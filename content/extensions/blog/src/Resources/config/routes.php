@@ -7,9 +7,10 @@
                 '/'                  => ['controller' => '@blog\Blog::index',  'access' => 'post.view'],
                 'edit/{id}'          => ['controller' => '@blog\Blog::edit',   'access' => 'post.view'],
                 'data/{status}.json' => ['controller' => '@blog\Blog::filter', 'access' => 'post.view'],
-                'save'               => ['controller' => '@blog\Blog::save',   'access' => 'post.edit',   'csrf' => true, 'log.after' => ['message' => '@user:%user_id% edited post @post:%id%']],
+                'save'               => ['controller' => '@blog\Blog::save',   'access' => 'post.edit',   'csrf' => true, 'log.after' => ['message' => ':user:%user_id% edited post :post:%id%']],
                 'setting'            => ['controller' => '@blog\Blog::setting'],
                 'trash'              => ['controller' => '@blog\Blog::trash',  'access' => 'post.delete', 'csrf' => true],
+                'revision/{id}'      => ['controller' => '@blog\Blog::revision',  'access' => 'post.revision.view'],
 
                 'comments' => ['controller' => '@blog\Comment::index', 'access' => 'comment.view'],
             ]

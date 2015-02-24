@@ -12,7 +12,7 @@
                             <img alt="" src="<?php echo gravatar_url($comment['email'], 40); ?>">
                         </div>
                         <div style="text-overflow: ellipsis;">
-                            <?php echo $comment['name'] ?> On
+                            <?php echo $comment['name'] ?> <?php echo __('On'); ?>
                             <a href="<?php echo admin_url('blog/edit/'.$comment['post_id']) ?>"><?php echo $comment['title'] ?></a>
                             <p><?php echo $comment['content']; ?></p>
                         </div>
@@ -20,7 +20,7 @@
                 <?php endforeach; ?>
             </ul>
             <div>
-                <a href="<?php echo admin_url('blog/comments'); ?>" class="btn btn-sm pull-right">View more</a>
+                <a href="<?php echo admin_url('blog/comments'); ?>" class="btn btn-sm pull-right"><?php echo __('View more') ?></a>
             </div>
             <?php else : ?>
             <?php echo __('No Recent Comment'); ?>.

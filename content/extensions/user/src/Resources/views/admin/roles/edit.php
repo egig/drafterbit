@@ -24,8 +24,7 @@
     <div class="col-md-8 col-md-offset-2 content-full">
     <h3 style="">Permissions</h3>
     <div class="row">
-    <?php foreach ($permissions as $ext => $pms) :
-?>
+    <?php foreach ($permissions as $ext => $pms) : ?>
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -33,13 +32,12 @@
                 </div>
                 <div class="panel-body" style="height:200px;overflow:auto">
                 <ul>
-                <?php foreach ($pms as $id => $label) :
-?>
+                <?php foreach ($pms as $id => $label) : ?>
                     <li class="checkbox permission">
-                        <input <?php echo checked('permissions', $id, in_array($id, $permissionIds)); ?> type="checkbox" name="permissions[]" value="<?php echo $id ?>" ><?php echo ucfirst($label) ?>
+                        <?php $v = in_array($id, $permissionIds) || ($roleName == $adminRole); ?>
+                        <input <?php echo $disabled.' '.checked('permissions', $id, $v); ?> type="checkbox" name="permissions[]" value="<?php echo $id ?>" ><?php echo ucfirst($label) ?>
                     </li>
-                <?php
-endforeach; ?>
+                <?php endforeach; ?>
                 </ul>
                 </div>
             </div>

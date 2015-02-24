@@ -5,7 +5,7 @@ class UserExtension extends \Drafterbit\Framework\Extension
     function boot()
     {
         //log entities
-        $this->getApplication()->addLogEntityFormatter(
+        $this->addLogEntityFormatter(
             'user',
             function($id){
                 if ($this['session']->get('user.id') == $id) {
@@ -17,7 +17,7 @@ class UserExtension extends \Drafterbit\Framework\Extension
             }
         );
 
-        $this->getApplication()->addLogEntityFormatter(
+        $this->addLogEntityFormatter(
             'role',
             function($id){
             

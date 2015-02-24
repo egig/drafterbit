@@ -8,13 +8,10 @@
     <?php foreach ($posts as $post) : ?>
 			<item>
 				<title><?php echo $post['title']; ?></title>
-				<?php if ($post['excerpt']) : ?>
-					<description><?php echo $post['excerpt']; ?></description>
-       		 	<?php else : ?>
-					<description><?php echo $post['content']; ?></description>
-        		<?php endif; ?>
-                <pubDate><?php $post['date'] ?></pubDate>
+				<description><![CDATA[<?php echo $post['feed_content']; ?>]]></description>
+                <pubDate><?php echo $post['date'] ?></pubDate>
 				<link><?php echo $post['url'] ?></link>
+				<guid isPermaLink="true"><?php echo $post['url'] ?></guid>
 			</item>
     <?php endforeach; ?>
 	</channel>

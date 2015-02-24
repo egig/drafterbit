@@ -6,10 +6,13 @@ class SystemExtension extends \Drafterbit\Framework\Extension
 {
     public function boot()
     {
-        foreach (['form', 'support', 'twig'] as $helper) {
+        foreach (['form', 'support'] as $helper) {
             $this['helper']->register($helper, $this->getResourcesPath("helpers/$helper.php"));
             $this['helper']->load($helper);
         }
+
+        $this['widget']->register(new Widgets\SearchWidget);
+        $this['widget']->register(new Widgets\TextWidget);
     }
 
     public function getNav()
@@ -18,11 +21,12 @@ class SystemExtension extends \Drafterbit\Framework\Extension
             ['id' => 'general', 'parent' => 'setting', 'label' => 'General', 'href' => 'setting/general', 'order' => 1],
             ['id' => 'themes', 'parent' => 'setting', 'label' => 'Themes', 'href' => 'setting/themes', 'order' => 2],
 
-            //['id'=>'dashboard', 'label' => 'Dashboard', 'href' => '/'],
             ['id'=>'content', 'label' => 'Content'],
             ['id'=>'users',   'label' => 'Users'],
             ['id'=>'setting', 'label' => 'Setting'],
             ['id'=>'system',  'label' => 'System'],
+
+            ['id'=>'menus',  'label' => 'Menus', 'order' => 3, 'href' => 'menus'],
 
             ['parent'=>'system', 'id'=> 'log',    'label' => 'Log',   'href' => 'system/log'],
             ['parent'=>'system', 'id'=> 'cache',  'label' => 'Cache', 'href' => 'system/cache'],
@@ -55,9 +59,12 @@ class SystemExtension extends \Drafterbit\Framework\Extension
 
     public function dashboardWidgets()
     {
-        return array(
-            'recent' => $this->model('@system\Dashboard')->recent(),
-            'stat' => $this->model('@system\Dashboard')->info()
-        );
+        $dashboard = new Widgets\DashboardWidget;
+
+        return [
+            'shortcuts' => $dashboard->shortcuts(),
+            'recent' => $dashboard->recent(),
+            'stat' => $dashboard->info(),
+        ];
     }
 }

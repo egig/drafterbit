@@ -5,32 +5,25 @@ use Drafterbit\Component\Validation\Exceptions\ValidationFailsException;
 
 class Menus extends BackendController
 {
-
     function index()
     {
-        $currentTheme = $this->get('themes')->get();
+        $data['title'] = __('Menus');
 
-        $positions = $currentTheme['menus'];
+        $menus = $this->model('Menus')->all();
 
-        $model = $this->model('@system\\Menus');
-
-        $theme = $this->get('themes')->current();
-
-        foreach ($positions as $position) {
-            $menus[$position] = $model->getByThemePosition($theme, $position);
+        foreach ($menus as &$menu) {
+            $menu['items'] = $this->model('Menus')->getItems($menu['id']);
         }
 
-        $data['positions'] = $positions;
         $data['menus'] = $menus;
-        $data['frontPageOptions'] = $this->get('app')->getFrontPageOption();
-        
-        $data['title'] = __('Menus');
-        return $this->render('@system/setting/themes/menus', $data);
+        $data['pageOptions'] = $this['app']->getFrontPageOption();
+
+        return $this->render('@system/menus', $data);
     }
 
-    function save()
+    function itemSave()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
 
         try {
             $this->validate('menus', $post);
@@ -54,10 +47,10 @@ class Menus extends BackendController
         return $this->jsonResponse($response);
     }
 
-    function delete()
+    function itemDelete()
     {
-        $id = $this->get('input')->post('id');
-        return $this->get('db')->delete('#_menus', ['id' => $id]);
+        $id = $this['input']->post('id');
+        return $this->model('Menus')->itemDelete($id);
     }
 
     private function createInsertData($post)
@@ -66,27 +59,51 @@ class Menus extends BackendController
         $data['type'] = $post['type'];
         $data['link'] = $post['link'];
         $data['page'] = $post['page'];
-        $data['position'] = $post['position'];
-        $data['theme'] = $post['theme'];
 
         return $data;
     }
 
     public function sort()
     {
-        $ids = $this->get('input')->post('order');
+        $menus = $this['input']->post('menus');
+        $name = $this['input']->post('name');
+        $id = $this['input']->post('id');
 
-        $order = 1;
-        foreach (array_filter(explode(',', $ids)) as $temp) {
-            $temp2 = explode('-', $temp);
-            $id = current($temp2);
-            $data = ['sequence' => $order];
+        $this['db']->update('#_menus', ['name' => $name], ['id' => $id]);
 
-            $order++;
-
-            $this->model('@system\Menus')->update($id, $data);
+        if($menus) {
+            foreach ($menus as $menu) {
+                $this['db']->update('#_menu_items', [
+                    'parent_id' => $menu['parent'],
+                    'sequence' => $menu['sequence'],
+                ], ['id' => $menu['id']]);
+            }
         }
 
-        return 1;
+    }
+
+    public function addItem()
+    {
+        $parentId =  $this['input']->post('menu_id');
+
+        $data = $this->model('Menus')->addItem($parentId);
+
+        return $this->jsonResponse($data);
+    }
+
+    public function delete()
+    {
+        $id = $this['input']->post('id');
+        return $this->model('Menus')->delete($id);
+    }
+
+    public function add()
+    {
+        $name = $this['input']->post('name');
+        $this['db']->insert('#_menus', ['name' => $name]);
+
+        $id = $this['db']->lastInsertId();
+
+        return $this->jsonResponse(['id' => $id, 'name' => $name, 'slug' => slug($name)]);
     }
 }

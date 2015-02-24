@@ -3,8 +3,15 @@ $.extend(
     true, $.fn.dataTable.defaults, {
         "bLengthChange": false,
         "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>" + "t" + "<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        "oLanguage": {
-            "sLengthMenu": "showing _MENU_ records per page"
+         "language": {
+            "zeroRecords": "Nothing found - sorry",
+            "info": __("Showing _START_ to _END_ of _TOTAL_ entries"),
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            paginate: {
+                next: __("Next"),
+                previous: __("Previous"),
+            }
         }
     }
 );

@@ -6,22 +6,16 @@ class Install extends Model
 {   
     public function createAdmin($email, $password)
     {
-        $permissions = array();
-
-        foreach (array_values($this->get('app')->getPermissions()) as $extPermissions) {
-            $permissions = array_merge($permissions, array_keys($extPermissions));
-        }
-
-        $this->get('db')->insert(
+        $this['db']->insert(
             '#_roles',
             [
-            'label'       => 'Administrator',
+            'label'       => $this['config']['auth.admin_role'],
             'description' => 'God of the site',
-            'permissions' => json_encode($permissions)
+            'permissions' => ''
             ]
         );
 
-        $roleId = $this->get('db')->lastInsertId();
+        $roleId = $this['db']->lastInsertId();
 
         $user['email']     = $email;
         $user['password']  = password_hash($password, PASSWORD_BCRYPT);
@@ -29,10 +23,10 @@ class Install extends Model
         $user['real_name'] = 'Administrator';
         $user['status']    = 1;
 
-        $this->get('db')->insert('#_users', $user);
-        $userId = $this->get('db')->lastInsertId();
+        $this['db']->insert('#_users', $user);
+        $userId = $this['db']->lastInsertId();
         
-        $this->get('db')->insert(
+        $this['db']->insert(
             '#_users_roles',
             [
             'user_id' => $userId,
@@ -40,13 +34,12 @@ class Install extends Model
             ]
         );
 
-        return array('userId' => $userId, 'roleId' => $roleId);
+        return ['userId' => $userId, 'roleId' => $roleId];
     }
 
     public function systemInit($name, $desc, $email, $userId)
     {
         $page = $this->createSamplePage($userId);
-        $this->createMenu($page);
         $firstPost = $this->createFirstPost($userId);
         $this->createFirstComment($firstPost);
         $this->addWidget();
@@ -57,19 +50,31 @@ class Install extends Model
         $data['language']         = 'en_EN';
         $data['format.date']      = 'm dS Y';
         $data['format.time']      = 'H:m:s';
-        $data['theme']            = 'default';
+        $data['theme']            = 'feather';
         $data['homepage']         = 'blog';
 
-        $extensions = array(
+        $extensions = [
             "pages" => '0.1.0',
             "blog"  => '0.1.0',
             "user"  => '0.1.0',
-            "files" => '0.1.0');
+            "files" => '0.1.0'
+        ];
         
         $data['extensions'] = json_encode($extensions);
         $data['timezone']   = "Asia/Jakarta";
-        $data['dashboard']  = '[{"id":"recent-comments","display":1,"position":1},{"id":"recent","display":1,"position":1},{"id":"stat","display":1,"position":2}]';
-        $data['comment_moderation'] = 1;
+
+        $dashboard = [
+            ["id"=>"shortcuts","display"=>1,"position"=>1],
+            ["id"=>"stat","display"=>1,"position"=>2],
+            ["id"=>"recent-comments","display"=>1,"position"=>1],
+            ["id"=>"recent","display"=>1,"position"=>2]
+        ];
+
+        $data['dashboard']  = json_encode($dashboard);
+        $data['comment.moderation'] = 1;
+        $data['post.per_page'] = 5;
+        $data['feed.shows']    = 10;
+        $data['feed.content']  = 2;
 
         $q = "INSERT INTO #_system (name, value) ";
         $q .= "VALUES ";
@@ -82,7 +87,7 @@ class Install extends Model
         }
 
         $q = rtrim($q, ',').';';
-        return $this->get('db')->executeUpdate($q, $param);
+        return $this['db']->executeUpdate($q, $param);
     }
 
     private function createSamplePage($user)
@@ -94,31 +99,9 @@ class Install extends Model
         $data['created_at'] = date('Y-m-d H:m:s');
         $data['status'] = 1;
 
-        $this->get('db')->insert('#_pages', $data);
-        $id = $this->get('db')->lastInsertId();
+        $this['db']->insert('#_pages', $data);
+        $id = $this['db']->lastInsertId();
         return "pages:$id";
-    }
-
-    private function createMenu($page)
-    {
-        $data = [
-            ['label' => "Home",
-             'link' => '%base_url%',
-             'sequence' => 1,
-             'type' => 1,
-             'position' => 'main',
-             'theme' => 'default'],
-            ['label' => "Sample Page",
-             'page' => $page,
-             'sequence' => 2,
-             'type' => 2,
-             'position'=>'main',
-             'theme' => 'default']
-        ];
-
-        foreach ($data as $d) {
-            $this->get('db')->insert('#_menus', $d);
-        }
     }
 
     private function addWidget()
@@ -128,10 +111,10 @@ class Install extends Model
             'title' => 'Search',
             'sequence' => 1,
             'position' => 'Sidebar',
-            'theme' => 'default'
+            'theme' => 'feather'
         ];
         
-        $this->get('db')->insert('#_widgets', $data);
+        $this['db']->insert('#_widgets', $data);
     }
 
     private function createFirstPost($user)
@@ -140,11 +123,12 @@ class Install extends Model
         $data['slug'] = "hello-world";
         $data['content'] = "This is Hello World Page is to be edited or removed.";
         $data['user_id'] = $user;
+        $data['type'] = 'standard';
         $data['created_at'] = date('Y-m-d H:m:s');
         $data['status'] = 1;
 
-        $this->get('db')->insert('#_posts', $data);
-        $id = $this->get('db')->lastInsertId();
+        $this['db']->insert('#_posts', $data);
+        $id = $this['db']->lastInsertId();
 
         return $id;
     }
@@ -158,8 +142,8 @@ class Install extends Model
         $data['subscribe'] = 0;
         $data['post_id'] = $postId;
         $data['status'] = 1;
-        $data['created_at'] = $this->get('time')->now();
+        $data['created_at'] = $this['time']->now();
 
-        $this->get('db')->insert('#_comments', $data);
+        $this['db']->insert('#_comments', $data);
     }
 }

@@ -13,12 +13,8 @@
     // datatables
     drafTerbit.comments.dt =  $("#comments-data-table").dataTable(
         {
-            "oLanguage": {
-                //"sLengthMenu": "Showing _MENU_ records per page",
-                ///"sSearch": "Search this table: _INPUT_",
-            },
-            "columnDefs": [
-            {'orderable': false, 'searchable':false, 'targets':[0]}
+            columnDefs: [
+                {orderable: false, searchable:false, targets:[0]}
             ]
         }
     );
@@ -58,10 +54,10 @@
 
             if (status == 2) {
                 $(this).parents('tr').fadeOut('fast');
-                $.notify('Comment marked as spam', 'warning');
+                $.notify(__('Comment marked as spam'), 'warning');
             } else if ($(this).hasClass('unspam')) {
                 $(this).parents('tr').fadeOut('fast');
-                $.notify('Comment marked as not spam', 'warning');
+                $.notify(__('Comment marked as not spam'), 'warning');
             } else {
                 $(this).toggle();
                 $(this).siblings('.unapprove, .approve').toggle();
@@ -104,8 +100,8 @@
             '<textarea style="width:100%" class="form-control">',
             '</textarea>',
             '<div style="margin-top:5px;">',
-                '<button type="button" class="btn btn-xs btn-default inline-form-cancel">Cancel</button>',
-                '<button type="button" class="btn btn-xs btn-primary pull-right inline-form-submit" data-post-id="'+postId+'" data-id="'+id+'">Submit</button>',
+                '<button type="button" class="btn btn-xs btn-default inline-form-cancel">'+__('Cancel')+'</button>',
+                '<button type="button" class="btn btn-xs btn-primary pull-right inline-form-submit" data-post-id="'+postId+'" data-id="'+id+'">'+__('Submit')+'</button>',
             '</div>',
             '</div>'
             ].join('');
@@ -172,10 +168,10 @@
     // change trash, add restore button
     changeUncreateAction = function(s){
         if (s === 'trashed') {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> Delete').val('delete');
-            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default comments-restore"><i class="fa fa-refresh"></i> Restore </button>');
+            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
+            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default comments-restore"><i class="fa fa-refresh"></i> '+__('Restore')+'</button>');
         } else {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> Trash').val('trash');
+            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Trash')).val('trash');
             $('.comments-restore').remove();
         }
     }

@@ -4,19 +4,20 @@ use Drafterbit\Framework\Model;
 
 class Widget extends Model
 {
-
-    public function widget($position)
+    public function widget($position, $theme)
     {
-        $qb = $this->get('db')->createQueryBuilder();
+        $qb = $this['db']->createQueryBuilder();
         
         $widgets = $qb->select('*')
             ->from('#_widgets', 'w')
             ->where('position=:position')
+            ->andWhere('theme=:theme')
             ->setParameter('position', $position)
+            ->setParameter('theme', $theme)
             ->execute()->fetchAll();
         
         foreach ($widgets as &$widget) {
-            $widget['data'] = json_decode($widget['data'], true);
+            $widget['context'] = json_decode($widget['context'], true);
         }
         
         return $widgets;
@@ -24,24 +25,24 @@ class Widget extends Model
 
     public function add($name, $pos)
     {
-        $theme = $this->get('themes')->current();
+        $theme = $this['themes']->current();
 
-        $this->get('db')
+        $this['db']
             ->insert(
                 '#_widgets',
-                array(
+                [
                     'name' => $name,
                     'position' =>  $pos,
                     'theme' =>  $theme
-                )
+                ]
             );
 
-        return $this->get('db')->lastInsertId();
+        return $this['db']->lastInsertId();
     }
 
     public function fetch($id)
     {
-        $qb = $this->get('db')->createQueryBuilder();
+        $qb = $this['db']->createQueryBuilder();
         
         $widget = $qb->select('*')
             ->from('#_widgets', 'w')
@@ -54,28 +55,28 @@ class Widget extends Model
 
     public function remove($id)
     {
-        return $this->get('db')->delete("#_widgets", ['id'=> $id]);
+        return $this['db']->delete("#_widgets", ['id'=> $id]);
     }
 
-    public function save($id, $title, $data, $name = null, $position = null, $theme = null)
+    public function save($id, $title, $context, $name = null, $position = null, $theme = null)
     {
-        $data =  json_encode($data);
+        $context =  json_encode($context);
 
         if ($this->has($id)) {
-            $this->get('db')->update('#_widgets', array('title' => $title, 'data' => $data), array('id' => $id));
+            $this['db']->update('#_widgets', ['title' => $title, 'context' => $context], ['id' => $id]);
             return $id;
         }
 
-        $data = array(
+        $data = [
             'position' => $position,
             'title' => $title,
-            'data' => $data,
+            'context' => $context,
             'name' => $name,
             'position' => $position,
             'theme' => $theme
-        );
-        $this->get('db')->insert('#_widgets', $data);
-        return $this->get('db')->lastInsertId();
+        ];
+        $this['db']->insert('#_widgets', $data);
+        return $this['db']->lastInsertId();
     }
 
     public function has($id)
@@ -85,6 +86,6 @@ class Widget extends Model
 
     public function update($id, $data)
     {
-        return $this->get('db')->update('#_widgets', $data, ['id' => $id]);
+        return $this['db']->update('#_widgets', $data, ['id' => $id]);
     }
 }

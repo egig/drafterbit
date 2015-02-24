@@ -1,5 +1,7 @@
 (function($, drafTerbit){
 
+    console.log(drafTerbit.csrfToken);
+
     $('#finder-container').finder(
         {
             url: drafTerbit.adminUrl+'/files/data',

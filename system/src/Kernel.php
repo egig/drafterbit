@@ -7,39 +7,41 @@ use Drafterbit\System\Provider\WidgetServiceProvider;
 use Drafterbit\System\Provider\ExtensionServiceProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class Kernel extends Application
+abstract class Kernel extends Application
 {
     /**
      * Application admin navigation.
      *
      * @var array
      */
-    protected $nav = array();
+    protected $nav = [];
 
     /**
      * Permissions.
      *
      * @var array
      */
-    protected $permissions = array();
+    protected $permissions = [];
 
     /**
      * Log Entity Labels.
      *
      * @var array
      */
-    protected $logEntityLabels = array();
+    protected $logEntityLabels = [];
     
     /**
      * Application Fronpage options.
      *
      * @var array
      */
-    protected $frontpage = array();
+    protected $frontpage = [];
 
     public function __construct($environment = 'development', $debug = true)
     {
         parent::__construct($environment, $debug);
+
+        $this['version'] = self::VERSION;
 
         $this->register(new ExtensionServiceProvider);
         $this->register(new WidgetServiceProvider);
@@ -74,82 +76,6 @@ class Kernel extends Application
         return $this->permissions;
     }
 
-    /**
-     * Return widget ui based on given position
-     *
-     * @param  string $position
-     * @return string
-     */
-    public function widget($position)
-    {
-        $qb = $this['db']->createQueryBuilder();
-        
-        $widgets = $qb->select('*')
-            ->from('#_widgets', 'w')
-            ->where('position=:position')
-            ->setParameter('position', $position)
-            ->execute()->fetchAll();
-
-        usort(
-            $widgets,
-            function($a, $b) {
-                if ($a['sequence'] == $b['sequence']) {
-                    return $a['id'] - $b['id'];
-                }
-
-                return $a['sequence'] < $b['sequence'] ? -1 : 1;
-            }
-        );
-
-        $output = null;
-        foreach ($widgets as $widget) {
-            $output .=
-            $this['widget']->get($widget['name'])->run(json_decode($widget['data'], true));
-        }
-
-        return $output;
-    }
-
-    /**
-     * Return front end menus on given position
-     *
-     * @param  string $position
-     * @return string
-     */
-    public function menus($position)
-    {
-        $qb = $this['db']->createQueryBuilder();
-        
-        $data = $qb->select('*')
-            ->from('#_menus', 'm')
-            ->where('position=:position')
-            ->andWhere('theme=:theme')
-            ->setParameter('position', $position)
-            ->setParameter('theme', $this['themes']->current())
-            ->getResult();
-
-        usort(
-            $data,
-            function($a, $b) {
-                if ($a['sequence'] == $b['sequence']) {
-                    return $a['id'] - $b['id'];
-                }
-
-                return $a['sequence'] < $b['sequence'] ? -1 : 1;
-            }
-        );
-
-        foreach ($data as &$item) {
-            if ($item['type'] == 1) {
-                $item['link'] = strtr($item['link'], array("%base_url%" => base_url()));
-            } elseif ($item['type'] == 2) {
-                $pages = $this->getFrontpage();
-                $item['link'] = base_url($pages[$item['page']]['defaults']['slug']);
-            }
-        }
-
-        return $data;
-    }
 
     public function loadsystem()
     {
@@ -185,8 +111,9 @@ class Kernel extends Application
         $this['path.cache'] =  $this['path.content'].'cache/data';
 
         foreach ([
-            'fontawesome' => 'Drafterbit\\System\\Asset\Filter\\DrafterbitFontAwesomeFilter',
-            'chosen_css' => 'Drafterbit\\System\\Asset\Filter\\DrafterbitChosenFilter'
+            'chosen_css' => 'Drafterbit\\System\\Asset\Filter\\ChosenFilter',
+            'fontawesome' => 'Drafterbit\\System\\Asset\Filter\\FontAwesomeFilter',
+            'colorpicker_css' => 'Drafterbit\\System\\Asset\Filter\\ColorPickerFilter'
             ]
             as $name => $class) {
                 $this['asset']->getFilterManager()->set($name, new $class($this['dir.system'].'/vendor/web'));
@@ -196,6 +123,14 @@ class Kernel extends Application
 
         //language
         $this['translator']->setLocale($system['language']);
+        $this['translator']->addPath($this['path.content'].'l10n');
+        if(!$this['debug']) {
+            $this['translator']->setCachePath($this['path.content'].'cache/l10n');
+        }
+
+        if(!$this['debug']) {
+            $this['translator']->setCachePath($this['path.content'].'/cache/l10n');
+        }
 
         //theme
         $theme = $system['theme'];
@@ -204,8 +139,6 @@ class Kernel extends Application
         
         $this['themes']->current($theme);
         
-        $this['themes']->registerAll();
-
         // add language catalogue
         if (is_dir($path = $this['path.themes'].$this['themes']->current().'/l10n')) {
             $this['translator']->addPath($path);
@@ -213,7 +146,7 @@ class Kernel extends Application
 
         $this['path.theme'] = $this['path.themes'].$this['themes']->current().'/';
 
-        $extensions = array();
+        $extensions = [];
         if ($system !== false) {
             $extensions = json_decode($system['extensions'], true);
         }
@@ -222,8 +155,6 @@ class Kernel extends Application
             $this['extension.manager']->load($extension);
         }
 
-        $this['widget']->registerAll();
-        
         date_default_timezone_set($system['timezone']);
 
         if (! $this['debug']) {
@@ -231,6 +162,7 @@ class Kernel extends Application
                 function(NotFoundHttpException $e){
                 
                     if (is_file($this['path.theme'].'404.html')) {
+                        $this['twig']->setLoader(new \Twig_Loader_Filesystem($this['path.theme']));
                         return $this['twig']->render('404.html');
                     }
 
@@ -287,8 +219,8 @@ class Kernel extends Application
             -512
         );
 
-        $this->addMiddleware('Drafterbit\\System\\Middlewares\\Security', array($this, $this['session'], $this['router']));
-        $this->addMiddleware('Drafterbit\\System\\Middlewares\\Log', array($this));
+        $this->addMiddleware('Drafterbit\\System\\Middlewares\\Security', [$this, $this['session'], $this['router']]);
+        $this->addMiddleware('Drafterbit\\System\\Middlewares\\Log', [$this]);
     }
 
     public function getFrontpage()
@@ -299,7 +231,7 @@ class Kernel extends Application
             ->from('#_pages', 'p')
             ->execute()->fetchAll();
 
-        $options = array();
+        $options = [];
         foreach ($pages as $page) {
             $options['pages:'.$page['id']] = [
                 'label' => $page['title'],
@@ -318,7 +250,7 @@ class Kernel extends Application
 
     public function getFrontPageOption()
     {
-        $options = array();
+        $options = [];
 
         foreach ($this->getFrontpage() as $id => $param) {
             $options[$id] = $param['label'];
@@ -329,7 +261,7 @@ class Kernel extends Application
 
     public function getReservedBaseUrl()
     {
-        $urls = array();
+        $urls = [];
         foreach ($this->getExtensions() as $extension) {
             if (method_exists($extension, 'getReservedBaseUrl')) {
                 $urls =  array_merge($urls, $extension->getReservedBaseUrl());
@@ -356,6 +288,7 @@ class Kernel extends Application
         $this['dir.system']      = basename($this['path']);
         $this['path.extensions'] = $this['path.content'] . '/extensions';
         $this['path.install']    = $this['path.public'] =  getcwd().'/';
+        $this['path.log']        = $this['path.content'].'cache/logs';
 
         // asset
         $this['config']->addReplaces('%path.vendor.asset%', $this['path'].'vendor/web');
@@ -407,7 +340,7 @@ class Kernel extends Application
 
     function getLogEntityLabel($entity, $id)
     {
-        return call_user_func_array($this->logEntityLabels[$entity], array($id));
+        return call_user_func_array($this->logEntityLabels[$entity], [$id]);
     }
 
     function addLogEntityFormatter($entity, $callback)
@@ -417,7 +350,7 @@ class Kernel extends Application
 
     function dashboardWidgets()
     {
-        $widgets = array();
+        $widgets = [];
         
         foreach ($this->getExtensions() as $extension) {
             if (method_exists($extension, 'dashboardWidgets')) {
@@ -430,7 +363,7 @@ class Kernel extends Application
 
     function getStat()
     {
-        $stat = array();
+        $stat = [];
         
         foreach ($this->getExtensions() as $extension) {
             if (method_exists($extension, 'getStat')) {
@@ -439,5 +372,18 @@ class Kernel extends Application
         }
 
         return $stat;
+    }
+
+    function getShortcuts()
+    {
+        $shortcuts = [];
+        
+        foreach ($this->getExtensions() as $extension) {
+            if (method_exists($extension, 'getShortcuts')) {
+                $shortcuts =  array_merge($shortcuts, $extension->getShortcuts());
+            }
+        }
+
+        return $shortcuts;
     }
 }

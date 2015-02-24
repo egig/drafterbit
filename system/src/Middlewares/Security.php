@@ -79,7 +79,7 @@ class Security implements HttpKernelInterface
                 $referer = $this->app['input']->headers('referer') ?
                     $this->app['input']->headers('referer') : admin_url('dashboard');
                 
-                $this->session->getFlashBag()->add('messages', array('text' => $message, 'type' => 'error'));
+                $this->session->getFlashBag()->add('messages', ['text' => $message, 'type' => 'error']);
                 return redirect($referer);
             }
         }

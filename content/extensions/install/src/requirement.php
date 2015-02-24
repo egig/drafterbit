@@ -7,10 +7,24 @@
         'message' => 'You need to run PHP 5.4+ to get drafterbit running'
     ],
     [
-        'name' => 'cache Directory',
+        'name' => 'Cache Directory',
         'function' => function($app) {
             return is_writable($app['path.content'].'cache');
         },
-        'message' => "Content cache directory is required to be writable"
+        'message' => app('path.content')."cache directory is required to be writable"
+    ],
+    [
+        'name' => 'Files Directory',
+        'function' => function($app) {
+            return is_writable($app['path.content'].'files');
+        },
+        'message' => app('path.content')."files directory is required to be writable"
+    ],
+    [
+        'name' => 'PHP Mcrypt Exstension',
+        'function' => function($app) {
+            return function_exists("mcrypt_encrypt");
+        },
+        'message' => "PHP Mcrypt extension is required"
     ]
 ];

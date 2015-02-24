@@ -28,19 +28,19 @@ class Pages extends \Drafterbit\Framework\Model
 
     public function insert($data)
     {
-        $this->get('db')->insert('#_pages', $data);
-        return $this->get('db')->lastInsertId();
+        $this['db']->insert('#_pages', $data);
+        return $this['db']->lastInsertId();
     }
 
     public function update($data, $id)
     {
         return
-        $this->get('db')->update('#_pages', $data, array('id' => $id));
+        $this['db']->update('#_pages', $data, ['id' => $id]);
     }
 
     public function getBy($key, $value = null, $singleRequested = false)
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
         $stmt = $queryBuilder->select('*')->from('#_pages', 'p');
 
         if (is_array($key)) {

@@ -4,59 +4,76 @@ use Drafterbit\Extensions\System\BackendController;
 
 class Theme extends BackendController
 {
-    
     public function index()
     {
         $this->setting = $this->model('@system\System');
 
-        $cache = $this->get('cache');
-        $post = $this->get('input')->post();
+        $cache = $this['cache'];
+        $post = $this['input']->post();
 
         if ($post) {
             $this->setting->updateTheme($post['theme']);
 
-            $cache->delete('settings');
-            
-            message('Theme updated', 'success');
+            // show notif
+            $this['template']->addGlobal('messages', [['text' => "Theme updated", "type" => 'success']]);
         }
 
-        // @todo
         $settings = $this->setting->all();
 
-        $data['currentTheme'] = $settings['theme'];
+        $data['currentTheme'] = $this->model('System')->get('theme');
 
-        $themesDir = $this->get('path.themes');
-        $themes = $this->get('themes')->all();
+        $themesDir = $this['path.themes'];
+        $themes = $this['themes']->all();
 
         $data['themes'] = $themes;
         $data['id'] = 'themes';
         $data['title'] = __('Themes');
 
-        return $this->render('@system/setting/appearance', $data);
+        return $this->render('@system/setting/themes', $data);
     }
 
     public function customize()
     {
-        $this->get('session')->set('customize_mode', 1);
+        $this['session']->set('customize_mode', 1);
 
-        $currentTheme = $this->get('themes')->get();
+        $theme = $this['input']->get('theme');
+
+        $context = $this->model('System')->get('theme.'.$theme.'.context');
+        
+        if($context) {
+            $context = json_decode($context, true);
+        }
+
+        $currentTheme = $this['themes']->get($theme);
+        
+        $optionInputs = [];
+        if(isset($currentTheme['options'])) {
+            
+            foreach ($currentTheme['options'] as $option) {
+            
+                if(isset($context[$option['name']])) {
+                    $value = $context[$option['name']];
+                } else {
+                    $value = isset($option['default']) ? $option['default'] : null;
+                }
+
+                $optionInputs[] = $this->createOptionInput($option, $value);
+            }
+        }
 
         $positions = $currentTheme['widgets'];
 
-        if (!isset($currentTheme->widget->position)) {
-            //return 'Current theme does not support widget';
-        }
-
-        $availableWidget = $this->get('widget')->all();
+        $availableWidget = $this['widget']->all();
         
         foreach ($availableWidget as &$widget) {
-            $widget->ui = $this->get('widget.ui')->build($widget);
+            $widget->ui = $this['widget.ui']->build($widget);
         }
 
         $model = $this->model('widget');
-
         foreach ($positions as $position) {
-            $widgets[$position] = $model->widget($position);
+
+            // get current widget
+            $widgets[$position] = $model->widget($position, $theme);
 
             usort(
                 $widgets[$position],
@@ -72,12 +89,15 @@ class Theme extends BackendController
 
         foreach ($widgets as $name => &$arrayOfWidget) {
             foreach ($arrayOfWidget as &$widget) {
-                $widget['data']['id'] = $widget['id'];
-                $widget['data']['title'] = $widget['title'];
-                $widgetObj = $this->get('widget')->get($widget['name']);
-                $widgetObj->data = $widget['data'];
+
+                $context = $widget['context'];
+                $context['id'] = $widget['id'];
+                $context['title'] = $widget['title'];
+
+                $widgetObj = $this['widget']->get($widget['name']);
+                $widgetObj->setContext($context);
                 
-                $widget['ui'] = $this->get('widget.ui')->build($widgetObj);
+                $widget['ui'] = $this['widget.ui']->build($widgetObj);
             }
         }
 
@@ -85,39 +105,31 @@ class Theme extends BackendController
 
         $menuModel = $this->model('@system\\Menus');
 
-        $theme = $this->get('themes')->current();
-
-        foreach ($menuPositions as $position) {
-            $menus[$position] = $menuModel->getByThemePosition($theme, $position);
-
-            //sort
-            usort(
-                $menus[$position],
-                function($a, $b) {
-                    if ($a['sequence'] == $b['sequence']) {
-                        return $a['id'] - $b['id'];
-                    }
-
-                    return $a['sequence'] < $b['sequence'] ? -1 : 1;
-                }
-            );
-        }
-
         $config = $this->model('@system\System')->all();
         
         $data = [
             'siteName' => $config['site.name'],
             'tagLine' => $config['site.description'],
             'homepage' => $config['homepage'],
-            'pageOptions' => $this->get('app')->getFrontPageOption(),
+            'pageOptions' => $this['app']->getFrontPageOption(),
         ];
+
+        $menus = $this->model('System')->get('theme.'.$theme.'.menus');
+
+        if($menus) {
+            $menus = json_decode($menus, true);
+        }
 
         $data['availableWidget'] = $availableWidget;
         $data['menuPositions'] = $menuPositions;
         $data['widgetPositions'] = $positions;
         $data['widgets'] = $widgets;
         $data['menus'] = $menus;
+        $data['context'] = $context;
+        $data['menuOptions'] =$this->model('Menus')->all();
         $data['theme'] = $theme;
+        $data['preview_url'] = base_url('?theme='.$theme.'&nonce='.csrf_token());
+        $data['optionInputs'] = $optionInputs;
 
         return $this->render('@system/setting/customize', $data);
     }
@@ -125,35 +137,75 @@ class Theme extends BackendController
     public function customPreview()
     {
         // end session if preview window id closed
-        if ($this->get('input')->post('endSession')) {
-            $this->get('session')->remove('customize_mode');
-            $this->get('session')->remove('customize_data');
+        if ($this['input']->post('endSession')) {
+            $this['session']->remove('customize_mode');
+            $this['session']->remove('customize_data');
 
             return;
         }
+
+        $context = $this['input']->post('context');
+        $general = $this['input']->post('general');
         
-        $general = $this->get('input')->post('general');
-        $c_data = array(
+        $c_data = [
             'siteName' => $general['title'],
             'siteDesc' => $general['tagline'],
-        );
-        $this->get('session')->set('customize_data', $c_data);
+        ];
 
-        if ($this->get('input')->post('action') == 'save') {
+        $this['session']->set('customize_data', $c_data);
+
+        $theme = $this['themes']->current();
+        if($menus = $this['input']->post('menus')) {
+            $menus = json_encode($menus);
+        }
+
+        if ($this['input']->post('action') == 'save') {
             $this->model('@system\System')->updateSetting(
                 [
                 'site.name' => $general['title'],
                 'site.description' => $general['tagline'],
+                'theme.'.$theme.'.menus' => $menus,
+                'theme.'.$theme.'.context' => json_encode($context),
                 ]
             );
         }
 
-        $url = $this->get('input')->post('url');
+        $url = $this['input']->post('url');
 
         return $this->jsonResponse(
-            array(
+            [
             'url' => $url,
-            )
+            ]
         );
+    }
+
+    private function createOptionInput($option, $value)
+    {
+        $name = "context[{$option['name']}]";
+
+        switch ($option['type']) {
+            case 'string':
+                return '<label class="control-label">'.$option['label'].'</label>
+                <input class="form-control input-sm" type="string" name="'.$name.'" value="'.value($option['name'], $value).'">';
+                break;
+            case 'color':
+                return '<label class="control-label">'.$option['label'].'</label>
+                <input class="form-control input-sm dt-color-picker" type="string" name="'.$name.'" value="'.value($option['name'], $value).'">';
+                break;
+            case 'boolean':
+                $checked = $value ? 'checked' : '';
+                return '<div class="checkbox"> <label> <input name="'.$name.'" value="1" type="checkbox" '.$checked.'> '.$option['label'].' </label></div>';
+                break;
+            case 'image' :
+                return '<label class="control-label">'.$option['label'].'</label>
+                <input id="input-'.$option['name'].'" type="hidden" name="'.$name.'" value="'.value($option['name'], $value).'">
+                <div class="well well-sm"><img style="width:100%" id="'.$option['name'].'" alt="No Image" src="'.$value.'" /></div>
+                <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-default btn-xs dt-image-add">'.__('Select image').'</a>
+                <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-xs dt-image-remove">'.__('Remove image').'</a>';
+                break;
+            default:
+                return '<div><em>Unsupported option type: '.$option['type'].'</em></div>';
+                break;
+        }
     }
 }

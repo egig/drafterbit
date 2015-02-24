@@ -4,7 +4,6 @@ use Drafterbit\Extensions\User\Auth\Exceptions\UserNotAuthorizedException;
 
 class Auth extends \Drafterbit\Framework\Model
 {
-
     public function __construct()
     {
         $this->user = $this->model('@user\User');
@@ -13,11 +12,9 @@ class Auth extends \Drafterbit\Framework\Model
 
     public function doLogin($login, $password)
     {
-        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->user->getByEmail($login);
-        } else {
-            $user = $this->user->getByUserName($login);
-        }
+        $user = filter_var($login, FILTER_VALIDATE_EMAIL) ?
+            $this->user->getByEmail($login) :
+            $this->user->getByUserName($login);
 
         if (!$user or !password_verify($password, $user['password']) or ($user['status'] != 1)) {
             throw new \RuntimeException(__("Incorrect Username/Email or Password"));
@@ -32,33 +29,39 @@ class Auth extends \Drafterbit\Framework\Model
      * @param  object $user
      * @return void
      */
-    public function registerSession($user)
+    private function registerSession($user)
     {
-        $encrypter = $this->get('encrypter');
+        $encrypter = $this['encrypter'];
         
         $userPermissions = $encrypter->encrypt(serialize($this->user->getPermissions($user['id'])));
         
-        $session = $this->get('session');
-        $data = array(
+        $session = $this['session'];
+        $data = [
             'user.id' => $user['id'],
             'user.email' => $user['email'],
             'user.name' => $user['real_name'],
+            'user.role_id' => $user['role_id'],
             'user.permissions' => $userPermissions,
             '_token' => sha1((string) microtime(true)),
-        );
+        ];
 
         foreach ($data as $key => $value) {
             $session->set($key, $value);
         }
     }
 
+    /**
+     * Authenticate current active user
+     *
+     * @return boolean|Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function authenticate($route, $request)
     {
         if ($this->isLoggedIn()) {
             return true;
         }
 
-        $config = $this->get('config');
+        $config = $this['config'];
 
         $publicPath = [$config['path.admin'].'/login', $config['path.admin'].'/do_login'];
 
@@ -77,10 +80,7 @@ class Auth extends \Drafterbit\Framework\Model
     public function restrict($accessKey)
     {
         if (!$this->userHasPermission($accessKey)) {
-                        
-            throw new UserNotAuthorizedException(
-                "Access denied."
-            );
+            throw new UserNotAuthorizedException("Access denied");
         }
 
         return true;
@@ -97,12 +97,16 @@ class Auth extends \Drafterbit\Framework\Model
             return;   
         }
 
-        $encrypter = $this->get('encrypter');
-        $session = $this->get('session');
+        if($this->currentUserIsAdmin()) {
+            return true;
+        }
 
-        $perm = $this->get('app')->getPermissions();
+        $encrypter = $this['encrypter'];
+        $session = $this['session'];
 
-        $permissions = array();
+        $perm = $this['app']->getPermissions();
+
+        $permissions = [];
         foreach ($perm as $key => $value) {
             $permissions = array_merge($permissions, $value);
         }
@@ -119,6 +123,19 @@ class Auth extends \Drafterbit\Framework\Model
      */
     public function isLoggedIn()
     {
-        return $this->get('session')->get('user.id');
+        return $this['session']->get('user.id');
+    }
+
+    /**
+     * Check if current user is a superadmin
+     *
+     * @return boolean
+     */
+    public function currentUserIsAdmin()
+    {
+        $role_id = $this['session']->get('user.role_id');
+        $role = $this->role->getSingleBy('id', $role_id);
+
+        return $role['label'] == $this['config']['auth.admin_role'];
     }
 }

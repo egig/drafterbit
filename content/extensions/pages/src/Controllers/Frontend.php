@@ -7,7 +7,7 @@ class Frontend extends FrontendController
 
     public function index()
     {
-        return $this->get('twig')->render('index.html');
+        return $this['twig']->render('index.html');
     }
 
     public function home($id = null)

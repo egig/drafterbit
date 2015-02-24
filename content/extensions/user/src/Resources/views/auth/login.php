@@ -28,15 +28,19 @@
     <div class="container">
       <div class="panel panel-default form-signin-panel">
         <div class="panel-body">
-            <div style="text-align:center; margin-bottom:20px;"><h1 class="title">Drafterbit</h1></div>       
+            <div style="text-align:center; margin-bottom:20px;"><h1 class="title"><?php echo $siteName; ?></h1></div>       
                   <form role="form" class="form-signin" method="POST" action="<?php echo admin_url('do_login'); ?>">
                     <input name="login" type="text" class="form-control input-sm" placeholder="<?= __('USERNAME OR EMAIL'); ?>" autofocus value="<?php echo value('email'); ?>">
                     <input name="password" type="password" class="form-control input-sm" placeholder="<?= __('PASSWORD'); ?>">
+                    <input name="next" type="hidden" value="<?php echo $next; ?>">
                     <div class="clearfix">
                         <button class="btn btn-sm btn-primary form-control btn-login" type="submit"><?= __('LOGIN'); ?></button>
                     </div>
                   </form>
               </div>
+        </div>
+        <div class="copyright dt-brand">
+            <p>Drafterbit v<?php echo app('version'); ?> &copy; <?php echo date('Y') ?></p>
         </div>
     </div> <!-- /container -->
     

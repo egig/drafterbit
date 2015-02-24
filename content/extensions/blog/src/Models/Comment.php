@@ -64,8 +64,8 @@ class Comment extends Model
 
         $comments =  $query->getResult();
 
-        $childs = array();
-        $parents = array();
+        $childs = [];
+        $parents = [];
         foreach ($comments as &$comment) {
             //filter moderation
             if ($comment['status'] == 0) {
@@ -91,7 +91,7 @@ class Comment extends Model
 
     private function getChilds($id, $c)
     {
-        $childs = isset($c[$id]) ? $c[$id] : array();
+        $childs = isset($c[$id]) ? $c[$id] : [];
         foreach ($childs as &$child) {
             $child['childs'] = $this->getChilds($child['id'], $c);
         }
@@ -101,14 +101,14 @@ class Comment extends Model
 
     public function insert($data)
     {
-        $this->get('db')->insert('#_comments', $data);
+        $this['db']->insert('#_comments', $data);
 
-        return $this->get('db')->lastInsertid();
+        return $this['db']->lastInsertid();
     }
 
     public function update($id, $data)
     {
-        $this->get('db')->update('#_comments', $data, array('id' => $id));
+        $this['db']->update('#_comments', $data, ['id' => $id]);
     }
 
     public function changeStatus($id, $status)

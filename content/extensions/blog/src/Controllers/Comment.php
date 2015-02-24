@@ -6,23 +6,18 @@ use Drafterbit\Component\Validation\Exceptions\ValidationFailsException;
 class Comment extends BackendController
 {
     public function index()
-    {
-        $model = $this->model('Comment');
-
-        $comments = $model->all(['status' => 'active']);
-
+    {        
         $data['id']     = 'comments';
         $data['title']  = __('Comments');
         $data['status'] = 1;
         $data['action'] = admin_url('comments/trash');
-        $data['commentsTable'] = $this->dataTable('comments', $this->_table(), $comments);
 
         return $this->render('@blog/admin/comments/index', $data);
     }
 
     public function trash()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
 
         $commentIds = $post['comments'];
 
@@ -46,10 +41,10 @@ class Comment extends BackendController
     {
         $comments = $this->model('@blog\Comment')->all(['status' => $status]);
         
-        $arr  = array();
+        $arr  = [];
 
         foreach ($comments as $comment) {
-            $data = array();
+            $data = [];
             $data[] = "<input type=\"checkbox\" name=\"comments[]\" value=\"{$comment['id']}\">";
             $data[] = '<img alt="" src="'.gravatar_url($comment['email'], 40).'"/>'.$comment['name'].'<br/><a href="mailto:'.$comment['email'].'">'.$comment['email'].'</a>';
 
@@ -66,33 +61,6 @@ class Comment extends BackendController
         $ob->recordsFiltered = count($arr);
 
         return $this->jsonResponse($ob);
-    }
-
-    private function _table()
-    {
-        return array(
-            [
-                'field' => 'name',
-                'label' => 'Author',
-                'width' => '25%',
-                'format' => function($value, $item){
-                    return "<img src='".gravatar_url($item['email'])."'/>{$value} <div><a href=\"mailto:{$item['email']}\">{$item['email']}</a></div>";
-                }],
-            [
-                'field' => 'content',
-                'label' => 'Comment',
-                'width' => '55%',
-                'format' => array($this, 'contentFormat')
-            ],
-            [
-                'field' => 'post_id',
-                'label' => 'In Respose to',
-                'width' => '20%',
-                'format' => function($value, $item){
-                    return '<a href="'.admin_url('blog/edit/'.$value).'">'.$item['title'].'</a><br/>'.$item['created_at'];
-                }
-            ]
-        );
     }
 
     private function contentFormat($content, $item)
@@ -114,11 +82,11 @@ class Comment extends BackendController
     public function submit()
     {
         try {
-            $comment = $this->get('input')->post();
+            $comment = $this['input']->post();
 
             $this->validate('comment', $comment);
 
-            $moderation = $this->model('@system\System')->fetch('comment.moderation');
+            $moderation = $this->model('@system\System')->get('comment.moderation');
 
             $data['name']       = $comment['name'];
             $data['email']      = $comment['email'];
@@ -133,17 +101,19 @@ class Comment extends BackendController
                 $data['status'] = 0;
             }
             
-            $data['created_at'] = $this->get('time')->now();
+            $data['created_at'] = $this['time']->now();
             $data['subscribe']  = isset($comment['subscribe']) ? $comment['subscribe'] : 0;
 
             $id = $this->model('@blog\Comment')->insert($data);
-            $referer = $this->get('input')->headers('referer');
+            $referer = $this['input']->headers('referer');
 
-            $mailConfig = $this->model('@system\System')->fetch('smtp.host');
+
+            // @todo improve and translate mail message
+            $mailConfig = $this->model('@system\System')->get('smtp.host');
 
             if($mailConfig) {            
                 //send notification to admin
-                $toEmail = $this->model('@system\System')->fetch('email');
+                $toEmail = $this->model('@system\System')->get('email');
                 $subscriber = $this->getSubscribers($postId);
 
                 array_unshift($subscriber, $toEmail);
@@ -151,13 +121,13 @@ class Comment extends BackendController
                 // @todo improve mail message
                 $messageBody = $this->render('@blog/mail/new-comment-notif', $data);
 
-                $message = $this->get('mail')
+                $message = $this['mail']
                     ->setFrom($toEmail)
                     ->setTo($subscriber)
                     ->setSubject('New Comment Notification')
                     ->setBody($messageBody);
 
-                $this->get('mailer')->send($message, $failures);
+                $this['mailer']->send($message, $failures);
             }
 
             return redirect($referer.'#comment-'.$id);
@@ -171,23 +141,23 @@ class Comment extends BackendController
 
     public function status()
     {
-        $id = $this->get('input')->post('id');
-        $status = $this->get('input')->post('status');
+        $id = $this['input']->post('id');
+        $status = $this['input']->post('status');
 
         $this->model('Comment')->changeStatus($id, $status);
     }
 
     public function quickReply()
     {
-        $data['post_id']   = $this->get('input')->post('postId');
-        $data['content']   = $this->get('input')->post('comment');
-        $data['parent_id'] = $this->get('input')->post('parentId');
+        $data['post_id']   = $this['input']->post('postId');
+        $data['content']   = $this['input']->post('comment');
+        $data['parent_id'] = $this['input']->post('parentId');
 
-        $session = $this->get('session');
+        $session = $this['session'];
         $data['user_id'] = $session->get('user.id');
         $data['name']    = $session->get('user.name');
         $data['email']   = $session->get('user.email');
-        $data['created_at'] = $this->get('time')->now();
+        $data['created_at'] = $this['time']->now();
 
         $id = $this->model('Comment')->insert($data);
 
@@ -196,7 +166,7 @@ class Comment extends BackendController
 
     public function quickTrash()
     {
-        $id = $this->get('input')->post('id');
+        $id = $this['input']->post('id');
         $this->model('Comment')->trash($id);
         return $this->jsonResponse(['msg' => 'Comment moved to trash', 'status' => 'warning']);
     }
@@ -210,7 +180,7 @@ class Comment extends BackendController
     {
         $comments =  $this->model('Post')->getSubscribers($postId);
 
-        $subscriber = array();
+        $subscriber = [];
         foreach ($comments as $comment) {
             $subscriber[] = $comment['email'];
         }

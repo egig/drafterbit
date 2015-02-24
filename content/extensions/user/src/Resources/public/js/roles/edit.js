@@ -62,7 +62,8 @@
 
         return function(e) {
             if (dirty) {
-                return 'Discard unsaved changes ?'; }
+                return __('Discard unsaved changes ?');
+            }
         };
 
     })();

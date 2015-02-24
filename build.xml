@@ -26,19 +26,33 @@
             <include name="LICENSE" />
           </fileset>
         </copy>
-        
+
+        <copy file="./app.php.dist" tofile="./build/system/config/app.php" overwrite="true"></copy>
+
         <delete dir="./build/content/cache/data" includeemptydirs="true" />
         <delete dir="./build/content/cache/asset" includeemptydirs="true" />
+        <delete dir="./build/content/cache/l10n" includeemptydirs="true" />
+        <delete dir="./build/content/cache/view" includeemptydirs="true" />
         <delete file="./build/content/cache/routes.php"/>
 
         <delete includeemptydirs="true">
           <fileset dir="./build/content/files">
             <exclude name=".gitignore" />
           </fileset>
+          <fileset dir="./build/content/cache/logs">
+            <exclude name=".gitignore" />
+          </fileset>
         </delete>
+
+        <chmod file="./build/content/cache" mode="0777" />
+        <chmod file="./build/content/files" mode="0777" />
 
         <!-- clean unused vendor files  -->
         <fileset dir="./build/system/vendor" id="packageFiles">
+
+            <exclude name="cogpowered/finediff/src/**" />
+            <include name="cogpowered/finediff/**" />
+
             <include name="doctrine/annotations/README.md" />
             <include name="doctrine/annotations/composer.json" />
             

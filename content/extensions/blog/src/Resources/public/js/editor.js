@@ -29,14 +29,20 @@
             pos = $('.ms-sel-ctn').find('input').position();
             h = $('.ms-sel-ctn').find('input').height();
 
-            $('.ms-res-ctn').css(
-                {
-                    width: "auto",
-                    position: "absolute",
-                    top: (pos.top + h) + "px",
-                    left: (pos.left) + "px"
-                }
-            );
+            var ctn = $('.ms-res-ctn');
+
+            if(ctn.children().length < 1) {
+                ctn.css({display: 'none'});
+            } else {
+                ctn.css(
+                    {
+                        width: "auto",
+                        position: "absolute",
+                        top: (pos.top + h) + "px",
+                        left: (pos.left) + "px",
+                    }
+                );
+            }
         }
     );
 
@@ -122,7 +128,8 @@
 
         return function(e) {
             if (dirty) {
-                return 'Discard unsaved changes ?'; }
+                return __('Discard unsaved changes ?');
+            }
         };
 
     })();

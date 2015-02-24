@@ -2,54 +2,41 @@
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Drafterbit\System\Twig\DrafterbitSystemExtension;
+use Drafterbit\System\Twig\SystemExtension;
 
 class TwigServiceProvider implements ServiceProviderInterface
 {
 
     public function register(Container $app)
     {
-        $app['twig.options'] = array();
-        $app['twig.templates'] = array();
+        $app['twig.options'] = [];
+        $app['twig.templates'] = [];
 
-        $app['twig'] = function ($app) {
-            $app['twig.options'] = array_replace(
-                array(
-                    'autoescape'       => false,
-                    'charset'          => $app['config']['app.charset'],
-                    'debug'            => $app['config']['app.debug'],
-                    'strict_variables' => $app['config']['app.debug']
-                ),
-                $app['twig.options']
-            );
+        $options = [
+            'autoescape'       => false,
+            'charset'          => $app['config']['app.charset'],
+            'debug'            => $app['config']['app.debug'],
+            'strict_variables' => $app['config']['app.debug'],
+        ];
 
-            $twig = new \Twig_Environment($app['twig.loader'], $app['twig.options']);
+        if(!$app['debug']) {
+            $options['cache'] = $app['path.content'].'cache/view';
+        }
+
+        $app['twig'] = function ($app) use ($options) {
+
+            // we will set loader later, on frontendController;
+            $loader = null;
+            $twig = new \Twig_Environment($loader, $options);
             $twig->addGlobal('app', $app);
 
-            $twig->addExtension(new DrafterbitSystemExtension());
+            $twig->addExtension(new SystemExtension);
 
             if ($app['config']['app.debug']) {
                 $twig->addExtension(new \Twig_Extension_Debug());
             }
             
             return $twig;
-        };
-
-        $app['twig.loader.filesystem'] = function ($app) {
-            return new \Twig_Loader_Filesystem($app['path.theme']);
-        };
-
-        $app['twig.loader.array'] = function ($app) {
-            return new \Twig_Loader_Array($app['twig.templates']);
-        };
-
-        $app['twig.loader'] = function ($app) {
-            return new \Twig_Loader_Chain(
-                array(
-                $app['twig.loader.array'],
-                $app['twig.loader.filesystem'],
-                )
-            );
         };
     }
 }

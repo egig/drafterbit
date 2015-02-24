@@ -18,11 +18,11 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             $this['twig']->addExtension(new $extensionClass);
         }
 
-        $this->getApplication()->addFrontPageOption(
+        $this->addFrontPageOption(
             ['blog' => [
             'label' => 'Blog',
             'controller' => '@blog\Frontend::index',
-            'defaults' => array('slug' => 'blog')
+            'defaults' => ['slug' => 'blog']
             ]
             ]
         );
@@ -47,14 +47,16 @@ class BlogExtension extends \Drafterbit\Framework\Extension
 
 
         //log entities
-        $this->getApplication()->addLogEntityFormatter(
+        $this->addLogEntityFormatter(
             'post',
             function($id){
             
-                $label = $this->model('Post')->getSingleBy('id', $id)['title'];
+                $label = $this->model('Post')->getOneBy('id', $id)['title'];
                 return '<a href="'.admin_url('blog/edit/'.$id).'">'.$label.'</a>';
             }
         );
+
+        $this['widget']->register(new Widgets\TagsWidget);
     }
 
     public function getNav()
@@ -73,6 +75,7 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             'post.edit' => 'edit post',
             'post.save' => 'save a post',
             'post.delete' => 'delete or trash post',
+            'post.revision.view' => 'view post revision',
             'comment.view' => 'view comment',
             'comment.delete' => 'delete comment',
         ];
@@ -95,7 +98,14 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             ->where("p.title like :q")
             ->orWhere("p.content like :q");
 
-        return array('blog', $query);
+        return [$query, [
+            'url' =>  function ($item) {
+                    $date = date('Y/m', strtotime($item['created_at']));
+                    return blog_url($date.'/'.$item['slug']);
+            },
+            'title' => function ($item) { return $item['title']; },
+            'summary' => function ($item) { return $item['content']; }
+        ]];
     }
 
     function getReservedBaseUrl()
@@ -116,9 +126,9 @@ class BlogExtension extends \Drafterbit\Framework\Extension
 
     function dashboardWidgets()
     {
-        return array(
-            'recent-comments' => $this->model('Dashboard')->recentComments()
-        );
+        return [
+            'recent-comments' => (new Widgets\DashboardWidget)->recentComments()
+        ];
     }
 
     function getStat()
@@ -126,9 +136,20 @@ class BlogExtension extends \Drafterbit\Framework\Extension
         $posts = $this->model('Post')->all(['status' => 'all']);
         $comments = $this->model('Comment')->all(['status' => 'all']);
 
-        return array(
+        return [
             'Post(s)' => count($posts),
             'Comment(s)' => count($comments)
-        );
+        ];
+    }
+
+    public function getShortcuts()
+    {
+        return [
+            [
+                'link' => admin_url('blog/edit/new'),
+                'label' => 'New Post',
+                'icon-class' => 'fa fa-edit'
+            ]
+        ];
     }
 }

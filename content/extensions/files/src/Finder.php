@@ -63,7 +63,7 @@ class Finder {
      */
     protected function preparePath($path)
     {
-        return realpath(implode(DIRECTORY_SEPARATOR, array($this->root, trim($path, DIRECTORY_SEPARATOR))));
+        return realpath(implode(DIRECTORY_SEPARATOR, [$this->root, trim($path, DIRECTORY_SEPARATOR)]));
     }
 
     /**
@@ -79,7 +79,7 @@ class Finder {
         $finder = $this->createFinder();
         $finder->in($path)->depth(0)->sortByType();
 
-        $items = array();
+        $items = [];
         foreach ($finder as $item) {
 
             $instance = $item;
@@ -117,7 +117,7 @@ class Finder {
         $path = $this->preparePath($relativePath);
         $instance = new \SplFileInfo($path);
 
-        $items = array();
+        $items = [];
 
         if ($this->isImage($path)) {
 
@@ -231,13 +231,13 @@ class Finder {
             $type = 'image';
         }
 
-        return array(
+        return [
             'thumbnail' => isset($file->thumbnail) ? $file->thumbnail : false,
             'base64' => isset($file->thumbnail) ? $this->getBase64Image($file->thumbnail) : false,
             'type' => $type,
             'path' => $path,
             'label' => $file->getFileName()
-        );
+        ];
     }
 
     /**
@@ -294,11 +294,11 @@ class Finder {
 
         $path = $this->preparePath($relpath);
 
-        $returned = array();
+        $returned = [];
 
         foreach ($files as $file) {
 
-            $array = array();
+            $array = [];
             
             if ($file instanceof UploadedFile ) {
 
@@ -313,5 +313,19 @@ class Finder {
         }
 
         return $returned;
+    }
+
+    public function properties($path)
+    {
+        $path = $this->preparePath($path);
+
+        $file = new \SplFileInfo($path);
+
+        $data['Name'] = $file->getFileName();
+        $data['Type'] = $file->getType();
+        $data['Size'] = $file->getSize() .' b';
+        $data['Location'] = $this->fileSystem->makePathRelative(pathinfo($file->getRealPath(), PATHINFO_DIRNAME), $this->root);
+
+        return $data;
     }
 }

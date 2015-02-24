@@ -4,33 +4,27 @@ use Drafterbit\Extensions\System\FrontendController;
 
 class Frontend extends FrontendController
 {
-
     /**
      * /search Controller
      */
     public function search()
     {
-        $q = $this->get('input')->get('q');
-        $f = $this->get('input')->get('f');
+        $data['q'] = $q = $this['input']->get('q');
+        $f = $this['input']->get('f');
 
         $model = $this->model('@system\Search');
 
-        $extensions = $this->get('app')->getExtensions();
+        $extensions = $this['app']->getExtensions();
 
-        $queries = array();
+        $queries = [];
         foreach ($extensions as $extension) {
             if (method_exists($extension, 'getSearchQuery')) {
-                list($name, $query) = $extension->getSearchQuery();
-                $queries[$name] = $query;
+                list($query, $formatter) = $extension->getSearchQuery();
+                $queries[] = [$query, $formatter];
             }
         }
 
         $results = $model->doSearch($q, $queries);
-
-        foreach ($results as &$result) {
-            $data['results'] = $result['results'];
-            $result['content'] = $this->get('twig')->render($result['name'].'/search.html', $data);
-        }
 
         $data['results'] = $results;
         return $this->render('search/index', $data);

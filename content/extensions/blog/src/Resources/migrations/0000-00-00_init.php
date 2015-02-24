@@ -4,12 +4,13 @@
     {
         $schema = $app['db']->getSchemaManager()->createSchema();
         
-        // pages
+        // posts
         $posts = $schema->createTable('#_posts');
         $posts->addColumn('id', 'integer', ['autoincrement' => true]);
         $posts->addColumn('slug', 'string', ['length' => 150]);
         $posts->addColumn('title', 'string', ['length' => 150]);
         $posts->addColumn('content', 'text');
+        $posts->addColumn('type', 'string', ['length' => 20]);
         $posts->addColumn('user_id', 'integer');
         $posts->addColumn('created_at', 'datetime');
         $posts->addColumn('updated_at', 'datetime');

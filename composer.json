@@ -15,10 +15,6 @@
       {
           "type": "vcs",
           "url": "https://github.com/drafterbit/framework.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://github.com/egig/tika.git"
       }
   ],
   "require": {
@@ -32,7 +28,8 @@
       "natxet/CssMin": "3.0.2",
       "mrclay/minify": "2.2.*",
       "gregwar/image": "2.0.*",
-      "swiftmailer/swiftmailer": "5.2.*"
+      "swiftmailer/swiftmailer": "5.2.*",
+      "cogpowered/finediff": "0.3.*"
   },
   "config": {
     "vendor-dir": "system/vendor",

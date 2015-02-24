@@ -17,7 +17,6 @@
 
     .page-wrapper {
         position: inherit;
-        padding: 0px;
-        min-height: 500px;
+        padding: 0px 0px 20px;
     }
 }

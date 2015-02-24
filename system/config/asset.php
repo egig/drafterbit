@@ -40,6 +40,10 @@ return [
         'handlebars'                => '%path.vendor.asset%/handlebars/handlebars.min.js',
         'finder_css'                => '%path.vendor.asset%/finder/finder.css',
         'finder_js'                 => '%path.vendor.asset%/finder/dist/finder.min.js',
+
+        'nested_sortable'            => '%path.vendor.asset%/nestedSortable/jquery.ui.nestedSortable.js',
+        'colorpicker_css'            => '%path.vendor.asset%/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css',
+        'colorpicker_js'            => '%path.vendor.asset%/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
 ]
 
 ];

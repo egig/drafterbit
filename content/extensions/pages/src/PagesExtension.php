@@ -6,7 +6,7 @@ class PagesExtension extends \Drafterbit\Framework\Extension
     public function boot()
     {
         //log entities
-        $this->getApplication()->addLogEntityFormatter(
+        $this->addLogEntityFormatter(
             'page',
             function($id){
             
@@ -41,15 +41,30 @@ class PagesExtension extends \Drafterbit\Framework\Extension
             ->where("p.title like :q")
             ->orWhere("p.content like :q");
 
-        return array('page', $query);
+        return [$query, [
+            'url' =>  function ($item) { return base_url($item['slug']); },
+            'title' => function ($item) { return $item['title']; },
+            'summary' => function ($item) { return $item['content']; }
+        ]];
     }
 
     function getStat()
     {
         $pages = $this->model('Pages')->all(['status' => 'untrashed']);
 
-        return array(
+        return [
             'Page(s)' => count($pages)
-        );
+        ];
+    }
+
+    public function getShortcuts()
+    {
+        return [
+            [
+                'link' => admin_url('pages/edit/new'),
+                'label' => 'New Page',
+                'icon-class' => 'fa fa-file-o'
+            ]
+        ];
     }
 }

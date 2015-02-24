@@ -1,50 +1,23 @@
 <?php namespace Drafterbit\System;
 
-use Drafterbit\Framework\Application;
-use Symfony\Component\Finder\Finder;
-
 class ThemeManager
 {
-
     protected $themes;
     protected $current;
     protected $path;
 
-    public function __construct($path = array())
+    /**
+     * Constructor
+     *
+     * @param array $path
+     */
+    public function __construct($path = [])
     {
         $this->path = $path;
     }
 
     /**
-     * Register all modules on path.
-     *
-     * @return void
-     */
-    public function registerAll()
-    {
-        foreach ($this->path as $path) {
-            $themes = $this->createFinder()->in($path)->directories()->depth(0);
-
-            
-            foreach ($themes as $theme) {
-                $config = json_decode(file_get_contents($theme.'/theme.json'), true);
-
-                $this->register($theme->getFilename(), $config);
-            }
-        }
-    }
-
-    /**
-     * Register a theme.
-     ** @return void
-     */
-    public function register($name, $config)
-    {
-        $this->themes[$name] = $config;
-    }
-
-    /**
-     * Get or set current theme;
+     * Get or set current theme.
      *
      * @param string $thame theme name
      */
@@ -58,34 +31,42 @@ class ThemeManager
     }
 
     /**
-     * Create finder to finds themes
-     *
-     * @return Symfony\Component\Finder\Finder;
-     */
-    private function createFinder()
-    {
-        return new Finder;
-    }
-
-    /**
-     * Get all registered themes.
+     * Get all installed themes.
      *
      * @return array
      */
     public function all()
     {
+        if($this->themes) {
+            return $this->themes;
+        }
+
+        foreach ($this->path as $path) {
+            $themes = new \FilesystemIterator($path);
+            
+            foreach ($themes as $theme) {
+                if($theme->isDir()
+                    and is_file($file = $theme->getRealpath().'/theme.json')) {
+                    $config = json_decode(file_get_contents($file), true);
+                    $this->themes[$theme->getFilename()] = $config;
+                }
+            }
+        }
+
         return $this->themes;
     }
 
     /**
-     * Get a theme config;
+     * Get a theme config.
      *
      * @param  string $name
      * @return array
      */
     public function get($theme = null)
     {
+        $this->themes = $this->all();
         $theme = is_null($theme) ? $this->current : $theme;
+
         return isset($this->themes[$theme]) ? $this->themes[$theme] : false;
     }
 }

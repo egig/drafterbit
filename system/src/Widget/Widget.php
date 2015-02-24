@@ -1,12 +1,15 @@
 <?php namespace Drafterbit\System\Widget;
 
-use Drafterbit\Framework\RootTrait;
-use Drafterbit\Framework\ExtensionTrait;
 use Drafterbit\Framework\Controller;
 
 abstract class Widget extends Controller implements WidgetInterface
 {
-    use RootTrait, ExtensionTrait;
+    /**
+     * Namespace origin is helper for namespaceparser
+     *
+     * @var string
+     */
+    protected $namespaceOrigin = 'Widgets';
 
     /**
      * Widget UI Builder.
@@ -16,25 +19,28 @@ abstract class Widget extends Controller implements WidgetInterface
     protected $uiBuilder;
 
     /**
-     * Widget config.
-     *
-     * @var array
-     */
-    protected $config = array();
-
-    /**
      * Widget data.
      *
      * @var array
      */
-    public $data = array();
+    protected $context = [];
     
     /**
      * Run the widget.
      *
      * @return string
      */
-    abstract function run();
+    abstract function run($context = null);
+
+    /**
+     * Get Namespace.
+     *
+     * @return string $key
+     */
+    public function getNamespace()
+    {
+        return (new \ReflectionObject($this))->getNamespaceName();
+    }
 
     /**
      * Widget construction.
@@ -47,27 +53,13 @@ abstract class Widget extends Controller implements WidgetInterface
     }
 
     /**
-     * Get or set config value.
+     * Get contecxt type, mostly declared on each widget
      *
-     * @param string $name
-     * @param mixed  $value
+     * @return array
      */
-    public function config($name = null, $value = null)
+    public function getContextTypes()
     {
-        // if no arg passed, just return the config
-        if (is_null($name) and is_null($value)) {
-            return $this->config;
-        }
-
-        if (is_array($name)) {
-            return $this->config = $name;
-        }
-
-        if (is_null($value)) {
-            return isset($this->config[$name]) ? $this->config[$name] : false;
-        }
-
-        return $this->config[$name] = $value;
+        return [];
     }
 
     /**
@@ -76,18 +68,32 @@ abstract class Widget extends Controller implements WidgetInterface
      * @param array $data
      * @return void
      */
-    public function setData($data)
+    public function setContext($context)
     {
-        $this->data = $data;
+        $this->context = $context;
     }
 
     /**
-     * Return user interface of the widget.
+     * Get Context
      *
-     * @return string
+     * @return mixed
      */
-    public function ui()
+    public function getContext($id = null)
     {
-        return $this->uiBuider->build($this);
+        if($id) {
+            return isset($this->context[$id]) ? $this->context[$id]  : null;
+        }
+
+        return $this->context;
+    }
+
+    /**
+     * Determine if widget has a context
+     *
+     * @return boolean
+     */
+    public function hasContext($id)
+    {
+        return isset($this->context[$id]);
     }
 }

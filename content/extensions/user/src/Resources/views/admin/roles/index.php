@@ -10,6 +10,18 @@
 </button>
 <?php $this->end(); ?>
 
-<?php echo $rolesTable; ?>
+<?php $this->start('table'); ?>
+	<table class="table table-hover table-condensed" id="<?php echo $id ?>-data-table">
+	    <thead>
+	        <tr>
+	            <th class="sorting" width="15">
+	                <input id="<?php echo $id ?>-checkall" type="checkbox">
+	            </th>
+	            <th width="30%"><?php echo __('Role') ?></th>
+	            <th width="70%"><?php echo __('Description') ?></th>
+	        </tr>
+	    </thead>
+	</table>
+<?php $this->end(); ?>
 
 <?php $this->js('@user/js/roles/index.js'); 

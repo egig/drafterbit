@@ -10,7 +10,7 @@ class ExtensionManager
     protected $loaded;
     protected $loader;
     protected $enabled;
-    protected $installed = array();
+    protected $installed = [];
     protected $extensionsPath;
     protected $defaultNS = 'Drafterbit\\Extensions\\';
 
@@ -22,7 +22,7 @@ class ExtensionManager
      * @param  array                            $extensionsPath
      * @return void
      */
-    public function __construct(Kernel $app, ClassLoader $loader, $extensionsPath = array())
+    public function __construct(Kernel $app, ClassLoader $loader, $extensionsPath = [])
     {
         $this->app = $app;
         $this->loader = $loader;
@@ -45,7 +45,7 @@ class ExtensionManager
                         throw new \Exception("Extension name collision: $name");
                     }
 
-                    $config = array();
+                    $config = [];
 
                     if (file_exists($file.'/config.php')) {
                         $config = include $file.'/config.php';
@@ -67,7 +67,7 @@ class ExtensionManager
      */
     public function refreshInstalled()
     {
-        $this->installed = array();
+        $this->installed = [];
     }
 
     /**
@@ -142,11 +142,6 @@ class ExtensionManager
         // register permissions
         if (method_exists($instance, 'getPermissions')) {
             $this->app->addPermission($extension, $instance->getPermissions());
-        }
-
-        // widget path
-        if (is_dir($instance->getResourcesPath('widgets'))) {
-            $this->app['widget']->addPath($instance->getResourcesPath('widgets'));
         }
 
         return $this->loaded[$extension] = $instance;

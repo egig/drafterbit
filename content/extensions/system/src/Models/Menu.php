@@ -7,7 +7,7 @@ class Menu
     public $href = '#';
     public $id;
     public $class;
-    public $children = array();
+    public $children = [];
 
     public function __construct($label, $href, $id, $class)
     {

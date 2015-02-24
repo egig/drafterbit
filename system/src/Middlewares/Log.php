@@ -107,7 +107,7 @@ class Log implements HttpKernelInterface
 
     private function createLogMessageContext($context)
     {
-        $newArray = array();
+        $newArray = [];
         foreach ($context as $key => $value) {
             if (is_string($value)) {
                 $newArray['%'.$key.'%'] = $value;

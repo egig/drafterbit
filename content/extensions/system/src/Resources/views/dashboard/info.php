@@ -5,7 +5,7 @@
     <div class="panel-body row">
         <?php foreach ($stat as $k => $v) : ?>
         <div class="col-md-6">
-            <div><strong><?php echo $k; ?> : </strong> <?php echo $v; ?></div>
+            <div><strong><?php echo __($k); ?> : </strong> <?php echo $v; ?></div>
         </div>
         <?php endforeach; ?>
     </div>

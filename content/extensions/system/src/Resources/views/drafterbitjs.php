@@ -20,7 +20,8 @@
     baseUrl: "<?php echo base_url() ?>",
     adminUrl: "<?php echo admin_url() ?>",
     contentUrl: "<?php echo base_url(app('dir.content')) ?>",
-    csrfToken: "<?php echo csrf_token() ?>",
+    language: "<?php echo $language; ?>",
+    theme: "<?php echo $theme; ?>",
 
     permissions: {
       files: {
@@ -29,6 +30,13 @@
         move: "<?php echo has_permission('files.move') ?>"
       }
     },
+
+   //useImg
+   useImg: function(fallback, url) {
+      console.log(url);
+      $('#'+fallback).attr('src', url);
+      $('#input-'+fallback).val(url);
+   },
 
     //replace datatable search box;
     replaceDTSearch: function(dt) {
@@ -47,27 +55,6 @@
         var val = $(this).val();
         dt.api().search($(this).val()).draw();
         
-      });
-    },
-
-    initAjaxForm: function(){
-      $('form.ajax-form').ajaxForm({
-        dataType: 'json',
-        success: function(response){
-          
-          if(response.error) {
-            if(response.error.type == 'validation') {
-              var messages =response.error.messages
-
-              for(k in messages) {
-                var ctn = $(':input[name="'+k+'"]').closest('.form-group');
-                ctn.addClass('has-error');
-                ctn.append('<span class="help-block">'+messages[k]+'</span>');
-              }
-            }
-          }
-
-        }
       });
     },
 

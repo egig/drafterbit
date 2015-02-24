@@ -6,7 +6,7 @@
     margin-left: 0px;
 }*/
 
-/** DONT'T LIKE BORDER RADIUS **/
+/* remove border radius */
 code,
 .form-control,
 .input-lg,
@@ -121,4 +121,14 @@ code,
     margin-left: 10px;
     padding: 5px;
     border:none;
+}
+
+.panel {
+  box-shadow: none;
+}
+
+.panel-default > .panel-heading {
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+  color: inherit;
 }

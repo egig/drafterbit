@@ -4,7 +4,7 @@ class Tag extends \Drafterbit\Framework\Model
 {
     public function all()
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
         return
         $queryBuilder
             ->select('*')
@@ -14,7 +14,7 @@ class Tag extends \Drafterbit\Framework\Model
 
     public function getBy($key, $value = null, $singleRequested = false)
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
         $stmt = $queryBuilder->select('*')->from('#_tags', 't');
 
         if (is_array($key)) {
@@ -57,7 +57,7 @@ class Tag extends \Drafterbit\Framework\Model
 
     public function getIdBy($field, $value)
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
 
         $tag = $queryBuilder
             ->select('*')
@@ -73,9 +73,9 @@ class Tag extends \Drafterbit\Framework\Model
         $data['label'] = $tag;
         $data['slug'] = slug($tag);
 
-        $this->get('db')->insert('#_tags', $data);
+        $this['db']->insert('#_tags', $data);
 
-        return $this->get('db')->lastInsertId();
+        return $this['db']->lastInsertId();
     }
 
     public function getPosts($id)

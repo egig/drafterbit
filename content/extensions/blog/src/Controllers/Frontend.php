@@ -7,7 +7,7 @@ class Frontend extends FrontendController
 {
     public function index()
     {
-        $page = $this->get('input')->get('p') or $page = 1;
+        $page = $this['input']->get('p', 1);
 
         $posts = $this->getFormattedPostList($page);
 
@@ -20,9 +20,9 @@ class Frontend extends FrontendController
 
     public function view($yyyy = null, $mm = null, $slug = null)
     {
-        $post = $this->model('@blog\Post')->getSingleBy('slug', $slug) or show_404();
+        $post = $this->model('@blog\Post')->getOneBy('slug', $slug) or show_404();
 
-        $post['date'] = $this->get('time')->parse($post['created_at'])->format('d F Y');
+        $post['date'] = $this['time']->parse($post['created_at'])->format('d F Y');
 
         $post['tags'] = $this->model('@blog\Tag')->getByPost($post['id']);
 
@@ -32,7 +32,7 @@ class Frontend extends FrontendController
 
     public function tag($slug)
     {
-        $page = $this->get('input')->get('p') or $page = 1;
+        $page = $this['input']->get('p', 1);
         $filter = ['tag' => $slug];
 
         $posts = $this->getFormattedPostList($page, $filter);
@@ -48,7 +48,7 @@ class Frontend extends FrontendController
 
     public function author($username)
     {
-        $page = $this->get('input')->get('p') or $page = 1;
+        $page = $this['input']->get('p', 1);
         $filter = ['username' => $username];
 
         $user = $this->model('@user\User')->getByUserName($username) or show_404();
@@ -64,23 +64,49 @@ class Frontend extends FrontendController
 
     public function feed()
     {
-        $page = $this->get('input')->get('p') or $page = 1;
+        $system = $this->model('@system\System');
+        $post = $this->model('@blog\Post');
+        
+        $data['siteName'] = $system->get('site.name');
+        $data['siteDesc'] = $system->get('site.description');
 
-        $system = $this->model('@system\System')->all();
-        $data = array(
-            'siteName' =>  $system['site.name'],
-            'siteDesc' => $system['site.description']
-        );
+        $shows = $system->get('feed.shows', 10);
 
-        $posts = $this->getFormattedPostList($page);
+        $data['posts'] = $this->formatFeeds($post->take($shows, 0));
 
-        $data['posts'] = $posts;
-
-        $content =  $this->get('template')->render('@blog/feed', $data);
+        $content =  $this['template']->render('@blog/feed', $data);
 
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/xml');
         return $response;
+    }
+
+    private function formatFeeds($posts)
+    {
+        foreach ($posts as &$post) {
+            $date = date('Y/m', strtotime($post['created_at']));
+
+            $post['date'] = $this['time']->parse($post['updated_at'])->format('d F Y H:i:s');
+
+            $post['url'] = blog_url($date.'/'.$post['slug']);
+
+            
+            if (strpos($post['content'], '<!--more-->') !== false) {
+                $post['content'] = str_replace('<!--more-->', '', $post['content']);
+            }
+
+            $feedsContent = $this->model('@system\System')->get('feed.content', 1);
+
+            $text = $post['content'];
+
+            if($feedsContent == 2) {
+                $post['feed_content'] = substr($text, 0, 250).( strlen($text) > 250 ? '&hellip;' : '');
+            } else {
+                $post['feed_content'] = $text;
+            }
+        }
+
+        return $posts;
     }
 
     private function format($posts)
@@ -88,7 +114,7 @@ class Frontend extends FrontendController
         foreach ($posts as &$post) {
             $date = date('Y/m', strtotime($post['created_at']));
 
-            $post['date'] = $this->get('time')->parse($post['created_at'])->format('d F Y');
+            $post['date'] = $this['time']->parse($post['created_at'])->format('d F Y');
 
             $post['url'] = blog_url($date.'/'.$post['slug']);
 
@@ -104,28 +130,28 @@ class Frontend extends FrontendController
         return $posts;
     }
 
-    private function getPostList($page, $filter = array())
+    private function getPostList($page, $filter = [])
     {
-        $perPage = $this->model('@system\System')->fetch('post.per_page') ?: 5;
+        $perPage = $this->model('@system\System')->get('post.per_page', 5);
         
         $offset = ($page*$perPage)-$perPage;
 
         return $this->model('@blog\Post')->take($perPage, $offset, $filter);
     }
 
-    private function getFormattedPostList($page, $filter = array())
+    private function getFormattedPostList($page, $filter = [])
     {
         $posts = $this->getPostList($page, $filter);
 
         return $this->format($posts);
     }
 
-    private function hasNextPage($page, $filter = array())
+    private function hasNextPage($page, $filter = [])
     {
         return (boolean) count($this->getPostList($page+1, $filter));
     }
 
-    private function getNav($page, $filter = array())
+    private function getNav($page, $filter = [])
     {
         $data['prev_link'] = false;
         $data['next_link'] = false;

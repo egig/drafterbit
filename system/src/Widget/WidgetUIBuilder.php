@@ -10,13 +10,13 @@ class WidgetUIBuilder
      */
     public function build(Widget $widget)
     {
-        $title         = isset($widget->data['title']) ? $widget->data['title'] : null;
-        $id         = isset($widget->data['id']) ? $widget->data['id'] : null;
-        $name         = isset($widget->data['name']) ? $widget->data['name'] : $widget->getName();
-        $position     = isset($widget->data['position']) ? $widget->data['position'] : null;
-        $theme         = isset($widget->data['theme']) ? $widget->data['theme'] : null;
+        $id            =  $widget->getContext('id');
+        $title         =  $widget->getContext('title');
+        $name          =  $widget->getName();
+        $position      =  $widget->getContext('position');
+        $theme         =  $widget->getContext('theme');
         
-        $html  = form_open(admin_url('setting/themes/widget/save'), array('class' => 'widget-edit-form'));
+        $html  = form_open(admin_url('setting/themes/widget/save'), ['class' => 'widget-edit-form']);
 
         $html .= '<div class="form-group">'.$this->text('Title', 'title', $title).'</div>';
         $html .= $this->hidden('id', $id);
@@ -24,22 +24,26 @@ class WidgetUIBuilder
         $html .= $this->hidden('position', $position);
         $html .= $this->hidden('theme', $theme);
 
-        $param = $widget->config('input') ? $widget->config('input') : array();
-        
-        foreach ($param as $name => $config) {
+        $param = $widget->getContextTypes();
+
+        if(!is_array($param)) {
+            throw new \Exception(get_class($widget).'::getContextTypes must return an array');
+        }
+
+        foreach ($param as $config) {
             $html .= '<div class="form-group">';
 
-            $name = $name;
+            $name = $config['name'];
             $type = $config['type'];
 
-            if (isset($widget->data[$name])) {
-                $default = $widget->data[$name];
+            if ($widget->hasContext($name)) {
+                $default = $widget->getContext($name);
 
             } else {
                 $default = isset($config['default']) ? $config['default'] : null;
             }
 
-            $options = isset($config['options']) ? $config['options'] : array();
+            $options = isset($config['options']) ? $config['options'] : [];
 
             if (!method_exists($this, $type)) {
                 throw new \RuntimeException("Type $type is not supported by Widget UI Builder");

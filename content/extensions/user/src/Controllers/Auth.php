@@ -8,9 +8,10 @@ class Auth extends Controller
 
     public function login()
     {
-        $data = array();
-        $this->get('helper')->load('form');
-
+        $data = [];
+        $this['helper']->load('form');
+        $data['next'] = $this['input']->get('next');
+        $data['siteName'] = $this->model('@system\System')->get('site.name');
         return $this->render('@user/auth/login', $data);
     }
 
@@ -18,17 +19,17 @@ class Auth extends Controller
     {
         $redirectAfterLogin = admin_url();
 
-        if ($next = $this->get('input')->get('next')) {
+        if ($next = $this['input']->post('next')) {
             $redirectAfterLogin = urldecode($next);
         }
 
         try {
-            $post = $this->get('input')->post();
+            $post = $this['input']->post();
 
             $this->model('@user\Auth')->doLogin($post['login'], $post['password']);
 
-            $userId = $this->get('session')->get('user.id');
-            $userName = $this->get('session')->get('user.name');
+            $userId = $this['session']->get('user.id');
+            $userName = $this['session']->get('user.name');
 
             $url = admin_url("user/edit/$userId");
 
@@ -43,14 +44,14 @@ class Auth extends Controller
 
     public function logout()
     {
-        $session = $this->get('session');
+        $session = $this['session'];
         $userId = $session->get('user.id');
         $userName = $session->get('user.name');
         
         $session->clear();
         $session->invalidate();
 
-        $cookies = $this->get('input')->cookies();
+        $cookies = $this['input']->cookies();
         
         $response = new RedirectResponse(admin_url('login?logged_out=1'));
         foreach ($cookies as $key => $value) {

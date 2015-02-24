@@ -2,14 +2,13 @@
     
     var dt = $("#log-data-table").dataTable(
         {
-            "oLanguage": {
-                "sLengthMenu": "Showing _MENU_ records per page",
-                "sSearch": "Search: _INPUT_",
+            ajax: {
+                url: drafTerbit.adminUrl+'/system/log-data.json'
             },
-            "columnDefs": [
-                    {'orderable': false, 'searchable':false, 'targets':[0]}
-                ]
-            }
+            columnDefs: [
+                {orderable: false, searchabl:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="log[]" value="'+d+'">' } }
+            ]
+        }
     );
 
     drafTerbit.replaceDTSearch(dt);

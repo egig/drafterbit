@@ -10,10 +10,10 @@ class User extends BackendController
 
     public function index()
     {
-        $userIds = $this->get('input')->post('users');
+        $userIds = $this['input']->post('users');
 
         if ($userIds) {
-            $action = $this->get('input')->post('action');
+            $action = $this['input']->post('action');
 
             switch($action) {
                 case "Delete":
@@ -27,17 +27,8 @@ class User extends BackendController
             }
         }
 
-        $users = $this->model('@user\User')->all(['status' => 'all']);
-
-        foreach ($users as &$user) {
-            $user = $user;
-            $user['roles'] = $this->model('@user\Role')->getByUser($user['id']);
-        }
-
-        $data['users'] = $users;
         $data['id'] ='users';
         $data['title'] = __('Users');
-        $data['usersTable'] = $this->dataTable('users', $this->_table(), $users);
         $data['action'] = admin_url('user/index-action');
 
         return $this->render('@user/admin/index', $data);
@@ -45,7 +36,7 @@ class User extends BackendController
 
     public function indexAction()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
 
         $userIds = $post['users'];
 
@@ -58,35 +49,20 @@ class User extends BackendController
         }
     }
 
-    private function _table()
-    {
-        $editUrl = admin_url('user/edit');
-
-        return array(
-            ['field' => 'real_name', 'label' => 'Name', 'format' => function($value, $item) use ($editUrl) {
-                    return "<a href='$editUrl/{$item['id']}'>$value</a>";
-            }],
-            ['field' => 'email', 'label' => 'Email'],
-            ['field' => 'status', 'label' => 'Status', 'format' => function($value, $item) {
-                    return $value == 1 ? __('active') : __('banned');
-            }],
-        );
-    }
-
     public function filter($status)
     {
         $users = $this->model('@user\User')->all(['status' => $status]);
         
         $editUrl = admin_url('user/edit');
 
-        $usersArr  = array();
+        $usersArr  = [];
 
         foreach ($users as $user) {
-            $data = array();
-            $data[] = '<input type="checkbox" name="users[]" value="'.$user->id.'">';
-            $data[] = "<a class='user-edit-link' href='$editUrl/{$user->id}'> {$user->real_name}</a>";
-            $data[] = $user->email;
-            $data[] = $user->status == 1 ? 'active' : 'banned';
+            $data = [];
+            $data[] = $user['id'];
+            $data[] = $user['real_name'];
+            $data[] = $user['email'];
+            $data[] = $user['status'] == 1 ? 'active' : 'banned';
 
             $usersArr[] = $data;
         }
@@ -102,7 +78,7 @@ class User extends BackendController
     public function save()
     {
         try {
-            $postData = $this->get('input')->post();
+            $postData = $this['input']->post();
 
             $this->validate('user', $postData);
             
@@ -137,22 +113,22 @@ class User extends BackendController
     public function edit($id = null)
     {
         if ($id == 'new') {
-            $data = array(
+            $data = [
                 'username' => null,
                 'realName' => null,
                 'email' => null,
                 'url' => null,
                 'bio' => null,
-                'roleIds' => array(),
+                'roleIds' => [],
                 'status' => null,
                 'userId' => null,
                 'title' => __('New User')
-            );
+            ];
         } else {
-            $user = (object) $this->model('@user\User')->getSingleBy('id', $id);
+            $user = (object) $this->model('@user\User')->getSingleBy('u.id', $id);
             $user->roleIds = $this->model('@user\User')->getRoleIds($user->id);
 
-            $data = array(
+            $data = [
                 'username' => $user->username,
                 'realName' => $user->real_name,
                 'email' => $user->email,
@@ -162,7 +138,7 @@ class User extends BackendController
                 'status' => $user->status,
                 'userId' => $user->id,
                 'title' => __('Edit User')
-            );
+            ];
         }
 
         $roles = $this->model('@user\Role')->all();
@@ -185,7 +161,7 @@ class User extends BackendController
 
     protected function createInsertData($post, $update = false)
     {
-        $data = array();
+        $data = [];
         $data['email'] = $post['email'];
         $data['username'] = $post['username'];
         

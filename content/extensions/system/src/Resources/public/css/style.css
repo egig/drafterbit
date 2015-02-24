@@ -4,7 +4,6 @@
 body {
     background-color: #fff;
     font-family: Arial, Helvetica, "Sans Serif" ;
-    overflow-y: scroll;
 }
 
 /* Main Layout */
@@ -17,10 +16,8 @@ body {
 
 .page-wrapper {
     padding: 0 15px;
-    min-height: 500px;
     background-color: #fff;
     margin-top: 30px;
-    margin-bottom: 50px;
 }
 
 .content {
@@ -147,6 +144,9 @@ body {
 /* ------------------------------- */
 
 .footer {
+    background: #ffffff;
+    border-top:1px solid #e1e1e1;
+    color: #777;
     font-size: 0.9em;
 }
 

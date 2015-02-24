@@ -20,16 +20,16 @@ if (! function_exists('comment')) {
         $js = app('asset')->add('js', '@blog/js/comment/front-snippet.js')->dump('js');
         $js = '<script>'.$js.'</script>';
 
-        $form = app('twig')->render('blog/comment/form.html', array('parent_id' => 0, 'post_id' => $id));
+        $form = app('twig')->render('blog/comment/form.html', ['parent_id' => 0, 'post_id' => $id]);
 
         return $content.$form.$js;
     }
 
     function _render($comments, $post_id)
     {
-        $content = '';
+        $content = '<ol>';
         foreach ($comments as $comment) {
-            $comment['childs'] = _render($comment['childs'], $post_id, $comment['id']);
+            $comment['childs'] = _render($comment['childs'], $post_id);
             
             $data['parent_id'] = $comment['id'];
             $data['post_id'] = $post_id;
@@ -37,10 +37,10 @@ if (! function_exists('comment')) {
             $comment['form'] = app('twig')->render('blog/comment/form.html', $data);
 
             $data['comment'] = $comment;
-            $content .= app('twig')->render('blog/comment/index.html', $data);
+            $content .= '<li>'.app('twig')->render('blog/comment/index.html', $data).'</li>';
         }
 
-        return $content;
+        return $content.'</ol>';
     }
 }
 

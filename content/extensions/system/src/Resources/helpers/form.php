@@ -13,7 +13,7 @@ if (! function_exists('form_open')) {
  * @return string
  */
 
-    function form_open($action = '', $attributes = '', $hidden = array())
+    function form_open($action = '', $attributes = '', $hidden = [])
     {
         if ($attributes == '') {
             $attributes = 'method="post"';
@@ -85,7 +85,7 @@ if (! function_exists('input_text')) {
 
     function input_text($data = '', $value = '', $extra = '')
     {
-        $defaults = array('type' => 'text', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
+        $defaults = ['type' => 'text', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value];
 
         return "<input "._parse_attributes($data, $defaults).$extra." />";
     }
@@ -108,7 +108,7 @@ if (! function_exists('input_password')) {
     function input_password($data = '', $value = '', $extra = '')
     {
         if (! is_array($data)) {
-            $data = array('name' => $data);
+            $data = ['name' => $data];
         }
 
         $data['type'] = 'password';
@@ -132,7 +132,7 @@ if (! function_exists('input_file')) {
     function input_file($data = '', $value = '', $extra = '')
     {
         if (! is_array($data)) {
-            $data = array('name' => $data);
+            $data = ['name' => $data];
         }
 
         $data['type'] = 'file';
@@ -153,7 +153,7 @@ if (! function_exists('input_textarea')) {
 
     function input_textarea($data = '', $value = '', $extra = '')
     {
-        $defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'cols' => '40', 'rows' => '10');
+        $defaults = ['name' => (( ! is_array($data)) ? $data : ''), 'cols' => '40', 'rows' => '10'];
 
         if (! is_array($data) or ! isset($data['value'])) {
             $val = $value;
@@ -181,7 +181,7 @@ if (! function_exists('input_multiselect')) {
  * @param  string
  * @return type
  */
-    function input_multiselect($name = '', $options = array(), $selected = array(), $extra = '')
+    function input_multiselect($name = '', $options = [], $selected = [], $extra = '')
     {
         if (! strpos($extra, 'multiple')) {
             $extra .= ' multiple="multiple"';
@@ -204,10 +204,10 @@ if (! function_exists('input_select')) {
  * @return string
  */
 
-    function input_select($name = '', $options = array(), $selected = array(), $extra = '')
+    function input_select($name = '', $options = [], $selected = [], $extra = '')
     {
         if (! is_array($selected)) {
-            $selected = array($selected);
+            $selected = [$selected];
         }
 
         if ($extra != '') {
@@ -258,7 +258,7 @@ if (! function_exists('input_checkbox')) {
 
     function input_checkbox($data = '', $value = '', $checked = false, $extra = '')
     {
-        $defaults = array('type' => 'checkbox', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
+        $defaults = ['type' => 'checkbox', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value];
 
         if (is_array($data) and array_key_exists('checked', $data)) {
             $checked = $data['checked'];
@@ -295,7 +295,7 @@ if (! function_exists('input_radio')) {
     function input_radio($data = '', $value = '', $checked = false, $extra = '')
     {
         if (! is_array($data)) {
-            $data = array('name' => $data);
+            $data = ['name' => $data];
         }
 
         $data['type'] = 'radio';
@@ -316,7 +316,7 @@ if (! function_exists('input_submit')) {
 
     function input_submit($data = '', $value = '', $extra = '')
     {
-        $defaults = array('type' => 'submit', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
+        $defaults = ['type' => 'submit', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value];
 
         return "<input "._parse_attributes($data, $defaults).$extra." />";
     }
@@ -334,7 +334,7 @@ if (! function_exists('input_reset')) {
  */
     function input_reset($data = '', $value = '', $extra = '')
     {
-        $defaults = array('type' => 'reset', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
+        $defaults = ['type' => 'reset', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value];
 
         return "<input "._parse_attributes($data, $defaults).$extra." />";
     }
@@ -352,7 +352,7 @@ if (! function_exists('input_button')) {
  */
     function input_button($data = '', $content = '', $extra = '')
     {
-        $defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'type' => 'button');
+        $defaults = ['name' => (( ! is_array($data)) ? $data : ''), 'type' => 'button'];
 
         if (is_array($data) and isset($data['content'])) {
             $content = $data['content'];
@@ -376,7 +376,7 @@ if (! function_exists('label')) {
  * @return string
  */
 
-    function label($label_text = '', $id = '', $attributes = array())
+    function label($label_text = '', $id = '', $attributes = [])
     {
 
         $label = '<label';
@@ -410,7 +410,7 @@ if (! function_exists('fieldset_open')) {
  * @return string
  */
 
-    function fieldset_open($legend_text = '', $attributes = array())
+    function fieldset_open($legend_text = '', $attributes = [])
     {
         $fieldset = "<fieldset";
 
@@ -467,7 +467,7 @@ if (! function_exists('_prepare_value')) {
 
     function _prepare_value($str = '', $field_name = '')
     {
-        static $prepped_fields = array();
+        static $prepped_fields = [];
 
         // if the field name is an array we do this recursively
         if (is_array($str)) {
@@ -489,7 +489,7 @@ if (! function_exists('_prepare_value')) {
         $str = htmlspecialchars($str);
 
         // In case htmlspecialchars misses these.
-        $str = str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);
+        $str = str_replace(["'", '"'], ["&#39;", "&quot;"], $str);
 
         if ($field_name != '') {
             $prepped_fields[$field_name] = $field_name;

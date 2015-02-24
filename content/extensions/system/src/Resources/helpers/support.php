@@ -38,7 +38,7 @@ if (! function_exists('wysiwyg')) {
 CKEDITOR.replace('$name', {
 
     customConfig : '$path/ckeditor-custom/config.js',
-    skin: 'bootstrap,$path/ckeditor-custom/skins/bootstrap/',
+    skin: 'bootstrap, $path/ckeditor-custom/skins/bootstrap/',
 
     filebrowserWindowWidth  : 860,
     filebrowserWindowHeight : 453,
@@ -47,6 +47,18 @@ CKEDITOR.replace('$name', {
 
 CKEDITOR.plugins.addExternal( 'wpmore', '$wpmore');
 CKEDITOR.config.extraPlugins = 'wpmore';
+
+
+// handle footer position
+CKEDITOR.on("instanceReady", function(event)
+{
+    var h = $('.page-wrapper').height();
+    var hW = $(window).innerHeight();
+
+    if(h+30 > hW) {
+        $('.footer').removeClass('navbar-fixed-bottom');
+    }
+});
 
 </script>
 

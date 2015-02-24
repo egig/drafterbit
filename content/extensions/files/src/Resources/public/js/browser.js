@@ -8,16 +8,27 @@
      
         return (match && match.length > 1) ? match[1] : '' ;
     }
-    var funcNum = getUrlParam('CKEditorFuncNum');
+    var CKEditorFuncNum = getUrlParam('CKEditorFuncNum');
 
-    var ckeditorCallback;
-    if (funcNum != '') {
-        ckeditorCallback = function(e){
+    var aCallback;
+    if (CKEditorFuncNum != '') {
+        aCallback = function(e){
             e.preventDefault();
             url = $(e.currentTarget).attr('href');
             console.log(e.currentTarget);
             // @todo create content path
-            window.opener.CKEDITOR.tools.callFunction(funcNum, drafTerbit.contentUrl+'/files/'+url);
+            window.opener.CKEDITOR.tools.callFunction(CKEditorFuncNum, drafTerbit.contentUrl+'/files/'+url);
+            window.close();
+        }
+    }
+
+    var DTCustomizer = getUrlParam('DTCustomizer');
+    var fallback = getUrlParam('fallback');
+
+    if(DTCustomizer) {
+        aCallback = function(a) {
+            var href = $(a.target).parent('a').attr('href');
+            window.opener.drafTerbit.useImg(fallback, drafTerbit.contentUrl+'/files/'+href);
             window.close();
         }
     }
@@ -25,7 +36,7 @@
     $('#finder-container').finder(
         {
             url: drafTerbit.adminUrl+'/files/data',
-            onISelect: ckeditorCallback,
+            onISelect: aCallback,
             data: {
                 csrf: drafTerbit.csrfToken
             },

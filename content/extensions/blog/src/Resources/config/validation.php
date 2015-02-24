@@ -1,10 +1,10 @@
 <?php return [
 
 'blog' => [
-    'title'    => array('label' => 'Title',     'rules' => array('not-empty') ),
-    'content'  => array('label' => 'Content',     'rules' => array('optional') ),
-    'slug'     => array('label' => 'Slug',     'rules' => array('not-empty', 'alpha-dash') ),
-    'tags'     => array('label' => 'Tags',     'rules' => array('optional') )
+    'title'    => ['label' => 'Title',     'rules' => ['not-empty'] ],
+    'content'  => ['label' => 'Content',     'rules' => ['optional'] ],
+    'slug'     => ['label' => 'Slug',     'rules' => ['not-empty', 'alpha-dash'] ],
+    'tags'     => ['label' => 'Tags',     'rules' => ['optional'] ]
 ],
 
 'comment' => [

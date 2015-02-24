@@ -8,16 +8,15 @@ use FtpClient\FtpClient;
 
 class System extends BackendController
 {
-
     public function dashboard()
     {
         $data['title'] = __('Dashboard');
 
-        $dashboardWidgets = $this->get('app')->dashboardWidgets();
+        $dashboardWidgets = $this['app']->dashboardWidgets();
 
-        $dashboard = $this->model('@system\System')->fetch('dashboard');
+        $dashboard = $this->model('@system\System')->get('dashboard');
 
-        $left = $right = array();
+        $left = $right = [];
 
         foreach (json_decode($dashboard, true) as $d) {
             if ($d['position'] == 1) {
@@ -34,12 +33,12 @@ class System extends BackendController
     }
 
     public function sortDashboard() {
-        $dashboardWidgets = $this->get('app')->dashboardWidgets();
+        $dashboardWidgets = $this['app']->dashboardWidgets();
         
         $widgets = array_keys($dashboardWidgets);
 
-        $order = $this->get('input')->post('order');
-        $pos = $this->get('input')->post('pos');
+        $order = $this['input']->post('order');
+        $pos = $this['input']->post('pos');
 
         $order = explode(',', $order);
 
@@ -51,7 +50,7 @@ class System extends BackendController
         $pos = ($pos == 'left') ? 1 : 2;
         $diffPos = ($pos == 1) ? 2 : 1;
 
-        $data = array();
+        $data = [];
         foreach ($order as $id) {
             $data[] = ['id' => $id, 'position' => $pos, 'display' => 1];
         }
@@ -65,8 +64,8 @@ class System extends BackendController
 
     public function log()
     {
-        $action = $this->get('input')->post('action');
-        $logIds = $this->get('input')->post('log');
+        $action = $this['input']->post('action');
+        $logIds = $this['input']->post('log');
 
         switch($action) {
             case "delete":
@@ -75,38 +74,46 @@ class System extends BackendController
                         $this->model('@system\Log')->delete($id);
                     }
                     $msg = 'Logs deleted';
-                    $this->get('template')->addGlobal('messages', [['text' => $msg, "type" => 'success']]);
+                    $this['template']->addGlobal('messages', [['text' => $msg, "type" => 'success']]);
                 }
                 break;
             case "clear":
                 $this->model('@system\Log')->clear();
                 $msg = 'Logs cleared';
 
-                $this->get('template')->addGlobal('messages', [['text' => $msg, "type" => 'success']]);
+                $this['template']->addGlobal('messages', [['text' => $msg, "type" => 'success']]);
 
             default:
                 break;
         }
 
-
-        $logs = $this->model('@system\Log')->all();
-
         $data['title'] = __('Logs');
         $data['id'] = 'log';
 
-        $tableHead = array(
-            ['field' => 'time', 'width' => '20%', 'label' => 'Time', 'format' => function($val, $item) {
-                return date('d-m-Y H:i:s', $val);
-            }],
-            ['field' => 'message', 'label' => 'Activity', 'format' => function($val, $item){
-
-                return $this->model('@system\Dashboard')->formatLog($item['message']);
-            }]
-        );
-
-        $data['logTable'] = $this->dataTable('log', $tableHead, $logs);
-
         return $this->render('@system/log', $data);
+    }
+
+    public function logData()
+    {
+        $logs = $this->model('@system\Log')->all();
+
+        $logArr = [];
+        foreach ($logs as $log) {
+            
+            $data = [];
+            $data[] = $log['id'];
+            $data[] = date('d-m-Y H:i:s', $log['time']);
+            $data[] = $this->model('Log')->format($log['message']);
+
+            $logArr[] = $data;
+        }
+
+        $ob = new \StdClass;
+        $ob->data = $logArr;
+        $ob->recordsTotal= count($logArr);
+        $ob->recordsFiltered = count($logArr);
+
+        return $this->jsonResponse($ob);
     }
 
     public function cache()
@@ -114,7 +121,7 @@ class System extends BackendController
         
         $model = $this->model('cache');
         
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
         if (isset($post['action'])) {
             
             if($post['action'] == 'clear') {
@@ -133,23 +140,45 @@ class System extends BackendController
 
     public function drafterbitJs()
     {
+        $data['language'] = $this->model('System')->get('language');
+        $data['theme'] = $this['themes']->current();
+
+        $response  = $this->render('@system/drafterbitjs', $data);
+        $response = $this['debug'] ? $response : \JSMin::minify($response);
+
         return new Response(
-            $this->render('@system/drafterbitjs'),
+            $response,
             Response::HTTP_OK,
-            array(
-            'content-type' => 'application/javascript'
-            )
+            [
+            'Content-type' => 'application/javascript',
+            'Expires' => gmdate('D, d M Y H:i:s \G\M\T', time() + 3600*24*14)
+            ]
         );
     }
 
     public function drafterbitCss()
     {
+        $response  = $this->render('@system/drafterbitcss');
+        $response = $this['debug'] ? $response : \CssMin::minify($response);
+
         return new Response(
-            $this->render('@system/drafterbitcss'),
+            $response,
             Response::HTTP_OK,
-            array(
-            'content-type' => 'text/css'
-            )
+            [
+            'Content-Type' => 'text/css',
+            'Expires' => gmdate('D, d M Y H:i:s \G\M\T', time() + 3600*24*14)
+            ]
+        );
+    }
+
+    public function sessionjs()
+    {
+        return new Response(
+            "drafTerbit.csrfToken = '".csrf_token()."';",
+            Response::HTTP_OK,
+            [
+            'Content-Type' => 'application/javascript'
+            ]
         );
     }
 }

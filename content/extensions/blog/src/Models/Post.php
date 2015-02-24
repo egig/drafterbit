@@ -2,9 +2,9 @@
 
 class Post extends \Drafterbit\Framework\Model
 {
-    public function all($filter = array())
+    public function all($filter = [])
     {
-        $query = $this->get('db')->createQueryBuilder();
+        $query = $this['db']->createQueryBuilder();
 
         $query
             ->select('p.*, u.email as authorEmail, u.real_name as authorName, u.username')
@@ -29,11 +29,13 @@ class Post extends \Drafterbit\Framework\Model
                 }
             }
         }
+
+        $query->andWhere('p.type = "standard"');
         
         return $query->getResult();
     }
 
-    public function take($limit, $offset, $filter = array())
+    public function take($limit, $offset, $filter = [])
     {
         $query = $this->withQueryBuilder()
             ->select('p.*, u.email as authorEmail, u.real_name as authorName, u.username')
@@ -72,14 +74,14 @@ class Post extends \Drafterbit\Framework\Model
 
     public function insert($data)
     {
-        $this->get('db')->insert('#_posts', $data);
-        return $this->get('db')->lastInsertId();
+        $this['db']->insert('#_posts', $data);
+        return $this['db']->lastInsertId();
     }
 
     public function update($data, $id)
     {
         return
-        $this->get('db')->update('#_posts', $data, array('id' => $id));
+        $this['db']->update('#_posts', $data, ['id' => $id]);
     }
     /**
      * Delete post and related entities permanently
@@ -117,7 +119,7 @@ class Post extends \Drafterbit\Framework\Model
 
     public function getBy($field, $value)
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
         
         return (object)
         $queryBuilder->select('*')->from('#_posts', 'p')
@@ -128,8 +130,8 @@ class Post extends \Drafterbit\Framework\Model
     public function clearTag($id)
     {
         return
-        $this->get('db')
-            ->delete('#_posts_tags', array("post_id" => $id));
+        $this['db']
+            ->delete('#_posts_tags', ["post_id" => $id]);
     }
 
     public function addTag($tagId, $id)
@@ -137,12 +139,12 @@ class Post extends \Drafterbit\Framework\Model
         $data['post_id'] = $id;
         $data['tag_id'] = $tagId;
         return
-        $this->get('db')->insert('#_posts_tags', $data);
+        $this['db']->insert('#_posts_tags', $data);
     }
 
     public function getTags($id)
     {
-        $queryBuilder = $this->get('db')->createQueryBuilder();
+        $queryBuilder = $this['db']->createQueryBuilder();
 
         return
         $queryBuilder
@@ -153,10 +155,10 @@ class Post extends \Drafterbit\Framework\Model
             ->execute()->fetchAll();
     }
 
-    public function getSingleBy($field, $value)
+    public function getOneBy($field, $value)
     {
         return
-        $this->get('db')->createQueryBuilder()
+        $this['db']->createQueryBuilder()
             ->select('p.*, u.real_name as authorName, u.username')
             ->from('#_posts', 'p')
             ->innerJoin('p', '#_users', 'u', 'p.user_id = u.id')
@@ -225,6 +227,24 @@ class Post extends \Drafterbit\Framework\Model
             ->where('post_id=:post_id')
             ->andWhere('subscribe=1')
             ->setParameter('post_id', $postId)
+            ->getResult();
+    }
+
+    /**
+     * Get post revisions
+     *
+     * @return array
+     */
+    public function getRevisions($id)
+    {
+        return
+        $this->withQueryBuilder()
+            ->select('p.id, p.created_at as time, user_id, u.real_name as authorName, u.username')
+            ->from('#_posts', 'p')
+            ->innerJoin('p', '#_users', 'u', 'p.user_id = u.id')
+            ->where('p.type=:type')
+            ->setParameter('type', "revision:".$id)
+            ->orderBy('p.created_at', 'desc')
             ->getResult();
     }
 }

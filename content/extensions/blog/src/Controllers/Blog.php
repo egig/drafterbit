@@ -8,21 +8,17 @@ class Blog extends BackendController
     public function index()
     {
         $status = 'all';
-
-        $posts = $this->model('Post')->all(['status' => $status]);
-
         $data['id']        = 'posts';
         $data['title']     = __('Blog');
         $data['status']    = $status;
         $data['action']    = admin_url('blog/trash');
-        $data['blogTable'] = $this->dataTable('posts', $this->_table(), $posts);
 
         return $this->render('@blog/admin/index', $data);
     }
 
     public function trash()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
         $model = $this->model('Post');
 
         $postIds = $post['posts'];
@@ -47,22 +43,23 @@ class Blog extends BackendController
         
         $editUrl = admin_url('blog/edit');
 
-        $pagesArr  = array();
+        $pagesArr  = [];
 
         foreach ($posts as $post) {
-            $data = array();
-            $data[] = '<input type="checkbox" name="posts[]" value="'.$post['id'].'">';
-            $data[] = $status !== 'trashed' ? "<a class='post-edit-link' href='$editUrl/{$post['id']}'>{$post['title']}</a>" : $post['title'];
-            $data[] ='<a href="'.admin_url('blog/edit/'.$post['id']).'">'.$post['authorName'].'</a>';
+            $data = [];
+            $data['id'] = $post['id'];
+            $data['title'] = $post['title'];
+            $data['author'] = $post['authorName'];
+            $data['user_id'] = $post['user_id'];
 
             if ($status == 'trashed') {
                 $s = ucfirst($status);
             } else {
-                $s = $post['status'] == 1 ? 'Published' : 'Unpublished';
+                $s = $post['status'] == 1 ? __('Published') : __('Unpublished');
             }
 
-            $data[] = $s;
-            $data[] = $post['created_at'];
+            $data['status'] = $s;
+            $data['created_at'] = $post['created_at'];
 
             $pagesArr[] = $data;
         }
@@ -73,43 +70,6 @@ class Blog extends BackendController
         $ob->recordsFiltered = count($pagesArr);
 
         return $this->jsonResponse($ob);
-    }
-
-    private function _table()
-    {
-        $editUrl = admin_url('blog/edit');
-        $userUrl = admin_url('user/edit');
-
-        return array(
-            [
-                'field' => 'title',
-                'label' => 'Title',
-                'width' => '40%',
-                'format' => function($value, $item) use ($editUrl) {
-                    return "<a href='$editUrl/{$item['id']}'>$value</a>";
-                }],
-            [
-                'field' => 'authorName',
-                'label' => 'Author',
-                'width' => '20%',
-                'format' => function($value, $item) use ($userUrl) {
-                    return "<a href='$userUrl/{$item['user_id']}'>$value</a>";
-                }],
-            [
-                'field' => 'status',
-                'label' => 'Status',
-                'width' => '20%',
-                'format' => function($value, $item) use ($userUrl) {
-                    return $value == 1 ? 'Published' : 'Unpublished';
-                }],
-            [
-                'field' => 'created_at',
-                'label' => 'Created',
-                'width' => '20%',
-                'format' => function($value, $item){
-                    return $value;
-                }],
-        );
     }
 
     public function edit($id)
@@ -123,37 +83,44 @@ class Blog extends BackendController
         $tagOptions = rtrim($tagOptions, ',').']';
 
         if ('new' == $id) {
-            $data = array(
+            $data = [
                 'postId' => null,
                 'postTitle' => null,
                 'slug' => null,
                 'content' => null,
                 'tagOptions' => $tagOptions,
-                'tags' => array(),
+                'tags' => [],
+                'revisions' => [],
                 'status' => 1,
                 'title' => __('New Post'),
-            );
+            ];
         } else {
             $model = $this->model('Post'); 
             $post = $model->getBy('id', $id);
             $post->tags = $model->getTags($id);
-            
-            $tags = array();
+            $post->revisions = array_map(function($item) {
+                $item['time_human'] = $this['time']->parse($item['time'])->diffForHumans();
+                $item['time'] = $this['time']->parse($item['time'])->format('d F Y, @H:s');
+                return $item;
+            }, $model->getRevisions($id));
+
+            $tags = [];
             foreach ($post->tags as $tag) {
                 $tag = (object) $tag;
                 $tags [] = $tag->label;
             }
 
-            $data = array(
+            $data = [
                 'postId' => $id,
                 'postTitle' => $post->title,
                 'slug' => $post->slug,
                 'content' => $post->content,
+                'revisions' => $post->revisions,
                 'tags' => $tags,
                 'tagOptions' => $tagOptions,
                 'status' => $post->status,
                 'title' => __('Edit Post'),
-            );
+            ];
         }
 
         $data['id'] = 'post-edit';
@@ -167,13 +134,16 @@ class Blog extends BackendController
         $model = $this->model('Post');
         
         try {
-            $postData = $this->get('input')->post();
+            $postData = $this['input']->post();
 
             $this->validate('blog', $postData);
 
             $id = $postData['id'];
 
-            if ($id) {
+            if (is_numeric($id)) {
+
+                $this->createRevision($id, $postData['content']);
+
                 $data = $this->createUpdateData($postData);
                 $model->update($data, $id);
             
@@ -202,6 +172,29 @@ class Blog extends BackendController
     }
 
     /**
+     * Create a post revision
+     *
+     * @param int $id
+     */
+    private function createRevision($id, $new_content)
+    {
+        $current = $this->model('Post')->getOneBy('id', $id);
+
+        if($current['content'] == $new_content) {
+            return;
+        }
+
+        $insert_data = [
+            'content' => $current['content'],
+            'created_at' => $this['time']->now(),
+            'type' => 'revision:'.$id,
+            'user_id' => $this['session']->get('user.id')
+        ];
+
+        $this->model('Post')->insert($insert_data);
+    }
+
+    /**
      * Parse post data to insert to db
      *
      * @param  array $post
@@ -209,17 +202,17 @@ class Blog extends BackendController
      */
     protected function createInsertData($post, $isUpdate = false)
     {
-        $data = array();
+        $data = [];
         
         $data['slug']       = $post['slug'];
         $data['title']      = $post['title'];
         $data['status']     = $post['status'];
         $data['content']    = $post['content'];
-        $data['user_id']    = $this->get('session')->get('user.id');
-        $data['updated_at'] = $this->get('time')->now();
+        $data['user_id']    = $this['session']->get('user.id');
+        $data['updated_at'] = $this['time']->now();
         
         if (! $isUpdate) {
-            $data['created_at'] = $this->get('time')->now();
+            $data['created_at'] = $this['time']->now();
         }
 
         return $data;
@@ -257,17 +250,64 @@ class Blog extends BackendController
     {
         $data['title'] = __('Blog Setting');
 
-        if ($post = $this->get('input')->post()) {
-            $this->model('@system\System')->updateSetting(
-                [
-                'comment.moderation' => $post['comment_moderation'],
-                'post.per_page' => $post['post_perpage']
-                ]
-            );
+        $model = $this->model('@system\System');
+
+        if ($post = $this['input']->post()) {
+
+            $newSetting = [
+                'feed.shows'         => $post['feed_shows'],
+                'post.per_page'      => $post['post_perpage'],
+                'feed.content'       => $post['feed_content'],
+                'comment.moderation' => $post['comment_moderation']
+            ];
+
+            $model->updateSetting($newSetting);
+
+            $this['template']->addGlobal('messages', [['text' => "Setting updated", "type" => 'success']]);
         }
 
-        $data['mode'] = $this->model('@system\System')->fetch('comment.moderation');
-        $data['postPerpage'] = $this->model('@system\System')->fetch('post.per_page');
+        $data['mode']        = $model->get('comment.moderation');
+        $data['postPerpage'] = $model->get('post.per_page', 5);
+        $data['feedShows']   = $model->get('feed.shows', 10);
+        $data['feedContent'] = $model->get('feed.content', 2);
         return $this->render('@blog/admin/setting', $data);
+    }
+
+    public function revision($id)
+    {
+        $data['title'] = __('Post Revision');
+        $old_rev = $this->model('Post')->getOneBy('id', $id);
+        $old_content = $old_rev['content'];
+
+        //get newer content
+        $revs = $this['db']->createQueryBuilder()
+            ->select('*')
+            ->from('#_posts', 'p')
+            ->where('type = :type')
+            ->andWhere('created_at > :created')
+            ->setParameter('type', $old_rev['type'])
+            ->setParameter('created', $old_rev['created_at'])
+            ->orderBy('p.created_at', 'asc')
+            ->getResult();
+
+        if(count($revs) > 0) {
+            $new_rev = reset($revs);
+        } else {
+            // get curent version
+            $_tmp = explode(':', $old_rev['type']);
+            $post_id = end($_tmp);
+
+            $new_rev = $this->model('Post')->getOneBy('id', $post_id);
+        }
+        
+        $new_content = $new_rev['content'];
+
+        // @todo clean this
+        $granularity = new \cogpowered\FineDiff\Granularity\Word;
+        $renderer = new \cogpowered\FineDiff\Render\Html;
+        $data['diff'] = html_entity_decode((new \cogpowered\FineDiff\Diff($granularity, $renderer))
+            ->render($old_content, $new_content));
+
+        return $this->render('@blog/admin/revision', $data);
     }
 }

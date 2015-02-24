@@ -4,17 +4,17 @@
 
 <?php $this->start('action'); ?>
 <button class="btn btn-sm btn-success" type="submit" name="action" value="save">
-    <i class="fa fa-check spinner"></i> Save
+    <i class="fa fa-check spinner"></i> <?php echo __('Save') ?>
 </button>
 <a class="btn btn-sm btn-default" href="<?php echo admin_url('pages') ?>">
-    <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">Cancel</span>
+    <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text"><?php echo __('Cancel') ?></span>
 </a>
 <?php $this->end(); ?>
 
 <div class="row">
     <div class="col-md-9">
         <div class="form-group">
-            <input name="title" type="text" class="form-control input-lg" id="post-title" placeholder="Title" value="<?php echo value('title', $pageTitle); ?>">
+            <input name="title" type="text" class="form-control input-lg" id="post-title" placeholder="<?php echo __('Title') ?>" value="<?php echo value('title', $pageTitle); ?>">
             <input type="hidden" name="id" value="<?php echo $pageId; ?>" />
          </div>
          <div class="form-group">
@@ -28,8 +28,8 @@
         <div class="form-group">
             <label>Status</label>
             <select name="status" type="text" class="form-control" value="<?php echo value('slug', $slug); ?>">
-                <option <?php echo selected('status', 1, $status == 1) ?> value="1" >Published</option>
-                <option <?php echo selected('status', 0, $status == 0) ?> value="0" >Unpublished</option>
+                <option <?php echo selected('status', 1, $status == 1) ?> value="1" ><?php echo __('Published') ?></option>
+                <option <?php echo selected('status', 0, $status == 0) ?> value="0" ><?php echo __('Unpublished') ?></option>
             </select>
          </div>
          <div class="form-group">

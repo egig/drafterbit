@@ -11,9 +11,9 @@ class ExtensionServiceProvider implements ServiceProviderInterface
     {
         $app['extension.manager'] = function($c) {
 
-            $modulesPath = array(
+            $modulesPath = [
                 $c['path.extensions'],
-            );
+            ];
             return new ExtensionManager($c, $c['loader'], $modulesPath);
         };
     }

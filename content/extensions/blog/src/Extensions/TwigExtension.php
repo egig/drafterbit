@@ -12,13 +12,13 @@ class TwigExtension extends Twig_Extension
 
     function getFunctions()
     {
-        return array(
+        return [
             new Twig_SimpleFunction(
                 'comment',
                 function($id) {
                     return comment($id);
                 }
             ),
-        );
+        ];
     }
 }

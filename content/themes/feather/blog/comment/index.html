@@ -1,0 +1,8 @@
+<div id="comment-{{ comment.id }}" class="comment-item">
+    <div><a href="http://{{ comment.url }}">{{ comment.name }}</a> :</div>
+    <p>{{comment.content}} <a href="#" data-comment-id="{{ comment.id }}" class="do-reply">Reply</a></p>
+    
+    {{comment.form}}
+    
+    <div>{{ comment.childs }}</div>
+</div>

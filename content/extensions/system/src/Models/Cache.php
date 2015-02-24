@@ -8,51 +8,53 @@ class Cache extends \Drafterbit\Framework\Model
         return array_merge(
             $this->getDataCache(),
             $this->getAssetCache(),
-            $this->getRouteCache()
+            $this->getRouteCache(),
+            $this->getLanguageCache(),
+            $this->getViewCache()
         );
     }
 
     private function getDataCache()
     {
-        $size = 0;
-
-        if (is_dir($this->get('path.cache'))) {
-            $finder = $this->get('finder');
-            $finder->in($this->get('path.cache'))->directories();
-            
-            foreach ($finder as $file) {
-                $size += $this->getCacheFileSize($file->getRealPath());
-            }
-        }
-
-        return [['id' => 'Data', 'size' => $size]];
+        return [[
+            'id' => 'Data',
+            'size' => $this->getOnDirCacheSize($this['path.cache'])
+        ]];
     }
 
     public function getAssetCache()
     {
-        $size = 0;
-
-        if (is_dir($this->get('path.content').'cache/asset')) {
-            $finder = $this->get('finder');
-            $finder->in($this->get('path.content').'cache/asset')->files();
-
-            foreach ($finder as $file) {
-                $size += $this->getCacheFileSize($file->getRealPath());
-            }
-        }
-
-        return [['id' => 'Asset', 'size' => $size]];
+         return [[
+            'id' => 'Asset',
+            'size' => $this->getOnDirCacheSize($this['path.content'].'cache/asset')
+        ]];
     }
 
     public function getRouteCache()
     {
-        $path = $this->get('path.content').'cache/routes.php';
+        $path = $this['path.content'].'cache/routes.php';
 
         if(is_file($path)) {        
             return [['id' => 'Routes', 'size' => $this->getCacheFileSize($path)]];
         }
 
-        return  array();
+        return  [];
+    }
+
+    public function getLanguageCache()
+    {
+        return [[
+            'id' => 'Language',
+            'size' => $this->getOnDirCacheSize($this['path.content'].'cache/l10n')
+        ]];
+    }
+
+    public function getViewCache()
+    {
+        return [[
+        'id' => 'View',
+        'size' => $this->getOnDirCacheSize($this['path.content'].'cache/view')
+        ]];
     }
 
     private function getCacheFileSize($file)
@@ -73,28 +75,46 @@ class Cache extends \Drafterbit\Framework\Model
 
     public function clear()
     {
-        //clear data cache
-        if (is_dir($this->get('path.cache'))) {
-            $finder = $this->get('finder');
-            $finder->in($this->get('path.cache'))->directories()->depth(0);
-            
-            foreach ($finder as $file) {
-                $this->get('file')->remove($file);
-            }
-        }
-
-        //clear asset cache
-        if (is_dir($this->get('path.content').'cache/asset')) {
-            $finder = $this->get('finder');
-            $finder->in($this->get('path.content').'cache/asset')->files();
-
-            foreach ($finder as $file) {
-                $this->get('file')->remove($file->getRealPath());
-            }
-        }
-
         //routes
-        $path = $this->get('path.content').'cache/routes.php';
-        $this->get('file')->remove($path);
+        $path = $this['path.content'].'cache/routes.php';
+        $this['file']->remove($path);
+
+        //others
+        foreach ([
+            $this['path.cache'],
+            $this['path.content'].'cache/asset',
+            $this['path.content'].'cache/l10n',
+            $this['path.content'].'cache/view'
+            ] as $dir) {
+            $this->clearOnDirCaches($dir);
+        }
+    }
+
+    private function getOnDirCacheSize($dir)
+    {
+        $size = 0;
+
+        if (is_dir($dir)) {
+            $finder = $this['finder'];
+            $finder->in($dir)->files();
+
+            foreach ($finder as $file) {
+                $size += $this->getCacheFileSize($file->getRealPath());
+            }
+        }
+
+        return $size;
+    }
+
+    private function clearOnDirCaches($dir)
+    {
+        if (is_dir($dir)) {
+            $finder = $this['finder'];
+            $finder->in($dir)->files();
+
+            foreach ($finder as $file) {
+                $this['file']->remove($file->getRealPath());
+            }
+        }
     }
 }

@@ -2,7 +2,6 @@
 
 class User extends \Drafterbit\Framework\Model
 {
-
     public function all($filters)
     {
         $query = $this->withQueryBuilder()->select('*')            ->from('#_users', 'u');
@@ -30,11 +29,14 @@ class User extends \Drafterbit\Framework\Model
             }
         
         } else {
-            $queryBuilder->where("$key = :$key")
-                ->setParameter(":$key", $value);
+            $holder = ":".str_replace('.', '_', $key);
+            $queryBuilder->where("$key = $holder")
+                ->setParameter($holder, $value);
         }
 
-        $users = $queryBuilder->getResult();
+        $users = $queryBuilder
+        ->leftJoin('u', '#_users_roles', 'ur', 'ur.user_id = u.id')
+        ->getResult();
 
         if ($singleRequested) {
             return reset($users);
@@ -60,28 +62,28 @@ class User extends \Drafterbit\Framework\Model
     
     public function update($data, $where)
     {
-        return $this->get('db')->update('#_users', $data, $where);
+        return $this['db']->update('#_users', $data, $where);
     }
 
     public function insert($data)
     {
-        $this->get('db')->insert('#_users', $data);
-        return $this->get('db')->lastInsertId();
+        $this['db']->insert('#_users', $data);
+        return $this['db']->lastInsertId();
     }
 
-    public function delete($ids = array())
+    public function delete($ids = [])
     {
         // @todo optimize this and add extension realated data
         foreach ($ids as $id) {
-            $this->get('db')->delete('#_users', ['id' => $id]);
-            $this->get('db')->delete('#_users_roles', ['user_id'=> $id]);
+            $this['db']->delete('#_users', ['id' => $id]);
+            $this['db']->delete('#_users_roles', ['user_id'=> $id]);
         }
     }
 
     public function clearRoles($id)
     {
-        return $this->get('db')
-            ->delete('#_users_roles', array('user_id' => $id));
+        return $this['db']
+            ->delete('#_users_roles', ['user_id' => $id]);
     }
 
     public function insertRole($roleId, $userId)
@@ -90,7 +92,7 @@ class User extends \Drafterbit\Framework\Model
         $data['role_id'] = $roleId;
         $data['user_id'] = $userId;
 
-        return $this->get('db')
+        return $this['db']
             ->insert('#_users_roles', $data);
     }
 
@@ -105,7 +107,7 @@ class User extends \Drafterbit\Framework\Model
 
         $roles = $queryBuilder->getResult();
 
-        $ids = array();
+        $ids = [];
         foreach ($roles as $role) {
             $role = (object) $role;
             $ids[] = $role->id;
@@ -131,7 +133,7 @@ class User extends \Drafterbit\Framework\Model
 
         $roles = $queryBuilder->getResult();
 
-        $permissions = array();
+        $permissions = [];
 
         foreach ($roles as $role) {
             if ($role['permissions']) {

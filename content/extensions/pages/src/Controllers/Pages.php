@@ -14,18 +14,16 @@ class Pages extends BackendController
         $pages = $this->model('@pages\Pages')->all(['status' => $status]);
         
         $data['status'] = $status;
-        $data['pages'] = $pages;
         $data['id'] = 'pages';
         $data['title'] =  __('Pages');
         $data['action'] = admin_url('pages/trash');
-        $data['pagesTable'] = $this->dataTable('pages', $this->_tableHeader(), $pages);
 
         return $this->render('@pages/admin/index', $data);
     }
 
     public function trash()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
 
         $pageIds = $post['pages'];
 
@@ -49,20 +47,20 @@ class Pages extends BackendController
         
         $editUrl = admin_url('pages/edit');
 
-        $pagesArr  = array();
+        $pagesArr  = [];
 
         foreach ($pages as $page) {
             $page = (object)$page;
 
-            $data = array();
-            $data[] = '<input type="checkbox" name="pages[]" value="'.$page->id.'">';
-            $data[] = $status !== 'trashed' ? "<a class='page-edit-link' href='$editUrl/{$page->id}'> {$page->title}</a>" : $page->title;
+            $data = [];
+            $data[] = $page->id;
+            $data[] = $page->title;
             $data[] = $page->created_at;
 
             if ($status == 'trashed') {
                 $s = ucfirst($status);
             } else {
-                $s = $page->status == 1 ? 'Published' : 'Unpublished';
+                $s = $page->status == 1 ? __('Published') : __('Unpublished');
             }
 
             $data[] = $s;
@@ -81,20 +79,20 @@ class Pages extends BackendController
     public function edit($id)
     {
         if ($id == 'new') {
-            $data = array(
-                'title'     => __('Create New Page'),
+            $data = [
+                'title'     => __('New Page'),
 
-                'pageId'     => null,
+                'pageId'    => null,
                 'pageTitle' => null,
-                'slug'         => null,
-                'content'     => null,
-                'layout'     => null,
-                'status'     => 1,
-            );
+                'slug'      => null,
+                'content'   => null,
+                'layout'    => null,
+                'status'    => 1,
+            ];
 
         } else {
             $page = (object) $this->model('@pages\Pages')->getSingleBy('id', $id);
-            $data = array(
+            $data = [
                 'title'     => __('Edit Page'),
 
                 'pageId'     => $id,
@@ -103,7 +101,7 @@ class Pages extends BackendController
                 'content'     => $page->content,
                 'layout'    => $page->layout,
                 'status'     => $page->status,
-            );
+            ];
         }
 
         $data['id'] = 'page-edit';
@@ -119,7 +117,7 @@ class Pages extends BackendController
     public function save()
     {
         try {
-            $postData = $this->get('input')->post();
+            $postData = $this['input']->post();
 
             $this->validate('page', $postData);
 
@@ -134,7 +132,7 @@ class Pages extends BackendController
                 $id = $this->model('@pages\Pages')->insert($data);
             }
 
-            $this->get('cache')->delete('pages');
+            $this['cache']->delete('pages');
 
             return $this->jsonResponse(['message' => __('Page succesfully saved'), 'status' => 'success', 'id' => $id]);
 
@@ -174,8 +172,8 @@ class Pages extends BackendController
      */
     private function getLayoutOptions()
     {
-        $layouts = $this->get('finder')->in($this->get('path.theme').'layout')->files();
-        $options = array();
+        $layouts = $this['finder']->in($this['path.theme'].'layout')->files();
+        $options = [];
         foreach ($layouts as $layout) {
             $options[$layout->getFileName()] = $layout->getFileName();
         }
@@ -192,13 +190,13 @@ class Pages extends BackendController
      */
     protected function createInsertData($post, $isUpdate = false)
     {
-        $data = array();
+        $data = [];
         $data['title'] = $post['title'];
         $data['slug'] = $post['slug'];
         $data['content'] = $post['content'];
         $data['layout'] = $post['layout'];
         $data['status'] = $post['status'];
-        $data['user_id'] = $this->get('session')->get('user.id');
+        $data['user_id'] = $this['session']->get('user.id');
         $data['updated_at'] = Carbon::now();
         
         if (! $isUpdate) {

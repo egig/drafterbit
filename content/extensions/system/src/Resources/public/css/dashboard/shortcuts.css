@@ -1,0 +1,10 @@
+.dashboard-widget .shortcuts {
+	list-style: none;
+	margin: 0;
+	padding-left: 20px;
+}
+.dashboard-widget .shortcuts li.shortcut {
+	width: 30%;
+	display: inline-block;;
+	padding: 5px;
+}

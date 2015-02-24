@@ -12,14 +12,14 @@
     var urlHash = window.location.hash.replace('#','');
 
       drafTerbit.users.dt =  $("#users-data-table").dataTable(
-          {
-                "oLanguage": {
-                    "sLengthMenu": "Showing _MENU_ records per page",
-                    "sSearch": "Search: _INPUT_",
-                },
-                "columnDefs": [
-                {'orderable': false, 'searchable':false, 'targets':[0]}
-                ]
+        {
+            ajax: {
+                url: drafTerbit.adminUrl+"/user/data/"+urlHash+".json",
+            },
+            columnDefs: [
+                {orderable: false, searchable:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="users[]" value="'+d+'">' } },
+                {targets:1, render: function(d,t,f,m){ return '<a class="user-edit-link" href="'+drafTerbit.adminUrl+'/user/edit/'+f[0]+'">'+d+'</a>' }}
+            ]
           }
       );
   
@@ -38,7 +38,7 @@
     $('#users-index-form').ajaxForm(
         {
             beforeSend: function(){
-                if (confirm('Are you sure you want to delete those users, this con not be undone ?')) {
+                if (confirm(__('Are you sure you want to delete those users, this con not be undone ?'))) {
                     return true;
                 } else {
                     return false;

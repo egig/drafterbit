@@ -26,14 +26,11 @@
             <input name="password-confirm" type="password" class="form-control" autocomplete="off">
         </div>
          <div class="form-group">
-            <label for="groups" class="control-label">Role</label>
+            <label for="groups" class="control-label"><?php echo __('Role') ?></label>
               <select name="roles[]" multiple id="user-roles" class="form-control" data-placeholder="Select Role">
-                    <?php foreach ($roleOptions as $option) :
-?>
-                  <option <?php echo selected('roles', $option['id'], in_array($option['id'], $roleIds));
-?> value="<?php echo $option['id'] ?>"><?php echo $option['label']; ?></option>
-                    <?php
-endforeach?>
+                <?php foreach ($roleOptions as $option) : ?>
+                  <option <?php echo selected('roles', $option['id'], in_array($option['id'], $roleIds)); ?> value="<?php echo $option['id'] ?>"><?php echo $option['label']; ?></option>
+                <?php endforeach?>
               </select>
         </div>
     </div>
@@ -66,25 +63,6 @@ endforeach?>
             <input type="submit" class="btn btn-primary pull-right" name="action" value="Submit"/>
          </div>
     </div>
-
-
-        <!-- PENDING FEATURE -->
-        <!--
-    <div class="col-md-4">
-            
-        <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input name="send-password" value="1" type="checkbox" <?php echo checked('send-password'); ?>> Send password by email
-                </label>
-              </div>
-        </div>
-        <div class="form-group">
-              <textarea name="mail-message" class="form-control" placeholder="mail message"><?php echo value('mail-massage'); ?></textarea>
-              <span class="help-block">Use '%s'(percent and 's') in your message to include the password. e.g: Your password is %s</span>
-         </div>
-    </div>
-        -->
 </div>
 
     <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>"/>

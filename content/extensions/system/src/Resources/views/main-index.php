@@ -8,7 +8,7 @@
             <div class="row row-sticky-toolbar" style="margin:10px 0;">
                 <div class="pull-right">
                     <div style="display:inline-block; float:right;margin-left:5px;">
-                        <input type="search" class="form-control input-sm" placeholder="Search">
+                        <input type="search" class="form-control input-sm" placeholder="<?php echo __('Search') ?>">
                     </div>
 
                     <?php echo $this->block('filter'); ?>
@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row row-content">
            <div class="col-md-12 content-full">
-                <?php echo $this->block('content'); ?>
+                <?php echo $this->block('table'); ?>
             </div>
         </div>
      </div>

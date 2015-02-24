@@ -28,46 +28,49 @@ class Files extends BackendController
 
     public function data()
     {
-        $op = $this->get('input')->request('op');
-        $path = $this->get('input')->request('path');
+        $op = $this['input']->request('op');
+        $path = $this['input']->request('path');
         
         $res = new JsonResponse;
 
         try {
-            $data = array();
+            $data = [];
 
             switch ($op) {
                 case 'ls':
-                    $data = $this->get('ofinder')->ls($path);
+                    $data = $this['ofinder']->ls($path);
                     break;
                 case 'delete':
-                    $data = $this->get('ofinder')->delete($path);
+                    $data = $this['ofinder']->delete($path);
                     break;
                 case 'mkdir':
-                    $folderName = $this->get('input')->get('folder-name');
-                    $data = $this->get('ofinder')->mkdir($path, $folderName);
+                    $folderName = $this['input']->get('folder-name');
+                    $data = $this['ofinder']->mkdir($path, $folderName);
                     break;
                 case 'rename':
-                    $newName = $this->get('input')->post('newName');
-                    $data = $this->get('ofinder')->rename($path, $newName);
+                    $newName = $this['input']->post('newName');
+                    $data = $this['ofinder']->rename($path, $newName);
                     break;
                 case 'move':
-                    $dest = $this->get('input')->post('dest');
-                    $data = $this->get('ofinder')->move($path, $dest);
+                    $dest = $this['input']->post('dest');
+                    $data = $this['ofinder']->move($path, $dest);
                     break;
+                case 'properties':
+                    $data = $this['ofinder']->properties($path);
+                break;
                 default:
                      # code...
                     break;
             }
 
             // upload
-            if ($files = $this->get('input')->files('files', array())) {
-                $path = $this->get('input')->post('path');
-                $data = $this->get('ofinder')->upload($path, $files);
+            if ($files = $this['input']->files('files', [])) {
+                $path = $this['input']->post('path');
+                $data = $this['ofinder']->upload($path, $files);
             }
 
         } catch (\Exception $e) {
-            $data = array( 'message' => $e->getMessage(), 'status' => 'error');
+            $data = [ 'message' => $e->getMessage(), 'status' => 'error'];
         }
         
         $res->setData($data);

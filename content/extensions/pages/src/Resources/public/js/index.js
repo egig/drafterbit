@@ -15,13 +15,9 @@
             ajax: {
                 url: drafTerbit.adminUrl+"/pages/data/"+urlHash+".json",
             },
-            "bFilter": true,
-            "oLanguage": {
-                "sLengthMenu": "Showing _MENU_ records per page",
-                "sSearch": "_INPUT_",
-            },
-            "columnDefs": [
-            {'orderable': false, 'searchable':false, 'targets':[0]}
+            columnDefs: [
+                {orderable: false, searchable:false, targets:[0], render: function(d,t,f,m) { return '<input type="checkbox" name="pages[]" value="'+d+'">'}},
+                {render: function(d,t,f,m) { return '<a href="'+drafTerbit.adminUrl+'/pages/edit/'+f[0]+'">'+d+'</a>'}, targets:1}
             ]
         }
     );
@@ -44,10 +40,10 @@
     // change trash, add restore button
     changeUncreateAction = function(s){
         if (s === 'trashed') {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> Delete').val('delete');
-            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default pages-restore"><i class="fa fa-refresh"></i> Restore </button>');
+            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
+            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default pages-restore"><i class="fa fa-refresh"></i> '+__('Restore')+' </button>');
         } else {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> Trash').val('trash');
+            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Trash')).val('trash');
             $('.pages-restore').remove();
         }
     }

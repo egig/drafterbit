@@ -14,17 +14,16 @@ class Roles extends BackendController
         $data['roles'] = $roles;
 
         $editUrl = admin_url('user/roles/edit');
-        $tableHead = array(
+        $tableHead = [
             ['field' => 'label', 'label' => 'Role', 'format' => function($value, $item) use ($editUrl)  {
                 return "<a href='$editUrl/{$item['id']}'>$value</a>";
             }],
             ['field' => 'description', 'label' => 'Description']
-        );
+        ];
 
         $data['id'] = 'roles';
         $data['title'] = __('Roles');
         $data['action'] = admin_url('user/roles/index-action');
-        $data['rolesTable'] = $this->dataTable('roles', $tableHead, $roles);
 
         return $this->render('@user/admin/roles/index', $data);
     }
@@ -32,7 +31,7 @@ class Roles extends BackendController
     public function indexAction()
     {
 
-        $roles = $this->get('input')->post('roles');
+        $roles = $this['input']->post('roles');
 
         if (!$roles) {
             return $this->jsonResponse(
@@ -43,13 +42,13 @@ class Roles extends BackendController
             );
         }
 
-        $action = $this->get('input')->post('action');
+        $action = $this['input']->post('action');
 
         switch($action) {
             case "delete":
 
-                $freezed = array();
-                $notfreezed = array();
+                $freezed = [];
+                $notfreezed = [];
                 
                 foreach ($roles as $role) {
                     if ($this->model('@user\Role')->getRoledUsers($role)) {
@@ -85,12 +84,12 @@ class Roles extends BackendController
         
         $editUrl = admin_url('user/roles/edit');
 
-        $usersArr  = array();
+        $usersArr  = [];
 
         foreach ($roles as $role) {
-            $data = array();
-            $data[] = '<input type="checkbox" name="roles[]" value="'.$role['id'].'">';
-            $data[] = "<a class='role-edit-link' href='$editUrl/{$role['id']}'> {$role['label']}</a>";
+            $data = [];
+            $data[] = $role['id'];
+            $data[] = $role['label'];
             $data[] = $role['description'];
 
             $usersArr[] = $data;
@@ -107,34 +106,37 @@ class Roles extends BackendController
     public function edit($id = null)
     {
         $data['id'] = 'roles-edit';
-        $data['permissions'] = $this->get('app')->getPermissions();
+        $data['permissions'] = $this['app']->getPermissions();
 
         $data['action'] = admin_url('user/roles/save');
-        ;
+
         $data['roleId'] = $id;
+        $data['adminRole'] = $this['config']['auth.admin_role'];
 
         if ($role = $this->model('@user\Role')->getsingleBy('id', $id)) {
             $data['roleName'] = $role['label'];
             $data['description'] = $role['description'];
-            $data['permissionIds'] = $role['permissions'] ? json_decode($role['permissions'], true) : array();
+            $data['permissionIds'] = $role['permissions'] ? json_decode($role['permissions'], true) : [];
             $data['title'] = __('Edit Role');
         } else {
             $data['roleName'] = null;
             $data['description'] = null;
-            $data['permissionIds'] = array();
+            $data['permissionIds'] = [];
             $data['title'] = __('New Role');
         }
+
+        $data['disabled'] = ($this['config']['auth.admin_role'] == $data['roleName']) ? 'disabled="disabled"': '';
 
         return $this->render('@user/admin/roles/edit', $data);
     }
 
     public function save()
     {
-        $response = array();
+        $response = [];
 
             
         try {
-            $posts = $this->get('input')->post();
+            $posts = $this['input']->post();
 
             $this->validate('roles', $posts);
 
@@ -143,17 +145,17 @@ class Roles extends BackendController
             
             $id = $this->model('@user\Role')->save($posts['id'], $data);
 
-            $response = array(
+            $response = [
                 'message' => __('Role saved !'),
                 'status' => 'success',
                 'id' => $id
-            );
+            ];
 
         } catch (ValidationFailsException $e) {
-            $response['error'] = array(
+            $response['error'] = [
                 'type' => 'validation',
                 'messages' => $e->getMessages()
-            );
+            ];
         }
 
         return $this->jsonResponse($response);
@@ -161,7 +163,7 @@ class Roles extends BackendController
 
     protected function createRoleInsertData($post)
     {
-        $data = array();
+        $data = [];
         $data['label'] = $post['name'];
         $data['description'] = $post['description'];
 

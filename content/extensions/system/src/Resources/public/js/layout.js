@@ -1,6 +1,13 @@
 $(
     function(){
 
+        var h = $('.page-wrapper').height();
+        var hW = $(window).innerHeight();
+
+        if(h+30 < hW) {
+            $('.footer').addClass('navbar-fixed-bottom');
+        }
+
         //mobile
         $('.navbar-toggle').click(
             function(){

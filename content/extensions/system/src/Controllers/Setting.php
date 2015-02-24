@@ -7,32 +7,32 @@ class Setting extends BackendController
 
     public function general()
     {
-        $post = $this->get('input')->post();
+        $post = $this['input']->post();
 
         if ($post) {
             // @todo validate setting
 
             $data = $this->setupData($post);
             $this->model('@system\System')->updateSetting($data);
-            $this->get('template')->addGlobal('messages', [['text' => "Setting updated", "type" => 'success']]);
+            $this['template']->addGlobal('messages', [['text' => "Setting updated", "type" => 'success']]);
         }
-        
+
         $system = $this->model('@system\System');
 
         $data = [
-            'siteName'    => $system->fetch('site.name'),
-            'tagLine'     => $system->fetch('site.description'),
-            'adminEmail'  => $system->fetch('email'),
-            'language'    => $system->fetch('language'),
-            'timezone'    => $system->fetch('timezone'),
-            'dateFormat'  => $system->fetch('format.date'),
-            'timeFormat'  => $system->fetch('format.time'),
-            'homepage'    => $system->fetch('homepage'),
-            'smtpHost'    => $system->fetch('smtp.host'),
-            'smtpPort'    => $system->fetch('smtp.port'),
-            'smtpUser'    => $system->fetch('smtp.user'),
-            'smtpPass'    => $system->fetch('smtp.pass'),
-            'pageOptions' => $this->get('app')->getFrontPageOption(),
+            'siteName'    => $system->get('site.name'),
+            'tagLine'     => $system->get('site.description'),
+            'adminEmail'  => $system->get('email'),
+            'language'    => $system->get('language'),
+            'timezone'    => $system->get('timezone'),
+            'dateFormat'  => $system->get('format.date'),
+            'timeFormat'  => $system->get('format.time'),
+            'homepage'    => $system->get('homepage'),
+            'smtpHost'    => $system->get('smtp.host'),
+            'smtpPort'    => $system->get('smtp.port'),
+            'smtpUser'    => $system->get('smtp.user'),
+            'smtpPass'    => $system->get('smtp.pass'),
+            'pageOptions' => $this['app']->getFrontPageOption(),
             'timezoneIdList' => timezone_identifiers_list(),
             'languageList'   => $this->getLanguageList(),
             'title'       => __('General Setting'),
@@ -44,7 +44,7 @@ class Setting extends BackendController
 
     protected function setupData($p)
     {
-        $data = array();
+        $data = [];
 
         $data['site.name'] = $p['site-name'];
         $data['site.description'] = $p['site-tagline'];
@@ -66,6 +66,6 @@ class Setting extends BackendController
 
     private function getLanguageList()
     {
-        return $this->get('translator')->getLocales();
+        return $this['translator']->getLocales();
     }
 }

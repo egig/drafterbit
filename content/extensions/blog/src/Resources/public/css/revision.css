@@ -1,0 +1,17 @@
+code {
+	color: inherit;
+}
+
+del, ins {
+	text-decoration: none;
+}
+
+del *,
+del {
+	background-color: #F8CBCB;
+}
+
+ins *,
+ins {
+	background-color: #A6F3A6;
+}

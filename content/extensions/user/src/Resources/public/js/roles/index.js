@@ -1,18 +1,18 @@
  (function($, drafTerbit) {
 
-      drafTerbit.roles = {};
+    drafTerbit.roles = {};
 
-      drafTerbit.roles.dt =   $("#roles-data-table").dataTable(
-          {
-                "oLanguage": {
-                    "sLengthMenu": "Showing _MENU_ records per page",
-                    "sSearch": "Search: _INPUT_",
-                },
-                "columnDefs": [
-                {'orderable': false, 'searchable':false, 'targets':[0]}
-                ]
-          }
-      );
+    drafTerbit.roles.dt =   $("#roles-data-table").dataTable(
+        {
+            ajax: {
+                url: drafTerbit.adminUrl+"/user/roles/data/all.json",
+            },
+            columnDefs: [
+                {orderable: false, searchable:false, targets:0, render: function(d,t,f,m){ return '<input type="checkbox" name="roles[]" value="'+d+'">' }},
+                {targets:1, render: function(d,t,f,m){ return '<a class="role-edit-link" href="'+drafTerbit.adminUrl+'/user/roles/edit/'+f[0]+'">'+d+'</a>' }}
+            ]
+        }
+    );
 
         drafTerbit.replaceDTSearch(drafTerbit.roles.dt);
 
@@ -22,7 +22,7 @@
             {
                 dataType: 'json',
                 beforeSend: function(){
-                    if (confirm('Are you sure you want to delete those roles, this con not be undone ?')) {
+                    if (confirm(__('Are you sure you want to delete those roles, this con not be undone ?'))) {
                         return true;
                     } else {
                         return false;

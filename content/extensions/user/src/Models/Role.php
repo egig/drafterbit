@@ -6,7 +6,7 @@ class Role extends \Drafterbit\Framework\Model
     public function all()
     {
         return
-        $this->get('db')
+        $this['db']
             ->fetchAll('SELECT * from #_roles');
     }
 
@@ -35,7 +35,7 @@ class Role extends \Drafterbit\Framework\Model
         return $roles;
     }
 
-    public function getSingleBy($key, $value = array())
+    public function getSingleBy($key, $value = [])
     {
         return $this->getBy($key, $value, true);
     }
@@ -60,11 +60,11 @@ class Role extends \Drafterbit\Framework\Model
 
     public function update($data, array $where)
     {
-        return $this->get('db')
+        return $this['db']
             ->update('#_roles', $data, $where);
     }
 
-    public function delete($ids = array())
+    public function delete($ids = [])
     {
         $ids = (array) $ids;
         $ids = array_map(
@@ -93,9 +93,9 @@ class Role extends \Drafterbit\Framework\Model
 
     public function insert($data)
     {
-        $this->get('db')
+        $this['db']
             ->insert('#_roles', $data);
-        return $this->get('db')->lastInsertId();
+        return $this['db']->lastInsertId();
     }
 
     public function isExists($id)

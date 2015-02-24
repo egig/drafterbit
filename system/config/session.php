@@ -34,7 +34,7 @@
  *  location may be specified.
  */
 
- 'save.path' =>  realpath(__DIR__ . '/../../content/cache/sessions'),
+ 'save.path' =>  '%content_dir%/cache/sessions',
 
 /**
  * --------------------------------------------------------------------------

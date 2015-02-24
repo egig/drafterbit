@@ -5,18 +5,23 @@ class Search extends \Drafterbit\Framework\Model
 
     public function doSearch($q, $queries)
     {
-        $results = array();
+        $results = [];
         
         if ($q) {
-            foreach ($queries as $name => $query) {
+            foreach ($queries as $queryFormatter) {
+
+                $query = $queryFormatter[0];
                 $query->setParameter(':q', "%$q%");
                 $res = $query->getResult();
 
-                if ($res) {
-                    $data = array();
-                    $data['name'] = $name;
-                    $data['results'] = $res;
-                    $results[] = $data;
+                $formatter = $queryFormatter[1];
+
+                foreach ($res as $item) {
+                    $results[] = [
+                        'url' => $formatter['url']($item),
+                        'title' => $formatter['title']($item),
+                        'summary' => $formatter['summary']($item)
+                    ];
                 }
             }
         }
