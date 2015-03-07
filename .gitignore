@@ -2,3 +2,5 @@
 /config.php
 /system/vendor
 /composer.lock
+/codecept.phar
+tests/_output/*

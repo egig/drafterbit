@@ -1,39 +1,40 @@
-<?php $this->extend('@system/main-index'); ?>
+<?php _extend('@system/main-index'); ?>
 
-<?php $this->start('filter'); ?>
+<?php $this->css('@blog/css/index.css'); ?>
+
+<?php _start('filter'); ?>
 <div style="display:inline-block; float:right;margin-left:5px;">
     <select name="filter" class="form-control input-sm blog-status-filter">
-        <option value="all" <?php echo selected('status-filter', 'all', $status == 'all'); ?> >- <?php echo __('Status') ?> -</option>
-        <option value="unpublished" <?php echo selected('status-filter', 'unpublished', $status == 'unpublished'); ?> >  <?php echo __('Unpublished') ?></option>
-        <option value="published" <?php echo selected('status-filter', 'published', $status == 'published'); ?> >  <?php echo __('Published') ?></option>
-        <option value="trashed" <?php echo selected('status-filter', 'trashed', $status == 'trashed'); ?> >  <?php echo __('Trashed') ?></option>
+        <option value="all" <?= selected('status-filter', 'all', $status == 'all'); ?> >- <?= __('Status') ?> -</option>
+        <option value="published" <?= selected('status-filter', 'published', $status == 'published'); ?> >  <?= __('Published') ?></option>
+        <option value="pending" <?= selected('status-filter', 'pending', $status == 'pending'); ?> >  <?= __('Pending Review') ?></option>
+        <option value="trashed" <?= selected('status-filter', 'trashed', $status == 'trashed'); ?> >  <?= __('Trashed') ?></option>
     </select>
 </div>
-<?php $this->end(); ?>
+<?php _end(); ?>
 
-<?php $this->start('action'); ?>
-<a href="<?php echo admin_url('blog/edit/new') ?>" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" style=""></i> <?php echo __('New Post') ?>
+<?php _start('action'); ?>
+<a href="<?= admin_url('posts/edit/new') ?>" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" style=""></i> <?= __('New Post') ?>
 </a>
 <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="trash">
-    <i class="fa fa-trash-o"></i> <?php echo __('Trash') ?>
+    <i class="fa fa-trash-o"></i> <?= __('Trash') ?>
 </button>
-<?php $this->end(); ?>
+<?php _end(); ?>
 
-<?php $this->start('table'); ?>
-	<table class="table table-hover table-condensed" id="<?php echo $id ?>-data-table">
+<?php _start('table'); ?>
+	<table class="table table-hover table-condensed" id="<?= $id ?>-data-table">
 	    <thead>
 	        <tr>
 	            <th class="sorting" width="15">
-	                <input id="<?php echo $id ?>-checkall" type="checkbox">
+	                <input id="<?= $id ?>-checkall" type="checkbox">
 	            </th>
-	            <th width="40%"><?php echo __('Title') ?></th>
-	            <th width="20%"><?php echo __('Author') ?></th>
-	            <th width="20%"><?php echo __('Status') ?></th>
-	            <th width="20%"><?php echo __('Created') ?></th>
+	            <th width="60%"><?= __('Title') ?></th>
+	            <th width="20%"><?= __('Author') ?></th>
+	            <th width="20%"><?= __('Last Modified') ?></th>
 	        </tr>
 	    </thead>
 	</table>
-<?php $this->end(); ?>
+<?php _end(); ?>
 
-<?php $this->js('@blog/js/index.js'); 
+<?php $this->js('@blog/js/index.js'); ?>

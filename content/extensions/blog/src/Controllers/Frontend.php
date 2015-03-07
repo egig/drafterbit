@@ -15,7 +15,7 @@ class Frontend extends FrontendController
 
         $data = array_merge($data, $this->getNav($page));
 
-        return $this->render('blog/index', $data);
+        return $this->render('content/blog/index', $data);
     }
 
     public function view($yyyy = null, $mm = null, $slug = null)
@@ -27,7 +27,7 @@ class Frontend extends FrontendController
         $post['tags'] = $this->model('@blog\Tag')->getByPost($post['id']);
 
         $data['post'] = $post;
-        return $this->render('blog/view', $data);
+        return $this->render('content/blog/view', $data);
     }
 
     public function tag($slug)
@@ -43,7 +43,7 @@ class Frontend extends FrontendController
         $tag = $this->model('Tag')->getSingleBy('slug', $slug);
         $data['tag'] = $tag;
         
-        return $this->render('blog/tag/index', $data);
+        return $this->render('content/blog/tag/index', $data);
     }
 
     public function author($username)
@@ -59,7 +59,7 @@ class Frontend extends FrontendController
         $data['user'] = $user;
         $data = array_merge($data, $this->getNav($page, $filter));
 
-        return $this->render('user/view', $data);
+        return $this->render('content/blog/author/index', $data);
     }
 
     public function feed()

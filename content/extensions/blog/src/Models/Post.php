@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Models;
 
-class Post extends \Drafterbit\Framework\Model
+class Post extends \Drafterbit\Base\Model
 {
     public function all($filter = [])
     {

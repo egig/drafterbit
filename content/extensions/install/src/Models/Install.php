@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Extensions\Install\Models;
 
-use Drafterbit\Framework\Model;
+use Drafterbit\Base\Model;
 
 class Install extends Model
 {   
@@ -39,7 +39,8 @@ class Install extends Model
 
     public function systemInit($name, $desc, $email, $userId)
     {
-        $page = $this->createSamplePage($userId);
+        $samplePage = $this->createSamplePage($userId);
+        $this->createMainMenu($samplePage);
         $firstPost = $this->createFirstPost($userId);
         $this->createFirstComment($firstPost);
         $this->addWidget();
@@ -52,6 +53,9 @@ class Install extends Model
         $data['format.time']      = 'H:m:s';
         $data['theme']            = 'feather';
         $data['homepage']         = 'blog';
+
+        //theme menu
+        $data['theme.feather.menus'] = '{"main":"1"}';
 
         $extensions = [
             "pages" => '0.1.0',
@@ -106,15 +110,26 @@ class Install extends Model
 
     private function addWidget()
     {
-        $data = [
+        $widgets = [
+        [
             'name' => 'search',
             'title' => 'Search',
             'sequence' => 1,
             'position' => 'Sidebar',
             'theme' => 'feather'
+            ],
+            [
+            'name' => 'meta',
+            'title' => 'Meta',
+            'sequence' => 2,
+            'position' => 'Sidebar',
+            'theme' => 'feather'
+            ]
         ];
         
-        $this['db']->insert('#_widgets', $data);
+        foreach ($widgets as $widget) {
+            $this['db']->insert('#_widgets', $widget);
+        }
     }
 
     private function createFirstPost($user)
@@ -145,5 +160,37 @@ class Install extends Model
         $data['created_at'] = $this['time']->now();
 
         $this['db']->insert('#_comments', $data);
+    }
+
+    private function createMainMenu($samplePage)
+    {
+        $this['db']->insert('#_menus', ['name' => 'main']);
+        $id = $this['db']->lastInsertId();
+
+        //insert items
+        $items = [
+            [
+                'menu_id' => $id,
+                'label' => 'Home',
+                'link' => '%base_url%',
+                'page' => null,
+                'sequence' => 1,
+                'type' => 1,
+                'parent_id' => 0
+            ],
+            [
+                'menu_id' => $id,
+                'label' => 'Sample Page',
+                'link' => '#',
+                'page' => $samplePage,
+                'sequence' => 2,
+                'type' => 2,
+                'parent_id' => 0
+            ]
+        ];
+
+        foreach ($items as $item) {
+            $this['db']->insert('#_menu_items', $item);
+        }
     }
 }

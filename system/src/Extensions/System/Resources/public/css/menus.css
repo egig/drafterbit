@@ -1,0 +1,86 @@
+.nav-stacked li a {
+	outline: none;
+}
+
+.nav-stacked-left li a:hover {
+	background-color: #fff;
+
+}
+
+.nav-stacked-left li a:focus {
+	background-color: #fff;
+}
+
+.nav-stacked-left li:not(:last-child) {
+	margin: 0 !important;
+	background-color: #fff;
+	border-right: 1px solid #e1e1e1;
+	border-bottom: none;
+	border-top: none;
+	border-left: 0px solid transparent;
+}
+
+.nav-stacked li.active {
+	background-color: #fff;
+	border-bottom: 1px solid #e1e1e1; 	
+	border-top: 1px solid #e1e1e1; 	
+	border-left: 1px solid #e1e1e1; 	
+	border-right: 1px solid transparent;
+}
+
+
+input.add-menu-input:focus{
+	box-shadow: none;
+
+}
+input.add-menu-input{
+	border: none;
+	box-shadow: none;
+}
+
+.menu-setting {
+	border: 1px solid #e1e1e1;
+	padding:10px;
+}
+
+.menu-action,
+.menu-items {
+	border: 1px solid #e1e1e1;
+	padding:10px;
+	margin-top: 10px;
+}
+
+.menu-items ol {
+	list-style: none;
+	margin-left: 40px;
+	padding: 0;
+}
+
+.menu-items > ol {
+	list-style: none;
+	margin: 0;
+	padding: 0px;
+}
+
+.menu-items .panel {
+	margin: 4px 0;
+}
+
+.placeholder {
+	border: 2px dashed #e1e1e1;
+}
+.menu-items ol li {
+	width: 300px;
+}
+
+.menu-items ol li div.panel {
+	box-shadow: none;
+}
+.menu-items ol li div.panel-heading {
+	border-bottom: none;
+	cursor: move;
+}
+
+.menu-items ol li div.panel-heading .panel-title {
+	font-size: 12px;
+}

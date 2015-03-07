@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Models;
 
-use Drafterbit\Framework\Model;
+use Drafterbit\Base\Model;
 
 class Comment extends Model
 {

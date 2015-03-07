@@ -1,6 +1,6 @@
 {
   "name": "drafterbit/drafterbit",
-  "description": "Web app you can use to create a website",
+  "description": "Web software you can use to create a website",
   "keywords": [
     "website", "blog", "cms"
   ],
@@ -18,11 +18,23 @@
       }
   ],
   "require": {
-      "drafterbit/framework": "dev-master",
+      "php": ">=5.4.0",
+      "patchwork/utf8": "~1.2",
+      "pimple/pimple": "3.0.*",
+      "stack/builder": "1.0.*",
+      "symfony/http-kernel": "2.5.*",
+      "symfony/routing": "2.5.*",
+      "symfony/translation": "2.5.*",
       "symfony/config": "2.5.*",
       "symfony/translation": "2.5.*",
       "symfony/filesystem": "2.5.*",
       "symfony/finder": "2.5.*",
+      "filp/whoops": "1.0.*",
+      "monolog/monolog": "1.7.*",
+      "doctrine/dbal": "2.4.*",
+      "patchwork/utf8": "~1.2",
+      "nesbot/Carbon": "*",
+      "kriswallsmith/assetic": "1.2.*",
       "twig/twig": "1.15.*",
       "ircmaxell/password-compat": "1.0.*",
       "natxet/CssMin": "3.0.2",
@@ -30,6 +42,9 @@
       "gregwar/image": "2.0.*",
       "swiftmailer/swiftmailer": "5.2.*",
       "cogpowered/finediff": "0.3.*"
+  },
+  "require-dev": {
+    "codeception/codeception":"*"
   },
   "config": {
     "vendor-dir": "system/vendor",

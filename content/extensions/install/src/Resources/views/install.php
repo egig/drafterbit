@@ -4,7 +4,7 @@
     <title>Drafterbit Installation</title>
 
         <?php $this->css(':bootstrap_css, :notify_css'); ?>
-        <?php echo $this->block('css');?>
+        <?= $this->block('css');?>
 
     <style>
         input, button, .btn, textarea {
@@ -15,7 +15,7 @@
         @font-face {
           font-family: 'Lobster Two';
           /* temporary */
-          src: url("<?php echo base_url('system/Resources/public/assets/Lobster_Two/LobsterTwo-Regular.ttf')?>") format('truetype');
+          src: url("<?= base_url('system/Resources/public/assets/Lobster_Two/LobsterTwo-Regular.ttf')?>") format('truetype');
         }
 
         .title {
@@ -42,7 +42,7 @@
     </style>
     <script>
         drafTerbit = {
-            baseUrl: '<?php echo base_url(); ?>',
+            baseUrl: '<?= base_url(); ?>',
         }
     </script>
 </head>
@@ -54,7 +54,7 @@
                 <span class="help-block">Web software you can use to create a wabsite.</span>
                 <br/>
                 <br/>
-                <a href="<?php echo $start == 2 ? '#step-2' : '#step-1' ?>" class="btn btn-default begin-button"/> Install </a>
+                <a href="<?= $start == 2 ? '#step-2' : '#step-1' ?>" class="btn btn-default begin-button"/> Install </a>
             </div>
         </div>
         
@@ -63,7 +63,7 @@
                 <h2>Database Connection</h2>
                 <span class="help-block">Please Enter Your Database Conection Detail</span>
             </div>
-            <form data-next="#step-2" method="post" class="static-form" id="database-form" action="<?php echo base_url('install/check')?>">
+            <form data-next="#step-2" method="post" class="static-form" id="database-form" action="<?= base_url('install/check')?>">
                 <div class="col-md-3 col-md-offset-3">
                     <div class="form-group">
                         <label class="control-label">Driver</label>
@@ -106,7 +106,7 @@
                 <span class="help-block">Create Administrator Account</span>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <form action="<?php echo base_url('install/admin') ?>" data-next="#step-3" class="static-form" method="post">
+                <form action="<?= base_url('install/admin') ?>" data-next="#step-3" class="static-form" method="post">
                     <div class="form-group">
                         <label class="control-label">Email</label>
                         <input required type="email" name="admin[email]" class="form-control"/>
@@ -128,7 +128,7 @@
                 <span class="help-block">You always can change this later.</span>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <form class="install-form" method="post" action="<?php echo base_url('install/install') ?>">
+                <form class="install-form" method="post" action="<?= base_url('install/install') ?>">
                     <div class="form-group">
                         <label class="control-label">Name</label>
                             <input required type="text" name="site[name]" class="form-control"/>
@@ -150,8 +150,8 @@
                 <span class="help-block">Choose what to do now</span>
             </div>
             <div class="col-md-4 col-md-offset-4" style="text-align:center">
-                <a class="btn btn-default col-md-6s" href="<?php echo base_url() ?>">View my website</a>
-                <a class="btn btn-default col-md-6s" href="<?php echo base_url('admin/login') ?>">Go to admin</a>
+                <a class="btn btn-default col-md-6s" href="<?= base_url() ?>">View my website</a>
+                <a class="btn btn-default col-md-6s" href="<?= base_url('admin/login') ?>">Go to admin</a>
             </div>
         </div>
 
@@ -168,18 +168,18 @@
                     <textarea readonly rows="10" class="form-control"></textarea>
                   </div>
                   <div class="modal-footer">
-                    <a href="<?php echo base_url(); ?>" class="btn btn-default">Done, Please Refresh</a>
+                    <a href="<?= base_url(); ?>" class="btn btn-default">Done, Please Refresh</a>
                   </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
     <div class="install-trapper">
-        <img alt="Installing&hellip;" src="<?php echo $preloader; ?>" />
+        <img alt="Installing&hellip;" src="<?= $preloader; ?>" />
     </div>
 
     <?php $this->js(':jquery, :bootstrap_js, :jquery_form, :notify_js, @install/js/install.js'); ?>
-    <?php echo $this->block('js') ?>
+    <?= $this->block('js') ?>
 
 </body>
 </html>

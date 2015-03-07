@@ -33,6 +33,8 @@
     "ckeditor": "latest",
     "egig-notify": "latest",
     "handlebars": "latest",
-    "mjolnic-bootstrap-colorpicker": "latest"
+    "sticky-kit": "latest",
+    "mjolnic-bootstrap-colorpicker": "latest",
+    "smalot-bootstrap-datetimepicker": "latest"
   }
 }

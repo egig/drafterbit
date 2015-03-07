@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Widgets;
 
-use Drafterbit\System\DashboardWidget as Base;
+use Drafterbit\App\DashboardWidget as Base;
 
 class DashboardWidget extends Base
 {

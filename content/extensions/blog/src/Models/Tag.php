@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Models;
 
-class Tag extends \Drafterbit\Framework\Model
+class Tag extends \Drafterbit\Base\Model
 {
     public function all()
     {
@@ -91,5 +91,26 @@ class Tag extends \Drafterbit\Framework\Model
             ->andWhere('p.status = :status')
             ->setParameter(':status', 1)
             ->getResult();
+    }
+
+    public function getForWidget($num, $orderBy)
+    {
+        $query = $this->withQueryBuilder()
+            ->select('count(post_id) as num, t.slug, t.label')
+            ->from('#_posts_tags', 'pt')
+            ->leftJoin('pt', '#_tags', 't', 't.id = pt.tag_id') 
+            ->groupBy('t.id');
+
+        if($num && $num>0) {
+            $query->setMaxResults($num);
+        }
+
+        if($orderBy == 'alpha') {
+            $query->orderBy('t.label', 'asc');
+        } else if($orderBy == 'most-used') {
+            $query->orderBy('num', 'desc');
+        }
+
+        return $query->getResult();
     }
 }

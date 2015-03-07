@@ -22,12 +22,12 @@
             <include name="system/**" />
             <include name="index.php" />
             <include name="config-sample.php" />
-            <include name=".htaccess" />
             <include name="LICENSE" />
           </fileset>
         </copy>
 
-        <copy file="./app.php.dist" tofile="./build/system/config/app.php" overwrite="true"></copy>
+        <copy file="./.htaccess" tofile="./build/dist.htaccess"></copy>
+        <copy file="./app.php.dist" tofile="./build/system/src/App/Resources/config/app.php" overwrite="true"></copy>
 
         <delete dir="./build/content/cache/data" includeemptydirs="true" />
         <delete dir="./build/content/cache/asset" includeemptydirs="true" />
@@ -262,7 +262,14 @@
             <exclude name="web/magicsuggest/*.css" />
             <exclude name="web/magicsuggest/*.js" />
             <include name="web/magicsuggest/**" />
+
+            <exclude name="web/mjolnic-bootstrap-colorpicker/dist/**" />
+            <exclude name="web/mjolnic-bootstrap-colorpicker/LICENSE" />
+            <include name="web/mjolnic-bootstrap-colorpicker/**" />
             
+            <exclude name="web/sticky-kit/*.js" />
+            <include name="web/sticky-kit/**" />
+
         </fileset>
          
        <delete includeemptydirs="true">

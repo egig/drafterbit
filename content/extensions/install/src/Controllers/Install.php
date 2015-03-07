@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Extensions\Install\Controllers;
 
-use Drafterbit\Framework\Controller;
+use Drafterbit\Base\Controller;
 
 class Install extends Controller
 {

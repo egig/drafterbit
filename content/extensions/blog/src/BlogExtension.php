@@ -1,9 +1,9 @@
 <?php namespace Drafterbit\Blog;
 
-use Drafterbit\Framework\ExtensionEvent;
-use Drafterbit\Framework\Application;
+use Drafterbit\Base\ExtensionEvent;
+use Drafterbit\Base\Application;
 
-class BlogExtension extends \Drafterbit\Framework\Extension
+class BlogExtension extends \Drafterbit\Base\Extension
 {
     public function boot()
     {
@@ -35,10 +35,10 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             $tagUrlPattern = 'tag/{slug}';
             $authorUrlPattern = 'author/{username}';
         } else {
-            $urlPattern = 'blog/{yyyy}/{mm}/{slug}';
-            $pageUrlPattern = 'blog/page/{page}';
-            $tagUrlPattern = 'blog/tag/{slug}';
-            $authorUrlPattern = 'blog/author/{username}';
+            $urlPattern = 'posts/{yyyy}/{mm}/{slug}';
+            $pageUrlPattern = 'posts/page/{page}';
+            $tagUrlPattern = 'posts/tag/{slug}';
+            $authorUrlPattern = 'posts/author/{username}';
         }
         
         $this['router']->addReplaces('%blog_url_pattern%', $urlPattern);
@@ -52,7 +52,7 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             function($id){
             
                 $label = $this->model('Post')->getOneBy('id', $id)['title'];
-                return '<a href="'.admin_url('blog/edit/'.$id).'">'.$label.'</a>';
+                return '<a href="'.admin_url('posts/edit/'.$id).'">'.$label.'</a>';
             }
         );
 
@@ -62,9 +62,9 @@ class BlogExtension extends \Drafterbit\Framework\Extension
     public function getNav()
     {
         return [
-            [ 'id' => 'blog', 'label' => 'Blog', 'href' => 'blog', 'parent' => 'content'],
-            [ 'id' => 'comments', 'label' => 'Comments', 'href' => 'blog/comments', 'order' => 2],
-            [ 'id' => 'blog-setting', 'label' => 'Blog', 'href' => 'blog/setting', 'parent' => 'setting']
+            [ 'id' => 'posts', 'label' => 'Posts', 'href' => 'posts', 'parent' => 'content', 'order' => 1],
+            [ 'id' => 'comments', 'label' => 'Comments', 'href' => 'posts/comments', 'order' => 1],
+            [ 'id' => 'blog-setting', 'label' => 'Blog', 'href' => 'posts/setting', 'parent' => 'setting']
         ];
     }
 
@@ -96,7 +96,8 @@ class BlogExtension extends \Drafterbit\Framework\Extension
             ->select('*')
             ->from('#_posts', 'p')
             ->where("p.title like :q")
-            ->orWhere("p.content like :q");
+            ->orWhere("p.content like :q")
+            ->andWhere("p.type = 'standard'");
 
         return [$query, [
             'url' =>  function ($item) {
@@ -146,9 +147,10 @@ class BlogExtension extends \Drafterbit\Framework\Extension
     {
         return [
             [
-                'link' => admin_url('blog/edit/new'),
+                'link' => admin_url('posts/edit/new'),
                 'label' => 'New Post',
-                'icon-class' => 'fa fa-edit'
+                'icon-class' => 'fa fa-edit',
+                'order' => 1
             ]
         ];
     }

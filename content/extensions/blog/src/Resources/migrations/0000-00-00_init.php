@@ -15,6 +15,7 @@
         $posts->addColumn('created_at', 'datetime');
         $posts->addColumn('updated_at', 'datetime');
         $posts->addColumn('deleted_at', 'datetime');
+        $posts->addColumn('published_at', 'datetime');
         $posts->addColumn('status', 'boolean');
         $posts->addForeignKeyConstraint('#_users', ['user_id'], ['id']);
         $posts->setPrimaryKey(['id']);

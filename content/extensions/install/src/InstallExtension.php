@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Extensions\Install;
 
-use Drafterbit\Framework\Extension;
+use Drafterbit\Base\Extension;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InstallExtension extends Extension

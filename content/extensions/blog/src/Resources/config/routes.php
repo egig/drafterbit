@@ -1,23 +1,26 @@
 <?php return [
 
 '%admin%' => [
-    'subRoutes' => [
-        'blog' => [
-            'subRoutes' => [
-                '/'                  => ['controller' => '@blog\Blog::index',  'access' => 'post.view'],
-                'edit/{id}'          => ['controller' => '@blog\Blog::edit',   'access' => 'post.view'],
-                'data/{status}.json' => ['controller' => '@blog\Blog::filter', 'access' => 'post.view'],
-                'save'               => ['controller' => '@blog\Blog::save',   'access' => 'post.edit',   'csrf' => true, 'log.after' => ['message' => ':user:%user_id% edited post :post:%id%']],
-                'setting'            => ['controller' => '@blog\Blog::setting'],
-                'trash'              => ['controller' => '@blog\Blog::trash',  'access' => 'post.delete', 'csrf' => true],
-                'revision/{id}'      => ['controller' => '@blog\Blog::revision',  'access' => 'post.revision.view'],
+    'routes' => [
+        'posts' => [
+            'routes' => [
+                '/'                  => ['controller' => '@blog\Post::index',  'access' => 'post.view'],
+                'edit/{id}'          => ['controller' => '@blog\Post::edit',   'access' => 'post.view'],
+                'data/{status}.json' => ['controller' => '@blog\Post::filter', 'access' => 'post.view'],
+                'save'               => ['controller' => '@blog\Post::save',   'access' => 'post.edit',   'csrf' => true, 'log.after' => ['message' => ':user:%user_id% edited post :post:%id%']],
+                'setting'            => ['controller' => '@blog\Post::setting'],
+                'trash'              => ['controller' => '@blog\Post::trash',  'access' => 'post.delete', 'csrf' => true],
+                
+                '{postid}/revisions' => ['controller' => '@blog\Revision::view',  'access' => 'post.revision.view'],
+                'revision/clear'     => ['controller' => '@blog\Revision::clear'],
+                'revision/revert'    => ['controller' => '@blog\Revision::revert'],
 
                 'comments' => ['controller' => '@blog\Comment::index', 'access' => 'comment.view'],
             ]
         ],
 
         'comments' => [
-            'subRoutes' => [
+            'routes' => [
                 'data/{status}.json' => ['controller' => '@blog\Comment::filter', 'access' => 'comment.view'],
                 'trash'              => ['controller' => '@blog\Comment::trash',  'access' => 'comment.delete',   'csrf' => true],
                 'status'             => ['controller' => '@blog\Comment::status', 'access' => 'comment.view',     'csrf' => true],

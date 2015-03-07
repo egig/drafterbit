@@ -15,16 +15,16 @@
             {data: 'id'},
             {data: 'title'},
             {data: 'author'},
-            {data: 'status'},
-            {data: 'created_at'}
+            {data: 'updated_at'},
         ],
         ajax: {
-            url: drafTerbit.adminUrl+"/blog/data/"+urlHash+".json",
+            url: drafTerbit.adminUrl+"/posts/data/"+urlHash+".json",
         },
         columnDefs: [
             {orderable: false, searchable:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="posts[]" value="'+d+'">'}},
-            {render: function(d,t,f,m){ return '<a href="'+drafTerbit.adminUrl+'/blog/edit/'+f.id+'">'+d+'</a>'}, targets:1},
-            {render: function(d,t,f,m){ return '<a href="'+drafTerbit.adminUrl+'/user/edit/'+f.user_id+'">'+d+'</a>'}, targets:2}
+            {render: function(d,t,f,m){ return '<a href="'+drafTerbit.adminUrl+'/posts/edit/'+f.id+'">'+d+'</a>'}, targets:1},
+            {render: function(d,t,f,m){ return '<a href="'+drafTerbit.adminUrl+'/user/edit/'+f.user_id+'">'+d+'</a>'}, targets:2},
+            {align:"center", targets:2}
         ]
     });
 
@@ -36,7 +36,7 @@
 
         var status = status || 'all';
 
-        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/blog/data/"+status+".json").load();
+        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+status+".json").load();
         window.location.hash = status;
     }
 
@@ -60,7 +60,7 @@
             }
 
             var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/blog/data/"+urlHash2+".json").load();
+            drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+urlHash2+".json").load();
         }
     );
 

@@ -134,4 +134,27 @@
 
     })();
 
+    //clear history
+    $('a.clear-history').on('click', function(e){
+        e.preventDefault();
+
+        if(confirm(__('This will delete post revision history and can not be undone, are you sure ?'))) {
+            var id = $(this).data('post-id');
+            $.ajax({
+                type:'post',
+                data: {id:id},
+                url: drafTerbit.adminUrl+'/posts/revision/clear',
+                success: function(){
+                    $.notify(__('Revisions cleared'), 'success');
+                    $('.revisions-container').fadeOut('fast');
+                }
+            });
+        }
+    });
+
+    $(".publish-date").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+    });
+
 })(jQuery, tagOptions, tags, CKEDITOR);

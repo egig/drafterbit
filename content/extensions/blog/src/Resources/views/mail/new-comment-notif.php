@@ -1,10 +1,10 @@
-New Comment On Post with id: <?php echo $post_id ?>
+New Comment On Post with id: <?= $post_id ?>
 
-Name: <?php echo $name; ?>
+Name: <?= $name; ?>
 
-Email: <?php echo $email; ?>
+Email: <?= $email; ?>
 
-Url: <?php echo $url; ?>
+Url: <?= $url; ?>
 
 Content:
-<?php echo $content  ?>
+<?= $content  ?>
