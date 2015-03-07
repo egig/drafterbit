@@ -51,11 +51,5 @@ Issue tracker will not be opened until the initial release, if you are doing tes
 ### Git Structure
 Drafterbit use the git-flow model (see: <https://github.com/nvie/gitflow>) to structure development.
 
-### Issue Tracker
-Issue tracker will not opened until the initial release, if you are doing test then have something to discuss, have a request or any suggestion, please use the google forum above.
-
-### Git Structure
-Drafterbit use the git-flow model (see: <https://github.com/nvie/gitflow>) to structure development.
-
 ## License
 Drafterbit is licensed under the MIT license.
