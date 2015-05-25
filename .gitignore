@@ -11,4 +11,5 @@
 /vendor/
 /web/bundles/
 /web/plugins/
-/web/upload/
+/web/upload/*
+!web/upload/.gitkeep

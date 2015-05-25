@@ -21,6 +21,6 @@ parameters:
 
     #Drafterbit parameters
     admin: admin
-    theme: default
+    theme: feather
     test_user: foo
     upload_dir: upload
