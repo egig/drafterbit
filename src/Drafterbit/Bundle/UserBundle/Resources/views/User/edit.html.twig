@@ -52,8 +52,15 @@
              <span class="help-block">A little biographical information may be shown publicly.</span>
         </div>
         <div class="form-group">
-            {{ form_label(form.enabled, 'Bio', {label_attr:{class:"control-label" }}) }}
-            {{ form_widget(form.enabled) }}
+            {{ form_label(form.enabled, 'Status', {label_attr:{class:"control-label" }}) }}
+            <div>
+                {% for el in form.enabled %}
+                    <label class="checkbox-inline">
+                        {{ form_widget(el) }}
+                        {{ el.vars.label }}
+                    </label>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
