@@ -97,6 +97,7 @@ class UserController extends Controller
         $user = $userManager->findUserBy(['id' => $id]);
         if(!$user) {
             $user = new User();
+            $user->addRole('ROlE_ADMIN');
         }
 
         $form = $this->createForm(new UserType, $user);

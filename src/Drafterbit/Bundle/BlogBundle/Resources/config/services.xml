@@ -16,5 +16,11 @@
             <tag name="drafterbit_system.frontpage"></tag>
             <argument type="service" id="service_container"/>
         </service>
+
+        <!-- Security-->
+        <service id="security.access.post_voter" class="Drafterbit\Bundle\BlogBundle\Security\Authorization\Voter\PostVoter">
+            <argument type="service" id="security.attribute_provider" />
+            <tag name="security.voter" />
+        </service>
     </services>
 </container>

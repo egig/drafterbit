@@ -1,36 +1,36 @@
 <?php
-// src/AppBundle/Security/Authorization/Voter/PostVoter.php
-namespace Drafterbit\Bundle\SystemBundle\Security\Authorization\Voter;
+
+namespace Drafterbit\Bundle\BlogBundle\Security\Authorization\Voter;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 use Drafterbit\Bundle\SystemBundle\Security\Authorization\AttributeProvider;
+use Drafterbit\Bundle\BlogBundle\Entity\Post;
 
-class BaseVoter implements VoterInterface
+class PostVoter implements VoterInterface
 {
-    private $attributeProvider;
-
-    public function __construct(AttributeProvider $attributeProvider)
-    {
-        $this->attributeProvider = $attributeProvider;
-    }
+    const EDIT = 'post.edit';
 
     public function supportsAttribute($attribute)
     {
-        return array_key_exists($attribute, $this->attributeProvider->all());
+        return in_array($attribute, [
+            self::EDIT
+        ]);
     }
 
     public function supportsClass($class)
     {
-        return  true;
+        $supportedClass = "Drafterbit\Bundle\BlogBundle\Entity\Post";;
+
+        return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes)
+    public function vote(TokenInterface $token, $post, array $attributes)
     {
         // check if class of this object is supported by this voter
-        if (!$this->supportsClass(get_class($object))) {
+        if (!$this->supportsClass(get_class($post))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
@@ -42,6 +42,7 @@ class BaseVoter implements VoterInterface
                 'Only one attribute is allowed'
             );
         }
+
 
         // set the attribute to check against
         $attribute = $attributes[0];
@@ -63,7 +64,8 @@ class BaseVoter implements VoterInterface
         if ($user->hasRole('ROLE_SUPER_ADMIN')) {
             return VoterInterface::ACCESS_GRANTED;
         }
-        if ($user->hasRole($attribute)) {
+
+        if ($user->getId() === $post->getUser()->getId()) {
             return VoterInterface::ACCESS_GRANTED;
         }
 

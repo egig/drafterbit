@@ -1,9 +1,9 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block action %}
-    {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success btn-sm"}}) }}
+    {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success btn-sm", disabled:group_is_superadmin}}) }}
     <a href="{{path('drafterbit_user_group')}}" class="btn btn-default btn-sm">
-        <i class="fa fa-times" style=""></i> Cancel
+        <i class="fa fa-times" style=""></i> {{ __('Close') }}
     </a>
 {% endblock %}
 
@@ -13,11 +13,11 @@
     <div class="col-md-8 col-md-offset-2 content-full">
         <div class="form-group">
             {{ form_label(form.name, 'Group Name', {label_attr:{class:"control-label"  }}) }}
-            {{ form_widget(form.name, {attr:{class:"form-control"}}) }}
+            {{ form_widget(form.name, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
         </div>
         <div class="form-group">
             {{ form_label(form.description, 'Description', {label_attr:{class:"control-label"  }}) }}
-            {{ form_widget(form.description, {attr:{class:"form-control"}}) }}
+            {{ form_widget(form.description, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
         </div>
 
         <h3 style="">Roles</h3>
@@ -35,8 +35,13 @@
                             {% for role in form.roles %}
                                 {% if role.vars.value == key %}
                                     <li class="checkbox permission">
-                                        {{form_widget(role)}}
-                                        {{form_label(role, '', {label_attr: {class:"control-label"}})}}
+                                        {% if group_is_superadmin %}
+                                            {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
+                                        {% else %}
+                                            {{ form_widget(role) }}
+                                        {% endif %}
+
+                                        {{ form_label(role, '', {label_attr: {class:"control-label"}})}}
                                     </li>
                                 {% endif %}
                             {% endfor %}

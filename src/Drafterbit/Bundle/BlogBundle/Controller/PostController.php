@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\BlogBundle\Form\Type\PostType;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
@@ -24,6 +25,7 @@ class PostController extends Controller
     /**
      * @Route("/blog/post", name="drafterbit_blog_post")
      * @Template()
+     * @Security("is_granted('ROLE_POST_VIEW')")
      */
     public function indexAction(Request $request)
     {
@@ -147,12 +149,15 @@ class PostController extends Controller
     /**
      * @Route("/blog/post/edit/{id}", name="drafterbit_blog_post_edit")
      * @Template()
+     * @Security("is_granted('ROLE_POST_EDIT')")
      */
     public function editAction($id)
     {
         $pageTitle = 'Edit Post';
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
+
+        $this->denyAccessUnlessGranted('post.edit', $post);
 
         $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
 

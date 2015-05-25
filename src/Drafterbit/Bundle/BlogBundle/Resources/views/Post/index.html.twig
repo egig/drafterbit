@@ -17,12 +17,17 @@
 {% endblock %}
 
 {% block action %}
-	<a href="{{ url('drafterbit_blog_post_edit', {id:"new"}) }}" class="btn btn-success btn-sm">
-	    <i class="fa fa-plus" style=""></i> {{ __('New Post') }}
-	</a>
-	<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="trash">
-	    <i class="fa fa-trash-o"></i> {{ __('Trash') }}
-	</button>
+    {% if is_granted('ROLE_POST_CREATE') %}
+    <a href="{{ url('drafterbit_blog_post_edit', {id:"new"}) }}" class="btn btn-success btn-sm">
+        <i class="fa fa-plus" style=""></i> {{ __('New Post') }}
+    </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_POST_DELETE') %}
+    <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="trash">
+        <i class="fa fa-trash-o"></i> {{ __('Trash') }}
+    </button>
+    {% endif %}
 {% endblock %}
 
 {% block table %}

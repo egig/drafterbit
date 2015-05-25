@@ -88,7 +88,8 @@ class GroupController extends Controller
             'view_id' => 'group-edit',
             'action' => $this->generateUrl('drafterbit_user_group_save'),
             'rolesGroup' => $rolesGroup,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'group_is_superadmin' => $group->hasRole('ROLE_SUPER_ADMIN')
         ];
     }
 

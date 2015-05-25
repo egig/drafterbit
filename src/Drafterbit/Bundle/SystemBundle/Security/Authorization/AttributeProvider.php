@@ -13,6 +13,9 @@ class AttributeProvider {
 		$this->kernel = $kernel;
 	}
 
+    /**
+     * Get all permission attribute
+     */
 	public function all()
 	{
 
@@ -28,6 +31,11 @@ class AttributeProvider {
         return $attr;
 	}
 
+    /**
+     * Get permission attribute per bundle
+     *
+     * @return array
+     */
 	public function getPerBundle()
 	{
 		$container = $this->kernel->getContainer();
