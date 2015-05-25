@@ -1,0 +1,23 @@
+{% extends "DrafterbitSystemBundle::base.html.twig" %}
+
+{% block content %}
+    {{ form_start(form, {attr:{id: view_id~"-form"}, action: action}) }}
+        <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
+            <div class="container">
+                <div class="row row-sticky-toolbar" style="margin:10px 0;">
+                	{% block action %} {% endblock %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            {% block form %}{% endblock %}
+         </div>
+    {{ form_end(form) }}
+{% endblock %}
+ 
+ {% block javascripts %}
+ 	{{parent()}}
+ 	<script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+ 	<script type="text/javascript" src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+ {% endblock %}

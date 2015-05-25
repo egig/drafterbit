@@ -1,0 +1,25 @@
+{% extends "DrafterbitSystemBundle::base_index.html.twig" %}
+
+{% block action %}
+        <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="delete">Delete</button>
+        <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="clear">Clear</button>
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="log-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="log-checkall" type="checkbox">
+                </th>
+                <th width="30%">Time</th>
+                <th width="70%">Activity</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script type="text/javascript" src="{{ asset('@DrafterbitSystemBundle/js/log.js') }}"></script>
+{% endblock %}

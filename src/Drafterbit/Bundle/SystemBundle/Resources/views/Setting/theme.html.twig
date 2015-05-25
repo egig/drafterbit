@@ -1,0 +1,35 @@
+{% extends "DrafterbitSystemBundle::base.html.twig" %}
+
+{% block content %}	
+<div class="container">
+    <div class="row row-content">
+        <div class="col-md-12">
+        	{% for theme in themes %}
+                <div class="col-md-4">
+                    <div class="well well-sm clearfix">
+                        <div style="height:160px;overflow:hidden;">
+                        	<img width="100%;" src="{{ asset('themes/'~theme.id~'/screenshot.png') }}"/>
+                        </div>
+                        <div style="height:70px;overflow:hidden;" class="theme-property">
+                            <h4>{{ theme.name }}</h4>
+                            <form method="GET" target="_blank" action="{{ url('drafterbit_setting_theme_customize') }}">
+                            	<input type="hidden" name="_token" value="{{csrf_token('customize_theme')}}">
+                            	<input type="hidden" name="theme" value="{{theme.id}}">
+	                            <button target="_blank" class="btn btn-xs btn-primary pull-right" style="margin-left:5px;">Customize</button>
+                           </form>
+                            {%  if theme.is_active %}
+                            <a disabled class="btn btn-xs btn-default pull-right">Active</a>
+                            {% else %}
+                            <form method="POST">
+                                <input type="hidden" name="theme" value="{{ theme.id }}">
+                                <input type="submit" value="Activate" class="btn btn-xs btn-success pull-right">
+                           </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+			{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

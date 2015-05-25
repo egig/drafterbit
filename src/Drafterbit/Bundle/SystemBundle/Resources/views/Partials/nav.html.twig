@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+    <div class="container nav-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{url('drafterbit_system_dashboard')}}"><i class="fa fa-home"></i></a>
+            </div>
+            <!-- /.navbar-header -->
+            <div class="dt-off-canvas">
+                <ul class="nav navbar-top-links navbar-left">
+                    {% for n,nav in system.navigations %}
+                        {% if nav.children is defined and nav.children|length %}
+                            <li class="dropdown">
+                                <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
+                                    {{ nav.label }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-caret">
+                                      <span class="caret-outer"></span>
+                                      <span class="caret-inner"></span>
+                                    </div>
+
+                                    {% for name,child in nav.children %}
+                                        <li>
+                                            <a id="nav-{{name}}" href="{{url(child.route)}}">{{child.label}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <!-- /.dropdown -->
+                            </li>
+                        
+                        {% else %}
+                        <?php else : ?>
+                             <li>
+                                <a id="nav-{{ n }}" class="navbar-link"  href="{{url(nav.route)}}">
+                                    {{nav.label}}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right user-preferences">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
+                        <img width="20px;" class="profile-avatar" src="{{gravatar_url(app.user.email, 17)}}" alt="{{app.user.username}}"/>
+                        <!--<i class="fa fa-caret-down"></i>-->
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-user">
+                        <div class="dropdown-caret">
+                            <span class="caret-outer"></span>
+                            <span class="caret-inner"></span>
+                        </div>
+                        <li> <a href="{{ path('home') }}" target="_blank">Visit Site <i class="fa fa-external-link"></i> </a> </li>
+                        <!--<li><a href="#" class="soon">My Profile</a> </li>
+                        <li><a href="#" class="soon">Preferences</a> </li>-->
+                        <li><a href="{{ url('drafterbit_user_security_logout') }}">Logout</a> </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+    </div>
+</nav>

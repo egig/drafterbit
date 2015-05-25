@@ -1,0 +1,40 @@
+{% extends "DrafterbitSystemBundle::base_index.html.twig" %}
+
+{% block filter %}
+<div style="display:inline-block; float:right;margin-left:5px;">
+    <select name="filter" class="form-control input-sm users-status-filter">
+        <option value="all" selected >- Status -</option>
+        <option value="active" >Active</option>
+        <option value="banned" >Banned</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block action %}
+<a href="{{path('drafterbit_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" style=""></i> New User
+</a>
+<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+    <i class="fa fa-trash-o"></i> Delete
+</button>
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="users-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="users-checkall" type="checkbox">
+                </th>
+                <th width="60%">Name</th>
+                <th width="30%">Email</th>
+                <th width="10%">Status</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('@DrafterbitUserBundle/js/index.js') }}"></script>
+{% endblock %}

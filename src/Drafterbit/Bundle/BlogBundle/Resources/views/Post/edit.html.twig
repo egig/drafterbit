@@ -1,0 +1,138 @@
+{% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+  {{parent()}}
+  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/magicsuggest/magicsuggest-min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitBlogBundle/css/editor.css') }}">
+{% endblock %}
+
+{% block action %}
+  {{form_widget(form.Save, {attr:{class:"btn btn-sm btn-success"}})}}
+<a class="btn btn-sm btn-default" href="{{ url('drafterbit_blog_post') }}">
+    <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
+</a>
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <div class="clearfix col-md-9">
+        <div class="form-group">
+          {{ form_widget(form.title, {attr:{class:"form-control input-lg", placeholder:__('Title')}}) }}
+         </div>
+         <div class="form-group">
+          {{ form_widget(form.content) }}
+         </div>
+         {% if revisions %}
+          <div class="panel panel-default revisions-container">
+            <div class="panel-heading">
+              <h5 class="panel-title" style="font-size:14px;text-align:center">
+                <a href="#revisions" data-parent="" data-toggle="collapse" aria-expanded="false">
+                    {{ __('Revisions') }} ({{ revisions|length }})
+                </a>
+              </h5>
+            </div>
+            <div class="panel-collapse collapse" id="revisions" aria-expanded="false">
+                <div class="panel-body">
+                    <div class="pull-right">
+                        <a class="clear-history" href="#" data-post-id="{{ post_id }}"><i class="fa fa-times"></i> {{ __('Clear') }}</a>
+                    </div>
+                    <ol style="list-style:none">
+                      {% for revision in revisions %}
+                            <li>
+                                <a href="{{ url('drafterbit_user_edit', {id:revision.user.id}) }}">{{ revision.user.realname }}</a>
+                                {{ revision.createdAt|ago }}
+                                (<a href="{{url('drafterbit_blog_revision_view', {postId: post_id})}}#rev-{{revision.id}}">{{ revision.createdAt|date('d F Y, @H:i') }}</a>)
+                            </li>
+                      {% endfor %}
+                    </ol>
+                </div>
+              </div>
+          </div>
+         {% endif %}
+    </div>
+    <div class="clearfix col-md-3">
+        <div class="form-group" >
+          {{ form_widget(form.slug, {attr:{class:"form-control", placeholder:__('Slug')}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.status) }}
+            {{ form_widget(form.status, {attr:{class:"form-control"}}) }}
+        </div>
+         <div class="form-group">
+          {{ form_label(form.published_at) }}
+          {{ form_widget(form.published_at, {attr:{class:"form-control publish-date"}}) }}
+         </div>
+        <div class="form-group">
+            {{ form_label(form.categories) }}
+
+            <div class="categories">
+              {{ _self.render_categories(form.categories, categories) }}
+            </div>
+
+        </div>
+        <div class="form-group tags-input-wrapper">
+            <label>{{ __('Tags') }}</label>
+            <input placeholder="Tags" id="tags" name="tags"/>
+         </div>
+    </div>
+</div>
+{% endblock %}
+
+{% macro render_categories(form_ctg, categories, parent) %}
+  <ol>
+    {% for category in categories %}
+      {% if category.parent ==  parent %}
+          {% for form_cat in form_ctg %}
+            {% if form_cat.vars.value ==  category.id %}
+              {{ form_widget(form_cat) }} {{ form_cat.vars.label }}
+            {% endif %}
+          {% endfor %}
+          {{ _self.render_categories(form_ctg, categories, category) }}
+      {% endif %}
+    {% endfor %}
+  </ol>
+{% endmacro %}
+
+{% block javascripts %}
+  {{parent()}}
+
+{% autoescape false %}
+  <script>
+    var tagOptions = {{ tag_options }};
+    var tags = {{ tags }} // json encoded
+  </script>
+{% endautoescape %}
+  
+  <script type="text/javascript" src="{{ asset('plugins/magicsuggest/magicsuggest-min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('plugins/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/editor.js') }}"></script>
+
+   <script>
+    CKEDITOR.replace('blog_post[content]', {
+
+        customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
+        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
+
+        filebrowserWindowWidth  : 860,
+        filebrowserWindowHeight : 453,
+        filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
+    });
+
+    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
+    CKEDITOR.config.extraPlugins = 'wpmore';
+
+
+    // handle footer position
+    CKEDITOR.on("instanceReady", function(event)
+    {
+        var h = $('.page-wrapper').height();
+        var hW = $(window).innerHeight();
+
+        if(h+30 > hW) {
+            $('.footer').removeClass('navbar-fixed-bottom');
+        }
+    });
+  </script>
+{% endblock %}

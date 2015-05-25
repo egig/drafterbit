@@ -1,0 +1,51 @@
+<?php
+
+namespace Drafterbit\Bundle\SystemBundle\Security\Authorization;
+
+use Symfony\Component\HttpKernel\Kernel;
+
+class AttributeProvider {
+
+	protected $kernel;
+
+	public function __construct(Kernel $kernel)
+	{
+		$this->kernel = $kernel;
+	}
+
+	public function all()
+	{
+
+        $rolesGroup = $this->getPerBundle();
+
+        $attr = [];
+        foreach($rolesGroup as $bundle => $attributes) {
+            foreach ($attributes as $key => $value) {
+                $attr[$key] = $value;
+            }
+        }
+
+        return $attr;
+	}
+
+	public function getPerBundle()
+	{
+		$container = $this->kernel->getContainer();
+		$bundles = $this->kernel->getBundles();
+
+        $roles = [];
+        foreach ($bundles as $name => $bundle) {
+
+            if($extension = $bundle->getContainerExtension()) {
+
+                $parameter = $extension->getAlias().'.roles';
+                $section = ucfirst(preg_replace('/^drafterbit_/', '', $extension->getAlias()));
+                if($container->hasParameter($parameter)){
+                    $roles[$section] = $container->getParameter($parameter);
+                }
+            }
+        }
+
+        return $roles;
+	}
+}

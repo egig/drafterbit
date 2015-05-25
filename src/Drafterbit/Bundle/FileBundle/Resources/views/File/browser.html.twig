@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>File Browser</title>
+
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/font-awesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap/dist/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ asset('plugins/egig-notify/notify.css') }}" />
+	<link rel="stylesheet" href="{{asset('plugins/finder/finder.css')}}"/>
+
+<style>
+    #finder-container {
+        width: 100% !important;
+        padding: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div id="finder-container"></div>
+
+<script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.js') }}"></script>
+<script src="{{ asset('plugins/egig-notify/notify.js') }}"></script>
+<script src="{{ url('asset_drafterbit_js') }}"></script>
+<script src="{{ url('drafterbit_system_asset_session_js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('plugins/bootstrap-contextmenu/bootstrap-contextmenu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('plugins/finder/dist/finder.js') }}"></script>
+<script type="text/javascript" src="{{ asset('@DrafterbitFileBundle/js/browser.js') }}"></script>
+
+</body>
+</html>

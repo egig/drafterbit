@@ -1,0 +1,19 @@
+/* Dashboard */
+    .time-line {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .time-line li {
+        clear:both;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .time-line li .time {
+        font-size: 0.9em;
+        color: #BBBBBB;
+        float:right;
+    }
+
+    .time-line li .fa {
+        color: #BBBBBB;
+    }

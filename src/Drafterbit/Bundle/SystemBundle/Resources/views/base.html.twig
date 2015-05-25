@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ page_title|striptags }} | {{ system.sitename }}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/font-awesome.css') }}" />
+            <link rel="stylesheet" href="{{ asset('plugins/bootstrap/dist/css/bootstrap.css') }}" />
+            <link rel="stylesheet" href="{{ asset('plugins/egig-notify/notify.css') }}" />
+
+            <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/overrides-bootstrap.css') }}" />
+            <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/style.css') }}" />
+            <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/style-desktop.css') }}" />
+            <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/style-mobile.css') }}" />
+        {% endblock %}
+
+    </head>
+
+    <body>
+    <noscript>
+      <style type="text/css"> div:not(.noscript), nav {margin: 0; padding: 0; display: none; } body {margin: 0;padding: 0} </style>
+      <div class="noscript">Please use javascript-supported browser.</div>
+    </noscript>
+        {% include 'DrafterbitSystemBundle:Partials:nav.html.twig' %}
+            <div class="page-wrapper">
+                <div class="container row-header-container">
+                    <div class="row row-header">
+                      <div class="col-lg-12" style="margin-bottom:10px;">
+
+                          {% block page_title %}
+                              {# we'll unescape title so we can put a link within it #}
+                              {% autoescape false %}
+                                  <h2 style="display:inline-block">{{ page_title }}</h2>
+                              {% endautoescape %}
+                          {% endblock %}
+                      </div>
+                    </div>
+                </div>
+                {% block content %} {% endblock %}
+            </div>
+        {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
+
+        {% block javascripts %}
+            <script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+            <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('plugins/egig-notify/notify.js') }}"></script>
+            <script src="{{ asset('@DrafterbitSystemBundle/js/layout.js') }}"></script>
+            <script src="{{ url('asset_drafterbit_js') }}"></script>
+            <script src="{{ url('drafterbit_system_asset_session_js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

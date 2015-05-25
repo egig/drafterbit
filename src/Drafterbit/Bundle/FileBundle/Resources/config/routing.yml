@@ -1,0 +1,3 @@
+drafterbit_file:
+    resource: "@DrafterbitFileBundle/Controller"
+    type:     annotation

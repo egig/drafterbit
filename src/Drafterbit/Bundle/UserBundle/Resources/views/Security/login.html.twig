@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/img/ico/favicon.ico">
+
+    <title>Login | {{ system.sitename }}</title>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap/dist/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ asset('@DrafterbitUserBundle/css/login.css') }}" />
+  </head>
+
+  <body>
+    <noscript>
+      <style type="text/css"> div:not(.noscript), nav {margin: 0; padding: 0; display: none; } body {margin: 0;padding: 0} </style>
+      <div class="noscript">Please use javascript-supported browser.</div>
+    </noscript>
+    <div class="container">
+      <div class="panel panel-default form-signin-panel">
+        <div class="panel-body">
+			    <div style="text-align:center; margin-bottom:20px;"><h1 class="title">{{ system.sitename }}</h1></div>       
+				{% if error %}
+				    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'FOSUserBundle') }}</div>
+				{% endif %}
+				<form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-signin">
+					    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+					    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username_or_email'|trans({}, 'DrafterbitUserBundle') }}" class="form-control input-sm"/>
+
+					    <input type="password" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'DrafterbitUserBundle') }}" class="form-control input-sm"/>
+
+              {# PENDNG
+					    <div class="checkbox" style="display:inline-block;">
+						    <label for="remember_me">
+					    	<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+					    	{{ 'security.login.remember_me'|trans({}, 'DrafterbitUserBundle') }}
+						    </label>
+						  </div>
+              #}
+
+					    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'DrafterbitUserBundle') }}" class="btn btn-primary form-control" />
+                 </form>
+            </div>
+        </div>
+        <div class="copyright dt-brand">
+            <p>Drafterbit {{ system.version }} &copy; {{ date()|date('Y') }}</p>
+        </div>
+    </div> <!-- /container -->
+    <script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+    </script>
+  </body>
+</html>

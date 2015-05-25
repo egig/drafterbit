@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="twig.extension.assets.class">Drafterbit\Bundle\SystemBundle\Twig\Extension\AssetsExtension</parameter>
+        <parameter key="web_profiler.debug_toolbar.class">Drafterbit\Bundle\SystemBundle\EventListener\WebDebugToolbarListener</parameter>
+
+        <!-- admin -->
+        <parameter key="admin">admin</parameter>
+
+        <!-- theme -->
+        <parameter key="themes_path">%kernel.root_dir%/../web/themes</parameter>
+        <parameter key="theme">feather</parameter>
+
+        <!-- log connection param -->
+        <parameter key="system_log_handler_connection_param" type="collection">
+            <parameter key="dbname">%database_name%</parameter>
+            <parameter key="user">%database_user%</parameter>
+            <parameter key="password">%database_password%</parameter>
+            <parameter key="host">%database_host%</parameter>
+            <parameter key="driver">%database_driver%</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+
+        <!-- Frontend Templating extension -->
+        <service id="dtsystem.twig.extension.frontend" class="Drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="kernel" />
+        </service>
+
+        <!-- Twig-->
+        <service id="twig.extension.dtsystem" class="Drafterbit\Bundle\SystemBundle\Twig\Extension\DrafterbitSystemExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Security-->
+        <service id="security.access.base_voter" class="Drafterbit\Bundle\SystemBundle\Security\Authorization\Voter\BaseVoter">
+            <argument type="service" id="security.attribute_provider" />
+            <tag name="security.voter" />
+        </service>
+
+        <service id="security.attribute_provider" class="Drafterbit\Bundle\SystemBundle\Security\Authorization\AttributeProvider">
+            <argument type="service" id="kernel" />
+        </service>
+
+        <!-- System Model-->
+        <service id="drafterbit_system.model" class="Drafterbit\Bundle\SystemBundle\Model\System">
+            <argument type="service" id="database_connection" />
+        </service>
+
+        <service id="system" alias="drafterbit_system.model"/>
+
+        <!-- Log Handler -->
+        <service id="system_log_handler" class="Drafterbit\Bundle\SystemBundle\Monolog\Handler\DoctrineDBALHandler">
+            <argument>%system_log_handler_connection_param%</argument>
+            <argument /> <!-- level -->
+            <argument /> <!-- bubble -->
+        </service>
+
+        <!-- Log Handler -->
+        <service id="system_log_display_formatter" class="Drafterbit\Bundle\SystemBundle\Log\Display\Formatter"/>
+
+        <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\Frontpage\Search">
+            <tag name="drafterbit_system.frontpage"></tag>
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <!-- Frontpage Provider -->
+        <service id="drafterbit_system.frontpage_provider" class="Drafterbit\Bundle\SystemBundle\FrontpageProvider"/>
+
+
+        <!-- Frontend Route loader -->
+        <service id="drafterbit_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\FrontendLoader">
+            <argument id="service_container" type="service"/>
+            <tag name="routing.loader"></tag>
+        </service>
+
+        <!-- Event Listener -->
+        <service id="drafterbit_system.request.listener" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
+            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Dahboard and Panels -->
+        <service id="drafterbit_system.dashboard_manager" class="Drafterbit\Bundle\SystemBundle\Dashboard\DashboardManager"/>
+
+        <service id="dashboard" alias="drafterbit_system.dashboard_manager"/>
+
+        <service id="drafterbit_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\Dashboard\LogPanel">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system.dashboard.panel" />
+        </service>
+
+        <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\Dashboard\InfoPanel">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system.dashboard.panel" />
+        </service>
+
+        <!-- widget -->
+        <service id="drafterbit_system.widget.form_builder" class="Drafterbit\Bundle\SystemBundle\Widget\WidgetFormBuilder">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="drafterbit_system.widget.manager" class="Drafterbit\Bundle\SystemBundle\Widget\WidgetManager">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="drafterbit_system.widget.search" class="Drafterbit\Bundle\SystemBundle\Widget\SearchWidget">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.widget" />
+        </service>
+
+        <service id="drafterbit_system.widget.text" class="Drafterbit\Bundle\SystemBundle\Widget\TextWidget">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.widget" />
+        </service>
+
+    </services>
+</container>

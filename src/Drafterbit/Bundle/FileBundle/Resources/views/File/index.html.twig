@@ -1,0 +1,20 @@
+{% extends "DrafterbitSystemBundle::base.html.twig" %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('plugins/finder/finder.css')}}"/>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="finder-container"></div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script type="text/javascript" src="{{ asset('plugins/bootstrap-contextmenu/bootstrap-contextmenu.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('plugins/finder/dist/finder.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('@DrafterbitFileBundle/js/index.js') }}"></script>
+{% endblock %}

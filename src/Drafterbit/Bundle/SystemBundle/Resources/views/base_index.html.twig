@@ -1,0 +1,56 @@
+{% extends "DrafterbitSystemBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/overrides-datatables.css') }}" />
+    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/plugins/bootstrap-datatables/bootstrap-datatables.css') }}" />
+{% endblock %}
+
+{% block content %}
+<form method="POST"
+    id="{{ view_id|default(random()) }}-index-form"
+    {% if action is defined %} action="{{ action }}"{% endif %}
+    >
+    <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
+        <div class="container">
+            <div class="row row-sticky-toolbar" style="margin:10px 0;">
+                <div class="pull-right">
+                    <div style="display:inline-block; float:right;margin-left:5px;">
+                        <input type="search" class="form-control input-sm" placeholder="Search">
+                    </div>
+
+                    {% block filter %} {% endblock %}
+                </div>
+
+                    {% block action %} {% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row row-content">
+           <div class="col-md-12 content-full">
+                {% block table %} {% endblock %}
+            </div>
+        </div>
+     </div>
+    <input type="hidden" name="_token" value="{{ csrf_token(view_id) }}"/>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('@DrafterbitSystemBundle/plugins/bootstrap-datatables/bootstrap-datatables.js') }}"></script>
+    <script src="{{ asset('plugins/chekall/jquery-check-all.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+    <script src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+
+    <script type="text/javascript">
+    {% verbatim %}
+        $('.table').on('click', 'tbody tr', function(){
+            $(this).find('input[type="checkbox"]').click();
+        });
+    {% endverbatim %}
+    </script>
+{% endblock %}

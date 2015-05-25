@@ -1,0 +1,66 @@
+{% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+	{{parent()}}
+    <link rel="stylesheet" href="{{ asset('plugins/chosen/chosen.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/plugins/chosen-bootstrap/chosen-bootstrap.css') }}" />
+{% endblock %}
+
+{% block action %}
+    {{ form_widget(form.Save, {label: 'Save User', attr: {class: "btn btn-success btn-sm"}}) }}
+    <a href="{{path('drafterbit_user')}}" class="btn btn-default btn-sm">
+        <i class="fa fa-times" style=""></i> Close
+    </a>
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form_label(form.username, 'Username', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.username, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email, 'Email', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.email, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password.second, null, {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.password.second, {attr:{class:"form-control", autocomplete:"off"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password.first, null, {label_attr:{class:"control-label"}}) }}
+            {{ form_widget(form.password.first, {attr:{class:"form-control", autocomplete:"off"}}) }}
+        </div>
+         <div class="form-group">
+            {{ form_label(form.groups, 'Group', {label_attr:{class:"control-label" }}) }}
+            {{ form_widget(form.groups, {attr:{class:"form-control", "data-placeholder":"Select Group"}}) }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form_label(form.realname, 'Real Name', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.realname, {attr:{class:"form-control"}}) }}
+        </div>
+         <div class="form-group">
+            {{ form_label(form.url, 'Url', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.url, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.bio, 'Bio', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.bio, {attr:{class:"form-control"}}) }}
+             <span class="help-block">A little biographical information may be shown publicly.</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.enabled, 'Bio', {label_attr:{class:"control-label" }}) }}
+            {{ form_widget(form.enabled) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script type="text/javascript" src="{{ asset('plugins/chosen/chosen.jquery.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('@DrafterbitUserBundle/js/edit.js') }}"></script>
+{% endblock %}

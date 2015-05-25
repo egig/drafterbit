@@ -1,0 +1,3 @@
+drafterbit_user:
+    resource: "@DrafterbitUserBundle/Controller/"
+    type:     annotation

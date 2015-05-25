@@ -1,0 +1,29 @@
+{% extends "DrafterbitSystemBundle::base_index.html.twig" %}
+
+{% block action %}
+<a href="{{ url('drafterbit_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
+    <i class="fa fa-plus" style=""></i> New Group
+</a>
+<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+    <i class="fa fa-trash-o"></i> Delete
+</button>
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="group-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="group-checkall" type="checkbox">
+                </th>
+                <th width="30%">Name</th>
+                <th width="70%">Description</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('@DrafterbitUserBundle/js/group/index.js') }}"></script>
+{% endblock %}

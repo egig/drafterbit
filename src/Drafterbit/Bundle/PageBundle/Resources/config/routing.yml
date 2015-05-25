@@ -1,0 +1,3 @@
+drafterbit_page:
+    resource: "@DrafterbitPageBundle/Controller"
+    type:     annotation

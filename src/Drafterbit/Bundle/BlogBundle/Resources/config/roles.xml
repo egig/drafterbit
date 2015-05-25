@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="drafterbit_blog.roles" type="collection">
+            <parameter key="ROLE_POST_VIEW">View Post</parameter>
+            <parameter key="ROLE_POST_CREATE">Create Post</parameter>
+            <parameter key="ROLE_POST_EDIT">Edit Post</parameter>
+            <parameter key="ROLE_POST_POST">Delete Post</parameter>
+
+            <parameter key="ROLE_CATEGORY.VIEW">View Category</parameter>
+            <parameter key="ROLE_CATEGORY.CREATE">Create Category</parameter>
+            <parameter key="ROLE_CATEGORY.EDIT">Edit Category</parameter>
+            <parameter key="ROLE_CATEGORY.DELETE">Delete Category</parameter>
+        </parameter>
+    </parameters>
+</container>
