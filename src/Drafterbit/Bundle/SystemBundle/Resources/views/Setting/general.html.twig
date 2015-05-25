@@ -58,3 +58,13 @@
 
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+
+    {% if success %}
+        <script type="text/javascript">
+        $.notify('{{ success.message }}', 'success');
+        </script>>
+    {% endif %}
+{% endblock %}

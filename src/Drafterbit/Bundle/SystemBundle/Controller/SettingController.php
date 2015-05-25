@@ -26,30 +26,30 @@ class SettingController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
      */
-    public function generalAction()
+    public function generalAction(Request $request)
     {
         $form = $this->createForm(new SystemType($this->get('system'), $this->get('drafterbit_system.frontpage_provider'))) ;
-
-        return [
+        
+        $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
             'view_id' => 'system',
-            'action' => $this->generateUrl('drafterbit_system_setting_save'),
+            'action' => $this->generateUrl('drafterbit_system_setting_general'),
             'form' => $form->createView()
         ];
-    }
 
-    /**
-     * @Route("/setting/save", name="drafterbit_system_setting_save")
-     * 
-     */
-    public function saveAction(Request $request)
-    {
         $system = $request->request->get('system');
-        unset($system['Save']);
-        unset($system['_token']);
-        $this->get('system')->update($system);
 
-        return $this->redirect($this->generateUrl('drafterbit_system_setting_general'));
+        // @todo validation
+        $data['success'] = false;
+        if($system) {
+            unset($system['Save']);
+            unset($system['_token']);
+            $this->get('system')->update($system);
+            $data['success'] = ['message' => 'Setting Saved'];
+        }
+
+
+        return $data;
     }
 
     /**

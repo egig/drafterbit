@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\BlogBundle\Form\Type\PostType;
+use Drafterbit\Bundle\BlogBundle\Form\Type\SettingType;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
 use Drafterbit\Bundle\BlogBundle\Entity\Tag;
 use Drafterbit\Bundle\BlogBundle\Model\Revision;
@@ -360,11 +361,35 @@ class PostController extends Controller
 
     /**
      * @Route("/setting/blog", name="drafterbit_blog_setting")
-     * @Template()
+     * @Template("DrafterbitBlogBundle::setting.html.twig")
      * @Security("is_granted('ROLE_BLOG_SETTING_MANAGE')")
      */
-    public function settingAction()
+    public function settingAction(Request $request)
     {
+        $blogSetting = $request->request->get('blog_setting');
+        
+        $form = $this->createForm(new SettingType($this->get('system')));
 
+        $data =  [
+            'action' => $this->generateUrl('drafterbit_blog_setting'),
+            'view_id' => 'blog_setting',
+            'page_title' => $this->get('translator')->trans('Blog Setting'),
+            'form' => $form->createView()
+        ];
+
+        // @todo validation
+        $data['success'] = false;
+        if($blogSetting) {       
+            $settingData = [
+                'blog.post_perpage' => $blogSetting['post_perpage'],
+                'blog.feed_shows' => $blogSetting['feed_shows']
+            ];
+            $this->get('system')->update($settingData);
+            $data['success'] = [
+                'message' => 'Setting saved'
+            ];
+        }
+
+        return $data;
     }
 }
