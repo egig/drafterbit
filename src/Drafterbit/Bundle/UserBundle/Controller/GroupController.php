@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\UserBundle\Entity\Group;
 use Drafterbit\Bundle\UserBundle\Form\Type\GroupType;
@@ -21,6 +22,7 @@ class GroupController extends Controller
 	/**
      * @Route("/user/group", name="drafterbit_user_group")
      * @Template()
+     * @Security("is_granted('ROLE_GROUP_VIEW')")
      */
     public function indexAction()
     {
@@ -60,6 +62,7 @@ class GroupController extends Controller
     /**
      * @Route("/user/group/edit/{id}", name="drafterbit_user_group_edit")
      * @Template()
+     * @Security("is_granted('ROLE_GROUP_EDIT')")
      */
     public function editAction($id = 0)
     {

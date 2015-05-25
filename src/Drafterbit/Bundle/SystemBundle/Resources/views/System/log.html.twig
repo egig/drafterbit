@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block action %}
-        <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="delete">Delete</button>
-        <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="clear">Clear</button>
+        {% if is_granted('ROLE_LOG_DELETE') %}
+            <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="delete">Delete</button>
+            <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="clear">Clear</button>
+        {% endif %}
 {% endblock %}
 
 {% block table %}

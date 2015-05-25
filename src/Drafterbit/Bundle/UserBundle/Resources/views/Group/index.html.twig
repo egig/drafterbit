@@ -1,12 +1,16 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block action %}
-<a href="{{ url('drafterbit_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" style=""></i> New Group
-</a>
-<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
-    <i class="fa fa-trash-o"></i> Delete
-</button>
+    {% if is_granted('ROLE_GROUP_CREATE') %}
+        <a href="{{ url('drafterbit_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
+            <i class="fa fa-plus" style=""></i> New Group
+        </a>
+    {% endif %}
+    {% if is_granted('ROLE_GROUP_DELETE') %}
+        <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+            <i class="fa fa-trash-o"></i> Delete
+        </button>
+    {% endif %}
 {% endblock %}
 
 {% block table %}

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 use Drafterbit\Bundle\SystemBundle\Form\Type\SystemType;
@@ -23,6 +24,7 @@ class SettingController extends Controller
     /**
      * @Route("/setting/general", name="drafterbit_system_setting_general")
      * @Template()
+     * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
      */
     public function generalAction()
     {
@@ -53,11 +55,12 @@ class SettingController extends Controller
     /**
      * @Route("/setting/theme", name="drafterbit_system_setting_theme")
      * @Template()
+     * @Security("is_granted('ROLE_SETTING_THEME_MANAGE')")
      */
     public function themeAction()
     {
         $themes = $this->getThemes();
-    	return [
+        return [
             'page_title' => $this->get('translator')->trans('Theme'),
             'themes' => $themes
         ];

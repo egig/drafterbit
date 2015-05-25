@@ -14,6 +14,8 @@
             <parameter key="ROLE_CATEGORY_CREATE">Create Category</parameter>
             <parameter key="ROLE_CATEGORY_EDIT">Edit Category</parameter>
             <parameter key="ROLE_CATEGORY_DELETE">Delete Category</parameter>
+
+            <parameter key="ROLE_BLOG_SETTING_MANAGE">Manage Blog Setting</parameter>
         </parameter>
     </parameters>
 </container>

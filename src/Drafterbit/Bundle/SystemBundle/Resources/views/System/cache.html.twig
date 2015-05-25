@@ -3,11 +3,13 @@
 {% block content %}
 <div class="container">
     <div class="row" style="margin-bottom:10px;">
+        {% if is_granted('ROLE_CACHE_RENEW') %}
         <div class="col-md-8">
             <form action="{{ path('drafterbit_system_cache_clear') }}" method="POST">
                 <button type="submit" class="btn btn-default btn-sm">Renew Cache</button>
             </form>
         </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-md-8">

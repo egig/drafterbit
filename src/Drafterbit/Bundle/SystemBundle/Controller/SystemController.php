@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\SystemBundle\Entity\PanelConfig;
 
@@ -78,6 +79,7 @@ class SystemController extends Controller
     /**
      * @Route("/system/log", name="drafterbit_system_log")
      * @Template()
+     * @Security("is_granted('ROLE_LOG_VIEW')")
      */
     public function logAction()
     {
@@ -118,6 +120,7 @@ class SystemController extends Controller
     /**
      * @Route("/system/cache", name="drafterbit_system_cache")
      * @Template()
+     * @Security("is_granted('ROLE_CACHE_VIEW')")
      */
     public function cacheAction()
     {

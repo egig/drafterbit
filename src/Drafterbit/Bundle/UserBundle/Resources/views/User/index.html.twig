@@ -11,12 +11,18 @@
 {% endblock %}
 
 {% block action %}
-<a href="{{path('drafterbit_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
-    <i class="fa fa-plus" style=""></i> New User
-</a>
-<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
-    <i class="fa fa-trash-o"></i> Delete
-</button>
+    {% if is_granted('ROLE_USER_CREATE') %}
+        <a href="{{path('drafterbit_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
+            <i class="fa fa-plus" style=""></i> New User
+        </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_USER_DELETE') %}
+        <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+            <i class="fa fa-trash-o"></i> Delete
+        </button>
+    {% endif %}
+
 {% endblock %}
 
 {% block table %}

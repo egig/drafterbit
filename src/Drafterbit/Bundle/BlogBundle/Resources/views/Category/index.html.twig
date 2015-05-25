@@ -1,12 +1,17 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block action %}
+    {% if is_granted('ROLE_CATEGORY_CREATE') %}
     <a href="{{ url('drafterbit_blog_category_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
         <i class="fa fa-plus" style=""></i> {{ __('New Category') }}
     </a>
+    {% endif %}
+    
+    {% if is_granted('ROLE_CATEGORY_DELETE') %}
     <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
         <i class="fa fa-trash-o"></i> {{ __('Delete') }}
     </button>
+    {% endif %}
 {% endblock %}
 
 {% block table %}

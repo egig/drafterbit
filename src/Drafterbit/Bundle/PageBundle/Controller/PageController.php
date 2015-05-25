@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\PageBundle\Form\Type\PageType;
 use Drafterbit\Bundle\PageBundle\Entity\Page;
@@ -21,6 +22,7 @@ class PageController extends Controller
     /**
      * @Route("/page", name="drafterbit_page")
      * @Template()
+     * @Security("is_granted('ROLE_PAGE_VIEW')")
      */
     public function indexAction(Request $request)
     {
@@ -139,6 +141,8 @@ class PageController extends Controller
     /**
      * @Route("/page/edit/{id}", name="drafterbit_page_edit")
      * @Template()
+     * @todo crate permission attr constant 
+     * @Security("is_granted('ROLE_PAGE_EDIT')")
      */
     public function editAction($id)
     {

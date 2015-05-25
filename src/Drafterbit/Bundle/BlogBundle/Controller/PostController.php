@@ -162,7 +162,8 @@ class PostController extends Controller
             $pageTitle = 'New Post';
         }
 
-        $this->denyAccessUnlessGranted('post.edit', $post);
+        // @todo use object voter
+        // $this->denyAccessUnlessGranted('post.edit', $post);
 
         $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
 
@@ -360,6 +361,7 @@ class PostController extends Controller
     /**
      * @Route("/setting/blog", name="drafterbit_blog_setting")
      * @Template()
+     * @Security("is_granted('ROLE_BLOG_SETTING_MANAGE')")
      */
     public function settingAction()
     {

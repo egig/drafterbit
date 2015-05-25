@@ -21,7 +21,7 @@ class UserController extends Controller
     /**
      * @Route("/user", name="drafterbit_user")
      * @Template()
-     * @todo authorization
+     * @Security("is_granted('ROLE_USER_VIEW')")
      */
     public function indexAction()
     {
@@ -61,6 +61,7 @@ class UserController extends Controller
     /**
      * @Route("/user/edit/{id}", name="drafterbit_user_edit")
      * @Template()
+     * @Security("is_granted('ROLE_USER_EDIT')")
      */
     public function editAction($id)
     {

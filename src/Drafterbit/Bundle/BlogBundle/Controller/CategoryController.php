@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\BlogBundle\Form\Type\CategoryType;
 use Drafterbit\Bundle\BlogBundle\Entity\Category;
@@ -20,6 +21,7 @@ class CategoryController extends Controller
 	/**
      * @Route("/blog/category", name="drafterbit_blog_category")
      * @Template()
+     * @Security("is_granted('ROLE_CATEGORY_VIEW')")
      */
     public function indexAction()
     {
@@ -32,6 +34,7 @@ class CategoryController extends Controller
     /**
      * @Route("/blog/category/edit/{id}", name="drafterbit_blog_category_edit")
      * @Template()
+     * @Security("is_granted('ROLE_CATEGORY_EDIT')")
      */
     public function editAction($id, Request $request)
     {

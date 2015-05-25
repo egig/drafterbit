@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\SystemBundle\Form\Type\MenuType;
 use Drafterbit\Bundle\SystemBundle\Entity\Menu;
@@ -21,6 +22,7 @@ class MenuController extends Controller
     /**
      * @Route("/menu", name="drafterbit_system_menu")
      * @Template("DrafterbitSystemBundle::menu.html.twig")
+     * @Security("is_granted('ROLE_MENU_MANAGE')")
      */
     public function indexAction()
     {
