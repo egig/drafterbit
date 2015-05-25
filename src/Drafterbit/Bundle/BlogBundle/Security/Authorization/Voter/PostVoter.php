@@ -43,7 +43,6 @@ class PostVoter implements VoterInterface
             );
         }
 
-
         // set the attribute to check against
         $attribute = $attributes[0];
 
@@ -60,8 +59,12 @@ class PostVoter implements VoterInterface
             return VoterInterface::ACCESS_DENIED;
         }
 
-        // simply
         if ($user->hasRole('ROLE_SUPER_ADMIN')) {
+            return VoterInterface::ACCESS_GRANTED;
+        }
+
+        // post is new
+        if(!$post->getUser()) {
             return VoterInterface::ACCESS_GRANTED;
         }
 

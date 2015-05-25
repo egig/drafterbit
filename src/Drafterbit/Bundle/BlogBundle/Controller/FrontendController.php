@@ -110,6 +110,7 @@ class FrontendController extends BaseFrontendController
 		$query = $this->getDoctrine()->getManager()
 			->getRepository('DrafterbitBlogBundle:Post')
 			->createQueryBuilder('p')
+			->where("p.type = 'standard'")
 			->setMaxResults($perPage)
 			->setFirstResult($offset);
 

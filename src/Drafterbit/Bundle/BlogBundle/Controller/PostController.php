@@ -157,6 +157,11 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
 
+        if(!$post) {
+            $post = new Post(); 
+            $pageTitle = 'New Post';
+        }
+
         $this->denyAccessUnlessGranted('post.edit', $post);
 
         $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
@@ -165,10 +170,6 @@ class PostController extends Controller
             return $item->getLabel();
         }, $tags);
 
-        if(!$post) {
-            $post = new Post(); 
-            $pageTitle = 'New Post';
-        }
 
         $postTags = array_map(function($item) {
             return $item->getLabel();
