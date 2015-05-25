@@ -17,9 +17,10 @@ class Formatter
 
     function getEntityLabel($entity, $id)
     {
-        $callable = [$this->entityFormatters[$entity], 'format'];
 
-        return call_user_func_array($callable, [$id]);
+            $callable = [$this->entityFormatters[$entity], 'format'];
+
+            return call_user_func_array($callable, [$id]);
     }
 
     function addEntityFormatter(EntityFormatterInterface $entityFormatter)
@@ -35,6 +36,7 @@ class Formatter
      */
     public function format($line)
     {
+
         // @todo translation
 
         // we'll find words formatted like ":user:1"
@@ -48,6 +50,10 @@ class Formatter
                 
                 $entity = current($temp);
                 $id = end($temp);
+
+                if(!isset($this->entityFormatters[$entity])) {
+                    return $matches[1];
+                }
 
                 return $this->getEntityLabel($entity, $id);
             },

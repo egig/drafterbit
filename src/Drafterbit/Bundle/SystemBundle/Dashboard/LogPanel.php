@@ -9,6 +9,7 @@ class LogPanel extends Panel {
 		$em = $this->kernel->getContainer()->get('doctrine')->getManager();
         $logEntities = $em->getRepository('DrafterbitSystemBundle:Log')
         	->createQueryBuilder('l')
+        	->OrderBy('l.time', 'desc')
         	->setMaxResults(10)
         	->getQuery()
         	->getResult();

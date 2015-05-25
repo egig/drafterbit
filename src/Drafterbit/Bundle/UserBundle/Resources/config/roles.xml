@@ -6,9 +6,11 @@
     <parameters>
         <parameter key="drafterbit_user.roles" type="collection">
             <parameter key="ROLE_USER_VIEW">View User</parameter>
+            <parameter key="ROLE_USER_CREATE">Create User</parameter>
             <parameter key="ROLE_USER_EDIT">Edit User</parameter>
             <parameter key="ROLE_USER_DELETE">Delete User</parameter>
             <parameter key="ROLE_GROUP_VIEW">View Group</parameter>
+            <parameter key="ROLE_GROUP_CREATE">CREATE Group</parameter>
             <parameter key="ROLE_GROUP_EDIT">Edit Group</parameter>
             <parameter key="ROLE_GROUP_DELETE">Delete Group</parameter>
         </parameter>

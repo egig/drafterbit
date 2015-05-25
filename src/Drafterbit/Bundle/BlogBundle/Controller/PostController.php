@@ -276,9 +276,9 @@ class PostController extends Controller
 
             $id = $post->getId();
 
-            // @todo
-            // $logger = $this->get('logger');
-            // $logger->info(':user:'.$this->getUser()->getId().' edited :user:'.$id, ['id' => $id]);
+            // log
+            $logger = $this->get('logger');
+            $logger->info(':user:'.$this->getUser()->getId().' edited Post :post:'.$id, ['id' => $id]);
 
             $response = [
                 'message' => $this->get('translator')->trans('Post saved'),

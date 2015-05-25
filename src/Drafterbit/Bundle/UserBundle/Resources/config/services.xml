@@ -8,5 +8,9 @@
             <argument type="service" id="kernel" />
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
+        <service id="drafterbit_log_display_formatter.group" class="Drafterbit\Bundle\UserBundle\Log\GroupEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system_log.display_formatter" />
+        </service>
     </services>
 </container>

@@ -97,7 +97,8 @@ class SystemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $logs = $em->getRepository('DrafterbitSystemBundle:Log')->findAll();
-
+        
+        $logs = array_reverse($logs);
         $logArr = [];
         foreach ($logs as $log) {
             

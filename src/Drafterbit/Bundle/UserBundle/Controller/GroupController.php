@@ -137,6 +137,10 @@ class GroupController extends Controller
 
             $id = $group->getId();
 
+             // @todo
+            $logger = $this->get('logger');
+            $logger->info(':user:'.$this->getUser()->getId().' edited Group :group:'.$id, ['id' => $id]);
+
             $response = ['message' => 'Group saved', 'status' => 'success', 'id' => $id];
         } else {
 

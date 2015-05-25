@@ -4,11 +4,11 @@ namespace Drafterbit\Bundle\UserBundle\Log;
 
 use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
 
-class UserEntityFormatter extends BaseEntityFormatter
+class GroupEntityFormatter extends BaseEntityFormatter
 {
 	public function getName()
 	{
-		return 'user';
+		return 'group';
 	}
 
 	public function format($id)
@@ -19,9 +19,9 @@ class UserEntityFormatter extends BaseEntityFormatter
         } else {
 
         	$em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        	$user = $em->getRepository('DrafterbitUserBundle:User')->find($id);
+        	$group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
 
-            $label = $user->getRealname();
+            $label = $group->getName();
         }
 
         $url = $this->getKernel()

@@ -63,7 +63,7 @@
             <argument /> <!-- bubble -->
         </service>
 
-        <!-- Log Handler -->
+        <!-- Log Displayyer -->
         <service id="system_log_display_formatter" class="Drafterbit\Bundle\SystemBundle\Log\Display\Formatter"/>
 
         <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\Frontpage\Search">

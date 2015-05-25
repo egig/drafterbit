@@ -18,9 +18,21 @@
         </service>
 
         <!-- Security-->
+        <!-- PENDING
         <service id="security.access.post_voter" class="Drafterbit\Bundle\BlogBundle\Security\Authorization\Voter\PostVoter">
             <argument type="service" id="security.attribute_provider" />
             <tag name="security.voter" />
+        </service> -->
+
+        <!-- Log Formatter -->
+        <service id="drafterbit_log_display_formatter.post" class="Drafterbit\Bundle\BlogBundle\Log\PostEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system_log.display_formatter" />
+        </service>
+
+        <service id="drafterbit_log_display_formatter.category" class="Drafterbit\Bundle\BlogBundle\Log\CategoryEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system_log.display_formatter" />
         </service>
     </services>
 </container>
