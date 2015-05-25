@@ -18,8 +18,8 @@ class ValidationServiceProvider implements ServiceProviderInterface {
             return new Validator();
         };
 
-        $app['validation.form'] = function($app) {
+        $app['validation.form'] = $app->factory(function($app) {
             return new Form($app['validator'], $app['translator']);
-        };
+        });
     }
 }

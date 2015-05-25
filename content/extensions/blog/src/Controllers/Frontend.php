@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Controllers;
 
-use Drafterbit\Extensions\System\FrontendController;
+use Drafterbit\Base\Controller\Frontend as FrontendController;
 use Symfony\Component\HttpFoundation\Response;
 
 class Frontend extends FrontendController
@@ -25,6 +25,7 @@ class Frontend extends FrontendController
         $post['date'] = $this['time']->parse($post['created_at'])->format('d F Y');
 
         $post['tags'] = $this->model('@blog\Tag')->getByPost($post['id']);
+        $post['categories'] = $this->model('@blog\Post')->getCategories($post['id']);
 
         $data['post'] = $post;
         return $this->render('content/blog/view', $data);
@@ -42,8 +43,24 @@ class Frontend extends FrontendController
 
         $tag = $this->model('Tag')->getSingleBy('slug', $slug);
         $data['tag'] = $tag;
-        
+
         return $this->render('content/blog/tag/index', $data);
+    }
+
+    public function category($slug)
+    {
+        $page = $this['input']->get('p', 1);
+        $filter = ['category' => $slug];
+
+        $posts = $this->getFormattedPostList($page, $filter);
+
+        $data['posts'] = $posts;
+        $data = array_merge($data, $this->getNav($page, $filter));
+
+        $category = $this->model('Category')->getOneBy('slug', $slug);
+        $data['category'] = $category;
+
+        return $this->render('content/blog/category/index', $data);
     }
 
     public function author($username)
@@ -75,6 +92,9 @@ class Frontend extends FrontendController
         $data['posts'] = $this->formatFeeds($post->take($shows, 0));
 
         $content =  $this['template']->render('@blog/feed', $data);
+
+        // Fixes short opentag issue
+        $content = '<?xml version="1.0" encoding="UTF-8"?>'.$content;
 
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/xml');
@@ -125,6 +145,7 @@ class Frontend extends FrontendController
             }
 
             $post['tags'] = $this->model('@blog\Post')->getTags($post['id']);
+            $post['categories'] = $this->model('@blog\Post')->getCategories($post['id']);
         }
 
         return $posts;

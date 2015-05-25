@@ -113,4 +113,25 @@ class Tag extends \Drafterbit\Base\Model
 
         return $query->getResult();
     }
+
+    public function cleanUnused()
+    {
+        $tags = $this->withQueryBuilder()
+            ->select('tag_id')
+            ->from('#_posts_tags', 'pt')
+            ->getResult();
+
+        $tagIds = array_map(function($tag){
+            return $tag['tag_id'];
+        }, $tags);
+
+        if(empty($tagIds)) {
+            $this['db']->executeQuery('DELETE FROM #_tags');
+        } else {        
+            $this['db']->executeQuery('DELETE FROM #_tags WHERE id NOT IN (?)',
+                [$tagIds],
+                [\Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
+            );
+        }
+    }
 }

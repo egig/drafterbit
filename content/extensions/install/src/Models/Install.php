@@ -18,10 +18,10 @@ class Install extends Model
         $roleId = $this['db']->lastInsertId();
 
         $user['email']     = $email;
+        $user['status']    = 1;
         $user['password']  = password_hash($password, PASSWORD_BCRYPT);
         $user['username']  = 'admin';
         $user['real_name'] = 'Administrator';
-        $user['status']    = 1;
 
         $this['db']->insert('#_users', $user);
         $userId = $this['db']->lastInsertId();
@@ -68,10 +68,10 @@ class Install extends Model
         $data['timezone']   = "Asia/Jakarta";
 
         $dashboard = [
-            ["id"=>"shortcuts","display"=>1,"position"=>1],
-            ["id"=>"stat","display"=>1,"position"=>2],
-            ["id"=>"recent-comments","display"=>1,"position"=>1],
-            ["id"=>"recent","display"=>1,"position"=>2]
+            ["id"=>"stat",           "display"=>1,"position"=>2],
+            ["id"=>"recent",         "display"=>1,"position"=>2],
+            ["id"=>"shortcuts",      "display"=>1,"position"=>1],
+            ["id"=>"recent-comments","display"=>1,"position"=>1]
         ];
 
         $data['dashboard']  = json_encode($dashboard);
@@ -112,18 +112,18 @@ class Install extends Model
     {
         $widgets = [
         [
-            'name' => 'search',
-            'title' => 'Search',
+            'name'     => 'search',
+            'title'    => 'Search',
+            'theme'    => 'feather',
             'sequence' => 1,
-            'position' => 'Sidebar',
-            'theme' => 'feather'
+            'position' => 'Sidebar'
             ],
             [
-            'name' => 'meta',
-            'title' => 'Meta',
+            'name'     => 'meta',
+            'title'    => 'Meta',
+            'theme'    => 'feather',
             'sequence' => 2,
-            'position' => 'Sidebar',
-            'theme' => 'feather'
+            'position' => 'Sidebar'
             ]
         ];
         
@@ -150,13 +150,13 @@ class Install extends Model
 
     private function createFirstComment($postId)
     {
-        $data['content'] = 'This is test comment. Go to admin panel to delete this'.
-        $data['name'] = 'Drafterbit';
-        $data['email'] = 'noreply@drafterbit.org';
-        $data['url'] = 'drafterbit.org';
-        $data['subscribe'] = 0;
-        $data['post_id'] = $postId;
-        $data['status'] = 1;
+        $data['url']        = 'drafterbit.org';
+        $data['name']       = 'Drafterbit';
+        $data['email']      = 'noreply@drafterbit.org';
+        $data['status']     = 1;
+        $data['post_id']    = $postId;
+        $data['content']    = 'This is test comment. Go to admin panel to delete this'.
+        $data['subscribe']  = 0;
         $data['created_at'] = $this['time']->now();
 
         $this['db']->insert('#_comments', $data);
@@ -170,21 +170,21 @@ class Install extends Model
         //insert items
         $items = [
             [
-                'menu_id' => $id,
-                'label' => 'Home',
-                'link' => '%base_url%',
-                'page' => null,
-                'sequence' => 1,
-                'type' => 1,
+                'page'      => null,
+                'link'      => '%base_url%',
+                'type'      => 1,
+                'label'     => 'Home',
+                'menu_id'   => $id,
+                'sequence'  => 1,
                 'parent_id' => 0
             ],
             [
-                'menu_id' => $id,
-                'label' => 'Sample Page',
-                'link' => '#',
-                'page' => $samplePage,
-                'sequence' => 2,
-                'type' => 2,
+                'page'      => $samplePage,
+                'link'      => '#',
+                'type'      => 2,
+                'label'     => 'Sample Page',
+                'menu_id'   => $id,
+                'sequence'  => 2,
                 'parent_id' => 0
             ]
         ];

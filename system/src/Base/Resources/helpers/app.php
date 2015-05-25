@@ -13,7 +13,7 @@ if ( ! function_exists('app')) {
             return app()[$service];
         }
 
-        return \Drafterbit\Base\ApplicationTrait::getInstance();
+        return \Drafterbit\Base\ContainerTrait::getInstance();
     }
 }
 

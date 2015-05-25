@@ -1,9 +1,9 @@
 <?php namespace Drafterbit\Component\Routing;
 
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper;
 
 class Router {
 
+    protected $routeOptionKeys = ['auth', 'access'];
+    
     /**
      * The route collection instance.
      *
@@ -37,7 +39,7 @@ class Router {
      *
      * @var array
      */
-    protected $routeDefinition = [];
+    protected $routeArray = [];
 
     /**
      * Cache directory
@@ -61,6 +63,8 @@ class Router {
     public function __construct($cacheDir = null)
     {
         $this->cacheDir = $cacheDir;
+        // @todo clean and use cache
+        $this->reader = new \Doctrine\Common\Annotations\AnnotationReader();
     }
 
     /**
@@ -138,7 +142,6 @@ class Router {
 
         $collection =  $this->parseRoutes($subRoutes, $prefix);
         
-        
         if (null !== $host) {
             $collection->setHost($host);
         }
@@ -186,17 +189,16 @@ class Router {
         $context = new RequestContext;
         $context->fromRequest($request);
 
-        $this->routes = $this->parseRoutes($this->getRouteDefinition());
-
         if(!$this->cacheDir) {
-            return new UrlMatcher($this->routes, $context);
+            return new UrlMatcher($this->getRoutes(), $context);
         }
 
         $class = 'DrafterbitCachedUrlMatcher';
         $path = $this->cacheDir.'/routes.php';
 
         if(!file_exists($path)) {
-            $dumper = new PhpMatcherDumper($this->routes);
+
+            $dumper = new PhpMatcherDumper($this->getRoutes());
 
             $options = [
                 'class' => $class,
@@ -236,7 +238,18 @@ class Router {
          $collection = new RouteCollection;
 
         foreach ($routes as $path => $param) {
-            
+
+            // if $param is a string or callable,
+            // we'll guess it' the controller
+            if(is_string($param)) {
+
+                if(strpos($param, '::') !== false) {
+                    $param = ['controller' => $param ];
+                } else {
+                    $param = ['routes' => $param ];
+                }
+            }
+
             // @todo validate route
 
             //replace replaceable key
@@ -244,7 +257,51 @@ class Router {
 
             // If no controller defined. we guess this is groups
             if (isset($param['routes'])) {
-                                
+
+                // if routes is a string, we assume that is resources controller
+                if(is_string($param['routes'])) {
+                    
+                    $reflClass = new \ReflectionClass($param['routes']);
+                    
+                    $methods = $reflClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+                    $methods = array_filter($methods, function($reflMethod) use($reflClass){ 
+                        return $reflMethod->getDeclaringClass()->getName() == $reflClass->getName();
+                    });
+
+                    $param['routes'] = [];
+                    foreach ($methods as $reflMethod) {
+
+
+                        if($reflMethod->getName() == 'index') {
+                            $pathx = '/';
+                        } else {
+                            $pathx = snake_case($reflMethod->getName(), '-');
+                        }
+
+                        $parameters = $reflMethod->getParameters();
+
+                        foreach ($parameters as $reflParam) {
+                            $pathx .= '/{'.$reflParam->getName().'}';
+                        }
+
+                        $routeOptions = $this->getRouteOptions($reflMethod);
+
+                        $route = [
+                            'controller' => $reflClass->getName().'::'.$reflMethod->getName()
+                        ];
+                        
+                        if(!empty($routeOptions)) {
+                            $route = array_merge($route, $routeOptions);
+                        }
+
+                        $param['routes'][$pathx] = $route;
+                    }
+
+                    // @todo implement this in all extensions
+                    // @todo fixes restrictions, maybe use docblock
+                }
+
                 $subCollection = $this->createRouteCollection($path, $param);
                 $collection->addCollection($subCollection);
             
@@ -262,12 +319,37 @@ class Router {
     }
 
     /**
-     * Get route collection.
+     * Get route option from doc comments
      *
-     * @return Symfony\Component\Routing\RouteCollection
+     * @param ReflectionMethod $method
+     * @return array
      */
-    public function getRouteCollection()
+    public function getRouteOptions(\ReflectionMethod $method)
     {
+        $doc = $method->getDocComment();
+
+        $doc = trim($doc, '/*');
+        $lines = array_filter(explode('*', $doc));
+
+        $options = array();
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if(strpos($line, '@route_') == 0) {
+                $tmp = explode(' ', $line);
+                $key = substr(array_shift($tmp), strlen('@route_'));
+                if(in_array($key, $this->routeOptionKeys)) {
+                    $options[$key] = implode(' ', $tmp);
+                }
+            }
+        }
+
+        return $options;
+    }
+
+    public function getRoutes()
+    {
+        $this->routes = $this->parseRoutes($this->getRouteArray());
+
         return $this->routes;
     }
 
@@ -276,19 +358,9 @@ class Router {
      *
      * @return Symfony\Component\Routing\RouteCollection
      */
-    public function getRouteDefinition()
+    public function getRouteArray()
     {
-        return $this->routeDefinition;
-    }
-
-    /**
-     * Set route definition.
-     *
-     * @param array $definition
-     */
-    public function setRouteDefinition($definition)
-    {
-        $this->routeDefinition = $definition;
+        return $this->routeArray;
     }
 
     /**
@@ -297,13 +369,9 @@ class Router {
      * @param string $name
      * @param array $definition
      */
-    public function addRouteDefinition($name, array $definition)
+    public function addRouteArray(array $array)
     {
-        if(isset($this->routeDefinition[$name])) {
-            $this->routeDefinition[$name] = array_merge_recursive($this->routeDefinition[$name], $definition);
-        } else {
-            $this->routeDefinition[$name] = $definition;
-        }
+        $this->routeArray = array_merge_recursive($this->routeArray, $array);
     }
 
     /**
@@ -311,13 +379,23 @@ class Router {
      *
      * @param array
      */
-    public function addReplaces($key, $value)
+    public function addReplaces($key, $value = '')
     {
-        $this->replaces[$key] = $value;
+        if(is_array($key)) {
+            foreach ($key as $k => $v) {
+                $this->replaces[$k] = $v;
+            }
+        } else {
+            $this->replaces[$key] = $value;
+        }
     }
 
     public function getRoute($name)
     {
+        if(!$this->routes) {
+            $this->getRoutes();
+        }
+
         return $this->routes->get($name);
     }
 

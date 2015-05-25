@@ -9,6 +9,6 @@
         'controller' => '@install\Install::admin',
     ],
     'install/install' => [
-        'controller' => '@install\Install::install',
+        'controller' => '@install\Install::doInstall',
     ]
 ];

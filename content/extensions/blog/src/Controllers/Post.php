@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Controllers;
 
-use Drafterbit\Extensions\System\BackendController;
+use Drafterbit\Base\Controller\Backend as BackendController;
 use Drafterbit\Component\Validation\Exceptions\ValidationFailsException;
 
 class Post extends BackendController
@@ -11,11 +11,11 @@ class Post extends BackendController
         $data['id']        = 'posts';
         $data['title']     = __('Posts');
         $data['status']    = $status;
-        $data['action']    = admin_url('blog/trash');
+        $data['action']    = admin_url('posts/trash');
 
         return $this->render('@blog/admin/index', $data);
     }
-
+ 
     public function trash()
     {
         $post = $this['input']->post();
@@ -37,7 +37,7 @@ class Post extends BackendController
         }
     }
 
-    public function filter($status)
+    public function data($status)
     {
         $posts = $this->model('@blog\Post')->all(['status' => $status]);
         
@@ -75,12 +75,15 @@ class Post extends BackendController
         }
         $tagOptions = rtrim($tagOptions, ',').']';
 
+        $categories = $this->model('@blog\Category')->tree();
+
         if ('new' == $id) {
             $data = [
-                'postId' => null,
+                'postId' => $id,
                 'postTitle' => null,
                 'slug' => null,
                 'content' => null,
+                'postCategories' => [],
                 'tagOptions' => $tagOptions,
                 'tags' => [],
                 'revisions' => [],
@@ -104,12 +107,20 @@ class Post extends BackendController
                 $tags [] = $tag->label;
             }
 
+            $post->categories = $model->getCategories($id);
+            $postCategories = [];
+
+            foreach ($post->categories as $c) {
+                $postCategories[] = $c['id'];
+            }
+
             $data = [
                 'postId' => $id,
                 'postTitle' => $post->title,
                 'slug' => $post->slug,
                 'content' => $post->content,
                 'revisions' => $post->revisions,
+                'postCategories' => $postCategories,
                 'tags' => $tags,
                 'tagOptions' => $tagOptions,
                 'status' => $post->status,
@@ -118,6 +129,7 @@ class Post extends BackendController
             ];
         }
 
+        $data['categories'] = $categories;
         $data['id'] = 'post-edit';
         $data['action'] = admin_url('posts/save');
         
@@ -129,10 +141,23 @@ class Post extends BackendController
         $model = $this->model('Post');
         
         try {
+
+            $validator = $this['validation.form'];
+            $rules = $this['config']->get('validation.post@blog');
+            $validator->setRules($rules);
+
             $postData = $this['input']->post();
 
-            $this->validate('blog', $postData);
+            if(empty($postData['title'])) {
+                $validator->setRule('slug', 'optional');
+            }
 
+            if(empty($postData['slug'])) {
+                $postData['slug'] = slug($postData['title']);
+            }
+
+            $validator->validate($postData);
+            
             $id = $postData['id'];
 
             if (is_numeric($id)) {
@@ -148,8 +173,16 @@ class Post extends BackendController
                 $id = $model->insert($data);
             }
 
+            // delete all related tag first
+            $model->clearTag($id);
             if (isset($postData['tags'])) {
                 $this->insertTags($postData['tags'], $id);
+            }
+            //at this point, we'll remove unused tags
+            $this->model('Tag')->cleanUnused();
+
+            if (isset($postData['categories'])) {
+                $this->insertCategories($postData['categories'], $id);
             }
 
             // @todo log here
@@ -236,9 +269,6 @@ class Post extends BackendController
     {
         $post = $this->model('Post');
         $tag = $this->model('Tag');
-        
-        //delete all related tag first
-        $post->clearTag($postId);
 
         foreach ($tags as $t) {
             if (! $tagId = $tag->getIdBy('label', $t)) {
@@ -246,6 +276,18 @@ class Post extends BackendController
             }
 
             $post->addTag($tagId, $postId);
+        }
+    }
+
+    protected function insertCategories($categories, $postId)
+    {
+        $post = $this->model('Post');
+
+        //delete all related tag first
+        $post->clearCategories($postId);
+
+        foreach ($categories as $c) {
+            $post->addCategory($c, $postId);
         }
     }
 

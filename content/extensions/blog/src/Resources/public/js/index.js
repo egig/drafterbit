@@ -18,7 +18,7 @@
             {data: 'updated_at'},
         ],
         ajax: {
-            url: drafTerbit.adminUrl+"/posts/data/"+urlHash+".json",
+            url: drafTerbit.adminUrl+"/posts/data/"+urlHash,
         },
         columnDefs: [
             {orderable: false, searchable:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="posts[]" value="'+d+'">'}},
@@ -36,7 +36,7 @@
 
         var status = status || 'all';
 
-        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+status+".json").load();
+        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+status).load();
         window.location.hash = status;
     }
 
@@ -60,7 +60,7 @@
             }
 
             var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+urlHash2+".json").load();
+            drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"/posts/data/"+urlHash2).load();
         }
     );
 

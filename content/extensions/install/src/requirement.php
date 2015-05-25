@@ -4,7 +4,7 @@
         'function' => function() {
             return version_compare($ver = PHP_VERSION, $req = '5.4.0', '>=');
         },
-        'message' => 'You need to run PHP 5.4+ to get drafterbit running'
+        'message' => 'You need to run PHP 5.5+ to get drafterbit running'
     ],
     [
         'name' => 'Cache Directory',

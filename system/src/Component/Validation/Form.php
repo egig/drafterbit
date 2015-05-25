@@ -146,7 +146,7 @@ class Form {
      */
     public function setRule($name, $rules)
     {
-        $this->rules[$name] = $rules;
+        $this->rules[$name] = (array)$rules;
     }
 
     /**

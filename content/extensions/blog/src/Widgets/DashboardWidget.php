@@ -1,15 +1,15 @@
 <?php namespace Drafterbit\Blog\Widgets;
 
-use Drafterbit\App\DashboardWidget as Base;
+use Drafterbit\Base\Dashboard as Base;
 
 class DashboardWidget extends Base
 {
 
     public function recentComments()
     {
-        $data['comments'] = $this['app']
-        	->getExtension('blog')
-        	->model('Comment')->take(5);
+        $data['comments'] = $this['extension']
+            ->get('blog')
+            ->model('Comment')->take(5);
         return $this['template']->render('@blog/dashboard/recent-comments', $data);
     }
 }

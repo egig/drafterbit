@@ -60,8 +60,14 @@ class Post extends \Drafterbit\Base\Model
                         $query->join('pt', '#_tags', 't', 't.id = pt.tag_id');
                         $query->andWhere('t.slug = :tag');
                         $query->setParameter(':tag', $value);
-                        break;            
-                    
+                        break;
+                    case 'category':
+                        $query->leftJoin('p', '#_posts_categories', 'pc', 'pc.post_id = p.id');
+                        $query->join('p', '#_categories', 'c', 'c.id = pc.category_id');
+                        $query->andWhere('c.slug = :cat');
+                        $query->setParameter(':cat', $value);
+                        break;
+
                     default:
                         # code...
                         break;
@@ -109,7 +115,12 @@ class Post extends \Drafterbit\Base\Model
             ->delete('#_posts_tags')
             ->where('post_id IN ('.$idString.')')
             ->execute();
-        
+
+        $this->withQueryBuilder()
+            ->delete('#_posts_categories')
+            ->where('post_id IN ('.$idString.')')
+            ->execute();
+
         $this->withQueryBuilder()
             ->delete('#_posts')
             ->where('id IN ('.$idString.')')
@@ -134,6 +145,21 @@ class Post extends \Drafterbit\Base\Model
             ->delete('#_posts_tags', ["post_id" => $id]);
     }
 
+    public function clearCategories($id)
+    {
+        return
+        $this['db']
+            ->delete('#_posts_categories', ["post_id" => $id]);
+    }
+
+    public function addCategory($categoryId, $id)
+    {
+        $data['post_id'] = $id;
+        $data['category_id'] = $categoryId;
+        return
+        $this['db']->insert('#_posts_categories', $data);
+    }
+
     public function addTag($tagId, $id)
     {
         $data['post_id'] = $id;
@@ -152,6 +178,19 @@ class Post extends \Drafterbit\Base\Model
             ->from('#_tags', 't')
             ->innerJoin('t', '#_posts_tags', 'pt', 't.id = pt.tag_id')
             ->where("pt.post_id = '$id'")
+            ->execute()->fetchAll();
+    }
+
+    public function getCategories($id)
+    {
+        $queryBuilder = $this['db']->createQueryBuilder();
+
+        return
+        $queryBuilder
+            ->select('c.*')
+            ->from('#_categories', 'c')
+            ->innerJoin('c', '#_posts_categories', 'pc', 'c.id = pc.category_id')
+            ->where("pc.post_id = '$id'")
             ->execute()->fetchAll();
     }
 

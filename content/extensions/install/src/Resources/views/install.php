@@ -3,8 +3,8 @@
 <head>
     <title>Drafterbit Installation</title>
 
-        <?php $this->css(':bootstrap_css, :notify_css'); ?>
-        <?= $this->block('css');?>
+        <?php _css(':bootstrap_css, :notify_css'); ?>
+        <?= _block('css');?>
 
     <style>
         input, button, .btn, textarea {
@@ -178,8 +178,8 @@
         <img alt="Installing&hellip;" src="<?= $preloader; ?>" />
     </div>
 
-    <?php $this->js(':jquery, :bootstrap_js, :jquery_form, :notify_js, @install/js/install.js'); ?>
-    <?= $this->block('js') ?>
+    <?php _js(':jquery, :bootstrap_js, :jquery_form, :notify_js, @install/js/install.js'); ?>
+    <?= _block('js') ?>
 
 </body>
 </html>

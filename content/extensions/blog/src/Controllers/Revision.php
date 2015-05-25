@@ -1,13 +1,13 @@
 <?php namespace Drafterbit\Blog\Controllers;
 
-use Drafterbit\Extensions\System\BackendController;
+use Drafterbit\Base\Controller\Backend as BackendController;
 use cogpowered\FineDiff\Granularity\Character as CharacterGranularity;
 use cogpowered\FineDiff\Render\Html as HtmlRenderer;
 use cogpowered\FineDiff\Diff;
 
 class Revision extends BackendController
 {
-	/**
+    /**
      * Post revision controller
      *
      * @todo clean this
@@ -28,17 +28,17 @@ class Revision extends BackendController
         $current = $this->model('Post')->getOneBy('id', $postId);
 
         for($i=0;$i<count($revs);$i++) {
-        	$new = ($i-1 < 0) ? $current : $revs[$i-1];
-        	$old = $revs[$i];
+            $new = ($i-1 < 0) ? $current : $revs[$i-1];
+            $old = $revs[$i];
 
             $revs[$i]['diff_title'] =(new Diff)->render($old['title'], $new['title']);
 
             $granularity = new CharacterGranularity;
-        	$renderer = new HtmlRenderer;
+            $renderer = new HtmlRenderer;
             $diff_content = (new Diff($granularity, $renderer))->render($old['content'], $new['content']);
             $revs[$i]['diff_content'] = str_replace('&lt;/p&gt;', '&lt;/p&gt;<br/><br/>', $diff_content);
 
-           	$revs[$i]['authorUrl'] = admin_url('user/edit/'.$revs[$i]['user_id']);
+               $revs[$i]['authorUrl'] = admin_url('user/edit/'.$revs[$i]['user_id']);
             $revs[$i]['time'] = $this['time']->parse($revs[$i]['created_at'])->format('d F Y, @H:i');
             $revs[$i]['timeHumans'] = $this['time']->parse($revs[$i]['created_at'])->diffForHumans();
             $revs[$i]['pos'] = count($revs)-$i;
@@ -61,8 +61,8 @@ class Revision extends BackendController
 
     public function revert()
     {
-    	$id = $this['input']->post('id');
-    	$postId = $this['input']->post('post-id');
+        $id = $this['input']->post('id');
+        $postId = $this['input']->post('post-id');
 
         $rev = $this->model('Post')->getOneBy('id', $id);
 

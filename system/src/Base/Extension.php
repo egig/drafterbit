@@ -4,7 +4,7 @@ use ArrayAccess;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class Extension implements ArrayAccess {
-    use RootTrait, ApplicationTrait;
+    use RootTrait, ContainerTrait;
 
     /**
      * Get class type 'name';
@@ -60,7 +60,7 @@ abstract class Extension implements ArrayAccess {
             $name = ltrim(array_shift($temp),'@');
             $class = implode('\\', $temp);
 
-            if( ! $extension = $this->getExtension($name)) {
+            if( ! $extension = $this['extension']->get($name)) {
                 throw new \InvalidArgumentException("Extension $name doesn't exist");
             }
 
@@ -83,6 +83,6 @@ abstract class Extension implements ArrayAccess {
 
     public function __call($method, $args)
     {
-        return call_user_func_array([ApplicationTrait::getInstance(), $method], $args);
+        return call_user_func_array([ContainerTrait::getInstance(), $method], $args);
     }
 }

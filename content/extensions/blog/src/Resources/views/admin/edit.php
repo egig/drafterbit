@@ -1,6 +1,6 @@
 <?php _extend('@system/main-edit'); ?>
 
-<?php $this->css(':magicsuggest_css, :datetimepicker_css, @blog/css/editor.css'); ?>
+<?php _css(':magicsuggest_css, :datetimepicker_css, @blog/css/editor.css'); ?>
 
 <?php _start('action'); ?>
 <button class="btn btn-sm btn-success" type="submit" name="action" value="save">
@@ -63,6 +63,12 @@
             <label><?= __('Publish Date') ?></label>
             <input name="publish-date" class="form-control publish-date" value="<?= value('publish-date', $publishDate); ?>">
          </div>
+        <div class="form-group">
+            <label><?= __('Categories') ?></label>
+            <div class="categories">
+              <?= _categories($categories, $postCategories); ?>
+            </div>
+        </div>
         <div class="form-group tags-input-wrapper">
             <label><?= __('Tags') ?></label>
             <input placeholder="Tags" id="tags" name="tags"/>
@@ -70,9 +76,26 @@
     </div>
 </div>
 
+<?php
+  function _categories($categories, $postCategories = []) {
+    $html = '<ol>';
+
+    foreach ($categories as $cat) {
+      $html .= '<li><input '.checked('categories', $cat['id'], in_array($cat['id'], $postCategories)).' type="checkbox" name="categories[]" value="'.$cat['id'].'"> '.$cat['label'];
+      if($cat['childrens']) {
+        $html .= _categories($cat['childrens'], $postCategories);
+      }
+      $html .= '</li>';
+    }
+    $html .= '</ol>';
+
+    return $html;
+  }
+?>
+
 <script>
 var tagOptions = <?= $tagOptions; ?>;
 var tags = <?= json_encode(value('tags', $tags)); ?>
 </script>
 
-<?php $this->js(':magicsuggest_js, :datetimepicker_js, @blog/js/editor.js'); 
+<?php _js(':magicsuggest_js, :datetimepicker_js, @blog/js/editor.js'); 

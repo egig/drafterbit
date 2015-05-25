@@ -2,32 +2,14 @@
 
 '%admin%' => [
     'routes' => [
-        'posts' => [
-            'routes' => [
-                '/'                  => ['controller' => '@blog\Post::index',  'access' => 'post.view'],
-                'edit/{id}'          => ['controller' => '@blog\Post::edit',   'access' => 'post.view'],
-                'data/{status}.json' => ['controller' => '@blog\Post::filter', 'access' => 'post.view'],
-                'save'               => ['controller' => '@blog\Post::save',   'access' => 'post.edit',   'csrf' => true, 'log.after' => ['message' => ':user:%user_id% edited post :post:%id%']],
-                'setting'            => ['controller' => '@blog\Post::setting'],
-                'trash'              => ['controller' => '@blog\Post::trash',  'access' => 'post.delete', 'csrf' => true],
-                
-                '{postid}/revisions' => ['controller' => '@blog\Revision::view',  'access' => 'post.revision.view'],
-                'revision/clear'     => ['controller' => '@blog\Revision::clear'],
-                'revision/revert'    => ['controller' => '@blog\Revision::revert'],
+        'posts' => 'Drafterbit\\Blog\\Controllers\\Post',
 
-                'comments' => ['controller' => '@blog\Comment::index', 'access' => 'comment.view'],
-            ]
-        ],
+        'posts/{postid}/revisions' => ['controller' => '@blog\Revision::view',  'access' => 'post.revision.view'],
+        'posts/revision/clear'     => ['controller' => '@blog\Revision::clear'],
+        'posts/revision/revert'    => ['controller' => '@blog\Revision::revert'],
 
-        'comments' => [
-            'routes' => [
-                'data/{status}.json' => ['controller' => '@blog\Comment::filter', 'access' => 'comment.view'],
-                'trash'              => ['controller' => '@blog\Comment::trash',  'access' => 'comment.delete',   'csrf' => true],
-                'status'             => ['controller' => '@blog\Comment::status', 'access' => 'comment.view',     'csrf' => true],
-                'quick-reply'        => ['controller' => '@blog\Comment::quickReply', 'access' => 'comment.view', 'csrf' => true],
-                'quick-trash'        => ['controller' => '@blog\Comment::quickTrash', 'access' => 'comment.delete', 'csrf' => true],
-            ]
-        ]
+        'posts/categories' => "Drafterbit\\Blog\\Controllers\\Category",
+        'comments' => "Drafterbit\\Blog\\Controllers\\Comment"
     ]
 ],
 
@@ -35,7 +17,7 @@
     'controller' => '@blog\Frontend::index'
 ],
     
-'%blog_url_pattern%' => [
+'%blog_url%' => [
     'controller' => '@blog\Frontend::view',
     'methods' => 'get',
     'requirements' => [
@@ -44,8 +26,13 @@
         ]
     ],
 
-'%blog_tag_url_pattern%' => [
+'%blog_tag_url%' => [
     'controller' => '@blog\Frontend::tag',
+    'methods' => 'get'
+    ],
+
+'%blog_cat_url%' => [
+    'controller' => '@blog\Frontend::category',
     'methods' => 'get'
     ],
 
@@ -53,7 +40,7 @@
 
 'feed.xml' => ['controller' => '@blog\Frontend::feed'],
 
-'%blog_author_url_pattern%' => [
+'%blog_author_url%' => [
     'controller' => '@blog\Frontend::author'
 ]
 

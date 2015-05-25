@@ -1,6 +1,6 @@
 <?php _extend('@system/main'); ?>
 
-<?php $this->css('@blog/css/revision.css'); ?>
+<?php _css('@blog/css/revision.css'); ?>
 
 <div class="revisions">
 <?php foreach ($revs as $rev): ?>
@@ -35,4 +35,4 @@
 <?php endforeach; ?>
 </div>
 
-<?php $this->js(':sticky_kit, @blog/js/revision.js'); ?>
+<?php _js(':sticky_kit, @blog/js/revision.js'); ?>

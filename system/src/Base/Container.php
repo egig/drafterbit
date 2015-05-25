@@ -5,7 +5,7 @@ use Pimple\ServiceProviderInterface;
 
 class Container extends BaseContainer {
 
-	/**
+    /**
      * Registered service providers.
      *
      * @var array
@@ -19,7 +19,7 @@ class Container extends BaseContainer {
      */
     protected $deferred = [];
 
-	/**
+    /**
      * Get the value at a given offset. Overrides Pimples.
      *
      * @param  string  $key
@@ -43,7 +43,7 @@ class Container extends BaseContainer {
      */
     public function register( ServiceProviderInterface $provider, array $options = [])
     {
-        $this->providers[] = get_class($provider);
+        $this->providers[] = $provider;
 
         parent::register($provider, $options);
     }

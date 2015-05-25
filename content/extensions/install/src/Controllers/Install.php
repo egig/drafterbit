@@ -30,6 +30,7 @@ class Install extends Controller
         $message = 'ok';
 
         try {
+
             $config = $this['input']->post('database');
             $this['config']->set('database', $config);
 
@@ -50,7 +51,7 @@ class Install extends Controller
                 throw new \Exception("Database can not be empty");
             }
 
-            $key = $this->generateKey();
+            $key = str_random(32, true, true);
 
             $config = [
                 '%key%' => $key,
@@ -63,22 +64,27 @@ class Install extends Controller
              ];
 
              $content = strtr($string, $config);
-             $dest = $this['path.install'].'/config.php';
+             $dest = $this['path.public'].'/config.php';
              
             if (is_writable($dest)) {
                 file_put_contents($dest, $content);
             } else {
-                $config = $content;
-                return json_encode(['config' => $config]);
+                return json_encode(['config' => $content]);
             }
         
         } catch (\Exception $e) {
-            if (in_array($e->getCode(), ['1045', '1044'])) {
-                $message = "Database Access Denied";
-            } elseif ('1049' == $e->getCode()) {
-                $message = "Unknown Database";
-            } else {
-                $message = $e->getMessage();
+
+            switch ($e->getCode()) {
+                case 1044:
+                case 1045:
+                    $message = "Database Access Denied";
+                    break;
+                case 1049:
+                    $message = "Unknown Database";
+                    break;
+                default:
+                    $message = $e->getMessage();
+                    break;
             }
         }
 
@@ -94,18 +100,18 @@ class Install extends Controller
         return json_encode(['message' => 'ok']);
     }
 
-    public function install()
+    public function doInstall()
     {
         $site = $this['input']->post('site');
         $admin = $this['session']->get('install_admin');
          
-        $this['config']->load($this['path.install'].'/config.php');
+        $this['config']->load($this['path.public'].'config.php');
 
         $config = $this['config'];
-        $extMgr = $this['extension.manager'];
+        $extMgr = $this['extension'];
 
          // migrations
-        foreach ($extMgr->getCoreExtension() as $extension) {
+        foreach (['system', 'user', 'pages', 'blog', 'files'] as $extension) {
             // add and return the extension
             $ext = $extMgr->get($extension);
             if (is_dir($ext->getResourcesPath('migrations'))) {
@@ -122,10 +128,5 @@ class Install extends Controller
          $model->systemInit($site['name'], $site['desc'], $admin['email'], $adminIds['userId']);
 
          return $this->jsonResponse(['message' => 'ok']);
-    }
-
-    private function generateKey()
-    {
-        return str_random(32, true, true);
     }
 }

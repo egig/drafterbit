@@ -1,5 +1,7 @@
 (function($, tagOptions, tags, CKEDITOR){
 
+    // @todo sync title and slug input value
+
     var form = $('#post-edit-form'),
         spinner = $('i.spinner'),
         id = $('input[name="id"]'),

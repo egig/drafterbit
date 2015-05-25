@@ -1,0 +1,7 @@
+.parent_id ol {
+    list-style: none;
+}
+
+.parent_id > ol {
+    padding-left: 0px;
+}

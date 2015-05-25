@@ -10,7 +10,7 @@ if (! function_exists('comment')) {
      */
     function comment($id)
     {
-        $comments = app()->getExtension('blog')->getComments($id);
+        $comments = app('extension')->get('blog')->getComments($id);
 
         $data['comments'] = $comments;
         $data['post_id'] = $id;
@@ -53,6 +53,6 @@ if (! function_exists('blog_url')) {
      */
     function blog_url($path)
     {
-        return app()->getExtension('blog')->getUrl($path);
+        return app('extension')->get('blog')->getUrl($path);
     }
 }

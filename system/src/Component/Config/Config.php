@@ -72,13 +72,6 @@ class Config implements ArrayAccess {
     protected $resolved = [];
 
     /**
-     * Parse state
-     *
-     * @var bool
-     */
-    protected $parsed = false;
-
-    /**
      * array config per files.
      *
      * @var sstring
@@ -108,16 +101,21 @@ class Config implements ArrayAccess {
      */
     public function parse($key, $path = null)
     {
-        if (!$path ) {
+        if (isset($this->resolved[$key])) {
+            return $this->resolved[$key];
+        }
+            
+        if (strpos($key, '@') !== false ) {
+            $temp          = explode('@', $key);
+            $itemKey       = current($temp);
+            $extension     = end($temp);
+            $path = $this->getDeferredPath($extension);
+        } else {
+            $itemKey = $key;
             $path = $this->path;
         }
 
-        if (!isset( $this->resolved[ $key ] )) {
-            $this->resolved[$key] = $this->doParse( $key, $path);
-            $this->parsed     = true;
-        }
-
-        return $this->resolved[ $key ];
+        return $this->resolved[$key] = $this->doParse($itemKey, $path);
     }
 
     /**
@@ -154,26 +152,11 @@ class Config implements ArrayAccess {
 
         unset($_temp);
         if (is_null($file)) {
-            throw new ConfigFileNotFoundException("No file or value found for key '$key'");
-        }
-
-        $this->resolvedFilePath = $file;
-        $item = isset($segments[$i+1]) ? implode('.', array_slice($segments, $i+1)) : null;        
-        return $item;
-    }
-
-    /**
-     * Get File path;
-     *
-     * @return string
-     */
-    public function getResolvedFilePath()
-    {
-        if(!$this->parsed)
-        {
             return null;
         }
-        return $this->resolvedFilePath;
+
+        $item = isset($segments[$i+1]) ? implode('.', array_slice($segments, $i+1)) : null;        
+        return [$item, $file];
     }
 
     /**
@@ -213,21 +196,14 @@ class Config implements ArrayAccess {
             return $this->items[$key];
         }
 
-        if (strpos($key, '@')) {
-            $temp         = explode('@', $key);
-            $key         = current($temp);
-            $extension     = end($temp);
-            $path = $this->getDeferredPath($extension);
-            $item = $this->parse($key, $path);
-            $file = $this->getResolvedFilePath();
-        } else {
-            $item = $this->parse($key);
-            $file = $this->getResolvedFilePath();
+        $parsedKey = $this->parse($key);
+
+        $value = null;
+        if($parsedKey) {
+            list($item, $file) = $parsedKey;
+            $array = $this->files[$file] = $this->load($file);
+            $value = $this->arrayGet($array, $item, $default);
         }
-
-        $array = $this->files[$file] = $this->load($file);
-
-        $value = $this->arrayGet($array, $item, $default);
 
         return $this->items[$key] = $this->replace($value);
     }

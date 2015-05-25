@@ -18,41 +18,40 @@ class BlogExtension extends \Drafterbit\Base\Extension
             $this['twig']->addExtension(new $extensionClass);
         }
 
-        $this->addFrontPageOption(
-            ['blog' => [
-            'label' => 'Blog',
-            'controller' => '@blog\Frontend::index',
-            'defaults' => ['slug' => 'blog']
-            ]
-            ]
-        );
+        $home = $this->model('@system\System')->get('homepage');
+        
+        $patterns = [
+            'post'   => '{yyyy}/{mm}/{slug}',
+            'tag'    => 'tag/{slug}',
+            'cat'    => 'category/{slug}',
+            'author' => 'author/{username}'
+        ];
 
-        $system = $this->model('@system\System')->all();
-
-        if ('blog' === $system['homepage']) {
-            $urlPattern = '{yyyy}/{mm}/{slug}';
-            $pageUrlPattern = 'page/{page}';
-            $tagUrlPattern = 'tag/{slug}';
-            $authorUrlPattern = 'author/{username}';
-        } else {
-            $urlPattern = 'posts/{yyyy}/{mm}/{slug}';
-            $pageUrlPattern = 'posts/page/{page}';
-            $tagUrlPattern = 'posts/tag/{slug}';
-            $authorUrlPattern = 'posts/author/{username}';
+        if ('blog' != $home) {
+            array_walk($patterns, function(&$item, $key, $prefix){
+                 $item = "$prefix/$item";
+            }, 'blog');
         }
         
-        $this['router']->addReplaces('%blog_url_pattern%', $urlPattern);
-        $this['router']->addReplaces('%blog_tag_url_pattern%', $tagUrlPattern);
-        $this['router']->addReplaces('%blog_author_url_pattern%', $authorUrlPattern);
-
+        $this['router']->addReplaces([
+            '%blog_url%' => $patterns['post'],
+            '%blog_tag_url%' => $patterns['tag'],
+            '%blog_cat_url%' => $patterns['cat'],
+            '%blog_author_url%' => $patterns['author']
+        ]);
 
         //log entities
-        $this->addLogEntityFormatter(
+        $this['log.formatter']->addEntityFormatter(
             'post',
             function($id){
-            
+
                 $label = $this->model('Post')->getOneBy('id', $id)['title'];
-                return '<a href="'.admin_url('posts/edit/'.$id).'">'.$label.'</a>';
+                
+                if($label) {
+                    return '<a href="'.admin_url('posts/edit/'.$id).'">'.$label.'</a>';
+                }
+
+                return '<em>'.__('unsaved').'</em>';
             }
         );
 
@@ -62,15 +61,17 @@ class BlogExtension extends \Drafterbit\Base\Extension
     public function getNav()
     {
         return [
-            [ 'id' => 'posts', 'label' => 'Posts', 'href' => 'posts', 'parent' => 'content', 'order' => 1],
-            [ 'id' => 'comments', 'label' => 'Comments', 'href' => 'posts/comments', 'order' => 1],
+            [ 'id' => 'blog', 'label' => 'Blog', 'order' => 1],
+            [ 'id' => 'posts', 'label' => 'Posts', 'href' => 'posts', 'parent' => 'content', 'order' => 1, 'parent' => 'blog'],
+            [ 'id' => 'categories', 'label' => 'Categories', 'href' => 'posts/categories', 'parent' => 'content', 'order' => 2, 'parent' => 'blog'],
+            [ 'id' => 'comments', 'label' => 'Comments', 'href' => 'comments', 'order' => 3, 'parent' => 'blog'],
             [ 'id' => 'blog-setting', 'label' => 'Blog', 'href' => 'posts/setting', 'parent' => 'setting']
         ];
     }
 
     public function getPermissions()
     {
-        return [
+        return [ 'blog' =>[
             'post.view' => 'view post',
             'post.edit' => 'edit post',
             'post.save' => 'save a post',
@@ -78,6 +79,7 @@ class BlogExtension extends \Drafterbit\Base\Extension
             'post.revision.view' => 'view post revision',
             'comment.view' => 'view comment',
             'comment.delete' => 'delete comment',
+        ]
         ];
     }
 
@@ -88,6 +90,16 @@ class BlogExtension extends \Drafterbit\Base\Extension
         $comments = $model->getByPostId($id);
 
         return $comments;
+    }
+
+    public function getFrontpage()
+    {
+        return ['blog' => [
+            'label' => 'Blog',
+            'controller' => '@blog\Frontend::index',
+            'defaults' => ['slug' => 'blog']
+            ]
+        ];
     }
 
     function getSearchQuery()
@@ -125,7 +137,7 @@ class BlogExtension extends \Drafterbit\Base\Extension
         return base_url($path);
     }
 
-    function dashboardWidgets()
+    function getDashboardWidgets()
     {
         return [
             'recent-comments' => (new Widgets\DashboardWidget)->recentComments()

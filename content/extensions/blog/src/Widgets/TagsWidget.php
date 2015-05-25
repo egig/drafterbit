@@ -1,13 +1,13 @@
 <?php namespace Drafterbit\Blog\Widgets;
 
-use Drafterbit\App\Widget\Widget;
+use Drafterbit\Base\Widget\Widget;
 
 class TagsWidget extends Widget
 {
-	public function getName()
-	{
-		return 'tags';
-	}
+    public function getName()
+    {
+        return 'tags';
+    }
 
     public function run($context = null)
     {

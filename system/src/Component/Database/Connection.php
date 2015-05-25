@@ -147,9 +147,9 @@ class Connection extends BaseConnection
     /**
      * {@inheritdoc}
      */
-    public function fetchAssoc($statement, array $params = [])
+    public function fetchAssoc($statement, array $params = [], array $types = [])
     {
-        $stmt = $this->executeQuery($statement, $params);
+        $stmt = $this->executeQuery($statement, $params, $types);
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -162,9 +162,9 @@ class Connection extends BaseConnection
     /**
      * {@inheritdoc}
      */
-    public function fetchArray($statement, array $params = [])
+    public function fetchArray($statement, array $params = [], array $types = [])
     {
-        $stmt = $this->executeQuery($statement, $params);
+        $stmt = $this->executeQuery($statement, $params, $types);
 
         $result = $stmt->fetch(PDO::FETCH_NUM);
 
@@ -177,7 +177,7 @@ class Connection extends BaseConnection
     /**
      * {@inheritdoc}
      */
-    public function fetchColumn($statement, array $params = [], $colnum = 0)
+    public function fetchColumn($statement, array $params = [], $colnum = 0, array $types = [])
     {
         $stmt =  $this->executeQuery($statement, $params);
 

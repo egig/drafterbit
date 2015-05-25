@@ -4,18 +4,18 @@
 }
 
 .revisions-container ol {
-	font-size: 0.96em;
-	list-style: none;
-	padding-left: 25px;
+    font-size: 0.96em;
+    list-style: none;
+    padding-left: 25px;
 }
 
 .revisions-container .panel-heading {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 /* datetimepicker hack */
 .datetimepicker {
-	top: 340px !important;
+    top: 340px !important;
 }
 
 .datetimepicker table tr td.active:active,
@@ -76,4 +76,17 @@
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   color: inherit;
   text-shadow:none;
+}
+
+.categories {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.categories ol {
+  list-style:none;
+}
+.categories > ol {
+  padding-left:0px;
 }

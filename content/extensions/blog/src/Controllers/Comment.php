@@ -1,6 +1,6 @@
 <?php namespace Drafterbit\Blog\Controllers;
 
-use Drafterbit\Extensions\System\BackendController;
+use Drafterbit\Base\Controller\Backend as BackendController;
 use Drafterbit\Component\Validation\Exceptions\ValidationFailsException;
 
 class Comment extends BackendController
@@ -37,7 +37,7 @@ class Comment extends BackendController
         }
     }
 
-    public function filter($status)
+    public function data($status)
     {
         $comments = $this->model('@blog\Comment')->all(['status' => $status]);
         

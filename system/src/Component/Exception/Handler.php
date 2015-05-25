@@ -140,7 +140,7 @@ class Handler {
         $response = $this->callCustomHandlers($exception);
 
         if ( ! is_null($response)) {
-            echo $response;
+            return $response;
         } else {
             $this->displayException($exception);
         }

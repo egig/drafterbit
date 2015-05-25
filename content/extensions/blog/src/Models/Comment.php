@@ -6,7 +6,6 @@ class Comment extends Model
 {
     public function all($filter)
     {
-
         $query = $this ->withQueryBuilder()
             ->select('c.*, p.title')
             ->from('#_comments', 'c')
@@ -43,8 +42,7 @@ class Comment extends Model
 
     public function take($num)
     {
-        return
-        $query = $this ->withQueryBuilder()
+        return $query = $this ->withQueryBuilder()
             ->select('c.*, p.title')
             ->from('#_comments', 'c')
             ->leftJoin('c', '#_posts', 'p', 'c.post_id = p.id')
@@ -121,11 +119,6 @@ class Comment extends Model
         $this->update($id, ['deleted_at' => \Carbon\Carbon::now()]);
     }
 
-    /**
-     * Restore trashed pages
-     *
-     * @return void
-     */
     public function restore($ids)
     {
         $ids = array_map(

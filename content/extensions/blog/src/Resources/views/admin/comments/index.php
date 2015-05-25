@@ -1,6 +1,6 @@
 <?php _extend('@system/main-index'); ?>
 
-<?php $this->css('@blog/css/comment/index.css'); ?>
+<?php _css('@blog/css/comment/index.css'); ?>
 
 <?php _start('filter'); ?>
 <div style="display:inline-block; float:right;margin-left:5px;">
@@ -21,18 +21,18 @@
 <?php _end(); ?>
 
 <?php _start('table'); ?>
-	<table class="table table-hover table-condensed" id="<?= $id ?>-data-table">
-	    <thead>
-	        <tr>
-	            <th class="sorting" width="15">
-	                <input id="<?= $id ?>-checkall" type="checkbox">
-	            </th>
-	            <th width="25%"><?= __('Author') ?></th>
-	            <th width="55%"><?= __('Content') ?></th>
-	            <th width="20%"><?= __('In Response to') ?></th>
-	        </tr>
-	    </thead>
-	</table>
+    <table class="table table-hover table-condensed" id="<?= $id ?>-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="<?= $id ?>-checkall" type="checkbox">
+                </th>
+                <th width="25%"><?= __('Author') ?></th>
+                <th width="55%"><?= __('Content') ?></th>
+                <th width="20%"><?= __('In Response to') ?></th>
+            </tr>
+        </thead>
+    </table>
 <?php _end(); ?>
 
-<?php $this->js('@blog/js/comment/index.js'); 
+<?php _js('@blog/js/comment/index.js'); 

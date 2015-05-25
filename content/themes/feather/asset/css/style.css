@@ -56,11 +56,15 @@ input[type="email"], input[type="search"], input[type="text"], input[type="passw
     padding: 0 15px;
 }
 
-aside {
-    margin-left: 2%  !important;
-    padding: 10px;
-    border-left: 1px solid #F2F1F0;
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 720px) {
+    aside {
+        margin-left: 2%  !important;
+        padding: 10px;
+        border-left: 1px solid #F2F1F0;
+    }
 }
+
 
 /* HEADER */
 .site-title {
@@ -134,6 +138,12 @@ ul.nav li ul.nav li {
     list-style: none;
 }
 
+@media (max-width: 750px) {
+    .search-form {
+        width: 100%;
+    }
+}
+
 .search-result ol {
     list-style: none;
     padding: 0;
@@ -166,3 +176,4 @@ ul.nav li ul.nav li {
 .tags-widget ul.tags li.tag a {
     color: inherit;
 }
+ 

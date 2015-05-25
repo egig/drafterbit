@@ -4,7 +4,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class Controller implements \ArrayAccess {
 
-    use ApplicationTrait;
+    use ContainerTrait;
 
     /**
      * Namespace origin is helper for namespaceparser
@@ -44,6 +44,10 @@ abstract class Controller implements \ArrayAccess {
 
         $rules = $this['config']->get('validation.'.$ruleKey.'@'.$this->getExtension()->getName());
 
+        if(!$rules) {
+            throw new \Exception("Unknown rule '$ruleKey'");
+        }
+
         $validator
             ->setRules($rules)
             ->validate($data);
@@ -71,7 +75,7 @@ abstract class Controller implements \ArrayAccess {
             $name = snake_case($array[$i], '-');
         }
 
-        return $this['app']->getExtension($name);
+        return $this['extension']->get($name);
     }
 
     /**

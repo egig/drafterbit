@@ -47,4 +47,15 @@ class ExceptionServiceProvider implements ServiceProviderInterface {
                 $c['exception.displayer.debug'] );
         };
     }
+
+    public function boot($app)
+    {
+       if (!$app['debug']) {
+            $app['exception']->pushError(
+                function(\Exception $exception, $code) {
+                   $app['log']->addError($exception);
+                }
+            );
+        }
+    }
 }

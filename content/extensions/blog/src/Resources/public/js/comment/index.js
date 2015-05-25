@@ -152,7 +152,7 @@
 
         var status = status || 'active';
 
-        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+status+".json").load(
+        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+status).load(
             function(){
 
                 window.location.hash = status;
@@ -191,7 +191,7 @@
     $('#comments-index-form').ajaxForm(
         function(){
             var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+urlHash2+".json").load();
+            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+urlHash2).load();
         }
     );
 
