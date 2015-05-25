@@ -1,2 +1,0 @@
-﻿
-CKEDITOR.skin.name="bootstrap";
