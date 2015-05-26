@@ -49,7 +49,7 @@
         }
 
     // listen table form
-    $('#users-index-form').ajaxForm(
+    $('#user-index-form').ajaxForm(
         {
             beforeSend: function(){
                 if (confirm(__('Are you sure you want to delete those users, this con not be undone ?'))) {
@@ -58,7 +58,8 @@
                     return false;
                 }
             },
-            success: function(){
+            success: function(response){
+                $.notify(response.message, response.status);
                 var urlHash2 = window.location.hash.replace('#','');
                 drafTerbit.users.dt.api().ajax.url(drafTerbit.adminUrl+"user/data/"+urlHash2).load();
             }
@@ -66,7 +67,7 @@
     );
 
     //status-filter
-    $('.users-status-filter').on(
+    $('.user-status-filter').on(
         'change',
         function(){
             var s = $(this).val();

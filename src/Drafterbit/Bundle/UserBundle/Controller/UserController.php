@@ -23,8 +23,44 @@ class UserController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_USER_VIEW')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $userIds = $request->request->get('users', []);
+        $action = $request->request->get('action');
+
+        if($action == 'delete') {
+            $userManager = $this->get('fos_user.user_manager');
+
+            foreach ($userIds as $id) {
+                $user = $userManager->findUserBy(['id' => $id]);
+                
+                try {                
+                    $userManager->deleteUser($user);
+                    return new JsonResponse([
+                        'message' => 'User(s) Succesfully deleted',
+                        'status' => 'success'
+                    ]);
+                } catch (\Exception $e) {
+
+                    // instead of $e->getCode()
+                    // https://github.com/doctrine/dbal/pull/221
+                    if($e->getPrevious()->getcode() == '23000') {
+
+                        if($this->get('kernel')->getEnvironment() == 'dev') {
+                            $message = $e->getMessage();
+                        } else {
+                            $message = "Can not delete user(s), some users might still have associated object (post, page, etc)";
+                        }
+
+                        return new JsonResponse([
+                            'message' => $message,
+                            'status' => 'error'
+                        ]);
+                    }
+                }
+            }
+        }
+
     	return [
             'view_id' => 'user',
             'page_title' => $this->get('translator')->trans('User')

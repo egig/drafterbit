@@ -68,6 +68,17 @@ class PostController extends Controller
                         $em->persist($post);
                         break;
                     case 'delete':
+
+                        // delete the history first
+                        $histories = $em->getRepository('DrafterbitBlogBundle:Post')
+                            ->createQueryBuilder('p')
+                            ->where('p.type  = :type')
+                            ->setParameter('type', "history:".$post->getId())
+                            ->getQuery()->getResult();
+                        foreach ($histories as $history) {
+                            $em->remove($history);
+                        }
+
                         $em->remove($post);
 
                         $status = 'success';
