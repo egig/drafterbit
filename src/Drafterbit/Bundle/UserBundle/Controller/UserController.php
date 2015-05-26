@@ -36,10 +36,6 @@ class UserController extends Controller
                 
                 try {                
                     $userManager->deleteUser($user);
-                    return new JsonResponse([
-                        'message' => 'User(s) Succesfully deleted',
-                        'status' => 'success'
-                    ]);
                 } catch (\Exception $e) {
 
                     // instead of $e->getCode()
@@ -59,6 +55,11 @@ class UserController extends Controller
                     }
                 }
             }
+
+            return new JsonResponse([
+                'message' => 'User(s) Succesfully deleted',
+                'status' => 'success'
+            ]);
         }
 
     	return [

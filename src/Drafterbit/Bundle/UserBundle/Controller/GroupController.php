@@ -24,8 +24,45 @@ class GroupController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_GROUP_VIEW')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $groupIds = $request->request->get('group', []);
+        $action = $request->request->get('action');
+
+        if($action == 'delete') {
+            $groupManager = $this->get('fos_user.group_manager');
+
+            foreach ($groupIds as $id) {
+                $group = $groupManager->findGroupBy(['id' => $id]);
+                
+                try {                
+                    $groupManager->deleteGroup($group);
+                } catch (\Exception $e) {
+
+                    // instead of $e->getCode()
+                    // https://github.com/doctrine/dbal/pull/221
+                    if($e->getPrevious()->getcode() == '23000') {
+
+                        if($this->get('kernel')->getEnvironment() == 'dev') {
+                            $message = $e->getMessage();
+                        } else {
+                            $message = "Can not delete group(s), some group might still have associated users";
+                        }
+
+                        return new JsonResponse([
+                            'message' => $message,
+                            'status' => 'error'
+                        ]);
+                    }
+                }
+
+                return new JsonResponse([
+                    'message' => 'Group(s) Succesfully deleted',
+                    'status' => 'success'
+                ]);
+            }
+        }
+
     	return [
             'view_id' => 'group',
             'page_title' => $this->get('translator')->trans('Group')
