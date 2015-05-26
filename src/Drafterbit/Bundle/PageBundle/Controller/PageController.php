@@ -151,6 +151,10 @@ class PageController extends Controller
         	->getManager()
         	->getRepository('DrafterbitPageBundle:Page')
         	->find($id);
+        
+        if(!$page and ($id != 'new')) {
+            throw  $this->createNotFoundException();
+        }
 
         if(!$page) {
             $page = new Page(); 

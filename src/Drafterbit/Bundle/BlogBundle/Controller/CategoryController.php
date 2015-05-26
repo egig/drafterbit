@@ -43,6 +43,9 @@ class CategoryController extends Controller
             ->getManager()->getRepository('DrafterbitBlogBundle:Category')
             ->find($id);
 
+        if(!$category and ($id != 'new')) {
+            throw  $this->createNotFoundException();
+        }
 
         if(!$category) {
             $category = new Category;

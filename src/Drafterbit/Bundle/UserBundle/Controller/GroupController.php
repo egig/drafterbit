@@ -101,7 +101,7 @@ class GroupController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_GROUP_EDIT')")
      */
-    public function editAction($id = 0)
+    public function editAction($id)
     {
         $rolesGroup = $this->getRoles();
 
@@ -115,6 +115,11 @@ class GroupController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pageTitle = 'Edit Group';
         $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
+        
+        if(!$group and ($id != 'new')) {
+            throw  $this->createNotFoundException();
+        }
+
         if(!$group) {
             $group = new Group(null);
             $pageTitle = 'New Group';

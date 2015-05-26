@@ -106,6 +106,11 @@ class UserController extends Controller
 
         $pageTitle = 'Edit User';
         $user = $userManager->findUserBy(['id' => $id]);
+        
+        if(!$user and ($id != 'new')) {
+            throw  $this->createNotFoundException();
+        }
+
         if(!$user) {
             $user = new User(); 
             $pageTitle = 'New User';
