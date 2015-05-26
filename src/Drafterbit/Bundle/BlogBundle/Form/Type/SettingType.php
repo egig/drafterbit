@@ -23,6 +23,13 @@ class SettingType extends AbstractType
         $builder
             ->add('post_perpage', 'text', ['data' => $this->data('blog.post_perpage')])
             ->add('feed_shows', 'text', ['data' => $this->data('blog.feed_shows')])
+            ->add('feed_content', 'choice', [
+                'choices' => [
+                    1 => 'Full Text',
+                    2 => 'Summary'
+                ],
+                'data' => $this->data('blog.feed_content')]
+            )
             ->add('Save', 'submit');
     }
 

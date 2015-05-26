@@ -12,8 +12,12 @@
             {{ form_widget(form.post_perpage, {attr:{class:"form-control"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.feed_shows, 'feed Shows') }}
+            {{ form_label(form.feed_shows, 'Feed Shows') }}
             {{ form_widget(form.feed_shows, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.feed_content, 'Feed Content') }}
+            {{ form_widget(form.feed_content, {attr:{class:"form-control"}}) }}
         </div>
     </div>
 </div>
@@ -25,6 +29,6 @@
     {% if success %}
         <script type="text/javascript">
         $.notify('{{ success.message }}', 'success');
-        </script>>
+        </script>
     {% endif %}
 {% endblock %}

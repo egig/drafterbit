@@ -382,7 +382,8 @@ class PostController extends Controller
         if($blogSetting) {       
             $settingData = [
                 'blog.post_perpage' => $blogSetting['post_perpage'],
-                'blog.feed_shows' => $blogSetting['feed_shows']
+                'blog.feed_shows' => $blogSetting['feed_shows'],
+                'blog.feed_content' => $blogSetting['feed_content']
             ];
             $this->get('system')->update($settingData);
             $data['success'] = [
@@ -395,7 +396,7 @@ class PostController extends Controller
 
     public function feedAction()
     {        
-        $shows = $this->get('system')->get('feed_shows', 10);
+        $shows = $this->get('system')->get('blog.feed_shows', 10);
 
         $posts = $this->getDoctrine()->getManager()
             ->getRepository('DrafterbitBlogBundle:Post')
@@ -431,7 +432,7 @@ class PostController extends Controller
                 $post->setContent($content);
             }
 
-            $feedsContent = $this->get('system')->get('feed_content', 1);
+            $feedsContent = $this->get('system')->get('blog.feed_content', 1);
 
             $text = $post->getContent();
 
