@@ -26,10 +26,16 @@ class GroupController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $viewId = 'group';
         $groupIds = $request->request->get('group', []);
         $action = $request->request->get('action');
+        $token = $request->request->get('_token');
 
         if($action == 'delete') {
+            if(!$this->isCsrfTokenValid($viewId, $token)) {
+                throw $this->createAccessDeniedException();
+            }
+
             $groupManager = $this->get('fos_user.group_manager');
 
             foreach ($groupIds as $id) {
@@ -64,7 +70,7 @@ class GroupController extends Controller
         }
 
     	return [
-            'view_id' => 'group',
+            'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Group')
         ];
     }

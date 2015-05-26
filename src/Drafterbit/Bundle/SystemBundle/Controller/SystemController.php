@@ -81,12 +81,49 @@ class SystemController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_LOG_VIEW')")
      */
-    public function logAction()
+    public function logAction(Request $request)
     {
-    	return [
-            'view_id' => 'log',
+        $viewId = 'log';
+        $action = $request->request->get('action');
+        $token = $request->request->get('_token');
+        $data = [
+            'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Log')
         ];
+
+        if($action) {
+            if(!$this->isCsrfTokenValid($viewId, $token)) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('DrafterbitSystemBundle:Log');
+
+            switch ($action) {
+                case 'delete':
+                    $logIds = $request->request->get('log', []);
+                    foreach ($logIds as $id) {
+                        $log = $repo->find($id);
+                        $em->remove($log);
+                    }
+                    $message = 'Logs deleted';
+                    break;
+                case 'clear':
+                    $logs = $repo->findAll();
+                     foreach ($logs as $log) {
+                        $em->remove($log);
+                    }
+                    $message = 'All logs deleted';
+                    break;
+                default:
+                    break;
+            }
+            
+            $em->flush();
+            $data['notif'] = ['message' => $this->get('translator')->trans($message), 'status' => 'success'];
+        }
+
+        return $data;
     }
 
     /**

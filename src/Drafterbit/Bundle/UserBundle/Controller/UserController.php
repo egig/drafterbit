@@ -25,16 +25,21 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $viewId = 'user';
         $userIds = $request->request->get('users', []);
         $action = $request->request->get('action');
+        $token = $request->request->get('_token');
 
         if($action == 'delete') {
+            if(!$this->isCsrfTokenValid($viewId, $token)) {
+                throw $this->createAccessDeniedException();
+            }
             $userManager = $this->get('fos_user.user_manager');
 
             foreach ($userIds as $id) {
                 $user = $userManager->findUserBy(['id' => $id]);
                 
-                try {                
+                try {
                     $userManager->deleteUser($user);
                 } catch (\Exception $e) {
 
@@ -63,7 +68,7 @@ class UserController extends Controller
         }
 
     	return [
-            'view_id' => 'user',
+            'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('User')
         ];
     }
@@ -73,7 +78,16 @@ class UserController extends Controller
      */
     public function dataAction($status)
     {
-        $users = $this->get('fos_user.user_manager')->findUsers();
+        $repo = $this->getDoctrine()
+            ->getRepository('DrafterbitUserBundle:User');
+
+        if('all' == $status) {
+            $users = $repo->findAll();
+        } else {
+
+            $isEnabled = $status == 'enabled' ? 1 : 0;
+            $users = $repo->findBy(['enabled' => $isEnabled]);
+        }
 
         $usersArr  = [];
 
