@@ -55,6 +55,10 @@ class Blog extends Frontpage
 			new Route('author/{username}', ['_controller' => 'DrafterbitBlogBundle:Frontend:author'])
 		);
 
+		$routes->add('drafterbit_blog_feed',
+			new Route('feed.xml', ['_controller' => 'DrafterbitBlogBundle:Post:feed'])
+		);
+
 		return $routes;
 	}
 

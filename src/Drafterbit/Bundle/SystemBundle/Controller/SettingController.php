@@ -48,7 +48,6 @@ class SettingController extends Controller
             $data['success'] = ['message' => 'Setting Saved'];
         }
 
-
         return $data;
     }
 
