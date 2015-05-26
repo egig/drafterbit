@@ -13,7 +13,7 @@ class Search implements FrontpageInterface
 	}
 
 	public function resolve($key){
-		return new Route('/', ['_controller' => 'DrafterbitSystemBundle:System:search']);
+		return new Route('/', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
 	}
 
 	public function getType() {
@@ -22,7 +22,7 @@ class Search implements FrontpageInterface
 
 	public function getRoute()
 	{
-		return new Route('/search', ['_controller' => 'DrafterbitSystemBundle:System:search']);
+		return new Route('/search', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
 	}
 
 	public function getLabel()

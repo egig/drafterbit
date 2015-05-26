@@ -34,7 +34,7 @@ class Blog extends Frontpage
 			$routes->addPrefix('blog');
 		}
 
-		$routes->add('drrab_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
+		$routes->add('drafterbit_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
 			['_controller' => 'DrafterbitBlogBundle:Frontend:view'],
 			[
 			'year' => '\d{4}',

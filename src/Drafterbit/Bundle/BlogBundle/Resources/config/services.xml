@@ -34,5 +34,11 @@
             <argument type="service" id="kernel" />
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
+
+        <!-- Search query -->
+        <service id="drafterbit_blog.search.query_provider" class="Drafterbit\Bundle\BlogBundle\Search\QueryProvider">
+            <argument type="service" id="database_connection" />
+            <tag name="drafterbit_system.search.query_provider" />
+        </service>
     </services>
 </container>

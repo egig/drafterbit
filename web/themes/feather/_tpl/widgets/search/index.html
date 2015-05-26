@@ -8,7 +8,9 @@
     {% for result in results %}
     <li class="item">
         <h3><a href="{{result.url}}">{{ result.title }}</a></h3>
+        {% autoescape false %}
         <div>{{ result.summary }}</div>
+        {% endautoescape %}
      </li>
     {% endfor %}
 	</ol>

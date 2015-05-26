@@ -10,6 +10,7 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\FrontpageProvide
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\FrontendTemplatingPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\DashboardPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WidgetPass;
+use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProviderPass;
 
 class DrafterbitSystemBundle extends Bundle
 {
@@ -22,5 +23,6 @@ class DrafterbitSystemBundle extends Bundle
         $container->addCompilerPass(new FrontpageProviderPass());
         $container->addCompilerPass(new DashboardPass());
         $container->addCompilerPass(new WidgetPass());
+        $container->addCompilerPass(new SearchQueryProviderPass());
     }
 }
