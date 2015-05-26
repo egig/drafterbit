@@ -35,6 +35,7 @@ class ResultFormatter implements ResultFormatterInterface
 
 	function getSummary($item)
 	{
-		return $item['content']; 
+		// only diplay some text
+		return substr(strip_tags($item['content']), 0, 250);
 	}
 }
