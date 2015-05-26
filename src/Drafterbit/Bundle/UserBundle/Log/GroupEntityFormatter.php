@@ -13,21 +13,19 @@ class GroupEntityFormatter extends BaseEntityFormatter
 
 	public function format($id)
 	{
-		if ($this->getUser()->getId() == $id) {
+        $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
+        $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
 
-            $label = 'You';
-        } else {
-
-        	$em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        	$group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
-
+        if($group) {
             $label = $group->getName();
+        } else {
+            $label = "with id $id(deleted)";
         }
 
         $url = $this->getKernel()
             ->getContainer()
             ->get('router')
-            ->generate('drafterbit_user_edit', ['id' => $id]);
+            ->generate('drafterbit_user_group_edit', ['id' => $id]);
 
         if($label) {
             return '<a href="'.$url.'">'.$label.'</a>';

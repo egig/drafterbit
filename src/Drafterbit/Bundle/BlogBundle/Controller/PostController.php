@@ -169,6 +169,10 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
 
+        if(!$post and ($id != 'new')) {
+            throw  $this->createNotFoundException('Page not found');
+        }
+
         if(!$post) {
             $post = new Post(); 
             $pageTitle = 'New Post';

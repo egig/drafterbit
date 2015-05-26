@@ -21,7 +21,11 @@ class UserEntityFormatter extends BaseEntityFormatter
         	$em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         	$user = $em->getRepository('DrafterbitUserBundle:User')->find($id);
 
-            $label = $user->getRealname();
+            if($user) {
+                $label = $user->getRealname();
+            } else {
+                $label = "with id $id(deleted)";
+            }
         }
 
         $url = $this->getKernel()

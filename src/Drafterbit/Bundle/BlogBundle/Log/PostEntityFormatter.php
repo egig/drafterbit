@@ -16,7 +16,11 @@ class PostEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
 
-        $label = $post->getTitle();
+        if($post) {
+            $label = $post->getTitle();
+        } else {
+            $label = "with id $id(deleted)";
+        }
 
         $url = $this->getKernel()
             ->getContainer()

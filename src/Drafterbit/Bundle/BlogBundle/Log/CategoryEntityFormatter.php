@@ -16,7 +16,11 @@ class CategoryEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $cat = $em->getRepository('DrafterbitBlogBundle:Category')->find($id);
 
-        $label = $cat->getLabel();
+        if($cat) {
+            $label = $cat->getLabel();
+        } else {
+            $label = "with id $id(deleted)";
+        }
 
         $url = $this->getKernel()
             ->getContainer()
