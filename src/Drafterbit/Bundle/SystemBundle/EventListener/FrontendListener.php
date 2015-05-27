@@ -29,34 +29,6 @@ class FrontendListener implements EventSubscriberInterface
     }
 
     /**
-     * Check if request is contains customize mode
-     *
-     * @param GetResponseEvent $event
-     */
-    public function onKernelRequest(GetResponseEvent $event)
-    {
-        $request = $event->getRequest();
-        $theme = $request->query->get('theme');
-        $token = $request->query->get('_token');
-
-        // change theme path according to theme
-        // and add theme context data
-        if($theme) {
-            if(!$this->isCsrfTokenValid($token)) {
-                throw new AccessDeniedException();
-            }
-
-            $themesPath = $this->container->getParameter('themes_path');
-            $this->container->get('twig.loader')->setPaths($themesPath.'/'.$theme.'/_tpl');
-
-            $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
-            foreach (json_decode($context, true) as $key => $value) {
-                $this->container->get('twig')->addGlobal($key, $value);
-            }
-        }
-    }
-
-    /**
      * Change twig path on frontend controller
      */
     public function onKernelController(FilterControllerEvent $event)
@@ -66,10 +38,29 @@ class FrontendListener implements EventSubscriberInterface
 
         if($controller[0] instanceof FrontendController) {
 
-            $theme = $this->container->getParameter('theme');
+            // change theme path according to theme
+            // and add theme context data
+            if($theme = $request->query->get('theme')) {
+
+                $token = $request->query->get('_token');
+                if(!$this->isCsrfTokenValid($token)) {
+                    throw new AccessDeniedException();
+                }
+
+            } else {
+                $theme = $this->container->getParameter('theme');
+            }
+
             $themesPath = $this->container->getParameter('themes_path');
             $this->container->get('twig.loader')->setPaths($themesPath.'/'.$theme.'/_tpl');
             $this->container->get('twig')->disableStrictVariables();
+
+            // add global theme context
+            $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
+            foreach (json_decode($context, true) as $key => $value) {
+                $this->container->get('twig')->addGlobal($key, $value);
+            }
+
         } else {
 
             // restrict some browser
@@ -83,7 +74,6 @@ class FrontendListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => array('onKernelRequest'),
             KernelEvents::CONTROLLER => array('onKernelController')
         );
     }
