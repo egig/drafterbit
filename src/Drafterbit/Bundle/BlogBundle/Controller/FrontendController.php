@@ -12,6 +12,8 @@ use Drafterbit\Bundle\SystemBundle\Controller\FrontendController as BaseFrontend
 
 class FrontendController extends BaseFrontendController
 {
+	const MORE_TAG = '<!--more-->';
+
 	/**
 	 * @Template("content/blog/index.html")
 	 */
@@ -126,7 +128,22 @@ class FrontendController extends BaseFrontendController
 			$query->innerJoin('p.user', 'u', Expr\Join::WITH, "u.username = '$filterValue'");
 		}
 
-		return $query->getQuery()->getResult();
+		$posts = $query->getQuery()->getResult();
+
+		foreach ($posts as $post) {
+			if(strrpos($post->getContent(), self::MORE_TAG) !== false) {
+				$post->excerpt = current(explode(self::MORE_TAG, $post->getContent())).'&hellip;';
+			}
+
+			$year = $post->getPublishedAt()->format('Y');
+			$month = $post->getPublishedAt()->format('m');
+			$date = $post->getPublishedAt()->format('d');
+			$slug = $post->getSlug();
+			$post->url = $this->generateUrl('drafterbit_blog_post_front_view',
+				['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
+		}
+
+		return $posts;
 	}
 
 	/**
@@ -134,10 +151,18 @@ class FrontendController extends BaseFrontendController
 	 */
 	public function viewAction($year, $month, $date, $slug)
 	{
-		// @todo filter by year month and date
+		$time = new \DateTime("$year-$month-$date");
+
 		$post = $this->getDoctrine()->getManager()
 			->getRepository('DrafterbitBlogBundle:Post')
-			->findOneBy(['slug' => $slug]);
+			->createQueryBuilder('p')
+			->where('p.slug=:slug')
+			->andWhere('p.type=:type')
+			->andWhere('p.publishedAt >= :publishedAt')
+			->setParameters(['slug' => $slug, 'type' => 'standard', 'publishedAt' => $time])
+			->setMaxResults(1)
+			->getQuery()
+			->getOneOrNullResult();
 
 		return ['post'  => $post];
 	}
