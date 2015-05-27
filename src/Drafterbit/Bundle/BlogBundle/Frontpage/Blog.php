@@ -30,9 +30,6 @@ class Blog extends Frontpage
 	public function getRouteCollection()
 	{
 		$routes = new RouteCollection;
-		if('blog' != $this->container->get('system')->get('frontpage')) {
-			$routes->addPrefix('blog');
-		}
 
 		$routes->add('drafterbit_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
 			['_controller' => 'DrafterbitBlogBundle:Frontend:view'],
@@ -44,20 +41,26 @@ class Blog extends Frontpage
 		);
 
 		$routes->add('drafterbit_blog_category_front_view',
-			new Route('category/{slug}', ['_controller' => 'DrafterbitBlogBundle:Frontend:category'] )
+			new Route('/category/{slug}', ['_controller' => 'DrafterbitBlogBundle:Frontend:category'] )
 			);
 
 		$routes->add('drafterbit_blog_tag_front_view',
-			new Route('tag/{slug}', ['_controller' => 'DrafterbitBlogBundle:Frontend:tag'])
+			new Route('/tag/{slug}', ['_controller' => 'DrafterbitBlogBundle:Frontend:tag'])
 		);
 
 		$routes->add('drafterbit_blog_author_front_view',
-			new Route('author/{username}', ['_controller' => 'DrafterbitBlogBundle:Frontend:author'])
+			new Route('/author/{username}', ['_controller' => 'DrafterbitBlogBundle:Frontend:author'])
 		);
 
 		$routes->add('drafterbit_blog_feed',
-			new Route('feed.xml', ['_controller' => 'DrafterbitBlogBundle:Post:feed'])
+			new Route('/feed.xml', ['_controller' => 'DrafterbitBlogBundle:Post:feed'])
 		);
+
+		if('blog' != $this->container->get('system')->get('frontpage')) {
+			$routes->addPrefix('/blog');
+		}
+
+		dump($routes);
 
 		return $routes;
 	}
