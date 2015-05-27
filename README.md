@@ -24,20 +24,26 @@ Installation package will be available for download soon. For now you can just d
     cd drafterbit
     composer install --no-dev --prefer-dist
     ```
-    
-5. Then install web dependencies
+5. Make sure following directory is writable by current user and web server:
+    ```shell
+    	app/cache
+    	app/logs
+    	web/upload
+    ```
+
+6. Then install web dependencies
     ```shell
     bower install
-    php app/console doctrine:schema:create assets:install
+    php app/console assets:install
     ```
     
-6. Load database and fixtures
+7. Load database and fixtures
 	```shell
 	php app/console doctrine:schema:create
 	php app/console doctrine:fixtures:load
 	```
 
-7. From here, you can just visit browser to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel, first created user is 'admin' with password also 'admin'.
+8. From here, you can just visit browser to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel, first created user is 'admin' with password also 'admin'.
 
 Please let me know thru the google forum below if you get any problem.
 
