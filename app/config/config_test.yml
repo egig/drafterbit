@@ -19,3 +19,10 @@ security:
     firewalls:
         main:
             http_basic: ~
+
+doctrine:
+    dbal:
+        host:     127.0.0.1
+        dbname:   symfony
+        user:     root
+        password: ~
