@@ -62,6 +62,7 @@ class FrontendListener implements EventSubscriberInterface
     public function onKernelController(FilterControllerEvent $event)
     {
         $controller = $event->getController();
+        $request = $event->getRequest();
 
         if($controller[0] instanceof FrontendController) {
 
@@ -69,6 +70,13 @@ class FrontendListener implements EventSubscriberInterface
             $themesPath = $this->container->getParameter('themes_path');
             $this->container->get('twig.loader')->setPaths($themesPath.'/'.$theme.'/_tpl');
             $this->container->get('twig')->disableStrictVariables();
+        } else {
+
+            // restrict some browser
+            if(preg_match('/(?i)msie [1-9]/', $request->server->get('HTTP_USER_AGENT'))) {
+                // if IE<=9
+                exit('Browser not supported yet, sorry. :(');
+            }
         }
     }
 
