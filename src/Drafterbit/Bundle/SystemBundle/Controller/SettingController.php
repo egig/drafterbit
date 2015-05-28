@@ -77,7 +77,7 @@ class SettingController extends Controller
             ->find($id);
 
         if(!$widget) {
-            $sequence = 1;
+            $sequence = 0;
             $widget = new Widget;
         } else {
             $sequence = $widget->getSequence();
@@ -98,6 +98,32 @@ class SettingController extends Controller
         $em->flush();
 
         return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
+    }
+
+    /**
+     * @Route("/setting/widget/sort", name="drafterbit_setting_widget_sort")
+     */
+    public function widgetSortAction(Request $request)
+    {
+        $ids = $request->request->get('order');
+        $em = $this->getDoctrine()->getManager();
+
+        $order = 1;
+        foreach (array_filter(explode(',', $ids)) as $temp) {
+            $temp2 = explode('-', $temp);
+            $id = current($temp2);
+            //$data = ['sequence' => $order];
+
+            $widget = $em->getRepository('DrafterbitSystemBundle:Widget')->find($id);
+
+            $widget->setSequence($order);
+            $em->persist($widget);
+            $em->flush();
+
+            $order++;
+        }
+        
+        return new Response(1);
     }
 
     private function getThemes()

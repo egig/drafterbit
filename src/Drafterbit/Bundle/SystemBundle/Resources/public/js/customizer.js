@@ -216,13 +216,14 @@
 
                 $.ajax(
                     {
-                        url: drafTerbit.adminUrl+"/setting/themes/widget/sort",
+                        url: drafTerbit.adminUrl+"setting/widget/sort",
                         global: false,
                         type: "POST",
                         async: false,
                         dataType: "html",
                         data: "order="+orders,
                         success: function(html){
+                            refreshPreview();
                         }
                     }
                 );
