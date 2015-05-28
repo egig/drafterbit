@@ -28,8 +28,16 @@ class SettingController extends Controller
      */
     public function generalAction(Request $request)
     {
+        // @todo validation
+        $notif['success'] = false;
+        if($system = $request->request->get('system')) {
+            unset($system['Save']);
+            unset($system['_token']);
+            $this->get('system')->update($system);
+            $notif['success'] = ['message' => 'Setting Saved'];
+        }
+
         $form = $this->createForm(new SystemType($this->get('system'), $this->get('drafterbit_system.frontpage_provider'))) ;
-        
         $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
             'view_id' => 'system',
@@ -37,18 +45,7 @@ class SettingController extends Controller
             'form' => $form->createView()
         ];
 
-        $system = $request->request->get('system');
-
-        // @todo validation
-        $data['success'] = false;
-        if($system) {
-            unset($system['Save']);
-            unset($system['_token']);
-            $this->get('system')->update($system);
-            $data['success'] = ['message' => 'Setting Saved'];
-        }
-
-        return $data;
+        return array_merge($data, $notif);
     }
 
     /**

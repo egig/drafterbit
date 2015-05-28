@@ -160,8 +160,15 @@ class SystemController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_CACHE_VIEW')")
      */
-    public function cacheAction()
+    public function cacheAction(Request $request)
     {
+        $notif = false;
+        if($request->request->get('renew')) {
+            $this->clearCache();
+            $message = $this->get('translator')->trans('Cache renewed');
+            $notif = ['message' => $message, 'status' => 'success'];
+        }
+
         $cacheDir = $this->get('kernel')->getCacheDir();
         $finder = (new Finder)->in($cacheDir)->depth(0);
 
@@ -174,19 +181,25 @@ class SystemController extends Controller
             ];
         }
 
-        return ['page_title' => $this->get('translator')->trans('Cache'), 'caches' => $caches];
+        return [
+            'page_title' => $this->get('translator')->trans('Cache'),
+            'notif' => $notif,
+            'caches' => $caches
+        ];
     }
 
     /**
-     * @Route("/system/cache/clear", name="drafterbit_system_cache_clear")
      * @todo do this use php, not exec
      */
-    public function clearCacheAction()
+    public function clearCache()
     {
         $kernel = $this->get('kernel');
-        exec('php '.$kernel->getRootDir().'/console cache:clear --env="'.$kernel->getEnvironment().'"');
+        // @todo ensure this
+        if('dev' == $kernel->getEnvironment()) {
+            return;
+        }
 
-        return new RedirectResponse($this->generateUrl('drafterbit_system_cache'));
+        exec('php '.$kernel->getRootDir().'/console cache:clear --env="'.$kernel->getEnvironment().'"');
     }
 
     /**

@@ -60,8 +60,6 @@ class Blog extends Frontpage
 			$routes->addPrefix('/blog');
 		}
 
-		dump($routes);
-
 		return $routes;
 	}
 

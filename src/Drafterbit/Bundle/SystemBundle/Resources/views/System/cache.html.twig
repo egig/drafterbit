@@ -5,8 +5,8 @@
     <div class="row" style="margin-bottom:10px;">
         {% if is_granted('ROLE_CACHE_RENEW') %}
         <div class="col-md-8">
-            <form action="{{ path('drafterbit_system_cache_clear') }}" method="POST">
-                <button type="submit" class="btn btn-default btn-sm">Renew Cache</button>
+            <form method="POST">
+                <button type="submit" name="renew" value="1" class="btn btn-default btn-sm">Renew Cache</button>
             </form>
         </div>
         {% endif %}
@@ -32,5 +32,16 @@
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+
+    {% if notif %}
+        <script type="text/javascript">
+            $.notify("{{ notif.message }}", "{{ notif.status }}");
+        </script>>
+    {% endif %}
 
 {% endblock %}
