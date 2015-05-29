@@ -64,7 +64,6 @@ class CategoryController extends Controller
 
     /**
      * @Route("/blog/category/data/all", name="drafterbit_blog_category_data")
-     * @Template()
      */
     public function dataAction()
     {

@@ -41,7 +41,7 @@
             var status = $(this).data('status');
 
             $.post(
-                drafTerbit.adminUrl+'/comments/status',
+                drafTerbit.adminUrl+'comment/status',
                 {
                     id: $(this).data('id'),
                     status: status,
@@ -74,7 +74,7 @@
         function(e){
             e.preventDefault();
             $.post(
-                drafTerbit.adminUrl+'/comments/quick-trash',
+                drafTerbit.adminUrl+'comment/quick-trash',
                 {
                     id: $(this).data('id'),
                     csrf: drafTerbit.csrfToken,
@@ -152,7 +152,7 @@
 
         var status = status || 'active';
 
-        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+status).load(
+        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+status).load(
             function(){
 
                 window.location.hash = status;
@@ -179,7 +179,7 @@
     changeUncreateAction(urlHash);
 
     //status-filter
-    $('.comments-status-filter').on(
+    $('.comment-status-filter').on(
         'change',
         function(){
             var s = $(this).val();
@@ -188,10 +188,10 @@
         }
     );
 
-    $('#comments-index-form').ajaxForm(
+    $('#comment-index-form').ajaxForm(
         function(){
             var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"/comments/data/"+urlHash2).load();
+            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"comment/data/"+urlHash2).load();
         }
     );
 
