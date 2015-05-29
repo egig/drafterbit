@@ -118,6 +118,13 @@ class Post
     protected $tags;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="Drafterbit\Bundle\BlogBundle\Entity\Comment", mappedBy="post")
+     * @var collection
+     */
+    protected $comments;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -369,7 +376,7 @@ class Post
     }
 
     /**
-     * Get Category
+     * Get Tags
      *
      * @return collection
      */
@@ -379,7 +386,7 @@ class Post
     }
 
     /**
-     * Get Category
+     * Get Tags
      *
      * @return collection
      */
@@ -396,6 +403,28 @@ class Post
     public function setTags($tags)
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get Comments
+     *
+     * @return collection
+     */
+    public function getComments()
+    {
+        return $this->comments ? $this->comments : new ArrayCollection();
+    }
+
+    /**
+     * Set Comments
+     *
+     * @return Post
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
 
         return $this;
     }

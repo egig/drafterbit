@@ -9,15 +9,12 @@
         </div>
         {{ post.content|raw }}
     </div>
-
-        {#
-        <div class="comments">
-            <h4>{{ __('Discussion') }}</h4>
-            <section>
-                {{ comment(post.id) }}
-            </section>
-        </div>
-        #}
+    <div class="comments">
+        <h4>{{ __('Discussion') }}</h4>
+        <section>
+            {{ comment(post)|raw }}
+        </section>
+    </div>
     
     </section>
 {% endblock %}
