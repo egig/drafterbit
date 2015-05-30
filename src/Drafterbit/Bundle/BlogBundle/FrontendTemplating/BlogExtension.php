@@ -5,6 +5,8 @@ namespace Drafterbit\Bundle\BlogBundle\FrontendTemplating;
 use Symfony\Component\HttpKernel\Kernel;
 use Drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
+use Drafterbit\Bundle\BlogBundle\Form\Type\CommentType;
+use Drafterbit\Bundle\BlogBundle\Entity\Comment;
 
 class BlogExtension extends \Twig_Extension
 {
@@ -23,7 +25,7 @@ class BlogExtension extends \Twig_Extension
         );
     }
 
-    public function comment(Post $post)
+    public function comment(Post $post = null)
     {
         $comments = $post->getComments();
         $data['comments'] = $comments;
@@ -36,9 +38,18 @@ class BlogExtension extends \Twig_Extension
 
         $js = '<script>'.file_get_contents($jsCommentSnippet).'</script>';
 
-        $form = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html', ['parent_id' => 0, 'post_id' => $post->getId()]);
+        $form = $this->kernel->getContainer()->get('form.factory')->create(new CommentType);
+        $form->get('post')->setData($post);
 
-        return $content.$form.$js;
+
+        $formSection = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html',
+            [
+                'form' =>  $form->createView(),
+                'parent' => null,
+                'form_id' => 'form-comment-0'
+            ]);
+
+        return $content.$formSection.$js;
     }
 
     public function blogUrl($path)
@@ -63,9 +74,16 @@ class BlogExtension extends \Twig_Extension
         foreach ($comments as $comment) {
 
             if($comment->getParent() == $parent) {
-                $data['parent_id'] = $comment->getId();
-                $data['post_id'] = $comment->getPost()->getId();
                 
+                $newComment =  new Comment;
+                $newComment->setParent($comment);
+                $form = $this->kernel->getContainer()->get('form.factory')->create(new CommentType, $newComment);
+                $form->get('post')->setData($comment->getPost());
+
+                $data['form'] = $form->createView();
+                $data['parent'] = $comment;
+                $data['form_id'] = 'form-comment-'.$comment->getId();
+
                 $comment->form = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html', $data);
                 $comment->childs = $this->renderComments($comments, $comment);
                 $data['comment'] = $comment;

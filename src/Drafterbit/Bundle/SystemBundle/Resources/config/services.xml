@@ -128,5 +128,11 @@
 
         <service id="search_engine" alias="drafterbit_system.search.engine"/>
 
+        <!-- Form Type -->
+        <service id="drafterbit_system.form.type.entity_hidden" class="Drafterbit\Bundle\SystemBundle\Form\Type\EntityHiddenType">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="form.type" alias="entity_hidden"/>
+        </service>
+
     </services>
 </container>

@@ -166,4 +166,15 @@ class FrontendController extends BaseFrontendController
 
 		return ['post'  => $post];
 	}
+
+	
+    /**
+     * @Route("/blog/comment/submit", name="drafterbit_blog_comment_submit")
+     */
+    public function commentSubmitAction()
+    {
+        return [
+        //
+        ];
+    }
 }

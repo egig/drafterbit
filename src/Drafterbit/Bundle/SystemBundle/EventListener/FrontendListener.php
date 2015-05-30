@@ -52,8 +52,23 @@ class FrontendListener implements EventSubscriberInterface
             }
 
             $themesPath = $this->container->getParameter('themes_path');
-            $this->container->get('twig.loader')->setPaths($themesPath.'/'.$theme.'/_tpl');
-            $this->container->get('twig')->disableStrictVariables();
+
+            // @odo
+            if(!is_dir($defaultForm = $this->container->get('kernel')->getRootDir().
+                    '/../vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form')) {
+                throw new \RuntimeException("Default form view path doesn't exsist");
+            }
+
+            $paths = [
+                $defaultForm,
+                $themesPath.'/'.$theme.'/_tpl',
+            ];
+
+            $this->container->get('twig.loader')->setPaths($paths);
+
+            if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
+                $this->container->get('twig')->disableStrictVariables();
+            }
 
             // add global theme context
             $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
