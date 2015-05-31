@@ -262,7 +262,6 @@ class PostController extends Controller
 
         $form = $this->createForm(new PostType(), $post);
         $form->handleRequest($request);
-        
 
          if($form->isValid()) {
 

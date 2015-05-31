@@ -1,0 +1,11 @@
+{% extends 'layout/default.html' %}
+
+{% block content %}
+<p>{{ __('Please go back and fix the following error first') }}</p>
+	<ul>
+	{% for field,message in errors %}
+		<li><strong>{{ field }}</strong>: {{ message }}</li>
+	{% endfor %}
+	</ul>
+<p><a href="{{ post_url }}">&lt;&lt; Back</a></p>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace Drafterbit\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -24,14 +25,8 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
-     */
-    private $content;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="author_name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $authorName;
 
@@ -39,15 +34,25 @@ class Comment
      * @var string
      *
      * @ORM\Column(name="author_email", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $authorEmail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="author_url", type="string", length=150)
+     * @ORM\Column(name="author_url", type="string", length=150, nullable=true)
      */
     private $authorUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     */
+    private $content;
 
     /**
      * @var \DateTime

@@ -6,9 +6,14 @@ use Doctrine\ORM\Query\Expr;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Drafterbit\Bundle\SystemBundle\Controller\FrontendController as BaseFrontendController;
+
+use Drafterbit\Bundle\BlogBundle\Entity\Comment;
+use Drafterbit\Bundle\BlogBundle\Form\Type\CommentType;
 
 class FrontendController extends BaseFrontendController
 {
@@ -133,6 +138,8 @@ class FrontendController extends BaseFrontendController
 		foreach ($posts as $post) {
 			if(strrpos($post->getContent(), self::MORE_TAG) !== false) {
 				$post->excerpt = current(explode(self::MORE_TAG, $post->getContent())).'&hellip;';
+			} else {
+				$post->excerpt = false;
 			}
 
 			$year = $post->getPublishedAt()->format('Y');
@@ -166,15 +173,67 @@ class FrontendController extends BaseFrontendController
 
 		return ['post'  => $post];
 	}
-
 	
     /**
      * @Route("/blog/comment/submit", name="drafterbit_blog_comment_submit")
+     * @Method("POST")
      */
-    public function commentSubmitAction()
+    public function commentSubmitAction(Request $request)
     {
-        return [
-        //
-        ];
+    	$referer = $request->server->get('HTTP_REFERER');
+    	$requestedComment = $request->request->get('blog_comment');
+
+    	if($parentId = $requestedComment['parent']) {
+			$parent = $this->getDoctrine()->getManager()
+				->getRepository('DrafterbitBlogBundle:Comment')
+				->find($parentId);
+    	} else {
+    		$parent = null;
+    	}
+
+    	$newComment = new Comment;
+    	$newComment->setParent($parent);
+
+    	$form = $this->createForm(new CommentType, $newComment);
+    	$form->handleRequest($request);
+
+    	if($form->isValid()) {
+    		$comment = $form->getData();
+    		$comment->setCreatedAt(new \DateTime);
+    		$comment->setUpdatedAt(new \DateTime);
+    		$comment->setDeletedAt(new \DateTime('0000-00-00'));
+
+    		// @todo status
+    		$comment->setStatus(1);
+
+    		$em = $this->getDoctrine()->getManager();
+    		$em->persist($comment);
+    		$em->flush();
+
+    		//.. send email
+    		return new RedirectResponse($referer.'#comment-'.$comment->getId());
+
+    	} else {
+    		
+    		$errors = [];
+
+            // @todo clean this, make a recursive
+            // create service, FormErrorExtractor maybe
+        	$formView = $form->createView();
+            
+            foreach ($formView as $inputName => $view) {
+
+                if(isset($view->vars['errors'])) {
+                    foreach($view->vars['errors'] as $error) {
+                        $errors[$view->vars['label']] = $error->getMessage();
+                    }
+                }
+            }
+
+            $data['post_url'] = $referer;
+            $data['errors'] = $errors;
+    		$content = $this->renderView('content/blog/comment/error.html', $data);
+    		return new Response($content);
+    	}
     }
 }

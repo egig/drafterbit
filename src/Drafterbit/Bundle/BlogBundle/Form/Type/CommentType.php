@@ -11,16 +11,16 @@ class CommentType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author_name', 'text', ['required' => true])
-            ->add('author_email', 'text', ['required' => true])
-            ->add('author_url', 'text')
+            ->add('authorName', 'text', ['required' => true, 'label'=>'Name'])
+            ->add('authorEmail', 'text', ['required' => true, 'label'=>'Email'])
+            ->add('authorUrl', 'text')
             ->add('post', 'entity_hidden', [
                 'class' => 'DrafterbitBlogBundle:Post',
                 ])
             ->add('parent', 'entity_hidden', [
                 'class' => 'DrafterbitBlogBundle:Comment',
                 ])
-            ->add('content', 'textarea', ['required' => true])
+            ->add('content', 'textarea', ['required' => true, 'label'=>'Content'])
             ->add('subscribe', 'checkbox', [
                 'label'    => 'Notify me of followup comments via e-mail',
                 'required' => false,
