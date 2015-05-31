@@ -45,12 +45,4 @@
     <script src="{{ asset('plugins/chekall/jquery-check-all.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
     <script src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
-
-    <script type="text/javascript">
-    {% verbatim %}
-        $('.table').on('click', 'tbody tr', function(){
-            $(this).find('input[type="checkbox"]').click();
-        });
-    {% endverbatim %}
-    </script>
 {% endblock %}

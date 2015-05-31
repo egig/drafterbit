@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comment
 {
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_SPAM = 2;
+
     /**
      * @var integer
      *
@@ -45,6 +49,13 @@ class Comment
      * @ORM\Column(name="author_url", type="string", length=150, nullable=true)
      */
     private $authorUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="author_ip_address", type="string", length=150, nullable=true)
+     */
+    private $authorIpAddress;
 
     /**
      * @var string
@@ -85,7 +96,7 @@ class Comment
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="status", type="smallint")
      */
     private $status;
 
@@ -204,6 +215,29 @@ class Comment
     public function getAuthorUrl()
     {
         return $this->authorUrl;
+    }
+
+    /**
+     * Set author Ip address
+     *
+     * @param string $ipAddress
+     * @return Comment
+     */
+    public function setAuthorIpAddress($ipAddress)
+    {
+        $this->authorIpAddress = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get authorIpAddress
+     *
+     * @return string 
+     */
+    public function getAuthorIpAddress()
+    {
+        return $this->authorIpAddress;
     }
 
     /**

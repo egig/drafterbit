@@ -41,7 +41,7 @@
             var status = $(this).data('status');
 
             $.post(
-                drafTerbit.adminUrl+'comment/status',
+                drafTerbit.adminUrl+'blog/comment/status',
                 {
                     id: $(this).data('id'),
                     status: status,
@@ -74,7 +74,7 @@
         function(e){
             e.preventDefault();
             $.post(
-                drafTerbit.adminUrl+'comment/quick-trash',
+                drafTerbit.adminUrl+'blog/comment/quick-trash',
                 {
                     id: $(this).data('id'),
                     csrf: drafTerbit.csrfToken,
@@ -132,7 +132,7 @@
             var comment = $(this).parent().siblings('textarea').val();
             if (comment.trim() !== '') {
                 $.post(
-                    drafTerbit.adminUrl+'/comments/quick-reply',
+                    drafTerbit.adminUrl+'blog/comment/quick-reply',
                     {
                         parentId: $(this).data('id'),
                         postId: $(this).data('post-id'),
@@ -191,7 +191,7 @@
     $('#comment-index-form').ajaxForm(
         function(){
             var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"comment/data/"+urlHash2).load();
+            drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+urlHash2).load();
         }
     );
 
