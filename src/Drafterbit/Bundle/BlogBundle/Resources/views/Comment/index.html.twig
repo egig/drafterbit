@@ -7,7 +7,7 @@
 
 {% block filter %}
 <div style="display:inline-block; float:right;margin-left:5px;">
-    <select name="filter" class="form-control input-sm comment-status-filter">
+    <select name="filter" class="form-control input-sm {{ view_id }}-status-filter">
         <option value="active" >- {{ __('Status') }} -</option>
         <option value="approved" >{{ __('Approved') }}</option>
         <option value="pending" >{{ __('Pending') }}</option>

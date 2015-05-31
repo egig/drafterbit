@@ -8,10 +8,10 @@
     
     var urlHash = window.location.hash.replace('#','');
 
-    $('.comments-status-filter option[value="'+urlHash+'"]').prop('selected', true);
+    $('.comment-status-filter option[value="'+urlHash+'"]').prop('selected', true);
 
     // datatables
-    drafTerbit.comments.dt =  $("#comments-data-table").dataTable(
+    drafTerbit.comments.dt =  $("#comment-data-table").dataTable(
         {
             columnDefs: [
                 {orderable: false, searchable:false, targets:[0]}
@@ -21,7 +21,7 @@
 
     drafTerbit.replaceDTSearch(drafTerbit.comments.dt);
 
-    $('#comments-checkall').checkAll({showIndeterminate:true});
+    $('#comment-checkall').checkAll({showIndeterminate:true});
 
     // style all pending
     var stylePendingRow = function(){
@@ -141,6 +141,9 @@
                     },
                     function(data){
                         $.notify(data.msg, data.status);
+
+                        var urlHash2 = window.location.hash.replace('#','');
+                        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+urlHash2).load();
                     }
                 );
             }
@@ -149,8 +152,6 @@
     );
 
     filterByStatus = function(status){
-
-        var status = status || 'active';
 
         drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+status).load(
             function(){
@@ -163,7 +164,7 @@
         //refresh pages index form
     }
 
-    filterByStatus();
+    filterByStatus(urlHash);
 
     // change trash, add restore button
     changeUncreateAction = function(s){
@@ -189,7 +190,9 @@
     );
 
     $('#comment-index-form').ajaxForm(
-        function(){
+        function(response){
+            $.notify(response.message, response.status);
+
             var urlHash2 = window.location.hash.replace('#','');
             drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+urlHash2).load();
         }

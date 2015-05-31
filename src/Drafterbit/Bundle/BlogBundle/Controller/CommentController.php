@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\BlogBundle\Entity\Comment;
+use Doctrine\DBAL\DBALException;
 
 /**
  * @Route("/%admin%")
@@ -22,10 +23,73 @@ class CommentController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_VIEW')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $viewId  = 'comment';
+        if($action = $request->request->get('action')) {
+
+            // safety first
+            $token = $request->request->get('_token');
+            if(!$this->isCsrfTokenValid($viewId, $token)) {
+                throw $this->createAccessDeniedException();
+            }
+            
+            $comments = $request->request->get('comments');
+
+            if(!$comments) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => $this->get('translator')->trans('Please make selection first')
+                ]);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+             foreach ($comments as $id) {
+                $comment = $em->getRepository('DrafterbitBlogBundle:Comment')->find($id);
+
+                switch ($action) {
+                    case 'trash':
+                        $comment->setDeletedAt(new \DateTime());
+                        $status = 'warning';
+                        $message = 'Comment(s) moved to trash';
+                        $em->persist($comment);
+
+                        break;
+                    case 'restore':
+                        $comment->setDeletedAt(new \DateTime('0000-00-00'));
+                        $status = 'success';
+                        $message = 'Comment(s) restored';
+                        $em->persist($comment);
+                        break;
+                    case 'delete':
+                        
+                        $em->remove($comment);
+                        $message = 'Comment(s) deleted permanently';
+                        $status = 'success';
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            try {
+                $em->flush();
+            } catch(DBALException $e) {
+                if($e->getPrevious()->getCode() == '23000') {
+                    $status = 'error';
+                    $message = 'Can not delete some comments, they still have associated childs.';
+                }
+            }
+
+            return new JsonResponse([
+                'status' => $status,
+                'message' => $this->get('translator')->trans($message),
+                ]);
+        }
+
     	return [
-            'view_id' => 'comments',
+            'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Comment')
         ];
     }
@@ -40,12 +104,10 @@ class CommentController extends Controller
             ->createQueryBuilder('c');
 
         if($status == 'trashed') {
-            $query->where('c.deletedAt!=:deletedAt');
-            $query->setParameter('deletedAt', '0000-00-00 00:00');
+            $query->where('c.deletedAt is not null');
 
         } else {
-            $query->where('c.deletedAt=:deletedAt');
-            $query->setParameter('deletedAt', '0000-00-00 00:00');
+            $query->where('c.deletedAt is null');
             switch ($status) {
                 case 'active':
                     $query->andWhere('c.status!=:status');
@@ -107,6 +169,7 @@ class CommentController extends Controller
         $data['item_id'] = $item->getId();
         $data['post_id'] = $item->getPost()->getId();
         $data['status'] = $item->getStatus();
+        $data['is_not_trashed'] = $item->getDeletedAt() == null;
 
         if ($data['status'] != Comment::STATUS_SPAM) {
             $data['display'] = $data['status'] == Comment::STATUS_APPROVED ? 'inline' : 'none';
