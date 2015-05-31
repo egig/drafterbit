@@ -62,6 +62,8 @@ class PostController extends Controller
                         $em->persist($post);
                         break;
                     case 'restore':
+                        // @todo change deleted_at to null
+                        // 0000-00-00 is not valid
                         $post->setDeletedAt(new \DateTime('0000-00-00'));
                         $status = 'success';
                         $message = 'Post(s) restored';
