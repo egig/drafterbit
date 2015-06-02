@@ -29,6 +29,12 @@ class SettingType extends AbstractType
                     2 => 'Summary'
                 ],
                 'data' => $this->data('blog.feed_content')]
+            )->add('comment_moderation', 'choice', [
+                'choices' => [
+                    0 => 'Never',
+                    1 => 'Always'
+                ],
+                'data' => $this->data('blog.comment_moderation')]
             )
             ->add('Save', 'submit');
     }

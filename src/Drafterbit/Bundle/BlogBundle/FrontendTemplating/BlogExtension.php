@@ -27,7 +27,19 @@ class BlogExtension extends \Twig_Extension
 
     public function comment(Post $post = null)
     {
-        $comments = $post->getComments();
+        $container = $this->kernel->getContainer();
+
+        $comments = $container->get('doctrine')
+            ->getManager()
+            ->getRepository('DrafterbitBlogBundle:Comment')
+            ->createQueryBuilder('c')
+            ->where('c.post=:post')
+            ->andWhere('c.status = 1')
+            ->andWhere('c.deletedAt is null')
+            ->setParameter('post', $post)
+            ->getQuery()
+            ->getResult();
+
         $data['comments'] = $comments;
 
         $content = $this->renderComments($comments);

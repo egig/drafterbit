@@ -19,6 +19,10 @@
             {{ form_label(form.feed_content, 'Feed Content') }}
             {{ form_widget(form.feed_content, {attr:{class:"form-control"}}) }}
         </div>
+        <div class="form-group">
+            {{ form_label(form.comment_moderation, 'Comment Moderation') }}
+            {{ form_widget(form.comment_moderation, {attr:{class:"form-control"}}) }}
+        </div>
     </div>
 </div>
 {% endblock %}

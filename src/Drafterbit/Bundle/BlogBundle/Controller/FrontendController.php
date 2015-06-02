@@ -204,7 +204,11 @@ class FrontendController extends BaseFrontendController
     		$comment->setDeletedAt(new \DateTime('0000-00-00'));
 
     		// @todo status
-    		$comment->setStatus(1);
+    		if($this->get('system')->get('blog.comment_moderation')){
+	    		$comment->setStatus(0);
+    		} else {
+	    		$comment->setStatus(1);
+    		}
 
     		$em = $this->getDoctrine()->getManager();
     		$em->persist($comment);

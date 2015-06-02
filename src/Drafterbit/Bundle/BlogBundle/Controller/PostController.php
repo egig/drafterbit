@@ -383,9 +383,23 @@ class PostController extends Controller
     public function settingAction(Request $request)
     {
         $blogSetting = $request->request->get('blog_setting');
-        
-        $form = $this->createForm(new SettingType($this->get('system')));
 
+        // @todo validation
+        $notif['success'] = false;
+        if($blogSetting) {       
+            $settingData = [
+                'blog.post_perpage' => $blogSetting['post_perpage'],
+                'blog.feed_shows' => $blogSetting['feed_shows'],
+                'blog.feed_content' => $blogSetting['feed_content'],
+                'blog.comment_moderation' => $blogSetting['comment_moderation']
+            ];
+            $this->get('system')->update($settingData);
+            $notif['success'] = [
+                'message' => 'Setting saved'
+            ];
+        }
+
+        $form = $this->createForm(new SettingType($this->get('system')));
         $data =  [
             'action' => $this->generateUrl('drafterbit_blog_setting'),
             'view_id' => 'blog_setting',
@@ -393,21 +407,7 @@ class PostController extends Controller
             'form' => $form->createView()
         ];
 
-        // @todo validation
-        $data['success'] = false;
-        if($blogSetting) {       
-            $settingData = [
-                'blog.post_perpage' => $blogSetting['post_perpage'],
-                'blog.feed_shows' => $blogSetting['feed_shows'],
-                'blog.feed_content' => $blogSetting['feed_content']
-            ];
-            $this->get('system')->update($settingData);
-            $data['success'] = [
-                'message' => 'Setting saved'
-            ];
-        }
-
-        return $data;
+        return $data+$notif;
     }
 
     public function feedAction()

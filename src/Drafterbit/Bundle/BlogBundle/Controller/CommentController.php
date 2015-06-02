@@ -57,7 +57,7 @@ class CommentController extends Controller
 
                         break;
                     case 'restore':
-                        $comment->setDeletedAt(new \DateTime('0000-00-00'));
+                        $comment->setDeletedAt(NULL);
                         $status = 'success';
                         $message = 'Comment(s) restored';
                         $em->persist($comment);
