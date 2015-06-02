@@ -214,7 +214,7 @@ class FrontendController extends BaseFrontendController
     		$em->persist($comment);
     		$em->flush();
 
-    		//.. send email
+    		$this->sendMails($comment);
     		return new RedirectResponse($referer.'#comment-'.$comment->getId());
 
     	} else {
@@ -239,5 +239,38 @@ class FrontendController extends BaseFrontendController
     		$content = $this->renderView('content/blog/comment/error.html', $data);
     		return new Response($content);
     	}
+    }
+
+    private function sendMails($comment)
+    {
+    	$from = $this->get('system')->get('email');
+    	$sitename = $this->get('system')->get('sitename');
+    	$subsribers = $this->getSubscribers($comment->getPost());
+    	array_unshift($subsribers, $from);
+    	$subject = $this->get('translator')->trans('New Comment Notification');
+    	$messageBody = $this->renderView('content/blog/comment/mail.html', ['comment' => $comment]);
+
+    	$message = \Swift_Message::newInstance()
+        	->setSubject($subject)
+        	->setFrom($from, $sitename)
+        	->setTo($subsribers)
+        	->setBody($messageBody, 'text/html');
+
+	    $this->get('mailer')->send($message);
+    }
+
+    private function getSubscribers($post)
+    {
+    	$comments = $post->getComments();
+
+    	$subscribers = [];
+
+    	foreach ($comments as $comment) {
+    		if($comment->getSubscribe()) {
+    			$subscribers[] = $comment->getAuthorEmail();	
+    		}
+    	}
+
+    	return array_unique($subscribers);
     }
 }

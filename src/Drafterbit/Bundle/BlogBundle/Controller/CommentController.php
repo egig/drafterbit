@@ -223,7 +223,7 @@ class CommentController extends Controller
         $comment->setParent($parent);
         $comment->setCreatedAt(new \DateTime);
         $comment->setUpdatedAt(new \DateTime);
-        $comment->setDeletedAt(new \DateTime('0000-00-00'));
+        $comment->setDeletedAt(NULL);
         $comment->setStatus(Comment::STATUS_APPROVED);
         $comment->setSubscribe(0);
 
