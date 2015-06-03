@@ -248,7 +248,24 @@ class FrontendController extends BaseFrontendController
     	$subsribers = $this->getSubscribers($comment->getPost());
     	array_unshift($subsribers, $from);
     	$subject = $this->get('translator')->trans('New Comment Notification');
-    	$messageBody = $this->renderView('content/blog/comment/mail.html', ['comment' => $comment]);
+
+    	$post = $comment->getPost();
+
+		$year = $post->getPublishedAt()->format('Y');
+		$month = $post->getPublishedAt()->format('m');
+		$date = $post->getPublishedAt()->format('d');
+		$slug = $post->getSlug();
+		$post->url = $this->generateUrl('drafterbit_blog_post_front_view',
+				['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
+
+    	// @todo create default template
+    	// @todo make templating also supports bundles view
+    	$data = [
+    		'comment' => $comment,
+    		'post' => $post,
+    		'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe')
+    	];
+    	$messageBody = $this->renderView('content/blog/comment/mail.html', $data);
 
     	$message = \Swift_Message::newInstance()
         	->setSubject($subject)
@@ -272,5 +289,13 @@ class FrontendController extends BaseFrontendController
     	}
 
     	return array_unique($subscribers);
+    }
+
+    /**
+     * @Route("/blog/comment/unsubscribe", name="drafterbit_blog_comment_unsubscribe")
+     */
+    public function commentUnsubscribeAction(Request $request)
+    {
+    	return new Response('Under Maintenance');
     }
 }
