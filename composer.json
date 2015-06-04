@@ -1,7 +1,9 @@
 {
-    "name": "egig/drafterbit2",
-    "license": "proprietary",
+    "name": "drafterbit/drafterbit",
+    "license": "MIT",
     "type": "project",
+    "description": "Web software you can use to create website",
+    "keywords": ["cms"],
     "autoload": {
         "psr-0": {
             "": "src/",
