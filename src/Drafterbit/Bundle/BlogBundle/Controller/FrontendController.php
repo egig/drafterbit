@@ -201,7 +201,7 @@ class FrontendController extends BaseFrontendController
     		$comment = $form->getData();
     		$comment->setCreatedAt(new \DateTime);
     		$comment->setUpdatedAt(new \DateTime);
-    		$comment->setDeletedAt(new \DateTime('0000-00-00'));
+    		$comment->setDeletedAt(new \DateTime(NULL));
 
     		// @todo status
     		if($this->get('system')->get('blog.comment_moderation')){
@@ -256,14 +256,14 @@ class FrontendController extends BaseFrontendController
 		$date = $post->getPublishedAt()->format('d');
 		$slug = $post->getSlug();
 		$post->url = $this->generateUrl('drafterbit_blog_post_front_view',
-				['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
+				['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug], true);
 
-    	// @todo create default template
+    	// @todo create and improve default template
     	// @todo make templating also supports bundles view
     	$data = [
     		'comment' => $comment,
     		'post' => $post,
-    		'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe')
+    		'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe', [], true)
     	];
     	$messageBody = $this->renderView('content/blog/comment/mail.html', $data);
 
