@@ -1,7 +1,7 @@
 # README.md
 
 ## What is Drafterbit ?
-Drafterbit is self-hosted web software you can use to create a website, yes, like WordPress, built on top of Symfony2 Full-Stack Framework. Currently in ~~slow~~ active development.
+Drafterbit is self-hosted web software you can use to create a website, yes, like WordPress, built on top of Symfony2 Full-Stack Framework. Currently still in early phase.
 
 [![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg)](https://travis-ci.org/drafterbit/drafterbit)
 
@@ -24,12 +24,7 @@ Installation package will be available for download soon. For now you can just d
     cd drafterbit
     composer install --no-dev --prefer-dist
     ```
-5. Make sure following directory is writable by current user and web server:
-    ```shell
-    app/cache
-    app/logs
-    web/upload
-    ```
+5. Check app configuration by visitting `http://localhost/drafterbit/web/config.php`, then fix major problem appeared on your screen if any.
 
 6. Then install web dependencies
     ```shell
@@ -38,10 +33,10 @@ Installation package will be available for download soon. For now you can just d
     ```
     
 7. Edit or create `parameters.yml` file in `app/config` directory if it's not generated during composer install, then Load database and fixtures
-	```shell
-	php app/console doctrine:schema:create
-	php app/console doctrine:fixtures:load
-	```
+    ```shell
+    php app/console doctrine:schema:create
+    php app/console doctrine:fixtures:load
+    ```
 
 8. From here, you can just visit browser (IE not supported yet) to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel, first created user is 'admin' with password also 'admin'.
 
