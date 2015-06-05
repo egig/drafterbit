@@ -1,7 +1,5 @@
-{% extends 'layout/default.html' %}
-
 {% block content %}
-<p>{{ __('Please go back and fix the following error first') }}</p>
+<p>{{ __('Please fix the following error first') }}</p>
 	<ul>
 	{% for field,message in errors %}
 		<li><strong>{{ field }}</strong>: {{ message }}</li>

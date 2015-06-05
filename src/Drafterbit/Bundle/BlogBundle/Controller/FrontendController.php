@@ -201,7 +201,7 @@ class FrontendController extends BaseFrontendController
     		$comment = $form->getData();
     		$comment->setCreatedAt(new \DateTime);
     		$comment->setUpdatedAt(new \DateTime);
-    		$comment->setDeletedAt(new \DateTime(NULL));
+    		$comment->setDeletedAt(NULL);
 
     		// @todo status
     		if($this->get('system')->get('blog.comment_moderation')){
@@ -215,6 +215,12 @@ class FrontendController extends BaseFrontendController
     		$em->flush();
 
     		$this->sendMails($comment);
+
+    		if($this->get('system')->get('blog.comment_moderation')){
+    			$data['post_url'] = $referer;
+	    		return $this->render('DrafterbitBlogBundle:Comment:pending.html.twig', $data);
+    		}
+
     		return new RedirectResponse($referer.'#comment-'.$comment->getId());
 
     	} else {
@@ -236,7 +242,7 @@ class FrontendController extends BaseFrontendController
 
             $data['post_url'] = $referer;
             $data['errors'] = $errors;
-    		$content = $this->renderView('content/blog/comment/error.html', $data);
+    		$content = $this->renderView('DrafterbitBlogBundle:Comment:error.html.twig', $data);
     		return new Response($content);
     	}
     }
@@ -263,9 +269,10 @@ class FrontendController extends BaseFrontendController
     	$data = [
     		'comment' => $comment,
     		'post' => $post,
-    		'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe', [], true)
+    		'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe',
+    			['email' => $comment->getAuthorEmail()], true)
     	];
-    	$messageBody = $this->renderView('content/blog/comment/mail.html', $data);
+    	$messageBody = $this->renderView('DrafterbitBlogBundle:Comment:mail.html.twig', $data);
 
     	$message = \Swift_Message::newInstance()
         	->setSubject($subject)
@@ -292,10 +299,22 @@ class FrontendController extends BaseFrontendController
     }
 
     /**
-     * @Route("/blog/comment/unsubscribe", name="drafterbit_blog_comment_unsubscribe")
+     * @Route("/blog/comment/unsubscribe/{email}", name="drafterbit_blog_comment_unsubscribe")
      */
-    public function commentUnsubscribeAction(Request $request)
+    public function commentUnsubscribeAction($email, Request $request)
     {
-    	return new Response('Under Maintenance');
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$comments = $em->getRepository('DrafterbitBlogBundle:Comment')
+    		->findBy(['authorEmail' => $email]);
+
+    	foreach ($comments as $comment) {
+    		$comment->setSubscribe(0);
+    		$em->persist($comment);
+    	}
+
+    	$em->flush();
+
+    	return $this->render('DrafterbitBlogBundle:Comment:unsubscribed.html.twig');
     }
 }
