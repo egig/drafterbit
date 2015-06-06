@@ -157,7 +157,7 @@ class CommentController extends Controller
         return new JsonResponse($ob);
     }
 
-    public function gravatarUrl($email, $size = 47)
+    public function gravatarUrl($email, $size = 37)
     {
         $hash = md5(strtolower($email));
         return "http://www.gravatar.com/avatar/$hash?d=mm&s=$size";

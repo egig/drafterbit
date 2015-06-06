@@ -7,7 +7,7 @@
 
     <services>
     	<!-- Frontend Tenplating Extension -->
-	    <service id="drafterbit_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\FrontendTemplating\BlogExtension">
+	    <service id="drafterbit_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\Twig\Extension\BlogExtension">
 	        <tag name="twig.extension"></tag>
 	        <argument type="service" id="kernel" />
 	    </service>

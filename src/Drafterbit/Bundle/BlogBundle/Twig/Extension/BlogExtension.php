@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\FrontendTemplating;
+namespace Drafterbit\Bundle\BlogBundle\Twig\Extension;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension;
