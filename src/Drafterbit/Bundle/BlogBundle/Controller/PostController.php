@@ -27,6 +27,7 @@ class PostController extends Controller
      * @Route("/blog/post", name="drafterbit_blog_post")
      * @Template()
      * @Security("is_granted('ROLE_POST_VIEW')")
+     * @todo improve indexing (filter by collumn)
      */
     public function indexAction(Request $request)
     {
