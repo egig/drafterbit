@@ -22,23 +22,27 @@ Installation package will be available for download soon. For now you can just d
 4. Go to cloned directory then install php dependencies
     ```shell
     cd drafterbit
-    composer install --no-dev --prefer-dist
+    composer install --prefer-dist
     ```
-5. Check app configuration by visitting `http://localhost/drafterbit/web/config.php`, then fix major problem appeared on your screen if any.
+5. Check app configuration by visitting `http://localhost/drafterbit/web/config.php`, or on cli by running
+    ```shell
+    php app/check.php
+    ```
+ then fix major problem appeared on your screen if any.
 
-6. Then install web dependencies
+6. Install web dependencies
     ```shell
     bower install
     php app/console assets:install
     ```
     
-7. Edit or create `parameters.yml` file in `app/config` directory if it's not generated during composer install, then Load database and fixtures
+7. Edit or create `parameters.yml` file in `app/config` directory if it's not generated during composer install.
+8. Do the install by
     ```shell
-    php app/console doctrine:schema:create
-    php app/console doctrine:fixtures:load
+    php app/console drafterbit:install
     ```
-
-8. From here, you can just visit browser (IE not supported yet) to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel, first created user is 'admin' with password also 'admin'.
+    
+9. From here, you can just visit browser (IE not supported yet) to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel then login using credential you created during install.
 
 Please let me know thru the google forum below if you get any problem.
 
@@ -53,3 +57,4 @@ Issue tracker will not be opened until the initial release, if you are doing tes
 
 ## License
 Drafterbit is licensed under the MIT license.
+
