@@ -29,11 +29,18 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
-        $data = $this->container->get('drafterbit_installer')->getData();
+        $username = 'admin';
+        $email = 'admin@drafterbit.org';
+        $password = 'admin';
 
-        $username = isset($data['username']) ? $data['username'] : 'admin';
-        $email = isset($data['email']) ? $data['email'] : 'admin@drafterbit.org';
-        $password = isset($data['password']) ? $data['password'] : 'admin';
+        if($this->container->has('drafterbit_installer')) {
+            $data = $this->container->get('drafterbit_installer')->getData();
+            if($data) {
+                $username = $data['username'];
+                $email = $data['email'];
+                $password = $data['password'];
+            }
+        }
 
         $userAdmin = new User();
         $userAdmin->setUsername($username);

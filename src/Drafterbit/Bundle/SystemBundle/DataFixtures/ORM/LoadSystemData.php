@@ -27,6 +27,10 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        $this->container->get('system')->update(['frontpage' => 'blog']);
+        $initData = [
+            'sitename' => 'My Awesome Website',
+            'frontpage' => 'blog'
+        ];
+        $this->container->get('system')->update($initData);
     }
 }
