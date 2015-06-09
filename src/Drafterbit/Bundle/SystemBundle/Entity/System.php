@@ -25,7 +25,7 @@ class System
      protected $key;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $value;
 
