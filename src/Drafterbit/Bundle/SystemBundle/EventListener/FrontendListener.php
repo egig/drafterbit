@@ -56,9 +56,10 @@ class FrontendListener implements EventSubscriberInterface
             // prepend theme path
             $this->container->get('twig.loader')->prependPath($themesPath.'/'.$theme.'/_tpl');
 
-            if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
+            // @todo
+            // if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
                 $this->container->get('twig')->disableStrictVariables();
-            }
+            //}
 
             // add global theme context
             $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');

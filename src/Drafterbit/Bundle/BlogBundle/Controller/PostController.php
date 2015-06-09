@@ -32,6 +32,7 @@ class PostController extends Controller
     public function indexAction(Request $request)
     {
         $viewId = 'post';
+        $em = $this->getDoctrine()->getManager();
 
         if($action = $request->request->get('action')) {
 
@@ -50,7 +51,6 @@ class PostController extends Controller
                 ]);
             }
 
-            $em = $this->getDoctrine()->getManager();
 
              foreach ($posts as $id) {
                 $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
@@ -102,6 +102,7 @@ class PostController extends Controller
 
     	return [
             'view_id' => $viewId,
+            'categories' => $categories,
             'page_title' => $this->get('translator')->trans('Post')
         ];
     }

@@ -157,7 +157,7 @@ class SettingController extends Controller
             throw new InvalidCsrfTokenException();
         };
 
-        $theme = $this->container->getParameter('theme');
+        $theme = $request->query->get('theme');
 
         $themesPath = $this->container->getParameter('themes_path');
 
