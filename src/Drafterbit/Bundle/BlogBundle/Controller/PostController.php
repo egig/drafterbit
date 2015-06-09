@@ -102,7 +102,6 @@ class PostController extends Controller
 
     	return [
             'view_id' => $viewId,
-            'categories' => $categories,
             'page_title' => $this->get('translator')->trans('Post')
         ];
     }
