@@ -44,17 +44,13 @@ Installation package will be available for download soon. For now you can just d
     
 9. From here, you can just visit browser (IE not supported yet) to check if it all works, e.g: `http://localhost/drafterbit/web`. Go to `/admin` to go to administration panel then login using credential you created during install.
 
-Please let me know thru the google forum below if you get any problem.
+Please let us know if you get any problem: <https://github.com/drafterbit/drafterbit/issues>.
 
 ## Learn
-There is no documentation at all yet, for now you can just ask me anything anytime thru  this google forum : <https://groups.google.com/forum/#!forum/drafterbit>
+There is no documentation at all yet, for now you can just ask me anything anytime thru this google forum : <https://groups.google.com/forum/#!forum/drafterbit>
 
 ## Contribute
 Drafterbit is an opensource and intended to be community-driven project. Any kind of contribution (code, translation, stars, bug reports, feature request) are welcome.
 
-### Issue Tracker
-Issue tracker will not be opened until the initial release, if you are doing test then have something to discuss, have a request or any suggestion, please use the google forum above.
-
 ## License
 Drafterbit is licensed under the MIT license.
-
