@@ -21,20 +21,20 @@ _drafterbit_user:
 _drafterbit_user_security:
     resource: "@DrafterbitUserBundle/Resources/config/routing/security.xml"
 
-_drafterbit_user_profile:
-    resource: "@DrafterbitUserBundle/Resources/config/routing/profile.xml"
+#_drafterbit_user_profile:
+#    resource: "@DrafterbitUserBundle/Resources/config/routing/profile.xml"
 
-_drafterbit_user_register:
-    resource: "@DrafterbitUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
+#_drafterbit_user_register:
+#    resource: "@DrafterbitUserBundle/Resources/config/routing/registration.xml"
+#    prefix: /register
 
-_drafterbit_user_resetting:
-    resource: "@DrafterbitUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
+#_drafterbit_user_resetting:
+#    resource: "@DrafterbitUserBundle/Resources/config/routing/resetting.xml"
+#    prefix: /resetting
 
-_drafterbit_user_change_password:
-    resource: "@DrafterbitUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /profile
+#_drafterbit_user_change_password:
+#    resource: "@DrafterbitUserBundle/Resources/config/routing/change_password.xml"
+#    prefix: /profile
 
 #_drafterbit_user_group:
 #    resource: "@DrafterbitUserBundle/Resources/config/routing/group.xml"
