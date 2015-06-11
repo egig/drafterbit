@@ -6,13 +6,13 @@ use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
 
 class CategoryEntityFormatter extends BaseEntityFormatter
 {
-	public function getName()
-	{
-		return 'category';
-	}
+    public function getName()
+    {
+        return 'category';
+    }
 
-	public function format($id)
-	{
+    public function format($id)
+    {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $cat = $em->getRepository('DrafterbitBlogBundle:Category')->find($id);
 
@@ -32,5 +32,5 @@ class CategoryEntityFormatter extends BaseEntityFormatter
         }
 
         return '<em>'.__('unsaved').'</em>';
-	}
+    }
 }

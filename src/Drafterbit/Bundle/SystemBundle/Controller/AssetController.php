@@ -27,8 +27,8 @@ class AssetController extends Controller
      */
     public function sessionJsAction()
     {
-    	$csrf = $this->get('security.csrf.token_manager');
-		$token = $csrf->refreshToken('unknown');
+        $csrf = $this->get('security.csrf.token_manager');
+        $token = $csrf->refreshToken('unknown');
 
         $content = "drafTerbit.csrfToken = '".$token."';";
         $content .= 'drafTerbit.permissions = {

@@ -14,10 +14,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class FileController extends Controller
 {
-	/**
-	 * @Route("/file", name="drafterbit_file")
-	 * @Template()
-	 */
+    /**
+     * @Route("/file", name="drafterbit_file")
+     * @Template()
+     */
     public function indexAction()
     {
         return ['page_title' => $this->get('translator')->trans('File')];
@@ -34,11 +34,11 @@ class FileController extends Controller
     }
 
     /**
-	 * @Route("/file/data", name="drafterbit_file_data")
-	 */
+     * @Route("/file/data", name="drafterbit_file_data")
+     */
     public function dataAction(Request $request)
     {
-    	$op = $request->get('op');
+        $op = $request->get('op');
         $path = $request->get('path');
         
         $res = new JsonResponse;

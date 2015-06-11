@@ -5,7 +5,7 @@
         <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
             <div class="container">
                 <div class="row row-sticky-toolbar" style="margin:10px 0;">
-                	{% block action %} {% endblock %}
+                    {% block action %} {% endblock %}
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
 {% endblock %}
  
  {% block javascripts %}
- 	{{parent()}}
- 	<script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
- 	<script type="text/javascript" src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+     {{parent()}}
+     <script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+     <script type="text/javascript" src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
  {% endblock %}

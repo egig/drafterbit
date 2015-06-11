@@ -22,7 +22,7 @@ class Tag
      */
     private $id;
 
-	/**
+    /**
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=150)
@@ -41,26 +41,26 @@ class Tag
 
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
 
     public function getSlug()
     {
-    	return $this->slug;
+        return $this->slug;
     }
 
     public function setSlug($slug)
     {
-    	$this->slug = $slug;
+        $this->slug = $slug;
     }
 
     public function setLabel($label)
     {
-    	$this->label = $label;
+        $this->label = $label;
     }
 
     public function getLabel()
     {
-    	return $this->label;
+        return $this->label;
     }
 }

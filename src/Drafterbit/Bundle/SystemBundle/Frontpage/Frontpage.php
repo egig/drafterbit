@@ -7,20 +7,20 @@ use Symfony\Component\DependencyInjection\Container;
 
 abstract class Frontpage implements FrontpageInterface
 {
-	protected $container;
+    protected $container;
 
-	public function __construct( Container $container)
-	{
-		$this->container = $container;
-	}
+    public function __construct( Container $container)
+    {
+        $this->container = $container;
+    }
 
-	abstract public function getName();
+    abstract public function getName();
 
-	abstract public function resolve($key);
+    abstract public function resolve($key);
 
-	abstract public function getType();
+    abstract public function getType();
 
-	abstract public function getRoute();
+    abstract public function getRoute();
 
-	abstract public function getLabel();
+    abstract public function getLabel();
 }

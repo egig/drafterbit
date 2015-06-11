@@ -18,14 +18,14 @@ use Drafterbit\Bundle\BlogBundle\Entity\Category;
  */
 class CategoryController extends Controller
 {
-	/**
+    /**
      * @Route("/blog/category", name="drafterbit_blog_category")
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_VIEW')")
      */
     public function indexAction()
     {
-    	return [
+        return [
             'view_id' => 'category',
             'page_title' => $this->get('translator')->trans('Category')
         ];

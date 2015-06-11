@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CategoryType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('id', 'hidden', ['mapped' => false])
@@ -17,10 +17,10 @@ class CategoryType extends AbstractType
             ->add('description', 'textarea')
             ->add('parent', 'entity', [
                 'placeholder' => 'No Parent',
-            	'required' => false,
-            	'property' => 'label',
-            	'class' => 'DrafterbitBlogBundle:Category',
-            	]
+                'required' => false,
+                'property' => 'label',
+                'class' => 'DrafterbitBlogBundle:Category',
+                ]
             )
             ->add('Save', 'submit');
     }

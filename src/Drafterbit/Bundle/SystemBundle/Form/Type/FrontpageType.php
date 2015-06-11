@@ -10,26 +10,26 @@ use Drafterbit\Bundle\SystemBundle\frontpageProvider;
 
 class FrontpageType extends AbstractType
 {
-	private $frontpageProvider;
+    private $frontpageProvider;
 
-	public function __construct(frontpageProvider $frontpageProvider)
-	{
-		$this->frontpageProvider = $frontpageProvider;
-	}
+    public function __construct(frontpageProvider $frontpageProvider)
+    {
+        $this->frontpageProvider = $frontpageProvider;
+    }
 
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$options = [];
+        $options = [];
 
-    	foreach ($this->frontpageProvider->all() as $name => $frontapage) {
+        foreach ($this->frontpageProvider->all() as $name => $frontapage) {
 
-    		if($frontapage->getType() == 'cascade' ) {
-	    		$options[$name] = $frontapage->getOptions();
-    		} else {
-	    		$options[$name] = $frontapage->getLabel();
-    		}
-    	}
+            if($frontapage->getType() == 'cascade' ) {
+                $options[$name] = $frontapage->getOptions();
+            } else {
+                $options[$name] = $frontapage->getLabel();
+            }
+        }
 
         $resolver->setDefaults(array(
             'choices' => $options

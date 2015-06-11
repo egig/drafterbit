@@ -6,23 +6,23 @@ use Symfony\Component\HttpKernel\Kernel;
 
 abstract class BaseEntityFormatter implements EntityFormatterInterface  {
 
-	protected $kernel;
+    protected $kernel;
 
-	public function __construct(Kernel $kernel)
-	{
-		$this->kernel = $kernel;
-	}
+    public function __construct(Kernel $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
-	public function getKernel()
-	{
-		return $this->kernel;
-	}
+    public function getKernel()
+    {
+        return $this->kernel;
+    }
 
-	public function getName() {}
+    public function getName() {}
 
-	public function format($id) {}
+    public function format($id) {}
 
-	public function getUser()
+    public function getUser()
     {
         $container = $this->kernel->getContainer();
 

@@ -1,55 +1,55 @@
 {% extends "DrafterbitSystemBundle::base.html.twig" %}
 
 {% block stylesheets %}
-	{{parent()}}
-	<link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/dashboard.css') }}">
+    {{parent()}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/dashboard.css') }}">
 {% endblock %}
 
 {% block page_title %}
-	{{ parent()}}
-	<a href="javascript:;" class="btn btn-sm btn-default pull-right panel-manager-toggle" style="margin-top:20px"><i class="fa fa-bars"></i></a>
+    {{ parent()}}
+    <a href="javascript:;" class="btn btn-sm btn-default pull-right panel-manager-toggle" style="margin-top:20px"><i class="fa fa-bars"></i></a>
 {% endblock %}
 
 {% block content %}
-	<div class="container">
-		<div class="row panel-manager" style="display:none;">
-	        <div class="col-md-12">
-	        	<div style="padding:10px 15px;margin-bottom:10px;border:1px solid #e5e5e5">
-	        		<strong>{{ __('Show Panel(s)') }}</strong>
-	        		<div style="margin-top:10px;">
-		        		{% for name, panel in panels %}
-		        			<input {% if panel.status %} checked="checked" {% endif %} class="panel-toggler" data-panel="{{ name }}" type="checkbox"> {{ name|capitalize }}
-		        		{% endfor %}
-	        		</div>
-	        	</div>
-			</div>
-		</div>
-	    <div class="row panel-container">
-	        <div class="panel-row col-md-6" id="panel-row-left" data-pos="left">
-		        {% for panel in left_panels %}
-		            <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
-		            	{% autoescape false %}
-		               	{{ panel.getView() }}
-		            	{% endautoescape %}
-		            </div>
-		        {% endfor %}
-	        </div>
+    <div class="container">
+        <div class="row panel-manager" style="display:none;">
+            <div class="col-md-12">
+                <div style="padding:10px 15px;margin-bottom:10px;border:1px solid #e5e5e5">
+                    <strong>{{ __('Show Panel(s)') }}</strong>
+                    <div style="margin-top:10px;">
+                        {% for name, panel in panels %}
+                            <input {% if panel.status %} checked="checked" {% endif %} class="panel-toggler" data-panel="{{ name }}" type="checkbox"> {{ name|capitalize }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row panel-container">
+            <div class="panel-row col-md-6" id="panel-row-left" data-pos="left">
+                {% for panel in left_panels %}
+                    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
+                        {% autoescape false %}
+                           {{ panel.getView() }}
+                        {% endautoescape %}
+                    </div>
+                {% endfor %}
+            </div>
 
-	        <div class="panel-row col-md-6" id="panel-row-right" data-pos="right">
-		   		{% for panel in right_panels %}
-		            <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
-		            	{% autoescape false %}
-		               	{{ panel.getView() }}
-		            	{% endautoescape %}
-		            </div>
-		        {% endfor %}
-	        </div>
-	    </div>
-	</div>
+            <div class="panel-row col-md-6" id="panel-row-right" data-pos="right">
+                   {% for panel in right_panels %}
+                    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
+                        {% autoescape false %}
+                           {{ panel.getView() }}
+                        {% endautoescape %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-	{{parent()}}
-	<script type="text/javascript" src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('@DrafterbitSystemBundle/js/dashboard.js') }}"></script>
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('@DrafterbitSystemBundle/js/dashboard.js') }}"></script>
 {% endblock %}

@@ -100,7 +100,7 @@ class PostController extends Controller
                 ]);
         }
 
-    	return [
+        return [
             'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Post')
         ];
@@ -184,7 +184,7 @@ class PostController extends Controller
         // @todo use object voter
         // $this->denyAccessUnlessGranted('post.edit', $post);
 
-        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
+        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findBy(['id']);
 
         $tagOptions = array_map(function($item) {
             return $item->getLabel();

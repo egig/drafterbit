@@ -6,13 +6,13 @@ use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
 
 class PageEntityFormatter extends BaseEntityFormatter
 {
-	public function getName()
-	{
-		return 'page';
-	}
+    public function getName()
+    {
+        return 'page';
+    }
 
-	public function format($id)
-	{
+    public function format($id)
+    {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $post = $em->getRepository('DrafterbitPageBundle:Page')->find($id);
 
@@ -28,5 +28,5 @@ class PageEntityFormatter extends BaseEntityFormatter
         }
 
         return '<em>'.__('unsaved').'</em>';
-	}
+    }
 }

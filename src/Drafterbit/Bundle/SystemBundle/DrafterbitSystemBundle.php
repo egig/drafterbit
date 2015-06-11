@@ -14,9 +14,9 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProvi
 
 class DrafterbitSystemBundle extends Bundle
 {
-	const NAVIGATION = 'drafterbit_system.navigation';
+    const NAVIGATION = 'drafterbit_system.navigation';
 
-	public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container)
     {
         parent::build($container);
         $container->addCompilerPass(new LogDisplayFormatterPass());

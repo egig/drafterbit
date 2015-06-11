@@ -1,7 +1,7 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block action %}
-	{{form_widget(form.Save, {label:"Save Setting", attr:{class:"btn btn-sm btn-success"}})}}
+    {{form_widget(form.Save, {label:"Save Setting", attr:{class:"btn btn-sm btn-success"}})}}
 {% endblock %}
 
 {% block form %}
@@ -18,36 +18,36 @@
       <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-            	{{ form_label(form.sitename, 'Sitename', {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.sitename, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.sitename, 'Sitename', {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.sitename, {attr: {class:"form-control"}}) }}
              </div>
              <div class="form-group">
-            	{{ form_label(form.tagline, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.tagline, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.tagline, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.tagline, {attr: {class:"form-control"}}) }}
                  <span class="help-block">In a few words, explain what this site is about.</span>
              </div>
              <div class="form-group">
-            	{{ form_label(form.frontpage, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.frontpage, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.frontpage, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.frontpage, {attr: {class:"form-control"}}) }}
              </div>
             <div class="form-group">
-            	{{ form_label(form.email, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.email, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.email, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.email, {attr: {class:"form-control"}}) }}
                 <span class="help-block">This address is used for admin purposes, like new user notification.</span>
              </div>
         </div>
         <div class="col-md-4">
              <div class="form-group">
-            	{{ form_label(form.timezone, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.timezone, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.timezone, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.timezone, {attr: {class:"form-control"}}) }}
              </div>
              <div class="form-group">
-            	{{ form_label(form.date_format, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.date_format, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.date_format, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.date_format, {attr: {class:"form-control"}}) }}
              </div>
              <div class="form-group">
-            	{{ form_label(form.time_format, null, {attr: {class:"control-label" }}) }}
-            	{{ form_widget(form.time_format, {attr: {class:"form-control"}}) }}
+                {{ form_label(form.time_format, null, {attr: {class:"control-label" }}) }}
+                {{ form_widget(form.time_format, {attr: {class:"form-control"}}) }}
              </div>
         </div>
       </div>

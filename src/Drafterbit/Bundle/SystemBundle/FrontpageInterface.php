@@ -6,11 +6,11 @@ use Symfony\Component\Routing\Route;
 
 interface FrontpageInterface
 {
-	public function getName();
+    public function getName();
 
-	public function resolve($key);
+    public function resolve($key);
 
-	public function getType();
+    public function getType();
 
-	public function  getRoute();
+    public function  getRoute();
 }

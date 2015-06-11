@@ -9,7 +9,7 @@ use Drafterbit\Bridge\DependencyInjection\ExtensionConfiguration;
 
 class Configuration extends ExtensionConfiguration
 {
-	/**
+    /**
      * Generates the configuration tree.
      *
      * @return TreeBuilder
@@ -24,15 +24,15 @@ class Configuration extends ExtensionConfiguration
             ->children()
                 ->arrayNode('navigation')
                     ->addDefaultsIfNotSet()
-                	->children()
-                		->arrayNode('page')
-		                    ->addDefaultsIfNotSet()
-                			->children()
-	                			->scalarNode('label')->defaultValue('Page')->end()
-   								->scalarNode('route')->defaultValue('drafterbit_page')->end()
-	                		->end()
-                		->end()
-                	->end()
+                    ->children()
+                        ->arrayNode('page')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('label')->defaultValue('Page')->end()
+                                   ->scalarNode('route')->defaultValue('drafterbit_page')->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
 

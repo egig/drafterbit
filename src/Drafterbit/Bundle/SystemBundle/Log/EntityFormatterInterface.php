@@ -4,7 +4,7 @@ namespace Drafterbit\Bundle\SystemBundle\Log;
 
 interface EntityFormatterInterface {
 
-	public function getName();
+    public function getName();
 
-	public function format($id);
+    public function format($id);
 }

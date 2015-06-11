@@ -18,7 +18,7 @@ use Doctrine\DBAL\DBALException;
  */
 class CommentController extends Controller
 {
-	/**
+    /**
      * @Route("/blog/comment", name="drafterbit_blog_comment")
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_VIEW')")
@@ -88,7 +88,7 @@ class CommentController extends Controller
                 ]);
         }
 
-    	return [
+        return [
             'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Comment')
         ];
