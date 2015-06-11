@@ -184,7 +184,7 @@ class PostController extends Controller
         // @todo use object voter
         // $this->denyAccessUnlessGranted('post.edit', $post);
 
-        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findBy(['id']);
+        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
 
         $tagOptions = array_map(function($item) {
             return $item->getLabel();
