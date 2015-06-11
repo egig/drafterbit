@@ -6,11 +6,11 @@
 
 
     <services>
-    	<!-- Frontend Tenplating Extension -->
-	    <service id="drafterbit_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\Twig\Extension\BlogExtension">
-	        <tag name="twig.extension"></tag>
-	        <argument type="service" id="kernel" />
-	    </service>
+        <!-- Frontend Tenplating Extension -->
+        <service id="drafterbit_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\Twig\Extension\BlogExtension">
+            <tag name="twig.extension"></tag>
+            <argument type="service" id="kernel" />
+        </service>
         
         <service id="drafterbit_blog.frontpage" class="Drafterbit\Bundle\BlogBundle\Frontpage\Blog">
             <tag name="drafterbit_system.frontpage"></tag>

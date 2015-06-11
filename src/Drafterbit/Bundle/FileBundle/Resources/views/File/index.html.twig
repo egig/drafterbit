@@ -1,8 +1,8 @@
 {% extends "DrafterbitSystemBundle::base.html.twig" %}
 
 {% block stylesheets %}
-	{{parent()}}
-	<link rel="stylesheet" href="{{asset('plugins/finder/finder.css')}}"/>
+    {{parent()}}
+    <link rel="stylesheet" href="{{asset('plugins/finder/finder.css')}}"/>
 {% endblock %}
 
 {% block content %}
@@ -12,9 +12,9 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{parent()}}
-	<script type="text/javascript" src="{{ asset('plugins/bootstrap-contextmenu/bootstrap-contextmenu.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('plugins/finder/dist/finder.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('@DrafterbitFileBundle/js/index.js') }}"></script>
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-contextmenu/bootstrap-contextmenu.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/finder/dist/finder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('@DrafterbitFileBundle/js/index.js') }}"></script>
 {% endblock %}

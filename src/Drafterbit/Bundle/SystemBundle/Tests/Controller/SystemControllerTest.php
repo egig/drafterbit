@@ -9,7 +9,7 @@ use Symfony\Component\BrowserKit\Cookie;
 
 class PostControllerTest extends WebTestCase
 {
-	public static $admin;
+    public static $admin;
     protected $client;
  
     protected function setUp()
@@ -31,7 +31,7 @@ class PostControllerTest extends WebTestCase
 
     public function testAdminAuth()
     {
-    	$client = $this->createAuthorizedClient();
+        $client = $this->createAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/');
 

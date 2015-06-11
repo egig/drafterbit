@@ -8,14 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class Revision
 {
-	protected $controller;
+    protected $controller;
 
-	public function __construct(Controller $controller)
-	{
-		$this->controller = $controller;
-	}
+    public function __construct(Controller $controller)
+    {
+        $this->controller = $controller;
+    }
 
-	/**
+    /**
      * Create a post revision
      *
      * @param int $id

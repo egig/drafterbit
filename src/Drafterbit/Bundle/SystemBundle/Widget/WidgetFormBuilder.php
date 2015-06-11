@@ -17,20 +17,20 @@ class WidgetFormBuilder
 
     public function build( Widget $widget, $data = null, $options = [])
     {
-    	// @todo
-    	$id = '';
+        // @todo
+        $id = '';
 
-    	$html = '';
+        $html = '';
 
         $context = $widget->getContext();
 
-    	$form = $widget->getFormView(new WidgetType, $data, $options);
+        $form = $widget->getFormView(new WidgetType, $data, $options);
 
         $saveUrl = $this->container->get('router')->generate('drafterbit_setting_widget_save');
 
-    	if($form instanceof FormView) {
-    		$helper = $this->container->get('templating.helper.form');
-	    	$html .= $helper->start($form, ['attr' => ['class' => 'widget-edit-form'], 'action' => $saveUrl]);
+        if($form instanceof FormView) {
+            $helper = $this->container->get('templating.helper.form');
+            $html .= $helper->start($form, ['attr' => ['class' => 'widget-edit-form'], 'action' => $saveUrl]);
 
             foreach ($form as $key => $val) {
 
@@ -40,23 +40,23 @@ class WidgetFormBuilder
                     $value = null;
                 }
 
-	    		// @todo find a way to check a form type is hidden or not
-	    		if(!in_array($key, ['Save', '_token', 'id', 'name', 'theme', 'position'])) {
+                // @todo find a way to check a form type is hidden or not
+                if(!in_array($key, ['Save', '_token', 'id', 'name', 'theme', 'position'])) {
                     $html .= '<div class="form-group">';
-		    		$html .= $helper->label($form[$key], null, ['label_attr' => ['class' => 'control-label']]);
-			    	$html .= $helper->widget($form[$key], ['attr' =>  ['class' => 'form-control input-sm'], 'value' => $value]);
+                    $html .= $helper->label($form[$key], null, ['label_attr' => ['class' => 'control-label']]);
+                    $html .= $helper->widget($form[$key], ['attr' =>  ['class' => 'form-control input-sm'], 'value' => $value]);
                     $html .= '</div>';
-	    		}
-	    	}
+                }
+            }
 
-   	        $html .= '<div class="clearfix" style="margin-top:10px;">';
-			$html .= $helper->widget($form['Save']);
-		    $html .= '<a href="javascript:;" data-id="'.$id.'" class="btn btn-xs dt-widget-remover">Remove</a>';
-		    $html .= '</div>';
+               $html .= '<div class="clearfix" style="margin-top:10px;">';
+            $html .= $helper->widget($form['Save']);
+            $html .= '<a href="javascript:;" data-id="'.$id.'" class="btn btn-xs dt-widget-remover">Remove</a>';
+            $html .= '</div>';
 
-	    	$html .= $helper->end($form);
-    	}
+            $html .= $helper->end($form);
+        }
 
-    	return $html;
+        return $html;
     }
 }

@@ -4,9 +4,9 @@ namespace Drafterbit\Bundle\SystemBundle\Dashboard;
 
 class InfoPanel extends Panel {
 
-	public function getView()
-	{
-		
+    public function getView()
+    {
+        
         $request = $this->kernel->getContainer()->get('request_stack')->getCurrentRequest();
 
 
@@ -18,16 +18,16 @@ class InfoPanel extends Panel {
         $info['Server'] = $request->server->get('SERVER_SOFTWARE');
 
         return $this->renderView('DrafterbitSystemBundle:Panel:info.html.twig', [
-        	'info' => $info
+            'info' => $info
         ]);
-	}
+    }
 
-	public function getName()
-	{
-		return 'info';
-	}
+    public function getName()
+    {
+        return 'info';
+    }
 
-	private function getOs()
+    private function getOs()
     {
         $os_platform = "Unknown";
 
@@ -57,7 +57,7 @@ class InfoPanel extends Panel {
         ];
 
         foreach ($os_array as $regex => $value) {
-        	$request = $this->kernel->getContainer()->get('request_stack')->getCurrentRequest();
+            $request = $this->kernel->getContainer()->get('request_stack')->getCurrentRequest();
             if (preg_match($regex, $request->server->get('HTTP_USER_AGENT'))) {
                 $os_platform = $value;
             }

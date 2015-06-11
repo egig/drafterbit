@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class FrontendController extends Controller {
 
-	/**
-	 * @Template("widgets/search/index.html")
-	 */
-	public function searchAction(Request $request)
+    /**
+     * @Template("widgets/search/index.html")
+     */
+    public function searchAction(Request $request)
     {
         $data['q'] = $q = $request->query->get('q');
 

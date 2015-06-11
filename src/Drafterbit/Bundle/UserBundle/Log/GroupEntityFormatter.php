@@ -6,13 +6,13 @@ use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
 
 class GroupEntityFormatter extends BaseEntityFormatter
 {
-	public function getName()
-	{
-		return 'group';
-	}
+    public function getName()
+    {
+        return 'group';
+    }
 
-	public function format($id)
-	{
+    public function format($id)
+    {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
 
@@ -32,5 +32,5 @@ class GroupEntityFormatter extends BaseEntityFormatter
         }
 
         return '<em>'.__('unsaved').'</em>';
-	}
+    }
 }

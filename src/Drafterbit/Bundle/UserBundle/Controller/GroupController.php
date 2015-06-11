@@ -19,7 +19,7 @@ use Drafterbit\Bundle\UserBundle\Form\Type\GroupType;
  */
 class GroupController extends Controller
 {
-	/**
+    /**
      * @Route("/user/group", name="drafterbit_user_group")
      * @Template()
      * @Security("is_granted('ROLE_GROUP_VIEW')")
@@ -69,7 +69,7 @@ class GroupController extends Controller
             }
         }
 
-    	return [
+        return [
             'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('Group')
         ];
@@ -81,7 +81,7 @@ class GroupController extends Controller
     public function dataAction($status)
     {
         //$users = $this->get('fos_user.user_manager')->findUsers();
-    	$groups = $this->container->get('fos_user.group_manager')->findGroups();
+        $groups = $this->container->get('fos_user.group_manager')->findGroups();
 
         $groupsArr  = [];
 

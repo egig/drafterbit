@@ -7,26 +7,26 @@ use Symfony\Component\Routing\Route;
 
 class Search implements FrontpageInterface
 {
-	public function getName()
-	{
-		return 'search';
-	}
+    public function getName()
+    {
+        return 'search';
+    }
 
-	public function resolve($key){
-		return new Route('/', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
-	}
+    public function resolve($key){
+        return new Route('/', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
+    }
 
-	public function getType() {
-		return 'standard';
-	}
+    public function getType() {
+        return 'standard';
+    }
 
-	public function getRoute()
-	{
-		return new Route('/search', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
-	}
+    public function getRoute()
+    {
+        return new Route('/search', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
+    }
 
-	public function getLabel()
-	{
-		return 'Search';
-	}
+    public function getLabel()
+    {
+        return 'Search';
+    }
 }

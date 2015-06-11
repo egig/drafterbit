@@ -39,11 +39,11 @@ class MenuController extends Controller
 
         $pages = $em->getRepository('DrafterbitPageBundle:Page')->findAll();
 
-    	return [
+        return [
             'form' => $form->createView(),
             'menus' =>  $menus,
-    		'page_title' => $this->get('translator')->trans('Menus')
-    	];
+            'page_title' => $this->get('translator')->trans('Menus')
+        ];
     }
 
     private function buildFamily($items, $parent = null)

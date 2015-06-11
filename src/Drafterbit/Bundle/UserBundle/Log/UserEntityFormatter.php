@@ -6,20 +6,20 @@ use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
 
 class UserEntityFormatter extends BaseEntityFormatter
 {
-	public function getName()
-	{
-		return 'user';
-	}
+    public function getName()
+    {
+        return 'user';
+    }
 
-	public function format($id)
-	{
-		if ($this->getUser()->getId() == $id) {
+    public function format($id)
+    {
+        if ($this->getUser()->getId() == $id) {
 
             $label = 'You';
         } else {
 
-        	$em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        	$user = $em->getRepository('DrafterbitUserBundle:User')->find($id);
+            $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
+            $user = $em->getRepository('DrafterbitUserBundle:User')->find($id);
 
             if($user) {
                 $label = $user->getRealname();
@@ -38,5 +38,5 @@ class UserEntityFormatter extends BaseEntityFormatter
         }
 
         return '<em>'.__('unsaved').'</em>';
-	}
+    }
 }

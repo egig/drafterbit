@@ -9,7 +9,7 @@ use Drafterbit\Bridge\DependencyInjection\ExtensionConfiguration;
 
 class Configuration extends ExtensionConfiguration
 {
-	/**
+    /**
      * Generates the configuration tree.
      *
      * @return TreeBuilder
@@ -23,23 +23,23 @@ class Configuration extends ExtensionConfiguration
         $rootNode
             ->children()
                 ->arrayNode('navigation')
-                	->useAttributeAsKey('name')
-		            ->prototype('array')
-	                	
-	                	->children()
-	                		->scalarNode('label')->end()
-   							->scalarNode('route')->defaultValue('')->end()
-   							->arrayNode('children')
-					            ->prototype('array')
-			    	            	->children()
-       			                		->scalarNode('label')->end()
-		   								->scalarNode('route')->defaultValue('')->end()
-	   								->end()
-	   							->end()
-   							->end()
-	                	->end()
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        
+                        ->children()
+                            ->scalarNode('label')->end()
+                               ->scalarNode('route')->defaultValue('')->end()
+                               ->arrayNode('children')
+                                ->prototype('array')
+                                    ->children()
+                                           ->scalarNode('label')->end()
+                                           ->scalarNode('route')->defaultValue('')->end()
+                                       ->end()
+                                   ->end()
+                               ->end()
+                        ->end()
 
-                	->end()
+                    ->end()
                 ->end()
             ->end();
 

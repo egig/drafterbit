@@ -1,38 +1,38 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
-	{{parent()}}
-	<link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitPageBundle/css/editor.css') }}">
+    {{parent()}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitPageBundle/css/editor.css') }}">
 {% endblock %}
 
 {% block action %}
-	{{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-sm btn-success"}}) }}
-	<a class="btn btn-sm btn-default" href="{{ url('drafterbit_page') }}">
-	    <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
-	</a>
+    {{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-sm btn-success"}}) }}
+    <a class="btn btn-sm btn-default" href="{{ url('drafterbit_page') }}">
+        <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
+    </a>
 {% endblock %}
 
 {% block form %}
 <div class="row">
     <div class="col-md-9">
         <div class="form-group">
-        	{{ form_widget(form.title, {attr:{class:"form-control input-lg", placeholder:__('Title')}}) }}
+            {{ form_widget(form.title, {attr:{class:"form-control input-lg", placeholder:__('Title')}}) }}
          </div>
          <div class="form-group">
-        	{{ form_widget(form.content) }}
+            {{ form_widget(form.content) }}
          </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-        	{{ form_widget(form.slug, {attr:{class:"form-control", placeholder:__('Slug')}}) }}
+            {{ form_widget(form.slug, {attr:{class:"form-control", placeholder:__('Slug')}}) }}
         </div>
         <div class="form-group">
-        	{{ form_label(form.status) }}
-        	{{ form_widget(form.status, {attr:{class:"form-control"}}) }}
+            {{ form_label(form.status) }}
+            {{ form_widget(form.status, {attr:{class:"form-control"}}) }}
          </div>
          <div class="form-group">
-        	{{ form_label(form.layout) }}
-        	{{ form_widget(form.layout, {attr:{class:"form-control"}}) }}
+            {{ form_label(form.layout) }}
+            {{ form_widget(form.layout, {attr:{class:"form-control"}}) }}
          </div>
     </div>
 </div>
@@ -40,33 +40,33 @@
 
 {% block javascripts %}
 
-	{{parent()}}
-	<script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('@DrafterbitPageBundle/js/editor.js') }}"></script>
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('@DrafterbitPageBundle/js/editor.js') }}"></script>
     <script>
-	CKEDITOR.replace('page[content]', {
+    CKEDITOR.replace('page[content]', {
 
-	    customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
-	    skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
+        customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
+        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
 
-	    filebrowserWindowWidth  : 860,
-	    filebrowserWindowHeight : 453,
-	    filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
-	});
+        filebrowserWindowWidth  : 860,
+        filebrowserWindowHeight : 453,
+        filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
+    });
 
-	CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
-	CKEDITOR.config.extraPlugins = 'wpmore';
+    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
+    CKEDITOR.config.extraPlugins = 'wpmore';
 
 
-	// handle footer position
-	CKEDITOR.on("instanceReady", function(event)
-	{
-	    var h = $('.page-wrapper').height();
-	    var hW = $(window).innerHeight();
+    // handle footer position
+    CKEDITOR.on("instanceReady", function(event)
+    {
+        var h = $('.page-wrapper').height();
+        var hW = $(window).innerHeight();
 
-	    if(h+30 > hW) {
-	        $('.footer').removeClass('navbar-fixed-bottom');
-	    }
-	});
-	</script>
+        if(h+30 > hW) {
+            $('.footer').removeClass('navbar-fixed-bottom');
+        }
+    });
+    </script>
 {% endblock %}

@@ -11,7 +11,7 @@ class DrafterbitBlogExtension extends Extension
 {
     public function loadInternal(array $config, ContainerBuilder $container)
     {
-    	$this->mergeNavigation($container, $config['navigation']);
+        $this->mergeNavigation($container, $config['navigation']);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

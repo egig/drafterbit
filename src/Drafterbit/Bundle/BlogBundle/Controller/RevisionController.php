@@ -20,25 +20,25 @@ use cogpowered\FineDiff\Diff;
  */
 class RevisionController extends Controller
 {
-	/**
+    /**
      * @Route("/blog/post/{postId}/revisions", name="drafterbit_blog_revision_view")
      * @Template()
      */
     public function viewAction($postId)
     {
-    	$repo = $this->getDoctrine()->getManager()->getRepository('DrafterbitBlogBundle:Post');
+        $repo = $this->getDoctrine()->getManager()->getRepository('DrafterbitBlogBundle:Post');
 
 
-    	$revs = $repo->createQueryBuilder('p')
-    		->where('p.type = :type')
+        $revs = $repo->createQueryBuilder('p')
+            ->where('p.type = :type')
             ->orderBy('p.createdAt', 'desc')
-    		->setParameter('type', 'history:'.$postId)
-    		->getQuery()
-    		->getResult();
+            ->setParameter('type', 'history:'.$postId)
+            ->getQuery()
+            ->getResult();
 
-    	$current = $repo->find($postId);
+        $current = $repo->find($postId);
 
-    	for($i=0;$i<count($revs);$i++) {
+        for($i=0;$i<count($revs);$i++) {
             $new = ($i-1 < 0) ? $current : $revs[$i-1];
             $old = $revs[$i];
 
@@ -55,12 +55,12 @@ class RevisionController extends Controller
             $revs[$i]->pos = count($revs)-$i;
         }
 
-    	$postUrl = '<a href="'.$this->generateUrl('drafterbit_blog_post_edit', ['id' => $current->getId()]).'">'.$current->getTitle()."</a>";
-    	return [
-    		'post_id' => $postId,
-    		'revs' => $revs,
-    		'page_title' => $this->get('translator')->trans('Revisions of %post%', ['%post%' => $postUrl])
-    	];
+        $postUrl = '<a href="'.$this->generateUrl('drafterbit_blog_post_edit', ['id' => $current->getId()]).'">'.$current->getTitle()."</a>";
+        return [
+            'post_id' => $postId,
+            'revs' => $revs,
+            'page_title' => $this->get('translator')->trans('Revisions of %post%', ['%post%' => $postUrl])
+        ];
     }
 
     /**
@@ -75,7 +75,7 @@ class RevisionController extends Controller
         $revs = $em->getRepository('DrafterbitBlogBundle:Post')->findby(['type' => 'history:'.$postId]);
 
         foreach ($revs as $rev) {
-		    $em->remove($rev);
+            $em->remove($rev);
         }
 
         $em->flush();
@@ -92,7 +92,7 @@ class RevisionController extends Controller
         $postId = $request->request->get('post-id');
 
         $em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository('DrafterbitBlogBundle:Post');
+        $repo = $em->getRepository('DrafterbitBlogBundle:Post');
 
         $rev = $repo->find($id);
 

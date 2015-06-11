@@ -67,7 +67,7 @@ class UserController extends Controller
             ]);
         }
 
-    	return [
+        return [
             'view_id' => $viewId,
             'page_title' => $this->get('translator')->trans('User')
         ];

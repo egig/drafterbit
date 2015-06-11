@@ -1,9 +1,9 @@
 <p>New Comment On Post <a href="{{ post.url }}">{{ post.title }}</a></p>
 
 {% if comment.authorUrl %}
-	<p><a href="{{ comment.authorUrl }}">{{ comment.authorName }} :</a></p>
+    <p><a href="{{ comment.authorUrl }}">{{ comment.authorName }} :</a></p>
 {% else %}
-	<p>{{ comment.authorName }} :</p>
+    <p>{{ comment.authorName }} :</p>
 {% endif %}
 
 <p>{{ comment.content }}</p>

@@ -6,7 +6,7 @@
 
     <services>
         <service id="drafterbit_page.frontpage" class="Drafterbit\Bundle\PageBundle\Frontpage\Page">
-        	<argument id="service_container" type="service"/>
+            <argument id="service_container" type="service"/>
             <tag name="drafterbit_system.frontpage"></tag>
         </service>
 

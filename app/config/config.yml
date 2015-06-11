@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: fos_user.yml }
+    - { resource: drafterbit.yml }
 
 framework:
     #esi:             ~
@@ -86,35 +87,3 @@ monolog:
             id: system_log_handler
             level: info
             channels: app
-
-drafterbit_file:
-    navigation:
-        file:
-            label: Files
-
-drafterbit_system:
-    navigation:
-        menu:
-            label: Menu
-            route: drafterbit_system_menu
-        setting:
-            label: Setting
-            children:
-                general:
-                    label: General
-                    route: drafterbit_system_setting_general
-                theme:
-                    label: Theme
-                    route: drafterbit_system_setting_theme
-                blog:
-                    label: Blog
-                    route: drafterbit_blog_setting
-        system:
-            label: System
-            children:
-                log:
-                    label: Log
-                    route: drafterbit_system_log
-                cache:
-                    label: Cache
-                    route: drafterbit_system_cache

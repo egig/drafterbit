@@ -82,10 +82,10 @@ class PageController extends Controller
                 ]);
         }
 
-    	return [
-    		'view_id' => $viewId,
-    		'page_title' => $this->get('translator')->trans('Page')
-    	];
+        return [
+            'view_id' => $viewId,
+            'page_title' => $this->get('translator')->trans('Page')
+        ];
     }
 
     /**
@@ -96,7 +96,7 @@ class PageController extends Controller
         $pagesArr  = [];
         $query = $this->getDoctrine()
             ->getManager()
-        	->getRepository('DrafterbitPageBundle:Page')
+            ->getRepository('DrafterbitPageBundle:Page')
             ->createQueryBuilder('p');
 
         if($status == 'trashed') {
@@ -147,10 +147,10 @@ class PageController extends Controller
     public function editAction($id)
     {
         $pageTitle = 'Edit Page';
-    	$page = $this->getDoctrine()
-        	->getManager()
-        	->getRepository('DrafterbitPageBundle:Page')
-        	->find($id);
+        $page = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('DrafterbitPageBundle:Page')
+            ->find($id);
         
         if(!$page and ($id != 'new')) {
             throw  $this->createNotFoundException();
@@ -165,12 +165,12 @@ class PageController extends Controller
         $form = $this->createForm(new PageType($layoutOptions), $page);
         $form->get('id')->setData($id);
 
-    	return [
-    		'form' => $form->createView(),
-    		'view_id' => 'page-edit',
-    		'action' =>  $this->generateUrl('drafterbit_page_save'),
-    		'page_title' => $this->get('translator')->trans($pageTitle)
-    	];
+        return [
+            'form' => $form->createView(),
+            'view_id' => 'page-edit',
+            'action' =>  $this->generateUrl('drafterbit_page_save'),
+            'page_title' => $this->get('translator')->trans($pageTitle)
+        ];
     }
 
     /**
@@ -182,14 +182,14 @@ class PageController extends Controller
         $id = $requestPage['id'];
 
         $page = $this->getDoctrine()
-        	->getManager()
-        	->getRepository('DrafterbitPageBundle:Page')
-        	->find($id);
+            ->getManager()
+            ->getRepository('DrafterbitPageBundle:Page')
+            ->find($id);
 
         $isNew = false;
         if(!$page) {
             $page = new Page();
-	        $isNew = true;
+            $isNew = true;
         }
 
         $layoutOptions = $this->getLayoutOptions();
@@ -201,11 +201,11 @@ class PageController extends Controller
             //save data to database
             $page = $form->getData();
             $page->setUser($this->getUser());
-	        $page->setUpdatedAt(new \DateTime);
+            $page->setUpdatedAt(new \DateTime);
 
             if($isNew) {
-	            $page->setCreatedAt(new \DateTime);
-	            $page->setDeletedAt(new \DateTime('0000-00-00'));
+                $page->setCreatedAt(new \DateTime);
+                $page->setDeletedAt(new \DateTime('0000-00-00'));
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -219,9 +219,9 @@ class PageController extends Controller
             $logger->info(':user:'.$this->getUser()->getId().' edited Page :page:'.$id, ['id' => $id]);
 
             $response = [
-            	'message' => $this->get('translator')->trans('Page saved'),
-            	'status' => 'success',
-            	'id' => $id];
+                'message' => $this->get('translator')->trans('Page saved'),
+                'status' => 'success',
+                'id' => $id];
         } else {
 
             $errors = [];
@@ -259,17 +259,17 @@ class PageController extends Controller
 
     private function getLayoutOptions()
     {
-    	$theme = $this->container->getParameter('theme');
-    	$themesPath = $this->container->getParameter('themes_path');
+        $theme = $this->container->getParameter('theme');
+        $themesPath = $this->container->getParameter('themes_path');
 
-    	$files = (new Finder)->depth(0)
-    		->in($themesPath.'/'.$theme.'/_tpl/layout');
+        $files = (new Finder)->depth(0)
+            ->in($themesPath.'/'.$theme.'/_tpl/layout');
 
-    	$layouts = [];
-    	foreach ($files as $file) {
-    		$layouts[$file->getfilename()] = $file->getfilename();
-    	}
+        $layouts = [];
+        foreach ($files as $file) {
+            $layouts[$file->getfilename()] = $file->getfilename();
+        }
 
-    	return $layouts;
+        return $layouts;
     }
 }
