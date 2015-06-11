@@ -100,26 +100,33 @@ class PostController extends Controller
                 ]);
         }
 
+        $categories = $em->getRepository('DrafterbitBlogBundle:Category')->findAll();
+
         return [
             'view_id' => $viewId,
+            'categories' => $categories,
             'page_title' => $this->get('translator')->trans('Post')
         ];
     }
 
     /**
-     * @Route("/blog/post/data/{status}", name="drafterbit_blog_post_data")
+     * @Route("/blog/post/data", name="drafterbit_blog_post_data")
      * @Template()
      */
-    public function dataAction($status)
+    public function dataAction(Request $request)
     {
-        $filter = ['type' => 'standard'];
-
+        $status = $request->query->get('status');
+        $em = $this->getDoctrine()->getManager();
         $pagesArr  = [];
-        $query = $this->getDoctrine()
-            ->getManager()
+        $query = $em
             ->getRepository('DrafterbitBlogBundle:Post')
             ->createQueryBuilder('p')
             ->where("p.type = 'standard'");
+
+        if($categoryId = $request->query->get('category')) {
+            $query->join('p.categories', 'c', 'WITH', 'c.id = :categoryId ')
+                ->setParameter('categoryId', $categoryId);
+        }
 
         if($status == 'trashed') {
             $query->andWhere("p.deletedAt != '0000-00-00 00:00'");

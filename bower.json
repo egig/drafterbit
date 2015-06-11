@@ -35,6 +35,7 @@
     "handlebars": "latest",
     "sticky-kit": "latest",
     "mjolnic-bootstrap-colorpicker": "latest",
-    "smalot-bootstrap-datetimepicker": "latest"
+    "smalot-bootstrap-datetimepicker": "latest",
+    "qs": "https://github.com/hapijs/qs.git"
   }
 }

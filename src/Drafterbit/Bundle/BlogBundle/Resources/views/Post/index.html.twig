@@ -7,11 +7,19 @@
 
 {% block filter %}
 <div style="display:inline-block; float:right;margin-left:5px;">
-    <select name="filter" class="form-control input-sm post-status-filter">
+    <select name="status-filter" class="form-control input-sm filter post-status-filter">
         <option value="all" >- {{ __('Status') }}</option>
         <option value="published" >{{ __('Published') }}</option>
         <option value="pending" > {{ __('Pending Review') }}</option>
         <option value="trashed" > {{ __('Trashed') }}</option>
+    </select>
+</div>
+<div style="display:inline-block; float:right;margin-left:5px;">
+    <select name="category-filter" class="form-control input-sm filter post-category-filter">
+        <option value="0" >- {{ __('Category') }}</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.label }}</option>
+        {% endfor %}
     </select>
 </div>
 {% endblock %}
@@ -47,10 +55,11 @@
 
 {% block javascripts %}
     {{parent()}}
+    <script type="text/javascript" src="{{ asset('plugins/qs/dist/qs.js') }}"></script>
     <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/index.js') }}"></script>
     <script type="text/javascript">
         drafTerbit.blog.post.handleIndexForm('#post-index-form');
         drafTerbit.blog.post.handleIndexTable('#post-data-table', '#post-checkall');
-        drafTerbit.blog.post.handleFilter('.post-status-filter');
+        drafTerbit.blog.post.handleFilter('.post-status-filter', '.post-category-filter', '.filter');
     </script>
 {% endblock %}

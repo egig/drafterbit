@@ -1,19 +1,13 @@
 (function($, drafTerbit) {
 
     if (window.location.hash == '') {
-        window.location.hash = 'all';
+        window.location.hash = '#category=0&status=all';
     }
-    var urlHash = window.location.hash.replace('#','');
-    var filterByStatus = function(status) {
 
-        var status = status || 'all';
-
-        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"blog/post/data/"+status).load();
-        window.location.hash = status;
-    }
+    var hash = window.location.hash.substr(1);
 
     // change trash, add restore button
-    var changeUncreateAction = function(s){
+    var changeActions = function(s){
         if (s === 'trashed') {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
             $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default posts-restore"><i class="fa fa-refresh"></i> '+__('Restore')+'</button>');
@@ -48,29 +42,39 @@
                     success: function(response){
 
                        $.notify(response.message, response.status);
-
-                        var urlHash2 = window.location.hash.replace('#','');
-                        drafTerbit.blog.dt.api().ajax.url(drafTerbit.adminUrl+"blog/post/data/"+urlHash2).load();
+                        drafTerbit.blog.dt.api().ajax.reload();
                     }
                 }
             );
         },
 
-        handleFilter: function (selector) {
+        handleFilter: function (statusFilterSelector, categoryFilterSelector, filterSelector) {
 
-            $(selector+' option[value="'+urlHash+'"]').prop('selected', true);
+            var param = Qs.parse(hash);
 
-            //status-filter
-            $(selector).on(
+            $(statusFilterSelector+' option[value="'+param.status+'"]').prop('selected', true);
+            $(categoryFilterSelector+' option[value="'+param.category+'"]').prop('selected', true);
+
+            $(filterSelector).on(
                 'change',
                 function(){
-                    var s = $(this).val();
-                    filterByStatus(s);
-                    changeUncreateAction(s);
+
+                    var param = {
+                        category: $(categoryFilterSelector).val(),
+                        status: $(statusFilterSelector).val()
+                    }
+
+                    hash = Qs.stringify(param);
+                    drafTerbit.blog.dt.api().ajax.reload();
                 }
             );
 
-            changeUncreateAction(urlHash);
+            $(statusFilterSelector).on('change', function(){
+                var status = $(statusFilterSelector).val();
+                changeActions($(this).val());
+            });
+
+            changeActions($(statusFilterSelector).val());
         },
 
         handleIndexTable: function (selector, checkSelector) {
@@ -83,7 +87,10 @@
                     {data: 'updated_at'},
                 ],
                 ajax: {
-                    url: drafTerbit.adminUrl+"blog/post/data/"+urlHash,
+                    data: function(data) {
+                        return Qs.parse(hash);
+                    },
+                    url: drafTerbit.adminUrl+"blog/post/data",
                 },
                 columnDefs: [
                     {orderable: false, searchable:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="posts[]" value="'+d+'">'}},
