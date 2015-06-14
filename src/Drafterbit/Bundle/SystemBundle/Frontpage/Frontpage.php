@@ -2,10 +2,10 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Frontpage;
 
-use Drafterbit\Bundle\SystemBundle\FrontpageInterface;
+use Drafterbit\System\FrontPage\FrontPageInterface;
 use Symfony\Component\DependencyInjection\Container;
 
-abstract class Frontpage implements FrontpageInterface
+abstract class Frontpage implements FrontPageInterface
 {
     protected $container;
 

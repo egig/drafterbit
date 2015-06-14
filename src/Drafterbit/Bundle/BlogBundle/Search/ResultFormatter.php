@@ -2,7 +2,7 @@
 
 namespace Drafterbit\Bundle\BlogBundle\Search;
 
-use Drafterbit\Bundle\SystemBundle\Search\ResultFormatterInterface;
+use Drafterbit\System\Search\ResultFormatterInterface;
 
 class ResultFormatter implements ResultFormatterInterface
 {

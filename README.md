@@ -16,7 +16,7 @@ Installation package will be available for download soon. For now you can just d
     
 3. Clone this repo (**master** branch)
     ```shell
-    git clone https://github.com/drafterbit/drafterbit.git -b master
+    git clone https://github.com/drafterbit/application.git -b master
     ```
     
 4. Go to cloned directory then install php dependencies

@@ -2,7 +2,7 @@
 
 namespace Drafterbit\Bundle\BlogBundle\Search;
 
-use Drafterbit\Bundle\SystemBundle\Search\QueryProvider as BaseQueryProvider;
+use Drafterbit\System\Search\QueryProvider as BaseQueryProvider;
 use Symfony\Component\DependencyInjection\Container;
 
 class QueryProvider extends BaseQueryProvider {

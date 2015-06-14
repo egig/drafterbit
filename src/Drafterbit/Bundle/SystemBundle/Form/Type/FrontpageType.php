@@ -5,14 +5,13 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Drafterbit\Bundle\SystemBundle\frontpageProvider;
+use Drafterbit\System\FrontPage\FrontPageProvider;
 
 class FrontpageType extends AbstractType
 {
     private $frontpageProvider;
 
-    public function __construct(frontpageProvider $frontpageProvider)
+    public function __construct(FrontPageProvider $frontpageProvider)
     {
         $this->frontpageProvider = $frontpageProvider;
     }

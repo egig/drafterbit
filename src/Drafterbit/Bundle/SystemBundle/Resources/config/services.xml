@@ -63,8 +63,8 @@
             <argument /> <!-- bubble -->
         </service>
 
-        <!-- Log Displayyer -->
-        <service id="system_log_display_formatter" class="Drafterbit\Bundle\SystemBundle\Log\Display\Formatter"/>
+        <!-- Log Displayer -->
+        <service id="drafterbit_system.log.display_formatter" class="Drafterbit\System\Log\DisplayFormatter"/>
 
         <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\Frontpage\Search">
             <tag name="drafterbit_system.frontpage"></tag>
@@ -72,8 +72,7 @@
         </service>
 
         <!-- Frontpage Provider -->
-        <service id="drafterbit_system.frontpage_provider" class="Drafterbit\Bundle\SystemBundle\FrontpageProvider"/>
-
+        <service id="drafterbit_system.frontpage_provider" class="Drafterbit\System\FrontPage\FrontPageProvider"/>
 
         <!-- Frontend Route loader -->
         <service id="drafterbit_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\FrontendLoader">
@@ -88,7 +87,7 @@
         </service>
 
         <!-- Dahboard and Panels -->
-        <service id="drafterbit_system.dashboard_manager" class="Drafterbit\Bundle\SystemBundle\Dashboard\DashboardManager"/>
+        <service id="drafterbit_system.dashboard_manager" class="Drafterbit\System\Dashboard\DashboardManager"/>
 
         <service id="dashboard" alias="drafterbit_system.dashboard_manager"/>
 
@@ -103,11 +102,11 @@
         </service>
 
         <!-- widget -->
-        <service id="drafterbit_system.widget.form_builder" class="Drafterbit\Bundle\SystemBundle\Widget\WidgetFormBuilder">
+        <service id="drafterbit_system.widget.form_builder" class="Drafterbit\System\Widget\WidgetFormBuilder">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="drafterbit_system.widget.manager" class="Drafterbit\Bundle\SystemBundle\Widget\WidgetManager">
+        <service id="drafterbit_system.widget.manager" class="Drafterbit\System\Widget\WidgetManager">
             <argument type="service" id="service_container" />
         </service>
 
@@ -122,7 +121,7 @@
         </service>
 
         <!-- widget -->
-        <service id="drafterbit_system.search.engine" class="Drafterbit\Bundle\SystemBundle\Search\Engine">
+        <service id="drafterbit_system.search.engine" class="Drafterbit\System\Search\Engine">
             <argument type="service" id="service_container" />
         </service>
 

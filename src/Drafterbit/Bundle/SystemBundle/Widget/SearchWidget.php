@@ -3,6 +3,7 @@
 namespace Drafterbit\Bundle\SystemBundle\Widget;
 
 use Symfony\Component\Form\Form;
+use Drafterbit\System\Widget\Widget;
 
 class SearchWidget extends Widget
 {

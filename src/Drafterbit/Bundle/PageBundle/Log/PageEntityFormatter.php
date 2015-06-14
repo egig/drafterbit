@@ -2,7 +2,7 @@
 
 namespace Drafterbit\Bundle\PageBundle\Log;
 
-use Drafterbit\Bundle\SystemBundle\Log\BaseEntityFormatter;
+use Drafterbit\System\Log\BaseEntityFormatter;
 
 class PageEntityFormatter extends BaseEntityFormatter
 {

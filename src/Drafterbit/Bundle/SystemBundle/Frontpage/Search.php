@@ -2,10 +2,10 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Frontpage;
 
-use Drafterbit\Bundle\SystemBundle\FrontpageInterface;
+use Drafterbit\System\FrontPage\FrontPageInterface;
 use Symfony\Component\Routing\Route;
 
-class Search implements FrontpageInterface
+class Search implements FrontPageInterface
 {
     public function getName()
     {

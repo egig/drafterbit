@@ -2,6 +2,8 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Dashboard;
 
+use Drafterbit\System\Dashboard\Panel;
+
 class InfoPanel extends Panel {
 
     public function getView()
@@ -14,7 +16,6 @@ class InfoPanel extends Panel {
         $info['OS'] = $this->getOs();
         $info['Theme'] = $this->kernel->getContainer()->getParameter('theme');
         $info['PHP'] = phpversion();
-        //$stat['DB'] = $this['db']->getServerVersion();
         $info['Server'] = $request->server->get('SERVER_SOFTWARE');
 
         return $this->renderView('DrafterbitSystemBundle:Panel:info.html.twig', [

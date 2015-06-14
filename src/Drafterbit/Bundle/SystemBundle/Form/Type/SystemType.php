@@ -4,17 +4,16 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Drafterbit\Bundle\SystemBundle\FrontpageProvider;
-
+use Drafterbit\System\FrontPage\FrontPageProvider;
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SystemType extends AbstractType
 {
     protected $systemModel;
     protected $frontpageProvider;
 
-    public function __construct(SystemModel $systemModel, FrontpageProvider $frontpageProvider)
+    public function __construct(SystemModel $systemModel, FrontPageProvider $frontpageProvider)
     {
         $this->systemModel = $systemModel;
         $this->frontpageProvider = $frontpageProvider;

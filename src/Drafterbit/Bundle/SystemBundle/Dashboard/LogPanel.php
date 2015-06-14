@@ -2,6 +2,8 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Dashboard;
 
+use Drafterbit\System\Dashboard\Panel;
+
 class LogPanel extends Panel {
 
     public function getView()
@@ -17,7 +19,7 @@ class LogPanel extends Panel {
         $logs = array_map(function($log){
             return [
                 'time' => (new \DateTime())->setTimestamp($log->getTime()),
-                'activity' => $this->kernel->getContainer()->get('system_log_display_formatter')->format($log->getMessage())
+                'activity' => $this->kernel->getContainer()->get('drafterbit_system.log.display_formatter')->format($log->getMessage())
             ];
         }, $logEntities);
 
