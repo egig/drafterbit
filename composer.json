@@ -17,5 +17,5 @@
         "cogpowered/finediff": "0.3.*",
         "knplabs/knp-time-bundle": "^1.3",
         "doctrine/doctrine-fixtures-bundle": "2.2.*"
-    },
+    }
 }
