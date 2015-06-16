@@ -18,7 +18,10 @@ class AssetController extends Controller
      */
     public function dtJsAction()
     {
-        $content = $this->renderView('DrafterbitSystemBundle:Asset:dt.js.twig');
+        $locale = $this->container->getParameter('locale');
+        $dict = $this->get('translator')->getCatalogue($locale)->all('messages');
+        $data['dict'] = json_encode($dict);
+        $content = $this->renderView('DrafterbitSystemBundle:Asset:dt.js.twig', $data);
         return new Response($content, 200, array('Content-Type' => 'application/javascript'));
     }
 

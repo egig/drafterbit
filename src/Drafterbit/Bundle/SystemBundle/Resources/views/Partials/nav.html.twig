@@ -16,7 +16,7 @@
                         {% if nav.children is defined and nav.children|length %}
                             <li class="dropdown">
                                 <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                                    {{ nav.label }}
+                                    {{ __(nav.label) }}
                                 </a>
                                 <ul class="dropdown-menu">
                                     <div class="dropdown-caret">
@@ -26,7 +26,7 @@
 
                                     {% for name,child in nav.children %}
                                         <li>
-                                            <a id="nav-{{name}}" href="{{url(child.route)}}">{{child.label}}</a>
+                                            <a id="nav-{{name}}" href="{{url(child.route)}}">{{ __(child.label) }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -37,7 +37,7 @@
                         <?php else : ?>
                              <li>
                                 <a id="nav-{{ n }}" class="navbar-link"  href="{{url(nav.route)}}">
-                                    {{nav.label}}
+                                    {{ __(nav.label) }}
                                 </a>
                             </li>
                         {% endif %}

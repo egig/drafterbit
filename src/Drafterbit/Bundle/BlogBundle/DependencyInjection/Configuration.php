@@ -58,7 +58,7 @@ class Configuration extends ExtensionConfiguration
                                 ->end()
                             ->end()
                         ->end()
-                    
+
                     ->end()
                 ->end()
             ->end();
