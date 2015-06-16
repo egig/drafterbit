@@ -6,7 +6,7 @@ Drafterbit is self-hosted web software you can use to create a website, yes, lik
 [![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg)](https://travis-ci.org/drafterbit/drafterbit)
 
 ## Install
-Installation package will be available for download soon. For now you can just do the following step to get it running (I assume you use Ubuntu):
+For now you can just do the following step to get it running (I assume you use Ubuntu):
 
 1. Make sure that you have [composer](https://getcomposer.org/) and [bower](https://bower.io/) installed in your computer.
 2. Open Terminal then go to web doc root. e.g:
@@ -14,17 +14,18 @@ Installation package will be available for download soon. For now you can just d
     cd /var/www/
     ```
     
-3. Clone this repo (**master** branch)
+3. Create composer project (use -`sdev` since we have no stable version yet)
     ```shell
-    git clone https://github.com/drafterbit/application.git -b master
+    composer create-project drafterbit/application drafterbit -sdev
     ```
-    
-4. Go to cloned directory then install php dependencies
+
+4. Go to created directory
+
     ```shell
     cd drafterbit
-    composer install --prefer-dist
     ```
-5. Check app configuration by visitting `http://localhost/drafterbit/web/config.php`, or on cli by running
+
+5. Check app configuration, e.g by visitting `http://localhost/drafterbit/web/config.php`, or on cli by running
     ```shell
     php app/check.php
     ```
@@ -54,3 +55,4 @@ Drafterbit is an opensource and intended to be community-driven project. Any kin
 
 ## License
 Drafterbit is licensed under the MIT license.
+
