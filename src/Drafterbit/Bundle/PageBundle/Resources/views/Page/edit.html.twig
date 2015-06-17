@@ -46,6 +46,7 @@
     <script>
     CKEDITOR.replace('page[content]', {
 
+        language: drafTerbit.locale,
         customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
         skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
 
