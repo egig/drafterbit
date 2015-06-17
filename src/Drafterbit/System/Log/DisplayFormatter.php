@@ -3,10 +3,16 @@
 namespace Drafterbit\System\Log;
 
 use Drafterbit\System\Log\EntityFormatterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DisplayFormatter
 {
-    const ENTITY_PATTERN = '/:(\w+:[\w]*)/';
+    protected $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * Log Entity Labels.
@@ -14,14 +20,6 @@ class DisplayFormatter
      * @var array
      */
     protected $entityFormatters = [];
-
-    function getEntityLabel($entity, $id)
-    {
-
-            $callable = [$this->entityFormatters[$entity], 'format'];
-
-            return call_user_func_array($callable, [$id]);
-    }
 
     function addEntityFormatter(EntityFormatterInterface $entityFormatter)
     {
@@ -34,30 +32,36 @@ class DisplayFormatter
      * @param  string $line
      * @return string
      */
-    public function format($line)
+    public function format($line, $context = null)
     {
+        $context = json_decode($context, true);
 
-        // @todo translation
+        $replaces = [];
+        foreach ($context as $key => $value) {
+            $replaces['%'.$key.'%'] = $this->resolve($key, $value);
+        }
 
-        // we'll find words formatted like ":user:1"
-        // then replace it with format function
-        // defined in each extension.
-        return preg_replace_callback(
-            static::ENTITY_PATTERN,
-            function ($matches) {
+        return $this->translator->trans($line, $replaces);
+    }
 
-                $temp = explode(':', $matches[1]);
-                
-                $entity = current($temp);
-                $id = end($temp);
+    private function resolve($entityPlaceholder, $id)
+    {
+        $entity = trim($entityPlaceholder, '%');
 
-                if(!isset($this->entityFormatters[$entity])) {
-                    return $matches[1];
-                }
+        if($this->hasEntityFormatter($entity)) {
+            return $this->getEntityFormatter($entity)->format($id);
+        }
 
-                return $this->getEntityLabel($entity, $id);
-            },
-            $line
-        );
+        return "$entity:$id";
+    }
+
+    public function getEntityFormatter($entity)
+    {
+        return $this->entityFormatters[$entity];
+    }
+
+    public function hasEntityFormatter($entity)
+    {
+        return isset($this->entityFormatters[$entity]);
     }
 }

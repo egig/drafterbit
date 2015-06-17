@@ -142,7 +142,7 @@ class SystemController extends Controller
             $data = [];
             $data[] = $log->getid();
             $data[] = date('d-m-Y H:i:s', $log->getTime());
-            $data[] = $this->get('drafterbit_system.log.display_formatter')->format($log->getMessage());
+            $data[] = $this->get('drafterbit_system.log.display_formatter')->format($log->getMessage(), $log->getContext());
 
             $logArr[] = $data;
         }

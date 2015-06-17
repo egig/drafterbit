@@ -64,7 +64,9 @@
         </service>
 
         <!-- Log Displayer -->
-        <service id="drafterbit_system.log.display_formatter" class="Drafterbit\System\Log\DisplayFormatter"/>
+        <service id="drafterbit_system.log.display_formatter" class="Drafterbit\System\Log\DisplayFormatter">
+            <argument type="service" id="translator"/>
+        </service>
 
         <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\Frontpage\Search">
             <tag name="drafterbit_system.frontpage"></tag>

@@ -2,3 +2,6 @@ Page: Halaman
 
 "New Page": "Halaman Baru"
 "Edit Page": "Sunting Halaman"
+
+# log
+"%user% edited page %page%": "%user% menyunting halaman %page%"

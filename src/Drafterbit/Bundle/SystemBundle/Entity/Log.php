@@ -66,4 +66,9 @@ class Log
     {
         return $this->time;
     }
+
+    public function getContext()
+    {
+        return $this->context;
+    }
 }

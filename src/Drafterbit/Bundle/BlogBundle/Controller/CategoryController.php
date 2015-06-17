@@ -118,7 +118,7 @@ class CategoryController extends Controller
 
             // log
             $logger = $this->get('logger');
-            $logger->info(':user:'.$this->getUser()->getId().' edited Category :category:'.$id, ['id' => $id]);
+            $logger->info('%user% edited category %category%', ['user' => $this->getUser()->getId(), 'category' => $id]);
 
             $response = [
                 'message' => $this->get('translator')->trans('Category saved'),

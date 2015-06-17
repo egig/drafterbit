@@ -1,3 +1,4 @@
+You: Anda
 User: Pengguna
 Group: Grup
 
@@ -6,3 +7,7 @@ Group: Grup
 
 "New Group": "Grup Baru"
 "Edit Group": "Sunting Grup"
+
+# log
+"%user% edited user %user_id%": '%user% menyunting pengguna %user_id%'
+"%user% edited group %group%": '%user% menyunting grup %group%'

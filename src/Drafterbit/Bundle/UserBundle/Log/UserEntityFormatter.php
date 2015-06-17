@@ -15,7 +15,7 @@ class UserEntityFormatter extends BaseEntityFormatter
     {
         if ($this->getUser()->getId() == $id) {
 
-            $label = 'You';
+            $label = $this->getKernel()->getContainer()->get('translator')->trans('You');
         } else {
 
             $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();

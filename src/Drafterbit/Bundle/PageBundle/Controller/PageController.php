@@ -216,7 +216,7 @@ class PageController extends Controller
 
             // log
             $logger = $this->get('logger');
-            $logger->info(':user:'.$this->getUser()->getId().' edited Page :page:'.$id, ['id' => $id]);
+            $logger->info('%user% edited page %page%', ['user' => $this->getUser()->getId(), 'page' => $id]);
 
             $response = [
                 'message' => $this->get('translator')->trans('Page saved'),
