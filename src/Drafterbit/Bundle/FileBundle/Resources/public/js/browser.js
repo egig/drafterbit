@@ -39,6 +39,7 @@
             data: {
                 csrf: drafTerbit.csrfToken
             },
+            locale: drafTerbit.locale,
             permissions: {             
                 create: drafTerbit.permissions.files.create,
                 move: drafTerbit.permissions.files.move,

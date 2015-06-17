@@ -20,7 +20,10 @@ class FileController extends Controller
      */
     public function indexAction()
     {
-        return ['page_title' => $this->get('translator')->trans('File')];
+        return [
+            'locale' => $this->container->getParameter('locale'),
+            'page_title' => $this->get('translator')->trans('File')
+        ];
     }
 
     /**
@@ -30,7 +33,9 @@ class FileController extends Controller
     public function browserAction()
     {
         // @todo filter browser to diplay only image on ckeditor
-        return [];
+        return [
+            'locale' => $this->container->getParameter('locale'),
+        ];
     }
 
     /**
