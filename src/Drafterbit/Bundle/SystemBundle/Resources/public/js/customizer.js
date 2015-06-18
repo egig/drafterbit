@@ -178,6 +178,7 @@
                 
                         if (!res.error) {
                             $(form).find('input[name="id"]').val(res.id);
+                            $(form).find('.dt-widget-remover').data('id', res.id);
                             $(form).closest('.widget-item-container').prop('id', res.id+'-widget-item-container');
                     
                             $.notify(res.message, 'success');
@@ -198,8 +199,9 @@
             function(e){
                 e.preventDefault();
                 var id = $(this).data('id');
-                $.post(drafTerbit.adminUrl+'/setting/themes/widget/delete', {id:id});
+                $.post(drafTerbit.adminUrl+'setting/widget/delete', {id:id});
                 $(this).closest('.panel').remove();
+                refreshPreview();
             }
      );
 

@@ -151,7 +151,7 @@ class FrontendExtension extends \Twig_Extension
             $widgets,
             function($a, $b) {
                 if ($a['sequence'] == $b['sequence']) {
-                    return $a['id'] - $b['id'];
+                    return $b['id'] - $a['id'];
                 }
 
                 return $a['sequence'] < $b['sequence'] ? -1 : 1;

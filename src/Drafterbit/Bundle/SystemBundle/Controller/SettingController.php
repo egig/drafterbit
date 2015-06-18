@@ -63,6 +63,21 @@ class SettingController extends Controller
     }
 
     /**
+     * @Route("/setting/widget/delete", name="drafterbit_setting_widget_delete")
+     */
+    public function widgetDeleteAction(Request $request)
+    {
+        $id = $request->request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $widget = $em->getRepository('DrafterbitSystemBundle:Widget')
+            ->find($id);
+        $em->remove($widget);
+        $em->flush();
+
+        return new Response();
+    }
+
+    /**
      * @Route("/setting/widget/save", name="drafterbit_setting_widget_save")
      */
     public function widgetSaveAction(Request $request)

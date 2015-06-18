@@ -17,8 +17,7 @@ class WidgetFormBuilder
 
     public function build( Widget $widget, $data = null, $options = [])
     {
-        // @todo
-        $id = '';
+        $id = $data->getId();
 
         $html = '';
 
