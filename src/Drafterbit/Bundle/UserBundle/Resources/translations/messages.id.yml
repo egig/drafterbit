@@ -9,5 +9,5 @@ Group: Grup
 "Edit Group": "Sunting Grup"
 
 # log
-"%user% edited user %user_id%": '%user% menyunting pengguna %user_id%'
-"%user% edited group %group%": '%user% menyunting grup %group%'
+"%author% edited user %user%": '%author% menyunting pengguna %user%'
+"%author% edited group %group%": '%author% menyunting grup %group%'

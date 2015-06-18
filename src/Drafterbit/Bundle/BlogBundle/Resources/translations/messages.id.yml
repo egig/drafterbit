@@ -19,5 +19,5 @@ Content: Konten
 "In Response to": Menanggapi
 
 # log
-"%user% edited post %post%": "%user% menyunting post %post%"
-"%user% edited category %category%": "%user% menyunting kategori %category%"
+"%author% edited post %post%": "%author% menyunting post %post%"
+"%author% edited category %category%": "%author% menyunting kategori %category%"

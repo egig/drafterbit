@@ -303,7 +303,7 @@ class PostController extends Controller
 
             // log
             $logger = $this->get('logger');
-            $logger->info("%user% edited post %post%", ['user' => $this->getUser()->getId(), 'post' => $id]);
+            $logger->info("%author% edited post %post%", ['author' => $this->getUser()->getId(), 'post' => $id]);
 
             $response = [
                 'message' => $this->get('translator')->trans('Post saved'),

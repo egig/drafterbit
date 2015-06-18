@@ -135,5 +135,10 @@
             <tag name="form.type" alias="entity_hidden"/>
         </service>
 
+        <service id="drafterbit_system.log.formatter.author" class="Drafterbit\Bundle\SystemBundle\Log\AuthorEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="drafterbit_system_log.display_formatter" />
+        </service>
+
     </services>
 </container>

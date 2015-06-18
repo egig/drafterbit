@@ -14,7 +14,7 @@
                 <tbody>
                 {% for log in logs %}
                     <tr>
-                        <td width="40%;">{{ log.time|ago }}</td>
+                        <td width="40%;">{{ time_diff(log.time) }}</td>
                         <td>{{ log.activity|raw }}</td>
                     </tr>
                 {% endfor %}

@@ -176,7 +176,7 @@ class UserController extends Controller
 
             // @todo
             $logger = $this->get('logger');
-            $logger->info('%user% edited user %user_id%', ['user'=>$this->getUser()->getId(), 'user_id' => $id]);
+            $logger->info('%author% edited user %user%', ['author'=>$this->getUser()->getId(), 'user' => $id]);
 
             $response = ['message' => 'User saved', 'status' => 'success', 'id' => $id];
         } else {
