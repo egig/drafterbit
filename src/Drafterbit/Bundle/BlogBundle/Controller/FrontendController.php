@@ -108,10 +108,17 @@ class FrontendController extends BaseFrontendController
         return $request->getSchemeAndHttpHost().$request->getBaseUrl().$request->getPathInfo().$qs;
     }
 
+    /**
+     * Get pos list for front end view
+     *
+     * @param int $page
+     * @param string $filterKey
+     * @param mixed $filterValue
+     * @return array
+     */
     private function getPostlist($page, $filterKey = null, $filterValue = null)
     {
-        // @todo save this in config
-        $perPage = 5;
+        $perPage = $this->get('system')->get('blog.post_perpage', 5);
         $offset = ($page*$perPage)-$perPage;
 
         $query = $this->getDoctrine()->getManager()
@@ -136,15 +143,19 @@ class FrontendController extends BaseFrontendController
         $posts = $query->getQuery()->getResult();
 
         foreach ($posts as $post) {
+
+            // Create post excerpt
             if(strrpos($post->getContent(), self::MORE_TAG) !== false) {
                 $post->excerpt = current(explode(self::MORE_TAG, $post->getContent())).'&hellip;';
             } else {
                 $post->excerpt = false;
             }
 
-            $year = $post->getPublishedAt()->format('Y');
-            $month = $post->getPublishedAt()->format('m');
-            $date = $post->getPublishedAt()->format('d');
+            // Create post url
+            $dateObject = $post->getPublishedAt();
+            $year = $dateObject->format('Y');
+            $month = $dateObject->format('m');
+            $date = $dateObject->format('d');
             $slug = $post->getSlug();
             $post->url = $this->generateUrl('drafterbit_blog_post_front_view',
                 ['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
