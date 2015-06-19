@@ -41,7 +41,6 @@
                       {% for revision in revisions %}
                             <li>
                                 <a href="{{ url('drafterbit_user_edit', {id:revision.user.id}) }}">{{ revision.user.realname }}</a>
-                                {{ revision.createdAt|ago }}
                                 (<a href="{{url('drafterbit_blog_revision_view', {postId: post_id})}}#rev-{{revision.id}}">{{ revision.createdAt|date('d F Y, @H:i') }}</a>)
                             </li>
                       {% endfor %}
