@@ -1,0 +1,11 @@
+/tests/bootstrap.php.cache
+/tests/cache/*
+!tests/cache/.gitkeep
+/tests/config/parameters.yml
+/tests/logs/*
+!tests/logs/.gitkeep
+/tests/phpunit.xml
+/bin/
+/composer.phar
+/composer.lock
+/vendor/
