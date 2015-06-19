@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php app/console doctrine:database:create --env=travis
+  - php app/console doctrine:schema:create --env=travis
+  - php app/console doctrine:fixtures:load --env=travis --append
+
+script: phpunit
