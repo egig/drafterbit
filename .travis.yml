@@ -9,8 +9,11 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  - php app/console doctrine:database:create --env=travis
-  - php app/console doctrine:schema:create --env=travis
-  - php app/console doctrine:fixtures:load --env=travis --append
+  - php tests/console doctrine:database:create --env=travis
+  - php tests/console doctrine:schema:create --env=travis
+  - php tests/console doctrine:fixtures:load --env=travis --append
+
+env:
+  - SYMFONY__TEST_USER=admin
 
 script: phpunit
