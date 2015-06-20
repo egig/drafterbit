@@ -15,10 +15,10 @@
                             <form method="GET" target="_blank" action="{{ url('drafterbit_setting_theme_customize') }}">
                                 <input type="hidden" name="_token" value="{{csrf_token('customize_theme')}}">
                                 <input type="hidden" name="theme" value="{{theme.id}}">
-                                <button target="_blank" class="btn btn-xs btn-primary pull-right" style="margin-left:5px;">Customize</button>
+                                <button target="_blank" class="btn btn-xs btn-primary pull-right" style="margin-left:5px;">{{ __('Customize') }}</button>
                            </form>
                             {%  if theme.is_active %}
-                            <a disabled class="btn btn-xs btn-default pull-right">Active</a>
+                            <a disabled class="btn btn-xs btn-default pull-right">{{ __('Active') }}</a>
                             {% else %}
                             <!-- {# todo #}
                             <form method="POST">

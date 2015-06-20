@@ -28,7 +28,7 @@
         <div class="panel-body">
                 <div style="text-align:center; margin-bottom:20px;"><h1 class="title">{{ system.sitename }}</h1></div>       
                 {% if error %}
-                    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'FOSUserBundle') }}</div>
+                    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'DrafterbitUserBundle') }}</div>
                 {% endif %}
                 <form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-signin">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

@@ -8,6 +8,9 @@ Restore: Restor
 Delete: Hapus
 Previous: Sebelumya
 Next: Berikutnya
+Clear: Bersihkan
+"Renew Cache": "Perbarui Cache"
+Remove: Hapus
 
 # input
 Search: Cari
@@ -35,3 +38,33 @@ Theme: Tema
 System: Sistem
 Setting: Pengaturan
 General: Umum
+
+"Thank you for using": "Terimakasih telah menggunakan"
+
+"Show Panel(s)": "Tampilkan Panel"
+
+# datatables
+"Showing _START_ to _END_ of _TOTAL_ entries": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri"
+
+Size: Ukuran
+"Visit Site" : "Kunjungi Situs"
+Logout: Keluar
+
+# setting
+"Save Setting": "Simpan Pengaturan"
+Sitename: "Nama Situs"
+Tagline: Slogan
+"In a few words, explain what this site is about": "Secara singkat, Jelaskan situs ini"
+Frontpage: "Halaman Depan"
+Timezone: "Zona Waktu"
+"Date Format": "Format Tanggal"
+"Time Format": "Format Waktu"
+"This address is used for admin purposes, like new user notification": "Alamat ini digunakan untuk keperluan admin, misal pemberitahuan user baru"
+
+Active: Aktif
+Customize: Kustom
+"Theme Option": "Opsi Tema"
+Navigation: Navigasi
+
+"Display Text": "Teks Tampilan"
+"Menu Items": "Item Menu"

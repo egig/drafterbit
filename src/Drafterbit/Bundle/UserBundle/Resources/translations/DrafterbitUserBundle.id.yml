@@ -12,15 +12,15 @@ group:
         deleted: The group has been deleted
 
 # Security
-"Bad credentials": Invalid username or password
+"Bad credentials.": "Nama Pengguna/Email atau Kata Sandi tidak cocok."
 
 security:
     login:
-        username: "USERNAME"
-        username_or_email: "USERNAME OR EMAIL"
-        password: "PASSWORD"
+        username: "NAMA PENGGUNA"
+        username_or_email: "NAMA PENGGUNA ATAU EMAIL"
+        password: "KATA SANDI"
         remember_me: Remember me
-        submit: LOGIN
+        submit: MASUK
 
 # Profile
 profile:
