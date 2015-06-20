@@ -15,8 +15,8 @@
             <parameter key="ROLE_CATEGORY_EDIT">Edit Category</parameter>
             <parameter key="ROLE_CATEGORY_DELETE">Delete Category</parameter>
 
-            <parameter key="ROLE_COMMENT_VIEW">View Category</parameter>
-            <parameter key="ROLE_COMMENT_DELETE">Delete Category</parameter>
+            <parameter key="ROLE_COMMENT_VIEW">View Comment</parameter>
+            <parameter key="ROLE_COMMENT_DELETE">Delete Comment</parameter>
 
             <parameter key="ROLE_BLOG_SETTING_MANAGE">Manage Blog Setting</parameter>
         </parameter>

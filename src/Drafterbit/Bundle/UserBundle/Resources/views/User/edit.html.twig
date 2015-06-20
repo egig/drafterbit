@@ -17,39 +17,39 @@
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
-            {{ form_label(form.username, 'Username', {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.username, __('Username'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.username, {attr:{class:"form-control"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.email, 'Email', {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.email, __('Email'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.email, {attr:{class:"form-control"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.password.second, null, {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.password.second, __('Password'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.password.second, {attr:{class:"form-control", autocomplete:"off"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.password.first, null, {label_attr:{class:"control-label"}}) }}
+            {{ form_label(form.password.first, __('Password Confirmation'), {label_attr:{class:"control-label"}}) }}
             {{ form_widget(form.password.first, {attr:{class:"form-control", autocomplete:"off"}}) }}
         </div>
          <div class="form-group">
-            {{ form_label(form.groups, 'Group', {label_attr:{class:"control-label" }}) }}
+            {{ form_label(form.groups, __('Group'), {label_attr:{class:"control-label" }}) }}
             {{ form_widget(form.groups, {attr:{class:"form-control", "data-placeholder":"Select Group"}}) }}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {{ form_label(form.realname, 'Real Name', {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.realname, __('Real Name'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.realname, {attr:{class:"form-control"}}) }}
         </div>
          <div class="form-group">
-            {{ form_label(form.url, 'Url', {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.url, __('Url'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.url, {attr:{class:"form-control"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.bio, 'Bio', {label_attr:{class:"control-label"  }}) }}
+            {{ form_label(form.bio, __('Bio'), {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.bio, {attr:{class:"form-control"}}) }}
-             <span class="help-block">A little biographical information may be shown publicly.</span>
+             <span class="help-block">{{ __('A little biographical information may be shown publicly') }}.</span>
         </div>
         <div class="form-group">
             {{ form_label(form.enabled, 'Status', {label_attr:{class:"control-label" }}) }}
@@ -57,7 +57,7 @@
                 {% for el in form.enabled %}
                     <label class="checkbox-inline">
                         {{ form_widget(el) }}
-                        {{ el.vars.label }}
+                        {{ __(el.vars.label) }}
                     </label>
                 {% endfor %}
             </div>

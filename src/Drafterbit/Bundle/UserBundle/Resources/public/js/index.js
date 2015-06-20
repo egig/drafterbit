@@ -17,10 +17,10 @@
     }
     var renderCol3 = function(d,t,f,m){
         if(d == 1) {
-            return 'enabled';
+            return __('Enabled');
         }
 
-        return 'disabled';
+        return __('Disabled');
     }
 
       drafTerbit.users.dt =  $("#users-data-table").dataTable(

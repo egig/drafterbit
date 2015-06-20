@@ -59,11 +59,11 @@
             {{ form_widget(form.status, {attr:{class:"form-control"}}) }}
         </div>
          <div class="form-group">
-          {{ form_label(form.published_at) }}
+          {{ form_label(form.published_at, __('Published At')) }}
           {{ form_widget(form.published_at, {attr:{class:"form-control publish-date"}}) }}
          </div>
         <div class="form-group">
-            {{ form_label(form.categories) }}
+            {{ form_label(form.categories, __('Categories')) }}
             <div class="categories">
               {% if form.categories|length %}
                 {{ _self.render_categories(form.categories, categories) }}
@@ -71,7 +71,7 @@
                 {{ form_widget(form.categories) }}
               {% endif %}
               <div class="clearfix">
-                <small class="pull-right" style="margin:5px 0px 0px;"><a href="{{ url('drafterbit_blog_category_edit', {id:'new'}) }}">{{ __('add category') }}</a></small>
+                <small class="pull-right" style="margin:5px 0px 0px;"><a href="{{ url('drafterbit_blog_category_edit', {id:'new'}) }}">{{ __('Add Category') }}</a></small>
               </div>
             </div>
         </div>

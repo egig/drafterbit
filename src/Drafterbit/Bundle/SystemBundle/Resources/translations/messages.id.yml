@@ -68,3 +68,11 @@ Navigation: Navigasi
 
 "Display Text": "Teks Tampilan"
 "Menu Items": "Item Menu"
+
+# roles
+"View Log": "Lihat Log"
+"Delete Log": "Hapus Log"
+"View Cache": "Lihat Cache"
+"Manage Menus": "Atur Menu"
+"Manage General Setting": "Atur Pengaturan Umum"
+"Manage Theme Setting": "Atur Pengaturan Tema"

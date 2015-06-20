@@ -4,8 +4,8 @@
 <div style="display:inline-block; float:right;margin-left:5px;">
     <select name="filter" class="form-control input-sm user-status-filter">
         <option value="all" selected >- Status -</option>
-        <option value="enabled" >Enabled</option>
-        <option value="disabled" >Disabled</option>
+        <option value="enabled" >{{ __('Enabled') }}</option>
+        <option value="disabled" >{{ __('Disabled') }}</option>
     </select>
 </div>
 {% endblock %}
@@ -13,13 +13,13 @@
 {% block action %}
     {% if is_granted('ROLE_USER_CREATE') %}
         <a href="{{path('drafterbit_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
-            <i class="fa fa-plus" style=""></i> New User
+            <i class="fa fa-plus" style=""></i> {{ __('New User') }}
         </a>
     {% endif %}
 
     {% if is_granted('ROLE_USER_DELETE') %}
         <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
-            <i class="fa fa-trash-o"></i> Delete
+            <i class="fa fa-trash-o"></i> {{ __('Delete') }}
         </button>
     {% endif %}
 
@@ -32,9 +32,9 @@
                 <th class="sorting" width="15">
                     <input id="users-checkall" type="checkbox">
                 </th>
-                <th width="60%">Name</th>
-                <th width="30%">Email</th>
-                <th width="10%">Status</th>
+                <th width="60%">{{ __('Name') }}</th>
+                <th width="30%">{{ __('Email') }}</th>
+                <th width="10%">{{ __('Status') }}</th>
             </tr>
         </thead>
     </table>

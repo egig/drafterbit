@@ -1,7 +1,13 @@
-Page: Halaman
+Page: Laman
 
-"New Page": "Halaman Baru"
-"Edit Page": "Sunting Halaman"
+"New Page": "Laman Baru"
+"Edit Page": "Sunting Laman"
+"Save Page": "Simpan Laman"
 
 # log
 "%user% edited page %page%": "%user% menyunting halaman %page%"
+
+# roles
+"View Page": "Lihat Laman"
+"Create Page": "Buat Laman"
+"Delete Page":  "Hapus Laman"

@@ -20,14 +20,14 @@
             {{ form_widget(form.description, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
         </div>
 
-        <h3 style="">Roles</h3>
+        <h3 style="">{{ __('Roles') }}</h3>
         <div class="row">
 
             {% for bundle,attributes in rolesGroup %}
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">{{bundle}} </h4>
+                        <h4 class="panel-title">{{ __(bundle) }} </h4>
                     </div>
                     <div class="panel-body" style="height:200px;overflow:auto">
                         <ul>
@@ -41,7 +41,7 @@
                                             {{ form_widget(role) }}
                                         {% endif %}
 
-                                        {{ form_label(role, '', {label_attr: {class:"control-label"}})}}
+                                        {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
                                     </li>
                                 {% endif %}
                             {% endfor %}
