@@ -5,22 +5,31 @@ namespace Drafterbit\Bundle\SystemBundle\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\BrowserKit\Cookie;
 
-class PostControllerTest extends WebTestCase
+use Drafterbit\Test\Auth;
+
+class SystemControllerTest extends WebTestCase
 {
     public static $admin;
     protected $client;
+
+    private function getAuthorizedClient() {
+        if(!$this->client) {
+            $this->client = Auth::authorizeClient(static::createClient());
+        }
+
+        return $this->client;
+    }
  
     protected function setUp()
     {
-        $this->client = static::createClient();
-        static::$admin = $this->client->getContainer()->getParameter('admin');
+        $client = static::createClient();
+        static::$admin = $client->getContainer()->getParameter('admin');
     }
 
-    public function testAdminDashboardRedirect()
+    public function testUnauthorizedRedirect()
     {
-        $client = $this->client;
+        $client = static::createClient();
 
         $crawler = $client->request('GET', '/'.static::$admin);
 
@@ -31,7 +40,7 @@ class PostControllerTest extends WebTestCase
 
     public function testAdminAuth()
     {
-        $client = $this->createAuthorizedClient();
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/');
 
@@ -41,35 +50,67 @@ class PostControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * Create authorized client
-     *
-     * @link http://stackoverflow.com/questions/14957807/symfony2-tests-with-fosuserbundle/27223293#27223293
-     * @return Client
-     */
-    protected function createAuthorizedClient()
+    public function testDashboard()
     {
-        $client = $this->client;
-        $container = $client->getContainer();
+        $client = $this->getAuthorizedClient();
 
-        $session = $container->get('session');
-        /** @var $userManager \FOS\UserBundle\Doctrine\UserManager */
-        $userManager = $container->get('fos_user.user_manager');
-        /** @var $loginManager \FOS\UserBundle\Security\LoginManager */
-        $loginManager = $container->get('fos_user.security.login_manager');
-        $firewallName = $container->getParameter('fos_user.firewall_name');
+        $crawler = $client->request('GET', '/'.static::$admin.'/');
 
-        /// @todo create fixture for this
-        $testUser = $container->getParameter('test_user');
-        $user = $userManager->findUserBy(array('username' => $testUser));
-        $loginManager->loginUser($firewallName, $user);
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
+        $this->assertContains('Dashboard', $client->getResponse()->getContent());
+        $this->assertContains('Logout', $client->getResponse()->getContent());
+    }
 
-        // save the login token into the session and put it in a cookie
-        $container->get('session')->set('_security_' . $firewallName,
-            serialize($container->get('security.context')->getToken()));
-        $container->get('session')->save();
-        $client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+    public function testLogAction()
+    {
+        $client = $this->getAuthorizedClient();
 
-        return $client;
+        $crawler = $client->request('GET', '/'.static::$admin.'/system/log');
+
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
+        $this->assertContains('Log', $client->getResponse()->getContent());
+        $this->assertGreaterThan(0, $crawler->filter('button[name="action"]')->count() );
+        $this->assertEquals('Delete', $crawler->filter('button[value="delete"]')->text() );
+        $this->assertEquals('Clear', $crawler->filter('button[value="clear"]')->text() );
+    }
+
+    public function testLogCSRF()
+    {
+        $param = array('action' => 'delete');
+
+        // no _token parameter passed
+        $client = $this->getAuthorizedClient();
+
+        $crawler = $client->request(
+            'POST',
+            '/'.static::$admin.'/system/log',
+            $param,
+            array()
+        );
+        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+
+        $crawler = $client->request('GET', '/'.static::$admin.'/system/log');
+
+        $csrfToken = $crawler->filter('input[name="_token"]')->attr('value');
+        $param['_token'] = $csrfToken;
+
+        $crawler = $client->request(
+            'POST',
+            '/'.static::$admin.'/system/log',
+            $param,
+            array()
+        );
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function testCacheAction()
+    {
+        $client = $this->getAuthorizedClient();
+
+        $crawler = $client->request('GET', '/'.static::$admin.'/system/cache');
+
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
+        $this->assertContains('Cache', $client->getResponse()->getContent());
+        $this->assertEquals('Renew Cache', $crawler->filter('button[name="renew"]')->text());
     }
 }
