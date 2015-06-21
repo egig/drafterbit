@@ -65,6 +65,7 @@
                     }
 
                     hash = Qs.stringify(param);
+                    window.location.hash = hash;
                     drafTerbit.blog.dt.api().ajax.reload();
                 }
             );
