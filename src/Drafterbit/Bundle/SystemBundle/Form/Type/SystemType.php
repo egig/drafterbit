@@ -41,7 +41,9 @@ class SystemType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => false,
-            'mapped' => false
+            'mapped' => false,
+            'csrf_protection' => true,
+            'intention' => 'system_type'
         ]);
     }
 

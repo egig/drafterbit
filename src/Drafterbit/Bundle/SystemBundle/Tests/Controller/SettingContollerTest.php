@@ -33,9 +33,19 @@ class SettingControllerTest extends WebTestCase
 		$client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/setting/general');
-        
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertContains('General', $client->getResponse()->getContent());
+
+        // test error, no _token passed
+        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general');
+        $this->assertContains('error', $client->getResponse()->getContent());
+
+        // test valid
+        $container = $client->getContainer();
+        $token = $container->get('form.csrf_provider')->generateCsrfToken('system_type');
+        $param['system'] = ['_token' => $token ];
+        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general', $param);
+        $this->assertNotContains('error', $client->getResponse()->getContent());
 	}
 
 	public function testThemeAction()
