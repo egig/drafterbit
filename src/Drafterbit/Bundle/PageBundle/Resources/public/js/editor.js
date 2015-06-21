@@ -1,5 +1,27 @@
 (function($, CKEDITOR){
 
+
+    drafTerbit.pageEditor = {
+
+        titleSelector: 'input[name="page[title]"]',
+        slugSelector: 'input[name="page[slug]"]',
+
+        syncSlugAndTitle: function() {
+            $(this.titleSelector).on('keyup', this.syncSlugTitle);
+        },
+
+        desyncSlugAndTitle: function() {
+            $(this.titleSelector).off('keyup', this.syncSlugTitle);
+
+        },
+
+        syncSlugTitle: function(e) {
+            var val = $(drafTerbit.pageEditor.titleSelector).val()
+                .toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+            $(drafTerbit.pageEditor.slugSelector).val(val);
+        }
+    }
+
     var form = $('#page-edit-form'),
         spinner = $('i.spinner'),
         id = $('input[name="page[id]"]'),
@@ -53,7 +75,7 @@
             } else {
                 if (data.id) {
                     id.val(data.id);
-                
+                    drafTerbit.pageEditor.desyncSlugAndTitle();
                     $.notify(data.message, data.status);
                 }
             }

@@ -1,6 +1,26 @@
 (function($, tagOptions, tags, CKEDITOR){
 
-    // @todo sync title and slug input value
+
+    drafTerbit.blogPostEditor = {
+
+        titleSelector: 'input[name="blog_post[title]"]',
+        slugSelector: 'input[name="blog_post[slug]"]',
+
+        syncSlugAndTitle: function() {
+            $(this.titleSelector).on('keyup', this.syncSlugTitle);
+        },
+
+        desyncSlugAndTitle: function() {
+            $(this.titleSelector).off('keyup', this.syncSlugTitle);
+
+        },
+
+        syncSlugTitle: function(e) {
+            var val = $(drafTerbit.blogPostEditor.titleSelector).val()
+                .toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+            $(drafTerbit.blogPostEditor.slugSelector).val(val);
+        }
+    }
 
     var form = $('#post-edit-form'),
         spinner = $('i.spinner'),
@@ -100,10 +120,10 @@
                         id.val(data.id);
                     
                         $.notify(data.message, data.status);
+                        drafTerbit.blogPostEditor.desyncSlugAndTitle();
+                        closeText.text(__('Close'));
                     }
                 }
-
-                closeText.text('Close');
             }
         }
     );

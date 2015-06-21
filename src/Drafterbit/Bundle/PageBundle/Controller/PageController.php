@@ -168,6 +168,7 @@ class PageController extends Controller
         return [
             'form' => $form->createView(),
             'view_id' => 'page-edit',
+            'page_id' => $id,
             'action' =>  $this->generateUrl('drafterbit_page_save'),
             'page_title' => $this->get('translator')->trans($pageTitle)
         ];

@@ -37,7 +37,8 @@
     </div>
 </div>
 {% endblock %}
-
+    
+{# @todo clean ckeditor #}
 {% block javascripts %}
 
     {{parent()}}
@@ -70,4 +71,10 @@
         }
     });
     </script>
+
+    {% if page_id == 'new' %}
+    <script type="text/javascript">
+        drafTerbit.pageEditor.syncSlugAndTitle();
+    </script>
+    {% endif %}
 {% endblock %}

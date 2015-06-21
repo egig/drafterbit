@@ -140,4 +140,10 @@
         }
     });
   </script>
+
+  {% if post_id == 'new' %}
+  <script type="text/javascript">
+    drafTerbit.blogPostEditor.syncSlugAndTitle();
+  </script>
+  {% endif %}
 {% endblock %}
