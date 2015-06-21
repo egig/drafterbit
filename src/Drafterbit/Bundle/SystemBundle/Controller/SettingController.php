@@ -36,15 +36,17 @@ class SettingController extends Controller
         // @todo validation
         $notif['message'] = false;
         
-        if($form->isValid()) {
+        if($system = $request->request->get('system')) {
+            if($form->isValid()) {
 
-            $system = $request->request->get('system');
-            unset($system['Save']);
-            unset($system['_token']);
-            $this->get('system')->update($system);
-            $notif['message'] = ['text' => 'Setting Saved', 'status' => 'success'];
-        } else {
-            $notif['message'] = ['text' => $form->getErrorsAsString(), 'status'=> 'error'];
+                $system = $request->request->get('system');
+                unset($system['Save']);
+                unset($system['_token']);
+                $this->get('system')->update($system);
+                $notif['message'] = ['text' => 'Setting Saved', 'status' => 'success'];
+            } else {
+                $notif['message'] = ['text' => $form->getErrorsAsString(), 'status'=> 'error'];
+            }
         }
 
         $data = [
