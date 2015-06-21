@@ -4,9 +4,9 @@ $.extend(
         "bLengthChange": false,
         "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>" + "t" + "<'row'<'col-sm-6'i><'col-sm-6'p>>",
          "language": {
-            "zeroRecords": "Nothing found - sorry",
+            "zeroRecords": __("Nothing found - sorry"),
             "info": __("Showing _START_ to _END_ of _TOTAL_ entries"),
-            "infoEmpty": "No records available",
+            "infoEmpty": __("No records available"),
             "infoFiltered": "(filtered from _MAX_ total records)",
             paginate: {
                 next: __("Next"),
