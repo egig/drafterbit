@@ -28,16 +28,25 @@ class SettingController extends Controller
      */
     public function generalAction(Request $request)
     {
+        $form = $this->createForm(new SystemType($this->get('system'),
+            $this->get('drafterbit_system.frontpage_provider'))) ;
+
+        $form->handleRequest($request);
+
         // @todo validation
-        $notif['success'] = false;
-        if($system = $request->request->get('system')) {
+        $notif['message'] = false;
+        
+        if($form->isValid()) {
+
+            $system = $request->request->get('system');
             unset($system['Save']);
             unset($system['_token']);
             $this->get('system')->update($system);
-            $notif['success'] = ['message' => 'Setting Saved'];
+            $notif['message'] = ['text' => 'Setting Saved', 'status' => 'success'];
+        } else {
+            $notif['message'] = ['text' => $form->getErrorsAsString(), 'status'=> 'error'];
         }
 
-        $form = $this->createForm(new SystemType($this->get('system'), $this->get('drafterbit_system.frontpage_provider'))) ;
         $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
             'view_id' => 'system',

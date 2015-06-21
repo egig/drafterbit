@@ -63,9 +63,11 @@
 {% block javascripts %}
     {{parent()}}
 
-    {% if success %}
+    {% if message %}
         <script type="text/javascript">
-        $.notify('{{ success.message }}', 'success');
+        {% autoescape 'js' %}
+        $.notify('{{ message.text }}', '{{ message.status }}');
+        {% endautoescape %}
         </script>
     {% endif %}
 {% endblock %}
