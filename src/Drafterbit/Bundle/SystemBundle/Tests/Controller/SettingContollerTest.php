@@ -36,8 +36,9 @@ class SettingControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertContains('General', $client->getResponse()->getContent());
 
-        // test error, no _token passed
-        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general');
+        // test error
+        $param['system'] = ['_token' => 'foo' ];
+        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general', $param);
         $this->assertContains('error', $client->getResponse()->getContent());
 
         // test valid
