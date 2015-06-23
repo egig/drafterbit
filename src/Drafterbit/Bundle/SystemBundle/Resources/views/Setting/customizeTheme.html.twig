@@ -36,14 +36,14 @@
         </div>
 
         <div id="dt-iframe-container">
-            <iframe name="preview" width="100%" height="100%" src="{{ url('home', {theme:theme, _token:csrf_token('customize_theme')}) }}" sandbox="allow-same-origin allow-scripts"> </iframe>
+            <iframe name="preview" width="100%" height="100%" src="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}" sandbox="allow-same-origin allow-scripts"> </iframe>
         </div>
         <div id="customizer">
             <div class="col-container">
                 <div class="col">
                     <form action="{{ url('drafterbit_setting_theme_save') }}" method="POST" id="customizer-form" class="customizer-ajax-form">
                     <input type="hidden" name="csrf" value="{{ csrf_token('customize_theme') }}"/>
-                    <input type="hidden" name="url" value="{{ url('home', {theme:theme, _token:csrf_token('customize_theme')}) }}"/>
+                    <input type="hidden" name="url" value="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}"/>
                     <input type="hidden" name="theme" value="{{ theme }}"/>
                     <div class="section">
                         <a href="javascript:close();" class="btn btn-default btn-xs">{{ __('Close') }}</a>

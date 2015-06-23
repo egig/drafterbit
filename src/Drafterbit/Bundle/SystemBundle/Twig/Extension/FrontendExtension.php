@@ -111,11 +111,17 @@ class FrontendExtension extends \Twig_Extension
         return $request->getSchemeAndHttpHost().$request->getBasePath().'/'.$path;
     }
 
-    public function baseUrl($path = null)
+    public function baseUrl($path = null, $param = [])
     {
         $path = trim($path, '/');
+
+        $qs = null;
+        if($param) {
+            $qs = '?'.http_build_query($param);
+        }
+
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        return $request->getUriForPath('/'.$path);
+        return $request->getUriForPath('/'.$path.$qs);
     }
 
     /**
