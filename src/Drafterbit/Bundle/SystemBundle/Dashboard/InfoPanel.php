@@ -7,14 +7,12 @@ use Drafterbit\System\Dashboard\Panel;
 class InfoPanel extends Panel {
 
     public function getView()
-    {
-        
-        $request = $this->kernel->getContainer()->get('request_stack')->getCurrentRequest();
-
+    {        
+        $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $info['Time'] = date('H:i:s');
         $info['OS'] = $this->getOs();
-        $info['Theme'] = $this->kernel->getContainer()->getParameter('theme');
+        $info['Theme'] = $this->container->getParameter('theme');
         $info['PHP'] = phpversion();
         $info['Server'] = $request->server->get('SERVER_SOFTWARE');
 
@@ -58,7 +56,7 @@ class InfoPanel extends Panel {
         ];
 
         foreach ($os_array as $regex => $value) {
-            $request = $this->kernel->getContainer()->get('request_stack')->getCurrentRequest();
+            $request = $this->container->get('request_stack')->getCurrentRequest();
             if (preg_match($regex, $request->server->get('HTTP_USER_AGENT'))) {
                 $os_platform = $value;
             }

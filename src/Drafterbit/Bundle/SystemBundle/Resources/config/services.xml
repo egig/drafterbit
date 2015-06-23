@@ -94,12 +94,12 @@
         <service id="dashboard" alias="drafterbit_system.dashboard_manager"/>
 
         <service id="drafterbit_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\Dashboard\LogPanel">
-            <argument type="service" id="kernel" />
+            <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
 
         <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\Dashboard\InfoPanel">
-            <argument type="service" id="kernel" />
+            <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
 

@@ -185,10 +185,6 @@ class FrontendController extends BaseFrontendController
         return ['post'  => $post];
     }
     
-    /**
-     * @Route("/blog/comment/submit", name="drafterbit_blog_comment_submit")
-     * @Method("POST")
-     */
     public function commentSubmitAction(Request $request)
     {
         $referer = $request->server->get('HTTP_REFERER');

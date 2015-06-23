@@ -40,5 +40,10 @@
             <argument type="service" id="database_connection" />
             <tag name="drafterbit_system.search.query_provider" />
         </service>
+
+        <service id="drafterbit_blog.dashboard.panel.recent_comment" class="Drafterbit\Bundle\BlogBundle\Dashboard\RecentCommentPanel">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.dashboard.panel" />
+        </service>
     </services>
 </container>

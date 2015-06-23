@@ -8,7 +8,7 @@ class LogPanel extends Panel {
 
     public function getView()
     {
-        $em = $this->kernel->getContainer()->get('doctrine')->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $logEntities = $em->getRepository('DrafterbitSystemBundle:Log')
             ->createQueryBuilder('l')
             ->OrderBy('l.time', 'desc')
@@ -19,7 +19,7 @@ class LogPanel extends Panel {
         $logs = array_map(function($log){
             return [
                 'time' => (new \DateTime())->setTimestamp($log->getTime()),
-                'activity' => $this->kernel->getContainer()
+                'activity' => $this->container
                     ->get('drafterbit_system.log.display_formatter')->format($log->getMessage(), $log->getContext())
             ];
         }, $logEntities);

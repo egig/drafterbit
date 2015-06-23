@@ -2,8 +2,8 @@
 
 namespace Drafterbit\System\Widget;
 
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\DependencyInjection\Container;
 use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
 
 class WidgetFormBuilder
@@ -48,7 +48,7 @@ class WidgetFormBuilder
                 }
             }
 
-               $html .= '<div class="clearfix" style="margin-top:10px;">';
+            $html .= '<div class="clearfix" style="margin-top:10px;">';
             $html .= $helper->widget($form['Save']);
             $html .= '<a href="javascript:;" data-id="'.$id.'" class="btn btn-xs dt-widget-remover">Remove</a>';
             $html .= '</div>';

@@ -2,16 +2,16 @@
 
 namespace Drafterbit\System\Dashboard;
 
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\DependencyInjection\Container;
 
 abstract class Panel implements PanelInterface {
 
-    protected $kernel;
+    protected $container;
     protected $position = 'left';
 
-    public function __construct(Kernel $kernel)
+    public function __construct(Container $container)
     {
-        $this->kernel = $kernel;
+        $this->container = $container;
     }
 
     abstract public function getView();
@@ -30,6 +30,6 @@ abstract class Panel implements PanelInterface {
 
     public function renderView($view, array $parameters = array())
     {
-        return $this->kernel->getContainer()->get('templating')->render($view, $parameters);
+        return $this->container->get('templating')->render($view, $parameters);
     }
 }

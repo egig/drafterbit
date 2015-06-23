@@ -46,6 +46,10 @@ class Blog extends Frontpage
             new Route('/feed.xml', ['_controller' => 'DrafterbitBlogBundle:Post:feed'])
         );
 
+        $routes->add('drafterbit_blog_comment_submit',
+            new Route('/comment/submit', ['_controller' => 'DrafterbitBlogBundle:Frontend:commentSubmit'], ['methods' => 'post'])
+        );
+
         return $routes;
     }
 
