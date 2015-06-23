@@ -5,29 +5,26 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\System\FrontPage\FrontPageProvider;
 
 class FrontpageType extends AbstractType
 {
     private $frontpageProvider;
+    private $container;
 
-    public function __construct(FrontPageProvider $frontpageProvider)
+    public function __construct(ContainerInterface $container)
     {
-        $this->frontpageProvider = $frontpageProvider;
+        $this->frontpageProvider = $container->get('drafterbit_system.frontpage_provider');
+        $this->container = $container;
     }
-
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $options = [];
+        $options = $this->getPageOptions();
 
         foreach ($this->frontpageProvider->all() as $name => $frontapage) {
-
-            if($frontapage->getType() == 'cascade' ) {
-                $options[$name] = $frontapage->getOptions();
-            } else {
-                $options[$name] = $frontapage->getLabel();
-            }
+            $options = array_merge($options, $frontapage->getOptions());
         }
 
         $resolver->setDefaults(array(
@@ -43,5 +40,20 @@ class FrontpageType extends AbstractType
     public function getName()
     {
         return 'frontapage';
+    }
+
+    public function getPageOptions()
+    {
+        $repo = $this->container->get('doctrine')
+            ->getManager()->getRepository('DrafterbitPageBundle:Page');
+
+        $pages = $repo->findAll();
+
+        $options = [];
+        foreach ($pages as $page) {
+            $options[$page->getSlug()] = $page->getTitle();
+        }
+
+        return $options;
     }
 }

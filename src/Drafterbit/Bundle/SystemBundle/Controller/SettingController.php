@@ -28,8 +28,7 @@ class SettingController extends Controller
      */
     public function generalAction(Request $request)
     {
-        $form = $this->createForm(new SystemType($this->get('system'),
-            $this->get('drafterbit_system.frontpage_provider'))) ;
+        $form = $this->createForm(new SystemType($this->container)) ;
 
         $form->handleRequest($request);
 

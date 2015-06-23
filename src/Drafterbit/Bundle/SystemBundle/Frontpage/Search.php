@@ -4,29 +4,24 @@ namespace Drafterbit\Bundle\SystemBundle\Frontpage;
 
 use Drafterbit\System\FrontPage\FrontPageInterface;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 class Search implements FrontPageInterface
 {
-    public function getName()
+    public function getRoutePrefix()
     {
         return 'search';
     }
 
-    public function resolve($key){
-        return new Route('/', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
-    }
-
-    public function getType() {
-        return 'standard';
-    }
-
-    public function getRoute()
+    public function getRoutes()
     {
-        return new Route('/search', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']);
+        $routes = new RouteCollection;
+        $routes->add('drafterbit_system_search', new Route('', ['_controller' => 'DrafterbitSystemBundle:Frontend:search']));
+        return $routes;
     }
 
-    public function getLabel()
+    public function getOptions()
     {
-        return 'Search';
+        return ['search' => 'Search'];
     }
 }

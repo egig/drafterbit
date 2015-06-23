@@ -18,7 +18,7 @@
    }
 
   drafTerbit = {
-    baseUrl: "{{ url('home') }}",
+    baseUrl: "{{ base_url() }}",
     adminUrl: "{{ url('drafterbit_system_dashboard') }}",
     contentUrl: "{{ app.request.getBasePath~'/'~upload_dir~'/' }}",
     locale: "{{ locale }}",

@@ -8,28 +8,18 @@ use Symfony\Component\Routing\RouteCollection;
 
 class Blog extends Frontpage
 {
-    public function getName()
+    public function getRoutePrefix()
     {
         return 'blog';
     }
 
-    public function resolve($key){
-
-        return new Route('/', ['_controller' => 'DrafterbitBlogBundle:Frontend:index']);
-    }
-
-    public function getType() {
-        return 'standard';
-    }
-
-    public function getRoute()
-    {
-        return new Route('/blog', ['_controller' => 'DrafterbitBlogBundle:Frontend:index']);
-    }
-
-    public function getRouteCollection()
+    public function getRoutes()
     {
         $routes = new RouteCollection;
+
+        $routes->add('drafterbit_blog_category_front_home',
+            new Route('/', ['_controller' => 'DrafterbitBlogBundle:Frontend:index'])
+        );
 
         $routes->add('drafterbit_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
             ['_controller' => 'DrafterbitBlogBundle:Frontend:view'],
@@ -56,15 +46,11 @@ class Blog extends Frontpage
             new Route('/feed.xml', ['_controller' => 'DrafterbitBlogBundle:Post:feed'])
         );
 
-        if('blog' != $this->container->get('system')->get('frontpage')) {
-            $routes->addPrefix('/blog');
-        }
-
         return $routes;
     }
 
-    public function getLabel()
+    public function getOptions()
     {
-        return 'Blog';
+        return ['blog' => 'Blog'];
     }
 }

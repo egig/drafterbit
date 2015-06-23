@@ -6,11 +6,24 @@ use Symfony\Component\Routing\Route;
 
 interface FrontPageInterface
 {
-    public function getName();
+	/**
+	 * Route prefix will be used if its not used as front page
+	 *
+	 * @return string
+	 */
+	public function getRoutePrefix();
 
-    public function resolve($key);
+	/**
+	 * Get app oute collection
+	 *
+	 * @return RouteCollection
+	 */
+	public function getRoutes();
 
-    public function getType();
-
-    public function  getRoute();
+	/**
+	 * Get option for frontpage setting
+	 *
+	 * @return array
+	 */
+	public function getOptions();
 }

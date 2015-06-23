@@ -28,42 +28,43 @@ class FrontendLoader implements LoaderInterface
 
         $routes = new RouteCollection();
 
-        $frontp = $this->container->get('system')->get('frontpage');
+        $frontPageConfig = $this->container->get('system')->get('frontpage');
 
-        $frontpageProvider = $this->container->get('drafterbit_system.frontpage_provider');
+        $frontPageProvider = $this->container->get('drafterbit_system.frontpage_provider');
 
         $reservedBaseUrl = [$this->container->getParameter('admin')];
         
-        foreach ($frontpageProvider->all() as $name => $frontpage) {
-            $reservedBaseUrl[] = $name;
+        foreach ($frontPageProvider->all() as $prefix => $frontPage) {
 
-            if(method_exists($frontpage, 'getRouteCollection')) {
-                $routes->addCollection($frontpage->getRouteCollection());
-            }
+            $frontRoutes = $frontPage->getRoutes();
             
-            if($name !== $frontp) {
-                $route = $frontpage->getRoute();
-                $routes->add($name, $route);
+            if($prefix !== $frontPageConfig) {
+                $frontRoutes->addPrefix($frontPage->getRoutePrefix());
+                $reservedBaseUrl[] = $prefix;
             }
+
+            $routes->addCollection($frontRoutes);
         }
 
-        $route = $frontpageProvider->resolve($frontp);
+        $defaults = array('_controller' => 'DrafterbitPageBundle:Frontend:view');
 
-        $routes->add('home', $route);
-
-        // page or others
-        $defaults2 = array(
-            '_controller' => 'DrafterbitPageBundle:Frontend:view',
-        );
+        // check if configured frontpage is not an app
+        if(!array_key_exists($frontPageConfig, $frontPageProvider->all()))
+        {
+            // its page
+            $defaults['slug'] = $frontp;
+            $routes->add('_home', new Route('/', $defaults));
+        }
 
         $reservedBaseUrl = implode('|', $reservedBaseUrl);
 
+        // @link http://stackoverflow.com/questions/25496704/regex-match-slug-except-particular-start-words
+        // @prototype  'slug' => "^(?!(?:backend|blog)(?:/|$)).*$"
         $requirements = array(
-            // @prototype  'slug' => "^(?!(?:backend|blog)(?:/|$)).*$"
             'slug' => "^(?!(?:%admin%|".$reservedBaseUrl."|)(?:/|$)).*$"
         );
 
-        $route2 = new Route('/{slug}', $defaults2, $requirements);
+        $route2 = new Route('/{slug}', $defaults, $requirements);
         $routes->add('misc', $route2);
 
         return $routes;

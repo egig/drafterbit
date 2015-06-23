@@ -14,13 +14,9 @@ abstract class Frontpage implements FrontPageInterface
         $this->container = $container;
     }
 
-    abstract public function getName();
+    abstract public function getRoutePrefix();
 
-    abstract public function resolve($key);
+    abstract public function getRoutes();
 
-    abstract public function getType();
-
-    abstract public function getRoute();
-
-    abstract public function getLabel();
+    abstract public function getOptions();
 }

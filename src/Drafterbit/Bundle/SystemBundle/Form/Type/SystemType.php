@@ -7,16 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Drafterbit\System\FrontPage\FrontPageProvider;
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SystemType extends AbstractType
 {
-    protected $systemModel;
-    protected $frontpageProvider;
+    protected $container;
 
-    public function __construct(SystemModel $systemModel, FrontPageProvider $frontpageProvider)
+    public function __construct(ContainerInterface $container)
     {
-        $this->systemModel = $systemModel;
-        $this->frontpageProvider = $frontpageProvider;
+        $this->container = $container;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -24,7 +23,7 @@ class SystemType extends AbstractType
         $builder
             ->add('sitename', 'text', ['data' => $this->data('sitename')])
             ->add('tagline', 'text', ['data' => $this->data('tagline')])
-            ->add('frontpage', new FrontpageType($this->frontpageProvider), [
+            ->add('frontpage', new FrontpageType($this->container), [
                 'data' => $this->data('frontpage')
             ])
             ->add('email', null, ['data' => $this->data('email')])
@@ -54,6 +53,6 @@ class SystemType extends AbstractType
 
     private function data($key)
     {
-        return  $this->systemModel->get($key);
+        return  $this->container->get('system')->get($key);
     }
 }
