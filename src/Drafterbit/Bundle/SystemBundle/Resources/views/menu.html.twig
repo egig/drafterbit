@@ -8,7 +8,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
         <ul class="nav nav-stacked nav-stacked-left" role="tablist">
             {% for menu in menus %}
                 <li role="presentation"><a href="#{{ menu.displayText }}" aria-controls="{{ menu.displayText }}" role="tab" data-toggle="tab">{{ menu.displayText }}</a></li>
@@ -16,7 +16,7 @@
               <li><a href="#add-menu" data-toggle="tab" id="menu-adder"><i class="fa fa-plus"></i></a></li>
         </ul>
         </div>
-        <div class="col-md-10 tab-content">
+        <div class="col-md-9 tab-content">
             {% for menu in menus %}
                 <div role="tabpanel" class="tab-pane" id="{{ menu.displayText }}">
                   <div class="clearfix menu-setting">
