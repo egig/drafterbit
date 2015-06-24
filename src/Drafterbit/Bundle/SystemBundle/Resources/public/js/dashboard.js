@@ -33,21 +33,4 @@
          }
      );
 
-    $('.panel-manager-toggle').on('click', function(e){
-        e.preventDefault();
-        $('.panel-manager').slideToggle(100)
-    });
-
-    $('.panel-toggler').change(function(e){
-        var panel = $(e.target).data('panel');
-
-        $('#dashboard-panel-'+panel).toggle();
-
-        $.ajax({
-            type: 'POST',
-            data: {panel:panel},
-            url: drafTerbit.adminUrl+'system/dashboard/toggle_panel'
-        });
-    });
-
 })(jQuery);
