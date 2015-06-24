@@ -44,6 +44,12 @@ code,
   box-shadow: none;
 }
 
+ul.dropdown-menu {
+  border-radius: 2px;
+  box-shadow: none;
+
+}
+
 .nav-tabs > li > a {
   border-radius: 2px 2px 0 0;
 }
@@ -63,7 +69,7 @@ code,
   .nav-tabs-justified > li > a {
     border-radius: 2px 2px 0 0;
   }
-}
+} 
 
 @media (min-width: 768px) {
    {
@@ -100,16 +106,12 @@ code,
 }
 
 /* override bootstrap navbar syle */
-.navbar {
-    min-height: 30px;
-}
-
-    .navbar-top-links li {
+    .nav-pills li {
       margin: 0px !important;
       padding: 0px !important;
   }
 
-    .navbar-top-links li a {
+    .nav-pills li a {
         min-height: 30px;
         padding: 5px 10px;
     }

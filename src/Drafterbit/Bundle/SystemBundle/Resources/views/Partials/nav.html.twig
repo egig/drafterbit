@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+<nav class="drafterbit-navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
     <div class="container nav-container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -11,7 +11,7 @@
             </div>
             <!-- /.navbar-header -->
             <div class="dt-off-canvas">
-                <ul class="nav navbar-top-links navbar-left">
+                <ul class="nav nav-pills navbar-left">
                     {% for n,nav in system.navigations %}
                         {% if nav.children is defined and nav.children|length %}
                             <li class="dropdown">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
 
-            <ul class="nav navbar-top-links navbar-right user-preferences">
+            <ul class="nav nav-pills navbar-right user-preferences">
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">

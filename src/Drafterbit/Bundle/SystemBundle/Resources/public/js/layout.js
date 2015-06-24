@@ -31,7 +31,7 @@ $(function(){
         handleStickyToolbar: function(){
             // stick sticky-toolbar
             if($('#sticky-toolbar') && typeof $.fn.stick_in_parent != 'undefined') {
-                $('#sticky-toolbar').stick_in_parent({offset_top:30});
+                $('#sticky-toolbar').stick_in_parent({offset_top:50});
             }
         },
 
@@ -52,7 +52,7 @@ $(function(){
         }
     }
 
-    layoutHandler.handleScreenSize();
+    //layoutHandler.handleScreenSize();
     layoutHandler.handleNavbar();
     layoutHandler.handleStickyToolbar();
     layoutHandler.handleFooter();

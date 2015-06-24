@@ -17,7 +17,7 @@ body {
 .page-wrapper {
     padding: 0 15px;
     background-color: #fff;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .content {
@@ -89,54 +89,20 @@ body {
 /* ------------------------------- */
 /* Top Right Navigation Dropdown Styles */
 
- .navbar-top-links li {
-    display: inline-block;
+.drafterbit-navbar {
+    color: #555;
+    height: 50px;
+    background-color: #F8F8F8;
+    border-bottom: 1px solid #e1e1e1;
 }
 
-.navbar-top-links li:last-child {
-    margin-right: 15px;
+.drafterbit-navbar li a,
+.drafterbit-navbar a {
+    color: inherit;
 }
 
-.navbar-top-links .dropdown-menu li {
-    display: block;
-}
-
-.navbar-top-links .dropdown-menu li:last-child {
-    margin-right: 0;
-}
-
-.navbar-top-links .dropdown-menu li a {
-    padding: 3px 20px;
-    min-height: 0;
-}
-
-.navbar-top-links .dropdown-menu li a div {
-    white-space: normal;
-}
-
-.navbar-top-links .dropdown-messages,
-.navbar-top-links .dropdown-tasks,
-.navbar-top-links .dropdown-alerts {
-    width: 310px;
-    min-width: 0;
-}
-
-.navbar-top-links .dropdown-messages {
-    margin-left: 5px;
-}
-
-.navbar-top-links .dropdown-tasks {
-    margin-left: -59px;
-}
-
-.navbar-top-links .dropdown-alerts {
-    margin-left: -123px;
-}
-
-.dropdown-menu-right,
-.navbar-top-links .dropdown-user {
-    right: 0;
-    left: auto;
+.nav-container {
+    padding: 10px
 }
 
 
