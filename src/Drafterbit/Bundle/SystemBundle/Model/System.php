@@ -21,11 +21,37 @@ class System
     protected $databaseConnection;
 
     /**
+     * Resolved data;
+     *
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * Constructor
      */
     public function __construct(Connection $connection)
     {
         $this->databaseConnection =  $connection;
+        $this->initData();
+    }
+
+    private function initData()
+    {
+        $rows = $this->data = $this->databaseConnection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from($this->systemTable, $this->systemTable)
+            ->execute()
+            ->fetchAll();
+
+        $data = [];
+
+        foreach ($rows as $row) {
+            $data[$row['key']] = $row['value'];
+        }
+
+        return $this->data = $data;
     }
 
     /**
@@ -33,10 +59,7 @@ class System
      */
     public function get($key, $default = null)
     {
-        $stmt = $this->getStatementForARow($key);
-        $row = $stmt->fetch();
-
-        return isset($row['value']) ? $row['value'] : $default;
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 
     /**
