@@ -45,5 +45,11 @@
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
+
+        <!-- setting field -->
+        <service id="drafterbit_blog.setting.field.blog" class="Drafterbit\Bundle\BlogBundle\Setting\BlogField">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.setting.field" />
+        </service>
     </services>
 </container>

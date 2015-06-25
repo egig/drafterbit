@@ -20,7 +20,6 @@ class System
      */
     protected $databaseConnection;
 
-
     /**
      * Constructor
      */

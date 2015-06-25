@@ -32,8 +32,8 @@ class SystemType extends AbstractType
                 'choices' => array_combine(timezone_identifiers_list(), timezone_identifiers_list())
             ])
             ->add('date_format', null, ['data' => $this->data('date_format')])
-            ->add('time_format', null, ['data' => $this->data('time_format')])
-            ->add('Save', 'submit');
+            ->add('time_format', null, ['data' => $this->data('time_format')]);
+            //->add('Save', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

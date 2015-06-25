@@ -140,5 +140,13 @@
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
 
+        <!-- setting -->
+        <service id="drafterbit_system.setting.field_manager" class="Drafterbit\System\Setting\FieldManager"/>
+
+        <service id="drafterbit_system.setting.field.general" class="Drafterbit\Bundle\SystemBundle\Setting\GeneralField">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.setting.field" />
+        </service>
+
     </services>
 </container>

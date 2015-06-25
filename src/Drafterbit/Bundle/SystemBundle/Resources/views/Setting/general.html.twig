@@ -1,67 +1,41 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/setting/general.css') }}">
+{% endblock %}
+
 {% block action %}
-    {{form_widget(form.Save, {label: __("Save Setting"), attr:{class:"btn btn-sm btn-success"}})}}
+    {{ form_widget(form.Save, {label: __("Save Setting"), attr:{class:"btn btn-sm btn-success"}}) }}
 {% endblock %}
 
 {% block form %}
-<div role="tabpanel">
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#general-setting" aria-controls="general" role="tab" data-toggle="tab">{{ __('General') }}</a></li>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content" style="padding:20px 10px;">
-    <div role="tabpanel" class="tab-pane active" id="general-setting">
-      <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form_label(form.sitename, __('Sitename'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.sitename, {attr: {class:"form-control"}}) }}
-             </div>
-             <div class="form-group">
-                {{ form_label(form.tagline, __('Tagline'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.tagline, {attr: {class:"form-control"}}) }}
-                 <span class="help-block">{{ __('In a few words, explain what this site is about') }}.</span>
-             </div>
-             <div class="form-group">
-                {{ form_label(form.frontpage, __('Frontpage'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.frontpage, {attr: {class:"form-control"}}) }}
-             </div>
-            <div class="form-group">
-                {{ form_label(form.email, __('Email'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.email, {attr: {class:"form-control"}}) }}
-                <span class="help-block">{{ __('This address is used for admin purposes, like new user notification') }}.</span>
-             </div>
-        </div>
-        <div class="col-md-4">
-             <div class="form-group">
-                {{ form_label(form.timezone, __('Timezone'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.timezone, {attr: {class:"form-control"}}) }}
-             </div>
-             {# @todo create choices for this  #}
-             <div class="form-group">
-                {{ form_label(form.date_format, __('Date Format'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.date_format, {attr: {class:"form-control"}}) }}
-             </div>
-             <div class="form-group">
-                {{ form_label(form.time_format, __('Time Format'), {attr: {class:"control-label" }}) }}
-                {{ form_widget(form.time_format, {attr: {class:"form-control"}}) }}
-             </div>
-        </div>
-      </div>
-
+<div class="row">
+    <div class="col-md-3">
+        <ul class="nav nav-stacked nav-stacked-left" role="tablist">
+            {% for name in field_names %}
+                <li role="presentation"><a href="#setting-{{ name }}" aria-controls="setting-{{ name }}" role="tab" data-toggle="tab">{{ name|capitalize }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
+    <div class="col-md-9 tab-content">
+        {% for field in form %}
+            <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
+                {% for f in field %}
+                    <div class="form-group">
+                        {{ form_label(f) }}
+                        {{ form_widget(f, {attr: {class:"form-control"}}) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
-  </div>
-
 </div>
 {% endblock %}
-
+    
 {% block javascripts %}
     {{parent()}}
+    <script src="{{ asset('@DrafterbitSystemBundle/js/setting/general.js') }}"></script>
 
     {% if message %}
         <script type="text/javascript">

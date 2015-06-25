@@ -31,22 +31,21 @@
       <div class="noscript">Please use javascript-supported browser.</div>
     </noscript>
         {% include 'DrafterbitSystemBundle:Partials:nav.html.twig' %}
-            <div class="page-wrapper">
-                <div class="container row-header-container">
-                    <div class="row row-header">
-                      <div class="col-lg-12" style="margin-bottom:10px;">
-
-                          {% block page_title %}
-                              {# we'll unescape title so we can put a link within it #}
-                              {% autoescape false %}
-                                  <h2 style="display:inline-block">{{ page_title }}</h2>
-                              {% endautoescape %}
-                          {% endblock %}
-                      </div>
-                    </div>
+        <div class="page-wrapper">
+            <div class="container row-header-container">
+                <div class="row row-header">
+                  <div class="col-lg-12" style="margin-bottom:10px;">
+                      {% block page_title %}
+                          {# e'll unescape title so we can put a link within it #}
+                          {% autoescape false %}
+                              <h2 style="display:inline-block">{{ page_title }}</h2>
+                          {% endautoescape %}
+                      {% endblock %}
+                  </div>
                 </div>
-                {% block content %} {% endblock %}
             </div>
+            {% block content %} {% endblock %}
+        </div>
         {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
 
         {% block javascripts %}

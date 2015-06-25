@@ -11,6 +11,7 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\FrontendTemplati
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\DashboardPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WidgetPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProviderPass;
+use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SettingFieldPass;
 
 class DrafterbitSystemBundle extends Bundle
 {
@@ -24,5 +25,6 @@ class DrafterbitSystemBundle extends Bundle
         $container->addCompilerPass(new DashboardPass());
         $container->addCompilerPass(new WidgetPass());
         $container->addCompilerPass(new SearchQueryProviderPass());
+        $container->addCompilerPass(new SettingFieldPass());
     }
 }

@@ -35,8 +35,8 @@ class SettingType extends AbstractType
                     1 => 'Always'
                 ],
                 'data' => $this->data('blog.comment_moderation')]
-            )
-            ->add('Save', 'submit');
+            );
+            //->add('Save', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -49,7 +49,7 @@ class SettingType extends AbstractType
 
     public function getName()
     {
-        return 'blog_setting';
+        return 'blog';
     }
 
     private function data($key)

@@ -29,12 +29,28 @@ class SettingController extends Controller
      */
     public function generalAction(Request $request)
     {
-        $form = $this->createForm(new SystemType($this->container)) ;
+        $fields = $this->get('drafterbit_system.setting.field_manager')->getAll();
+
+        $mainForm = $this->get('form.factory')->createNamedBuilder('setting')
+            ->add('Save', 'submit')
+            ->getForm();
+
+        $fieldNames = [];
+        foreach ($fields as $name => $form) {
+            $fieldNames[] = $form->getConfig()->getName();
+            $form->getConfig()->setAutoInitialize(false);
+            $mainForm->add($form);
+        }
+
+        unset($fieldNames[array_search('system', $fieldNames)]);
+        array_unshift($fieldNames, 'system');
+
+        $notif['message'] = false;
+        /*$form = $this->createForm(new SystemType($this->container)) ;
 
         $form->handleRequest($request);
 
         // @todo validation
-        $notif['message'] = false;
         
         if($system = $request->request->get('system')) {
             if($form->isValid()) {
@@ -47,13 +63,14 @@ class SettingController extends Controller
             } else {
                 $notif['message'] = ['text' => $form->getErrorsAsString(), 'status'=> 'error'];
             }
-        }
+        }*/
 
         $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
             'view_id' => 'system',
             'action' => $this->generateUrl('drafterbit_system_setting_general'),
-            'form' => $form->createView()
+            'form' => $mainForm->createView(),
+            'field_names' => $fieldNames
         ];
 
         return array_merge($data, $notif);
