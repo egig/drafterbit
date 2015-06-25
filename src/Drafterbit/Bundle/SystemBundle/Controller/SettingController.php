@@ -60,7 +60,7 @@ class SettingController extends Controller
                 unset($setting['Save']);
                 unset($setting['_token']);
 
-                $this->get('system')->update($setting);
+                $this->get('system')->saveSetting($setting);
 
                 $response = ['message' => $this->get('translator')->trans('Setting Saved'), 'status' => 'success'];
                 return new JsonResponse($response);

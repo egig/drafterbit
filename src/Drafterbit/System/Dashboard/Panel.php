@@ -18,6 +18,11 @@ abstract class Panel implements PanelInterface {
 
     abstract public function getName();
 
+    public function getTitle()
+    {
+        return ucwords(str_replace('_', ' ', $this->getName()));
+    }
+
     public function getPosition()
     {
         return $this->position;

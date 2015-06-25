@@ -46,12 +46,17 @@ class System
             ->fetchAll();
 
         $data = [];
+        $merged = [];
 
         foreach ($rows as $row) {
-            $data[$row['key']] = $row['value'];
+            static::deNotated($data[$row['key']], $row['key'], $row['value']);
         }
 
-        return $this->data = $data;
+        foreach (array_values($data) as $value) {
+            $merged = array_merge_recursive($merged, $value);
+        }
+
+        return $this->data = $merged;
     }
 
     /**
@@ -59,11 +64,10 @@ class System
      */
     public function get($key, $default = null)
     {
-        return isset($this->data[$key]) ? $this->data[$key] : $default;
+        return static::getNotated($this->data, $key, $default);
     }
 
     /**
-     * @todo cache this
      */
     private function getStatementForARow($key)
     {
@@ -85,12 +89,18 @@ class System
     public function update($system)
     {
         foreach ($system as $key => $value) {
-            if($this->isExists($key)) {
-                $this->doUpdate($key, $value);
-            } else {
-                $this->insert($key, $value);
-            }
+            $this->databaseConnection->delete($this->systemTable, ['`key`' => $key]);
+            $this->insert($key, $value);
         }
+    }
+
+    public function saveSetting($system)
+    {
+        $this->databaseConnection->exec('DELETE FROM '.$this->systemTable);
+
+        foreach ($system as $key => $value) {
+            $this->insert($key, $value);
+        }   
     }
 
     /**
@@ -113,5 +123,42 @@ class System
     public function insert($key, $value)
     {
         $this->databaseConnection->insert($this->systemTable, ['`value`' => $value, '`key`' => $key]);
+    }
+
+    public static function deNotated(&$arr, $path, $value) {
+        $keys = explode('.', $path);
+
+        while ($key = array_shift($keys)) {
+            $arr = &$arr[$key];
+        }
+
+        $arr = $value;
+    }
+
+    /**
+     * Get an item from an array using "dot" notation.
+     *
+     * @param  array   $array
+     * @param  string  $key
+     * @param  mixed   $default
+     * @return mixed
+     */
+    public static function getNotated($array, $key, $default = null)
+    {
+        if (is_null($key)) return $array;
+
+        if (isset($array[$key])) return $array[$key];
+
+        foreach (explode('.', $key) as $segment)
+        {
+            if ( ! is_array($array) || ! array_key_exists($segment, $array))
+            {
+                return $default;
+            }
+
+            $array = $array[$segment];
+        }
+
+        return $array;
     }
 }
