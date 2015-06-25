@@ -21,19 +21,18 @@ class SystemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sitename', 'text', ['data' => $this->data('sitename')])
-            ->add('tagline', 'text', ['data' => $this->data('tagline')])
+            ->add('site_name', 'text', ['data' => $this->data('system.site_name')])
+            ->add('site_description', 'text', ['data' => $this->data('system.site_description')])
             ->add('frontpage', new FrontpageType($this->container), [
-                'data' => $this->data('frontpage')
+                'data' => $this->data('system.frontpage')
             ])
-            ->add('email', null, ['data' => $this->data('email')])
+            ->add('email', null, ['data' => $this->data('system.email')])
             ->add('timezone', 'choice', [
-                'data' => $this->data('timezone'),
+                'data' => $this->data('system.timezone'),
                 'choices' => array_combine(timezone_identifiers_list(), timezone_identifiers_list())
             ])
-            ->add('date_format', null, ['data' => $this->data('date_format')])
-            ->add('time_format', null, ['data' => $this->data('time_format')]);
-            //->add('Save', 'submit');
+            ->add('date_format', null, ['data' => $this->data('system.date_format')])
+            ->add('time_format', null, ['data' => $this->data('system.time_format')]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

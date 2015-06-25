@@ -46,28 +46,30 @@ class SettingController extends Controller
         array_unshift($fieldNames, 'system');
 
         $notif['message'] = false;
-        /*$form = $this->createForm(new SystemType($this->container)) ;
+            
+        if($request->isXmlHttpRequest()) {
 
-        $form->handleRequest($request);
+            $mainForm->handleRequest($request);
 
-        // @todo validation
-        
-        if($system = $request->request->get('system')) {
             if($form->isValid()) {
 
-                $system = $request->request->get('system');
-                unset($system['Save']);
-                unset($system['_token']);
-                $this->get('system')->update($system);
-                $notif['message'] = ['text' => 'Setting Saved', 'status' => 'success'];
-            } else {
-                $notif['message'] = ['text' => $form->getErrorsAsString(), 'status'=> 'error'];
+                $setting = $request->request->get('setting');
+
+                $setting = static::dot($setting);
+
+                unset($setting['Save']);
+                unset($setting['_token']);
+
+                $this->get('system')->update($setting);
+
+                $response = ['message' => $this->get('translator')->trans('Setting Saved'), 'status' => 'success'];
+                return new JsonResponse($response);
             }
-        }*/
+        }
 
         $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
-            'view_id' => 'system',
+            'view_id' => 'setting',
             'action' => $this->generateUrl('drafterbit_system_setting_general'),
             'form' => $mainForm->createView(),
             'field_names' => $fieldNames
@@ -385,5 +387,27 @@ class SettingController extends Controller
         $widgets = $query->getResult();
         
         return $widgets;
+    }
+
+    /**
+     * Flatten a multi-dimensional associative array with dots.
+     *
+     * @param  array   $array
+     * @param  string  $prepend
+     * @return array
+     */
+    public static function dot($array, $prepend = '')
+    {
+        $results = [];
+
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $results = array_merge($results, static::dot($value, $prepend.$key.'.'));
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+
+        return $results;
     }
 }

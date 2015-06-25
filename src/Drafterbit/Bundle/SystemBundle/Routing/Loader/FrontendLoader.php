@@ -28,7 +28,7 @@ class FrontendLoader implements LoaderInterface
 
         $routes = new RouteCollection();
 
-        $frontPageConfig = $this->container->get('system')->get('frontpage');
+        $frontPageConfig = $this->container->get('system')->get('system.frontpage', 'blog');
 
         $frontPageProvider = $this->container->get('drafterbit_system.frontpage_provider');
 
@@ -52,7 +52,7 @@ class FrontendLoader implements LoaderInterface
         if(!array_key_exists($frontPageConfig, $frontPageProvider->all()))
         {
             // its page
-            $defaults['slug'] = $frontp;
+            $defaults['slug'] = $frontPageConfig;
             $routes->add('_home', new Route('/', $defaults));
         }
 

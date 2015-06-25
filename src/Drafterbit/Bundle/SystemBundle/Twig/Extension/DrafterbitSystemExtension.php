@@ -20,8 +20,8 @@ class DrafterbitSystemExtension extends \Twig_Extension
 
         $system = [
             'navigations' => $this->getNavigations(),
-            'sitename' => $model->get('sitename'),
-            'tagline' => $model->get('tagline'),
+            'sitename' => $model->get('system.site_name'),
+            'tagline' => $model->get('system.site_description'),
             'version' => \Drafterbit\Drafterbit::VERSION
         ];
 
