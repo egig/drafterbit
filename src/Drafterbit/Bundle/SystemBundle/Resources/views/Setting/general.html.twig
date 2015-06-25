@@ -20,14 +20,31 @@
     </div>
     <div class="col-md-9 tab-content">
         {% for field in form %}
+            {% if field.vars.name not in ['Save', '_token'] %}
             <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
                 {% for f in field %}
-                    <div class="form-group">
+                    <div class="form-group col-md-6">
                         {{ form_label(f) }}
-                        {{ form_widget(f, {attr: {class:"form-control"}}) }}
+                        {# Render widget #}
+                        {% if 'choice' in f.vars.block_prefixes %}
+                            {% if f.vars.expanded %}
+                                <div>
+                                {% for f_w in f %}
+                                    <label class="checkbox-inline">
+                                        {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
+                                    </label>
+                                {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_widget(f, {attr: {class:"form-control"}}) }}
+                            {% endif %}
+                        {% else %}
+                            {{ form_widget(f, {attr: {class:"form-control"}}) }}
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>

@@ -52,7 +52,7 @@ $(function(){
         }
     }
 
-    //layoutHandler.handleScreenSize();
+    layoutHandler.handleScreenSize();
     layoutHandler.handleNavbar();
     layoutHandler.handleStickyToolbar();
     layoutHandler.handleFooter();
