@@ -35,18 +35,6 @@ class SettingControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/'.static::$admin.'/setting/general');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertContains('General', $client->getResponse()->getContent());
-
-        // test error
-        $param['system'] = ['_token' => 'foo' ];
-        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general', $param);
-        $this->assertContains('error', $client->getResponse()->getContent());
-
-        // test valid
-        $container = $client->getContainer();
-        $token = $container->get('form.csrf_provider')->generateCsrfToken('system_type');
-        $param['system'] = ['_token' => $token ];
-        $crawler = $client->request('POST', '/'.static::$admin.'/setting/general', $param);
-        $this->assertNotContains('error', $client->getResponse()->getContent());
 	}
 
 	public function testThemeAction()
@@ -64,7 +52,7 @@ class SettingControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/'.static::$admin.'/setting/theme/customize');
 
-        /// url must be accoumpanid with csrf _token and theme
+        /// url must be accoumpanied with csrf _token and theme
         $response = $client->getResponse();
         $this->assertTrue($response->isRedirect());	
 	}
