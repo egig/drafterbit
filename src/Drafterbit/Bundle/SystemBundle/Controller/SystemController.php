@@ -35,9 +35,6 @@ class SystemController extends Controller
 
             if(!$panelConfig) {
                 $panelConfig = new PanelConfig();
-
-                $status = $panelConfig ? $panelConfig->getStatus() : 1;
-
                 $panelConfig->setUser($this->getUser());
                 $panelConfig->setName($name);
                 $panelConfig->setPosition('left');

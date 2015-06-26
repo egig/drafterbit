@@ -148,10 +148,5 @@
             <tag name="drafterbit_system.setting.field" />
         </service>
 
-        <service id="drafterbit_system.setting.field.dashboard" class="Drafterbit\Bundle\SystemBundle\Setting\DashboardField">
-            <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.setting.field" />
-        </service>
-
     </services>
 </container>
