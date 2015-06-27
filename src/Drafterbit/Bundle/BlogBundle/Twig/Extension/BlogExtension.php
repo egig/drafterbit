@@ -68,7 +68,7 @@ class BlogExtension extends \Twig_Extension
     {
         $path = trim($path, '/');
 
-        $frontpage = $this->kernel->getContainer()->get('system')->get('frontpage');
+        $frontpage = $this->kernel->getContainer()->get('system')->get('system.frontpage');
 
         if($frontpage != 'blog') {
             $path = 'blog/'.$path;
