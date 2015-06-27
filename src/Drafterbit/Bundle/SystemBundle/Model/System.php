@@ -94,15 +94,6 @@ class System
         }
     }
 
-    public function saveSetting($system)
-    {
-        $this->databaseConnection->exec('DELETE FROM '.$this->systemTable);
-
-        foreach ($system as $key => $value) {
-            $this->insert($key, $value);
-        }   
-    }
-
     /**
      * Check if a key is exists
      *

@@ -25,7 +25,6 @@ class SettingController extends Controller
      * @Route("/setting/general", name="drafterbit_system_setting_general")
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
-     * @todo create config Provider and dashboard panel toggler
      */
     public function generalAction(Request $request)
     {
@@ -60,7 +59,7 @@ class SettingController extends Controller
                 unset($setting['Save']);
                 unset($setting['_token']);
 
-                $this->get('system')->saveSetting($setting);
+                $this->get('system')->update($setting);
 
                 $response = ['message' => $this->get('translator')->trans('Setting Saved'), 'status' => 'success'];
                 return new JsonResponse($response);
