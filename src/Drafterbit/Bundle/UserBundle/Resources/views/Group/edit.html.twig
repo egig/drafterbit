@@ -1,5 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitUserBundle/css/group/edit.css') }}">
+{% endblock %}
+
 {% block action %}
     {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success btn-sm", disabled:group_is_superadmin}}) }}
     <a href="{{path('drafterbit_user_group')}}" class="btn btn-default btn-sm">
@@ -10,7 +15,7 @@
 
 {% block form %}
 <div class="row row-content">
-    <div class="col-md-8 col-md-offset-2 content-full">
+    <div class="col-md-5">
         <div class="form-group">
             {{ form_label(form.name, 'Group Name', {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.name, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
@@ -19,39 +24,41 @@
             {{ form_label(form.description, 'Description', {label_attr:{class:"control-label"  }}) }}
             {{ form_widget(form.description, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
         </div>
+    </div>
+    <div class="col-md-7">
 
-        <h3 style="">{{ __('Roles') }}</h3>
+        <label style="">{{ __('Roles') }}</label>
         <div class="row">
-
-            {% for bundle,attributes in rolesGroup %}
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{ __(bundle) }} </h4>
-                    </div>
-                    <div class="panel-body" style="height:200px;overflow:auto">
-                        <ul>
-                        {% for key,lebel in attributes %}
-                            {% for role in form.roles %}
-                                {% if role.vars.value == key %}
-                                    <li class="checkbox permission">
-                                        {% if group_is_superadmin %}
-                                            {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
-                                        {% else %}
-                                            {{ form_widget(role) }}
-                                        {% endif %}
-
-                                        {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <ul class="nav nav-stacked nav-stacked-left" role="tablist">
+                    {% for bundle,attributes in rolesGroup %}
+                        <li role="presentation"><a href="#roles-{{ bundle }}" aria-controls="roles-{{ bundle }}" role="tab" data-toggle="tab">{{ __(bundle) }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% endfor %}
+            <div class="col-md-8 tab-content">
+                {% for bundle,attributes in rolesGroup %}
+                <div role="tabpanel" class="tab-pane" id="roles-{{ bundle }}">
+                    <ul>
+                    {% for key,lebel in attributes %}
+                        {% for role in form.roles %}
+                            {% if role.vars.value == key %}
+                                <li class="checkbox permission">
+                                    {% if group_is_superadmin %}
+                                        {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
+                                    {% else %}
+                                        {{ form_widget(role) }}
+                                    {% endif %}
 
+                                    {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

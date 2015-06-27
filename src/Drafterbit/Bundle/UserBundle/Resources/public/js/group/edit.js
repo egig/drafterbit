@@ -1,5 +1,11 @@
 (function($){
 
+    if (location.hash) {
+        $('a[href="'+location.hash+'"]').tab('show');
+    } else {
+        $('ul.nav-stacked-left li:first-child a').tab('show');
+    }
+
     var form = $('#group-edit-form'),
         id = $('input[name="group[id]"]');
 
