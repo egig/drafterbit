@@ -1,0 +1,2 @@
+parameters:
+    themes_path: %kernel.root_dir%/web/themes
