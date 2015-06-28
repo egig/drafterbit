@@ -1,0 +1,21 @@
+{% extends 'layout/default.html' %}
+
+{% block content %}
+<section class="search-result">
+{% if results %}
+	<p>Result found for query: {{ q }}</p>
+	<ol>
+    {% for result in results %}
+    <li class="item">
+        <h3><a href="{{result.url}}">{{ result.title }}</a></h3>
+        {% autoescape false %}
+        <div>{{ result.summary }}</div>
+        {% endautoescape %}
+     </li>
+    {% endfor %}
+	</ol>
+{% else %}
+	<p>No Result found for query: {{ q }}</p>
+{% endif %}
+ </section>
+{% endblock %}

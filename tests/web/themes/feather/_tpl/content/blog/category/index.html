@@ -1,0 +1,10 @@
+{% extends 'layout/default.html' %}
+
+{% block content %}
+    <h3>
+        Category: {{category.label}}
+    </h3>
+    
+    {% include 'content/blog/post/index.html' %}
+
+{% endblock %}

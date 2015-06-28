@@ -17,6 +17,10 @@ class FrontendController extends Controller {
     {
         $data['q'] = $q = $request->query->get('q');
 
+        if(!$q) {
+            throw $this->createNotFoundException();
+        }
+
         $results = $this->get('search_engine')->doSearch($q);
 
         $data['results'] = $results;
