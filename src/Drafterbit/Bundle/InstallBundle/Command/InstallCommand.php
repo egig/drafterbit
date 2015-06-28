@@ -93,7 +93,7 @@ class InstallCommand extends ContainerAwareCommand
             return "Invalid Username";
         }
 
-        // username is valie
+        // username is valid
         return false;
     }
 }
