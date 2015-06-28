@@ -130,18 +130,24 @@ class SettingController extends Controller
         $form = $this->createForm(new WidgetType, $widget);
         $form->handleRequest($request);
 
-        $widget = $form->getData();
-        $widget->setPosition($position);
-        $widget->setSequence($sequence);
+        if($form->isValid()) {
+            $widget = $form->getData();
+            $widget->setPosition($position);
+            $widget->setSequence($sequence);
 
-        $context = json_encode($widgetRequested);
+            $context = json_encode($widgetRequested);
 
-        $widget->setContext($context);
+            $widget->setContext($context);
 
-        $em->persist($widget);
-        $em->flush();
+            $em->persist($widget);
+            $em->flush();
+    
+            return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
+        } else {
+            return new Response($form->getErrorsAsString());
+        }
 
-        return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
+        // @todo return error
     }
 
     /**

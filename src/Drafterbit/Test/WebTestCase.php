@@ -4,8 +4,39 @@ namespace Drafterbit\Test;
 
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 
-class Auth {
+abstract class WebTestCase extends BaseTestCase  {
+
+    public static $admin;
+    protected $client;
+
+    public function setUp()
+    {
+        static::$admin = static::createClient()
+            ->getContainer()->getParameter('admin');
+    }
+
+    protected function getAuthorizedClient() {
+        if(!$this->client) {
+            $this->client = $this->createAuthorizedClient();
+        }
+
+        return $this->client;
+    }
+
+    protected function createAuthorizedClient() {
+        return static::authorizeClient(static::createClient());
+    }
+
+    /**
+     * Create admin path
+     *
+     * @return string
+     */
+    protected function adminPath($path) {
+        return '/'.static::$admin.'/'.trim($path, '/');
+    }
 
 	/**
      * Create authorized client

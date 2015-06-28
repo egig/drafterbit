@@ -2,31 +2,13 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use Drafterbit\Test\Auth;
+use Drafterbit\Test\WebTestCase;
 
 class SystemControllerTest extends WebTestCase
 {
-    public static $admin;
-    protected $client;
-
-    private function getAuthorizedClient() {
-        if(!$this->client) {
-            $this->client = Auth::authorizeClient(static::createClient());
-        }
-
-        return $this->client;
-    }
- 
-    protected function setUp()
-    {
-        $client = static::createClient();
-        static::$admin = $client->getContainer()->getParameter('admin');
-    }
-
     public function testUnauthorizedRedirect()
     {
         $client = static::createClient();

@@ -177,7 +177,7 @@
                     success: function(res, a, b, form){
                 
                         if (!res.error) {
-                            $(form).find('input[name="id"]').val(res.id);
+                            $(form).find('input[name="widget[id]"]').val(res.id);
                             $(form).find('.dt-widget-remover').data('id', res.id);
                             $(form).closest('.widget-item-container').prop('id', res.id+'-widget-item-container');
                     
