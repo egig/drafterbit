@@ -1,9 +1,13 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" href="{{ asset('plugins/chosen/chosen.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/plugins/chosen-bootstrap/chosen-bootstrap.css') }}" />
+    {{ parent() }}
+    {% stylesheets
+        'plugins/chosen/chosen.min.css'
+        '@DrafterbitSystemBundle/Resources/public/plugins/chosen-bootstrap/chosen-bootstrap.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -67,7 +71,11 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script type="text/javascript" src="{{ asset('plugins/chosen/chosen.jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('@DrafterbitUserBundle/js/edit.js') }}"></script>
+    {{ parent() }}
+    {% javascripts
+        'plugins/chosen/chosen.jquery.js'
+        '@DrafterbitUserBundle/Resources/public/js/edit.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

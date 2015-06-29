@@ -2,7 +2,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitUserBundle/css/group/edit.css') }}">
+    {% stylesheets
+        '@DrafterbitUserBundle/Resources/public/css/group/edit.css'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -66,6 +70,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script type="text/javascript" src="{{asset('@DrafterbitUserBundle/js/group/edit.js')}}"></script> 
+    {{ parent() }}
+    {% javascripts '@DrafterbitUserBundle/Resources/public/js/group/edit.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script> 
+    {% endjavascripts %}
 {% endblock %}

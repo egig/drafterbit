@@ -41,6 +41,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script src="{{ asset('@DrafterbitUserBundle/js/index.js') }}"></script>
+    {{ parent() }}
+    {% javascripts '@DrafterbitUserBundle/Resources/public/js/index.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
