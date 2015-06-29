@@ -54,7 +54,7 @@ class BlogExtension extends \Twig_Extension
         $form->get('post')->setData($post);
 
 
-        $formSection = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html',
+        $formSection = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html.twig',
             [
                 'form' =>  $form->createView(),
                 'parent' => null,
@@ -96,10 +96,10 @@ class BlogExtension extends \Twig_Extension
                 $data['parent'] = $comment;
                 $data['form_id'] = 'form-comment-'.$comment->getId();
 
-                $comment->form = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html', $data);
+                $comment->form = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html.twig', $data);
                 $comment->childs = $this->renderComments($comments, $comment);
                 $data['comment'] = $comment;
-                $content .= '<li>'.$this->kernel->getContainer()->get('templating')->render('content/blog/comment/index.html', $data).'</li>';
+                $content .= '<li>'.$this->kernel->getContainer()->get('templating')->render('content/blog/comment/index.html.twig', $data).'</li>';
             }
         }
 

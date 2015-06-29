@@ -4,6 +4,7 @@
 /tests/config/parameters.yml
 /tests/web/css/*
 /tests/web/js/*
+/tests/web/upload/*
 /tests/web/plugins/*
 /tests/web/bundles/*
 /tests/logs/*

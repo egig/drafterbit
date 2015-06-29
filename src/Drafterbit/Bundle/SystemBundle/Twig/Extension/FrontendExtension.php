@@ -68,7 +68,7 @@ class FrontendExtension extends \Twig_Extension
 
         $data['items'] = $items;
 
-        return $this->container->get('templating')->render('nav/main.html', $data);
+        return $this->container->get('templating')->render('nav/main.html.twig', $data);
     }
 
     public function _getMenuItems($menu_id, $parent = NULL)

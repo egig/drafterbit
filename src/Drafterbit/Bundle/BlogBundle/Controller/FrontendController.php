@@ -20,7 +20,7 @@ class FrontendController extends BaseFrontendController
     const MORE_TAG = '<!--more-->';
 
     /**
-     * @Template("content/blog/index.html")
+     * @Template("content/blog/index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -32,7 +32,7 @@ class FrontendController extends BaseFrontendController
         return $data;
     }
     /**
-     * @Template("content/blog/tag/index.html")
+     * @Template("content/blog/tag/index.html.twig")
      */
     public function tagAction($slug, Request $request)
     {
@@ -47,7 +47,7 @@ class FrontendController extends BaseFrontendController
     }
 
     /**
-     * @Template("content/blog/category/index.html")
+     * @Template("content/blog/category/index.html.twig")
      */
     public function categoryAction($slug, Request $request)
     {
@@ -62,7 +62,7 @@ class FrontendController extends BaseFrontendController
     }
 
     /**
-     * @Template("content/blog/author/index.html")
+     * @Template("content/blog/author/index.html.twig")
      */
     public function authorAction($username, Request $request)
     {
@@ -165,7 +165,7 @@ class FrontendController extends BaseFrontendController
     }
 
     /**
-     * @Template("content/blog/view.html")
+     * @Template("content/blog/view.html.twig")
      */
     public function viewAction($year, $month, $date, $slug)
     {

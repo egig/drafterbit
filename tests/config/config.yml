@@ -12,11 +12,12 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
-    form:            ~
+    form:
+        enabled: true
     csrf_protection: ~
     validation:      { enable_annotations: true }
     templating:
-        engines: ['twig']
+        engines: ['twig', 'php']
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
@@ -40,7 +41,7 @@ twig:
 assetic:
     read_from: %kernel.root_dir%/web
     debug: "%kernel.debug%"
-    use_controller: false
+    use_controller: true
 #    java: /usr/bin/java
     filters:
        cssrewrite: ~

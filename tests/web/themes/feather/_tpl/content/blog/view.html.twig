@@ -1,11 +1,11 @@
-{% extends 'layout/default.html' %}
+{% extends 'layout/default.html.twig' %}
 
 {% block content %}
     <section>
     <div class="post">
         <h2>{{ post.title }}</a></h2>
         <div class="meta">
-            {% include 'content/blog/post/meta.html' %}
+            {% include 'content/blog/post/meta.html.twig' %}
         </div>
         {{ post.content|raw }}
     </div>

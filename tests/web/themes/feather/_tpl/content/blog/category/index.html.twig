@@ -1,10 +1,10 @@
-{% extends 'layout/default.html' %}
+{% extends 'layout/default.html.twig' %}
 
 {% block content %}
     <h3>
         Category: {{category.label}}
     </h3>
     
-    {% include 'content/blog/post/index.html' %}
+    {% include 'content/blog/post/index.html.twig' %}
 
 {% endblock %}

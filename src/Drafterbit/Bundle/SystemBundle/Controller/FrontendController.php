@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FrontendController extends Controller {
 
     /**
-     * @Template("widgets/search/index.html")
+     * @Template("widgets/search/index.html.twig")
      */
     public function searchAction(Request $request)
     {
