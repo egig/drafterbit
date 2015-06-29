@@ -29,6 +29,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/category/index.js') }}"></script>
+    {{ parent() }}
+    {% javascripts '@DrafterbitBlogBundle/Resources/public/js/category/index.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

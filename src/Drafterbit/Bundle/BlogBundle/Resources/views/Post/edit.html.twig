@@ -1,10 +1,14 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
-  {{parent()}}
-  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/magicsuggest/magicsuggest-min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitBlogBundle/css/editor.css') }}">
+  {{ parent() }}
+  {% stylesheets
+  'plugins/magicsuggest/magicsuggest-min.css'
+  'plugins/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css'
+  '@DrafterbitBlogBundle/Resources/public/css/editor.css'
+  %}
+  <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+  {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -108,24 +112,28 @@
   </script>
 {% endautoescape %}
   
-  <script type="text/javascript" src="{{ asset('plugins/magicsuggest/magicsuggest-min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('plugins/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/editor.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>  
+  {% javascripts
+    'plugins/magicsuggest/magicsuggest-min.js'
+    'plugins/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+    '@DrafterbitBlogBundle/Resources/public/js/editor.js'
+  %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
 
    <script>
     CKEDITOR.replace('blog_post[content]', {
 
         language: drafTerbit.locale,
-        customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
-        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
+        customConfig : "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/config.js') }}",
+        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}/{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/skins/bootstrap/') }}",
 
         filebrowserWindowWidth  : 860,
         filebrowserWindowHeight : 453,
         filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
     });
 
-    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
+    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
     CKEDITOR.config.extraPlugins = 'wpmore';
 
 

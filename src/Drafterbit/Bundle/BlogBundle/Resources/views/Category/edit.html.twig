@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
-  {{parent()}}
-  <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitBlogBundle/css/category/edit.css') }}">
+  {{ parent() }}
+  {% stylesheets '@DrafterbitBlogBundle/Resources/public/css/category/edit.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+  {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -36,6 +38,8 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{parent()}}
-  <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/category/edit.js') }}"></script>
+  {{ parent() }}
+  {% javascripts '@DrafterbitBlogBundle/Resources/public/js/category/edit.js' %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
 {% endblock %}

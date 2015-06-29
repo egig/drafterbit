@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" href="{{ asset('@DrafterbitBlogBundle/css/index.css') }}"/>
+    {{ parent() }}
+    {% stylesheets '@DrafterbitBlogBundle/Resources/public/css/index.css'%}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block filter %}
@@ -54,9 +56,13 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script type="text/javascript" src="{{ asset('plugins/qs/dist/qs.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/index.js') }}"></script>
+    {{ parent() }}
+    {% javascripts
+        'plugins/qs/dist/qs.js'
+        '@DrafterbitBlogBundle/Resources/public/js/index.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script type="text/javascript">
         drafTerbit.blog.post.handleIndexForm('#post-index-form');
         drafTerbit.blog.post.handleIndexTable('#post-data-table', '#post-checkall');

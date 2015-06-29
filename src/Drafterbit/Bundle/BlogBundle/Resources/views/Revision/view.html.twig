@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitBlogBundle/css/revision.css') }}">
+    {{ parent() }}
+    {% stylesheets '@DrafterbitBlogBundle/Resources/public/css/revision.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
@@ -44,7 +46,11 @@
 {% endblock %}
 
 {% block javascripts  %}
-    {{parent()}}
-    <script src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('@DrafterbitBlogBundle/js/revision.js') }}"></script>
+    {{ parent() }}
+    {% javascripts
+        'plugins/sticky-kit/jquery.sticky-kit.min.js'
+        '@DrafterbitBlogBundle/Resources/public/js/revision.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock  %}
