@@ -60,7 +60,7 @@
     },
     "extra": {
         "symfony-app-dir": "tests",
-        "symfony-web-dir": "web",
+        "symfony-web-dir": "tests/web",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "tests/config/parameters.yml"

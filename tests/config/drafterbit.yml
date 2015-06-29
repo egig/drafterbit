@@ -17,9 +17,6 @@ drafterbit_system:
                 theme:
                     label: Theme
                     route: drafterbit_system_setting_theme
-                blog:
-                    label: Blog
-                    route: drafterbit_blog_setting
         system:
             label: System
             children:

@@ -1,9 +1,13 @@
 {% extends "DrafterbitSystemBundle::base.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/css/overrides-datatables.css') }}" />
-    <link rel="stylesheet" href="{{ asset('@DrafterbitSystemBundle/plugins/bootstrap-datatables/bootstrap-datatables.css') }}" />
+    {{ parent() }}
+    {% stylesheets
+        '@DrafterbitSystemBundle/Resources/public/css/overrides-datatables.css'
+        '@DrafterbitSystemBundle/Resources/public/plugins/bootstrap-datatables/bootstrap-datatables.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
@@ -39,10 +43,14 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script src="{{ asset('plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('@DrafterbitSystemBundle/plugins/bootstrap-datatables/bootstrap-datatables.js') }}"></script>
-    <script src="{{ asset('plugins/chekall/jquery-check-all.min.js') }}"></script>
-    <script src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
-    <script src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+    {{ parent() }}
+    {% javascripts
+        'plugins/datatables/media/js/jquery.dataTables.min.js'
+        '@DrafterbitSystemBundle/Resources/public/plugins/bootstrap-datatables/bootstrap-datatables.js'
+        'plugins/chekall/jquery-check-all.min.js'
+        'plugins/jquery-form/jquery.form.js'
+        'plugins/sticky-kit/jquery.sticky-kit.min.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

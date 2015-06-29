@@ -2,7 +2,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/setting/general.css') }}">
+    {% stylesheets '@DrafterbitSystemBundle/Resources/public/css/setting/general.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -51,8 +53,10 @@
 {% endblock %}
     
 {% block javascripts %}
-    {{parent()}}
-    <script src="{{ asset('@DrafterbitSystemBundle/js/setting/general.js') }}"></script>
+    {{ parent() }}
+    {% javascripts '@DrafterbitSystemBundle/Resources/public/js/setting/general.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     {% if message %}
         <script type="text/javascript">

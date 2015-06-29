@@ -2,6 +2,10 @@
 /tests/cache/*
 !tests/cache/.gitkeep
 /tests/config/parameters.yml
+/tests/web/css/*
+/tests/web/js/*
+/tests/web/plugins/*
+/tests/web/bundles/*
 /tests/logs/*
 !tests/logs/.gitkeep
 /tests/phpunit.xml

@@ -2,7 +2,9 @@
 
 {% block stylesheets %}
     {{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/dashboard.css') }}">
+    {% stylesheets '@DrafterbitSystemBundle/Resources/public/css/dashboard.css' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
@@ -33,6 +35,10 @@
 
 {% block javascripts %}
     {{parent()}}
-    <script type="text/javascript" src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('@DrafterbitSystemBundle/js/dashboard.js') }}"></script>
+    {% javascripts
+    'plugins/jquery-ui/jquery-ui.min.js'
+    '@DrafterbitSystemBundle/Resources/public/js/dashboard.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

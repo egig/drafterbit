@@ -2,7 +2,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitSystemBundle/css/menus.css') }}">
+    {% stylesheets '@DrafterbitSystemBundle/Resources/public/css/menus.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
@@ -93,12 +95,16 @@
 {% endblock %}
 
 {% block javascripts %}
-     {{parent()}}
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
-    <script src="{{ asset('plugins/handlebars/handlebars.min.js') }}"></script>
-    <script src="{{ asset('plugins/nestedSortable/jquery.ui.nestedSortable.js') }}"></script>
-    <script src="{{ asset('@DrafterbitSystemBundle/js/menus.js') }}"></script>
+     {{ parent() }}
+     {% javascripts
+        'plugins/jquery-ui/jquery-ui.min.js'
+        'plugins/jquery-form/jquery.form.js'
+        'plugins/handlebars/handlebars.min.js'
+        'plugins/nestedSortable/jquery.ui.nestedSortable.js'
+        '@DrafterbitSystemBundle/Resources/public/js/menus.js'
+     %}
+     <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
 {% endblock %}
 
 {% macro _print_menu_items(items) %}
