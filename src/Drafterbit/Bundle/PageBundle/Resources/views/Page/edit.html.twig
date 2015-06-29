@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitPageBundle/css/editor.css') }}">
+    {{ parent() }}
+    {% stylesheets '@DrafterbitPageBundle/Resources/public/css/editor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block action %}
@@ -40,23 +42,25 @@
     
 {# @todo clean ckeditor #}
 {% block javascripts %}
-
-    {{parent()}}
+    {{ parent() }}
     <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('@DrafterbitPageBundle/js/editor.js') }}"></script>
+    {% javascripts '@DrafterbitPageBundle/Resources/public/js/editor.js'%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
     <script>
     CKEDITOR.replace('page[content]', {
 
         language: drafTerbit.locale,
-        customConfig : "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/config.js') }}",
-        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/skins/bootstrap/') }}",
+        customConfig : "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/config.js') }}",
+        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/skins/bootstrap/') }}",
 
         filebrowserWindowWidth  : 860,
         filebrowserWindowHeight : 453,
         filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
     });
 
-    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('@DrafterbitSystemBundle/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
+    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
     CKEDITOR.config.extraPlugins = 'wpmore';
 
 

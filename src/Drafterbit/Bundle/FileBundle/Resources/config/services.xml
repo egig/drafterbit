@@ -5,12 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="upload_path">upload</parameter>
+        <parameter key="upload_dir">upload</parameter>
+        <parameter key="upload_path">%kernel.root_dir%/../web/%upload_dir%</parameter>
     </parameters>
 
     <services>
         <service id="drafterbit_file.server" class="Drafterbit\Bundle\FileBundle\Server">
-            <argument>%kernel.root_dir%/../web/%upload_path%</argument>
+            <argument>%upload_path%</argument>
             <argument type="service" id="filesystem" />
         </service>
     </services>

@@ -1,8 +1,10 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('@DrafterbitPageBundle/css/index.css') }}">
+    {{ parent() }}
+    {% stylesheets '@DrafterbitPageBundle/Resources/public/css/index.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block filter %}
@@ -41,6 +43,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script type="text/javascript" src="{{ asset('@DrafterbitPageBundle/js/index.js') }}"></script>
+    {{ parent() }}
+    {% javascripts '@DrafterbitPageBundle/Resources/public/js/index.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts  %}
 {% endblock %}
