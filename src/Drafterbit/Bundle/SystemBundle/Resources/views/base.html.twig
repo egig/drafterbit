@@ -8,8 +8,8 @@
 
         {% block stylesheets %}
           {% stylesheets filter="cssrewrite"
-            'plugins/fontawesome/css/font-awesome.css'
-            'plugins/bootstrap/dist/css/bootstrap.css'
+            '@fontawesome'
+            '@bootstrap_css'
             'plugins/egig-notify/notify.css'
 
             '@DrafterbitSystemBundle/Resources/public/css/overrides-bootstrap.css'
@@ -55,7 +55,7 @@
         {% block javascripts %}
             {% javascripts
              'plugins/jquery/dist/jquery.js'
-             'plugins/bootstrap/dist/js/bootstrap.js'
+             '@bootstrap_js'
              'plugins/egig-notify/notify.js'
              '@DrafterbitSystemBundle/Resources/public/js/layout.js'
               %}
