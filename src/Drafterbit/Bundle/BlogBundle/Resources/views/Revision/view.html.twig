@@ -48,7 +48,7 @@
 {% block javascripts  %}
     {{ parent() }}
     {% javascripts
-        'plugins/sticky-kit/jquery.sticky-kit.min.js'
+        '@sticky_kit'
         '@DrafterbitBlogBundle/Resources/public/js/revision.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>

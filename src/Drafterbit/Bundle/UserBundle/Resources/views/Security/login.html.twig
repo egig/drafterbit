@@ -16,7 +16,7 @@
     <![endif]-->
 
     {% stylesheets
-      'plugins/bootstrap/dist/css/bootstrap.css'
+      '@bootstrap_css'
       '@DrafterbitUserBundle/Resources/public/css/login.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -60,7 +60,9 @@
             <p>Drafterbit {{ system.version }} &copy; {{ date()|date('Y') }}</p>
         </div>
     </div> <!-- /container -->
-    <script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+    {% javascripts '@jquery' %}
+      <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     </script>
   </body>
 </html>

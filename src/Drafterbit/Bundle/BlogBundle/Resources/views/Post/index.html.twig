@@ -58,7 +58,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        'plugins/qs/dist/qs.js'
+        '@qs'
         '@DrafterbitBlogBundle/Resources/public/js/index.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>

@@ -43,38 +43,12 @@
 {# @todo clean ckeditor #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     {% javascripts '@DrafterbitPageBundle/Resources/public/js/editor.js'%}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <script>
-    CKEDITOR.replace('page[content]', {
-
-        language: drafTerbit.locale,
-        customConfig : "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/config.js') }}",
-        skin: "bootstrap, {{ app.request.getSchemeAndHttpHost() }}//{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/skins/bootstrap/') }}",
-
-        filebrowserWindowWidth  : 860,
-        filebrowserWindowHeight : 453,
-        filebrowserImageBrowseUrl : "{{ url('drafterbit_file_browser') }}"
-    });
-
-    CKEDITOR.plugins.addExternal( 'wpmore', "{{ asset('bundles/drafterbitsystem/plugins/ckeditor-custom/plugins/wpmore/plugin.js') }}");
-    CKEDITOR.config.extraPlugins = 'wpmore';
-
-
-    // handle footer position
-    CKEDITOR.on("instanceReady", function(event)
-    {
-        var h = $('.page-wrapper').height();
-        var hW = $(window).innerHeight();
-
-        if(h+30 > hW) {
-            $('.footer').removeClass('navbar-fixed-bottom');
-        }
-    });
-    </script>
+    <script> {% include 'DrafterbitSystemBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"page[content]" } %}</script>
 
     {% if page_id == 'new' %}
     <script type="text/javascript">

@@ -36,7 +36,7 @@
 {% block javascripts %}
     {{parent()}}
     {% javascripts
-    'plugins/jquery-ui/jquery-ui.min.js'
+    '@jquery_ui_js'
     '@DrafterbitSystemBundle/Resources/public/js/dashboard.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>

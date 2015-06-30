@@ -45,13 +45,23 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/web/egig-notify/notify.js'
         jquery:
             inputs: '%kernel.root_dir%/../vendor/web/jquery/dist/jquery.min.js'
-        bootstrap_contexmenu:
-            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-contexmenu/bootstrap-contexmenu.js'
+        bootstrap_contextmenu:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-contextmenu/bootstrap-contextmenu.js'
         jquery_checkall:
             inputs: '%kernel.root_dir%/../vendor/web/chekall/jquery-check-all.js'
+        ckeditor:
+            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/ckeditor.js'
+            output: ckeditor/ckeditor.js
+        ckeditor_lang_en:
+            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/lang/en.js'
+            output: ckeditor.lang/en.js
         chosen_css:
             inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.min.css'
         chosen_js:
+            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.jquery.min.js'
+        chosen_sprite:
+            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen-sprite.png'
+            output: css/chosen-sprite.png
         datatables_css:
             inputs: '%kernel.root_dir%/../vendor/web/datatables/media/css/jquery.dataTables.css'
         datatables_js:
@@ -67,9 +77,9 @@ assetic:
         jquery_ui_js:
             inputs: '%kernel.root_dir%/../vendor/web/jquery-ui/jquery-ui.min.js'
         magicsuggest_css:
-            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest-min.css'
+            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest/magicsuggest-min.css'
         magicsuggest_js:
-            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest-min.js'
+            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest/magicsuggest-min.js'
         bootstrap_colorpicker_css:
             inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css'
         bootstrap_colorpicker_js:
@@ -92,11 +102,11 @@ assetic:
         nested_sortable:
             inputs: '%kernel.root_dir%/../vendor/web/nestedSortable/jquery.ui.nestedSortable.js'
         qs:
-            inputs: '%kernel.root_dir%/../vendor/web/qs/dist/qsjs'
+            inputs: '%kernel.root_dir%/../vendor/web/qs/dist/qs.js'
         bootstrap_datetimepicker_css:
             inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'
         bootstrap_datetimepicker_js:
-            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.js'
+            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
         sticky_kit:
             inputs: '%kernel.root_dir%/../vendor/web/sticky-kit/jquery.sticky-kit.min.js'
 

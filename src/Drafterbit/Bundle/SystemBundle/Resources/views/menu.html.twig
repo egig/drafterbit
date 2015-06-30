@@ -97,10 +97,10 @@
 {% block javascripts %}
      {{ parent() }}
      {% javascripts
-        'plugins/jquery-ui/jquery-ui.min.js'
-        'plugins/jquery-form/jquery.form.js'
-        'plugins/handlebars/handlebars.min.js'
-        'plugins/nestedSortable/jquery.ui.nestedSortable.js'
+        '@jquery_ui_js'
+        '@jquery_form'
+        '@handlebars'
+        '@nested_sortable'
         '@DrafterbitSystemBundle/Resources/public/js/menus.js'
      %}
      <script type="text/javascript" src="{{ asset_url }}"></script>

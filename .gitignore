@@ -4,6 +4,7 @@
 /tests/config/parameters.yml
 /tests/web/css/*
 /tests/web/js/*
+/tests/web/ckeditor
 /tests/web/upload/*
 !tests/web/upload/.gitkeep
 /tests/web/plugins/*

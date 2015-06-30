@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        'plugins/chosen/chosen.min.css'
+        '@chosen_css'
         '@DrafterbitSystemBundle/Resources/public/plugins/chosen-bootstrap/chosen-bootstrap.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -73,7 +73,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        'plugins/chosen/chosen.jquery.js'
+        '@chosen_js'
         '@DrafterbitUserBundle/Resources/public/js/edit.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
