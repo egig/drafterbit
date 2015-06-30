@@ -17,7 +17,8 @@
 {% endblock %}
  
  {% block javascripts %}
-     {{parent()}}
-     <script type="text/javascript" src="{{ asset('plugins/jquery-form/jquery.form.js') }}"></script>
-     <script type="text/javascript" src="{{ asset('plugins/sticky-kit/jquery.sticky-kit.min.js') }}"></script>
+     {{ parent() }}
+     {% javascripts '@jquery_form' '@sticky_kit' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
  {% endblock %}

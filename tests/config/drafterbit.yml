@@ -20,7 +20,6 @@ assetic:
         font-awesome-woff2:
             inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.woff'
             output: 'fonts/fontawesome-webfont.woff2'
-
         bootstrap_css:
             inputs: '%kernel.root_dir%/../vendor/web/bootstrap/dist/css/bootstrap.min.css'
         bootstrap_js:
@@ -40,6 +39,66 @@ assetic:
         bootstrap-fonts-woff2:
             inputs: '%kernel.root_dir%/../vendor/web/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2'
             output: 'fonts/glyphicons-halflings-regular.woff2'
+        notify_css:
+            inputs: '%kernel.root_dir%/../vendor/web/egig-notify/notify.css'
+        notify_js:
+            inputs: '%kernel.root_dir%/../vendor/web/egig-notify/notify.js'
+        jquery:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery/dist/jquery.min.js'
+        bootstrap_contexmenu:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-contexmenu/bootstrap-contexmenu.js'
+        jquery_checkall:
+            inputs: '%kernel.root_dir%/../vendor/web/chekall/jquery-check-all.js'
+        chosen_css:
+            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.min.css'
+        chosen_js:
+        datatables_css:
+            inputs: '%kernel.root_dir%/../vendor/web/datatables/media/css/jquery.dataTables.css'
+        datatables_js:
+            inputs: '%kernel.root_dir%/../vendor/web/datatables/media/js/jquery.dataTables.js'
+        finder_js:
+            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/finder.min.js'
+        finder_css:
+            inputs: '%kernel.root_dir%/../vendor/web/finder/finder.css'
+        handlebars:
+            inputs: '%kernel.root_dir%/../vendor/web/handlebars/handlebars.min.js'
+        jquery_form:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery-form/jquery.form.js'
+        jquery_ui_js:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery-ui/jquery-ui.min.js'
+        magicsuggest_css:
+            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest-min.css'
+        magicsuggest_js:
+            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest-min.js'
+        bootstrap_colorpicker_css:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css'
+        bootstrap_colorpicker_js:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
+        bootstrap_colorpicker_img_alpha_h:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha-horizontal.png'
+            output: 'img/bootstrap-colorpicker/alpha-horizontal.png'
+        bootstrap_colorpicker_img_alpha:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha.png'
+            output: 'img/bootstrap-colorpicker/alpha.png'
+        bootstrap_colorpicker_img_hue_h:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue-horizontal.png'
+            output: 'img/bootstrap-colorpicker/hue-horizontal.png'
+        bootstrap_colorpicker_img_hue:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue.png'
+            output: 'img/bootstrap-colorpicker/hue.png'
+        bootstrap_colorpicker_img_sat:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/saturation.png'
+            output: 'img/bootstrap-colorpicker/saturation.png'
+        nested_sortable:
+            inputs: '%kernel.root_dir%/../vendor/web/nestedSortable/jquery.ui.nestedSortable.js'
+        qs:
+            inputs: '%kernel.root_dir%/../vendor/web/qs/dist/qsjs'
+        bootstrap_datetimepicker_css:
+            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'
+        bootstrap_datetimepicker_js:
+            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.js'
+        sticky_kit:
+            inputs: '%kernel.root_dir%/../vendor/web/sticky-kit/jquery.sticky-kit.min.js'
 
 drafterbit_file:
     navigation:

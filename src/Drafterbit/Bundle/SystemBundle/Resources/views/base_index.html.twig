@@ -45,11 +45,11 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        'plugins/datatables/media/js/jquery.dataTables.min.js'
+        '@datatables_js'
         '@DrafterbitSystemBundle/Resources/public/plugins/bootstrap-datatables/bootstrap-datatables.js'
-        'plugins/chekall/jquery-check-all.min.js'
-        'plugins/jquery-form/jquery.form.js'
-        'plugins/sticky-kit/jquery.sticky-kit.min.js'
+        '@jquery_checkall'
+        '@jquery_form'
+        '@sticky_kit'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

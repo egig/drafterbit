@@ -10,8 +10,7 @@
           {% stylesheets filter="cssrewrite"
             '@fontawesome'
             '@bootstrap_css'
-            'plugins/egig-notify/notify.css'
-
+            '@notify_css'
             '@DrafterbitSystemBundle/Resources/public/css/overrides-bootstrap.css'
             '@DrafterbitSystemBundle/Resources/public/css/style.css'
             '@DrafterbitSystemBundle/Resources/public/css/style-desktop.css'
@@ -54,9 +53,9 @@
 
         {% block javascripts %}
             {% javascripts
-             'plugins/jquery/dist/jquery.js'
+             '@jquery'
              '@bootstrap_js'
-             'plugins/egig-notify/notify.js'
+             '@notify_js'
              '@DrafterbitSystemBundle/Resources/public/js/layout.js'
               %}
               <script src="{{ asset_url }}"></script>
