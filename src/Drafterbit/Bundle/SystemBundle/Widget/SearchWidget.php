@@ -14,7 +14,7 @@ class SearchWidget extends Widget
 
     public function run($context = null)
     {
-        return $this->container->get('templating')->render('widgets/search/form.html');
+        return $this->container->get('templating')->render('widgets/search/form.html.twig');
     }
 
     public function buildForm(Form $form)

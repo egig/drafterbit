@@ -17,6 +17,6 @@ class FrontendController extends BaseFrontendController
             throw $this->createNotFoundException('Page Not Found');
         }
 
-        return $this->render('content/page/view.html', ['page' => $page]);
+        return $this->render('content/page/view.html.twig', ['page' => $page]);
     }
 }
