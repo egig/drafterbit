@@ -1,3 +1,6 @@
+imports:
+    - { resource: assets/ckeditor.yml }
+
 assetic:
     assets:
         fontawesome:
@@ -49,12 +52,6 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/web/bootstrap-contextmenu/bootstrap-contextmenu.js'
         jquery_checkall:
             inputs: '%kernel.root_dir%/../vendor/web/chekall/jquery-check-all.js'
-        ckeditor:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/ckeditor.js'
-            output: ckeditor/ckeditor.js
-        ckeditor_lang_en:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/lang/en.js'
-            output: ckeditor.lang/en.js
         chosen_css:
             inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.min.css'
         chosen_js:

@@ -109,8 +109,9 @@
   </script>
 {% endautoescape %}
   
-  <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+  <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>  
   {% javascripts
+    '@ckeditor'
     '@magicsuggest_js'
     '@bootstrap_datetimepicker_js'
     '@DrafterbitBlogBundle/Resources/public/js/editor.js'

@@ -43,8 +43,10 @@
 {# @todo clean ckeditor #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    {% javascripts '@DrafterbitPageBundle/Resources/public/js/editor.js'%}
+
+    <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>
+
+    {% javascripts '@ckeditor' '@DrafterbitPageBundle/Resources/public/js/editor.js'%}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
