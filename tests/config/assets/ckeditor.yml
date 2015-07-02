@@ -4,6 +4,11 @@ assetic:
         ckeditor:
             inputs: '%kernel.root_dir%/../vendor/web/ckeditor/ckeditor.js'
             output: ckeditor/ckeditor.js
+        ckeditor_config:
+            # we replace default
+            # inputs: '%kernel.root_dir%/../vendor/web/ckeditor/config.js'
+            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/config.js
+            output: ckeditor/config.js
         ckeditor_styles:
             inputs: '%kernel.root_dir%/../vendor/web/ckeditor/styles.js'
             output: ckeditor/styles.js
@@ -23,6 +28,9 @@ assetic:
             inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/plugin.js
             output: ckeditor/plugins/wpmore/plugin.js
         ckeditor_plugin_wpmore_img:
+            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more_bug.gif
+            output: ckeditor/plugins/wpmore/images/more_bug.gif
+        ckeditor_plugin_wpmore_img2:
             inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more.gif
             output: ckeditor/plugins/wpmore/images/more.gif
         ckeditor_skin_bootstrap:

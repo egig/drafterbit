@@ -7,7 +7,7 @@
         <title>{{ page_title|striptags }} | {{ system.sitename }}</title>
 
         {% block stylesheets %}
-          {% stylesheets filter="cssrewrite"
+          {% stylesheets
             '@fontawesome'
             '@bootstrap_css'
             '@notify_css'

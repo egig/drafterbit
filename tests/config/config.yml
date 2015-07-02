@@ -41,7 +41,7 @@ twig:
 assetic:
     read_from: %kernel.root_dir%/web
     debug: "%kernel.debug%"
-    use_controller: true
+    use_controller: "%kernel.debug%"
 #    java: /usr/bin/java
     filters:
        cssrewrite: ~

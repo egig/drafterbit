@@ -2,6 +2,9 @@
 /tests/cache/*
 !tests/cache/.gitkeep
 /tests/config/parameters.yml
+/tests/web/assetic/*
+/tests/web/img/*
+/tests/web/fonts/*
 /tests/web/css/*
 /tests/web/js/*
 /tests/web/ckeditor

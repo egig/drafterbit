@@ -6,13 +6,11 @@
         <title>{{ page_title }} | {{ system.sitename~' Administrator' }}</title>
 
         {% block stylesheets %}
-          {% stylesheets filter="cssrewrite"
-            'plugins/fontawesome/css/font-awesome.css'
-            'plugins/bootstrap/dist/css/bootstrap.css'
-            'plugins/egig-notify/notify.css'
-
-            'plugins/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'
-
+          {% stylesheets
+            '@fontawesome'
+            '@bootstrap_css'
+            '@notify_css'
+            '@bootstrap_colorpicker_css'
             '@DrafterbitSystemBundle/Resources/public/css/overrides-bootstrap.css'
             '@DrafterbitSystemBundle/Resources/public/css/style.css'
             '@DrafterbitSystemBundle/Resources/public/css/style-desktop.css'
@@ -196,10 +194,8 @@
 
         <!-- script -->
         {% block javascripts %}
-            {% javascripts
-              'plugins/jquery/dist/jquery.js'
-            %}
-            <script src="{{ asset_url }}"></script>
+            {% javascripts '@jquery'%}
+              <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
             
             <script src="{{ url('asset_drafterbit_js') }}"></script>
@@ -209,13 +205,13 @@
             </script>
 
             {% javascripts
-              'plugins/bootstrap/dist/js/bootstrap.js'
-              'plugins/egig-notify/notify.js'
+              '@bootstrap_js'
+              '@notify_js'
               '@DrafterbitSystemBundle/Resources/public/js/layout.js'
-              'plugins/jquery-ui/jquery-ui.min.js'
-              'plugins/jquery-form/jquery.form.js'
-              'plugins/handlebars/handlebars.min.js'
-              'plugins/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js'
+              '@jquery_ui_js'
+              '@jquery_form'
+              '@handlebars'
+              '@bootstrap_colorpicker_js'
               '@DrafterbitSystemBundle/Resources/public/js/customizer.js'
             %}
             <script src="{{ asset_url }}"></script>
