@@ -23,7 +23,8 @@ class WidgetType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => true,
-            'intention' => static::INTENTION
+            'intention' => static::INTENTION,
+            'allow_extra_fields' => true
         ]);
     }
 
