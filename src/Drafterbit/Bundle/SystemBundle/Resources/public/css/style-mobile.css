@@ -1,20 +1,22 @@
 @media (max-width: 767px) {
 
+    html, body {
+        overflow-x:hidden;
+    }
+
     .page-wrapper {
+        position: relative;
         min-height: 300px;
     }
 
-    .navbar-brand {
-        padding:10px;
-        height: 40px;
+    .dt-off-canvas ul:not(:first-child) {
+        margin-left: 5px;
     }
-
-    .dt-off-canvas li.dropdown {
-        display: block;
-    }
-
-    .dt-off-canvas li a.dropdown-toggle {
-        padding: 10px !important;
+    .dt-off-canvas ul li {
+        display: block !important;
+        width: 100%;
+        padding: 5px !important;
+        border-bottom: 1px solid #e1e1e1;
     }
 
     .dt-off-canvas a.navbar-link i,
@@ -33,8 +35,9 @@
     .dt-off-canvas {
         z-index: 99999;
         position: fixed;
-        background-color: #e8e8e8;
-        top:40px;
+        background-color: #e9e9e9;
+        top:50px;
+        bottom:0px;
         left: -200px;
         width: 200px;
         overflow: auto;
@@ -48,7 +51,7 @@
     .user-preferences {
         display: inline-block !important;
         position:fixed;
-        top:5px;
+        top:10px;
         right:15px;
         width:auto;
     }
@@ -57,7 +60,17 @@
         border: none;
     }
 
-    .nav-container {
-        height:40px;
+    .footer {
+        position: relative;
+    }
+
+    .drafterbit-index-filter {
+        display:block;
+        margin:5px 0;
+    }
+
+    .action-filter-container {
+        margin: 0px!important;
+        padding: 0px!important;
     }
 }

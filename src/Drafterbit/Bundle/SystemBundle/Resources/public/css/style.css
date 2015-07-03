@@ -90,7 +90,7 @@ body {
 /* Top Right Navigation Dropdown Styles */
 
 .drafterbit-navbar {
-    color: #555;
+    color: #555 !important;
     height: 50px;
     background-color: #F8F8F8;
     border-bottom: 1px solid #e1e1e1;
@@ -99,10 +99,6 @@ body {
 .drafterbit-navbar li a,
 .drafterbit-navbar a {
     color: inherit;
-}
-
-.nav-container {
-    padding: 10px
 }
 
 

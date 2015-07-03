@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block filter %}
-<div style="display:inline-block; float:right;margin-left:5px;">
+<div class="drafterbit-index-filter">
     <select name="status-filter" class="form-control input-sm filter post-status-filter">
         <option value="all" >- {{ __('Status') }}</option>
         <option value="published" >{{ __('Published') }}</option>
@@ -16,7 +16,7 @@
         <option value="trashed" > {{ __('Trashed') }}</option>
     </select>
 </div>
-<div style="display:inline-block; float:right;margin-left:5px;">
+<div class="drafterbit-index-filter">
     <select name="category-filter" class="form-control input-sm filter post-category-filter">
         <option value="0" >- {{ __('Category') }}</option>
         {% for category in categories %}
@@ -48,8 +48,8 @@
                     <input id="{{ view_id }}-checkall" type="checkbox">
                 </th>
                 <th width="60%">{{ __('Title') }}</th>
-                <th width="20%">{{ __('Author') }}</th>
-                <th width="20%">{{ __('Last Modified') }}</th>
+                <th class="hidden-phone" width="20%">{{ __('Author') }}</th>
+                <th class="hidden-phone" width="20%">{{ __('Last Modified') }}</th>
             </tr>
         </thead>
     </table>

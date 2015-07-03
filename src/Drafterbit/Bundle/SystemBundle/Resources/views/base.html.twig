@@ -48,8 +48,9 @@
                 </div>
             </div>
             {% block content %} {% endblock %}
+            
+            {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
         </div>
-        {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
 
         {% block javascripts %}
             {% javascripts

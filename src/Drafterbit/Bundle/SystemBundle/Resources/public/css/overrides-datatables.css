@@ -31,6 +31,7 @@ table.dataTable thead .sorting:after {
 table.dataTable,
 table.dataTable thead tr th {
     border-bottom: 1px solid #DDDDDD;
+    vertical-align: middle !important;
 }
 
 .dataTables_paginate ul a {

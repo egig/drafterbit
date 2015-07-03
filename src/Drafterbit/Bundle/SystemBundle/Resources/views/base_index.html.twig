@@ -16,24 +16,25 @@
     {% if action is defined %} action="{{ action }}"{% endif %}
     >
     <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
-        <div class="container">
+        <div class="container action-filter-container">
             <div class="row row-sticky-toolbar" style="margin:10px 0;">
-                <div class="pull-right">
-                    <div style="display:inline-block; float:right;margin-left:5px;">
+                <div class="drafterbit-filter-container">
+                    <div class="drafterbit-index-filter">
                         <input type="search" class="form-control input-sm" placeholder="{{ __('Search') }}">
                     </div>
 
                     {% block filter %} {% endblock %}
                 </div>
-
+                <div class="drafterbit-action-container">
                     {% block action %} {% endblock %}
+                </div>
             </div>
         </div>
     </div>
     
     <div class="container">
         <div class="row row-content">
-           <div class="col-md-12 content-full">
+           <div class="col-md-12 table-responsive">
                 {% block table %} {% endblock %}
             </div>
         </div>
