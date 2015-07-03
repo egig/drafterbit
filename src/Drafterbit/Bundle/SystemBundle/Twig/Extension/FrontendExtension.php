@@ -53,9 +53,13 @@ class FrontendExtension extends \Twig_Extension
         $id = $menus[$position];
 
         $items = $this->_getMenuItems($id, $parent);
-
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $baseUrl = $request->getUriForPath('');
         foreach ($items as &$item) {
 
+            // Replace %base_url with current site $baseUrl
+            // this allows user to uses %base_url% in menu item link
+            $item['link'] = strtr($item['link'], ['%base_url%' => $baseUrl]);
 
             $item['child'] = null;
             if($this->_menuHasChild($item['id'], $item['menu_id'])) {

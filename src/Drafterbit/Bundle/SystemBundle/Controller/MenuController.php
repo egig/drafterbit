@@ -30,7 +30,6 @@ class MenuController extends Controller
         $menus = $em->getRepository('DrafterbitSystemBundle:Menu')->findAll();
 
         foreach ($menus as &$menu) {
-
             $items = $em->getRepository('DrafterbitSystemBundle:MenuItem')->findby(['menu' => $menu]);
             $menu->items = $this->buildFamily($items);
         }
