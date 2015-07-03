@@ -199,7 +199,7 @@ class SettingController extends Controller
      * @Route("/setting/theme/customize", name="drafterbit_setting_theme_customize")
      * @Template()
      */
-    public function customizeThemeAction(Request $request)
+    public function customizerAction(Request $request)
     {
         // safety first
         $token = $request->query->get('_token');
