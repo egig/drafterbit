@@ -32,7 +32,7 @@ class UserType extends AbstractType
                 'multiple' => true,
             ])
             ->add('enabled', 'choice', [
-                'choices'  => [1 => 'Enabled', 0 => 'Disabled'],
+                'choices'  => ['1' => 'Enabled', '' => 'Disabled'],
                 'required' => true,
                 'multiple' => false,
                 'expanded' => true

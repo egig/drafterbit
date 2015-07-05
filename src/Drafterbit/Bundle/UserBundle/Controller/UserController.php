@@ -38,7 +38,7 @@ class UserController extends Controller
 
             foreach ($userIds as $id) {
                 $user = $userManager->findUserBy(['id' => $id]);
-                
+
                 try {
                     $userManager->deleteUser($user);
                 } catch (\Exception $e) {
@@ -67,27 +67,40 @@ class UserController extends Controller
             ]);
         }
 
+        $groups = $this->getDoctrine()->getManager()
+            ->getRepository('DrafterbitUserBundle:Group')->findAll();
+
         return [
             'view_id' => $viewId,
+            'groups' => $groups,
             'page_title' => $this->get('translator')->trans('User')
         ];
     }
 
     /**
-     * @Route("/user/data/{status}", name="drafterbit_user_data")
+     * @Route("/user/data", name="drafterbit_user_data")
      */
-    public function dataAction($status)
+    public function dataAction(Request $request)
     {
-        $repo = $this->getDoctrine()
-            ->getRepository('DrafterbitUserBundle:User');
+        $status = $request->query->get('status');
+        $group = $request->query->get('group');
 
-        if('all' == $status) {
-            $users = $repo->findAll();
-        } else {
+        $queryBuilder = $this->getDoctrine()
+            ->getRepository('DrafterbitUserBundle:User')
+            ->createQueryBuilder('u');
+
+        if($group) {
+            $queryBuilder->join('u.groups', 'g', 'WITH', 'g.id = :groupId ')
+                ->setParameter('groupId', $group);
+        }
+
+        if('all' !== $status) {
 
             $isEnabled = $status == 'enabled' ? 1 : 0;
-            $users = $repo->findBy(['enabled' => $isEnabled]);
+            $queryBuilder->where('u.enabled = :enabled')->setParameter('enabled', $isEnabled);
         }
+
+        $users = $queryBuilder->getQuery()->getResult();
 
         $usersArr  = [];
 
@@ -120,13 +133,13 @@ class UserController extends Controller
 
         $pageTitle = 'Edit User';
         $user = $userManager->findUserBy(['id' => $id]);
-        
+
         if(!$user and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
 
         if(!$user) {
-            $user = new User(); 
+            $user = new User();
             $pageTitle = 'New User';
         }
 

@@ -1,79 +1,98 @@
 (function($, drafTerbit) {
 
-    drafTerbit.users = {};
-
     if (window.location.hash == '') {
-        window.location.hash = 'all';
+        window.location.hash = '#group=0&status=all';
     }
 
-    $('.users-status-filter option[value="'+urlHash+'"]').prop('selected', true);
-    
-    var urlHash = window.location.hash.replace('#','');
-    var renderCol1 = function(d,t,f,m){
-        return '<input type="checkbox" name="users[]" value="'+d+'">';
-    }
-    var renderCol2 = function(d,t,f,m){
-        return '<a class="user-edit-link" href="'+drafTerbit.adminUrl+'user/edit/'+f[0]+'">'+d+'</a>'
-    }
-    var renderCol3 = function(d,t,f,m){
-        if(d == 1) {
-            return __('Enabled');
+    var hash = window.location.hash.substr(1);
+
+    drafTerbit.user = function(){
+
+        var renderCol1 = function(d,t,f,m){
+            return '<input type="checkbox" name="users[]" value="'+d+'">';
+        }
+        var renderCol2 = function(d,t,f,m){
+            return '<a class="user-edit-link" href="'+drafTerbit.adminUrl+'user/edit/'+f[0]+'">'+d+'</a>'
+        }
+        var renderCol3 = function(d,t,f,m){
+            if(d == 1) {
+                return __('Enabled');
+            }
+
+            return __('Disabled');
         }
 
-        return __('Disabled');
-    }
-
-      drafTerbit.users.dt =  $("#users-data-table").dataTable(
-        {
-            ajax: {
-                url: drafTerbit.adminUrl+"user/data/"+urlHash,
-            },
-            columnDefs: [
-                {orderable: false, searchable:false, targets:0, render: renderCol1 },
-                {targets:1, render: renderCol2 },
-                {targets:3, render: renderCol3 }
-            ]
-          }
-      );
-  
-        drafTerbit.replaceDTSearch(drafTerbit.users.dt);
-
-        $('#users-checkall').checkAll({showIndeterminate:true});
-
-        filterByStatus = function(status){
-
-            var status = status || 'all';
-
-            drafTerbit.users.dt.api().ajax.url(drafTerbit.adminUrl+"user/data/"+status).load();
+        var filterByStatus = function(){
+            drafTerbit.blog.dt.api().ajax.reload();
             window.location.hash = status;
         }
 
-    // listen table form
-    $('#user-index-form').ajaxForm(
-        {
-            beforeSend: function(){
-                if (confirm(__('Are you sure you want to delete those users, this con not be undone ?'))) {
-                    return true;
-                } else {
-                    return false;
-                }
+        return {
+
+            handleIndexTable: function(tableSelector) {
+                drafTerbit.user.dt =  $(tableSelector).dataTable(
+                  {
+                      ajax: {
+                          data: function(data) {
+                              return Qs.parse(hash);
+                          },
+                          url: drafTerbit.adminUrl+"user/data",
+                      },
+                      columnDefs: [
+                          {orderable: false, searchable:false, targets:0, render: renderCol1 },
+                          {targets:1, render: renderCol2 },
+                          {targets:3, render: renderCol3 }
+                      ]
+                    }
+                );
+
+                drafTerbit.replaceDTSearch(drafTerbit.user.dt);
+
+                  $('#users-checkall').checkAll({showIndeterminate:true});
             },
-            success: function(response){
-                $.notify(response.message, response.status);
-                var urlHash2 = window.location.hash.replace('#','');
-                drafTerbit.users.dt.api().ajax.url(drafTerbit.adminUrl+"user/data/"+urlHash2).load();
+
+            handleIndexForm: function(formSelector) {
+
+                $(formSelector).ajaxForm(
+                    {
+                        beforeSend: function(){
+                            if (confirm(__('Are you sure you want to delete those users, this con not be undone ?'))) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        },
+                        success: function(response){
+                            $.notify(response.message, response.status);
+                            drafTerbit.user.dt.api().ajax.reload();
+                        }
+                    }
+                );
+            },
+
+            listenTableFilter: function(statusFilterSelector, groupFilterSelector, filterSelector) {
+
+                var param = Qs.parse(hash);
+
+                $(statusFilterSelector+' option[value="'+param.status+'"]').prop('selected', true);
+                $(groupFilterSelector+' option[value="'+param.group+'"]').prop('selected', true);
+
+                $(filterSelector).on(
+                    'change',
+                    function(){
+
+                        var param = {
+                            group: $(groupFilterSelector).val(),
+                            status: $(statusFilterSelector).val()
+                        }
+
+                        hash = Qs.stringify(param);
+                        window.location.hash = hash;
+                        drafTerbit.user.dt.api().ajax.reload();
+                    }
+                );
             }
         }
-    );
-
-    //status-filter
-    $('.user-status-filter').on(
-        'change',
-        function(){
-            var s = $(this).val();
-            filterByStatus(s);
-        }
-    );
-
+    }();
 
 })(jQuery, drafTerbit);

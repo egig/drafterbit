@@ -20,7 +20,7 @@ class UserControllerTest extends WebTestCase
 	public function testDataAction()
 	{
 		$client = $this->getAuthorizedClient();
-        $crawler = $client->request('GET', $this->adminPath('user/data/all'));
+        $crawler = $client->request('GET', $this->adminPath('user/data'));
         $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
 	}
 

@@ -1,11 +1,19 @@
 {% extends "DrafterbitSystemBundle::base_index.html.twig" %}
 
 {% block filter %}
-<div style="display:inline-block; float:right;margin-left:5px;">
-    <select name="filter" class="form-control input-sm user-status-filter">
+<div class="drafterbit-index-filter">
+    <select name="status-filter" class="form-control input-sm filter user-status-filter">
         <option value="all" selected >- Status -</option>
         <option value="enabled" >{{ __('Enabled') }}</option>
         <option value="disabled" >{{ __('Disabled') }}</option>
+    </select>
+</div>
+<div class="drafterbit-index-filter">
+    <select name="group-filter" class="form-control input-sm filter user-group-filter">
+        <option value="0" >- {{ __('Group') }} -</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
     </select>
 </div>
 {% endblock %}
@@ -42,7 +50,13 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@DrafterbitUserBundle/Resources/public/js/index.js' %}
+    {% javascripts '@qs' '@DrafterbitUserBundle/Resources/public/js/index.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <script type="text/javascript">
+        drafTerbit.user.handleIndexTable('#users-data-table');
+        drafTerbit.user.handleIndexForm('#user-index-form');
+        drafTerbit.user.listenTableFilter('.user-status-filter', '.user-group-filter', '.filter');
+    </script>
 {% endblock %}

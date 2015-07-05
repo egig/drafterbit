@@ -41,7 +41,7 @@ class PostController extends Controller
             if(!$this->isCsrfTokenValid($viewId, $token)) {
                 throw $this->createAccessDeniedException();
             }
-            
+
             $posts = $request->request->get('posts');
 
             if(!$posts) {
@@ -111,7 +111,6 @@ class PostController extends Controller
 
     /**
      * @Route("/blog/post/data", name="drafterbit_blog_post_data")
-     * @Template()
      */
     public function dataAction(Request $request)
     {
@@ -145,7 +144,7 @@ class PostController extends Controller
                     break;
             }
         }
-        
+
         $posts = $query->getQuery()->getResult();
 
         foreach ($posts as $post) {
@@ -184,7 +183,7 @@ class PostController extends Controller
         }
 
         if(!$post) {
-            $post = new Post(); 
+            $post = new Post();
             $pageTitle = 'New Post';
         }
 
@@ -249,7 +248,7 @@ class PostController extends Controller
 
         // tags needs sparate input
         $tagLabels = $request->request->get('tags');
-        
+
         if($tagLabels) {
             foreach ($tagLabels as $label) {
                 $tag = $em->getRepository('DrafterbitBlogBundle:Tag')->findOneBy(['label' => $tagLabels]);
@@ -358,7 +357,7 @@ class PostController extends Controller
             ->setParameter('type', "history:".$id)
             ->orderBy('p.createdAt', 'desc')
             ->getQuery();
-        
+
         return $query->getResult();
     }
 
@@ -374,10 +373,10 @@ class PostController extends Controller
         // Convert all dashes/underscores into separator
         $flip = $separator == '-' ? '_' : '-';
         $title = preg_replace('!['.preg_quote($flip).']+!u', $separator, $title);
-        
+
         // Remove all characters that are not the separator, letters, numbers, or whitespace.
         $title = preg_replace('![^'.preg_quote($separator).'\pL\pN\s]+!u', '', mb_strtolower($title));
-        
+
         // Replace all separator characters and whitespace by a single separator
         $title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
         return trim($title, $separator);
@@ -394,7 +393,7 @@ class PostController extends Controller
 
         // @todo validation
         $notif['success'] = false;
-        if($blogSetting) {       
+        if($blogSetting) {
             $settingData = [
                 'blog.post_perpage' => $blogSetting['post_perpage'],
                 'blog.feed_shows' => $blogSetting['feed_shows'],
@@ -419,7 +418,7 @@ class PostController extends Controller
     }
 
     public function feedAction()
-    {        
+    {
         $shows = $this->get('system')->get('blog.feed_shows', 10);
 
         $posts = $this->getDoctrine()->getManager()
@@ -450,7 +449,7 @@ class PostController extends Controller
             $post->date = $post->getCreatedAt()->format('d F Y H:i:s');
 
             $post->url = $date.'/'.$post->getSlug();
-            
+
             if (strpos($post->getContent(), '<!--more-->') !== false) {
                 $content = str_replace('<!--more-->', '', $post->getContent());
                 $post->setContent($content);
