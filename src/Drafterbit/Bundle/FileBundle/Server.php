@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class Server {
-    
+
     /**
      * Root of filesystem to browse;
      *
@@ -65,6 +65,7 @@ class Server {
      */
     protected function preparePath($path)
     {
+        $path = ltrim($path, '#');
         return realpath(implode(DIRECTORY_SEPARATOR, [$this->root, trim($path, DIRECTORY_SEPARATOR)]));
     }
 
@@ -134,7 +135,7 @@ class Server {
         $this->fileSystem->remove($path);
         $items['status'] = 'success';
         $items['message'] = "$relativePath just deleted";
-        
+
         return $items;
     }
 
@@ -156,13 +157,13 @@ class Server {
             $data['created'] = $folderName;
             $data['status'] = 'success';
             $data['message'] = "Folder '$folderName' just created";
-            
+
             return $data;
         } catch (IOExceptionInterface $e) {
             $data['message'] = $e->getMessage();
             $data['status'] = 'error';
         }
-        
+
         return $data;
     }
 
@@ -180,9 +181,9 @@ class Server {
 
             $this->fileSystem->rename($path, $newPath);
 
-            $data['status'] = 'success';            
+            $data['status'] = 'success';
             $data['newName'] = $newName;
-            
+
             return $data;
 
         } catch (IOExceptionInterface $e) {
@@ -206,7 +207,7 @@ class Server {
             $this->fileSystem->rename($path, $dest);
 
             $data['status'] = 'success';
-            
+
             return $data;
 
         } catch (IOExceptionInterface $e) {
@@ -301,7 +302,7 @@ class Server {
         foreach ($files as $file) {
 
             $array = [];
-            
+
             if ($file instanceof UploadedFile ) {
 
                 $name = $file->getClientOriginalName();

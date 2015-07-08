@@ -5,7 +5,7 @@
     {
         var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i');
         var match = window.location.search.match(reParam);
-     
+
         return (match && match.length > 1) ? match[1] : '' ;
     }
     var CKEditorFuncNum = getUrlParam('CKEditorFuncNum');
@@ -14,7 +14,8 @@
     if (CKEditorFuncNum != '') {
         aCallback = function(e){
             e.preventDefault();
-            url = $(e.currentTarget).attr('href');
+            var url = $(e.currentTarget).attr('href');
+            url = url.substr(2); // remove #/
 
             window.opener.CKEDITOR.tools.callFunction(CKEditorFuncNum, drafTerbit.contentUrl+url);
             window.close();
@@ -40,7 +41,7 @@
                 csrf: drafTerbit.csrfToken
             },
             locale: drafTerbit.locale,
-            permissions: {             
+            permissions: {
                 create: drafTerbit.permissions.files.create,
                 move: drafTerbit.permissions.files.move,
                 delete: drafTerbit.permissions.files.delete

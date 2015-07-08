@@ -28,7 +28,7 @@
     "magicsuggest": "latest",
     "chekall": "https://github.com/markgx/jquery-check-all.git",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.2.0/chosen_v1.2.0.zip",
-    "finder": "https://github.com/drafterbit/finder.git",
+    "finder": "https://github.com/drafterbit/finder.git#develop",
     "nestedSortable": "https://github.com/ilikenwf/nestedSortable.git",
     "ckeditor": "latest",
     "egig-notify": "latest",
