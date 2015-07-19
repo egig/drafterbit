@@ -6,19 +6,22 @@
         <title>{{ page_title }} | {{ system.sitename~' Administrator' }}</title>
 
         {% block stylesheets %}
-          {% stylesheets
-            '@fontawesome'
-            '@bootstrap_css'
-            '@notify_css'
-            '@bootstrap_colorpicker_css'
-            '@DrafterbitSystemBundle/Resources/public/css/overrides-bootstrap.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style-desktop.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style-mobile.css'
-            '@DrafterbitSystemBundle/Resources/public/css/themes/customizer.css'
-          %}
-          <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
-          {% endstylesheets %}
+            {% stylesheets
+              '@DrafterbitSystemBundle/Resources/sass/drafterbit-bootstrap.scss'
+              '@DrafterbitSystemBundle/Resources/sass/drafterbit.scss'
+              filter="scss"
+            %}
+              <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+            {% stylesheets
+              '@fontawesome'
+              '@notify_css'
+              '@bootstrap_colorpicker_css'
+              '@DrafterbitSystemBundle/Resources/public/css/themes/customizer.css'
+            %}
+              <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
         {% endblock %}
 
     </head>
@@ -197,7 +200,7 @@
             {% javascripts '@jquery'%}
               <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-            
+
             <script src="{{ url('asset_drafterbit_js') }}"></script>
             <script src="{{ url('drafterbit_system_asset_session_js') }}"></script>
             <script type="text/javascript">
@@ -207,7 +210,7 @@
             {% javascripts
               '@bootstrap_js'
               '@notify_js'
-              '@DrafterbitSystemBundle/Resources/public/js/layout.js'
+              '@DrafterbitSystemBundle/Resources/public/js/responsive.js'
               '@jquery_ui_js'
               '@jquery_form'
               '@handlebars'
@@ -219,7 +222,7 @@
 
         {% endblock %}
 
-      
+
       {% verbatim %}
         <script id="widget-item-template" type="text/x-handlebars-template">
           <div class="panel panel-default widget-item-container">

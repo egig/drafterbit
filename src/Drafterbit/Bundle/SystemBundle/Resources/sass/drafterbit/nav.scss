@@ -1,0 +1,34 @@
+.dt-navbar {
+    color: #555;
+    height: 50px;
+    background-color: #F8F8F8;
+    border-bottom: 1px solid #e1e1e1;
+
+    a,
+    li a {
+        color: inherit;
+    }
+
+    .nav-pills li {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .nav-pills li a {
+        min-height: 30px;
+        padding: 5px 10px;
+    }
+
+    .navbar-text {
+        margin: 0px;
+        min-height: 30px;
+        padding: 5px 10px;
+    }
+
+    .dt-profile-avatar {
+        border: 0px;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+}

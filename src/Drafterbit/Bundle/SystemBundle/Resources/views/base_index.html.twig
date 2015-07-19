@@ -3,35 +3,31 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@DrafterbitSystemBundle/Resources/public/css/overrides-datatables.css'
-        '@DrafterbitSystemBundle/Resources/public/plugins/bootstrap-datatables/bootstrap-datatables.css'
+        '@DrafterbitSystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.css'
+        '@DrafterbitSystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.css'
+        '@DrafterbitSystemBundle/Resources/sass/table.scss'
+        filter="scss"
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
 
-{% block content %}
-<form method="POST"
-    id="{{ view_id|default(random()) }}-index-form"
-    {% if action is defined %} action="{{ action }}"{% endif %}
-    >
+{% block content %} <form method="POST" id="{{ view_id|default(random()) }}-index-form" >
     <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
         <div class="container action-filter-container">
-            <div class="row row-sticky-toolbar" style="margin:10px 0;">
-                <div class="drafterbit-filter-container">
-                    <div class="drafterbit-index-filter">
-                        <input type="search" class="form-control input-sm" placeholder="{{ __('Search') }}">
-                    </div>
-
-                    {% block filter %} {% endblock %}
-                </div>
-                <div class="drafterbit-action-container">
+            <div class="row row-sticky-toolbar">
+                <div class="col-md-12">
                     {% block action %} {% endblock %}
+
+                    <div class="dt-table-filter-container clearfix">
+                        <input type="search" class="dt-table-filter form-control input-sm" placeholder="{{ __('Search') }}">
+                        {% block filter %} {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="container">
         <div class="row row-content">
            <div class="col-md-12 table-responsive">
@@ -47,7 +43,8 @@
     {{ parent() }}
     {% javascripts
         '@datatables_js'
-        '@DrafterbitSystemBundle/Resources/public/plugins/bootstrap-datatables/bootstrap-datatables.js'
+        '@DrafterbitSystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.js'
+        '@DrafterbitSystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.js'
         '@jquery_checkall'
         '@jquery_form'
         '@sticky_kit'

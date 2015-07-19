@@ -14,29 +14,24 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    {% stylesheets
-      '@bootstrap_css'
-      '@DrafterbitUserBundle/Resources/public/css/login.css'
+    {% stylesheets filter="scss"
+      '@DrafterbitSystemBundle/Resources/sass/drafterbit-bootstrap.scss'
+      '@DrafterbitSystemBundle/Resources/sass/login.scss'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
   </head>
 
-  <body>
-    <noscript>
-      <style type="text/css"> div:not(.noscript), nav {margin: 0; padding: 0; display: none; } body {margin: 0;padding: 0} </style>
-      <div class="noscript">Please use javascript-supported browser.</div>
-    </noscript>
+  <body class="dt-login">
     <div class="container">
-      <div class="panel panel-default form-signin-panel">
-        <div class="panel-body">
-                <div style="text-align:center; margin-bottom:20px;"><h1 class="title">{{ system.sitename }}</h1></div>       
+        <div class="panel panel-default dt-form-login-panel">
+            <div class="panel-body">
+                <h1 class="title">{{ system.sitename }}</h1>
                 {% if error %}
                     <div class="alert alert-danger" role="alert">{{ error|trans({}, 'DrafterbitUserBundle') }}</div>
                 {% endif %}
-                <form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-signin">
+                <form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-login">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
                         <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username_or_email'|trans({}, 'DrafterbitUserBundle') }}" class="form-control input-sm"/>
@@ -57,12 +52,8 @@
             </div>
         </div>
         <div class="copyright dt-brand">
-            <p>Drafterbit {{ system.version }} &copy; {{ date()|date('Y') }}</p>
+            <p>Drafterbit UI &copy; 2015</p>
         </div>
     </div> <!-- /container -->
-    {% javascripts '@jquery' %}
-      <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    </script>
   </body>
 </html>

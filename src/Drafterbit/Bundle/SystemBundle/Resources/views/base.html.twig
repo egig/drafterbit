@@ -2,20 +2,22 @@
 <html>
     <head>
         <meta charset="utf-8">
-        {# @todo #}
-        {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{{ page_title|striptags }} | {{ system.sitename }}</title>
 
         {% block stylesheets %}
           {% stylesheets
             '@fontawesome'
-            '@bootstrap_css'
             '@notify_css'
-            '@DrafterbitSystemBundle/Resources/public/css/overrides-bootstrap.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style-desktop.css'
-            '@DrafterbitSystemBundle/Resources/public/css/style-mobile.css'
+          %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+          {% endstylesheets %}
+
+          {% stylesheets
+            '@DrafterbitSystemBundle/Resources/sass/drafterbit-bootstrap.scss'
+            '@DrafterbitSystemBundle/Resources/sass/drafterbit.scss'
+            filter="scss"
           %}
             <link rel="stylesheet" href="{{ asset_url }}" />
           {% endstylesheets %}
@@ -30,35 +32,37 @@
     </head>
 
     <body>
-    <noscript>
-      <style type="text/css"> div:not(.noscript), nav {margin: 0; padding: 0; display: none; } body {margin: 0;padding: 0} </style>
-      <div class="noscript">Please use javascript-supported browser.</div>
-    </noscript>
+        <noscript>
+            <style type="text/css"> div:not(.noscript), nav {margin: 0; padding: 0; display: none; } body {margin: 0;padding: 0} </style>
+            <div class="noscript">Please use javascript-supported browser.</div>
+        </noscript>
+
         {% include 'DrafterbitSystemBundle:Partials:nav.html.twig' %}
-        <div class="page-wrapper">
-            <div class="container row-header-container">
-                <div class="row row-header">
-                  <div class="col-lg-12" style="margin-bottom:10px;">
+
+        <div class="dt-main">
+            <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
                       {% block page_title %}
-                          {# e'll unescape title so we can put a link within it #}
+                          {# we'll unescape title so we can put a link within it #}
                           {% autoescape false %}
-                              <h2 style="display:inline-block">{{ page_title }}</h2>
+                              <h2>{{ page_title }}</h2>
                           {% endautoescape %}
                       {% endblock %}
                   </div>
                 </div>
             </div>
-            {% block content %} {% endblock %}
 
-            {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
+            {% block content %}{% endblock %}
         </div>
+        {% include 'DrafterbitSystemBundle:Partials:footer.html.twig' %}
 
         {% block javascripts %}
             {% javascripts
              '@jquery'
              '@bootstrap_js'
              '@notify_js'
-             '@DrafterbitSystemBundle/Resources/public/js/layout.js'
+             '@DrafterbitSystemBundle/Resources/public/js/responsive.js'
               %}
               <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
@@ -66,5 +70,6 @@
             <script src="{{ url('asset_drafterbit_js') }}"></script>
             <script src="{{ url('drafterbit_system_asset_session_js') }}"></script>
         {% endblock %}
+
     </body>
 </html>

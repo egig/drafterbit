@@ -2,6 +2,10 @@ imports:
     - { resource: assets/ckeditor.yml }
 
 assetic:
+    filters:
+        scss:
+           load_paths:
+               - '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/stylesheets'
     assets:
         fontawesome:
             inputs: '%kernel.root_dir%/../vendor/web/fontawesome/css/font-awesome.min.css'

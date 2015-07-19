@@ -1,10 +1,12 @@
-<nav class="drafterbit-navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+<nav class="dt-navbar navbar-fixed-top" role="navigation">
     <div class="container nav-container">
-            <button type="button" class="navbar-toggle btn" >
-                <span class="sr-only">Toggle navigation</span>
-                <span class="fa fa-bars" style="font-size:1.8em"></span>
-            </button>
-            <a class="navbar-brand" href="{{url('drafterbit_system_dashboard')}}"><i class="fa fa-home"></i></a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle btn" >
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand" href="{{url('drafterbit_system_dashboard')}}"><i class="fa fa-home"></i></a>
+            </div>
             <!-- /.navbar-header -->
             <div class="dt-off-canvas">
                 <ul class="nav nav-pills navbar-left">
@@ -40,14 +42,14 @@
                 </ul>
             </div>
 
-            <ul class="nav nav-pills navbar-right user-preferences">
+            <ul class="nav nav-pills navbar-right dt-user-menu">
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img width="20px;" class="profile-avatar" src="{{gravatar_url(app.user.email, 17)}}" alt="{{app.user.username}}"/>
+                        <img width="20px;" class="dt-profile-avatar" src="{{gravatar_url(app.user.email, 17)}}" alt="{{app.user.username}}"/>
                         <!--<i class="fa fa-caret-down"></i>-->
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-user">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-caret">
                             <span class="caret-outer"></span>
                             <span class="caret-inner"></span>

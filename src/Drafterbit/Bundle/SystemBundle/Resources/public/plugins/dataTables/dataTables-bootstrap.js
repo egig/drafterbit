@@ -1,16 +1,16 @@
 /* Set the defaults for DataTables initialisation */
 $.extend(
     true, $.fn.dataTable.defaults, {
-        "bLengthChange": false,
-        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>" + "t" + "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        "dom": "tf" + "<'row dt-table-control'<'col-sm-6'li><'col-sm-6'p>>",
          "language": {
-            "zeroRecords": __("Nothing found - sorry"),
-            "info": __("Showing _START_ to _END_ of _TOTAL_ entries"),
-            "infoEmpty": __("No records available"),
+            "lengthMenu": "Showing <label>_MENU_</label>",
+            "zeroRecords": "Nothing found - sorry",
+            "info": "(_START_ to _END_) of _TOTAL_ entries",
+            "infoEmpty": "No records available",
             "infoFiltered": "(filtered from _MAX_ total records)",
             paginate: {
-                next: __("Next"),
-                previous: __("Previous"),
+                next: "Next",
+                previous: "Previous",
             }
         }
     }

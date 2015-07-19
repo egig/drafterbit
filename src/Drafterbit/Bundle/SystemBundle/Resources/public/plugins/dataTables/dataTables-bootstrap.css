@@ -1,12 +1,22 @@
+div.dataTables_length  {
+    display: inline-block;
+}
+
 div.dataTables_length label {
-    float: left;
-    text-align: left;
     font-weight: normal;
 }
 
-div.dataTables_length select {
-    width: 75px;
+div.dataTables_info {
+    display: inline-block;
+    line-height: 30px;
+    margin-left: 5px;
 }
+
+div.dataTables_info,
+div.dataTables_length {
+    font-size: 12px;
+}
+
 
 div.dataTables_filter label {
     float: right;
@@ -15,15 +25,6 @@ div.dataTables_filter label {
 
 div.dataTables_filter input {
     width: 16em;
-}
-
-div.dataTables_info {
-    padding-top: 8px;
-}
-
-div.dataTables_paginate {
-    float: right;
-    margin: 0;
 }
 
 div.dataTables_paginate ul.pagination {
@@ -231,4 +232,70 @@ div.DTFC_LeftBodyWrapper tbody tr:first-child td {
 div.DTFC_RightFootWrapper table,
 div.DTFC_LeftFootWrapper table {
     border-top: none;
+}
+
+/* Drafterbit Overrides */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    *background: transparent;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    /*content: "\f0dc";*/
+    content: " ";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+
+table.dataTable,
+table.dataTable thead tr th {
+    border-bottom: 1px solid #DDDDDD;
+    vertical-align: middle !important;
+}
+
+.dataTables_paginate ul a {
+    border: none !important;
+}
+
+.dataTables_paginate ul li.active a:hover,
+.dataTables_paginate ul li.active a {
+    background-color: #F5F5F5;
+    color: inherit;
+}
+
+/* bootstrap hack */
+.table-responsive {
+    border: none;
+}
+
+/* mobile */
+@media (max-width: 767px) {
+
+    .dataTables_wrapper .dt-table-control {
+        text-align: center;
+    }
+}
+/* desktop */
+@media (min-width: 767px) {
+
+    div.dataTables_paginate {
+        float: right;
+        margin: 0;
+    }
 }

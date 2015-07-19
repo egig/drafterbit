@@ -19,7 +19,6 @@
   ],
   "dependencies": {
     "jquery": "latest",
-    "bootstrap": "latest",
     "datatables": "latest",
     "jquery-form": "latest",
     "jquery-ui": "latest",
@@ -36,6 +35,7 @@
     "sticky-kit": "latest",
     "mjolnic-bootstrap-colorpicker": "latest",
     "smalot-bootstrap-datetimepicker": "latest",
-    "qs": "https://github.com/hapijs/qs.git"
+    "qs": "https://github.com/hapijs/qs.git",
+    "bootstrap-sass": "~3.3.5"
   }
 }

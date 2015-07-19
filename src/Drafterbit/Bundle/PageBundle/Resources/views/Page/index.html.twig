@@ -8,14 +8,12 @@
 {% endblock %}
 
 {% block filter %}
-<div style="display:inline-block; float:right;margin-left:5px;">
-    <select name="filter" class="form-control input-sm page-status-filter">
+    <select name="filter" class="dt-table-filter form-control input-sm page-status-filter">
         <option value="all"> {{ __('Status') }}</option>
         <option value="published">{{ __('Published') }}</option>
         <option value="pending" >{{ __('Pending Review') }}</option>
         <option value="trashed">{{ __('Trashed') }}</option>
     </select>
-</div>
 {% endblock %}
 
 {% block action %}

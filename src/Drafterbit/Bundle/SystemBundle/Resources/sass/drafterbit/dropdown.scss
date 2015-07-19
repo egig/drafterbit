@@ -1,0 +1,47 @@
+/* Dropdown Carret */
+/* ------------------------------- */
+
+.dropdown-menu .dropdown-caret {
+    float: left;
+    height: 10px;
+    left: 12px;
+    overflow: hidden;
+    position: absolute;
+    top: -10px;
+    width: 18px;
+}
+
+.dropdown-menu-right .dropdown-caret {
+    left: auto;
+    right: 12px;
+}
+
+.dropdown-caret {
+
+    .caret-outer,
+    .caret-inner {
+        display: inline-block;
+        left: 0;
+        margin-left: -1px;
+        position: absolute;
+        top: 0;
+    }
+
+    .caret-outer {
+        border-bottom: 10px solid rgba(0, 0, 0, 0.1);
+        border-left: 11px solid rgba(0, 0, 0, 0);
+        border-right: 11px solid rgba(0, 0, 0, 0);
+        height: auto;
+        left: 0;
+        top: 0;
+        width: auto;
+    }
+
+    .caret-inner {
+        border-bottom:10px solid rgba(255, 255, 255, 0.98);
+        border-left:10px solid rgba(0, 0, 0, 0);
+        border-right:10px solid rgba(0, 0, 0, 0);
+        left: 1px;
+        top: 1px;
+    }
+}

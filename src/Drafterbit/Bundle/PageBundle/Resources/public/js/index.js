@@ -5,13 +5,14 @@
     if (window.location.hash == '') {
         window.location.hash = 'all';
     }
-    
+
     var urlHash = window.location.hash.replace('#','');
 
     $('.page-status-filter option[value="'+urlHash+'"]').prop('selected', true);
 
     drafTerbit.pages.dt = $("#page-data-table").dataTable(
         {
+            responsive: true,
             ajax: {
                 url: drafTerbit.adminUrl+"page/data/"+urlHash,
             },
@@ -54,14 +55,14 @@
     }
 
     changeUncreateAction(urlHash);
-    
+
     $('#page-index-form').ajaxForm({
         beforeSubmit: function(formData, jqForm, x){
 
             for (var i=0; i < formData.length; i++) {
                 if(formData[i].name == 'action') {
 
-                    if (formData[i].value == 'delete') { 
+                    if (formData[i].value == 'delete') {
                         if (confirm(__('Are you sure ? this can not be undone.'))) {
                             return true;
                         }
@@ -70,8 +71,8 @@
                     return true;
                 }
             }
-            
-            return false; 
+
+            return false;
         },
         success: function(response){
            $.notify(response.message, response.status);
