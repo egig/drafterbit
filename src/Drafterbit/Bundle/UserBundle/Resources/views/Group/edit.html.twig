@@ -2,8 +2,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets
-        '@DrafterbitUserBundle/Resources/public/css/group/edit.css'
+    {% stylesheets filter="scss"
+        '@DrafterbitSystemBundle/Resources/sass/vertical-tabs.scss'
     %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
@@ -34,34 +34,36 @@
         <label style="">{{ __('Roles') }}</label>
         <div class="row">
             <div class="col-md-4">
-                <ul class="nav nav-stacked nav-stacked-left" role="tablist">
+                <ul id="dt-group-role-tab" class="nav nav-tabs tabs-left">
                     {% for bundle,attributes in rolesGroup %}
                         <li role="presentation"><a href="#roles-{{ bundle }}" aria-controls="roles-{{ bundle }}" role="tab" data-toggle="tab">{{ __(bundle) }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-8 tab-content">
-                {% for bundle,attributes in rolesGroup %}
-                <div role="tabpanel" class="tab-pane" id="roles-{{ bundle }}">
-                    <ul>
-                    {% for key,lebel in attributes %}
-                        {% for role in form.roles %}
-                            {% if role.vars.value == key %}
-                                <li class="checkbox permission">
-                                    {% if group_is_superadmin %}
-                                        {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
-                                    {% else %}
-                                        {{ form_widget(role) }}
-                                    {% endif %}
+            <div class="col-md-8">
+                <div class="tab-content">
+                    {% for bundle,attributes in rolesGroup %}
+                    <div role="tabpanel" class="tab-pane" id="roles-{{ bundle }}">
+                        <ul>
+                        {% for key,lebel in attributes %}
+                            {% for role in form.roles %}
+                                {% if role.vars.value == key %}
+                                    <li class="checkbox permission">
+                                        {% if group_is_superadmin %}
+                                            {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
+                                        {% else %}
+                                            {{ form_widget(role) }}
+                                        {% endif %}
 
-                                    {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
-                                </li>
-                            {% endif %}
+                                        {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
+                        </ul>
+                    </div>
                     {% endfor %}
-                    </ul>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
@@ -71,7 +73,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@DrafterbitUserBundle/Resources/public/js/group/edit.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script> 
+    {% javascripts '@bootstrap_tabcollapse' '@DrafterbitUserBundle/Resources/public/js/group/edit.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

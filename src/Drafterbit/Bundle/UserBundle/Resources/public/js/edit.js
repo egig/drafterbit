@@ -24,7 +24,7 @@
     form.ajaxForm(
         {
             success: function(data){
-            
+
                 dirty = false;
 
                 if (data.error) {
@@ -44,11 +44,11 @@
                     if (data.error.type == 'auth') {
                         $.notify(data.error.message, 'error');
                     }
-                
+
                 } else {
                     if (data.id) {
                         id.val(data.id);
-                    
+
                         $.notify(data.message, data.status);
                     }
                 }
@@ -58,7 +58,7 @@
 
     // check form before leaving page
     dirty = false;
-    
+
     window.onbeforeunload = (function() {
 
 

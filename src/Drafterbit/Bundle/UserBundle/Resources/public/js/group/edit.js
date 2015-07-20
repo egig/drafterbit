@@ -3,7 +3,7 @@
     if (location.hash) {
         $('a[href="'+location.hash+'"]').tab('show');
     } else {
-        $('ul.nav-stacked-left li:first-child a').tab('show');
+        $('ul#dt-group-role-tab li:first-child a').tab('show');
     }
 
     var form = $('#group-edit-form'),
@@ -21,7 +21,7 @@
     form.ajaxForm(
         {
             success: function(data){
-            
+
                 dirty = false;
 
                 if (data.error) {
@@ -39,11 +39,11 @@
                     if (data.error.type == 'auth') {
                         $.notify(data.error.message, 'error');
                     }
-                
-                } else {                    
+
+                } else {
                     if (data.id) {
                         id.val(data.id);
-                    
+
                         $.notify(data.message, data.status);
                     }
                 }
@@ -54,7 +54,7 @@
 
     // check form before leaving page
     dirty = false;
-    
+
     window.onbeforeunload = (function() {
 
 
@@ -73,4 +73,8 @@
         };
 
     })();
+
+    //tabCollapse
+    $('#dt-group-role-tab').tabCollapse();
+
 })(jQuery);
