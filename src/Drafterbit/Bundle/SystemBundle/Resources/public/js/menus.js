@@ -3,7 +3,7 @@
     if (location.hash) {
         $('a[href="'+location.hash+'"]').tab('show');
     } else {
-        $('ul.nav-stacked-left li:first-child a').tab('show');
+        $('ul#dt-menu-tab li:first-child a').tab('show');
     }
 
     $('.menu-sortable').nestedSortable({
@@ -13,6 +13,9 @@
         items: 'li',
         toleranceElement: '> div'
     });
+
+    //tabCollapse
+    $('#dt-menu-tab').tabCollapse();
 
      // add menu
     $(document).on(
@@ -25,7 +28,7 @@
             var label = null;
             var type = null;
             var link = null;
-            
+
             $.ajax({
                 url: drafTerbit.adminUrl+'menu/item/add',
                 async:false,
@@ -66,7 +69,7 @@
 
         for(i in menus) {
            var parent = $(menus[i]).parent('ol').parent('li');
-           
+
             data[i] = {
                 id: $(menus[i]).attr('id'),
                 parent: parent.attr('id') == undefined ? 0 : parent.attr('id'),
@@ -76,7 +79,7 @@
 
         var name = $(this).parent().siblings('.menu-setting').find('input[name="name"]').val();
         var id = $(this).parent().siblings('.menu-setting').find('input[name="id"]').val();
-        
+
         $.ajax({
             dataType: 'json',
             type: 'POST',
@@ -120,7 +123,7 @@
     );
 
     //delete menu
-    $(document).on( 
+    $(document).on(
         'click',
         '.delete-menu-item',
         function(e){
@@ -178,7 +181,7 @@
                         if (res.error) {
                             if (res.error.type == 'validation') {
                                 for (name in res.error.messages) {
-                                    
+
                                     var input = $(form).find(':input[name="'+name+'"]');
 
                                     if(!input.data('has-error')) {

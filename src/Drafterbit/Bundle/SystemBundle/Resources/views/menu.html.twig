@@ -2,6 +2,12 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+    {% stylesheets filter="scss"
+    '@DrafterbitSystemBundle/Resources/sass/vertical-tabs.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
     {% stylesheets '@DrafterbitSystemBundle/Resources/public/css/menus.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
@@ -11,12 +17,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-        <ul class="nav nav-stacked nav-stacked-left" role="tablist">
-            {% for menu in menus %}
-                <li role="presentation"><a href="#{{ menu.displayText }}" aria-controls="{{ menu.displayText }}" role="tab" data-toggle="tab">{{ menu.displayText }}</a></li>
-            {% endfor %}
-              <li><a href="#add-menu" data-toggle="tab" id="menu-adder"><i class="fa fa-plus"></i></a></li>
-        </ul>
+            <ul id="dt-menu-tab" class="nav nav-tabs tabs-left">
+                {% for menu in menus %}
+                    <li role="presentation"><a href="#{{ menu.displayText }}" aria-controls="{{ menu.displayText }}" role="tab" data-toggle="tab">{{ menu.displayText }}</a></li>
+                {% endfor %}
+                  <li><a href="#add-menu" data-toggle="tab" id="menu-adder"><i class="fa fa-plus"></i></a></li>
+            </ul>
         </div>
         <div class="col-md-9 tab-content">
             {% for menu in menus %}
@@ -101,6 +107,7 @@
         '@jquery_form'
         '@handlebars'
         '@nested_sortable'
+        '@bootstrap_tabcollapse'
         '@DrafterbitSystemBundle/Resources/public/js/menus.js'
      %}
      <script type="text/javascript" src="{{ asset_url }}"></script>
