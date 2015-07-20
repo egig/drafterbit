@@ -4,6 +4,7 @@
 
     drafTerbit.group.dt =   $("#group-data-table").dataTable(
         {
+            responsive: true,
             ajax: {
                 url: drafTerbit.adminUrl+"user/group/data/all",
             },

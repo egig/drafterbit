@@ -2,6 +2,12 @@
 
 {% block stylesheets %}
     {{ parent() }}
+
+    {% stylesheets filter="scss"
+    '@DrafterbitSystemBundle/Resources/sass/vertical-tabs.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
     {% stylesheets '@DrafterbitSystemBundle/Resources/public/css/setting/general.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
@@ -14,47 +20,49 @@
 {% block form %}
 <div class="row">
     <div class="col-md-3">
-        <ul class="nav nav-stacked nav-stacked-left" role="tablist">
+        <ul id="dt-setting-tab" class="nav nav-tabs tabs-left">
             {% for name in field_names %}
                 <li role="presentation"><a href="#setting-{{ name }}" aria-controls="setting-{{ name }}" role="tab" data-toggle="tab">{{ name|capitalize }}</a></li>
             {% endfor %}
         </ul>
     </div>
-    <div class="col-md-9 tab-content">
-        {% for field in form %}
-            {% if field.vars.name not in ['Save', '_token'] %}
-            <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
-                {% for f in field %}
-                    <div class="form-group col-md-6">
-                        {{ form_label(f) }}
-                        {# Render widget #}
-                        {% if 'choice' in f.vars.block_prefixes %}
-                            {% if f.vars.expanded %}
-                                <div>
-                                {% for f_w in f %}
-                                    <label class="checkbox-inline">
-                                        {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
-                                    </label>
-                                {% endfor %}
-                                </div>
+    <div class="col-md-9">
+        <div class="tab-content">
+            {% for field in form %}
+                {% if field.vars.name not in ['Save', '_token'] %}
+                <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
+                    {% for f in field %}
+                        <div class="form-group col-md-6">
+                            {{ form_label(f) }}
+                            {# Render widget #}
+                            {% if 'choice' in f.vars.block_prefixes %}
+                                {% if f.vars.expanded %}
+                                    <div>
+                                    {% for f_w in f %}
+                                        <label class="checkbox-inline">
+                                            {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
+                                        </label>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form_widget(f, {attr: {class:"form-control"}}) }}
+                                {% endif %}
                             {% else %}
                                 {{ form_widget(f, {attr: {class:"form-control"}}) }}
                             {% endif %}
-                        {% else %}
-                            {{ form_widget(f, {attr: {class:"form-control"}}) }}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
-    
+
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@DrafterbitSystemBundle/Resources/public/js/setting/general.js' %}
+    {% javascripts '@bootstrap_tabcollapse' '@DrafterbitSystemBundle/Resources/public/js/setting/general.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

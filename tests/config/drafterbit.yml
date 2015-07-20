@@ -108,6 +108,8 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'
         bootstrap_datetimepicker_js:
             inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
+        bootstrap_tabcollapse:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-tabcollapse/bootstrap-tabcollapse.js'
         sticky_kit:
             inputs: '%kernel.root_dir%/../vendor/web/sticky-kit/jquery.sticky-kit.min.js'
 

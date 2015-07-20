@@ -27,7 +27,7 @@
                         for (var i=0; i < formData.length; i++) {
                             if(formData[i].name == 'action') {
 
-                                if (formData[i].value == 'delete') { 
+                                if (formData[i].value == 'delete') {
                                     if (confirm(__('Are you sure ? this can not be undone.'))) {
                                         return true;
                                     }
@@ -36,8 +36,8 @@
                                 return true;
                             }
                         }
-                        
-                        return false; 
+
+                        return false;
                     },
                     success: function(response){
 
@@ -81,6 +81,7 @@
         handleIndexTable: function (selector, checkSelector) {
 
             drafTerbit.blog.dt =  $(selector).dataTable({
+                responsive: true,
                 columns: [
                     {data: 'id'},
                     {data: 'title'},

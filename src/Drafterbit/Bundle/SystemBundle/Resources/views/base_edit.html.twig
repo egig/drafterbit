@@ -1,21 +1,32 @@
 {% extends "DrafterbitSystemBundle::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter="scss"
+    '@DrafterbitSystemBundle/Resources/sass/edit.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block content %}
     {{ form_start(form, {attr:{id: view_id~"-form"}, action: action}) }}
         <div class="container-fluid sticky-toolbar-wrapper" id="sticky-toolbar">
             <div class="container">
-                <div class="row row-sticky-toolbar" style="margin:10px 0;">
-                    {% block action %} {% endblock %}
+                <div class="row dt-row-sticky-toolbar">
+                    <div class="col-md-12">
+                        {% block action %} {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             {% block form %}{% endblock %}
          </div>
     {{ form_end(form) }}
 {% endblock %}
- 
+
  {% block javascripts %}
      {{ parent() }}
      {% javascripts '@jquery_form' '@sticky_kit' %}

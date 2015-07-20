@@ -32,6 +32,7 @@
             handleIndexTable: function(tableSelector) {
                 drafTerbit.user.dt =  $(tableSelector).dataTable(
                   {
+                      responsive: true,
                       ajax: {
                           data: function(data) {
                               return Qs.parse(hash);

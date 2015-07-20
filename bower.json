@@ -36,6 +36,7 @@
     "mjolnic-bootstrap-colorpicker": "latest",
     "smalot-bootstrap-datetimepicker": "latest",
     "qs": "https://github.com/hapijs/qs.git",
-    "bootstrap-sass": "~3.3.5"
+    "bootstrap-sass": "~3.3.5",
+    "bootstrap-tabcollapse": "~0.2.6"
   }
 }
