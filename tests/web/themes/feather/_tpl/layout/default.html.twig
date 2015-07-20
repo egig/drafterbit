@@ -22,7 +22,7 @@
 
             {% if displayHeaderImage %}
                 #header {
-                    background: url({{ headerImage }}) no-repeat scroll center right;
+                    background: url("{{ headerImage }}") no-repeat scroll center right;
                     background-size:contain;
              }
             {% endif %}
@@ -35,7 +35,7 @@
     <body>
         <div class="wrapper">
             <div class="container">
-                <div class="row">            
+                <div class="row">
                     <div class="twelve columns" id="header">
                         <h1 class="site-title"><a href="{{ base_url() }}">{{ system.sitename }}</a></h1>
                         <h2 class="site-description">{{ system.tagline }}</h2>
@@ -46,7 +46,7 @@
                         {% endautoescape %}
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <!-- Main Page Content and Sidebar -->
                         <!-- Main Content -->

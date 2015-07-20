@@ -37,6 +37,7 @@
     "smalot-bootstrap-datetimepicker": "latest",
     "qs": "https://github.com/hapijs/qs.git",
     "bootstrap-sass": "~3.3.5",
-    "bootstrap-tabcollapse": "~0.2.6"
+    "bootstrap-tabcollapse": "~0.2.6",
+    "nunjucks": "~1.3.4"
   }
 }

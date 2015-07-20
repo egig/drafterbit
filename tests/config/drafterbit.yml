@@ -68,11 +68,13 @@ assetic:
         datatables_js:
             inputs: '%kernel.root_dir%/../vendor/web/datatables/media/js/jquery.dataTables.js'
         finder_js:
-            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/finder.min.js'
+            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/js/finder.min.js'
         finder_css:
-            inputs: '%kernel.root_dir%/../vendor/web/finder/finder.css'
+            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/css/finder.css'
         handlebars:
             inputs: '%kernel.root_dir%/../vendor/web/handlebars/handlebars.min.js'
+        nunjucks:
+            inputs: '%kernel.root_dir%/../vendor/web/nunjucks/browser/nunjucks.min.js'
         jquery_form:
             inputs: '%kernel.root_dir%/../vendor/web/jquery-form/jquery.form.js'
         jquery_ui_js:

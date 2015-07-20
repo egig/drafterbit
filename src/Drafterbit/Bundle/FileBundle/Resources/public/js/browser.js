@@ -14,7 +14,7 @@
     if (CKEditorFuncNum != '') {
         aCallback = function(e){
             e.preventDefault();
-            var url = $(e.currentTarget).attr('href');
+            var url = $(e.currentTarget).data('path');
             url = url.substr(2); // remove #/
 
             window.opener.CKEDITOR.tools.callFunction(CKEditorFuncNum, drafTerbit.contentUrl+url);
@@ -27,7 +27,8 @@
 
     if(DTCustomizer) {
         aCallback = function(a) {
-            var href = $(a.target).parent('a').attr('href');
+            var href = $(a.target).data('path');
+            href = href.substr(2); // remove #/
             window.opener.drafTerbit.useImg(fallback, drafTerbit.contentUrl+href);
             window.close();
         }
