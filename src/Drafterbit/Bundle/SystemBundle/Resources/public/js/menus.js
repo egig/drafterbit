@@ -44,8 +44,7 @@
             });
 
             var source   = $("#menu-item-template").html();
-            var template = Handlebars.compile(source);
-            var html    = template(
+            var html    = nunjucks.renderString(source,
                 {
                     label: label,
                     link: link,

@@ -38,7 +38,7 @@
     {
         var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i');
         var match = window.location.search.match(reParam);
-     
+
         return (match && match.length > 1) ? match[1] : '' ;
     }
 
@@ -51,12 +51,12 @@
         function(e){
             var currentPreviewUrl = e.currentTarget.contentWindow.document.URL
             $('#customizer-form input[name="url"]').val(currentPreviewUrl);
-        
+
             $(this).contents().find('a').on(
                 'click',
                 function(e){
                     e.preventDefault();
-                    
+
                     if (e.currentTarget.href.indexOf(drafTerbit.baseUrl) == -1) {
                         console.log('Can\'t load external url when customizing');
                         return false;
@@ -85,7 +85,7 @@
             //collapse opened opened available widget
             if ($('body').data('expanded')) {
                 var x = $('html').width();
-            
+
                 $('body').animate(
                     {marginLeft:"0px"},
                     300,
@@ -142,15 +142,12 @@
             var ui = atob($(this).data('ui'));
 
             var source   = $("#widget-item-template").html();
-            var template = Handlebars.compile(source);
-            var html    = template(
-                {
-                    position:pos,
-                    widgetId: id,
-                    widgetName: name,
-                    widgetUi: ui,
-                }
-            );
+            var html = nunjucks.renderString(source, {
+                position:pos,
+                widgetId: id,
+                widgetName: name,
+                widgetUi: ui,
+            });
 
             $('.widget-position.in > .widget-container > .widget-sortable').prepend(html);
         }
@@ -175,14 +172,14 @@
                         position: position,
                     },
                     success: function(res, a, b, form){
-                
+
                         if (!res.error) {
                             $(form).find('input[name="widget[id]"]').val(res.id);
                             $(form).find('.dt-widget-remover').data('id', res.id);
                             $(form).closest('.widget-item-container').prop('id', res.id+'-widget-item-container');
-                    
+
                             $.notify(res.message, 'success');
-                    
+
                             refreshPreview();
                         }
 

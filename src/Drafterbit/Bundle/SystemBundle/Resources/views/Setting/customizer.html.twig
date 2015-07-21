@@ -213,7 +213,7 @@
               '@DrafterbitSystemBundle/Resources/public/js/responsive.js'
               '@jquery_ui_js'
               '@jquery_form'
-              '@handlebars'
+              '@nunjucks'
               '@bootstrap_colorpicker_js'
               '@DrafterbitSystemBundle/Resources/public/js/customizer.js'
             %}
@@ -224,16 +224,16 @@
 
 
       {% verbatim %}
-        <script id="widget-item-template" type="text/x-handlebars-template">
+        <script id="widget-item-template" type="text/x-nunjucks-template">
           <div class="panel panel-default widget-item-container">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent=".widget-container" href="#widget-{{widgetId}}">{{widgetName}}</a>
+                  <a data-toggle="collapse" data-parent=".widget-container" href="#widget-{{ widgetId }}">{{ widgetName }}</a>
                 </h4>
               </div>
-              <div id="widget-{{widgetId}}" class="panel-collapse collapse">
+              <div id="widget-{{ widgetId }}" class="panel-collapse collapse">
                 <div class="panel-body">
-                  {{{widgetUi}}}
+                  {{ widgetUi }}
                 </div>
               </div>
           </div>

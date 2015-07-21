@@ -1,0 +1,21 @@
+assetic:
+    assets:
+        bootstrap_css:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap/dist/css/bootstrap.min.css'
+        bootstrap_js:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+        bootstrap-fonts-eot:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot'
+            output: 'fonts/bootstrap/glyphicons-halflings-regular.eot'
+        bootstrap-fonts-ttf:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf'
+            output: 'fonts/bootstrap/glyphicons-halflings-regular.ttf'
+        bootstrap-fonts-svg:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg'
+            output: 'fonts/bootstrap/glyphicons-halflings-regular.svg'
+        bootstrap-fonts-woff:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff'
+            output: 'fonts/bootstrap/glyphicons-halflings-regular.woff'
+        bootstrap-fonts-woff2:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2'
+            output: 'fonts/bootstrap/glyphicons-halflings-regular.woff2'

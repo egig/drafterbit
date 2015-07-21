@@ -63,7 +63,7 @@
 </div>
 
 {% verbatim %}
-<script id="menu-item-template" type="text/x-handlebars-template">
+<script id="menu-item-template" type="text/x-nunjucks-template">
   <div class="panel panel-default menu-item-container">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -105,7 +105,7 @@
      {% javascripts
         '@jquery_ui_js'
         '@jquery_form'
-        '@handlebars'
+        '@nunjucks'
         '@nested_sortable'
         '@bootstrap_tabcollapse'
         '@DrafterbitSystemBundle/Resources/public/js/menus.js'

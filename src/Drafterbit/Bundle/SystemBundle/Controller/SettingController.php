@@ -45,7 +45,7 @@ class SettingController extends Controller
         array_unshift($fieldNames, 'system');
 
         $notif['message'] = false;
-            
+
         if($request->isXmlHttpRequest()) {
 
             $mainForm->handleRequest($request);
@@ -141,7 +141,7 @@ class SettingController extends Controller
 
             $em->persist($widget);
             $em->flush();
-    
+
             return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
         } else {
             return new Response($form->getErrorsAsString());
@@ -172,7 +172,7 @@ class SettingController extends Controller
 
             $order++;
         }
-        
+
         return new Response(1);
     }
 
@@ -228,9 +228,9 @@ class SettingController extends Controller
 
         $optionInputs = [];
         if(isset($themeConfig['option'])) {
-            
+
             foreach ($themeConfig['option'] as $option) {
-            
+
                 if(isset($context[$option['name']])) {
                     $value = $context[$option['name']];
                 } else {
@@ -388,9 +388,9 @@ class SettingController extends Controller
             ->setParameter('position', $position)
             ->setParameter('theme', $theme)
             ->getQuery();
-        
+
         $widgets = $query->getResult();
-        
+
         return $widgets;
     }
 
