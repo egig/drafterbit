@@ -1,0 +1,10 @@
+assetic:
+    assets:
+        jquery:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery/dist/jquery.min.js'
+        jquery_checkall:
+            inputs: '%kernel.root_dir%/../vendor/web/checkall/jquery-check-all.js'
+        jquery_form:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery-form/jquery.form.js'
+        jquery_ui_js:
+            inputs: '%kernel.root_dir%/../vendor/web/jquery-ui/jquery-ui.min.js'

@@ -19,3 +19,33 @@ assetic:
         bootstrap-fonts-woff2:
             inputs: '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2'
             output: 'fonts/bootstrap/glyphicons-halflings-regular.woff2'
+
+        bootstrap_colorpicker_css:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css'
+        bootstrap_colorpicker_js:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
+        bootstrap_colorpicker_img_alpha_h:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha-horizontal.png'
+            output: 'img/bootstrap-colorpicker/alpha-horizontal.png'
+        bootstrap_colorpicker_img_alpha:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha.png'
+            output: 'img/bootstrap-colorpicker/alpha.png'
+        bootstrap_colorpicker_img_hue_h:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue-horizontal.png'
+            output: 'img/bootstrap-colorpicker/hue-horizontal.png'
+        bootstrap_colorpicker_img_hue:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue.png'
+            output: 'img/bootstrap-colorpicker/hue.png'
+        bootstrap_colorpicker_img_sat:
+            inputs: '%kernel.root_dir%/../vendor/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/saturation.png'
+            output: 'img/bootstrap-colorpicker/saturation.png'
+
+        bootstrap_contextmenu:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-contextmenu/bootstrap-contextmenu.js'
+
+        bootstrap_datetimepicker_css:
+            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'
+        bootstrap_datetimepicker_js:
+            inputs: '%kernel.root_dir%/../vendor/web/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
+        bootstrap_tabcollapse:
+            inputs: '%kernel.root_dir%/../vendor/web/bootstrap-tabcollapse/bootstrap-tabcollapse.js'
