@@ -1,0 +1,14 @@
+system:
+    navigation:
+        blog:
+            label: Blog
+            children:
+                post:
+                    label: Post
+                    route: drafterbit_blog_post
+                category:
+                    label: Category
+                    route: drafterbit_blog_category
+                comment:
+                    label: Comeent
+                    route: drafterbit_blog_comment

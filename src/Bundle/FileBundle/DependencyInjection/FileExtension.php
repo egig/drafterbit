@@ -3,9 +3,9 @@
 namespace Drafterbit\Bundle\FileBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
-use Drafterbit\Bridge\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -17,10 +17,8 @@ class FileExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function loadInternal(array $config, ContainerBuilder $container)
+    public function load(array $config, ContainerBuilder $container)
     {
-        $this->mergeNavigation($container, $config['navigation']);
-
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('roles.xml');

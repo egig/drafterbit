@@ -1,0 +1,11 @@
+system:
+    navigation:
+        user:
+            label: User
+            children:
+                user:
+                    label: User
+                    route: drafterbit_user
+                group:
+                    label: Group
+                    route: drafterbit_user_group

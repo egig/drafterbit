@@ -2,8 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: fos_user.yml }
-    - { resource: drafterbit.yml }
+    - { resource: @SystemBundle/Resources/config/system.yml }
 
 framework:
     #esi:             ~
