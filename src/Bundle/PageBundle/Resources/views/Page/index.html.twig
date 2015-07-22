@@ -35,7 +35,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@PageBundle/Resources/public/js/index.js' %}
+    {% javascripts '@PageBundle/Resources/js/index.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts  %}
 {% endblock %}

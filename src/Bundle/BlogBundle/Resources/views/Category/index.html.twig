@@ -6,7 +6,7 @@
         <i class="fa fa-plus" style=""></i> {{ __('New Category') }}
     </a>
     {% endif %}
-    
+
     {% if is_granted('ROLE_CATEGORY_DELETE') %}
     <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
         <i class="fa fa-trash-o"></i> {{ __('Delete') }}
@@ -30,7 +30,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@BlogBundle/Resources/public/js/category/index.js' %}
+    {% javascripts '@BlogBundle/Resources/js/category/index.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets
-        '@SystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.css'
-        '@SystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.css'
+        '@SystemBundle/Resources/web/dataTables/dataTables-bootstrap.css'
+        '@SystemBundle/Resources/web/dataTables/dataTables.responsive.css'
         '@SystemBundle/Resources/scss/table.scss'
         filter="scss"
     %}
@@ -43,8 +43,8 @@
     {{ parent() }}
     {% javascripts
         '@datatables_js'
-        '@SystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.js'
-        '@SystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.js'
+        '@SystemBundle/Resources/web/dataTables/dataTables-bootstrap.js'
+        '@SystemBundle/Resources/web/dataTables/dataTables.responsive.js'
         '@jquery_checkall'
         '@jquery_form'
         '@sticky_kit'

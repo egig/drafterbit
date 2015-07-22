@@ -4,7 +4,7 @@
     {{ parent() }}
     {% stylesheets
         '@chosen_css'
-        '@SystemBundle/Resources/public/plugins/chosen-bootstrap/chosen-bootstrap.css'
+        '@SystemBundle/Resources/web/chosen-bootstrap/chosen-bootstrap.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -74,7 +74,7 @@
     {{ parent() }}
     {% javascripts
         '@chosen_js'
-        '@UserBundle/Resources/public/js/edit.js'
+        '@UserBundle/Resources/js/edit.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

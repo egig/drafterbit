@@ -1,8 +1,5 @@
 {% autoescape false %}
 (function($){
-    window.onbeforeunload = function(){
-        $('.preloader').fadeIn('fast');
-   }
 
    // translator
    window.__ = function(string, replace) {
@@ -47,7 +44,7 @@
 
         var val = $(this).val();
         dt.api().search($(this).val()).draw();
-        
+
       });
     },
 
@@ -55,7 +52,7 @@
   }
 })(jQuery);
 
-// @todo clean phpjs and translation 
+// @todo clean phpjs and translation
 drafTerbit.phpjs = {};
 drafTerbit.phpjs.strtr = function(str, from, to) {
 
