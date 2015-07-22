@@ -45,7 +45,7 @@ class FrontpageType extends AbstractType
     public function getPageOptions()
     {
         $repo = $this->container->get('doctrine')
-            ->getManager()->getRepository('DrafterbitPageBundle:Page');
+            ->getManager()->getRepository('PageBundle:Page');
 
         $pages = $repo->findAll();
 

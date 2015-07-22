@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@DrafterbitPageBundle/Resources/public/css/index.css' %}
+    {% stylesheets '@PageBundle/Resources/public/css/index.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
@@ -42,7 +42,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@DrafterbitPageBundle/Resources/public/js/index.js' %}
+    {% javascripts '@PageBundle/Resources/public/js/index.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts  %}
 {% endblock %}

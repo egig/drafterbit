@@ -36,7 +36,7 @@ class MenuController extends Controller
 
         $form = $this->createForm(new MenuType());
 
-        $pages = $em->getRepository('DrafterbitPageBundle:Page')->findAll();
+        $pages = $em->getRepository('PageBundle:Page')->findAll();
 
         return [
             'form' => $form->createView(),

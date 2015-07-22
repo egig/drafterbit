@@ -14,7 +14,7 @@ class PageEntityFormatter extends BaseEntityFormatter
     public function format($id)
     {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        $post = $em->getRepository('DrafterbitPageBundle:Page')->find($id);
+        $post = $em->getRepository('PageBundle:Page')->find($id);
 
         $label = $post->getTitle();
 

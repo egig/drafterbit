@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@DrafterbitPageBundle/Resources/public/css/editor.css' %}
+    {% stylesheets '@PageBundle/Resources/public/css/editor.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
@@ -46,7 +46,7 @@
 
     <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>
 
-    {% javascripts '@ckeditor' '@DrafterbitPageBundle/Resources/public/js/editor.js'%}
+    {% javascripts '@ckeditor' '@PageBundle/Resources/public/js/editor.js'%}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

@@ -46,7 +46,7 @@ class FrontendLoader implements LoaderInterface
             $routes->addCollection($frontRoutes);
         }
 
-        $defaults = array('_controller' => 'DrafterbitPageBundle:Frontend:view');
+        $defaults = array('_controller' => 'PageBundle:Frontend:view');
 
         // check if configured frontpage is not an app
         if(!array_key_exists($frontPageConfig, $frontPageProvider->all()))

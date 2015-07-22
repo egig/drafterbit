@@ -48,7 +48,7 @@ class PageController extends Controller
             $em = $this->getDoctrine()->getManager();
 
              foreach ($posts as $id) {
-                $post = $em->getRepository('DrafterbitPageBundle:Page')->find($id);
+                $post = $em->getRepository('PageBundle:Page')->find($id);
 
                 switch ($action) {
                     case 'trash':
@@ -96,7 +96,7 @@ class PageController extends Controller
         $pagesArr  = [];
         $query = $this->getDoctrine()
             ->getManager()
-            ->getRepository('DrafterbitPageBundle:Page')
+            ->getRepository('PageBundle:Page')
             ->createQueryBuilder('p');
 
         if($status == 'trashed') {
@@ -149,7 +149,7 @@ class PageController extends Controller
         $pageTitle = 'Edit Page';
         $page = $this->getDoctrine()
             ->getManager()
-            ->getRepository('DrafterbitPageBundle:Page')
+            ->getRepository('PageBundle:Page')
             ->find($id);
         
         if(!$page and ($id != 'new')) {
@@ -184,7 +184,7 @@ class PageController extends Controller
 
         $page = $this->getDoctrine()
             ->getManager()
-            ->getRepository('DrafterbitPageBundle:Page')
+            ->getRepository('PageBundle:Page')
             ->find($id);
 
         $isNew = false;

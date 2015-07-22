@@ -11,7 +11,7 @@ class FrontendController extends BaseFrontendController
     public function viewAction($slug)
     {
         $page = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitPageBundle:Page')->findOneBy(['slug' => $slug]);
+            ->getRepository('PageBundle:Page')->findOneBy(['slug' => $slug]);
 
         if(!$page) {
             throw $this->createNotFoundException('Page Not Found');

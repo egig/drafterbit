@@ -10,7 +10,7 @@ _drafterbit_file:
     resource: "@DrafterbitFileBundle/Resources/config/routing.yml"
 
 _drafterbit_page:
-    resource: "@DrafterbitPageBundle/Resources/config/routing.yml"
+    resource: "@PageBundle/Resources/config/routing.yml"
 
 _drafterbit_blog:
     resource: "@DrafterbitBlogBundle/Resources/config/routing.yml"
