@@ -17,13 +17,13 @@ class PostType extends AbstractType
             ->add('content', 'textarea')
             ->add('published_at', 'text', ['mapped' =>false])
             ->add('categories', 'entity', [
-                'class' => 'DrafterbitBlogBundle:Category',
+                'class' => 'BlogBundle:Category',
                 'property' => 'label',
                 'multiple' => true,
                 'expanded' => true
             ])
             /*->add('tags', 'entity', [
-                'class' => 'DrafterbitBlogBundle:Tag',
+                'class' => 'BlogBundle:Tag',
                 'property' => 'label',
                 'multiple' => true,
                 'expanded' => false

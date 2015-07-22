@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Drafterbit\Bridge\DependencyInjection\Extension;
 
-class DrafterbitBlogExtension extends Extension
+class BlogExtension extends Extension
 {
     public function loadInternal(array $config, ContainerBuilder $container)
     {

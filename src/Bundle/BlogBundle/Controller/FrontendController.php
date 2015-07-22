@@ -122,7 +122,7 @@ class FrontendController extends BaseFrontendController
         $offset = ($page*$perPage)-$perPage;
 
         $query = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitBlogBundle:Post')
+            ->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where("p.type = 'standard'")
             ->setMaxResults($perPage)
@@ -172,7 +172,7 @@ class FrontendController extends BaseFrontendController
         $time = new \DateTime("$year-$month-$date");
 
         $post = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitBlogBundle:Post')
+            ->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where('p.slug=:slug')
             ->andWhere('p.type=:type')
@@ -192,7 +192,7 @@ class FrontendController extends BaseFrontendController
 
         if($parentId = $requestedComment['parent']) {
             $parent = $this->getDoctrine()->getManager()
-                ->getRepository('DrafterbitBlogBundle:Comment')
+                ->getRepository('BlogBundle:Comment')
                 ->find($parentId);
         } else {
             $parent = null;
@@ -225,7 +225,7 @@ class FrontendController extends BaseFrontendController
 
             if($this->get('system')->get('blog.comment_moderation')){
                 $data['post_url'] = $referer;
-                return $this->render('DrafterbitBlogBundle:Comment:pending.html.twig', $data);
+                return $this->render('BlogBundle:Comment:pending.html.twig', $data);
             }
 
             return new RedirectResponse($referer.'#comment-'.$comment->getId());
@@ -249,7 +249,7 @@ class FrontendController extends BaseFrontendController
 
             $data['post_url'] = $referer;
             $data['errors'] = $errors;
-            $content = $this->renderView('DrafterbitBlogBundle:Comment:error.html.twig', $data);
+            $content = $this->renderView('BlogBundle:Comment:error.html.twig', $data);
             return new Response($content);
         }
     }
@@ -279,7 +279,7 @@ class FrontendController extends BaseFrontendController
             'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe',
                 ['email' => $comment->getAuthorEmail()], true)
         ];
-        $messageBody = $this->renderView('DrafterbitBlogBundle:Comment:mail.html.twig', $data);
+        $messageBody = $this->renderView('BlogBundle:Comment:mail.html.twig', $data);
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
@@ -312,7 +312,7 @@ class FrontendController extends BaseFrontendController
     {
         $em = $this->getDoctrine()->getManager();
         
-        $comments = $em->getRepository('DrafterbitBlogBundle:Comment')
+        $comments = $em->getRepository('BlogBundle:Comment')
             ->findBy(['authorEmail' => $email]);
 
         foreach ($comments as $comment) {
@@ -322,6 +322,6 @@ class FrontendController extends BaseFrontendController
 
         $em->flush();
 
-        return $this->render('DrafterbitBlogBundle:Comment:unsubscribed.html.twig');
+        return $this->render('BlogBundle:Comment:unsubscribed.html.twig');
     }
 }

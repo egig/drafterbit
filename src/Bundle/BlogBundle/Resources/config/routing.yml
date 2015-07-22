@@ -1,3 +1,3 @@
 drafterbit_blog:
-    resource: "@DrafterbitBlogBundle/Controller"
+    resource: "@BlogBundle/Controller"
     type:     annotation

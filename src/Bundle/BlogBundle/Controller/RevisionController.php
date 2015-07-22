@@ -26,7 +26,7 @@ class RevisionController extends Controller
      */
     public function viewAction($postId)
     {
-        $repo = $this->getDoctrine()->getManager()->getRepository('DrafterbitBlogBundle:Post');
+        $repo = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Post');
 
 
         $revs = $repo->createQueryBuilder('p')
@@ -72,7 +72,7 @@ class RevisionController extends Controller
         $postId = $request->request->get('id');
 
         $em = $this->getDoctrine()->getManager();
-        $revs = $em->getRepository('DrafterbitBlogBundle:Post')->findby(['type' => 'history:'.$postId]);
+        $revs = $em->getRepository('BlogBundle:Post')->findby(['type' => 'history:'.$postId]);
 
         foreach ($revs as $rev) {
             $em->remove($rev);
@@ -92,7 +92,7 @@ class RevisionController extends Controller
         $postId = $request->request->get('post-id');
 
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('DrafterbitBlogBundle:Post');
+        $repo = $em->getRepository('BlogBundle:Post');
 
         $rev = $repo->find($id);
 

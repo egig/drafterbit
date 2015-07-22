@@ -15,10 +15,10 @@ class CommentType extends AbstractType
             ->add('authorEmail', 'text', ['required' => true, 'label'=>'Email'])
             ->add('authorUrl', 'text')
             ->add('post', 'entity_hidden', [
-                'class' => 'DrafterbitBlogBundle:Post',
+                'class' => 'BlogBundle:Post',
                 ])
             ->add('parent', 'entity_hidden', [
-                'class' => 'DrafterbitBlogBundle:Comment',
+                'class' => 'BlogBundle:Comment',
                 ])
             ->add('content', 'textarea', ['required' => true, 'label'=>'Content'])
             ->add('subscribe', 'checkbox', [

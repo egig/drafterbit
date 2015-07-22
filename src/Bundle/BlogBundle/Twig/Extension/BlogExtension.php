@@ -31,7 +31,7 @@ class BlogExtension extends \Twig_Extension
 
         $comments = $container->get('doctrine')
             ->getManager()
-            ->getRepository('DrafterbitBlogBundle:Comment')
+            ->getRepository('BlogBundle:Comment')
             ->createQueryBuilder('c')
             ->where('c.post=:post')
             ->andWhere('c.status = 1')
@@ -45,7 +45,7 @@ class BlogExtension extends \Twig_Extension
         $content = $this->renderComments($comments);
 
         $jsCommentSnippet = $this->kernel
-            ->getBundle('DrafterbitBlogBundle')
+            ->getBundle('BlogBundle')
             ->getPath().'/Resources/public/js/comment/front-snippet.js';
 
         $js = '<script>'.file_get_contents($jsCommentSnippet).'</script>';

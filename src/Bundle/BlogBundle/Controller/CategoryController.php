@@ -40,7 +40,7 @@ class CategoryController extends Controller
     {
         $category = $this
             ->getDoctrine()
-            ->getManager()->getRepository('DrafterbitBlogBundle:Category')
+            ->getManager()->getRepository('BlogBundle:Category')
             ->find($id);
 
         if(!$category and ($id != 'new')) {
@@ -67,7 +67,7 @@ class CategoryController extends Controller
      */
     public function dataAction()
     {
-        $categories = $this->getDoctrine()->getManager()->getRepository('DrafterbitBlogBundle:Category')->findAll();
+        $categories = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Category')->findAll();
 
         $catArr = [];
         foreach ($categories as $cat) {
@@ -97,7 +97,7 @@ class CategoryController extends Controller
         $id = $requestCat['id'];
 
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('DrafterbitBlogBundle:Category')->find($id);
+        $category = $em->getRepository('BlogBundle:Category')->find($id);
 
         if(!$category) {
             $category = new Category();

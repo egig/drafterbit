@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@DrafterbitBlogBundle/Resources/public/css/comment/index.css' %}
+    {% stylesheets '@BlogBundle/Resources/public/css/comment/index.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
     {% endstylesheets %}
 {% endblock %}
@@ -42,7 +42,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@DrafterbitBlogBundle/Resources/public/js/comment/index.js' %}
+    {% javascripts '@BlogBundle/Resources/public/js/comment/index.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

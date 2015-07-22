@@ -14,7 +14,7 @@ class PostEntityFormatter extends BaseEntityFormatter
     public function format($id)
     {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
+        $post = $em->getRepository('BlogBundle:Post')->find($id);
 
         if($post) {
             $label = $post->getTitle();

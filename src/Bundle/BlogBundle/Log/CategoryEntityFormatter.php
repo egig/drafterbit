@@ -14,7 +14,7 @@ class CategoryEntityFormatter extends BaseEntityFormatter
     public function format($id)
     {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        $cat = $em->getRepository('DrafterbitBlogBundle:Category')->find($id);
+        $cat = $em->getRepository('BlogBundle:Category')->find($id);
 
         if($cat) {
             $label = $cat->getLabel();

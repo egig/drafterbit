@@ -53,7 +53,7 @@ class PostController extends Controller
 
 
              foreach ($posts as $id) {
-                $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
+                $post = $em->getRepository('BlogBundle:Post')->find($id);
 
                 switch ($action) {
                     case 'trash':
@@ -73,7 +73,7 @@ class PostController extends Controller
                     case 'delete':
 
                         // delete the history first
-                        $histories = $em->getRepository('DrafterbitBlogBundle:Post')
+                        $histories = $em->getRepository('BlogBundle:Post')
                             ->createQueryBuilder('p')
                             ->where('p.type  = :type')
                             ->setParameter('type', "history:".$post->getId())
@@ -100,7 +100,7 @@ class PostController extends Controller
                 ]);
         }
 
-        $categories = $em->getRepository('DrafterbitBlogBundle:Category')->findAll();
+        $categories = $em->getRepository('BlogBundle:Category')->findAll();
 
         return [
             'view_id' => $viewId,
@@ -118,7 +118,7 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pagesArr  = [];
         $query = $em
-            ->getRepository('DrafterbitBlogBundle:Post')
+            ->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where("p.type = 'standard'");
 
@@ -176,7 +176,7 @@ class PostController extends Controller
     {
         $pageTitle = 'Edit Post';
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
+        $post = $em->getRepository('BlogBundle:Post')->find($id);
 
         if(!$post and ($id != 'new')) {
             throw  $this->createNotFoundException();
@@ -190,7 +190,7 @@ class PostController extends Controller
         // @todo use object voter
         // $this->denyAccessUnlessGranted('post.edit', $post);
 
-        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findAll();
+        $tags = $em->getRepository('BlogBundle:Tag')->findAll();
 
         $tagOptions = array_map(function($item) {
             return $item->getLabel();
@@ -209,7 +209,7 @@ class PostController extends Controller
 
         $revisions = $this->getRevisions($id);
 
-        $categories = $em->getRepository('DrafterbitBlogBundle:Category')->findAll();
+        $categories = $em->getRepository('BlogBundle:Category')->findAll();
 
         return [
             'categories' => $categories,
@@ -234,7 +234,7 @@ class PostController extends Controller
         $id = $requestPage['id'];
 
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($id);
+        $post = $em->getRepository('BlogBundle:Post')->find($id);
 
         $isNew = false;
         if(!$post) {
@@ -251,7 +251,7 @@ class PostController extends Controller
 
         if($tagLabels) {
             foreach ($tagLabels as $label) {
-                $tag = $em->getRepository('DrafterbitBlogBundle:Tag')->findOneBy(['label' => $tagLabels]);
+                $tag = $em->getRepository('BlogBundle:Tag')->findOneBy(['label' => $tagLabels]);
 
                 if(!$tag) {
                     $tag = new Tag;
@@ -266,7 +266,7 @@ class PostController extends Controller
 
         $em->flush();
 
-        $tags = $em->getRepository('DrafterbitBlogBundle:Tag')->findBy(['label' => $tagLabels]);
+        $tags = $em->getRepository('BlogBundle:Tag')->findBy(['label' => $tagLabels]);
         $post->setTags($tags);
 
         $form = $this->createForm(new PostType(), $post);
@@ -351,7 +351,7 @@ class PostController extends Controller
     public function getRevisions($id)
     {
         $query = $this->getDoctrine()
-            ->getManager()->getRepository('DrafterbitBlogBundle:Post')
+            ->getManager()->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where('p.type=:type')
             ->setParameter('type', "history:".$id)
@@ -384,7 +384,7 @@ class PostController extends Controller
 
     /**
      * @Route("/setting/blog", name="drafterbit_blog_setting")
-     * @Template("DrafterbitBlogBundle::setting.html.twig")
+     * @Template("BlogBundle::setting.html.twig")
      * @Security("is_granted('ROLE_BLOG_SETTING_MANAGE')")
      */
     public function settingAction(Request $request)
@@ -422,7 +422,7 @@ class PostController extends Controller
         $shows = $this->get('system')->get('blog.feed_shows', 10);
 
         $posts = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitBlogBundle:Post')
+            ->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where("p.type = 'standard'")
             ->setMaxResults($shows)
@@ -431,7 +431,7 @@ class PostController extends Controller
 
         $data['posts'] = $this->formatFeeds($posts);
 
-        $content =  $this->renderView('DrafterbitBlogBundle::feed.xml.twig', $data);
+        $content =  $this->renderView('BlogBundle::feed.xml.twig', $data);
 
         // Fixes short opentag issue
         $content = '<?xml version="1.0" encoding="UTF-8"?>'.$content;

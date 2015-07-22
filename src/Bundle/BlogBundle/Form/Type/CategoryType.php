@@ -19,7 +19,7 @@ class CategoryType extends AbstractType
                 'placeholder' => 'No Parent',
                 'required' => false,
                 'property' => 'label',
-                'class' => 'DrafterbitBlogBundle:Category',
+                'class' => 'BlogBundle:Category',
                 ]
             )
             ->add('Save', 'submit');

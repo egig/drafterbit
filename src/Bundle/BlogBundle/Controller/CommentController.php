@@ -46,7 +46,7 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
 
              foreach ($comments as $id) {
-                $comment = $em->getRepository('DrafterbitBlogBundle:Comment')->find($id);
+                $comment = $em->getRepository('BlogBundle:Comment')->find($id);
 
                 switch ($action) {
                     case 'trash':
@@ -100,7 +100,7 @@ class CommentController extends Controller
     public function dataAction($status)
     {
         $query = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitBlogBundle:Comment')
+            ->getRepository('BlogBundle:Comment')
             ->createQueryBuilder('c');
 
         if($status == 'trashed') {
@@ -177,7 +177,7 @@ class CommentController extends Controller
         }
 
         $data['STATUS_SPAM'] = Comment::STATUS_SPAM;
-        return $this->renderView('DrafterbitBlogBundle:Comment:item.html.twig', $data);
+        return $this->renderView('BlogBundle:Comment:item.html.twig', $data);
     }
 
     /**
@@ -189,7 +189,7 @@ class CommentController extends Controller
         $status = $request->request->get('status');
 
         $em = $this->getDoctrine()->getManager();
-        $comment = $em->getRepository('DrafterbitBlogBundle:Comment')
+        $comment = $em->getRepository('BlogBundle:Comment')
             ->find($id);
 
         $comment->setStatus($status);
@@ -210,8 +210,8 @@ class CommentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $post = $em->getRepository('DrafterbitBlogBundle:Post')->find($postId);
-        $parent = $em->getRepository('DrafterbitBlogBundle:Comment')->find($parentId);
+        $post = $em->getRepository('BlogBundle:Post')->find($postId);
+        $parent = $em->getRepository('BlogBundle:Comment')->find($parentId);
 
         $comment = new Comment;
         $author = $this->getUser();
@@ -240,7 +240,7 @@ class CommentController extends Controller
     {
         $id = $request->request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $comment = $em->getRepository('DrafterbitBlogBundle:Comment')->find($id);
+        $comment = $em->getRepository('BlogBundle:Comment')->find($id);
         $comment->setDeletedAt(new \DateTime);
         $em->persist($comment);
         $em->flush();

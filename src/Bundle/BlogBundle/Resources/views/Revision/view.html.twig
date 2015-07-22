@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@DrafterbitBlogBundle/Resources/public/css/revision.css' %}
+    {% stylesheets '@BlogBundle/Resources/public/css/revision.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
@@ -49,7 +49,7 @@
     {{ parent() }}
     {% javascripts
         '@sticky_kit'
-        '@DrafterbitBlogBundle/Resources/public/js/revision.js'
+        '@BlogBundle/Resources/public/js/revision.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
