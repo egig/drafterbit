@@ -5,8 +5,7 @@ drafterbit_file:
     navigation:
         file:
             label: Files
-
-drafterbit_system:
+system:
     navigation:
         menu:
             label: Menu

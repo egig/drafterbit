@@ -5,8 +5,8 @@
     "description": "Web software you can use to create website",
     "keywords": ["cms", "symfony", "bundle"],
     "autoload": {
-        "psr-0": {
-            "": "src/"
+        "psr-4": {
+            "Drafterbit\\": "src/"
         }
     },
     "require": {

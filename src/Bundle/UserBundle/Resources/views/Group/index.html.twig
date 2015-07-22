@@ -1,0 +1,35 @@
+{% extends "SystemBundle::base_index.html.twig" %}
+
+{% block action %}
+    {% if is_granted('ROLE_GROUP_CREATE') %}
+        <a href="{{ url('drafterbit_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
+            <i class="fa fa-plus" style=""></i> {{ __('New Group') }}
+        </a>
+    {% endif %}
+    {% if is_granted('ROLE_GROUP_DELETE') %}
+        <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+            <i class="fa fa-trash-o"></i> {{ __('Delete') }}
+        </button>
+    {% endif %}
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="group-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="group-checkall" type="checkbox">
+                </th>
+                <th width="30%">{{ __('Name') }}</th>
+                <th width="70%">{{ __('Description') }}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@DrafterbitUserBundle/Resources/public/js/group/index.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

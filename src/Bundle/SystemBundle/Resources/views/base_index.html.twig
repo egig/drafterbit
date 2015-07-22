@@ -1,0 +1,54 @@
+{% extends "SystemBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@SystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.css'
+        '@SystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.css'
+        '@SystemBundle/Resources/sass/table.scss'
+        filter="scss"
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %} <form method="POST" id="{{ view_id|default(random()) }}-index-form" >
+    <div class="container-fluid" id="sticky-toolbar">
+        <div class="container action-filter-container">
+            <div class="row dt-row-sticky-toolbar">
+                <div class="col-md-12">
+                    {% block action %} {% endblock %}
+
+                    <div class="dt-table-filter-container clearfix">
+                        <input type="search" class="dt-table-filter form-control input-sm" placeholder="{{ __('Search') }}">
+                        {% block filter %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content">
+           <div class="col-md-12 table-responsive">
+                {% block table %} {% endblock %}
+            </div>
+        </div>
+     </div>
+    <input type="hidden" name="_token" value="{{ csrf_token(view_id) }}"/>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@datatables_js'
+        '@SystemBundle/Resources/public/plugins/dataTables/dataTables-bootstrap.js'
+        '@SystemBundle/Resources/public/plugins/dataTables/dataTables.responsive.js'
+        '@jquery_checkall'
+        '@jquery_form'
+        '@sticky_kit'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

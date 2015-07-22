@@ -1,3 +1,0 @@
-drafterbit_system:
-    resource: "@DrafterbitSystemBundle/Controller/"
-    type:     annotation

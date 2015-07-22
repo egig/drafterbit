@@ -4,7 +4,7 @@ _drafterbit_frontend:
     type: frontend
 
 _drafterbit_system:
-    resource: "@DrafterbitSystemBundle/Resources/config/routing.yml"
+    resource: "@SystemBundle/Resources/config/routing.yml"
 
 _drafterbit_file:
     resource: "@DrafterbitFileBundle/Resources/config/routing.yml"

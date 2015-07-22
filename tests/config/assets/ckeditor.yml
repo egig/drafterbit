@@ -7,7 +7,7 @@ assetic:
         ckeditor_config:
             # we replace default
             # inputs: '%kernel.root_dir%/../vendor/web/ckeditor/config.js'
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/config.js
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/config.js
             output: ckeditor/config.js
         ckeditor_styles:
             inputs: '%kernel.root_dir%/../vendor/web/ckeditor/styles.js'
@@ -25,32 +25,32 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/web/ckeditor/plugins/link/dialogs/link.js'
             output: ckeditor/plugins/link/dialogs/link.js
         ckeditor_plugin_wpmore:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/plugin.js
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/plugin.js
             output: ckeditor/plugins/wpmore/plugin.js
         ckeditor_plugin_wpmore_img:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more_bug.gif
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more_bug.gif
             output: ckeditor/plugins/wpmore/images/more_bug.gif
         ckeditor_plugin_wpmore_img2:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more.gif
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/plugins/wpmore/images/more.gif
             output: ckeditor/plugins/wpmore/images/more.gif
         ckeditor_skin_bootstrap:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/skin.js
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/skin.js
             output: ckeditor/skins/bootstrap/skin.js
         ckeditor_skin_bootstrap_images_close:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/close.png
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/close.png
             output: ckeditor/skins/bootstrap/images/close.png
         ckeditor_skin_bootstrap_images_refresh:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/refresh.png
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/refresh.png
             output: ckeditor/skins/bootstrap/images/refresh.png
         ckeditor_skin_bootstrap_images_lock:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/lock.png
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/images/lock.png
             output: ckeditor/skins/bootstrap/images/lock.png
         ckeditor_skin_bootstrap_dialog:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/dialog.css
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/dialog.css
             output: ckeditor/skins/bootstrap/dialog.css
         ckeditor_skin_bootstrap_icons:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/icons.png
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/icons.png
             output: ckeditor/skins/bootstrap/icons.png
         ckeditor_skin_bootstrap_gecko_css:
-            inputs: @DrafterbitSystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/editor_gecko.css
+            inputs: @SystemBundle/Resources/public/plugins/ckeditor-custom/skins/bootstrap/editor_gecko.css
             output: ckeditor/skins/bootstrap/editor_gecko.css
