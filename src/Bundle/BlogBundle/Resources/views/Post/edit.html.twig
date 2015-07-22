@@ -2,10 +2,10 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {% stylesheets
+  {% stylesheets filter="scss"
   '@magicsuggest_css'
   '@bootstrap_datetimepicker_css'
-  '@BlogBundle/Resources/public/css/editor.css'
+  '@BlogBundle/Resources/scss/editor.scss'
   %}
   <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
   {% endstylesheets %}
@@ -108,8 +108,8 @@
     var tags = {{ tags }} // json encoded
   </script>
 {% endautoescape %}
-  
-  <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>  
+
+  <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>
   {% javascripts
     '@ckeditor'
     '@magicsuggest_js'

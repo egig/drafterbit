@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {% stylesheets '@BlogBundle/Resources/public/css/category/edit.css' %}
+  {% stylesheets filter="scss" '@BlogBundle/Resources/scss/category/edit.scss' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
   {% endstylesheets %}
 {% endblock %}

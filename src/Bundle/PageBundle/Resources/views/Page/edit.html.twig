@@ -1,12 +1,5 @@
 {% extends "SystemBundle::base_edit.html.twig" %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets '@PageBundle/Resources/public/css/editor.css' %}
-    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
-    {% endstylesheets %}
-{% endblock %}
-
 {% block action %}
     {{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-sm btn-success"}}) }}
     <a class="btn btn-sm btn-default" href="{{ url('drafterbit_page') }}">
@@ -39,7 +32,7 @@
     </div>
 </div>
 {% endblock %}
-    
+
 {# @todo clean ckeditor #}
 {% block javascripts %}
     {{ parent() }}
