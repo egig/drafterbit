@@ -19,7 +19,7 @@ class AuthorEntityFormatter extends BaseEntityFormatter
         } else {
 
             $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-            $user = $em->getRepository('DrafterbitUserBundle:User')->find($id);
+            $user = $em->getRepository('UserBundle:User')->find($id);
 
             if($user) {
                 $label = $user->getRealname();

@@ -68,7 +68,7 @@ class UserController extends Controller
         }
 
         $groups = $this->getDoctrine()->getManager()
-            ->getRepository('DrafterbitUserBundle:Group')->findAll();
+            ->getRepository('UserBundle:Group')->findAll();
 
         return [
             'view_id' => $viewId,
@@ -86,7 +86,7 @@ class UserController extends Controller
         $group = $request->query->get('group');
 
         $queryBuilder = $this->getDoctrine()
-            ->getRepository('DrafterbitUserBundle:User')
+            ->getRepository('UserBundle:User')
             ->createQueryBuilder('u');
 
         if($group) {

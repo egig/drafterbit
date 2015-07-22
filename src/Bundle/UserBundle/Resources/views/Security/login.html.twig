@@ -29,25 +29,25 @@
             <div class="panel-body">
                 <h1 class="title">{{ system.sitename }}</h1>
                 {% if error %}
-                    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'DrafterbitUserBundle') }}</div>
+                    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'UserBundle') }}</div>
                 {% endif %}
                 <form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-login">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username_or_email'|trans({}, 'DrafterbitUserBundle') }}" class="form-control input-sm"/>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username_or_email'|trans({}, 'UserBundle') }}" class="form-control input-sm"/>
 
-                        <input type="password" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'DrafterbitUserBundle') }}" class="form-control input-sm"/>
+                        <input type="password" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'UserBundle') }}" class="form-control input-sm"/>
 
               {# PENDNG
                         <div class="checkbox" style="display:inline-block;">
                             <label for="remember_me">
                             <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                            {{ 'security.login.remember_me'|trans({}, 'DrafterbitUserBundle') }}
+                            {{ 'security.login.remember_me'|trans({}, 'UserBundle') }}
                             </label>
                           </div>
               #}
 
-                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'DrafterbitUserBundle') }}" class="btn btn-primary form-control" />
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'UserBundle') }}" class="btn btn-primary form-control" />
                  </form>
             </div>
         </div>

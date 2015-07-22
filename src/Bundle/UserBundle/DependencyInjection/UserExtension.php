@@ -8,7 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
 use Drafterbit\Bridge\DependencyInjection\Extension;
 
-class DrafterbitUserExtension extends Extension
+class UserExtension extends Extension
 {
     public function loadInternal(array $config, ContainerBuilder $container)
     {

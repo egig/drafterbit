@@ -4,7 +4,7 @@ namespace Drafterbit\Bundle\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class DrafterbitUserBundle extends Bundle
+class UserBundle extends Bundle
 {
     public function getParent()
     {

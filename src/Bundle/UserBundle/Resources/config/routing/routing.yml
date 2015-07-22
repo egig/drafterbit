@@ -1,3 +1,3 @@
 drafterbit_user:
-    resource: "@DrafterbitUserBundle/Controller/"
+    resource: "@UserBundle/Controller/"
     type:     annotation

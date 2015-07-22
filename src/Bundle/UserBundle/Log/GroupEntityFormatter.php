@@ -14,7 +14,7 @@ class GroupEntityFormatter extends BaseEntityFormatter
     public function format($id)
     {
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
-        $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
+        $group = $em->getRepository('UserBundle:Group')->find($id);
 
         if($group) {
             $label = $group->getName();

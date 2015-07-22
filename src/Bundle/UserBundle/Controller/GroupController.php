@@ -120,7 +120,7 @@ class GroupController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $pageTitle = 'Edit Group';
-        $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
+        $group = $em->getRepository('UserBundle:Group')->find($id);
         
         if(!$group and ($id != 'new')) {
             throw  $this->createNotFoundException();
@@ -165,7 +165,7 @@ class GroupController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if(!empty($id)) {
-            $group = $em->getRepository('DrafterbitUserBundle:Group')->find($id);
+            $group = $em->getRepository('UserBundle:Group')->find($id);
         }
 
         if(empty($group)) {

@@ -27,7 +27,7 @@ class UserType extends AbstractType
             ->add('url', 'url')
             ->add('bio', 'textarea')
             ->add('groups', 'entity', [
-                'class' => 'DrafterbitUserBundle:Group',
+                'class' => 'UserBundle:Group',
                 'property' => 'name',
                 'multiple' => true,
             ])

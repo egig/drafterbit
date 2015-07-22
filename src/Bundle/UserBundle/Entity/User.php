@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
-use DrafterbitUserBundle\Auth\Configuration;
+use UserBundle\Auth\Configuration;
 
 /**
  * @ORM\Entity
