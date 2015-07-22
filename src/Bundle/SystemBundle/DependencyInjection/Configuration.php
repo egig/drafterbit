@@ -5,9 +5,9 @@ namespace Drafterbit\Bundle\SystemBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Drafterbit\Bridge\DependencyInjection\ExtensionConfiguration;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration extends ExtensionConfiguration
+class Configuration implements ConfigurationInterface
 {
     /**
      * Generates the configuration tree.
@@ -18,7 +18,7 @@ class Configuration extends ExtensionConfiguration
     {
         $treeBuilder = new TreeBuilder();
 
-        $rootNode = $this->createRootNode($treeBuilder);
+        $rootNode = $treeBuilder->root('system');
 
         $rootNode
             ->children()

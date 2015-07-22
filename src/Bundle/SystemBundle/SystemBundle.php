@@ -15,7 +15,7 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SettingFieldPass
 
 class SystemBundle extends Bundle
 {
-    const NAVIGATION = 'drafterbit_system.navigation';
+    const NAVIGATION = 'system.navigation';
 
     public function build(ContainerBuilder $container)
     {
