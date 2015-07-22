@@ -7,8 +7,9 @@
 
         {% block stylesheets %}
             {% stylesheets
-              '@SystemBundle/Resources/sass/drafterbit-bootstrap.scss'
-              '@SystemBundle/Resources/sass/drafterbit.scss'
+              '@SystemBundle/Resources/scss/drafterbit-bootstrap.scss'
+              '@SystemBundle/Resources/scss/drafterbit.scss'
+              '@SystemBundle/Resources/scss/customizer.scss'
               filter="scss"
             %}
               <link rel="stylesheet" href="{{ asset_url }}" />
@@ -18,7 +19,6 @@
               '@fontawesome'
               '@notify_css'
               '@bootstrap_colorpicker_css'
-              '@SystemBundle/Resources/public/css/themes/customizer.css'
             %}
               <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}

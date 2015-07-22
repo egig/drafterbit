@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{parent()}}
-    {% stylesheets '@SystemBundle/Resources/public/css/dashboard.css' %}
+    {% stylesheets filter="scss" '@SystemBundle/Resources/scss/dashboard.scss' %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}

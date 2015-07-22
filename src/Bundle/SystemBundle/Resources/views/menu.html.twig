@@ -4,11 +4,11 @@
     {{ parent() }}
 
     {% stylesheets filter="scss"
-    '@SystemBundle/Resources/sass/vertical-tabs.scss' %}
+    '@SystemBundle/Resources/scss/vertical-tabs.scss' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
-    {% stylesheets '@SystemBundle/Resources/public/css/menus.css' %}
+    {% stylesheets '@SystemBundle/Resources/scss/menus.scss' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
