@@ -9,13 +9,13 @@
 
 {% block filter %}
     <select name="status-filter" class="dt-table-filter form-control input-sm filter post-status-filter">
-        <option value="all" >- {{ __('Status') }}</option>
+        <option value="all" >- {{ __('Status') }} -</option>
         <option value="published" >{{ __('Published') }}</option>
         <option value="pending" > {{ __('Pending Review') }}</option>
         <option value="trashed" > {{ __('Trashed') }}</option>
     </select>
     <select name="category-filter" class="dt-table-filter form-control input-sm filter post-category-filter">
-        <option value="0" >- {{ __('Category') }}</option>
+        <option value="0" >- {{ __('Category') }} -</option>
         {% for category in categories %}
         <option value="{{ category.id }}">{{ category.label }}</option>
         {% endfor %}
