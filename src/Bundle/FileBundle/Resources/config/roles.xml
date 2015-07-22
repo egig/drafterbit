@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="drafterbit_file.roles" type="collection">
+        <parameter key="file.roles" type="collection">
             <parameter key="ROLE_FILE_UPLOAD">Upload File</parameter>
             <parameter key="ROLE_FILE_DELETE">Delete File</parameter>
             <parameter key="ROLE_FILE_MOVE">Move File</parameter>

@@ -12,7 +12,7 @@ use Drafterbit\Bridge\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class DrafterbitFileExtension extends Extension
+class FileExtension extends Extension
 {
     /**
      * {@inheritdoc}

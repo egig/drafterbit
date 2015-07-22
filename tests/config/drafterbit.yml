@@ -1,7 +1,7 @@
 imports:
     - { resource: assets/assets.yml }
 
-drafterbit_file:
+file:
     navigation:
         file:
             label: Files

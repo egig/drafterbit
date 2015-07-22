@@ -7,7 +7,7 @@ _drafterbit_system:
     resource: "@SystemBundle/Resources/config/routing.yml"
 
 _drafterbit_file:
-    resource: "@DrafterbitFileBundle/Resources/config/routing.yml"
+    resource: "@FileBundle/Resources/config/routing.yml"
 
 _drafterbit_page:
     resource: "@PageBundle/Resources/config/routing.yml"

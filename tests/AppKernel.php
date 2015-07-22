@@ -36,7 +36,7 @@ class AppKernel extends Kernel
         // we override some symfony class, so we place our bundles on the bottom
         $bundles[] = new Drafterbit\Bundle\BlogBundle\DrafterbitBlogBundle();
         $bundles[] = new Drafterbit\Bundle\PageBundle\PageBundle();
-        $bundles[] = new Drafterbit\Bundle\FileBundle\DrafterbitFileBundle();
+        $bundles[] = new Drafterbit\Bundle\FileBundle\FileBundle();
         $bundles[] = new Drafterbit\Bundle\UserBundle\UserBundle();
         $bundles[] = new Drafterbit\Bundle\SystemBundle\SystemBundle();
         $bundles[] = new Drafterbit\Bundle\InstallBundle\InstallBundle();
