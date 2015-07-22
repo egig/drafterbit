@@ -1,25 +1,8 @@
-# support for dynamic frontend routing
-_drafterbit_frontend:
-    resource: .
-    type: frontend
-
 _drafterbit_system:
     resource: "@SystemBundle/Resources/config/routing.yml"
 
-_drafterbit_file:
-    resource: "@FileBundle/Resources/config/routing.yml"
-
-_drafterbit_page:
-    resource: "@PageBundle/Resources/config/routing.yml"
-
 _drafterbit_blog:
     resource: "@BlogBundle/Resources/config/routing.yml"
-
-_drafterbit_user:
-    resource: "@UserBundle/Resources/config/routing/routing.yml"
-
-_drafterbit_user_security:
-    resource: "@UserBundle/Resources/config/routing/security.xml"
 
 #_drafterbit_user_profile:
 #    resource: "@UserBundle/Resources/config/routing/profile.xml"
