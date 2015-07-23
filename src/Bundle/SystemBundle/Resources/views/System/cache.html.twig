@@ -1,8 +1,16 @@
 {% extends "SystemBundle::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter="scss" '@SystemBundle/Resources/scss/cache.scss' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+
 {% block content %}
 <div class="container">
-    <div class="row" style="margin-bottom:10px;">
+    <div class="row dt-cache-toolbar">
         {% if is_granted('ROLE_CACHE_RENEW') %}
         <div class="col-md-8">
             <form method="POST">

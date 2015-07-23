@@ -1,13 +1,13 @@
 (function($){
      // sort widgets
-     $('#panel-row-left, #panel-row-right').sortable(
+     $('#dt-panels-left, #dt-panels-right').sortable(
          {
             items: "div.panel-item:not(.placeholder)",
             connectWith:'.panel-row',
             placeholder: 'placeholder',
             forcePlaceholderSize: true,
             update: function(e, ui) {
-                    
+
                 //var parent = ui.item.parent();
                 var pos = $(e.target).data('pos');
 

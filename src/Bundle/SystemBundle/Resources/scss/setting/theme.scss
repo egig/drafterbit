@@ -1,0 +1,18 @@
+.dt-themes-container {
+    margin-top: 10px;
+
+    .dt-theme-item {
+        border: 1px solid #e1e1e1;
+        padding: 10px;
+        border-radius: 2px;
+
+        .dt-screenshot-container {
+            height:160px;
+            overflow:hidden;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}

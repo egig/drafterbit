@@ -46,7 +46,7 @@ class BlogExtension extends \Twig_Extension
 
         $jsCommentSnippet = $this->kernel
             ->getBundle('BlogBundle')
-            ->getPath().'/Resources/public/js/comment/front-snippet.js';
+            ->getPath().'/Resources/js/comment/front-snippet.js';
 
         $js = '<script>'.file_get_contents($jsCommentSnippet).'</script>';
 
@@ -86,7 +86,7 @@ class BlogExtension extends \Twig_Extension
         foreach ($comments as $comment) {
 
             if($comment->getParent() == $parent) {
-                
+
                 $newComment =  new Comment;
                 $newComment->setParent($comment);
                 $form = $this->kernel->getContainer()->get('form.factory')->create(new CommentType, $newComment);

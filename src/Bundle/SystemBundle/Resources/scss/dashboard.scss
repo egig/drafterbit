@@ -1,6 +1,10 @@
-.panel-row {
-    min-height: 30px;
-    padding-bottom: 30px;
+.panel-container {
+    margin-top: 10px;
+
+    .panel-row {
+        min-height: 30px;
+        padding-bottom: 30px;
+    }
 }
 
 .placeholder {

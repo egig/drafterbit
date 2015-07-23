@@ -10,7 +10,7 @@
 {% block content %}
     <div class="container">
         <div class="row panel-container">
-            <div class="panel-row col-md-6" id="panel-row-left" data-pos="left">
+            <div class="panel-row col-md-6" id="dt-panels-left" data-pos="left">
                 {% for panel in left_panels %}
                     <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
                         {% autoescape false %}
@@ -20,7 +20,7 @@
                 {% endfor %}
             </div>
 
-            <div class="panel-row col-md-6" id="panel-row-right" data-pos="right">
+            <div class="panel-row col-md-6" id="dt-panels-right" data-pos="right">
                    {% for panel in right_panels %}
                     <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
                         {% autoescape false %}
