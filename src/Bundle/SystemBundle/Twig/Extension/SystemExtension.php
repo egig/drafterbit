@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\SystemBundle\Twig\Extension;
 use Symfony\Component\DependencyInjection\Container;
 use Drafterbit\Bundle\SystemBundle\SystemBundle;
 
-class DrafterbitSystemExtension extends \Twig_Extension
+class SystemExtension extends \Twig_Extension
 {
     protected $container;
 

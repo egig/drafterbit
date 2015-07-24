@@ -146,7 +146,7 @@ class FrontendExtension extends \Twig_Extension
     public function widget($position, $titleTemplate = '{{ title }}', $contentTemplate = "{{ content }}") {
 
         $qb = $this->container->get('database_connection')->createQueryBuilder();
-        
+
         $theme = $this->container->getParameter('theme');
 
         $widgets = $qb->select('*')
