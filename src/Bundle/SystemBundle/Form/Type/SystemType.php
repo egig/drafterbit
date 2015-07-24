@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Drafterbit\System\FrontPage\FrontPageProvider;
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SystemType extends AbstractType
@@ -35,7 +35,7 @@ class SystemType extends AbstractType
             ->add('time_format', null, ['data' => $this->data('system.time_format')]);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'required' => false,

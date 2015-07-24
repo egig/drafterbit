@@ -4,7 +4,7 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WidgetType extends AbstractType
 {
@@ -19,7 +19,7 @@ class WidgetType extends AbstractType
             ->add('position', 'hidden');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'csrf_protection' => true,

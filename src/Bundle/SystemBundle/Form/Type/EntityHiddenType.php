@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Drafterbit\Bundle\SystemBundle\Form\DataTransformer\EntityToIdTransformer;
 
 class EntityHiddenType extends AbstractType
@@ -26,7 +26,7 @@ class EntityHiddenType extends AbstractType
         $builder->addModelTransformer($transformer);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array('class'))

@@ -4,7 +4,7 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\System\FrontPage\FrontPageProvider;
 
@@ -19,7 +19,7 @@ class FrontpageType extends AbstractType
         $this->container = $container;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $options = $this->getPageOptions();
 

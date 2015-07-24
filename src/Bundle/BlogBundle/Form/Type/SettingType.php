@@ -4,7 +4,7 @@ namespace Drafterbit\Bundle\BlogBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Drafterbit\Bundle\SystemBundle\System\FrontpageProvider;
 
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
@@ -39,7 +39,7 @@ class SettingType extends AbstractType
             //->add('Save', 'submit');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'required' => false,
