@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Drafterbit\Bundle\SystemBundle\FrontpageProvider;
+use Drafterbit\Bundle\SystemBundle\System\FrontpageProvider;
 
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
 

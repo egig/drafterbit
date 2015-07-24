@@ -68,7 +68,7 @@
             <argument type="service" id="translator"/>
         </service>
 
-        <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\Frontpage\Search">
+        <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\System\Frontpage\Search">
             <tag name="drafterbit_system.frontpage"></tag>
             <argument type="service" id="service_container"/>
         </service>
@@ -93,12 +93,12 @@
 
         <service id="dashboard" alias="drafterbit_system.dashboard_manager"/>
 
-        <service id="drafterbit_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\Dashboard\LogPanel">
+        <service id="drafterbit_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\LogPanel">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
 
-        <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\Dashboard\InfoPanel">
+        <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\InfoPanel">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
@@ -112,12 +112,12 @@
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="drafterbit_system.widget.search" class="Drafterbit\Bundle\SystemBundle\Widget\SearchWidget">
+        <service id="drafterbit_system.widget.search" class="Drafterbit\Bundle\SystemBundle\System\Widget\SearchWidget">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.widget" />
         </service>
 
-        <service id="drafterbit_system.widget.text" class="Drafterbit\Bundle\SystemBundle\Widget\TextWidget">
+        <service id="drafterbit_system.widget.text" class="Drafterbit\Bundle\SystemBundle\System\Widget\TextWidget">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.widget" />
         </service>
@@ -135,7 +135,7 @@
             <tag name="form.type" alias="entity_hidden"/>
         </service>
 
-        <service id="drafterbit_system.log.formatter.author" class="Drafterbit\Bundle\SystemBundle\Log\AuthorEntityFormatter">
+        <service id="drafterbit_system.log.formatter.author" class="Drafterbit\Bundle\SystemBundle\System\Log\AuthorEntityFormatter">
             <argument type="service" id="kernel" />
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
@@ -143,7 +143,7 @@
         <!-- setting -->
         <service id="drafterbit_system.setting.field_manager" class="Drafterbit\System\Setting\FieldManager"/>
 
-        <service id="drafterbit_system.setting.field.general" class="Drafterbit\Bundle\SystemBundle\Setting\GeneralField">
+        <service id="drafterbit_system.setting.field.general" class="Drafterbit\Bundle\SystemBundle\System\Setting\GeneralField">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.setting.field" />
         </service>

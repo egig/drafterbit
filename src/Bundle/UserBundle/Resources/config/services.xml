@@ -4,11 +4,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="drafterbit_log_display_formatter.user" class="Drafterbit\Bundle\UserBundle\Log\UserEntityFormatter">
+        <service id="drafterbit_log_display_formatter.user" class="Drafterbit\Bundle\UserBundle\System\Log\UserEntityFormatter">
             <argument type="service" id="kernel" />
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
-        <service id="drafterbit_log_display_formatter.group" class="Drafterbit\Bundle\UserBundle\Log\GroupEntityFormatter">
+        <service id="drafterbit_log_display_formatter.group" class="Drafterbit\Bundle\UserBundle\System\Log\GroupEntityFormatter">
             <argument type="service" id="kernel" />
             <tag name="drafterbit_system_log.display_formatter" />
         </service>
