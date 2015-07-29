@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class DrafterbitInstallExtension extends Extension
+class InstallExtension extends Extension
 {
     /**
      * {@inheritdoc}

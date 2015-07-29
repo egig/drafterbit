@@ -24,12 +24,16 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
     }
     /**
      * {@inheritDoc}
+     * @todo get user email during install
      */
     public function load(ObjectManager $manager)
     {
         $initData = [
-            'sitename' => 'My Awesome Website',
-            'frontpage' => 'blog'
+            'system.site_name' => 'My Awesome Website',
+            'system.site_description' => 'Just an Awesome DrafTerbit Website',
+            'system.frontpage' => 'blog',
+            'system.date_format' => 'd m Y',
+            'system.time_format' => 'H:i'
         ];
         $this->container->get('system')->update($initData);
     }
