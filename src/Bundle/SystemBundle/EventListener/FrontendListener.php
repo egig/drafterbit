@@ -53,8 +53,20 @@ class FrontendListener implements EventSubscriberInterface
 
             $themesPath = $this->container->getParameter('themes_path');
 
+            $kernel = $this->container->get('kernel');
+
+            // @todo create template structure spec
+            // @todo optimize this, maybe put during compilation
+            foreach ($kernel->getBundles() as $name => $bundle) {
+                if(is_dir($bundleTemplatePath = $bundle->getPath().'/Resources/web/_tpl')) {
+                    $this->container->get('twig.loader')->prependPath($bundleTemplatePath);
+                }
+            }
+
             // prepend theme path
-            $this->container->get('twig.loader')->prependPath($themesPath.'/'.$theme.'/_tpl');
+            if(is_dir($themeTemplatePath = $themesPath.'/'.$theme.'/_tpl')) {
+                $this->container->get('twig.loader')->prependPath($themeTemplatePath);
+            }
 
             // @todo
             // if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {

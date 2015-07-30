@@ -35,7 +35,7 @@ class PageController extends Controller
             if(!$this->isCsrfTokenValid($viewId, $token)) {
                 throw $this->createAccessDeniedException();
             }
-            
+
             $posts = $request->request->get('pages');
 
             if(!$posts) {
@@ -116,7 +116,7 @@ class PageController extends Controller
                     break;
             }
         }
-        
+
         $pages = $query->getQuery()->getResult();
 
         $pagesArr  = [];
@@ -141,7 +141,7 @@ class PageController extends Controller
     /**
      * @Route("/page/edit/{id}", name="drafterbit_page_edit")
      * @Template()
-     * @todo crate permission attr constant 
+     * @todo crate permission attr constant
      * @Security("is_granted('ROLE_PAGE_EDIT')")
      */
     public function editAction($id)
@@ -151,13 +151,13 @@ class PageController extends Controller
             ->getManager()
             ->getRepository('PageBundle:Page')
             ->find($id);
-        
+
         if(!$page and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
 
         if(!$page) {
-            $page = new Page(); 
+            $page = new Page();
             $pageTitle = 'New Page';
         }
 
@@ -258,15 +258,25 @@ class PageController extends Controller
         return new JsonResponse($response);
     }
 
+    /**
+     * Get layout options from current layout theme directory
+     *
+     * @todo handle the view if there is no theme
+     * @return array
+     */
     private function getLayoutOptions()
     {
         $theme = $this->container->getParameter('theme');
         $themesPath = $this->container->getParameter('themes_path');
 
-        $files = (new Finder)->depth(0)
-            ->in($themesPath.'/'.$theme.'/_tpl/layout');
-
         $layouts = [];
+        if(is_dir($layoutPath = $themesPath.'/'.$theme.'/_tpl/layout')) {
+            $files = (new Finder)->depth(0)
+                ->in($layoutPath);
+        } else {
+            $files = [];
+        }
+
         foreach ($files as $file) {
             $layouts[$file->getfilename()] = $file->getfilename();
         }
