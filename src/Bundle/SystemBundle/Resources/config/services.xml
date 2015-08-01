@@ -8,11 +8,14 @@
         <parameter key="twig.extension.assets.class">Drafterbit\Bundle\SystemBundle\Twig\Extension\AssetsExtension</parameter>
         <parameter key="web_profiler.debug_toolbar.class">Drafterbit\Bundle\SystemBundle\EventListener\WebDebugToolbarListener</parameter>
 
+        <!-- web -->
+        <parameter key="web">%kernel.root_dir%/../</parameter>
+
         <!-- admin -->
         <parameter key="admin">admin</parameter>
 
         <!-- theme -->
-        <parameter key="themes_path">%kernel.root_dir%/../web/themes</parameter>
+        <parameter key="themes_path">%web%/themes</parameter>
         <parameter key="theme">feather</parameter>
 
         <!-- log connection param -->

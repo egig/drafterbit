@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="upload_dir">upload</parameter>
-        <parameter key="upload_path">%kernel.root_dir%/../web/%upload_dir%</parameter>
+        <parameter key="upload_path">%web%/%upload_dir%</parameter>
     </parameters>
 
     <services>

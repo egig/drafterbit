@@ -1,3 +1,7 @@
+parameters:
+    vendor_dir: %kernel.root_dir%/../vendor
+
+
 imports:
     - { resource: bootstrap.yml }
     - { resource: ckeditor.yml }
@@ -8,36 +12,36 @@ assetic:
     filters:
         scss:
            load_paths:
-               - '%kernel.root_dir%/../vendor/web/bootstrap-sass/assets/stylesheets'
+               - '%vendor_dir%/web/bootstrap-sass/assets/stylesheets'
     assets:
         notify_css:
-            inputs: '%kernel.root_dir%/../vendor/web/egig-notify/notify.css'
+            inputs: '%vendor_dir%/web/egig-notify/notify.css'
         notify_js:
-            inputs: '%kernel.root_dir%/../vendor/web/egig-notify/notify.js'
+            inputs: '%vendor_dir%/web/egig-notify/notify.js'
         chosen_css:
-            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.min.css'
+            inputs: '%vendor_dir%/web/chosen/chosen.min.css'
         chosen_js:
-            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen.jquery.min.js'
+            inputs: '%vendor_dir%/web/chosen/chosen.jquery.min.js'
         chosen_sprite:
-            inputs: '%kernel.root_dir%/../vendor/web/chosen/chosen-sprite.png'
+            inputs: '%vendor_dir%/web/chosen/chosen-sprite.png'
             output: css/chosen-sprite.png
         datatables_css:
-            inputs: '%kernel.root_dir%/../vendor/web/datatables/media/css/jquery.dataTables.css'
+            inputs: '%vendor_dir%/web/datatables/media/css/jquery.dataTables.css'
         datatables_js:
-            inputs: '%kernel.root_dir%/../vendor/web/datatables/media/js/jquery.dataTables.js'
+            inputs: '%vendor_dir%/web/datatables/media/js/jquery.dataTables.js'
         finder_js:
-            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/js/finder.min.js'
+            inputs: '%vendor_dir%/web/finder/dist/js/finder.min.js'
         finder_css:
-            inputs: '%kernel.root_dir%/../vendor/web/finder/dist/css/finder.css'
+            inputs: '%vendor_dir%/web/finder/dist/css/finder.css'
         nunjucks:
-            inputs: '%kernel.root_dir%/../vendor/web/nunjucks/browser/nunjucks.min.js'
+            inputs: '%vendor_dir%/web/nunjucks/browser/nunjucks.min.js'
         magicsuggest_css:
-            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest/magicsuggest-min.css'
+            inputs: '%vendor_dir%/web/magicsuggest/magicsuggest-min.css'
         magicsuggest_js:
-            inputs: '%kernel.root_dir%/../vendor/web/magicsuggest/magicsuggest-min.js'
+            inputs: '%vendor_dir%/web/magicsuggest/magicsuggest-min.js'
         nested_sortable:
-            inputs: '%kernel.root_dir%/../vendor/web/nestedSortable/jquery.ui.nestedSortable.js'
+            inputs: '%vendor_dir%/web/nestedSortable/jquery.ui.nestedSortable.js'
         qs:
-            inputs: '%kernel.root_dir%/../vendor/web/qs/dist/qs.js'
+            inputs: '%vendor_dir%/web/qs/dist/qs.js'
         sticky_kit:
-            inputs: '%kernel.root_dir%/../vendor/web/sticky-kit/jquery.sticky-kit.min.js'
+            inputs: '%vendor_dir%/web/sticky-kit/jquery.sticky-kit.min.js'

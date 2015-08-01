@@ -1,22 +1,22 @@
 assetic:
     assets:
         fontawesome:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/css/font-awesome.min.css'
+            inputs: '%vendor_dir%/web/fontawesome/css/font-awesome.min.css'
         font-awesome-otf:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/FontAwesome.otf'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/FontAwesome.otf'
             output: 'fonts/FontAwesome.otf'
         font-awesome-eot:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.eot'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.eot'
             output: 'fonts/fontawesome-webfont.eot'
         font-awesome-svg:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.svg'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.svg'
             output: 'fonts/fontawesome-webfont.svg'
         font-awesome-ttf:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.ttf'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.ttf'
             output: 'fonts/fontawesome-webfont.ttf'
         font-awesome-woff:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.woff'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.woff'
             output: 'fonts/fontawesome-webfont.woff'
         font-awesome-woff2:
-            inputs: '%kernel.root_dir%/../vendor/web/fontawesome/fonts/fontawesome-webfont.woff'
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.woff'
             output: 'fonts/fontawesome-webfont.woff2'

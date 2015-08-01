@@ -2,27 +2,27 @@
 assetic:
     assets:
         ckeditor:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/ckeditor.js'
+            inputs: '%vendor_dir%/web/ckeditor/ckeditor.js'
             output: ckeditor/ckeditor.js
         ckeditor_config:
             # we replace default
-            # inputs: '%kernel.root_dir%/../vendor/web/ckeditor/config.js'
+            # inputs: '%vendor_dir%/web/ckeditor/config.js'
             inputs: @SystemBundle/Resources/web/ckeditor-custom/config.js
             output: ckeditor/config.js
         ckeditor_styles:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/styles.js'
+            inputs: '%vendor_dir%/web/ckeditor/styles.js'
             output: ckeditor/styles.js
         ckeditor_contents:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/contents.css'
+            inputs: '%vendor_dir%/web/ckeditor/contents.css'
             output: ckeditor/contents.css
         ckeditor_lang_en:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/lang/en.js'
+            inputs: '%vendor_dir%/web/ckeditor/lang/en.js'
             output: ckeditor/lang/en.js
         ckeditor_plugin_image:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/plugins/image/dialogs/image.js'
+            inputs: '%vendor_dir%/web/ckeditor/plugins/image/dialogs/image.js'
             output: ckeditor/plugins/image/dialogs/image.js
         ckeditor_plugin_link:
-            inputs: '%kernel.root_dir%/../vendor/web/ckeditor/plugins/link/dialogs/link.js'
+            inputs: '%vendor_dir%/web/ckeditor/plugins/link/dialogs/link.js'
             output: ckeditor/plugins/link/dialogs/link.js
         ckeditor_plugin_wpmore:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/plugins/wpmore/plugin.js

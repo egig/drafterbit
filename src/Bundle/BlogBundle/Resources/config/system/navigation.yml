@@ -10,5 +10,5 @@ system:
                     label: Category
                     route: drafterbit_blog_category
                 comment:
-                    label: Comeent
+                    label: Comment
                     route: drafterbit_blog_comment
