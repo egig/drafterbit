@@ -35,6 +35,13 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
             'system.date_format' => 'd m Y',
             'system.time_format' => 'H:i'
         ];
+
+        if($this->container->has('installer')) {
+            $connection = $this->container->get('installer')->getConnection();
+            
+            $this->container->get('system')->setConnection($connection);
+        }
+
         $this->container->get('system')->update($initData);
     }
 }

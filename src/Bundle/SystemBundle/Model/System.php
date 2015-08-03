@@ -33,30 +33,46 @@ class System
     public function __construct(Connection $connection)
     {
         $this->databaseConnection =  $connection;
-        $this->initData();
     }
 
-    private function initData()
+    public function setConnection(Connection $connection)
     {
-        $rows = $this->data = $this->databaseConnection
-            ->createQueryBuilder()
-            ->select('*')
-            ->from($this->systemTable, $this->systemTable)
-            ->execute()
-            ->fetchAll();
+        $this->databaseConnection =  $connection;
+    }
 
-        $data = [];
-        $merged = [];
-
-        foreach ($rows as $row) {
-            static::deNotated($data[$row['key']], $row['key'], $row['value']);
+    /**
+     * @todo integrate this with installer
+     */
+    private function getData()
+    {
+        if($this->data) {
+            return $this->data;
         }
 
-        foreach (array_values($data) as $value) {
-            $merged = array_merge_recursive($merged, $value);
-        }
+        try {
+            
+            $rows = $this->data = $this->databaseConnection
+                ->createQueryBuilder()
+                ->select('*')
+                ->from($this->systemTable, $this->systemTable)
+                ->execute()
+                ->fetchAll();
 
-        return $this->data = $merged;
+            $data = [];
+            $merged = [];
+
+            foreach ($rows as $row) {
+                static::deNotated($data[$row['key']], $row['key'], $row['value']);
+            }
+
+            foreach (array_values($data) as $value) {
+                $merged = array_merge_recursive($merged, $value);
+            }
+
+            return $this->data = $merged;
+        } catch (\PDOException $e) {
+            return [];
+        }
     }
 
     /**
@@ -64,7 +80,7 @@ class System
      */
     public function get($key, $default = null)
     {
-        return static::getNotated($this->data, $key, $default);
+        return static::getNotated($this->getData(), $key, $default);
     }
 
     /**
@@ -92,6 +108,8 @@ class System
             $this->databaseConnection->delete($this->systemTable, ['`key`' => $key]);
             $this->insert($key, $value);
         }
+
+        $this->data = [];
     }
 
     /**
@@ -109,11 +127,13 @@ class System
     private function doUpdate($key, $value)
     {
         $this->databaseConnection->update($this->systemTable, ['`value`' => $value], ['`key`' => $key]);
+        $this->data = [];
     }
 
     public function insert($key, $value)
     {
         $this->databaseConnection->insert($this->systemTable, ['`value`' => $value, '`key`' => $key]);
+        $this->data = [];
     }
 
     public static function deNotated(&$arr, $path, $value) {
