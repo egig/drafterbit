@@ -160,10 +160,10 @@ class SystemController extends Controller
     public function cacheAction(Request $request)
     {
         $notif = false;
-        if($request->request->get('renew')) {
-            $this->clearCache();
-            $message = $this->get('translator')->trans('Cache renewed');
-            $notif = ['message' => $message, 'status' => 'success'];
+
+        if($message = $this->get('session')->getFlashBag()->get('message')) {
+            $status =  $this->get('session')->getFlashBag()->get('status');
+            $notif = ['message' => $message[0], 'status' => $status[0]];
         }
 
         $cacheDir = $this->get('kernel')->getCacheDir();
@@ -186,17 +186,27 @@ class SystemController extends Controller
     }
 
     /**
-     * @todo do this use php, not exec
+     * Cache clearer controller
+     *
+     * @Route("/system/cache/clear", name="drafterbit_system_cache_clear")
      */
-    public function clearCache()
+    public function clearCacheAction(Request $request)
     {
-        $kernel = $this->get('kernel');
-        // @todo ensure this
-        if('dev' == $kernel->getEnvironment()) {
-            return;
+        if($request->getMethod() == 'POST') {
+
+            $message = $this->get('translator')->trans('Cache renewed');
+
+            $cacheDir = $this->container->getParameter('kernel.cache_dir');
+            $filesystem = $this->get('filesystem');
+            $this->get('cache_clearer')->clear($cacheDir);
+            $filesystem->remove($cacheDir);
+
+            $this->addFlash('status', 'success');
+            $this->addFlash('message', $message);
         }
 
-        exec('php '.$kernel->getRootDir().'/console cache:clear --env="'.$kernel->getEnvironment().'"');
+        // Don't user url generation, it will be failed due to cache dir just being cleared
+        return new RedirectResponse($request->headers->get('REFERER'));
     }
 
     /**
