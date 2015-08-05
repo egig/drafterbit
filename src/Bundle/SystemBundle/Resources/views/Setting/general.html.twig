@@ -18,8 +18,8 @@
 <div class="row">
     <div class="col-md-3">
         <ul id="dt-setting-tab" class="nav nav-tabs tabs-left">
-            {% for name in field_names %}
-                <li role="presentation"><a href="#setting-{{ name }}" aria-controls="setting-{{ name }}" role="tab" data-toggle="tab">{{ name|capitalize }}</a></li>
+            {% for name,field in fields %}
+                <li role="presentation"><a href="#setting-{{ field.name }}" aria-controls="setting-{{ field.name }}" role="tab" data-toggle="tab">{{ field.name|capitalize }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -28,27 +28,7 @@
             {% for field in form %}
                 {% if field.vars.name not in ['Save', '_token'] %}
                 <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
-                    {% for f in field %}
-                        <div class="form-group col-md-6">
-                            {{ form_label(f) }}
-                            {# Render widget #}
-                            {% if 'choice' in f.vars.block_prefixes %}
-                                {% if f.vars.expanded %}
-                                    <div>
-                                    {% for f_w in f %}
-                                        <label class="checkbox-inline">
-                                            {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
-                                        </label>
-                                    {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form_widget(f, {attr: {class:"form-control"}}) }}
-                                {% endif %}
-                            {% else %}
-                                {{ form_widget(f, {attr: {class:"form-control"}}) }}
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+                    {% include attribute(fields, field.vars.name).template with {form: field}  %}
                 </div>
                 {% endif %}
             {% endfor %}

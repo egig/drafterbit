@@ -35,14 +35,16 @@ class SettingController extends Controller
             ->getForm();
 
         $fieldNames = [];
-        foreach ($fields as $name => $form) {
-            $fieldNames[] = $form->getConfig()->getName();
+        foreach ($fields as $name => $field) {
+            $form = $field->getForm();
+
+            //we need this since its not root form
             $form->getConfig()->setAutoInitialize(false);
             $mainForm->add($form);
         }
 
-        unset($fieldNames[array_search('system', $fieldNames)]);
-        array_unshift($fieldNames, 'system');
+        //Move system to be first
+        $fields = ['system' => $fields['system']]+$fields;
 
         $notif['message'] = false;
 
@@ -71,7 +73,7 @@ class SettingController extends Controller
             'view_id' => 'setting',
             'action' => $this->generateUrl('drafterbit_system_setting_general'),
             'form' => $mainForm->createView(),
-            'field_names' => $fieldNames
+            'fields' => $fields
         ];
 
         return array_merge($data, $notif);

@@ -13,4 +13,9 @@ class GeneralField extends Field {
 		$this->container->get('form.factory')
 			->create(new SystemType($this->container));
 	}
+
+	public function getTemplate()
+	{
+		return 'SystemBundle:Setting/Field:system.html.twig';
+	}
 }

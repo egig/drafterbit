@@ -22,7 +22,7 @@ class FieldManager
 				must return instanceof FormInterface");
 		}
 
-		$this->fields[$form->getConfig()->getName()] = $form;
+		$this->fields[$form->getConfig()->getName()] = $field;
 	}
 
 	/**

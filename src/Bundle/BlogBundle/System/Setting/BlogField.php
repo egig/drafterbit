@@ -13,4 +13,9 @@ class BlogField extends Field {
 		$this->container->get('form.factory')
 			->create(new SettingType($this->container->get('system')));
 	}
+
+	public function getTemplate()
+	{
+		return 'BlogBundle:Setting/Field:blog.html.twig';
+	}
 }
