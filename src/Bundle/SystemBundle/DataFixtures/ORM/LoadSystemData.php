@@ -28,9 +28,20 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
+        $siteName = 'My Awesome Website';
+        $siteDescription = 'Just an Awesome DrafTerbit Website';
+
+        if($this->container->has('installer')) {
+            $data = $this->container->get('installer')->get('site');
+            if($data) {
+                $siteName =  $data['sitename'];
+                $siteDescription = $data['sitedesc'];
+            }
+        }
+
         $initData = [
-            'system.site_name' => 'My Awesome Website',
-            'system.site_description' => 'Just an Awesome DrafTerbit Website',
+            'system.site_name' => $siteName,
+            'system.site_description' => $siteDescription,
             'system.frontpage' => 'blog',
             'system.date_format' => 'd m Y',
             'system.time_format' => 'H:i'

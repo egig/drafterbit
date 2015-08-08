@@ -33,11 +33,10 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $email = 'admin@drafterbit.org';
         $password = 'admin';
 
-        if($this->container->has('drafterbit_installer')) {
-            $data = $this->container->get('drafterbit_installer')->getData();
+        if($this->container->has('installer')) {
+            $data = $this->container->get('installer')->get('account');
             if($data) {
                 $username = $data['username'];
-                $email = $data['email'];
                 $password = $data['password'];
             }
         }

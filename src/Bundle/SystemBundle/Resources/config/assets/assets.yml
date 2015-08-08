@@ -1,7 +1,6 @@
 parameters:
     vendor_dir: %kernel.root_dir%/../vendor
 
-
 imports:
     - { resource: bootstrap.yml }
     - { resource: ckeditor.yml }

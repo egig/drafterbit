@@ -10,6 +10,7 @@
 
         <!-- web -->
         <parameter key="web">%kernel.root_dir%/../</parameter>
+        <parameter key="vendor_dir">%kernel.root_dir%/../vendor</parameter>
 
         <!-- admin -->
         <parameter key="admin">admin</parameter>
