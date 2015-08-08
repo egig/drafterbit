@@ -30,9 +30,11 @@ class System
     /**
      * Constructor
      */
-    public function __construct(Connection $connection)
+    public function __construct($container)
     {
-        $this->databaseConnection =  $connection;
+        $this->databaseConnection =  $container->get('database_connection');
+        // @todo create wrapped connection to add table prefix
+        $this->systemTable = $container->getParameter('database_table_prefix').$this->systemTable;
     }
 
     public function setConnection(Connection $connection)

@@ -11,6 +11,9 @@ class FrontendExtension extends \Twig_Extension
     public function __construct(Kernel $kernel)
     {
         $this->container = $kernel->getContainer();
+        $tablePrefix = $this->container->getParameter('database_table_prefix');
+        $this->menuItemTable = $tablePrefix.'drafterbit_menu_item';
+        $this->widgetTable = $tablePrefix.'drafterbit_widget';
     }
 
     public function getGlobals()
@@ -79,7 +82,7 @@ class FrontendExtension extends \Twig_Extension
     {
         $q = $this->container->get('database_connection')->createQueryBuilder();
         $q->select('mi.*');
-        $q->from('drafterbit_menu_item', 'mi');
+        $q->from($this->menuItemTable, 'mi');
         $q->where('mi.menu_id=:menu_id');
         $q->setParameter('menu_id', $menu_id);
 
@@ -97,7 +100,7 @@ class FrontendExtension extends \Twig_Extension
     {
         $q = $this->container->get('database_connection')->createQueryBuilder();
         $q->select('mi.*');
-        $q->from('drafterbit_menu_item', 'mi');
+        $q->from($this->menuItemTable, 'mi');
         $q->where('mi.menu_id=:menu_id');
         $q->andWhere('mi.parent_id=:parent_id');
         $q->setParameter('menu_id', $menu_id);
@@ -150,7 +153,7 @@ class FrontendExtension extends \Twig_Extension
         $theme = $this->container->getParameter('theme');
 
         $widgets = $qb->select('*')
-            ->from('drafterbit_widget', 'w')
+            ->from($this->widgetTable, 'w')
             ->where('position=:position')
             ->andWhere('theme=:theme')
             ->setParameter('position', $position)
