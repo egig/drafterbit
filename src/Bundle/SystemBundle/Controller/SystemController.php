@@ -189,22 +189,27 @@ class SystemController extends Controller
      * Cache clearer controller
      *
      * @Route("/system/cache/clear", name="drafterbit_system_cache_clear")
+     * @Method("POST")
      */
     public function clearCacheAction(Request $request)
     {
-        if($request->getMethod() == 'POST') {
-
-            $message = $this->get('translator')->trans('Cache renewed');
+        if($this->get('kernel')->getEnvironment() == 'dev') {
+            $message = $this->get('translator')
+                ->trans('Cache can\'t be cleared from web interface in dev mode');
+            $status = 'warning';
+        } else {
 
             $cacheDir = $this->container->getParameter('kernel.cache_dir');
             $filesystem = $this->get('filesystem');
             $this->get('cache_clearer')->clear($cacheDir);
             $filesystem->remove($cacheDir);
 
-            $this->addFlash('status', 'success');
-            $this->addFlash('message', $message);
+            $message = $this->get('translator')->trans('Cache renewed');
+            $status = 'success';
         }
 
+        $this->addFlash('status',  $status);
+        $this->addFlash('message', $message);
         // Don't user url generation, it will be failed due to cache dir just being cleared
         return new RedirectResponse($request->headers->get('REFERER'));
     }
