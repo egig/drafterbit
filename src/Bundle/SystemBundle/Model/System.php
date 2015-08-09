@@ -11,7 +11,7 @@ class System
      *
      * @var string
      */
-    protected $systemTable = 'drafterbit_system';
+    protected $systemTable;
 
     /**
      * Database connection instance
@@ -33,8 +33,9 @@ class System
     public function __construct($container)
     {
         $this->databaseConnection =  $container->get('database_connection');
-        // @todo create wrapped connection to add table prefix
-        $this->systemTable = $container->getParameter('database_table_prefix').$this->systemTable;
+
+        $this->systemTable = $container->get('doctrine')->getManager()
+            ->getClassMetadata('SystemBundle:System')->getTableName();
     }
 
     public function setConnection(Connection $connection)

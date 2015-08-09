@@ -11,10 +11,11 @@ class FrontendExtension extends \Twig_Extension
     public function __construct(Kernel $kernel)
     {
         $this->container = $kernel->getContainer();
-        $tablePrefix = $this->container->getParameter('database_table_prefix');
-        $this->menuItemTable = $tablePrefix.'drafterbit_menu_item';
-        $this->widgetTable = $tablePrefix.'drafterbit_widget';
-    }
+
+        $em = $this->container->get('doctrine')->getManager();
+        $this->menuItemTable = $em->getClassMetadata('SystemBundle:MenuItem')->getTableName();
+        $this->widgetTable = $em->getClassMetadata('SystemBundle:Widget')->getTableName();
+   }
 
     public function getGlobals()
     {
