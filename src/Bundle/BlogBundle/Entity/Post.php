@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Post
  *
  * @ORM\Entity
- * @ORM\Table(name="drafterbit_post")
+ * @ORM\Table(name="post")
  */
 class Post
 {

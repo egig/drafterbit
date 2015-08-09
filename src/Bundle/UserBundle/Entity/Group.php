@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="drafterbit_group")
+ * @ORM\Table(name="group")
  */
 class Group extends BaseGroup
 {

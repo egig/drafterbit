@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Comment
  *
- * @ORM\Table("drafterbit_comment")
+ * @ORM\Table("comment")
  * @ORM\Entity
  */
 class Comment

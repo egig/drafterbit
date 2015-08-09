@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * MenuItem
  *
- * @ORM\Table("drafterbit_menu_item")
+ * @ORM\Table("menu_item")
  * @ORM\Entity
  */
 class MenuItem

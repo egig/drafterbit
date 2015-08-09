@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="drafterbit_log")
+ * @ORM\Table(name="log")
  */
 class Log
 {

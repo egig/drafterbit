@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Category
  *
  * @ORM\Entity
- * @ORM\Table(name="drafterbit_category")
+ * @ORM\Table(name="category")
  */
 class Category
 {

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Panel
  *
- * @ORM\Table("drafterbit_dashboard")
+ * @ORM\Table("dashboard")
  * @ORM\Entity
  */
 class PanelConfig

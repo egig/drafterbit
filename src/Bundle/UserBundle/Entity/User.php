@@ -9,7 +9,7 @@ use UserBundle\Auth\Configuration;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="drafterbit_user")
+ * @ORM\Table(name="user")
  */
 class User extends BaseUser
 {

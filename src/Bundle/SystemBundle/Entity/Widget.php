@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Widget
  *
- * @ORM\Table("drafterbit_widget")
+ * @ORM\Table("widget")
  * @ORM\Entity
  */
 class Widget
