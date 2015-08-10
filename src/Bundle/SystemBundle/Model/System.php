@@ -73,8 +73,22 @@ class System
             }
 
             return $this->data = $merged;
-        } catch (\PDOException $e) {
-            return [];
+        } catch (\Exception $e) {
+
+            // get PDPException instance
+            if($e instanceof \Doctrine\DBAL\DBALException) {
+                $e = $e->getPrevious();
+            }
+
+            if($e instanceof \PDOException) {
+                if($e->getCode() == '42S02') {
+                    // @todo handle this, application not installed
+                    // throw an exception or something
+                    return;
+                }
+            }
+
+            throw $e;
         }
     }
 
