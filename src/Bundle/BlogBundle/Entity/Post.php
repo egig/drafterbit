@@ -99,7 +99,7 @@ class Post
 
     /**
      * @ORM\ManyToMany(targetEntity="Drafterbit\Bundle\BlogBundle\Entity\Category")
-     * @ORM\JoinTable(name="drafterbit_post_category",
+     * @ORM\JoinTable(name="post_category",
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
      * )
@@ -109,7 +109,7 @@ class Post
 
     /**
      * @ORM\ManyToMany(targetEntity="Drafterbit\Bundle\BlogBundle\Entity\Tag")
-     * @ORM\JoinTable(name="drafterbit_post_tag",
+     * @ORM\JoinTable(name="post_tag",
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )

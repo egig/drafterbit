@@ -22,7 +22,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="Drafterbit\Bundle\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="drafterbit_user_group",
+     * @ORM\JoinTable(name="user_group",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )
