@@ -44,7 +44,9 @@ class System
     }
 
     /**
-     * @todo integrate this with installer
+     * Get system data from database.
+     *
+     * @return array
      */
     private function getData()
     {
@@ -75,17 +77,17 @@ class System
             return $this->data = $merged;
         } catch (\Exception $e) {
 
-            // get PDPException instance
+            // Doctrine DBAL Exception not contains proper message
+            // So we will just grab the PDOException instead
             if($e instanceof \Doctrine\DBAL\DBALException) {
                 $e = $e->getPrevious();
             }
 
+            // Either database credential not valid or system table not exists
+            // We will return empty data/array due to installation issue
+            // @todo determine the effect to application behaviour
             if($e instanceof \PDOException) {
-                if($e->getCode() == '42S02') {
-                    // @todo handle this, application not installed
-                    // throw an exception or something
-                    return;
-                }
+                return [];
             }
 
             throw $e;
