@@ -232,6 +232,8 @@
 
     // color picker
     $('.dt-color-picker').colorpicker();
+
+    // @todo decouple this, include to the form
     $('.dt-image-add').on('click', function(e){
         e.preventDefault();
         var fallback = $(this).data('fallback');
@@ -242,5 +244,18 @@
         $('#'+fallback).attr('src', '');
         $('#input-'+fallback).val('');
     });
+
+    // navigation selector
+    $('.menu-selector').click(function(e){
+        e.preventDefault();
+        var pos = $(this).data('pos');
+        window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=800");
+    });
+
+    drafTerbit.MENU = {
+        set: function(position, id, label){
+            $('select[name="menus['+position+']"]').val(id);
+        }
+    };
 
 })(jQuery,drafTerbit);

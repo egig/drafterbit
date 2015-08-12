@@ -225,6 +225,8 @@ class SettingController extends Controller
         }
 
         $context = $this->get('system')->get('theme.'.$theme.'.context', '');
+        $themeMenus = $this->get('system')->get('theme.'.$theme.'.menu', '');
+        $themeMenuIds = json_decode($themeMenus, true);
 
         $context = json_decode($context, true);
 
@@ -292,6 +294,7 @@ class SettingController extends Controller
             'menu_positions' => $themeConfig['menu'],
             'widget_positions' => $positions,
             'menu_options' => $availableMenus,
+            'theme_menu_ids' => $themeMenuIds,
         ];
     }
 

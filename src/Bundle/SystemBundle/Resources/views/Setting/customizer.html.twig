@@ -107,26 +107,30 @@
                               </h4>
                             </div>
                             <div id="collapse-two" class="panel-collapse collapse">
-                              <div class="panel-body">
+                              <div class="panel-body menus-section">
                                 {% for pos in menu_positions %}
                                    <div class="panel panel-default">
                                       <div class="panel-heading">
                                         <h4 class="panel-title">
-                                          <a data-toggle="collapse" data-parent="#menus-section" href="#{{ pos }}-menu-position">
+                                          <a data-toggle="collapse" data-parent=".menus-section" href="#{{ pos }}-menu-position">
                                               {{ pos }}
                                           </a>
                                         </h4>
                                       </div>
                                       <div id="{{ pos }}-menu-position" class="panel-collapse collapse">
                                         <div class="sortable panel-body {{ pos }}-menu-container">
-                                          <div>
-                                            <label>{{ __('Select Menu') }}</label>
-                                            <select data-pos="{{ pos }}" name="menus[{{ pos }}]" class="form-control menu-position">
+                                          
+                                        <div class="input-group">
+                                          <select data-pos="{{ pos }}" name="menus[{{ pos }}]" class="form-control input-sm">
                                               {% for id,option in menu_options %}
-                                                <option value="{{ id }}">{{ option }}</option>
+                                                <option {% if id == attribute(theme_menu_ids, pos)  %} selected="selected" {% endif %} value="{{ id }}">{{ option }}</option>
                                               {% endfor %}
-                                            </select>
-                                          </div>
+                                          </select>
+                                          <span class="input-group-btn">
+                                            <button data-pos="{{ pos }}" class="btn btn-default btn-sm menu-selector" type="button"><i class="fa fa-bars"></i></button>
+                                          </span>
+                                        </div><!-- /input-group -->
+
                                         </div>
                                       </div>
                                   </div>

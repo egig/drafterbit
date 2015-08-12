@@ -1,8 +1,5 @@
 system:
     navigation:
-        menu:
-            label: Menu
-            route: drafterbit_system_menu
         setting:
             label: Setting
             children:

@@ -208,4 +208,25 @@
         }
     );
 
+    // Helper function to get parameters from the query string.
+    function getUrlParam(paramName)
+    {
+        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i');
+        var match = window.location.search.match(reParam);
+
+        return (match && match.length > 1) ? match[1] : '' ;
+    }
+    var position = getUrlParam('pos');
+
+
+    $(document).on(
+        'click',
+        '.menu-item-selector',
+        function(e) {
+            var label = $(this).data('label');
+            var id = $(this).data('id');
+            window.opener.drafTerbit.MENU.set(position, id, label);
+            window.close();
+        }
+    );
 })(jQuery);
