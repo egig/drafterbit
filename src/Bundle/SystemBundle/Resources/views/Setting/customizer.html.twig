@@ -107,34 +107,32 @@
                               </h4>
                             </div>
                             <div id="collapse-two" class="panel-collapse collapse">
-                              <div class="panel-body menus-section">
-                                {% for pos in menu_positions %}
-                                   <div class="panel panel-default">
-                                      <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                          <a data-toggle="collapse" data-parent=".menus-section" href="#{{ pos }}-menu-position">
-                                              {{ pos }}
-                                          </a>
-                                        </h4>
-                                      </div>
-                                      <div id="{{ pos }}-menu-position" class="panel-collapse collapse">
-                                        <div class="sortable panel-body {{ pos }}-menu-container">
-                                          
-                                        <div class="input-group">
-                                          <select data-pos="{{ pos }}" name="menus[{{ pos }}]" class="form-control input-sm">
-                                              {% for id,option in menu_options %}
-                                                <option {% if id == attribute(theme_menu_ids, pos)  %} selected="selected" {% endif %} value="{{ id }}">{{ option }}</option>
-                                              {% endfor %}
-                                          </select>
-                                          <span class="input-group-btn">
-                                            <button data-pos="{{ pos }}" class="btn btn-default btn-sm menu-selector" type="button"><i class="fa fa-bars"></i></button>
-                                          </span>
-                                        </div><!-- /input-group -->
-
+                              <div class="panel-body">
+                                <div class="col-md-10 menus-section" style="padding:5px;">
+                                  {% for pos in menu_positions %}
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent=".menus-section" href="#{{ pos }}-menu-position">
+                                                {{ pos }}
+                                            </a>
+                                          </h4>
                                         </div>
-                                      </div>
-                                  </div>
-                                  {% endfor %}
+                                        <div id="{{ pos }}-menu-position" class="panel-collapse collapse">
+                                          <div class="sortable panel-body {{ pos }}-menu-container">
+                                            <select data-pos="{{ pos }}" name="menus[{{ pos }}]" class="form-control input-sm">
+                                                {% for id,option in menu_options %}
+                                                  <option {% if (pos in theme_menu_ids|keys) and (id == attribute(theme_menu_ids, pos))  %} selected="selected" {% endif %} value="{{ id }}">{{ option }}</option>
+                                                {% endfor %}
+                                            </select>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-md-1" style="padding:5px;">
+                                  <button class="btn btn-default btn-sm menu-selector" type="button"><i class="fa fa-bars"></i></button>
+                                </div>
                               </div>
                             </div>
                         </div>

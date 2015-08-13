@@ -248,7 +248,12 @@
     // navigation selector
     $('.menu-selector').click(function(e){
         e.preventDefault();
-        var pos = $(this).data('pos');
+        var pos = $('.menus-section .panel').find('.in select').data('pos');
+
+        if(!pos) {
+            alert(__('No menu position collapsed'));
+            return false;
+        }
         window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=800");
     });
 
