@@ -186,6 +186,19 @@ class SystemController extends Controller
     }
 
     /**
+     * @Route("/system/update", name="drafterbit_system_update")
+     * @Template()
+     * @todo
+     */
+    public function updateAction(Request $request)
+    {
+        return [
+            'page_title' => $this->get('translator')->trans('Update'),
+            'message' => $this->get('translator')->trans('No update availables.')
+        ];
+    }
+
+    /**
      * Cache clearer controller
      *
      * @Route("/system/cache/clear", name="drafterbit_system_cache_clear")
