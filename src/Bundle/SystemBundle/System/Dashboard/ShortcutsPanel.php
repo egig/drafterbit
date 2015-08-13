@@ -9,7 +9,7 @@ class ShortcutsPanel extends Panel {
     public function getView()
     {
         $extension_manager = $this->container->get('extension_manager');
-        $shortcuts = $extension_manager->getData('shortcuts');
+        $shortcuts = $extension_manager->get('shortcuts');
         $data['shortcuts'] = $shortcuts;
 
         foreach ($shortcuts as $shortcut) {

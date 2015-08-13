@@ -33,7 +33,7 @@ class ExtensionManager
      *
      * @return array
      */
-    function getData($section)
+    function get($section)
     {
         if(isset($this->data[$section])) {
             return $this->data[$section];
