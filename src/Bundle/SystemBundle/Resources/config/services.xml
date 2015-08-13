@@ -102,6 +102,11 @@
             <tag name="drafterbit_system.dashboard.panel" />
         </service>
 
+        <service id="drafterbit_system.dashboard.panel.shortcuts" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\ShortcutsPanel">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.dashboard.panel" />
+        </service>
+
         <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\InfoPanel">
             <argument type="service" id="service_container" />
             <tag name="drafterbit_system.dashboard.panel" />
@@ -155,6 +160,14 @@
         <service id="drafterbit_system.doctrine.subscribers.table_prefix" class="Drafterbit\Bundle\SystemBundle\Doctrine\Subscriber\TablePrefixSubscriber">
             <argument>%database_table_prefix%</argument>
             <tag name="doctrine.event_subscriber" />
+        </service>
+
+        <!-- Extensions -->
+        <service id="extension_manager" class="Drafterbit\System\Extension\ExtensionManager"/>
+
+        <service id="drafterbit_system.extensions.system" class="Drafterbit\Bundle\SystemBundle\System\Extension\SystemExtension">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.extensions" />
         </service>
 
     </services>

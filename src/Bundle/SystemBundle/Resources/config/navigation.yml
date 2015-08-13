@@ -12,12 +12,12 @@ system:
         system:
             label: System
             children:
+                update:
+                    label: Update
+                    route: drafterbit_system_update
                 log:
                     label: Log
                     route: drafterbit_system_log
                 cache:
                     label: Cache
                     route: drafterbit_system_cache
-                update:
-                    label: Update
-                    route: drafterbit_system_update
