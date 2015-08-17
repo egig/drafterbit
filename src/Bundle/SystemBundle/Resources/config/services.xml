@@ -26,6 +26,7 @@
             <parameter key="password">%database_password%</parameter>
             <parameter key="host">%database_host%</parameter>
             <parameter key="driver">%database_driver%</parameter>
+            <parameter key="table">%database_table_prefix%log</parameter>
         </parameter>
     </parameters>
 
@@ -131,7 +132,7 @@
             <tag name="drafterbit_system.widget" />
         </service>
 
-        <!-- widget -->
+        <!-- Search -->
         <service id="drafterbit_system.search.engine" class="Drafterbit\System\Search\Engine">
             <argument type="service" id="service_container" />
         </service>

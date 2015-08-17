@@ -6,11 +6,13 @@ use Symfony\Component\DependencyInjection\Container;
 
 abstract class QueryProvider {
 
+    protected $container;
     protected $databaseConnection;
 
-    public function __construct($databaseConnection)
+    public function __construct($container)
     {
-        $this->databaseConnection = $databaseConnection;
+    	$this->container = $container;
+        $this->databaseConnection = $container->get('database_connection');
     }
 
     abstract function getQuery();

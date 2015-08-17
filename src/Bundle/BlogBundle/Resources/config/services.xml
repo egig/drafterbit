@@ -37,7 +37,7 @@
 
         <!-- Search query -->
         <service id="drafterbit_blog.search.query_provider" class="Drafterbit\Bundle\BlogBundle\System\Search\QueryProvider">
-            <argument type="service" id="database_connection" />
+            <argument type="service" id="service_container" />
             <tag name="drafterbit_system.search.query_provider" />
         </service>
 

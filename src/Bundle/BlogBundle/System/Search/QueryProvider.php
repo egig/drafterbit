@@ -9,9 +9,12 @@ class QueryProvider extends BaseQueryProvider {
 
     function getQuery()
     {
+        $tableName = $this->container->get('doctrine')->getManager()
+            ->getClassMetadata('BlogBundle:Post')->getTableName();
+
         $query = $this->databaseConnection->createQueryBuilder()
             ->select('*')
-            ->from('drafterbit_post', 'p')
+            ->from($tableName, 'p')
             ->where("p.title like :q")
             ->orWhere("p.content like :q")
             ->andWhere("p.type = 'standard'");
