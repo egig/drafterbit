@@ -20,7 +20,7 @@
         <parameter key="theme">feather</parameter>
 
         <!-- log connection param -->
-        <parameter key="system_log_handler_connection_param" type="collection">
+        <!--<parameter key="system_log_handler_connection_param" type="collection">
             <parameter key="dbname">%database_name%</parameter>
             <parameter key="user">%database_user%</parameter>
             <parameter key="password">%database_password%</parameter>
@@ -28,6 +28,7 @@
             <parameter key="driver">%database_driver%</parameter>
             <parameter key="table">%database_table_prefix%log</parameter>
         </parameter>
+    -->
     </parameters>
 
     <services>
@@ -63,7 +64,7 @@
 
         <!-- Log Handler -->
         <service id="system_log_handler" class="Drafterbit\Bundle\SystemBundle\Monolog\Handler\DoctrineDBALHandler">
-            <argument>%system_log_handler_connection_param%</argument>
+            <argument type="service" id="service_container"/>
             <argument /> <!-- level -->
             <argument /> <!-- bubble -->
         </service>

@@ -11,20 +11,31 @@ class DoctrineDBALHandler extends AbstractProcessingHandler
     private $initialized = false;
     private $connection;
     private $statement;
-    private $logTable = 'drafterbit_log';
+    private $logTable;
+    private $container;
 
     /**
      * Handler constructor.
      *
      * @todo refactor this to be more clean
      */
-    public function __construct(array $param, $level = Logger::DEBUG, $bubble = true)
+    public function __construct($container, $level = Logger::DEBUG, $bubble = true)
     {
-        $this->connection = DriverManager::getConnection($param);;
+        $this->container = $container;
+
+        // we need new connection
+        $param['dbname'] = $this->container->getParameter('database_name');
+        $param['user'] = $this->container->getParameter('database_user');
+        $param['password'] = $this->container->getParameter('database_password');
+        $param['host'] = $this->container->getParameter('database_host');
+        $param['driver'] = $this->container->getParameter('database_driver');
+
+        $this->connection = DriverManager::getConnection($param);
         parent::__construct($level, $bubble);
+        $this->logTable = $this->getTableName();
     }
 
-    protected function write(array $record)
+    public function write(array $record)
     {
         if (!$this->initialized) {
             $this->initialize();
@@ -48,5 +59,16 @@ class DoctrineDBALHandler extends AbstractProcessingHandler
         );
 
         $this->initialized = true;
+    }
+
+    /**
+     * Get log table name
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->container->get('doctrine')->getManager()
+            ->getClassMetadata('SystemBundle:Log')->getTableName();
     }
 }
