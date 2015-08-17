@@ -18,17 +18,6 @@
         <!-- theme -->
         <parameter key="themes_path">%web%/themes</parameter>
         <parameter key="theme">feather</parameter>
-
-        <!-- log connection param -->
-        <!--<parameter key="system_log_handler_connection_param" type="collection">
-            <parameter key="dbname">%database_name%</parameter>
-            <parameter key="user">%database_user%</parameter>
-            <parameter key="password">%database_password%</parameter>
-            <parameter key="host">%database_host%</parameter>
-            <parameter key="driver">%database_driver%</parameter>
-            <parameter key="table">%database_table_prefix%log</parameter>
-        </parameter>
-    -->
     </parameters>
 
     <services>
