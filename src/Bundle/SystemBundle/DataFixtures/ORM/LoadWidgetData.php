@@ -32,14 +32,24 @@ class LoadWidgetData extends AbstractFixture implements  ContainerAwareInterface
     {
         $theme = $this->container->getParameter('theme');
 
-        $widget = new Widget;
-        $widget->setName('search');
-        $widget->setTheme($theme);
-        $widget->setPosition('Sidebar');
-        $widget->setSequence(0);
-        $widget->setContext('');
+        $search = new Widget;
+        $search->setName('search');
+        $search->setTheme($theme);
+        $search->setPosition('Sidebar');
+        $search->setSequence(0);
+        $search->setContext(json_encode(['title' => 'Search']));
 
-        $manager->persist($widget);
+        $manager->persist($search);
+
+        $meta = new Widget;
+        $meta->setName('meta');
+        $meta->setTheme($theme);
+        $meta->setPosition('Sidebar');
+        $meta->setSequence(1);
+        $meta->setContext(json_encode(['title' => 'Meta']));
+
+        $manager->persist($meta);
+
         $manager->flush();
     }
 
