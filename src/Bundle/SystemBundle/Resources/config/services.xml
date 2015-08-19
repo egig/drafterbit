@@ -122,6 +122,11 @@
             <tag name="drafterbit_system.widget" />
         </service>
 
+        <service id="drafterbit_system.widget.meta" class="Drafterbit\Bundle\SystemBundle\System\Widget\MetaWidget">
+            <argument type="service" id="service_container" />
+            <tag name="drafterbit_system.widget" />
+        </service>
+
         <!-- Search -->
         <service id="drafterbit_system.search.engine" class="Drafterbit\System\Search\Engine">
             <argument type="service" id="service_container" />
