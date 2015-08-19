@@ -3,12 +3,13 @@
 namespace Drafterbit\Bundle\SystemBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\Bundle\SystemBundle\Entity\System;
 
-class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
+class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,  OrderedFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -22,6 +23,7 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
     {
         $this->container = $container;
     }
+
     /**
      * {@inheritDoc}
      * @todo get user email during install
@@ -39,12 +41,15 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
             }
         }
 
+        $theme = $this->container->getParameter('theme');
+
         $initData = [
             'system.site_name' => $siteName,
             'system.site_description' => $siteDescription,
             'system.frontpage' => 'blog',
             'system.date_format' => 'd m Y',
-            'system.time_format' => 'H:i'
+            'system.time_format' => 'H:i',
+            'theme.'.$theme.'.menu' => '{"main":"'.$this->getReference('main-menu')->getId().'","side":"0"}'
         ];
 
         if($this->container->has('installer')) {
@@ -54,5 +59,13 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface
         }
 
         $this->container->get('system')->update($initData);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrder()
+    {
+        return 5;
     }
 }
