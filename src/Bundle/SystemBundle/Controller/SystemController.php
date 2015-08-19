@@ -37,7 +37,10 @@ class SystemController extends Controller
                 $panelConfig = new PanelConfig();
                 $panelConfig->setUser($this->getUser());
                 $panelConfig->setName($name);
-                $panelConfig->setPosition('left');
+
+                $position = ($i%2 == 0 ) ? 'right' : 'left';
+                
+                $panelConfig->setPosition($position);
                 $panelConfig->setSequence($i++);
                 $panelConfig->setStatus(1);
 
