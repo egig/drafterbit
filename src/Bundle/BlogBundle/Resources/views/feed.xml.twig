@@ -2,7 +2,7 @@
     <channel>
         <title>{{ system.sitename }}</title>
         <description>{{ system.tagline }}</description>        
-        <link>{{ url('home') }}</link>
+        <link>{{ base_url }}</link>
         <atom:link href="{{ url('drafterbit_blog_feed') }}" rel="self" type="application/rss+xml" />
 
     {% for post in posts %}

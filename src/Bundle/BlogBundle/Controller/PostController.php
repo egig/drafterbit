@@ -417,7 +417,7 @@ class PostController extends Controller
         return $data+$notif;
     }
 
-    public function feedAction()
+    public function feedAction(Request $request)
     {
         $shows = $this->get('system')->get('blog.feed_shows', 10);
 
@@ -429,6 +429,7 @@ class PostController extends Controller
             ->getQuery()
             ->getResult();
 
+        $data['base_url'] = $request->getSchemeAndHttpHost().$request->getBaseurl();
         $data['posts'] = $this->formatFeeds($posts);
 
         $content =  $this->renderView('BlogBundle::feed.xml.twig', $data);
