@@ -4,9 +4,9 @@ namespace Drafterbit\Bundle\PageBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Drafterbit\Bundle\SystemBundle\Controller\FrontendController as BaseFrontendController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class FrontendController extends BaseFrontendController
+class FrontendController extends Controller
 {
     public function viewAction($slug)
     {

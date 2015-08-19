@@ -36,10 +36,12 @@ class FrontendListener implements EventSubscriberInterface
         $controller = $event->getController();
         $request = $event->getRequest();
 
-        if($controller[0] instanceof FrontendController) {
+        $admin = $this->container->getParameter('admin');
 
-            // change theme path according to theme
-            // and add theme context data
+        // If the page requested is not admin area then we
+        // change theme path according to theme and add
+        // theme context data
+        if(strpos($request->getPathInfo(), $admin) !== 0) {
             if($theme = $request->query->get('theme')) {
 
                 $token = $request->query->get('_token');
