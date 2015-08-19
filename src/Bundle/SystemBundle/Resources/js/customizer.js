@@ -251,10 +251,10 @@
         var pos = $('.menus-section .panel').find('.in select').data('pos');
 
         if(!pos) {
-            alert(__('No menu position collapsed'));
+            alert(__('No menu position expanded'));
             return false;
         }
-        window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=800");
+        window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=1000");
     });
 
     drafTerbit.MENU = {

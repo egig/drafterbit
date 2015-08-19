@@ -219,6 +219,7 @@ class SettingController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $availableMenus[0] = '-- Select Menu --';
         $menus = $em->getRepository('SystemBundle:Menu')->findAll();
         foreach ($menus as $menu) {
             $availableMenus[$menu->getId()] = $menu->getDisplayText();
