@@ -287,7 +287,7 @@ class PostController extends Controller
                 $post->setDeletedAt(new \DateTime('0000-00-00'));
 
                 // @todo create revision
-                $post->setType('standard');
+                $post->setType(Post::TYPE_STANDARD);
             }
 
             // create revision first

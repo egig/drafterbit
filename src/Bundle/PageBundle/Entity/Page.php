@@ -210,7 +210,7 @@ class Page
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->createdAt ? $this->createdAt : new \DateTime();
     }
 
     /**
@@ -233,7 +233,7 @@ class Page
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updatedAt ? $this->updatedAt : new \DateTime();
     }
 
     /**
@@ -256,7 +256,7 @@ class Page
      */
     public function getDeletedAt()
     {
-        return $this->deletedAt;
+        return $this->deletedAt ? $this->deletedAt : new \DateTime('0000-00-00');
     }
 
     /**

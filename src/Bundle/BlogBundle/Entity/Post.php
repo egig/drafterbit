@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Post
 {
+    const TYPE_STANDARD = 'standard';
+
     /**
      * @var integer
      *
