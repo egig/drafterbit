@@ -52,6 +52,10 @@
             border: none;
             background: inherit;
         }
+
+        .nav-pills li a {
+            padding: 10px 15px;
+        }
     }
 
     .navbar-header:after {
