@@ -25,6 +25,7 @@ class SettingController extends Controller
      * @Route("/setting/general", name="drafterbit_system_setting_general")
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
+     * @todo Setting validation rules
      */
     public function generalAction(Request $request)
     {
