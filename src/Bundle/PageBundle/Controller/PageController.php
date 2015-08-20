@@ -58,7 +58,7 @@ class PageController extends Controller
                         $em->persist($post);
                         break;
                     case 'restore':
-                        $post->setDeletedAt(new \DateTime('0000-00-00'));
+                        $post->setDeletedAt(NULL);
                         $status = 'success';
                         $message = 'Post(s) restored';
                         $em->persist($post);
@@ -100,9 +100,9 @@ class PageController extends Controller
             ->createQueryBuilder('p');
 
         if($status == 'trashed') {
-            $query->where("p.deletedAt != '0000-00-00 00:00'");
+            $query->where("p.deletedAt is not null");
         } else {
-            $query->where("p.deletedAt = '0000-00-00 00:00'");
+            $query->where("p.deletedAt is null");
             switch ($status) {
                 case 'all':
                     break;
@@ -206,7 +206,7 @@ class PageController extends Controller
 
             if($isNew) {
                 $page->setCreatedAt(new \DateTime);
-                $page->setDeletedAt(new \DateTime('0000-00-00'));
+                $page->setDeletedAt(NULL);
             }
 
             $em = $this->getDoctrine()->getManager();

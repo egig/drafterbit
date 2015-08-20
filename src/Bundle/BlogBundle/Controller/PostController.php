@@ -65,7 +65,7 @@ class PostController extends Controller
                     case 'restore':
                         // @todo change deleted_at to null
                         // 0000-00-00 is not valid
-                        $post->setDeletedAt(new \DateTime('0000-00-00'));
+                        $post->setDeletedAt(NULL);
                         $status = 'success';
                         $message = 'Post(s) restored';
                         $em->persist($post);
@@ -128,9 +128,9 @@ class PostController extends Controller
         }
 
         if($status == 'trashed') {
-            $query->andWhere("p.deletedAt != '0000-00-00 00:00'");
+            $query->andWhere("p.deletedAt is not null");
         } else {
-            $query->andWhere("p.deletedAt = '0000-00-00 00:00'");
+            $query->andWhere("p.deletedAt is null");
             switch ($status) {
                 case 'all':
                     break;
@@ -284,7 +284,7 @@ class PostController extends Controller
 
             if($isNew) {
                 $post->setCreatedAt(new \DateTime);
-                $post->setDeletedAt(new \DateTime('0000-00-00'));
+                $post->setDeletedAt(NULL);
 
                 // @todo create revision
                 $post->setType(Post::TYPE_STANDARD);
