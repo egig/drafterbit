@@ -51,6 +51,9 @@ assetic:
         ckeditor_skin_bootstrap_icons:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/icons.png
             output: ckeditor/skins/bootstrap/icons.png
+        ckeditor_skin_bootstrap_css:
+            inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor.css
+            output: ckeditor/skins/bootstrap/editor.css
         ckeditor_skin_bootstrap_gecko_css:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor_gecko.css
             output: ckeditor/skins/bootstrap/editor_gecko.css
