@@ -4,12 +4,14 @@ namespace Drafterbit\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Page
  *
  * @ORM\Entity
  * @ORM\Table(name="page")
+ * @UniqueEntity("slug")
  */
 class Page
 {
@@ -76,7 +78,7 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="layout", type="string", length=50)
+     * @ORM\Column(name="layout", type="string", length=50, nullable=true)
      */
     private $layout;
 

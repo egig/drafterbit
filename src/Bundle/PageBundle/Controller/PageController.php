@@ -223,6 +223,8 @@ class PageController extends Controller
                 'message' => $this->get('translator')->trans('Page saved'),
                 'status' => 'success',
                 'id' => $id];
+
+            $status = 200;
         } else {
 
             $errors = [];
@@ -253,9 +255,11 @@ class PageController extends Controller
                 'type' => 'validation',
                 'messages' => $errors
             ];
+
+            $status = 500;
         }
 
-        return new JsonResponse($response);
+        return new JsonResponse($response, $status);
     }
 
     /**

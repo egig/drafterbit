@@ -63,12 +63,7 @@ class SystemControllerTest extends WebTestCase
         // no _token parameter passed
         $client = $this->getAuthorizedClient();
 
-        $crawler = $client->request(
-            'POST',
-            '/'.static::$admin.'/system/log',
-            $param,
-            array()
-        );
+        $crawler = $client->request('POST', '/'.static::$admin.'/system/log', $param, array() );
         $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
 
         $crawler = $client->request('GET', '/'.static::$admin.'/system/log');
