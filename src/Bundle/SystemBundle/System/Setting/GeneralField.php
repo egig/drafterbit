@@ -7,15 +7,15 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\SystemType;
 
 class GeneralField extends Field {
 
-	public function getForm()
-	{
-		return
-		$this->container->get('form.factory')
-			->create(new SystemType($this->container));
-	}
+    public function getForm()
+    {
+        return
+        $this->container->get('form.factory')
+            ->create(new SystemType($this->container));
+    }
 
-	public function getTemplate()
-	{
-		return 'SystemBundle:Setting/Field:system.html.twig';
-	}
+    public function getTemplate()
+    {
+        return 'SystemBundle:Setting/Field:system.html.twig';
+    }
 }

@@ -38,7 +38,7 @@ abstract class WebTestCase extends BaseTestCase  {
         return '/'.static::$admin.'/'.trim($path, '/');
     }
 
-	/**
+    /**
      * Create authorized client
      *
      * @link http://stackoverflow.com/questions/14957807/symfony2-tests-with-fosuserbundle/27223293#27223293

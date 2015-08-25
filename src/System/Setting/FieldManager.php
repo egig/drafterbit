@@ -6,46 +6,46 @@ use Symfony\Component\Form\FormInterface;
 
 class FieldManager
 {
-	protected $fields = [];
+    protected $fields = [];
 
-	/**
-	 * Add field
-	 *
-	 * @param FieldInterface
-	 */
-	public function addField(FieldInterface $field)
-	{
-		$form = $field->getForm();
+    /**
+     * Add field
+     *
+     * @param FieldInterface
+     */
+    public function addField(FieldInterface $field)
+    {
+        $form = $field->getForm();
 
-		if(!$field->getForm() instanceof FormInterface) {
-			throw new \LogicException("Method getForm of ".get_class($form)."
-				must return instanceof FormInterface");
-		}
+        if(!$field->getForm() instanceof FormInterface) {
+            throw new \LogicException("Method getForm of ".get_class($form)."
+                must return instanceof FormInterface");
+        }
 
-		$this->fields[$form->getConfig()->getName()] = $field;
-	}
+        $this->fields[$form->getConfig()->getName()] = $field;
+    }
 
-	/**
-	 * Get field by name
-	 *
-	 * @return FieldInterface
-	 */
-	public function get($name)
-	{
-		if(!isset($this->fields[$name])) {
-			throw new InvalidArgumentException("Unknown field $name");
-		}
+    /**
+     * Get field by name
+     *
+     * @return FieldInterface
+     */
+    public function get($name)
+    {
+        if(!isset($this->fields[$name])) {
+            throw new InvalidArgumentException("Unknown field $name");
+        }
 
-		return $this->fields[$name];
-	}
+        return $this->fields[$name];
+    }
 
-	/**
-	 * Get all fields
-	 *
-	 * @return arrau
-	 */
-	public function getAll()
-	{
-		return $this->fields;
-	}
+    /**
+     * Get all fields
+     *
+     * @return arrau
+     */
+    public function getAll()
+    {
+        return $this->fields;
+    }
 }

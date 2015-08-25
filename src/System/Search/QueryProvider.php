@@ -11,7 +11,7 @@ abstract class QueryProvider {
 
     public function __construct($container)
     {
-    	$this->container = $container;
+        $this->container = $container;
         $this->databaseConnection = $container->get('database_connection');
     }
 

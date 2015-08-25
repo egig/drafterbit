@@ -13,7 +13,7 @@ class SystemExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-    	$configuration = $this->getConfiguration($configs, $container);
+        $configuration = $this->getConfiguration($configs, $container);
         $config = (new Processor)->processConfiguration($configuration, $configs);
         $container->setParameter(SystemBundle::NAVIGATION, $config['navigation']);
 

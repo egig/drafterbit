@@ -6,15 +6,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class Field implements FieldInterface
 {
-	protected $container;
+    protected $container;
 
-	public function __construct(ContainerInterface $container)
-	{
-		$this->container = $container;
-	}
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
-	public function getName()
-	{
-		return $this->getForm()->getConfig()->getName();
-	}
+    public function getName()
+    {
+        return $this->getForm()->getConfig()->getName();
+    }
 }

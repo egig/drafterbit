@@ -7,12 +7,12 @@ use Drafterbit\Test\WebTestCase;
 
 class FrontendControllerTest extends WebTestCase
 {
-	public function testIndexAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testIndexAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/non-existing-page');
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode() );
-	}
+    }
 }

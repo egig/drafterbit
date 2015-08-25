@@ -10,13 +10,13 @@ use Drafterbit\Test\WebTestCase;
 
 class MenuControllerTest extends WebTestCase
 {
-	public function testIndexAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testIndexAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/menu');
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertContains('Menus', $client->getResponse()->getContent());
-	}
+    }
 }

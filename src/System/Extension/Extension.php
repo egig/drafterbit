@@ -4,15 +4,15 @@ namespace Drafterbit\System\Extension;
 
 abstract class Extension implements ExtensionInterface
 {
-	protected $container;
+    protected $container;
 
-	/**
-	 * The Constructor.
-	 *
-	 * @param Container
-	 */
-	public function __construct($container)
-	{
-		$this->container = $container;
-	}
+    /**
+     * The Constructor.
+     *
+     * @param Container
+     */
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
 }

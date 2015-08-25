@@ -4,31 +4,31 @@ namespace Drafterbit\System\Extension;
 
 class ExtensionManager
 {
-	/**
-	 * Registered extension
-	 * 
-	 * @var Extension[]
-	 */
-	protected $extensions = [];
+    /**
+     * Registered extension
+     * 
+     * @var Extension[]
+     */
+    protected $extensions = [];
 
-	/**
-	 * Populated extensions data.
-	 *
-	 * @var array
-	 */
-	protected $data;
+    /**
+     * Populated extensions data.
+     *
+     * @var array
+     */
+    protected $data;
 
-	/**
-	 * Register Extension
-	 *
-	 * @param Extension $extension
-	 */	
-	public function registerExtension(Extension $extension)
-	{
-		$this->extensions[$extension->getName()] = $extension;
-	}
+    /**
+     * Register Extension
+     *
+     * @param Extension $extension
+     */    
+    public function registerExtension(Extension $extension)
+    {
+        $this->extensions[$extension->getName()] = $extension;
+    }
 
-	/**
+    /**
      * Data shared from extension.
      *
      * @return array

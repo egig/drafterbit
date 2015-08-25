@@ -11,13 +11,13 @@ use Drafterbit\Test\WebTestCase;
 class AssetControllerTest extends WebTestCase
 {
 
-	public function testDtJsAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testDtJsAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/asset/js/dt.js');
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertEquals('application/javascript', $client->getResponse()->headers->get('Content-Type'));
-	}
+    }
 }

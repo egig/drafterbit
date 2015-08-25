@@ -9,9 +9,9 @@ use Drafterbit\Test\WebTestCase;
 
 class SettingControllerTest extends WebTestCase
 {
-	public function testGeneralAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testGeneralAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', $this->adminPath('setting/general'));
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
@@ -21,11 +21,11 @@ class SettingControllerTest extends WebTestCase
         $csrfToken = $crawler->filter('input[name="setting[_token]"]')->attr('value');
 
         $param = ['setting' => [
-        	'_token' => $csrfToken,
-        	'system' => [
-        			'site_name' => 'foobar'
-        		]
-        	]
+            '_token' => $csrfToken,
+            'system' => [
+                    'site_name' => 'foobar'
+                ]
+            ]
         ];
 
         $crawler = $client->request(
@@ -37,41 +37,41 @@ class SettingControllerTest extends WebTestCase
         );
 
         $expected = $this->createAuthorizedClient()->getContainer()
-        	->get('system')->get('system.site_name');
+            ->get('system')->get('system.site_name');
 
         $this->assertTrue($client->getRequest()->isXmlHttpRequest());
         $this->assertEquals($expected, 'foobar');
-	}
+    }
 
-	public function testThemeAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testThemeAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/setting/theme');
         
         $this->assertContains('Theme', $client->getResponse()->getContent());
-	}
+    }
 
-	public function testCreateDeletewidget(){
+    public function testCreateDeletewidget(){
 
-		/* PENDING: Cannot set session ID after the session has started
-		$client = $this->getAuthorizedClient();
-		
-		$csrfToken = $client->getContainer()->get('form.csrf_provider')
-			->generateCsrfToken(\Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType::INTENTION);
+        /* PENDING: Cannot set session ID after the session has started
+        $client = $this->getAuthorizedClient();
+        
+        $csrfToken = $client->getContainer()->get('form.csrf_provider')
+            ->generateCsrfToken(\Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType::INTENTION);
 
-		// creat new
-		$param = [
-			'widget' => [
-				'_token' => $csrfToken,
-				'id' => '',
-				'name' => 'text',
-				'content' => 'foobar',
-				'position' => 'Sidebar',
-				'theme' => 'feather',
-				'title' => 'foobar',
-			]
-		];
+        // creat new
+        $param = [
+            'widget' => [
+                '_token' => $csrfToken,
+                'id' => '',
+                'name' => 'text',
+                'content' => 'foobar',
+                'position' => 'Sidebar',
+                'theme' => 'feather',
+                'title' => 'foobar',
+            ]
+        ];
 
         $crawler = $client->request('POST', '/'.static::$admin.'/setting/widget/save', $param);
 
@@ -84,16 +84,16 @@ class SettingControllerTest extends WebTestCase
         $widget = $em->getRepository('SystemBundle"Widget')->find($param->id);
         $this->assertTrue($widget instanceof \Drafterbit\Bundle\SystemBundle\Entity\Widget);
         */
-	}
+    }
 
-	public function testCustomizeThemeAction()
-	{
-		$client = $this->getAuthorizedClient();
+    public function testCustomizeThemeAction()
+    {
+        $client = $this->getAuthorizedClient();
 
         $crawler = $client->request('GET', $this->adminPath('setting/theme/customize'));
 
         /// url must be accoumpanied with csrf _token and theme
         $response = $client->getResponse();
-        $this->assertTrue($response->isRedirect());	
-	}
+        $this->assertTrue($response->isRedirect());    
+    }
 }

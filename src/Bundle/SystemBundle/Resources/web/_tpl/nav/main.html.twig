@@ -2,7 +2,7 @@
 <ul class="nav">
     {% for item in items %}
         <li><a class="{{item.active}}" href="{{item.link}}">{{item.display_text}}</a>
-        	{{item.child}}
+            {{item.child}}
         </li>
     {% endfor %}
 </ul>
