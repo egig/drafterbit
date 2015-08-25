@@ -24,7 +24,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PostController extends Controller
 {
     /**
-     * @Route("/blog/post", name="drafterbit_blog_post")
+     * @Route("/blog/post", name="dt_blog_post")
      * @Template()
      * @Security("is_granted('ROLE_POST_VIEW')")
      * @todo improve indexing (filter by collumn)
@@ -110,7 +110,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/blog/post/data", name="drafterbit_blog_post_data")
+     * @Route("/blog/post/data", name="dt_blog_post_data")
      */
     public function dataAction(Request $request)
     {
@@ -168,7 +168,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/blog/post/edit/{id}", name="drafterbit_blog_post_edit")
+     * @Route("/blog/post/edit/{id}", name="dt_blog_post_edit")
      * @Template()
      * @Security("is_granted('ROLE_POST_EDIT')")
      */
@@ -219,13 +219,13 @@ class PostController extends Controller
             'post_id' => $id,
             'view_id' => 'post-edit',
             'revisions' => $revisions,
-            'action' =>  $this->generateUrl('drafterbit_blog_post_save'),
+            'action' =>  $this->generateUrl('dt_blog_post_save'),
             'page_title' => $this->get('translator')->trans($pageTitle)
         ];
     }
 
     /**
-     * @Route("/blog/post/save", name="drafterbit_blog_post_save")
+     * @Route("/blog/post/save", name="dt_blog_post_save")
      * @Template()
      */
     public function saveAction(Request $request)
@@ -383,7 +383,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/setting/blog", name="drafterbit_blog_setting")
+     * @Route("/setting/blog", name="dt_blog_setting")
      * @Template("BlogBundle::setting.html.twig")
      * @Security("is_granted('ROLE_BLOG_SETTING_MANAGE')")
      */
@@ -408,7 +408,7 @@ class PostController extends Controller
 
         $form = $this->createForm(new SettingType($this->get('system')));
         $data =  [
-            'action' => $this->generateUrl('drafterbit_blog_setting'),
+            'action' => $this->generateUrl('dt_blog_setting'),
             'view_id' => 'blog_setting',
             'page_title' => $this->get('translator')->trans('Blog Setting'),
             'form' => $form->createView()

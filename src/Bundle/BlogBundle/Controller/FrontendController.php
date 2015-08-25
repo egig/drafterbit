@@ -157,7 +157,7 @@ class FrontendController extends Controller
             $month = $dateObject->format('m');
             $date = $dateObject->format('d');
             $slug = $post->getSlug();
-            $post->url = $this->generateUrl('drafterbit_blog_post_front_view',
+            $post->url = $this->generateUrl('dt_blog_post_front_view',
                 ['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
         }
 
@@ -268,7 +268,7 @@ class FrontendController extends Controller
         $month = $post->getPublishedAt()->format('m');
         $date = $post->getPublishedAt()->format('d');
         $slug = $post->getSlug();
-        $post->url = $this->generateUrl('drafterbit_blog_post_front_view',
+        $post->url = $this->generateUrl('dt_blog_post_front_view',
                 ['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug], true);
 
         // @todo create and improve default template
@@ -276,7 +276,7 @@ class FrontendController extends Controller
         $data = [
             'comment' => $comment,
             'post' => $post,
-            'unsubscribe_url' => $this->generateUrl('drafterbit_blog_comment_unsubscribe',
+            'unsubscribe_url' => $this->generateUrl('dt_blog_comment_unsubscribe',
                 ['email' => $comment->getAuthorEmail()], true)
         ];
         $messageBody = $this->renderView('BlogBundle:Comment:mail.html.twig', $data);
@@ -306,7 +306,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/blog/comment/unsubscribe/{email}", name="drafterbit_blog_comment_unsubscribe")
+     * @Route("/blog/comment/unsubscribe/{email}", name="dt_blog_comment_unsubscribe")
      */
     public function commentUnsubscribeAction($email, Request $request)
     {

@@ -23,7 +23,7 @@ class ResultFormatter implements ResultFormatterInterface
         $slug = $item['slug'];
 
         return $this->container->get('router')->generate(
-            'drafterbit_blog_post_front_view',
+            'dt_blog_post_front_view',
             ['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]
         );
     }

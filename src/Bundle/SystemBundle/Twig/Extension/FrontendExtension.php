@@ -139,7 +139,7 @@ class FrontendExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'drafterbit_system.frontend';
+        return 'dt_system.frontend';
     }
 
     /**
@@ -184,7 +184,7 @@ class FrontendExtension extends \Twig_Extension
                 $title = strtr($titleTemplate, ['{{ title }}' => $context['title']]);
             }
 
-            $content = $this->container->get('drafterbit_system.widget.manager')->get($widget['name'])->run($context);
+            $content = $this->container->get('dt_system.widget.manager')->get($widget['name'])->run($context);
             $content = strtr($contentTemplate, ['{{ content }}' => $content]);
 
             $output .= $title.$content;

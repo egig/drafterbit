@@ -19,7 +19,7 @@ use Drafterbit\Bundle\UserBundle\Entity\User;
 class UserController extends Controller
 {
     /**
-     * @Route("/user", name="drafterbit_user")
+     * @Route("/user", name="dt_user")
      * @Template()
      * @Security("is_granted('ROLE_USER_VIEW')")
      */
@@ -78,7 +78,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/data", name="drafterbit_user_data")
+     * @Route("/user/data", name="dt_user_data")
      */
     public function dataAction(Request $request)
     {
@@ -123,7 +123,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/edit/{id}", name="drafterbit_user_edit")
+     * @Route("/user/edit/{id}", name="dt_user_edit")
      * @Template()
      * @Security("is_granted('ROLE_USER_EDIT')")
      */
@@ -149,13 +149,13 @@ class UserController extends Controller
         return [
             'page_title' => $this->get('translator')->trans($pageTitle),
             'view_id' => 'user-edit',
-            'action' => $this->generateUrl('drafterbit_user_save'),
+            'action' => $this->generateUrl('dt_user_save'),
             'form' => $form->createView()
         ];
     }
 
     /**
-     * @Route("/user/save", name="drafterbit_user_save")
+     * @Route("/user/save", name="dt_user_save")
      * @Template()
      */
     public function saveAction(Request $request)

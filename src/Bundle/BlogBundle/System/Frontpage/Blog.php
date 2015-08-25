@@ -17,11 +17,11 @@ class Blog extends Frontpage
     {
         $routes = new RouteCollection;
 
-        $routes->add('drafterbit_blog_category_front_home',
+        $routes->add('dt_blog_category_front_home',
             new Route('/', ['_controller' => 'BlogBundle:Frontend:index'])
         );
 
-        $routes->add('drafterbit_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
+        $routes->add('dt_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
             ['_controller' => 'BlogBundle:Frontend:view'],
             [
             'year' => '\d{4}',
@@ -30,23 +30,23 @@ class Blog extends Frontpage
             ])
         );
 
-        $routes->add('drafterbit_blog_category_front_view',
+        $routes->add('dt_blog_category_front_view',
             new Route('/category/{slug}', ['_controller' => 'BlogBundle:Frontend:category'] )
             );
 
-        $routes->add('drafterbit_blog_tag_front_view',
+        $routes->add('dt_blog_tag_front_view',
             new Route('/tag/{slug}', ['_controller' => 'BlogBundle:Frontend:tag'])
         );
 
-        $routes->add('drafterbit_blog_author_front_view',
+        $routes->add('dt_blog_author_front_view',
             new Route('/author/{username}', ['_controller' => 'BlogBundle:Frontend:author'])
         );
 
-        $routes->add('drafterbit_blog_feed',
+        $routes->add('dt_blog_feed',
             new Route('/feed.xml', ['_controller' => 'BlogBundle:Post:feed'])
         );
 
-        $routes->add('drafterbit_blog_comment_submit',
+        $routes->add('dt_blog_comment_submit',
             new Route('/comment/submit', ['_controller' => 'BlogBundle:Frontend:commentSubmit'], ['methods' => 'post'])
         );
 

@@ -25,7 +25,7 @@ class WidgetFormBuilder
 
         $form = $widget->getFormView(new WidgetType, $data, $options);
 
-        $saveUrl = $this->container->get('router')->generate('drafterbit_setting_widget_save');
+        $saveUrl = $this->container->get('router')->generate('dt_setting_widget_save');
 
         if($form instanceof FormView) {
             $helper = $this->container->get('templating.helper.form');

@@ -13,7 +13,7 @@
 
 {% block action %}
   {{form_widget(form.Save, {attr:{class:"btn btn-sm btn-success"}})}}
-<a class="btn btn-sm btn-default" href="{{ url('drafterbit_blog_post') }}">
+<a class="btn btn-sm btn-default" href="{{ url('dt_blog_post') }}">
     <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
 </a>
 {% endblock %}
@@ -44,8 +44,8 @@
                     <ol style="list-style:none">
                       {% for revision in revisions %}
                             <li>
-                                <a href="{{ url('drafterbit_user_edit', {id:revision.user.id}) }}">{{ revision.user.realname }}</a>
-                                (<a href="{{url('drafterbit_blog_revision_view', {postId: post_id})}}#rev-{{revision.id}}">{{ revision.createdAt|date('d F Y, @H:i') }}</a>)
+                                <a href="{{ url('dt_user_edit', {id:revision.user.id}) }}">{{ revision.user.realname }}</a>
+                                (<a href="{{url('dt_blog_revision_view', {postId: post_id})}}#rev-{{revision.id}}">{{ revision.createdAt|date('d F Y, @H:i') }}</a>)
                             </li>
                       {% endfor %}
                     </ol>

@@ -5,7 +5,7 @@ system:
             children:
                 user:
                     label: User
-                    route: drafterbit_user
+                    route: dt_user
                 group:
                     label: Group
-                    route: drafterbit_user_group
+                    route: dt_user_group

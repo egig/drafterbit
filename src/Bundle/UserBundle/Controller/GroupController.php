@@ -20,7 +20,7 @@ use Drafterbit\Bundle\UserBundle\Form\Type\GroupType;
 class GroupController extends Controller
 {
     /**
-     * @Route("/user/group", name="drafterbit_user_group")
+     * @Route("/user/group", name="dt_user_group")
      * @Template()
      * @Security("is_granted('ROLE_GROUP_VIEW')")
      */
@@ -76,7 +76,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/user/group/data/{status}", name="drafterbit_user_group_data")
+     * @Route("/user/group/data/{status}", name="dt_user_group_data")
      */
     public function dataAction($status)
     {
@@ -103,7 +103,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/user/group/edit/{id}", name="drafterbit_user_group_edit")
+     * @Route("/user/group/edit/{id}", name="dt_user_group_edit")
      * @Template()
      * @Security("is_granted('ROLE_GROUP_EDIT')")
      */
@@ -137,7 +137,7 @@ class GroupController extends Controller
         return [
             'page_title' => $this->get('translator')->trans($pageTitle),
             'view_id' => 'group-edit',
-            'action' => $this->generateUrl('drafterbit_user_group_save'),
+            'action' => $this->generateUrl('dt_user_group_save'),
             'rolesGroup' => $rolesGroup,
             'form' => $form->createView(),
             'group_is_superadmin' => $group->hasRole('ROLE_SUPER_ADMIN')
@@ -145,7 +145,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/user/group/save", name="drafterbit_user_group_save")
+     * @Route("/user/group/save", name="dt_user_group_save")
      * @Method("POST")
      */
     public function saveAction(Request $request)
@@ -221,7 +221,7 @@ class GroupController extends Controller
             if($extension = $bundle->getContainerExtension()) {
 
                 $parameter = $extension->getAlias().'.roles';
-                $section = ucfirst(preg_replace('/^drafterbit_/', '', $extension->getAlias()));
+                $section = ucfirst(preg_replace('/^dt_/', '', $extension->getAlias()));
                 if($this->container->hasParameter($parameter)){
                     $roles[$section] = $this->container->getParameter($parameter);
                 }

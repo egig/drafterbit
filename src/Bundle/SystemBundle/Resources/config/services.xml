@@ -45,11 +45,11 @@
         </service>
 
         <!-- System Model-->
-        <service id="drafterbit_system.model" class="Drafterbit\Bundle\SystemBundle\Model\System">
+        <service id="dt_system.model" class="Drafterbit\Bundle\SystemBundle\Model\System">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="system" alias="drafterbit_system.model"/>
+        <service id="system" alias="dt_system.model"/>
 
         <!-- Log Handler -->
         <service id="system_log_handler" class="Drafterbit\Bundle\SystemBundle\Monolog\Handler\DoctrineDBALHandler">
@@ -59,101 +59,101 @@
         </service>
 
         <!-- Log Displayer -->
-        <service id="drafterbit_system.log.display_formatter" class="Drafterbit\System\Log\DisplayFormatter">
+        <service id="dt_system.log.display_formatter" class="Drafterbit\System\Log\DisplayFormatter">
             <argument type="service" id="translator"/>
         </service>
 
-        <service id="drafterbit_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\System\Frontpage\Search">
-            <tag name="drafterbit_system.frontpage"></tag>
+        <service id="dt_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\System\Frontpage\Search">
+            <tag name="dt_system.frontpage"></tag>
             <argument type="service" id="service_container"/>
         </service>
 
         <!-- Frontpage Provider -->
-        <service id="drafterbit_system.frontpage_provider" class="Drafterbit\System\FrontPage\FrontPageProvider"/>
+        <service id="dt_system.frontpage_provider" class="Drafterbit\System\FrontPage\FrontPageProvider"/>
 
         <!-- Frontend Route loader -->
-        <service id="drafterbit_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\FrontendLoader">
+        <service id="dt_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\FrontendLoader">
             <argument id="service_container" type="service"/>
             <tag name="routing.loader"></tag>
         </service>
 
         <!-- Event Listener -->
-        <service id="drafterbit_system.request.listener" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
+        <service id="dt_system.request.listener" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="service_container" />
         </service>
 
         <!-- Dahboard and Panels -->
-        <service id="drafterbit_system.dashboard_manager" class="Drafterbit\System\Dashboard\DashboardManager"/>
+        <service id="dt_system.dashboard_manager" class="Drafterbit\System\Dashboard\DashboardManager"/>
 
-        <service id="dashboard" alias="drafterbit_system.dashboard_manager"/>
+        <service id="dashboard" alias="dt_system.dashboard_manager"/>
 
-        <service id="drafterbit_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\LogPanel">
+        <service id="dt_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\LogPanel">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.dashboard.panel" />
+            <tag name="dt_system.dashboard.panel" />
         </service>
 
-        <service id="drafterbit_system.dashboard.panel.shortcuts" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\ShortcutsPanel">
+        <service id="dt_system.dashboard.panel.shortcuts" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\ShortcutsPanel">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.dashboard.panel" />
+            <tag name="dt_system.dashboard.panel" />
         </service>
 
-        <service id="drafterbit_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\InfoPanel">
+        <service id="dt_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\InfoPanel">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.dashboard.panel" />
+            <tag name="dt_system.dashboard.panel" />
         </service>
 
         <!-- widget -->
-        <service id="drafterbit_system.widget.form_builder" class="Drafterbit\System\Widget\WidgetFormBuilder">
+        <service id="dt_system.widget.form_builder" class="Drafterbit\System\Widget\WidgetFormBuilder">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="drafterbit_system.widget.manager" class="Drafterbit\System\Widget\WidgetManager">
+        <service id="dt_system.widget.manager" class="Drafterbit\System\Widget\WidgetManager">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="drafterbit_system.widget.search" class="Drafterbit\Bundle\SystemBundle\System\Widget\SearchWidget">
+        <service id="dt_system.widget.search" class="Drafterbit\Bundle\SystemBundle\System\Widget\SearchWidget">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.widget" />
+            <tag name="dt_system.widget" />
         </service>
 
-        <service id="drafterbit_system.widget.text" class="Drafterbit\Bundle\SystemBundle\System\Widget\TextWidget">
+        <service id="dt_system.widget.text" class="Drafterbit\Bundle\SystemBundle\System\Widget\TextWidget">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.widget" />
+            <tag name="dt_system.widget" />
         </service>
 
-        <service id="drafterbit_system.widget.meta" class="Drafterbit\Bundle\SystemBundle\System\Widget\MetaWidget">
+        <service id="dt_system.widget.meta" class="Drafterbit\Bundle\SystemBundle\System\Widget\MetaWidget">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.widget" />
+            <tag name="dt_system.widget" />
         </service>
 
         <!-- Search -->
-        <service id="drafterbit_system.search.engine" class="Drafterbit\System\Search\Engine">
+        <service id="dt_system.search.engine" class="Drafterbit\System\Search\Engine">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="search_engine" alias="drafterbit_system.search.engine"/>
+        <service id="search_engine" alias="dt_system.search.engine"/>
 
         <!-- Form Type -->
-        <service id="drafterbit_system.form.type.entity_hidden" class="Drafterbit\Bundle\SystemBundle\Form\Type\EntityHiddenType">
+        <service id="dt_system.form.type.entity_hidden" class="Drafterbit\Bundle\SystemBundle\Form\Type\EntityHiddenType">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <tag name="form.type" alias="entity_hidden"/>
         </service>
 
-        <service id="drafterbit_system.log.formatter.author" class="Drafterbit\Bundle\SystemBundle\System\Log\AuthorEntityFormatter">
+        <service id="dt_system.log.formatter.author" class="Drafterbit\Bundle\SystemBundle\System\Log\AuthorEntityFormatter">
             <argument type="service" id="kernel" />
-            <tag name="drafterbit_system_log.display_formatter" />
+            <tag name="dt_system_log.display_formatter" />
         </service>
 
         <!-- setting -->
-        <service id="drafterbit_system.setting.field_manager" class="Drafterbit\System\Setting\FieldManager"/>
+        <service id="dt_system.setting.field_manager" class="Drafterbit\System\Setting\FieldManager"/>
 
-        <service id="drafterbit_system.setting.field.general" class="Drafterbit\Bundle\SystemBundle\System\Setting\GeneralField">
+        <service id="dt_system.setting.field.general" class="Drafterbit\Bundle\SystemBundle\System\Setting\GeneralField">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.setting.field" />
+            <tag name="dt_system.setting.field" />
         </service>
 
-        <service id="drafterbit_system.doctrine.subscribers.table_prefix" class="Drafterbit\Bundle\SystemBundle\Doctrine\Subscriber\TablePrefixSubscriber">
+        <service id="dt_system.doctrine.subscribers.table_prefix" class="Drafterbit\Bundle\SystemBundle\Doctrine\Subscriber\TablePrefixSubscriber">
             <argument>%database_table_prefix%</argument>
             <tag name="doctrine.event_subscriber" />
         </service>
@@ -161,9 +161,9 @@
         <!-- Extensions -->
         <service id="extension_manager" class="Drafterbit\System\Extension\ExtensionManager"/>
 
-        <service id="drafterbit_system.extensions.system" class="Drafterbit\Bundle\SystemBundle\System\Extension\SystemExtension">
+        <service id="dt_system.extensions.system" class="Drafterbit\Bundle\SystemBundle\System\Extension\SystemExtension">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.extensions" />
+            <tag name="dt_system.extensions" />
         </service>
 
     </services>

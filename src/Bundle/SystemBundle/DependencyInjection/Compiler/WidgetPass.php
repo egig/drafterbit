@@ -10,16 +10,16 @@ class WidgetPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.widget.manager')) {
+        if (!$container->hasDefinition('dt_system.widget.manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.widget.manager'
+            'dt_system.widget.manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system.widget'
+            'dt_system.widget'
         );
 
         foreach ($taggedServices as $id => $tags) {

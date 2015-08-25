@@ -10,16 +10,16 @@ class LogDisplayFormatterPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.log.display_formatter')) {
+        if (!$container->hasDefinition('dt_system.log.display_formatter')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.log.display_formatter'
+            'dt_system.log.display_formatter'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system_log.display_formatter'
+            'dt_system_log.display_formatter'
         );
 
         foreach ($taggedServices as $id => $tags) {

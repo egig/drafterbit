@@ -2,7 +2,7 @@
 
 {% block action %}
     {% if is_granted('ROLE_CATEGORY_CREATE') %}
-    <a href="{{ url('drafterbit_blog_category_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
+    <a href="{{ url('dt_blog_category_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
         <i class="fa fa-plus" style=""></i> {{ __('New Category') }}
     </a>
     {% endif %}

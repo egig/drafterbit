@@ -5,10 +5,10 @@ system:
             children:
                 post:
                     label: Post
-                    route: drafterbit_blog_post
+                    route: dt_blog_post
                 category:
                     label: Category
-                    route: drafterbit_blog_category
+                    route: dt_blog_category
                 comment:
                     label: Comment
-                    route: drafterbit_blog_comment
+                    route: dt_blog_comment

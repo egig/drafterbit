@@ -16,7 +16,7 @@ class Search implements FrontPageInterface
     public function getRoutes()
     {
         $routes = new RouteCollection;
-        $routes->add('drafterbit_system_search', new Route('', ['_controller' => 'SystemBundle:Frontend:search']));
+        $routes->add('dt_system_search', new Route('', ['_controller' => 'SystemBundle:Frontend:search']));
         return $routes;
     }
 

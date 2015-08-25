@@ -16,7 +16,7 @@
 
 {% block action %}
     {% if is_granted('ROLE_USER_CREATE') %}
-        <a href="{{path('drafterbit_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
+        <a href="{{path('dt_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
             <i class="fa fa-plus" style=""></i> {{ __('New User') }}
         </a>
     {% endif %}

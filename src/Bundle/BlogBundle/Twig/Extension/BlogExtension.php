@@ -117,6 +117,6 @@ class BlogExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'drafterbit_blog';
+        return 'dt_blog';
     }
 }

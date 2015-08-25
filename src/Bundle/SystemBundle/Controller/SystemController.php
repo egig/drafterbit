@@ -21,7 +21,7 @@ use Drafterbit\Bundle\SystemBundle\Entity\PanelConfig;
 class SystemController extends Controller
 {
     /**
-     * @Route("/", name="drafterbit_system_dashboard")
+     * @Route("/", name="dt_system_dashboard")
      * @Template()
      */
     public function dashboardAction()
@@ -77,7 +77,7 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/log", name="drafterbit_system_log")
+     * @Route("/system/log", name="dt_system_log")
      * @Template()
      * @Security("is_granted('ROLE_LOG_VIEW')")
      */
@@ -127,7 +127,7 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/log/data", name="drafterbit_system_log_data")
+     * @Route("/system/log/data", name="dt_system_log_data")
      * @Template()
      */
     public function logDataAction()
@@ -142,7 +142,7 @@ class SystemController extends Controller
             $data = [];
             $data[] = $log->getid();
             $data[] = date('d-m-Y H:i:s', $log->getTime());
-            $data[] = $this->get('drafterbit_system.log.display_formatter')->format($log->getMessage(), $log->getContext());
+            $data[] = $this->get('dt_system.log.display_formatter')->format($log->getMessage(), $log->getContext());
 
             $logArr[] = $data;
         }
@@ -156,7 +156,7 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/cache", name="drafterbit_system_cache")
+     * @Route("/system/cache", name="dt_system_cache")
      * @Template()
      * @Security("is_granted('ROLE_CACHE_VIEW')")
      */
@@ -189,7 +189,7 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/update", name="drafterbit_system_update")
+     * @Route("/system/update", name="dt_system_update")
      * @Template()
      * @todo
      */
@@ -204,7 +204,7 @@ class SystemController extends Controller
     /**
      * Cache clearer controller
      *
-     * @Route("/system/cache/clear", name="drafterbit_system_cache_clear")
+     * @Route("/system/cache/clear", name="dt_system_cache_clear")
      * @Method("POST")
      */
     public function clearCacheAction(Request $request)
@@ -232,7 +232,7 @@ class SystemController extends Controller
 
     /**
      * 
-     * @Route("/system/dashboard/sort", name="drafterbit_system_dashboard_sort")
+     * @Route("/system/dashboard/sort", name="dt_system_dashboard_sort")
      * @Method("POST")
      */
     public function sortDashboardAction(Request $request) {
@@ -281,7 +281,7 @@ class SystemController extends Controller
 
     /**
      * 
-     * @Route("/system/dashboard/toggle_panel", name="drafterbit_system_dashboard_toggle_panel")
+     * @Route("/system/dashboard/toggle_panel", name="dt_system_dashboard_toggle_panel")
      * @Method("POST")
      */
     public function togglePanelAction(Request $request) {

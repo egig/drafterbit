@@ -31,7 +31,7 @@
                 {% if error %}
                     <div class="alert alert-danger" role="alert">{{ error|trans({}, 'UserBundle') }}</div>
                 {% endif %}
-                <form action="{{ path("drafterbit_user_security_check") }}" method="post" role="form" class="form-login">
+                <form action="{{ path("dt_user_security_check") }}" method="post" role="form" class="form-login">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
                         <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username_or_email'|trans({}, 'UserBundle') }}" class="form-control input-sm"/>

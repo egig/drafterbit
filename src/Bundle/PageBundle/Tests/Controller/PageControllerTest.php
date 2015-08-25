@@ -35,7 +35,7 @@ class PageControllerTest extends WebTestCase
         // Test validatin first
         $param = [
         	'page' => [
-        		'id' => 'new',
+        	        'id' => 'new',
         		'title' => '',
         		'slug' => '',
         		'status' => 1,

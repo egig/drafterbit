@@ -10,16 +10,16 @@ class SettingFieldPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.setting.field_manager')) {
+        if (!$container->hasDefinition('dt_system.setting.field_manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.setting.field_manager'
+            'dt_system.setting.field_manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system.setting.field'
+            'dt_system.setting.field'
         );
 
         foreach ($taggedServices as $id => $tags) {

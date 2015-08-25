@@ -2,4 +2,4 @@ system:
     navigation:
         page:
             label: Page
-            route: drafterbit_page
+            route: dt_page

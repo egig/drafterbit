@@ -5,19 +5,19 @@ system:
             children:
                 general:
                     label: General
-                    route: drafterbit_system_setting_general
+                    route: dt_system_setting_general
                 theme:
                     label: Theme
-                    route: drafterbit_system_setting_theme
+                    route: dt_system_setting_theme
         system:
             label: System
             children:
                 update:
                     label: Update
-                    route: drafterbit_system_update
+                    route: dt_system_update
                 log:
                     label: Log
-                    route: drafterbit_system_log
+                    route: dt_system_log
                 cache:
                     label: Cache
-                    route: drafterbit_system_cache
+                    route: dt_system_cache

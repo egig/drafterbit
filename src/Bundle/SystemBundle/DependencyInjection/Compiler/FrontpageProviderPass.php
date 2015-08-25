@@ -10,16 +10,16 @@ class FrontpageProviderPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.frontpage_provider')) {
+        if (!$container->hasDefinition('dt_system.frontpage_provider')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.frontpage_provider'
+            'dt_system.frontpage_provider'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system.frontpage'
+            'dt_system.frontpage'
         );
 
         foreach ($taggedServices as $id => $tags) {

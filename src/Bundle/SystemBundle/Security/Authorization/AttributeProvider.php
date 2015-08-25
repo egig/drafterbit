@@ -47,7 +47,7 @@ class AttributeProvider {
             if($extension = $bundle->getContainerExtension()) {
 
                 $parameter = $extension->getAlias().'.roles';
-                $section = ucfirst(preg_replace('/^drafterbit_/', '', $extension->getAlias()));
+                $section = ucfirst(preg_replace('/^dt_/', '', $extension->getAlias()));
                 if($container->hasParameter($parameter)){
                     $roles[$section] = $container->getParameter($parameter);
                 }

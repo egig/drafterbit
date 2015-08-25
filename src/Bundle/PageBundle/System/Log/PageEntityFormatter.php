@@ -21,7 +21,7 @@ class PageEntityFormatter extends BaseEntityFormatter
         $url = $this->getKernel()
             ->getContainer()
             ->get('router')
-            ->generate('drafterbit_page_edit', ['id' => $id]);
+            ->generate('dt_page_edit', ['id' => $id]);
 
         if($label) {
             return '<a href="'.$url.'">'.$label.'</a>';

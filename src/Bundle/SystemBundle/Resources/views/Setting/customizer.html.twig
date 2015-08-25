@@ -47,7 +47,7 @@
         <div id="customizer">
             <div class="col-container">
                 <div class="col">
-                    <form action="{{ url('drafterbit_setting_theme_save') }}" method="POST" id="customizer-form" class="customizer-ajax-form">
+                    <form action="{{ url('dt_setting_theme_save') }}" method="POST" id="customizer-form" class="customizer-ajax-form">
                     <input type="hidden" name="csrf" value="{{ csrf_token('customize_theme') }}"/>
                     <input type="hidden" name="url" value="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}"/>
                     <input type="hidden" name="theme" value="{{ theme }}"/>
@@ -204,8 +204,8 @@
               <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            <script src="{{ url('asset_drafterbit_js') }}"></script>
-            <script src="{{ url('drafterbit_system_asset_session_js') }}"></script>
+            <script src="{{ url('asset_dt_js') }}"></script>
+            <script src="{{ url('dt_system_asset_session_js') }}"></script>
             <script type="text/javascript">
               drafTerbit.customThemeCsrfToken = "{{ csrf_token('customize_theme') }}";
             </script>

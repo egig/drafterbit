@@ -30,7 +30,7 @@ class FrontendLoader implements LoaderInterface
 
         $frontPageConfig = $this->container->get('system')->get('system.frontpage', 'blog');
 
-        $frontPageProvider = $this->container->get('drafterbit_system.frontpage_provider');
+        $frontPageProvider = $this->container->get('dt_system.frontpage_provider');
 
         $reservedBaseUrl = [$this->container->getParameter('admin')];
         

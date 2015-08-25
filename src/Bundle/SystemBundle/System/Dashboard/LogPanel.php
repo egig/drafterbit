@@ -20,7 +20,7 @@ class LogPanel extends Panel {
             return [
                 'time' => (new \DateTime())->setTimestamp($log->getTime()),
                 'activity' => $this->container
-                    ->get('drafterbit_system.log.display_formatter')->format($log->getMessage(), $log->getContext())
+                    ->get('dt_system.log.display_formatter')->format($log->getMessage(), $log->getContext())
             ];
         }, $logEntities);
 

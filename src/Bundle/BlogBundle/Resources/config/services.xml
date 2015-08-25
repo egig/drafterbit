@@ -7,13 +7,13 @@
 
     <services>
         <!-- Frontend Tenplating Extension -->
-        <service id="drafterbit_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\Twig\Extension\BlogExtension">
+        <service id="dt_blog.twig.extension" class="Drafterbit\Bundle\BlogBundle\Twig\Extension\BlogExtension">
             <tag name="twig.extension"></tag>
             <argument type="service" id="kernel" />
         </service>
         
-        <service id="drafterbit_blog.frontpage" class="Drafterbit\Bundle\BlogBundle\System\Frontpage\Blog">
-            <tag name="drafterbit_system.frontpage"></tag>
+        <service id="dt_blog.frontpage" class="Drafterbit\Bundle\BlogBundle\System\Frontpage\Blog">
+            <tag name="dt_system.frontpage"></tag>
             <argument type="service" id="service_container"/>
         </service>
 
@@ -25,31 +25,31 @@
         </service> -->
 
         <!-- Log Formatter -->
-        <service id="drafterbit_log_display_formatter.post" class="Drafterbit\Bundle\BlogBundle\System\Log\PostEntityFormatter">
+        <service id="dt_log_display_formatter.post" class="Drafterbit\Bundle\BlogBundle\System\Log\PostEntityFormatter">
             <argument type="service" id="kernel" />
-            <tag name="drafterbit_system_log.display_formatter" />
+            <tag name="dt_system_log.display_formatter" />
         </service>
 
-        <service id="drafterbit_log_display_formatter.category" class="Drafterbit\Bundle\BlogBundle\System\Log\CategoryEntityFormatter">
+        <service id="dt_log_display_formatter.category" class="Drafterbit\Bundle\BlogBundle\System\Log\CategoryEntityFormatter">
             <argument type="service" id="kernel" />
-            <tag name="drafterbit_system_log.display_formatter" />
+            <tag name="dt_system_log.display_formatter" />
         </service>
 
         <!-- Search query -->
-        <service id="drafterbit_blog.search.query_provider" class="Drafterbit\Bundle\BlogBundle\System\Search\QueryProvider">
+        <service id="dt_blog.search.query_provider" class="Drafterbit\Bundle\BlogBundle\System\Search\QueryProvider">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.search.query_provider" />
+            <tag name="dt_system.search.query_provider" />
         </service>
 
-        <service id="drafterbit_blog.dashboard.panel.recent_comment" class="Drafterbit\Bundle\BlogBundle\System\Dashboard\RecentCommentPanel">
+        <service id="dt_blog.dashboard.panel.recent_comment" class="Drafterbit\Bundle\BlogBundle\System\Dashboard\RecentCommentPanel">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.dashboard.panel" />
+            <tag name="dt_system.dashboard.panel" />
         </service>
 
         <!-- setting field -->
-        <service id="drafterbit_blog.setting.field.blog" class="Drafterbit\Bundle\BlogBundle\System\Setting\BlogField">
+        <service id="dt_blog.setting.field.blog" class="Drafterbit\Bundle\BlogBundle\System\Setting\BlogField">
             <argument type="service" id="service_container" />
-            <tag name="drafterbit_system.setting.field" />
+            <tag name="dt_system.setting.field" />
         </service>
     </services>
 </container>

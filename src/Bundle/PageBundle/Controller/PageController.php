@@ -20,7 +20,7 @@ use Drafterbit\Bundle\PageBundle\Entity\Page;
 class PageController extends Controller
 {
     /**
-     * @Route("/page", name="drafterbit_page")
+     * @Route("/page", name="dt_page")
      * @Template()
      * @Security("is_granted('ROLE_PAGE_VIEW')")
      */
@@ -89,7 +89,7 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/page/data/{status}", name="drafterbit_page_data")
+     * @Route("/page/data/{status}", name="dt_page_data")
      */
     public function data($status)
     {
@@ -139,7 +139,7 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/page/edit/{id}", name="drafterbit_page_edit")
+     * @Route("/page/edit/{id}", name="dt_page_edit")
      * @Template()
      * @todo crate permission attr constant
      * @Security("is_granted('ROLE_PAGE_EDIT')")
@@ -169,13 +169,13 @@ class PageController extends Controller
             'form' => $form->createView(),
             'view_id' => 'page-edit',
             'page_id' => $id,
-            'action' =>  $this->generateUrl('drafterbit_page_save'),
+            'action' =>  $this->generateUrl('dt_page_save'),
             'page_title' => $this->get('translator')->trans($pageTitle)
         ];
     }
 
     /**
-     * @Route("/page/save", name="drafterbit_page_save")
+     * @Route("/page/save", name="dt_page_save")
      */
     public function saveAction(Request $request)
     {

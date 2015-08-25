@@ -10,16 +10,16 @@ class SearchQueryProviderPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.search.engine')) {
+        if (!$container->hasDefinition('dt_system.search.engine')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.search.engine'
+            'dt_system.search.engine'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system.search.query_provider'
+            'dt_system.search.query_provider'
         );
 
         foreach ($taggedServices as $id => $tags) {

@@ -19,7 +19,7 @@ use Drafterbit\Bundle\BlogBundle\Entity\Category;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/blog/category", name="drafterbit_blog_category")
+     * @Route("/blog/category", name="dt_blog_category")
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_VIEW')")
      */
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/blog/category/edit/{id}", name="drafterbit_blog_category_edit")
+     * @Route("/blog/category/edit/{id}", name="dt_blog_category_edit")
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_EDIT')")
      */
@@ -57,13 +57,13 @@ class CategoryController extends Controller
         return [
             'form' => $form->createView(),
             'view_id' => 'category-edit',
-            'action' => $this->generateUrl('drafterbit_blog_category_save'),
+            'action' => $this->generateUrl('dt_blog_category_save'),
             'page_title' => $this->get('translator')->trans('Edit Category')
         ];
     }
 
     /**
-     * @Route("/blog/category/data/all", name="drafterbit_blog_category_data")
+     * @Route("/blog/category/data/all", name="dt_blog_category_data")
      */
     public function dataAction()
     {
@@ -88,7 +88,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/blog/category/save", name="drafterbit_blog_category_save")
+     * @Route("/blog/category/save", name="dt_blog_category_save")
      * @Template()
      */
     public function saveAction(Request $request)

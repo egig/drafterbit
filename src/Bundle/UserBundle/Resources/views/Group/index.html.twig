@@ -2,7 +2,7 @@
 
 {% block action %}
     {% if is_granted('ROLE_GROUP_CREATE') %}
-        <a href="{{ url('drafterbit_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
+        <a href="{{ url('dt_user_group_edit', {id:'new'}) }}" class="btn btn-success btn-sm">
             <i class="fa fa-plus" style=""></i> {{ __('New Group') }}
         </a>
     {% endif %}

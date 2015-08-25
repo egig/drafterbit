@@ -12,7 +12,7 @@ class AppearanceShortcut extends Shortcut {
 			'theme' => $this->container->getParameter('theme'),
 			'_token' => $this->container->get('form.csrf_provider')->generateCsrfToken('customize_theme')
 		];
-		return $this->container->get('router')->generate('drafterbit_setting_theme_customize', $param);
+		return $this->container->get('router')->generate('dt_setting_theme_customize', $param);
 	}
 
 	public function getText()

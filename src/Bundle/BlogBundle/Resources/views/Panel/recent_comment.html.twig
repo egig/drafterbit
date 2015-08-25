@@ -12,7 +12,7 @@
                         </div>
                         <div style="text-overflow: ellipsis;">
                             {{ comment.authorName }} {{ __('On') }}
-                            <a href="{{ url('drafterbit_blog_post_edit', {id: comment.post.id}) }}">{{ comment.post.title }}</a>
+                            <a href="{{ url('dt_blog_post_edit', {id: comment.post.id}) }}">{{ comment.post.title }}</a>
                             <p>{{ comment.content }}</p>
                         </div>
                     </li>
@@ -23,7 +23,7 @@
             <p>{{ __('No recent comment') }}</p>
         {% endif %}
         <div>
-            <a href="{{ url('drafterbit_blog_comment') }}" class="btn btn-sm pull-right">{{ __('View more') }}</a>
+            <a href="{{ url('dt_blog_comment') }}" class="btn btn-sm pull-right">{{ __('View more') }}</a>
         </div>
     </div>
 </div>

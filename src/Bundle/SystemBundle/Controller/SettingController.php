@@ -22,14 +22,14 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
 class SettingController extends Controller
 {
     /**
-     * @Route("/setting/general", name="drafterbit_system_setting_general")
+     * @Route("/setting/general", name="dt_system_setting_general")
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
      * @todo Setting validation rules
      */
     public function generalAction(Request $request)
     {
-        $fields = $this->get('drafterbit_system.setting.field_manager')->getAll();
+        $fields = $this->get('dt_system.setting.field_manager')->getAll();
 
         $mainForm = $this->get('form.factory')->createNamedBuilder('setting')
             ->add('Save', 'submit')
@@ -72,7 +72,7 @@ class SettingController extends Controller
         $data = [
             'page_title' => $this->get('translator')->trans('Setting'),
             'view_id' => 'setting',
-            'action' => $this->generateUrl('drafterbit_system_setting_general'),
+            'action' => $this->generateUrl('dt_system_setting_general'),
             'form' => $mainForm->createView(),
             'fields' => $fields
         ];
@@ -81,7 +81,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/theme", name="drafterbit_system_setting_theme")
+     * @Route("/setting/theme", name="dt_system_setting_theme")
      * @Template()
      * @Security("is_granted('ROLE_SETTING_THEME_MANAGE')")
      */
@@ -95,7 +95,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/widget/delete", name="drafterbit_setting_widget_delete")
+     * @Route("/setting/widget/delete", name="dt_setting_widget_delete")
      */
     public function widgetDeleteAction(Request $request)
     {
@@ -110,7 +110,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/widget/save", name="drafterbit_setting_widget_save")
+     * @Route("/setting/widget/save", name="dt_setting_widget_save")
      */
     public function widgetSaveAction(Request $request)
     {
@@ -154,7 +154,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/widget/sort", name="drafterbit_setting_widget_sort")
+     * @Route("/setting/widget/sort", name="dt_setting_widget_sort")
      */
     public function widgetSortAction(Request $request)
     {
@@ -199,7 +199,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/theme/customize", name="drafterbit_setting_theme_customize")
+     * @Route("/setting/theme/customize", name="dt_setting_theme_customize")
      * @Template()
      */
     public function customizerAction(Request $request)
@@ -247,12 +247,12 @@ class SettingController extends Controller
             }
         }
 
-        $availableWidgets = $this->get('drafterbit_system.widget.manager')->all();
+        $availableWidgets = $this->get('dt_system.widget.manager')->all();
         foreach ($availableWidgets as &$widget) {
             $newWidget = new Widget;
             $newWidget->setTheme($theme);
             $newWidget->setName($widget->getName());
-            $form = $this->get('drafterbit_system.widget.form_builder')->build($widget, $newWidget);
+            $form = $this->get('dt_system.widget.form_builder')->build($widget, $newWidget);
             $widget->form = base64_encode($form);
         }
 
@@ -280,10 +280,10 @@ class SettingController extends Controller
 
                 $context = json_decode($w->getContext(), true);
 
-                $widgetObj = $this->get('drafterbit_system.widget.manager')->get($w->getName());
+                $widgetObj = $this->get('dt_system.widget.manager')->get($w->getName());
                 $widgetObj->setContext($context);
 
-                $w->form = $this->get('drafterbit_system.widget.form_builder')->build($widgetObj, $w);
+                $w->form = $this->get('dt_system.widget.form_builder')->build($widgetObj, $w);
             }
         }
 
@@ -339,7 +339,7 @@ class SettingController extends Controller
     }
 
     /**
-     * @Route("/setting/theme/save", name="drafterbit_setting_theme_save")
+     * @Route("/setting/theme/save", name="dt_setting_theme_save")
      */
     public function themeSaveAction(Request $request)
     {

@@ -2,4 +2,4 @@ system:
     navigation:
         file:
             label: Files
-            route: drafterbit_file
+            route: dt_file

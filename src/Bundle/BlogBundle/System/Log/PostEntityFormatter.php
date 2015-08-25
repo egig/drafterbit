@@ -25,7 +25,7 @@ class PostEntityFormatter extends BaseEntityFormatter
         $url = $this->getKernel()
             ->getContainer()
             ->get('router')
-            ->generate('drafterbit_blog_post_edit', ['id' => $id]);
+            ->generate('dt_blog_post_edit', ['id' => $id]);
 
         if($label) {
             return '<a href="'.$url.'">'.$label.'</a>';

@@ -10,16 +10,16 @@ class DashboardPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('drafterbit_system.dashboard_manager')) {
+        if (!$container->hasDefinition('dt_system.dashboard_manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'drafterbit_system.dashboard_manager'
+            'dt_system.dashboard_manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'drafterbit_system.dashboard.panel'
+            'dt_system.dashboard.panel'
         );
 
         foreach ($taggedServices as $id => $tags) {

@@ -25,7 +25,7 @@ class CategoryEntityFormatter extends BaseEntityFormatter
         $url = $this->getKernel()
             ->getContainer()
             ->get('router')
-            ->generate('drafterbit_blog_category_edit', ['id' => $id]);
+            ->generate('dt_blog_category_edit', ['id' => $id]);
 
         if($label) {
             return '<a href="'.$url.'">'.$label.'</a>';

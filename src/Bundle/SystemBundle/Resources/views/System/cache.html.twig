@@ -13,7 +13,7 @@
     <div class="row dt-cache-toolbar">
         {% if is_granted('ROLE_CACHE_RENEW') %}
         <div class="col-md-8">
-            <form method="POST" action="{{ url('drafterbit_system_cache_clear') }}">
+            <form method="POST" action="{{ url('dt_system_cache_clear') }}">
                 <button type="submit" name="renew" value="1" class="btn btn-default btn-sm">{{ __('Renew Cache') }}</button>
             </form>
         </div>

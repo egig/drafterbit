@@ -21,7 +21,7 @@ use cogpowered\FineDiff\Diff;
 class RevisionController extends Controller
 {
     /**
-     * @Route("/blog/post/{postId}/revisions", name="drafterbit_blog_revision_view")
+     * @Route("/blog/post/{postId}/revisions", name="dt_blog_revision_view")
      * @Template()
      */
     public function viewAction($postId)
@@ -51,11 +51,11 @@ class RevisionController extends Controller
             // add line spacing between paragraph
             $revs[$i]->diff_content = str_replace('&lt;/p&gt;', '&lt;/p&gt;<br/><br/>', $diff_content);
 
-            $revs[$i]->authorUrl = $this->generateUrl('drafterbit_user_edit', ['id' => $revs[$i]->getUser()->getId()]);
+            $revs[$i]->authorUrl = $this->generateUrl('dt_user_edit', ['id' => $revs[$i]->getUser()->getId()]);
             $revs[$i]->pos = count($revs)-$i;
         }
 
-        $postUrl = '<a href="'.$this->generateUrl('drafterbit_blog_post_edit', ['id' => $current->getId()]).'">'.$current->getTitle()."</a>";
+        $postUrl = '<a href="'.$this->generateUrl('dt_blog_post_edit', ['id' => $current->getId()]).'">'.$current->getTitle()."</a>";
         return [
             'post_id' => $postId,
             'revs' => $revs,
@@ -64,7 +64,7 @@ class RevisionController extends Controller
     }
 
     /**
-     * @Route("/blog/revision/clear", name="drafterbit_blog_revision_clear")
+     * @Route("/blog/revision/clear", name="dt_blog_revision_clear")
      * @Template()
      */
     public function clearAction(Request $request)
@@ -84,7 +84,7 @@ class RevisionController extends Controller
     }
 
     /**
-     * @Route("/blog/revision/revert", name="drafterbit_blog_revision_revert")
+     * @Route("/blog/revision/revert", name="dt_blog_revision_revert")
      */
     public function revertAction(Request $request)
     {
@@ -109,6 +109,6 @@ class RevisionController extends Controller
         $em->persist($post);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('drafterbit_blog_post_edit', ['id' => $postId]));
+        return $this->redirect($this->generateUrl('dt_blog_post_edit', ['id' => $postId]));
     }
 }

@@ -16,7 +16,7 @@ class ExtensionsPass implements CompilerPassInterface {
 
         $definition = $container->getDefinition('extension_manager');
 
-        $taggedServices = $container->findTaggedServiceIds('drafterbit_system.extensions');
+        $taggedServices = $container->findTaggedServiceIds('dt_system.extensions');
 
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall(

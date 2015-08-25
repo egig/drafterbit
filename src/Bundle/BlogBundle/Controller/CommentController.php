@@ -19,7 +19,7 @@ use Doctrine\DBAL\DBALException;
 class CommentController extends Controller
 {
     /**
-     * @Route("/blog/comment", name="drafterbit_blog_comment")
+     * @Route("/blog/comment", name="dt_blog_comment")
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_VIEW')")
      */
@@ -95,7 +95,7 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/blog/comment/data/{status}", name="drafterbit_blog_comment_data")
+     * @Route("/blog/comment/data/{status}", name="dt_blog_comment_data")
      */
     public function dataAction($status)
     {
@@ -143,7 +143,7 @@ class CommentController extends Controller
 
             $data[] = $this->contentFormat($comment->getContent(), $comment);;
 
-            $data[] = '<a href="'.$this->generateUrl('drafterbit_blog_post_edit', ['id' => $comment->getPost()->getId()]).'">'
+            $data[] = '<a href="'.$this->generateUrl('dt_blog_post_edit', ['id' => $comment->getPost()->getId()]).'">'
                 .$comment->getPost()->getTitle().'</a><br/>'.$comment->getCreatedAt()->format('d/m/Y');
 
             $arr[] = $data;
@@ -181,7 +181,7 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/blog/comment/status", name="drafterbit_blog_comment_status")
+     * @Route("/blog/comment/status", name="dt_blog_comment_status")
      */
     public function statusAction(Request $request)
     {
@@ -200,7 +200,7 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/blog/comment/quick-reply", name="drafterbit_blog_comment_quickreply")
+     * @Route("/blog/comment/quick-reply", name="dt_blog_comment_quickreply")
      */
     public function quickReply(Request $request)
     {
@@ -234,7 +234,7 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/blog/comment/quick-trash", name="drafterbit_blog_comment_quicktrash")
+     * @Route("/blog/comment/quick-trash", name="dt_blog_comment_quicktrash")
      */
     public function quickTrash(Request $request)
     {

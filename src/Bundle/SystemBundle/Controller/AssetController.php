@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AssetController extends Controller
 {
     /**
-     * @Route("/js/dt.js", name="asset_drafterbit_js")
+     * @Route("/js/dt.js", name="asset_dt_js")
      */
     public function dtJsAction()
     {
@@ -26,7 +26,7 @@ class AssetController extends Controller
     }
 
     /**
-     * @Route("/js/session.js", name="drafterbit_system_asset_session_js")
+     * @Route("/js/session.js", name="dt_system_asset_session_js")
      */
     public function sessionJsAction()
     {

@@ -10,7 +10,7 @@
     </parameters>
 
     <services>
-        <service id="drafterbit_file.server" class="Drafterbit\Bundle\FileBundle\Server">
+        <service id="dt_file.server" class="Drafterbit\Bundle\FileBundle\Server">
             <argument>%upload_path%</argument>
             <argument type="service" id="filesystem" />
         </service>

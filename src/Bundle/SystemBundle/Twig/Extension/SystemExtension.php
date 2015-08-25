@@ -62,6 +62,6 @@ class SystemExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'drafterbit_system';
+        return 'dt_system';
     }
 }

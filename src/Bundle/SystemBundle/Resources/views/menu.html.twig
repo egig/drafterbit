@@ -48,7 +48,7 @@
             {% endfor %}
 
             <div role="tabpanel" class="tab-pane" id="add-menu">
-            {{ form_start(form, {attr:{class:"menu-add-form"}, action:url('drafterbit_system_menu_save')}) }}
+            {{ form_start(form, {attr:{class:"menu-add-form"}, action:url('dt_system_menu_save')}) }}
                 <div class="clearfix menu-setting">
                   <div class="col-md-4" style="padding:0">
                   {{ form_label(form.display_text, "Display Text") }}
@@ -128,7 +128,7 @@
           </h4>
         </div>
         <div class="panel-collapse collapse" id="menu-{{ item.id }}" aria-expanded="false">
-            <form method="POST" class="menu-form" action="{{ url('drafterbit_system_menu_item_save') }}">
+            <form method="POST" class="menu-form" action="{{ url('dt_system_menu_item_save') }}">
             <div class="panel-body">
               <div class="form-group">
                 <label>Display Text</label>

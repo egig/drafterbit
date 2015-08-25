@@ -20,7 +20,7 @@ use Drafterbit\Bundle\SystemBundle\Entity\MenuItem;
 class MenuController extends Controller
 {
     /**
-     * @Route("/menu", name="drafterbit_system_menu")
+     * @Route("/menu", name="dt_system_menu")
      * @Template("SystemBundle::menu.html.twig")
      * @Security("is_granted('ROLE_MENU_MANAGE')")
      */
@@ -60,7 +60,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @Route("/menu/save", name="drafterbit_system_menu_save")
+     * @Route("/menu/save", name="dt_system_menu_save")
      */
     public function saveAction(Request $request)
     {
@@ -123,7 +123,7 @@ class MenuController extends Controller
     /**
      * Actually this is also saving menu if the name changes
      *
-     * @Route("/menu/sort", name="drafterbit_system_menu_sort")
+     * @Route("/menu/sort", name="dt_system_menu_sort")
      */
     public function sortAction(Request $request)
     {
@@ -156,7 +156,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @Route("/menu/delete", name="drafterbit_system_menu_delete")
+     * @Route("/menu/delete", name="dt_system_menu_delete")
      */
     public function deleteAction(Request $request)
     {
@@ -178,7 +178,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @Route("/menu/item/add", name="drafterbit_system_menu_item_add")
+     * @Route("/menu/item/add", name="dt_system_menu_item_add")
      */
     public function itemAddAction(Request $request)
     {
@@ -204,7 +204,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @Route("/menu/item/delete", name="drafterbit_system_menu_item_delete")
+     * @Route("/menu/item/delete", name="dt_system_menu_item_delete")
      */
     public function itemDeleteAction(Request $request)
     {
@@ -226,7 +226,7 @@ class MenuController extends Controller
     }
 
     /**
-     * @Route("/menu/item/save", name="drafterbit_system_menu_item_save")
+     * @Route("/menu/item/save", name="dt_system_menu_item_save")
      */
     public function itemSaveAction(Request $request)
     {
