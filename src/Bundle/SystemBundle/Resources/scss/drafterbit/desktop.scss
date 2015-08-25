@@ -1,5 +1,11 @@
 @media (min-width:768px) {
 
+    .dt- {
+        &navbar-brand {
+            max-width:150px;
+        }
+    }
+
     .dt-navbar {
         height: 50px;
     }

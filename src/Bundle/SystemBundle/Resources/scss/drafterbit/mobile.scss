@@ -62,6 +62,12 @@
         clear: left;
     }
 
+    .dt- {
+        &navbar-brand {
+            width: 70%;
+        }
+    }
+
     .dt-user-menu {
         display: inline-block !important;
         position:fixed;

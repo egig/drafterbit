@@ -1,5 +1,5 @@
 <span>by <a href="{{blog_url('author')}}/{{post.user.username}}">{{ post.user.realname }}</a></span> |
-<span>{{ post.publishedA|date }}</span> 
+<span>{{ post.publishedAt|date }}</span> 
 {% if post.categories|length %}
 <span>Posted in 
     {% for category in post.categories %}

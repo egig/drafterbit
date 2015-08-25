@@ -1,19 +1,29 @@
-.dt-main {
-    background-color: #fff;
-    margin-top: 50px;
-}
+.dt- {
+    &navbar-brand {
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        overflow:hidden;
+    }
+    
+    &main {
+        background-color: #fff;
+        margin-top: 50px;
+    }
+    
+    /* Footer */
+    /* ------------------------------- */
+    &footer {
+        background: #ffffff;
+        border-top:1px solid #e1e1e1;
+        color: #777;
+        font-size: 0.9em;
+        margin-top: 20px;
 
-/* Footer */
-/* ------------------------------- */
-
-.dt-footer {
-    background: #ffffff;
-    border-top:1px solid #e1e1e1;
-    color: #777;
-    font-size: 0.9em;
-    margin-top: 20px;
-
-    .navbar-text {
-        margin: 5px 0;
+        .navbar-text {
+            margin: 5px 0;
+        }
     }
 }
+
+
+

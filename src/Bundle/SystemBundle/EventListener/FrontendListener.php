@@ -70,9 +70,9 @@ class FrontendListener implements EventSubscriberInterface
                 $this->container->get('twig.loader')->prependPath($themeTemplatePath);
             }
 
-            // @todo
+            // @todo add default value of Theme Options, unless you want 500 error on frontend
             // if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
-                $this->container->get('twig')->disableStrictVariables();
+                //$this->container->get('twig')->disableStrictVariables();
             //}
 
             // add global theme context
