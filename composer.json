@@ -59,11 +59,11 @@
         "bin-dir": "bin"
     },
     "extra": {
-        "symfony-app-dir": "tests",
-        "symfony-web-dir": "tests/web",
+        "symfony-app-dir": "test",
+        "symfony-web-dir": "test/web",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "tests/config/parameters.yml"
+            "file": "test/config/parameters.yml"
         }
     },
     "minimum-stability": "dev"

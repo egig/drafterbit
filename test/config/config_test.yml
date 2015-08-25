@@ -1,6 +1,9 @@
 imports:
     - { resource: config_dev.yml }
-    - { resource: parameters_test.yml }
+
+parameters:
+    themes_path: %kernel.root_dir%/web/themes
+    upload_path: %kernel.root_dir%/web/%upload_dir%
 
 framework:
     test: ~

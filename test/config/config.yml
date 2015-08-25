@@ -81,7 +81,7 @@ swiftmailer:
 
 monolog:
     handlers:
-        drafterbit_system:
+        dt_system:
             type: service
             id: system_log_handler
             level: info
