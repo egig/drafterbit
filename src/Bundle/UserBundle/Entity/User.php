@@ -6,10 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use UserBundle\Auth\Configuration;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
 class User extends BaseUser
 {
@@ -36,8 +39,14 @@ class User extends BaseUser
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $email;
+
+    /**
+     * @todo Validate this, currently always get "should not be blank" when password match
+     */
+    protected $password;
 
     /**
      * 

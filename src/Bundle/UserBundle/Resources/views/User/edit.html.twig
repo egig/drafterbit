@@ -29,12 +29,12 @@
             {{ form_widget(form.email, {attr:{class:"form-control"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.password.second, __('Password'), {label_attr:{class:"control-label"  }}) }}
-            {{ form_widget(form.password.second, {attr:{class:"form-control", autocomplete:"off"}}) }}
+            {{ form_label(form.password.first, __('Password'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.password.first, {attr:{class:"form-control", autocomplete:"off"}}) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.password.first, __('Password Confirmation'), {label_attr:{class:"control-label"}}) }}
-            {{ form_widget(form.password.first, {attr:{class:"form-control", autocomplete:"off"}}) }}
+            {{ form_label(form.password.second, __('Password Confirmation'), {label_attr:{class:"control-label"}}) }}
+            {{ form_widget(form.password.second, {attr:{class:"form-control", autocomplete:"off"}}) }}
         </div>
          <div class="form-group">
             {{ form_label(form.groups, __('Group'), {label_attr:{class:"control-label" }}) }}

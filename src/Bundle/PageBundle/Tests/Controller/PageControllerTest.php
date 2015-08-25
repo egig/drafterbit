@@ -45,7 +45,7 @@ class PageControllerTest extends WebTestCase
         ];
         $crawler = $client->request('POST', '/'.static::$admin.'/page/save', $param, array());
 
-        $this->assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isOK());
         $json = $client->getResponse()->getContent();
         $arr = json_decode($json,true);
         $this->assertEquals($arr['error']['type'], 'validation');
@@ -64,7 +64,7 @@ class PageControllerTest extends WebTestCase
 
         $crawler = $client->request('POST', '/'.static::$admin.'/page/save', $param, array());
 
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isOK());
         $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
     }
 }
