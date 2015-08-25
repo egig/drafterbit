@@ -28,8 +28,13 @@ class UserControllerTest extends WebTestCase
     {
         $client = $this->getAuthorizedClient();
         $crawler = $client->request('GET', $this->adminPath('user/edit/new'));
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
 
+    public function testValidation()
+    {
+        $client = $this->getAuthorizedClient();
+        $crawler = $client->request('GET', $this->adminPath('user/edit/new'));
         $csrfToken = $crawler->filter('input[name="user[_token]"]')->attr('value');
 
         // Test validatin first
@@ -56,6 +61,13 @@ class UserControllerTest extends WebTestCase
         $json = $client->getResponse()->getContent();
         $arr = json_decode($json,true);
         $this->assertEquals($arr['error']['type'], 'validation');
+    }
+
+    public function testSaveAction()
+    {
+        $client = $this->getAuthorizedClient();
+        $crawler = $client->request('GET', $this->adminPath('user/edit/new'));
+        $csrfToken = $crawler->filter('input[name="user[_token]"]')->attr('value');
 
         // Test the save
          $user = [

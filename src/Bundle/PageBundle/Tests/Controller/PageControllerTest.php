@@ -28,11 +28,15 @@ class PageControllerTest extends WebTestCase
     {
         $client = $this->getAuthorizedClient();
         $crawler = $client->request('GET', $this->adminPath('page/edit/new'));
-        $csrfToken = $crawler->filter('input[name="page[_token]"]')->attr('value');
-        
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());   
+    }
 
-        // Test validatin first
+    public function testValidation()
+    {
+        $client = $this->getAuthorizedClient();
+        $crawler = $client->request('GET', $this->adminPath('page/edit/new'));
+        $csrfToken = $crawler->filter('input[name="page[_token]"]')->attr('value');
+
         $param = [
             'page' => [
                     'id' => 'new',
@@ -49,6 +53,13 @@ class PageControllerTest extends WebTestCase
         $json = $client->getResponse()->getContent();
         $arr = json_decode($json,true);
         $this->assertEquals($arr['error']['type'], 'validation');
+    }
+
+    public function testSaveAction()
+    {
+        $client = $this->getAuthorizedClient();
+        $crawler = $client->request('GET', $this->adminPath('page/edit/new'));
+        $csrfToken = $crawler->filter('input[name="page[_token]"]')->attr('value');
 
         $param = [
             'page' => [
