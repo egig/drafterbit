@@ -70,14 +70,20 @@ class FrontendListener implements EventSubscriberInterface
                 $this->container->get('twig.loader')->prependPath($themeTemplatePath);
             }
 
-            // @todo add default value of Theme Options, unless you want 500 error on frontend
-            // if(!in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
-                //$this->container->get('twig')->disableStrictVariables();
-            //}
+            // add global theme context, first we need populate the default
+            $themesPath = $this->container->getParameter('themes_path');
+            $themeConfig = json_decode(file_get_contents($themesPath.'/'.$theme.'/theme.json'), true);
 
-            // add global theme context
+            // @todo validate this
+            $defaultContext = [];
+            foreach ($themeConfig['option'] as $option) {
+                $defaultContext[$option['name']] = $option['default'];
+            }
+
             $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
-            foreach (json_decode($context, true) as $key => $value) {
+            $context = json_decode($context, true);
+            $context = array_merge($context, $defaultContext);
+            foreach ($context as $key => $value) {
                 $this->container->get('twig')->addGlobal($key, $value);
             }
 
