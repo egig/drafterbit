@@ -72,19 +72,23 @@ class FrontendListener implements EventSubscriberInterface
 
             // add global theme context, first we need populate the default
             $themesPath = $this->container->getParameter('themes_path');
-            $themeConfig = json_decode(file_get_contents($themesPath.'/'.$theme.'/theme.json'), true);
 
-            // @todo validate this
-            $defaultContext = [];
-            foreach ($themeConfig['option'] as $option) {
-                $defaultContext[$option['name']] = $option['default'];
-            }
+            if(is_file($file = $themesPath.'/'.$theme.'/theme.json')) {
 
-            $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
-            $context = json_decode($context, true);
-            $context = array_merge($context, $defaultContext);
-            foreach ($context as $key => $value) {
-                $this->container->get('twig')->addGlobal($key, $value);
+                $themeConfig = json_decode(file_get_contents($file), true);
+
+                // @todo validate this
+                $defaultContext = [];
+                foreach ($themeConfig['option'] as $option) {
+                    $defaultContext[$option['name']] = $option['default'];
+                }
+
+                $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
+                $context = json_decode($context, true);
+                $context = array_merge($context, $defaultContext);
+                foreach ($context as $key => $value) {
+                    $this->container->get('twig')->addGlobal($key, $value);
+                }
             }
 
         } else {
