@@ -14,10 +14,12 @@ before_script:
   - php test/console doctrine:fixtures:load --env=test --append
 
 env:
-  - SYMFONY__TEST_USER=admin
-  - SYMFONY__DATATBASE_DRIVER=pdo_mysql
-  - SYMFONY__DATATBASE_HOST=127.0.0.1
-  - SYMFONY__DATATBASE_NAME=symfony
-  - SYMFONY__DATATBASE_USER=root
+  global:
+    - SYMFONY__TEST_USER=admin
+    - SYMFONY__DATATBASE_DRIVER=pdo_mysql
+    - SYMFONY__DATATBASE_HOST=127.0.0.1
+    - SYMFONY__DATATBASE_NAME=symfony
+    - SYMFONY__DATATBASE_USER=root
+    - SYMFONY__DATATBASE_TABLE_PREFIX=test_
 
 script: phpunit
