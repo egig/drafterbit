@@ -1,7 +1,7 @@
 {% extends "SystemBundle::base.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
     {% stylesheets filter="scss" '@SystemBundle/Resources/scss/dashboard.scss' %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}

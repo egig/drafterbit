@@ -1,5 +1,13 @@
+#dt-main-menu {
+    z-index: 11240;
+    box-shadow: none;
+}
+
+#sticky-toolbar {
+	background:#fff;
+}
+
 .is_stuck {
-    background: #fff;
     box-shadow: 1px 1px 4px #e1e1e1;
     z-index: 1029;
 }

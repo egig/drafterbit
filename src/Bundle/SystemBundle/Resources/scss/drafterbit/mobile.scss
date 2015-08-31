@@ -17,6 +17,16 @@
         min-height: 300px;
     }
 
+    .dt-user-menu {
+        display: inline-block !important;
+        position:fixed;
+        top:10px;
+        right:15px;
+        width:auto;
+        z-index:999999;
+   }
+
+
     .dt-off-canvas {
 
         z-index: 999999;
@@ -66,14 +76,6 @@
         &navbar-brand {
             width: 70%;
         }
-    }
-
-    .dt-user-menu {
-        display: inline-block !important;
-        position:fixed;
-        top:10px;
-        right:15px;
-        width:auto;
     }
 
     .dt-footer {

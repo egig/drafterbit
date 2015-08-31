@@ -55,13 +55,18 @@ $(function(){
         },
 
         handleStickyToolbar: function(){
+
+            $('#dt-main-menu').stick_in_parent({offset_top:0});
+
             // @todo decouple toolbar selector
             var stickyToolbar = $('#sticky-toolbar');
             if(Screen.isDesktop()) {
                 if(stickyToolbar && typeof $.fn.stick_in_parent != 'undefined') {
                     stickyToolbar.stick_in_parent({offset_top:50});
                 }
+                $('#dt-main-menu').removeClass('navbar-fixed-top');
             } else {
+                $('#dt-main-menu').addClass('navbar-fixed-top');
                 stickyToolbar.trigger("sticky_kit:detach");
             }
         },

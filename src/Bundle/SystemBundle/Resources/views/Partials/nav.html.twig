@@ -1,68 +1,44 @@
-<nav class="dt-navbar navbar-fixed-top" role="navigation">
+<nav id="dt-main-menu" class="dt-navbar" role="navigation">
     <div class="container nav-container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle btn" >
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="fa fa-bars"></span>
-                </button>
-                <a class="navbar-brand dt-navbar-brand" href="{{url('dt_system_dashboard')}}">{{ system.sitename }}</a>
-            </div>
-            <!-- /.navbar-header -->
-            <div class="dt-off-canvas">
-                <ul class="nav nav-pills navbar-left">
-                    {% for n,nav in system.navigations %}
-                        {% if nav.children is defined and nav.children|length %}
-                            <li class="dropdown">
-                                <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                                    {{ __(nav.label) }}
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <div class="dropdown-caret">
-                                      <span class="caret-outer"></span>
-                                      <span class="caret-inner"></span>
-                                    </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle btn" >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars"></span>
+            </button>
+        </div>
+        <!-- /.navbar-header -->
+        <div class="dt-off-canvas">
+            <ul class="nav nav-pills navbar-left">
+                {% for n,nav in system.navigations %}
+                    {% if nav.children is defined and nav.children|length %}
+                        <li class="dropdown">
+                            <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
+                                {{ __(nav.label) }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <div class="dropdown-caret">
+                                  <span class="caret-outer"></span>
+                                  <span class="caret-inner"></span>
+                                </div>
 
-                                    {% for name,child in nav.children %}
-                                        <li>
-                                            <a id="nav-{{name}}" href="{{url(child.route)}}">{{ __(child.label) }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                <!-- /.dropdown -->
-                            </li>
+                                {% for name,child in nav.children %}
+                                    <li>
+                                        <a id="nav-{{name}}" href="{{url(child.route)}}">{{ __(child.label) }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /.dropdown -->
+                        </li>
 
-                        {% else %}
-                             <li>
-                                <a id="nav-{{ n }}" class="navbar-link"  href="{{url(nav.route)}}">
-                                    {{ __(nav.label) }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <ul class="nav nav-pills navbar-right dt-user-menu">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img width="20px;" class="dt-profile-avatar" src="{{gravatar_url(app.user.email, 17)}}" alt="{{app.user.username}}"/>
-                        <!--<i class="fa fa-caret-down"></i>-->
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-caret">
-                            <span class="caret-outer"></span>
-                            <span class="caret-inner"></span>
-                        </div>
-                        <li> <a href="{{ base_url() }}" target="_blank">{{ __('Visit Site') }} <i class="fa fa-external-link"></i> </a> </li>
-                        <!--<li><a href="#" class="soon">My Profile</a> </li>
-                        <li><a href="#" class="soon">Preferences</a> </li>-->
-                        <li><a href="{{ url('dt_user_security_logout') }}">{{ __('Logout') }}</a> </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
+                    {% else %}
+                         <li>
+                            <a id="nav-{{ n }}" class="navbar-link"  href="{{url(nav.route)}}">
+                                {{ __(nav.label) }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
             </ul>
-            <!-- /.navbar-top-links -->
+        </div>
     </div>
 </nav>

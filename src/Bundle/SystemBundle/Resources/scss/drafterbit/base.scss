@@ -1,4 +1,23 @@
 .dt- {
+    
+    &header {
+        padding: 15px 0;
+    }
+
+    &header-title {
+        font-size: 22px;
+        margin-top:10px;
+        padding:0px;
+
+        a {
+            color:#676767;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    }
+
     &navbar-brand {
         text-overflow:ellipsis;
         white-space: nowrap;
@@ -7,7 +26,6 @@
     
     &main {
         background-color: #fff;
-        margin-top: 50px;
     }
     
     /* Footer */
@@ -24,6 +42,7 @@
         }
     }
 }
+
 
 
 
