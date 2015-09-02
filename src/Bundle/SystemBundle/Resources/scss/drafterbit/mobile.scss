@@ -4,40 +4,18 @@
         overflow-x:hidden;
     }
 
-    .navbar-toggle {
-        float:left;
-        margin: 2px 0 0 10px;
-        padding: 5px;
-        border:none;
-        font-size: 1.8em;
-    }
-
-    .dt-main {
-        position: relative;
-        min-height: 300px;
-    }
-
-    .dt-user-menu {
-        display: inline-block !important;
-        position:fixed;
-        top:10px;
-        right:15px;
-        width:auto;
-        z-index:999999;
-   }
-
-
     .dt-off-canvas {
 
         z-index: 999999;
         position: fixed;
-        background-color: #e9e9e9;
-        top:50px;
+        background-color: #E7E7E7;
+        top:0px;
         bottom:0px;
-        left: -200px;
-        width: 200px;
+        left: -240px;
+        width: 240px;
         overflow: auto;
         border-right: 1px solid #e1e1e1;
+        padding:0 10px;
 
         ul:not(:first-child) {
             margin-left: 5px;
@@ -45,8 +23,7 @@
 
         ul li {
             display: block;
-            width: 100%;
-            padding: 5px;
+            padding: 5px 0;
             border-bottom: 1px solid #e1e1e1;
         }
 
@@ -63,8 +40,8 @@
             background: inherit;
         }
 
-        .nav-pills li a {
-            padding: 10px 15px;
+        .navbar-nav {
+            margin: 0;
         }
     }
 
@@ -72,10 +49,8 @@
         clear: left;
     }
 
-    .dt- {
-        &navbar-brand {
-            width: 70%;
-        }
+    .dt-header-menu {
+        margin-bottom:10px;
     }
 
     .dt-footer {

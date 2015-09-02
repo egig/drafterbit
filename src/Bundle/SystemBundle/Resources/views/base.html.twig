@@ -37,56 +37,19 @@
             <div class="noscript">Please use javascript-supported browser.</div>
         </noscript>
 
-        <header class="dt-header">
-          <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                  <h1 class="dt-header-title">
-                      <a class="dt-navbar-brand" href="{{url('dt_system_dashboard')}}">
-                        {{ system.sitename }}
-                      </a>
-                  </h1>
-                </div>
-                <div class="col-md-6" style="">
-                  <ul class="nav nav-pills navbar-right dt-user-menu">
-                      <!-- /.dropdown -->
-                      <li class="dropdown">
-                          <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                              <img width="20px;" class="dt-profile-avatar" src="{{gravatar_url(app.user.email, 17)}}" alt="{{app.user.username}}"/>
-                              <!--<i class="fa fa-caret-down"></i>-->
-                          </a>
-                          <ul class="dropdown-menu dropdown-menu-right">
-                              <div class="dropdown-caret">
-                                  <span class="caret-outer"></span>
-                                  <span class="caret-inner"></span>
-                              </div>
-                              <li> <a href="{{ base_url() }}" target="_blank">{{ __('Visit Site') }} <i class="fa fa-external-link"></i> </a> </li>
-                              <!--<li><a href="#" class="soon">My Profile</a> </li>
-                              <li><a href="#" class="soon">Preferences</a> </li>-->
-                              <li><a href="{{ url('dt_user_security_logout') }}">{{ __('Logout') }}</a> </li>
-                          </ul>
-                          <!-- /.dropdown-user -->
-                      </li>
-                      <!-- /.dropdown -->
-                  </ul>
-                </div>
-            </div>
-
-          </div>
-        </header>
-
+        {% include 'SystemBundle:Partials:header.html.twig' %}
         {% include 'SystemBundle:Partials:nav.html.twig' %}
 
-        <div class="dt-main">
+        <div>
             <div class="container">
                 <div class="row">
                   <div class="col-lg-12">
-                      {% block page_title %}
+                        {% block page_title %}
                           {# we'll unescape title so we can put a link within it #}
                           {% autoescape false %}
                               <h2>{{ page_title }}</h2>
                           {% endautoescape %}
-                      {% endblock %}
+                        {% endblock %}
                   </div>
                 </div>
             </div>
@@ -109,6 +72,5 @@
             <script src="{{ url('asset_dt_js') }}"></script>
             <script src="{{ url('dt_system_asset_session_js') }}"></script>
         {% endblock %}
-
     </body>
 </html>

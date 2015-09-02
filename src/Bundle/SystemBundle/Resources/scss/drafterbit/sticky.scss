@@ -1,17 +1,8 @@
-#dt-main-menu {
-    z-index: 11240;
-    box-shadow: none;
-}
-
-#sticky-toolbar {
-	background:#fff;
-}
-
 .is_stuck {
-    box-shadow: 1px 1px 4px #e1e1e1;
-    z-index: 1029;
+    z-index: 998;
 }
 
-.dt-row-sticky-toolbar {
-    padding: 10px 0;
+#sticky-toolbar.is_stuck {
+    box-shadow: 0px 2px 4px #e1e1e1;
+    border-top:1px solid #e1e1e1;
 }

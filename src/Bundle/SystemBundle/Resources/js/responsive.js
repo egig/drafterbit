@@ -3,9 +3,9 @@ $(function(){
 
     var Screen = (function(){
 
-        var SCREEN_SM = 768;
-        var SCREEN_MD = 992;
-        var SCREEN_LG = 1200;
+        var SCREEN_SM = 720;
+        var SCREEN_MD = 940;
+        var SCREEN_LG = 1140;
 
         return {
             getInnerWidth: function(){
@@ -45,7 +45,7 @@ $(function(){
     var layoutHandler = {
 
         handleFooter: function(){
-            var h = $('.dt-main').height();
+            var h = $('body').height();
             var hW = $(window).innerHeight();
             var wW = $(window).innerWidth();
 
@@ -56,17 +56,16 @@ $(function(){
 
         handleStickyToolbar: function(){
 
-            $('#dt-main-menu').stick_in_parent({offset_top:0});
-
-            // @todo decouple toolbar selector
+            var mainMenu = $('#dt-main-menu');
             var stickyToolbar = $('#sticky-toolbar');
+
+            mainMenu.stick_in_parent({offset_top:0});
+
             if(Screen.isDesktop()) {
                 if(stickyToolbar && typeof $.fn.stick_in_parent != 'undefined') {
                     stickyToolbar.stick_in_parent({offset_top:50});
                 }
-                $('#dt-main-menu').removeClass('navbar-fixed-top');
             } else {
-                $('#dt-main-menu').addClass('navbar-fixed-top');
                 stickyToolbar.trigger("sticky_kit:detach");
             }
         },
@@ -79,11 +78,9 @@ $(function(){
 
                     leftOffset = $('.dt-off-canvas').css('left');
                     if (leftOffset === '0px') {
-                        $('.dt-off-canvas').animate({left:-200}, 300);
-                        $('.dt-main, .dt-footer').animate({left:0}, 300);
+                        $('.dt-off-canvas').animate({left:-240}, 300);
                     } else {
                         $('.dt-off-canvas').animate({left:0}, 300);
-                        $('.dt-main, .dt-footer').animate({left:200}, 300);
                     }
                 }
             )
