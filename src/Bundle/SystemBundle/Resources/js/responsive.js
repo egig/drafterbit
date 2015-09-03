@@ -46,7 +46,7 @@ $(function(){
 
         handleFooter: function(){
             var h = $('body').height();
-            var hW = $(window).innerHeight();
+            var hW = $(window).height();
             var wW = $(window).innerWidth();
 
             if(h+30 < hW && wW >= 746) {

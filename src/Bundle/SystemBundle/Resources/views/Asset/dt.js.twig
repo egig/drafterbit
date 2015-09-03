@@ -20,8 +20,9 @@
     contentUrl: "{{ app.request.getBasePath~'/'~upload_dir~'/' }}",
     locale: "{{ locale }}",
     theme: "{{ theme }}",
+    dict: {{ dict }},
 
-   //useImg
+   //useImg used in  customizer - theme options
    useImg: function(fallback, url) {
       console.log(url);
       $('#'+fallback).attr('src', url);
@@ -48,7 +49,18 @@
       });
     },
 
-    dict: {{ dict }}
+    handleFooter: function(){
+        var h = $('body').height();
+        var hW = $(window).height();
+        var wW = $(window).innerWidth();
+
+        if(h+30 < hW && wW >= 720) {
+            $('.dt-footer').addClass('navbar-fixed-bottom');
+        } else {
+            $('.dt-footer').removeClass('navbar-fixed-bottom');
+        }
+    }
+
   }
 })(jQuery);
 
