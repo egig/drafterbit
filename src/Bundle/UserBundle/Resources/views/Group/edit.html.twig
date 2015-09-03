@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block action %}
-    {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success btn-sm", disabled:group_is_superadmin}}) }}
-    <a href="{{path('dt_user_group')}}" class="btn btn-default btn-sm">
+    {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success", disabled:group_is_superadmin}}) }}
+    <a href="{{path('dt_user_group')}}" class="btn btn-default">
         <i class="fa fa-times" style=""></i> {{ __('Close') }}
     </a>
 {% endblock %}

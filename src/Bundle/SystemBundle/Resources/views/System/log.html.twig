@@ -2,8 +2,8 @@
 
 {% block action %}
         {% if is_granted('ROLE_LOG_DELETE') %}
-            <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
-            <button class="btn btn-default btn-sm uncreate" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
+            <button class="btn btn-default" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
+            <button class="btn btn-default" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
         {% endif %}
 {% endblock %}
 

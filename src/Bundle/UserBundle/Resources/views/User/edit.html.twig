@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block action %}
-    {{ form_widget(form.Save, {label: 'Save User', attr: {class: "btn btn-success btn-sm"}}) }}
-    <a href="{{path('dt_user')}}" class="btn btn-default btn-sm">
+    {{ form_widget(form.Save, {label: 'Save User', attr: {class: "btn btn-success"}}) }}
+    <a href="{{path('dt_user')}}" class="btn btn-default">
         <i class="fa fa-times" style=""></i> {{ __('Close') }}
     </a>
 {% endblock %}

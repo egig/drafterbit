@@ -1,7 +1,7 @@
 {% extends "SystemBundle::base_index.html.twig" %}
 
 {% block filter %}
-    <select name="filter" class="dt-table-filter form-control input-sm page-status-filter">
+    <select name="filter" class="dt-table-filter form-control page-status-filter">
         <option value="all"> {{ __('Status') }}</option>
         <option value="published">{{ __('Published') }}</option>
         <option value="pending" >{{ __('Pending Review') }}</option>
@@ -10,11 +10,11 @@
 {% endblock %}
 
 {% block action %}
-<a href="{{ url('dt_page_edit', {id:"new"}) }}" class="btn btn-success btn-sm">
+<a href="{{ url('dt_page_edit', {id:"new"}) }}" class="btn btn-success">
     <i class="fa fa-plus" style=""></i> {{ __('New Page') }}
 </a>
 
-<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="trash">
+<button class="btn btn-default uncreate-action" type="submit" name="action" value="trash">
     <i class="fa fa-trash-o"></i> {{ __('Trash') }}
 </button>
 {% endblock %}

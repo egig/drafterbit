@@ -1,12 +1,12 @@
 {% extends "SystemBundle::base_index.html.twig" %}
 
 {% block filter %}
-    <select name="status-filter" class="dt-table-filter form-control input-sm filter user-status-filter">
+    <select name="status-filter" class="dt-table-filter form-control filter user-status-filter">
         <option value="all" selected >- Status -</option>
         <option value="enabled" >{{ __('Enabled') }}</option>
         <option value="disabled" >{{ __('Disabled') }}</option>
     </select>
-    <select name="group-filter" class="dt-table-filter form-control input-sm filter user-group-filter">
+    <select name="group-filter" class="dt-table-filter form-control filter user-group-filter">
         <option value="0" >- {{ __('Group') }} -</option>
         {% for group in groups %}
         <option value="{{ group.id }}">{{ group.name }}</option>
@@ -16,13 +16,13 @@
 
 {% block action %}
     {% if is_granted('ROLE_USER_CREATE') %}
-        <a href="{{path('dt_user_edit', {id:'new'})}}" class="btn btn-success btn-sm">
+        <a href="{{path('dt_user_edit', {id:'new'})}}" class="btn btn-success">
             <i class="fa fa-plus" style=""></i> {{ __('New User') }}
         </a>
     {% endif %}
 
     {% if is_granted('ROLE_USER_DELETE') %}
-        <button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="delete">
+        <button class="btn btn-default uncreate-action" type="submit" name="action" value="delete">
             <i class="fa fa-trash-o"></i> {{ __('Delete') }}
         </button>
     {% endif %}

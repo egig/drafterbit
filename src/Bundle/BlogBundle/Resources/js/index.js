@@ -10,7 +10,7 @@
     var changeActions = function(s){
         if (s === 'trashed') {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
-            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default posts-restore"><i class="fa fa-refresh"></i> '+__('Restore')+'</button>');
+            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-default posts-restore"><i class="fa fa-refresh"></i> '+__('Restore')+'</button>');
         } else {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Trash')).val('trash');
             $('.posts-restore').remove();

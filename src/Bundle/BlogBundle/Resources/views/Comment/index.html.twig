@@ -10,7 +10,7 @@
 
 {% block filter %}
 <div style="display:inline-block; float:right;margin-left:5px;">
-    <select name="filter" class="form-control input-sm {{ view_id }}-status-filter">
+    <select name="filter" class="form-control {{ view_id }}-status-filter">
         <option value="active" >- {{ __('Status') }} -</option>
         <option value="approved" >{{ __('Approved') }}</option>
         <option value="pending" >{{ __('Pending') }}</option>
@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block action %}
-<button class="btn btn-default btn-sm uncreate-action" type="submit" name="action" value="trash">
+<button class="btn btn-default uncreate-action" type="submit" name="action" value="trash">
     <i class="fa fa-trash-o"></i> {{ __('Trash') }}
 </button>
 {% endblock %}

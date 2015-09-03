@@ -47,7 +47,7 @@
     changeUncreateAction = function(s){
         if (s === 'trashed') {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
-            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-sm btn-default pages-restore"><i class="fa fa-refresh"></i> '+__('Restore')+' </button>');
+            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-default pages-restore"><i class="fa fa-refresh"></i> '+__('Restore')+' </button>');
         } else {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Trash')).val('trash');
             $('.pages-restore').remove();

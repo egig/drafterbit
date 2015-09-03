@@ -1,8 +1,8 @@
 {% extends "SystemBundle::base_edit.html.twig" %}
 
 {% block action %}
-    {{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-sm btn-success"}}) }}
-    <a class="btn btn-sm btn-default" href="{{ url('dt_page') }}">
+    {{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-success"}}) }}
+    <a class="btn btn-default" href="{{ url('dt_page') }}">
         <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
     </a>
 {% endblock %}
