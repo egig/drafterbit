@@ -22,18 +22,6 @@
 
     <services>
 
-        <!-- Frontend Templating extension -->
-        <service id="dtsystem.twig.extension.frontend" class="Drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension" public="false">
-            <tag name="twig.extension" />
-            <argument type="service" id="kernel" />
-        </service>
-
-        <!-- Twig-->
-        <service id="twig.extension.dtsystem" class="Drafterbit\Bundle\SystemBundle\Twig\Extension\SystemExtension" public="false">
-            <tag name="twig.extension" />
-            <argument type="service" id="service_container" />
-        </service>
-
         <!-- Security-->
         <service id="security.access.base_voter" class="Drafterbit\Bundle\SystemBundle\Security\Authorization\Voter\BaseVoter">
             <argument type="service" id="security.attribute_provider" />
@@ -81,50 +69,6 @@
         <service id="dt_system.request.listener" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="service_container" />
-        </service>
-
-        <!-- Dahboard and Panels -->
-        <service id="dt_system.dashboard_manager" class="Drafterbit\System\Dashboard\DashboardManager"/>
-
-        <service id="dashboard" alias="dt_system.dashboard_manager"/>
-
-        <service id="dt_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\LogPanel">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.dashboard.panel" />
-        </service>
-
-        <service id="dt_system.dashboard.panel.shortcuts" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\ShortcutsPanel">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.dashboard.panel" />
-        </service>
-
-        <service id="dt_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\InfoPanel">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.dashboard.panel" />
-        </service>
-
-        <!-- widget -->
-        <service id="dt_system.widget.form_builder" class="Drafterbit\System\Widget\WidgetFormBuilder">
-            <argument type="service" id="service_container" />
-        </service>
-
-        <service id="dt_system.widget.manager" class="Drafterbit\System\Widget\WidgetManager">
-            <argument type="service" id="service_container" />
-        </service>
-
-        <service id="dt_system.widget.search" class="Drafterbit\Bundle\SystemBundle\System\Widget\SearchWidget">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.widget" />
-        </service>
-
-        <service id="dt_system.widget.text" class="Drafterbit\Bundle\SystemBundle\System\Widget\TextWidget">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.widget" />
-        </service>
-
-        <service id="dt_system.widget.meta" class="Drafterbit\Bundle\SystemBundle\System\Widget\MetaWidget">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.widget" />
         </service>
 
         <!-- Search -->

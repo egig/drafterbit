@@ -17,18 +17,6 @@ class FrontendExtension extends \Twig_Extension
         $this->widgetTable = $em->getClassMetadata('SystemBundle:Widget')->getTableName();
    }
 
-    public function getGlobals()
-    {
-        $model = $this->container->get('system');
-
-        $system = [
-            'sitename' => $model->get('sitename'),
-            'tagline' => $model->get('tagline')
-        ];
-
-        return [ 'system' => $system ];
-    }
-
     public function getFunctions()
     {
         return array(
