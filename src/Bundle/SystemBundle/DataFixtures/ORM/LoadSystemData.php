@@ -52,12 +52,6 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
             'theme.'.$theme.'.menu' => '{"main":"'.$this->getReference('main-menu')->getId().'","side":"0"}'
         ];
 
-        if($this->container->has('installer')) {
-            $connection = $this->container->get('installer')->getConnection();
-            
-            $this->container->get('system')->setConnection($connection);
-        }
-
         $this->container->get('system')->update($initData);
     }
 

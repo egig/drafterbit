@@ -26,7 +26,7 @@ class InstallCommand extends ContainerAwareCommand
         $email = $this->askEmail($input, $output);
         $password = $this->askPassword($input, $output);
 
-        $this->getContainer()->get('dt_installer')->setData([
+        $this->getContainer()->get('installer')->set('account', [
             'username' => $username,
             'email' => $email,
             'password' => $password
