@@ -115,37 +115,13 @@ class PostController extends Controller
     public function dataAction(Request $request)
     {
         $status = $request->query->get('status');
+        $categoryId = $request->query->get('category');
+
         $em = $this->getDoctrine()->getManager();
         $pagesArr  = [];
-        $query = $em
-            ->getRepository('BlogBundle:Post')
-            ->createQueryBuilder('p')
-            ->where("p.type = 'standard'");
 
-        if($categoryId = $request->query->get('category')) {
-            $query->join('p.categories', 'c', 'WITH', 'c.id = :categoryId ')
-                ->setParameter('categoryId', $categoryId);
-        }
-
-        if($status == 'trashed') {
-            $query->andWhere("p.deletedAt is not null");
-        } else {
-            $query->andWhere("p.deletedAt is null");
-            switch ($status) {
-                case 'all':
-                    break;
-                case 'published':
-                    $query->andWhere('p.status = 1');
-                    break;
-                case 'pending':
-                    $query->andWhere('p.status = 0');
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        $posts = $query->getQuery()->getResult();
+        $posts = $em->getRepository('BlogBundle:Post')->
+            getByStatusAndCategory($status, $categoryId);
 
         foreach ($posts as $post) {
             $data = [];

@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Post
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Drafterbit\Bundle\BlogBundle\Repository\PostRepository")
  * @ORM\Table(name="post")
  * @UniqueEntity("slug")
  */

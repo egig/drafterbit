@@ -36,7 +36,7 @@ class AppKernel extends Kernel
         $bundles[] = new Drafterbit\Bundle\FileBundle\FileBundle();
         $bundles[] = new Drafterbit\Bundle\UserBundle\UserBundle();
         $bundles[] = new Drafterbit\Bundle\SystemBundle\SystemBundle();
-        $bundles[] = new Drafterbit\Bundle\InstallBundle\InstallBundle();
+        $bundles[] = new Drafterbit\Bundle\DistributionBundle\DistributionBundle();
 
         return $bundles;
     }
