@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\InstallBundle\Command;
+namespace Drafterbit\Bundle\DistributionBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +10,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-
 
 class InstallCommand extends ContainerAwareCommand
 {
