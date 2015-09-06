@@ -18,6 +18,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Post
 {
     const TYPE_STANDARD = 'standard';
+    const STATUS_PENDING = 0;
+    const STATUS_PUBLISHED = 1;
 
     /**
      * @var integer

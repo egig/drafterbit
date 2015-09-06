@@ -51,8 +51,7 @@ class PostController extends Controller
                 ]);
             }
 
-
-             foreach ($posts as $id) {
+            foreach ($posts as $id) {
                 $post = $em->getRepository('BlogBundle:Post')->find($id);
 
                 switch ($action) {
@@ -63,8 +62,6 @@ class PostController extends Controller
                         $em->persist($post);
                         break;
                     case 'restore':
-                        // @todo change deleted_at to null
-                        // 0000-00-00 is not valid
                         $post->setDeletedAt(NULL);
                         $status = 'success';
                         $message = 'Post(s) restored';
@@ -74,10 +71,7 @@ class PostController extends Controller
 
                         // delete the history first
                         $histories = $em->getRepository('BlogBundle:Post')
-                            ->createQueryBuilder('p')
-                            ->where('p.type  = :type')
-                            ->setParameter('type', "history:".$post->getId())
-                            ->getQuery()->getResult();
+                            ->getHistories($post->getId());
                         foreach ($histories as $history) {
                             $em->remove($history);
                         }

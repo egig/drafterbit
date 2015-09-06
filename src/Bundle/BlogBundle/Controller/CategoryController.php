@@ -67,7 +67,8 @@ class CategoryController extends Controller
      */
     public function dataAction()
     {
-        $categories = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Category')->findAll();
+        $categories = $this->getDoctrine()->getManager()
+            ->getRepository('BlogBundle:Category')->findAll();
 
         $catArr = [];
         foreach ($categories as $cat) {

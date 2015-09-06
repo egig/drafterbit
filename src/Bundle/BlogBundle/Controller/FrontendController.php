@@ -39,9 +39,14 @@ class FrontendController extends Controller
         $page = $request->query->get('p', 1);
 
         $posts = $this->getPostlist($page, 'tag', $slug);
+
+        if(!$posts) {
+            throw $this->createNotFoundException();
+        }
+
         $data['tag'] = $posts[0]->getTags()[0];
         $data['posts'] = $posts;
-        $data['pagination'] = $this->getPagination($page, $request, 'category', $slug);
+        $data['pagination'] = $this->getPagination($page, $request, 'tag', $slug);
 
         return $data;
     }
@@ -54,6 +59,11 @@ class FrontendController extends Controller
         $page = $request->query->get('p', 1);
 
         $posts = $this->getPostlist($page, 'category', $slug);
+
+        if(!$posts) {
+            throw $this->createNotFoundException();
+        }
+
         $data['category'] = $posts[0]->getCategories()[0];
         $data['posts'] = $posts;
         $data['pagination'] = $this->getPagination($page, $request, 'category', $slug);
@@ -69,6 +79,11 @@ class FrontendController extends Controller
         $page = $request->query->get('p', 1);
 
         $posts = $this->getPostlist($page, 'author', $username);
+
+        if(!$posts) {
+            throw $this->createNotFoundException();
+        }
+
         $data['user'] = $posts[0]->getUser();
         $data['posts'] = $posts;
         $data['pagination'] = $this->getPagination($page, $request, 'author', $username);
@@ -119,28 +134,23 @@ class FrontendController extends Controller
     private function getPostlist($page, $filterKey = null, $filterValue = null)
     {
         $perPage = $this->get('system')->get('blog.post_perpage', 5);
-        $offset = ($page*$perPage)-$perPage;
 
-        $query = $this->getDoctrine()->getManager()
-            ->getRepository('BlogBundle:Post')
-            ->createQueryBuilder('p')
-            ->where("p.type = 'standard'")
-            ->setMaxResults($perPage)
-            ->setFirstResult($offset);
+        $repo = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Post');
 
-        if($filterKey == 'tag') {
-            $query->innerJoin('p.tags', 't', Expr\Join::WITH, "t.slug = '$filterValue'");
+        switch ($filterKey) {
+            case 'tag':
+                $posts = $repo->getByTag($filterValue, $page, $perPage);
+                break;
+            case 'category':
+                $posts = $repo->getByCategory($filterValue, $page, $perPage);
+                break;
+            case 'author':
+                $posts = $repo->getByAuthor($filterValue, $page, $perPage);
+                break;
+            default:
+                $posts = $repo->getStandard($page, $perPage);
+                break;
         }
-
-        if($filterKey == 'category') {
-            $query->innerJoin('p.categories', 'c', Expr\Join::WITH, "c.slug = '$filterValue'");
-        }
-
-        if($filterKey == 'author') {
-            $query->innerJoin('p.user', 'u', Expr\Join::WITH, "u.username = '$filterValue'");
-        }
-
-        $posts = $query->getQuery()->getResult();
 
         foreach ($posts as $post) {
 
