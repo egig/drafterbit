@@ -237,7 +237,7 @@
     $('.dt-image-add').on('click', function(e){
         e.preventDefault();
         var fallback = $(this).data('fallback');
-        window.open(drafTerbit.adminUrl+'file/browser?DTCustomizer=1&fallback='+fallback, '_blank', "height=400,width=800");
+        window.open(drafTerbit.adminUrl+'file/browser?DTCustomizer=1&fallback='+fallback, '_blank', "height=400,width=1040");
     });
     $('.dt-image-remove').on('click', function(e){
         var fallback = $(this).data('fallback');
@@ -254,7 +254,7 @@
             alert(__('No menu position expanded'));
             return false;
         }
-        window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=1000");
+        window.open(drafTerbit.adminUrl+'menu?pos='+pos, '_blank', "height=400,width=1040");
     });
 
     drafTerbit.MENU = {

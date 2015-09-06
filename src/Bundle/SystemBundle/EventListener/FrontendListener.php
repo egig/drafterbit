@@ -85,7 +85,9 @@ class FrontendListener implements EventSubscriberInterface
 
                 $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
                 $context = json_decode($context, true);
-                $context = array_merge($context, $defaultContext);
+
+                // @todo re-test this
+                $context = array_merge($defaultContext, $context);
                 foreach ($context as $key => $value) {
                     $this->container->get('twig')->addGlobal($key, $value);
                 }
