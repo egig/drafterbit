@@ -14,3 +14,11 @@
 .panel-heading {
     cursor: move;
 }
+
+a.dt-panel-edit-toggler {
+	color:#ccc;
+
+	&:hover {
+		color: #333;
+	}
+}

@@ -1,12 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{{ __('Shortcuts') }}</h3>
-    </div>
-    <div class="panel-body row">
-        <ul style="list-style:none;">
-            {% for shortcut in shortcuts %}
-                <li><a href="{{ shortcut.url }}"><i class="{{ shortcut.iconClass }}"></i> {{ shortcut.text }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+<ul style="list-style:none;">
+    {% for shortcut in shortcuts %}
+        <li><a href="{{ shortcut.url }}"><i class="{{ shortcut.iconClass }}"></i> {{ shortcut.text }}</a></li>
+    {% endfor %}
+</ul>

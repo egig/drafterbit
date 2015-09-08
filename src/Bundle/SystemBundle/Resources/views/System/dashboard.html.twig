@@ -12,30 +12,50 @@
         <div class="row panel-container">
             <div class="panel-row col-md-6" id="dt-panels-left" data-pos="left">
                 {% for panel in left_panels %}
-                    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
-                        {% autoescape false %}
-                           {{ panel.getView() }}
-                        {% endautoescape %}
-                    </div>
+                    {{ _self.display_panel(panel) }}
                 {% endfor %}
             </div>
 
             <div class="panel-row col-md-6" id="dt-panels-right" data-pos="right">
-                   {% for panel in right_panels %}
-                    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
-                        {% autoescape false %}
-                           {{ panel.getView() }}
-                        {% endautoescape %}
-                    </div>
+                {% for panel in right_panels %}
+                    {{ _self.display_panel(panel) }}
                 {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="modal in" id="dt-panel-edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                //..
             </div>
         </div>
     </div>
 {% endblock %}
 
+{% macro display_panel(panel) %}
+    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {% if panel.isConfigurable %}
+                    <a data-id="{{ panel.id }}" data-toggle="modal" data-target="#dt-panel-edit-modal" href="javascript:;" class="dt-panel-edit-toggler">
+                        <i class="fa fa-edit pull-right" style="font-size:18px;"></i>
+                    </a>
+                {% endif %}
+                <h3 class="panel-title">{{ panel.getTitle() }}</h3>
+            </div>
+            <div class="panel-body">
+                {% autoescape false %}
+                   {{ panel.getView() }}
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% block javascripts %}
     {{parent()}}
     {% javascripts
+    '@jquery_form'
     '@jquery_ui_js'
     '@SystemBundle/Resources/js/dashboard.js'
     %}

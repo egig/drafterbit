@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-use Drafterbit\Bundle\SystemBundle\Entity\PanelConfig;
+use Drafterbit\Bundle\SystemBundle\Entity\Panel;
 
 /**
  * @Route("%admin%")
@@ -30,11 +30,11 @@ class SystemController extends Controller
 
         $i=1;
         foreach ($this->get('dashboard')->getPanels() as $name => $panel) {
-            $panelConfig = $em->getRepository('SystemBundle:PanelConfig')
+            $panelConfig = $em->getRepository('SystemBundle:Panel')
             ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
 
             if(!$panelConfig) {
-                $panelConfig = new PanelConfig();
+                $panelConfig = new Panel();
                 $panelConfig->setUser($this->getUser());
                 $panelConfig->setName($name);
 
@@ -61,6 +61,54 @@ class SystemController extends Controller
         ];
     }
 
+    /**
+     * @Route("/system/dashboard/edit/{id}", name="dt_system_dashboard_edit")
+     * @Template("SystemBundle:Panel:edit.html.twig")
+     */
+    public function dashboardEditAction($id, Request $request)
+    {
+        // get panel from database
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('SystemBundle:Panel');
+        $panel = $repo->find($id);
+
+        //get panel from dashboard manager
+        $panelType = $this->get('dashboard')->getPanel($panel->getName());
+
+        $panelData = json_decode($panel->getContext());
+        $panelForm = $panelType->getForm($panelData);
+        //we need this since its not root form
+        $panelForm->getConfig()->setAutoInitialize(false);
+
+        $form = $this->get('form.factory')->createNamedBuilder('panel')
+            ->add('Save', 'submit')
+            ->getForm();
+        $form->add($panelForm);
+
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            // @todo get data from the form
+            $data = $request->request->get('panel');
+
+            $panel->setContext(json_encode($data['context']));
+            $em->persist($panel);
+            $em->flush();
+
+            // @todo refresh panel after edit
+            return new JsonResponse([
+                'data' => ['message' => $this->get('translator')->trans('Panel successfully saved. You can see the changes on next page refresh')]
+            ]);
+        }
+
+        return [
+            'id' => $id,
+            'template' => $panelType->getFormTemplate(),
+            'form' => $form->createView()
+        ];
+    }
+
     private function buildPanels($panelConfig)
     {
         $panels = [];
@@ -68,10 +116,33 @@ class SystemController extends Controller
         $panels['right'] = [];
 
         foreach ($panelConfig as $config) {
+
             $panel = $this->get('dashboard')->getPanel($config->getName());
+            $panel->id = $config->getId();
+            $panel->sequence = $config->getSequence();
+            $panel->isConfigurable = $panel->getForm();
             $panel->status = $config->getStatus();
+            $panel->context = json_decode($config->getContext());
+
             $panels[$config->getPosition()][] = $panel;
         }
+
+        // @todo clean this
+        usort($panels['left'], function($a, $b){
+            if($a->sequence == $b->sequence) {
+                return 0;
+            }
+
+            return $b->sequence > $a->sequence ? -1 : 1;
+        });
+
+        usort($panels['right'], function($a, $b){
+            if($a->sequence == $b->sequence) {
+                return 0;
+            }
+
+            return $b->sequence > $a->sequence ? -1 : 1;
+        });
 
         return $panels;
     }
@@ -258,7 +329,7 @@ class SystemController extends Controller
 
             if($name) {
 
-                $panelConfig =  $em->getRepository('SystemBundle:PanelConfig')
+                $panelConfig =  $em->getRepository('SystemBundle:Panel')
                 ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
 
                 $panelConfig or $panelConfig = new PanelConfig();
@@ -289,7 +360,7 @@ class SystemController extends Controller
         $name = $request->request->get('panel');
 
         $em = $this->getDoctrine()->getManager();
-        $panelConfig =  $em->getRepository('SystemBundle:PanelConfig')
+        $panelConfig =  $em->getRepository('SystemBundle:Panel')
             ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
 
         $panelConfig or $panelConfig = new PanelConfig();

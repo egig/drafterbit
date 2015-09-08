@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Panel
  *
- * @ORM\Table("dashboard")
+ * @ORM\Table("panel")
  * @ORM\Entity
  */
-class PanelConfig
+class Panel
 {
     /**
      * @var integer
@@ -54,6 +54,13 @@ class PanelConfig
      * @ORM\Column(name="status", type="boolean")
      */
     private $status;
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="context", type="text", nullable=true)
+     */
+    private $context;
 
     /**
      * Get id
@@ -168,5 +175,18 @@ class PanelConfig
     public function setStatus($status)
     {
         return $this->status = $status;
+    }
+
+    /**
+     * Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    public function setContext($context)
+    {
+        return $this->context = $context;
     }
 }

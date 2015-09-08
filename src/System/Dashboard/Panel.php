@@ -37,4 +37,9 @@ abstract class Panel implements PanelInterface {
     {
         return $this->container->get('templating')->render($view, $parameters);
     }
+
+    public function getForm()
+    {
+        //..
+    }
 }

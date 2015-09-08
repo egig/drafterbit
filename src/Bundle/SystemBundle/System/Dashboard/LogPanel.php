@@ -3,6 +3,7 @@
 namespace Drafterbit\Bundle\SystemBundle\System\Dashboard;
 
 use Drafterbit\System\Dashboard\Panel;
+use Drafterbit\Bundle\SystemBundle\Form\Type\Panel\LogType;
 
 class LogPanel extends Panel {
 
@@ -12,7 +13,7 @@ class LogPanel extends Panel {
         $logEntities = $em->getRepository('SystemBundle:Log')
             ->createQueryBuilder('l')
             ->OrderBy('l.time', 'desc')
-            ->setMaxResults(10)
+            ->setMaxResults($this->context->num)
             ->getQuery()
             ->getResult();
 
@@ -27,6 +28,16 @@ class LogPanel extends Panel {
         return $this->renderView('SystemBundle:Panel:log.html.twig', [
             'logs' => $logs
         ]);
+    }
+
+    public function getForm($data = null)
+    {
+        return $this->container->get('form.factory')->create(new LogType(), $data);
+    }
+
+    public function getFormTemplate()
+    {
+        return "SystemBundle:Panel:edit/log.html.twig";
     }
 
     public function getName()
