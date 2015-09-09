@@ -4,6 +4,10 @@
         overflow-x:hidden;
     }
 
+    #dt-site-title {
+        font-size: 24px;;
+    }
+
     .dt-off-canvas {
 
         z-index: 999999;
@@ -47,10 +51,6 @@
 
     .navbar-header:after {
         clear: left;
-    }
-
-    .dt-header-menu {
-        margin-bottom:10px;
     }
 
     .dt-footer {
