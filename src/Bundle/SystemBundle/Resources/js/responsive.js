@@ -76,11 +76,13 @@ $(function(){
             $('.navbar-toggle').click(
                 function(){
 
-                    leftOffset = $('.dt-off-canvas').css('left');
+                    leftOffset = $('.dt-off-canvas').css('right');
                     if (leftOffset === '0px') {
-                        $('.dt-off-canvas').animate({left:-240}, 300);
+                        $('.dt-off-canvas').animate({right:-240}, 300);
+                        $('body').animate({right:0}, 300);
                     } else {
-                        $('.dt-off-canvas').animate({left:0}, 300);
+                        $('.dt-off-canvas').animate({right:0}, 300);
+                        $('body').animate({right:240}, 300);
                     }
                 }
             )

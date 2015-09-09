@@ -2,6 +2,7 @@
 
     html, body {
         overflow-x:hidden;
+        position: relative;
     }
 
     #dt-site-title {
@@ -15,7 +16,7 @@
         background-color: #E7E7E7;
         top:0px;
         bottom:0px;
-        left: -240px;
+        right: -240px;
         width: 240px;
         overflow: auto;
         border-right: 1px solid #e1e1e1;
