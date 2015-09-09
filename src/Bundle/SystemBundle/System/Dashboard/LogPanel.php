@@ -9,9 +9,9 @@ class LogPanel extends Panel {
 
     const LOG_NUM = 10;
 
-    public function getView()
+    public function getView($context = null)
     {
-        $maxResult = ($this->context) ? $this->context->num : static::LOG_NUM;
+        $maxResult = $context ? $context->num : static::LOG_NUM;
         $em = $this->container->get('doctrine')->getManager();
         $logEntities = $em->getRepository('SystemBundle:Log')
             ->createQueryBuilder('l')

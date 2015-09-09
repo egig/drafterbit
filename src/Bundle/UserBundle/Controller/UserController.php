@@ -225,4 +225,15 @@ class UserController extends Controller
 
         return new JsonResponse($response);
     }
+
+    /**
+     * @Route("/user/profile", name="dt_user_profile")
+     * @Template()
+     */
+    public function profileAction(Request $request)
+    {
+        return [
+            'page_title' => $this->get('translator')->trans('Profile')
+        ];
+    }
 }

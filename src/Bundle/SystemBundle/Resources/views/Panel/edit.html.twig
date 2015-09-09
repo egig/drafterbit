@@ -4,7 +4,12 @@
 	<h4 class="modal-title">{{ __("Edit Panel") }}</h4>
 </div>
 <div class="modal-body">
-	{% include template with {form: form}  %}
+	{{ form_label(form.title, "Title") }}
+	{{ form_widget(form.title, {attr:{class:"form-control"}}) }}
+
+	{% if template %}
+		{% include template with {form: form}  %}
+	{% endif %}
 </div>
 <div class="modal-footer">
     {{ form_widget(form.Save, {attr:{class:"btn btn-success"}}) }}

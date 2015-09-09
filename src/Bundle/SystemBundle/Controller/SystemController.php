@@ -29,27 +29,9 @@ class SystemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $i=1;
-        foreach ($this->get('dashboard')->getPanels() as $name => $panel) {
-            $panelConfig = $em->getRepository('SystemBundle:Panel')
-            ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
 
-            if(!$panelConfig) {
-                $panelConfig = new Panel();
-                $panelConfig->setUser($this->getUser());
-                $panelConfig->setName($name);
-
-                $position = ($i%2 == 0 ) ? 'right' : 'left';
-                
-                $panelConfig->setPosition($position);
-                $panelConfig->setSequence($i++);
-                $panelConfig->setStatus(1);
-
-                $em->persist($panelConfig);
-                $em->flush();
-            }
-
-            $panelConfigs[] = $panelConfig;
-        }
+        $panelConfigs = $panelConfig = $em->getRepository('SystemBundle:Panel')
+            ->findBy(['user' => $this->getUser()]);;
 
         $panels = $this->buildPanels($panelConfigs);
 
@@ -72,18 +54,44 @@ class SystemController extends Controller
         $repo = $em->getRepository('SystemBundle:Panel');
         $panel = $repo->find($id);
 
-        //get panel from dashboard manager
-        $panelType = $this->get('dashboard')->getPanel($panel->getName());
+        if(!$panel) {
+            // if panel not found by given id, we'll assume id is panel name
+            $panelType = $this->get('dashboard')->getPanel($id);
+
+            if(!$panelType) {
+                throw $this->createNotFoundException();
+            }
+
+            $panel = new Panel;
+            $panel->setUser($this->getUser());
+            $panel->setName($id);
+            $panel->setPosition('left');
+            $panel->setSequence(0);
+            $panel->setStatus(1);
+
+        } else {
+
+            //get panel from dashboard manager
+            $panelType = $this->get('dashboard')->getPanel($panel->getName());
+        }
+
 
         $panelData = json_decode($panel->getContext());
-        $panelForm = $panelType->getForm($panelData);
+        $title = empty($panelData->title) ? $panelType->getName() : $panelData->title;
         //we need this since its not root form
-        $panelForm->getConfig()->setAutoInitialize(false);
 
         $form = $this->get('form.factory')->createNamedBuilder('panel')
+            ->add('title', 'text', ['data' => $title])
             ->add('Save', 'submit')
             ->getForm();
-        $form->add($panelForm);
+            
+        $panelForm = $panelType->getForm($panelData);
+        if($panelForm) {
+            //we need this since its not root form
+            $panelForm->getConfig()->setAutoInitialize(false);    
+            $form->add($panelForm);
+        }
+
 
         $form->handleRequest($request);
 
@@ -91,8 +99,9 @@ class SystemController extends Controller
         {
             // @todo get data from the form
             $data = $request->request->get('panel');
-
-            $panel->setContext(json_encode($data['context']));
+            $context = isset($data['context']) ? $data['context'] : []; 
+            $context = array_merge($context, ['title' => $data['title']]);
+            $panel->setContext(json_encode($context));
             $em->persist($panel);
             $em->flush();
 
@@ -117,16 +126,18 @@ class SystemController extends Controller
 
         foreach ($panelConfig as $config) {
 
-            $panel = $this->get('dashboard')->getPanel($config->getName());
+            $panel = new \StdClass;
             $panel->id = $config->getId();
             $panel->sequence = $config->getSequence();
-            $panel->isConfigurable = $panel->getForm();
             $panel->status = $config->getStatus();
             $panel->context = json_decode($config->getContext());
+            $panel->title = $panel->context->title;
+            $panel->name = $config->getName();
+            $panelType = $this->get('dashboard')->getPanel($config->getName());
+            $panel->view = $panelType->getView($panel->context);
 
             $panels[$config->getPosition()][] = $panel;
         }
-
         // @todo clean this
         usort($panels['left'], function($a, $b){
             if($a->sequence == $b->sequence) {
@@ -373,5 +384,40 @@ class SystemController extends Controller
         $em->flush();
 
         return new Response();
+    }
+
+    /**
+     * @Route("/system/preferences", name="dt_system_preferences")
+     * @Template()
+     */
+    public function preferencesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $panelConfigs = $panelConfig = $em->getRepository('SystemBundle:Panel')
+            ->findBy(['user' => $this->getUser()]);;
+
+        $panels = $this->buildPanels($panelConfigs);
+
+        return [
+            'panels' => $this->get('dashboard')->getPanels(),
+            'left_panels' => $panels['left'],
+            'right_panels' => $panels['right'],
+            'page_title' => $this->get('translator')->trans('Preferences')
+        ];
+    }
+
+    /**
+     * @Route("/system/dashboard/delete", name="dt_system_dashboard_delete")
+     */
+    public function dashboardDeleteAction(Request $request)
+    {
+        // @todo handle csrf token
+        $id = $request->request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $panel = $em->getRepository('SystemBundle:Panel')->find($id);
+        $em->remove($panel);
+        $em->flush();
+
+        return new JsonResponse(['data' => ['status' => 'ok']]);
     }
 }

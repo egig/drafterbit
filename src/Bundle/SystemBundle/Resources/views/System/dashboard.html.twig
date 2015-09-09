@@ -33,19 +33,14 @@
 {% endblock %}
 
 {% macro display_panel(panel) %}
-    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.getName() }}">
+    <div  {% if panel.status == 0 %} style="display:none" {% endif %}  class="panel-item" id="dashboard-panel-{{ panel.name }}">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {% if panel.isConfigurable %}
-                    <a data-id="{{ panel.id }}" data-toggle="modal" data-target="#dt-panel-edit-modal" href="javascript:;" class="dt-panel-edit-toggler">
-                        <i class="fa fa-edit pull-right" style="font-size:18px;"></i>
-                    </a>
-                {% endif %}
-                <h3 class="panel-title">{{ panel.getTitle() }}</h3>
+                <h3 class="panel-title">{{ panel.title }}</h3>
             </div>
             <div class="panel-body">
                 {% autoescape false %}
-                   {{ panel.getView() }}
+                   {{ panel.view }}
                 {% endautoescape %}
             </div>
         </div>
