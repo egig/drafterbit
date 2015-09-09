@@ -7,13 +7,16 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\Panel\LogType;
 
 class LogPanel extends Panel {
 
+    const LOG_NUM = 10;
+
     public function getView()
     {
+        $maxResult = ($this->context) ? $this->context->num : static::LOG_NUM;
         $em = $this->container->get('doctrine')->getManager();
         $logEntities = $em->getRepository('SystemBundle:Log')
             ->createQueryBuilder('l')
             ->OrderBy('l.time', 'desc')
-            ->setMaxResults($this->context->num)
+            ->setMaxResults($maxResult)
             ->getQuery()
             ->getResult();
 
