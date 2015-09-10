@@ -80,7 +80,6 @@ class GroupController extends Controller
      */
     public function dataAction($status)
     {
-        //$users = $this->get('fos_user.user_manager')->findUsers();
         $groups = $this->container->get('fos_user.group_manager')->findGroups();
 
         $groupsArr  = [];

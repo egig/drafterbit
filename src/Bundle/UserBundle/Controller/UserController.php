@@ -228,12 +228,21 @@ class UserController extends Controller
 
     /**
      * @Route("/user/profile", name="dt_user_profile")
-     * @Template()
+     * @Template("UserBundle:User:edit.html.twig")
      */
     public function profileAction(Request $request)
     {
+        $pageTitle = 'Profile';
+        $user = $this->getUser();
+
+        $form = $this->createForm(new UserType, $user);
+        $form->get('id')->setData($user->getId());
+
         return [
-            'page_title' => $this->get('translator')->trans('Profile')
+            'page_title' => $this->get('translator')->trans($pageTitle),
+            'view_id' => 'user-edit',
+            'action' => $this->generateUrl('dt_user_save'),
+            'form' => $form->createView()
         ];
     }
 }
