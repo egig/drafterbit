@@ -55,7 +55,6 @@ class DashboardController extends Controller
 
         $panelData = json_decode($panel->getContext());
         $title = empty($panelData->title) ? $panelType->getName() : $panelData->title;
-        //we need this since its not root form
 
         $form = $this->get('form.factory')->createNamedBuilder('panel')
             ->add('title', 'text', ['data' => $title])

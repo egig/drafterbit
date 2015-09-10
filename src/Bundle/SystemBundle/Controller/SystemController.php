@@ -34,10 +34,9 @@ class SystemController extends Controller
         $panels = $this->buildPanels($panelConfigs);
 
         return [
-            'panels' => $this->get('dashboard')->getPanels(),
             'left_panels' => $panels['left'],
-            'right_panels' => $panels['right'],
-            'page_title' => $this->get('translator')->trans('Dashboard')
+            'right_panels'=> $panels['right'],
+            'page_title'  => $this->get('translator')->trans('Dashboard')
         ];
     }
 
