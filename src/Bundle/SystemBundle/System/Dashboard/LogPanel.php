@@ -45,6 +45,6 @@ class LogPanel extends Panel {
 
     public function getName()
     {
-        return 'log';
+        return 'Log';
     }
 }

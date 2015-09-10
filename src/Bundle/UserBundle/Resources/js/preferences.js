@@ -25,13 +25,16 @@
 
 		handleEditForm: function() {
 
-            $(document).on('submit', '.dt-panel-edit-form', function(e){
+            $(document).on('submit', 'form.dt-panel-edit-form', function(e){
                 e.preventDefault();
+                var _this = $(this);
                 $(this).ajaxSubmit({
                     success: function(response) {
                         if(!response.errors) {
                             $.notify(response.data.message, 'success');
                         }
+
+                        _this.find('input[name="panel[id]"]').val(response.data.id);
                     }
                 });
             });
@@ -42,6 +45,8 @@
 
         		var id = $(this).data('id');
 
+        		var _this = $(this);
+
         		if(confirm(__('Are you sure ?'))) {    			
 	        		$.ajax({
 	        			type: 'POST',
@@ -49,7 +54,11 @@
 	        				id: id,
 	        				_token: drafTerbit.csrfToken
 	        			},
-	        			url: drafTerbit.adminUrl+'system/dashboard/delete'
+	        			url: drafTerbit.adminUrl+'system/dashboard/delete',
+	        			success: function(){
+	        				_this.closest('.dt-panel-item').fadeOut();
+	        				_this.closest('.dt-panel-item').remove();
+	        			}
 	        		});
         		}
 

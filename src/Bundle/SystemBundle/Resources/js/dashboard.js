@@ -1,32 +1,6 @@
 (function($){
-     // sort widgets
+
     drafTerbit.dashboard = {
-
-        handleEditToggler: function(){
-            /*$('.dt-panel-edit-toggler').click(function(e){
-                e.preventDefault();
-                alert('ok');
-            });*/
-            $('#dt-panel-edit-modal').on('show.bs.modal', function(e){
-                var id = $(e.relatedTarget).data('id');
-                var content = $(this).find('.modal-content');
-                content.load(drafTerbit.adminUrl+'system/dashboard/edit/'+id);
-            });
-        },
-
-        handleEditForm: function() {
-
-            $(document).on('submit', '.dt-panel-edit-form', function(e){
-                e.preventDefault();
-                $(this).ajaxSubmit({
-                    success: function(response) {
-                        if(!response.errors) {
-                            $.notify(response.data.message, 'success');
-                        }
-                    }
-                });
-            });
-        },
 
         makePanelSortable: function() {
 
@@ -67,7 +41,5 @@
 
 
     drafTerbit.dashboard.makePanelSortable();
-    drafTerbit.dashboard.handleEditToggler();
-    drafTerbit.dashboard.handleEditForm();
 
 })(jQuery);

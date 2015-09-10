@@ -23,6 +23,6 @@ class ShortcutsPanel extends Panel {
 
     public function getName()
     {
-        return 'shortcuts';
+        return 'Shortcuts';
     }
 }

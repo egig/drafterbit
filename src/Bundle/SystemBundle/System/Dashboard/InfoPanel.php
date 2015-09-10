@@ -23,7 +23,7 @@ class InfoPanel extends Panel {
 
     public function getName()
     {
-        return 'info';
+        return 'Info';
     }
 
     private function getOs()

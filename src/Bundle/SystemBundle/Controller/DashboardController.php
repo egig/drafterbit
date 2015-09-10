@@ -26,6 +26,9 @@ class DashboardController extends Controller
      */
     public function dashboardEditAction($id, Request $request)
     {
+        $panelRequested = $request->request->get('panel');
+        $id = $panelRequested['id'] ? $panelRequested['id'] : $id;
+
         // get panel from database
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('SystemBundle:Panel');
@@ -57,6 +60,7 @@ class DashboardController extends Controller
         $title = empty($panelData->title) ? $panelType->getName() : $panelData->title;
 
         $form = $this->get('form.factory')->createNamedBuilder('panel')
+            ->add('id', 'hidden', ['data' => $id])
             ->add('title', 'text', ['data' => $title])
             ->add('Save', 'submit')
             ->getForm();
@@ -83,7 +87,10 @@ class DashboardController extends Controller
 
             // @todo refresh panel after edit
             return new JsonResponse([
-                'data' => ['message' => $this->get('translator')->trans('Panel successfully saved. You can see the changes on next page refresh')]
+                'data' => [
+                    'message' => $this->get('translator')->trans('Panel successfully saved. You can see the changes on next page refresh'),
+                    'id' => $panel->getId(),
+                ]
             ]);
         }
 

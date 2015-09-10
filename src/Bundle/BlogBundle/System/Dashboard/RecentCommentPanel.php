@@ -23,6 +23,6 @@ class RecentCommentPanel extends Panel {
 
     public function getName()
     {
-        return 'recent_comment';
+        return 'RecentComment';
     }
 }

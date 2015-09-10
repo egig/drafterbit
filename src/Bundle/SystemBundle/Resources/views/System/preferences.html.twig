@@ -4,7 +4,9 @@
     {{ parent() }}
 
     {% stylesheets filter="scss"
-    '@SystemBundle/Resources/scss/vertical-tabs.scss' %}
+    '@SystemBundle/Resources/scss/preferences.scss'
+    '@SystemBundle/Resources/scss/vertical-tabs.scss'
+    %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 
@@ -72,7 +74,7 @@
 {% endblock %}
 
 {% macro panel_item(panel) %}
-	<div style="border:1px solid #eee;padding:10px;margin:5px 0;">
+	<div class="dt-panel-item">
 		{{ panel.title }}
 
 		<div class="pull-right">
