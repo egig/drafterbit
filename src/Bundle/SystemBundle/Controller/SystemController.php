@@ -57,8 +57,8 @@ class SystemController extends Controller
             $panel->status = $config->getStatus();
             $panel->context = json_decode($config->getContext());
             $panel->title = $panel->context->title;
-            $panel->name = $config->getName();
-            $panelType = $this->get('dashboard')->getPanel($config->getName());
+            $panel->name = $config->getType();
+            $panelType = $this->get('dashboard')->getPanelType($config->getType());
             $panel->view = $panelType->getView($panel->context);
 
             $panels[$config->getPosition()][] = $panel;
@@ -244,7 +244,7 @@ class SystemController extends Controller
         $panels = $this->buildPanels($panelConfigs);
 
         return [
-            'panels' => $this->get('dashboard')->getPanels(),
+            'panels' => $this->get('dashboard')->getPanelTypes(),
             'left_panels' => $panels['left'],
             'right_panels' => $panels['right'],
             'page_title' => $this->get('translator')->trans('Preferences')

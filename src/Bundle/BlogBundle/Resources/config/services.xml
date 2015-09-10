@@ -41,7 +41,7 @@
             <tag name="dt_system.search.query_provider" />
         </service>
 
-        <service id="dt_blog.dashboard.panel.recent_comment" class="Drafterbit\Bundle\BlogBundle\System\Dashboard\RecentCommentPanel">
+        <service id="dt_blog.dashboard.panel.recent_comment" class="Drafterbit\Bundle\BlogBundle\System\Dashboard\PanelType\RecentComment">
             <argument type="service" id="service_container" />
             <tag name="dt_system.dashboard.panel" />
         </service>

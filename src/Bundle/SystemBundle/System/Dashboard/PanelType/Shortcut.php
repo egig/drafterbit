@@ -1,10 +1,10 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\System\Dashboard;
+namespace Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType;
 
-use Drafterbit\System\Dashboard\Panel;
+use Drafterbit\System\Dashboard\PanelType;
 
-class ShortcutsPanel extends Panel {
+class Shortcut extends PanelType {
 
     public function getView()
     {
@@ -23,6 +23,6 @@ class ShortcutsPanel extends Panel {
 
     public function getName()
     {
-        return 'Shortcuts';
+        return 'Shortcut';
     }
 }

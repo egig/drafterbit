@@ -2,7 +2,7 @@
 
 namespace Drafterbit\System\Dashboard;
 
-interface PanelInterface {
+interface PanelTypeInterface {
 
     /**
      * Get panel view
@@ -17,13 +17,4 @@ interface PanelInterface {
      * @return string
      */
     public function getName();
-
-    /**
-     * Get panel position, left or right
-     *
-     * @return string
-     */
-    public function getPosition();
-    
-    public function setPosition($position);
 }

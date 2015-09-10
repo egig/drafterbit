@@ -4,32 +4,43 @@ namespace Drafterbit\System\Dashboard;
 
 class DashboardManager
 {
-    protected $panels = [];
+    /**
+     * @var array
+     */
+    protected $panelTypes = [];
 
     /**
-     * add a panel
+     * Add a panel types.
      *
-     * @param PanelInterface $panel
+     * @param PanelTypeInterface $panel
      */
-    public function addPanel(PanelInterface $panel)
+    public function addPanelType(PanelTypeInterface $panelType)
     {
-        $this->panels[$panel->getName()] = $panel;
+        $this->panelTypes[$panelType->getName()] = $panelType;
     }
 
-    public function getPanels()
+    /**
+     * Get all available panel types.
+     *
+     * @return array
+     */
+    public function getPanelTypes()
     {
-        return $this->panels;
+        return $this->panelTypes;
     }
 
     /**
      * Get panel by name
+     *
+     * @return PanelType
      */
-    public function getPanel($name)
+    public function getPanelType($name)
     {
-        if(isset($this->panels[$name])) {
-            return $this->panels[$name];
+        // @todo validate name ??
+        if(isset($this->panelTypes[$name])) {
+            return $this->panelTypes[$name];
         }
 
-        throw new \InvalidArgumentException("Trying to get unregistered panel: $name");
+        throw new \InvalidArgumentException("Trying to get unregistered panel type: $name");
     }
 }

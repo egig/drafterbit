@@ -24,7 +24,7 @@ class DashboardPass implements CompilerPassInterface {
 
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall(
-                'addPanel',
+                'addPanelType',
                 array(new Reference($id))
             );
         }

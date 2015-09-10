@@ -1,11 +1,11 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\System\Dashboard;
+namespace Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType;
 
-use Drafterbit\System\Dashboard\Panel;
+use Drafterbit\System\Dashboard\PanelType;
 use Drafterbit\Bundle\SystemBundle\Form\Type\Panel\LogType;
 
-class LogPanel extends Panel {
+class Log extends PanelType {
 
     const LOG_NUM = 10;
 

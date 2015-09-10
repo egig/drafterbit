@@ -38,9 +38,9 @@ class Panel
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $name;
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Drafterbit\Bundle\UserBundle\Entity\User")
@@ -121,12 +121,12 @@ class Panel
     /**
      * Set name
      *
-     * @param string $name
+     * @param string $type
      * @return Panel
      */
-    public function setName($name)
+    public function setType($type)
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
@@ -136,9 +136,9 @@ class Panel
      *
      * @return string 
      */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
+        return $this->type;
     }
 
     /**

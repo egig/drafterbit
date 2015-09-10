@@ -1,10 +1,10 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\System\Dashboard;
+namespace Drafterbit\Bundle\BlogBundle\System\Dashboard\PanelType;
 
-use Drafterbit\System\Dashboard\Panel;
+use Drafterbit\System\Dashboard\PanelType;
 
-class RecentCommentPanel extends Panel {
+class RecentComment extends PanelType {
 
     public function getView()
     {

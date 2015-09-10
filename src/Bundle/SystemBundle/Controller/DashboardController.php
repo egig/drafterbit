@@ -36,7 +36,7 @@ class DashboardController extends Controller
 
         if(!$panel) {
             // if panel not found by given id, we'll assume id is panel name
-            $panelType = $this->get('dashboard')->getPanel($id);
+            $panelType = $this->get('dashboard')->getPanelType($id);
 
             if(!$panelType) {
                 throw $this->createNotFoundException();
@@ -44,7 +44,7 @@ class DashboardController extends Controller
 
             $panel = new Panel;
             $panel->setUser($this->getUser());
-            $panel->setName($id);
+            $panel->setType($id);
             $panel->setPosition('left');
             $panel->setSequence(0);
             $panel->setStatus(1);
@@ -52,7 +52,7 @@ class DashboardController extends Controller
         } else {
 
             //get panel from dashboard manager
-            $panelType = $this->get('dashboard')->getPanel($panel->getName());
+            $panelType = $this->get('dashboard')->getPanelType($panel->getType());
         }
 
 
@@ -108,7 +108,7 @@ class DashboardController extends Controller
      */
     public function sortDashboardAction(Request $request) {
 
-        $dashboardPanels = $this->get('dashboard')->getPanels();
+        $dashboardPanels = $this->get('dashboard')->getPanelTypes();
         $panels = array_keys($dashboardPanels);
 
         $order = $request->request->get('order');
@@ -125,19 +125,19 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $i = 1;
-        foreach ($order as $name) {
+        foreach ($order as $type) {
 
-            if($name) {
+            if($type) {
 
                 $panelConfig =  $em->getRepository('SystemBundle:Panel')
-                ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
+                ->findOneBy(['user' => $this->getUser(), 'type' => $type]);
 
                 $panelConfig or $panelConfig = new PanelConfig();
 
                 $status = $panelConfig ? $panelConfig->getStatus() : 1;
 
                 $panelConfig->setUser($this->getUser());
-                $panelConfig->setName($name);
+                $panelConfig->setType($type);
                 $panelConfig->setPosition($pos);
                 $panelConfig->setSequence($i++);
 

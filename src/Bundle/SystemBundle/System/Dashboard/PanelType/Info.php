@@ -1,10 +1,10 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\System\Dashboard;
+namespace Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType;
 
-use Drafterbit\System\Dashboard\Panel;
+use Drafterbit\System\Dashboard\PanelType;
 
-class InfoPanel extends Panel {
+class Info extends PanelType {
 
     public function getView()
     {
