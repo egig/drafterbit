@@ -52,7 +52,7 @@
                     <input type="hidden" name="url" value="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}"/>
                     <input type="hidden" name="theme" value="{{ theme }}"/>
                     <div class="section">
-                        <a href="javascript:close();" class="btn btn-default btn-xs">{{ __('Close') }}</a>
+                        <a href="#" id="dt-customizer-closer" class="btn btn-default btn-xs">{{ __('Close') }}</a>
                         <button type="submit" name="action" value="save" class="btn btn-primary btn-xs pull-right">{{ __('Save') }}</button>
 
                         {# pending #}
@@ -213,7 +213,6 @@
             {% javascripts
               '@bootstrap_js'
               '@notify_js'
-              '@SystemBundle/Resources/js/responsive.js'
               '@jquery_ui_js'
               '@jquery_form'
               '@nunjucks'
