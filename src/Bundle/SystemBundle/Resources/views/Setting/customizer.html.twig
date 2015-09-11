@@ -37,7 +37,7 @@
         </div>
 
         <div id="dt-iframe-container">
-            <iframe name="preview" width="100%" height="100%" src="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}" sandbox="allow-same-origin allow-scripts"> </iframe>
+            <iframe name="preview" width="100%" height="100%" src="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme'), _pv:1}) }}" sandbox="allow-same-origin allow-scripts"> </iframe>
         </div>
         <div id="customizer">
             <div class="col-container">

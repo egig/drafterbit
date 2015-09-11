@@ -19,9 +19,9 @@ class WebDebugToolbarListener extends BaseListener
         $request = $event->getRequest();
         $theme = $request->query->get('theme');
         $token = $request->query->get('_token');
-        $controller = $event->getController();
+        $preview = $request->query->get('_pv');
         
-        if($theme and $token and ($controller[0] instanceof FrontendController)) {
+        if($theme and $token and $preview) {
             $this->mode = self::DISABLED;
         }
     }

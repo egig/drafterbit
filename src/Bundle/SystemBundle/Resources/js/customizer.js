@@ -20,7 +20,6 @@
         }
     };
 
-
     drafTerbit.customizer = {
 
         init: function(){
@@ -128,8 +127,8 @@
                                 console.log('Can\'t load external url when customizing');
                                 return false;
                             }
-
-                            $('iframe').prop('src', e.currentTarget.href+"?theme="+getUrlParam('theme')+"&_token="+drafTerbit.customThemeCsrfToken);
+                            var qs = "?theme="+getUrlParam('theme')+"&_pv=1&_token="+drafTerbit.customThemeCsrfToken;
+                            $('iframe').prop('src', e.currentTarget.href+qs);
                         }
                     );
                 }
