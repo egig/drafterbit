@@ -30,6 +30,6 @@ class Shortcut extends PanelType {
 
     protected function addShortcut(ShortcutItem $shortcut)
     {
-        $this->shortcuts[] = $shortcut;
+        $this->shortcuts[$shortcut->getText()] = $shortcut;
     }
 }
