@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\System\Shortcuts;
+namespace Drafterbit\Bundle\SystemBundle\System\Shortcut;
 
 use Drafterbit\System\Extension\Shortcut;
 

@@ -2,6 +2,9 @@
 
 namespace Drafterbit\System\Extension;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+
 class ExtensionManager
 {
     /**
@@ -18,6 +21,12 @@ class ExtensionManager
      */
     protected $data;
 
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container  = $container;
+    }
+
     /**
      * Register Extension
      *
@@ -25,7 +34,12 @@ class ExtensionManager
      */    
     public function registerExtension(Extension $extension)
     {
-        $this->extensions[$extension->getName()] = $extension;
+        $name = $extension->getName();
+        if(isset($this->extensions[$name])) {
+            throw new \InvalidArgumentException("Extension with name '$name' already exists");
+        }
+
+        $this->extensions[$name] = $extension;
     }
 
     /**
@@ -39,11 +53,7 @@ class ExtensionManager
             return $this->data[$section];
         }
 
-        // make sudly case
-        $section = ucwords(str_replace(['-', '_'], ' ', $section));
-        $section = str_replace(' ', '', $section);
-
-        $method = 'get'.$section.'Extension';
+        $method = 'get'.static::studly($section);
 
         $data = [];
         foreach ($this->extensions as $name => $instance) {
@@ -52,6 +62,18 @@ class ExtensionManager
             }
         }
 
+        array_map(function($item){
+            if($item instanceof ContainerAwareInterface) {
+                $item->setContainer($this->container);
+            }
+        }, $data);
+
         return $this->data[$section] = $data;
+    }
+
+    public static function studly($string)
+    {
+        $string = ucwords(str_replace(['-', '_'], ' ', $string));
+        return str_replace(' ', '', $string);
     }
 }

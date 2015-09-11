@@ -103,7 +103,9 @@
         </service>
 
         <!-- Extensions -->
-        <service id="extension_manager" class="Drafterbit\System\Extension\ExtensionManager"/>
+        <service id="extension_manager" class="Drafterbit\System\Extension\ExtensionManager">
+            <argument type="service" id="service_container" />
+        </service>
 
         <service id="dt_system.extensions.system" class="Drafterbit\Bundle\SystemBundle\System\Extension\SystemExtension">
             <argument type="service" id="service_container" />

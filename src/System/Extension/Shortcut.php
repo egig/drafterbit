@@ -2,11 +2,13 @@
 
 namespace Drafterbit\System\Extension;
 
-abstract class Shortcut
-{
-    public $container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-    public function setContainer($container)
+abstract class Shortcut implements ContainerAwareInterface
+{
+
+    public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }

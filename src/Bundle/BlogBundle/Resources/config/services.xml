@@ -51,5 +51,11 @@
             <argument type="service" id="service_container" />
             <tag name="dt_system.setting.field" />
         </service>
+
+        <service id="dt_system.extensions.blog" class="Drafterbit\Bundle\BlogBundle\System\Extension\BlogExtension">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.extensions" />
+        </service>
+
     </services>
 </container>

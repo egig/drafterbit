@@ -3,7 +3,7 @@
 namespace Drafterbit\Bundle\SystemBundle\System\Extension;
 
 use Drafterbit\System\Extension\Extension;
-use Drafterbit\Bundle\SystemBundle\System\Shortcuts\AppearanceShortcut;
+use Drafterbit\Bundle\SystemBundle\System\Shortcut\AppearanceShortcut;
 
 class SystemExtension extends Extension {
 
@@ -12,13 +12,10 @@ class SystemExtension extends Extension {
         return 'system';
     }
 
-    public function getShortcutsExtension()
+    public function getShortcuts()
     {
-        $appearanceShortcut = new AppearanceShortcut();
-        $appearanceShortcut->setContainer($this->container);
-
         return [
-            $appearanceShortcut
+            new AppearanceShortcut()
         ];
     }
 }
