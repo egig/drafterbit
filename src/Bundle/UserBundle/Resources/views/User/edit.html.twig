@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
         '@chosen_css'
         '@SystemBundle/Resources/web/chosen-bootstrap/chosen-bootstrap.css'
     %}
@@ -72,7 +72,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts
+    {% javascripts filter='?uglifyjs2' output="assets/css/*.js"
         '@chosen_js'
         '@UserBundle/Resources/js/edit.js'
     %}

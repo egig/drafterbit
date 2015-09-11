@@ -46,7 +46,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
         '@qs'
         '@BlogBundle/Resources/js/index.js'
     %}

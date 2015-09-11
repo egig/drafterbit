@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets '@finder_css' %}
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css" '@finder_css' %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 {% endblock %}
@@ -20,6 +20,7 @@
     '@finder_js'
     '@nunjucks'
     '@FileBundle/Resources/js/index.js'
+    filter='?uglifyjs2' output="assets/js/*.js"
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

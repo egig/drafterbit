@@ -37,9 +37,10 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>
+    <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'assets/ckeditor/'; </script>
 
-    {% javascripts '@ckeditor' '@PageBundle/Resources/js/editor.js'%}
+    {% javascripts filter='?uglifyjs2' output="assets/css/*.js"
+    '@ckeditor' '@PageBundle/Resources/js/editor.js'%}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

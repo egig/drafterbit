@@ -25,6 +25,7 @@
     {{ parent() }}
     {% javascripts
         '@SystemBundle/Resources/js/log.js'
+         filter='?uglifyjs2' output="assets/js/*.js"
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

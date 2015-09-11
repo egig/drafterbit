@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {% stylesheets filter="scss"
+  {% stylesheets filter='?uglifycss' output="assets/css/*.css"
   '@magicsuggest_css'
   '@bootstrap_datetimepicker_css'
   '@BlogBundle/Resources/scss/editor.scss'
@@ -109,8 +109,8 @@
   </script>
 {% endautoescape %}
 
-  <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'ckeditor/'; </script>
-  {% javascripts
+  <script> window.CKEDITOR_BASEPATH = drafTerbit.baseUrl+'assets/ckeditor/'; </script>
+  {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
     '@ckeditor'
     '@magicsuggest_js'
     '@bootstrap_datetimepicker_js'

@@ -10,14 +10,9 @@
           {% stylesheets
             '@fontawesome'
             '@notify_css'
-          %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-          {% endstylesheets %}
-
-          {% stylesheets
             '@SystemBundle/Resources/scss/drafterbit-bootstrap.scss'
             '@SystemBundle/Resources/scss/drafterbit.scss'
-            filter="scss"
+            filter='?uglifycss' output="assets/css/*.css"
           %}
             <link rel="stylesheet" href="{{ asset_url }}" />
           {% endstylesheets %}
@@ -42,7 +37,7 @@
         </div>
 
         {% block javascripts %}
-            {% javascripts
+            {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
              '@jquery'
              '@bootstrap_js'
              '@notify_js'

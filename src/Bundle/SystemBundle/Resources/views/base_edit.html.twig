@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% stylesheets filter="scss"
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
     '@SystemBundle/Resources/scss/edit.scss' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -29,7 +29,7 @@
 
  {% block javascripts %}
      {{ parent() }}
-     {% javascripts '@jquery_form' '@sticky_kit' %}
+     {% javascripts '@jquery_form' '@sticky_kit' filter='?uglifyjs2' output="assets/js/*.js" %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
      {% endjavascripts %}
  {% endblock %}

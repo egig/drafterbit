@@ -35,7 +35,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@PageBundle/Resources/js/index.js' %}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+    '@PageBundle/Resources/js/index.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts  %}
 {% endblock %}

@@ -3,9 +3,10 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% stylesheets filter="scss"
+    {% stylesheets
     '@SystemBundle/Resources/scss/preferences.scss'
     '@SystemBundle/Resources/scss/vertical-tabs.scss'
+     filter='?uglifycss' output="assets/css/*.css"
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -91,7 +92,9 @@
     {% javascripts
     '@jquery_form'
     '@bootstrap_tabcollapse'
-    '@UserBundle/Resources/js/preferences.js' %}
+    '@UserBundle/Resources/js/preferences.js' 
+     filter='?uglifyjs2' output="assets/js/*.js"
+    %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

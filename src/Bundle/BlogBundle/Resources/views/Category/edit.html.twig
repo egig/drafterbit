@@ -2,7 +2,8 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {% stylesheets filter="scss" '@BlogBundle/Resources/scss/category/edit.scss' %}
+  {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+  '@BlogBundle/Resources/scss/category/edit.scss' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
   {% endstylesheets %}
 {% endblock %}
@@ -39,7 +40,8 @@
 
 {% block javascripts %}
   {{ parent() }}
-  {% javascripts '@BlogBundle/Resources/js/category/edit.js' %}
+  {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+  '@BlogBundle/Resources/js/category/edit.js' %}
   <script type="text/javascript" src="{{ asset_url }}"></script>
   {% endjavascripts %}
 {% endblock %}

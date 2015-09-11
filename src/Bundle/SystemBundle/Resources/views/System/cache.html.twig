@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter="scss" '@SystemBundle/Resources/scss/cache.scss' %}
+    {% stylesheets  filter='?uglifycss' output="assets/css/*.css" '@SystemBundle/Resources/scss/cache.scss' %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}

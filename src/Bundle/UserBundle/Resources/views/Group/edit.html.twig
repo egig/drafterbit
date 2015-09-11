@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter="scss"
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
         '@SystemBundle/Resources/scss/vertical-tabs.scss'
     %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
@@ -73,7 +73,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts '@bootstrap_tabcollapse' '@UserBundle/Resources/js/group/edit.js' %}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+    '@bootstrap_tabcollapse' '@UserBundle/Resources/js/group/edit.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

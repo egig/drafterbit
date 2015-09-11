@@ -5,15 +5,9 @@
     <title>File Browser</title>
 
 
-    {% stylesheets
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
        '@SystemBundle/Resources/scss/drafterbit-bootstrap.scss'
        '@SystemBundle/Resources/scss/drafterbit.scss'
-       filter="scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-
-      {% stylesheets
         '@fontawesome'
         '@notify_css'
         '@finder_css'
@@ -33,7 +27,7 @@
 
 <div id="finder-container"></div>
 
-{% javascripts
+{% javascripts filter='?uglifyjs2' output="assets/js/*.js"
     '@jquery'
     '@bootstrap_js'
     '@notify_js'
@@ -46,7 +40,7 @@
 {# @todo finder locale #}
 <!--<script type="text/javascript" src="{{ asset('plugins/finder/src/l10n/'~locale~'.js') }}"></script>-->
 
-{% javascripts
+{% javascripts filter='?uglifyjs2' output="assets/js/*.js"
 '@bootstrap_contextmenu'
 '@jquery_form'
 '@finder_js'

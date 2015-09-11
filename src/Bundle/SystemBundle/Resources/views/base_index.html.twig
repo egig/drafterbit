@@ -6,7 +6,8 @@
         '@SystemBundle/Resources/web/dataTables/dataTables-bootstrap.css'
         '@SystemBundle/Resources/web/dataTables/dataTables.responsive.css'
         '@SystemBundle/Resources/scss/table.scss'
-        filter="scss"
+
+        filter='?uglifycss' output="assets/css/*.css"
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -41,7 +42,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
         '@datatables_js'
         '@SystemBundle/Resources/web/dataTables/dataTables-bootstrap.js'
         '@SystemBundle/Resources/web/dataTables/dataTables.responsive.js'

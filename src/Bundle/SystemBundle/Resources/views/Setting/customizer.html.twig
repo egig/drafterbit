@@ -11,15 +11,10 @@
               '@SystemBundle/Resources/scss/drafterbit-bootstrap.scss'
               '@SystemBundle/Resources/scss/drafterbit.scss'
               '@SystemBundle/Resources/scss/customizer.scss'
-              filter="scss"
-            %}
-              <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-
-            {% stylesheets
               '@fontawesome'
               '@notify_css'
               '@bootstrap_colorpicker_css'
+               filter='?uglifycss' output="assets/css/*.css"
             %}
               <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -200,7 +195,7 @@
 
         <!-- script -->
         {% block javascripts %}
-            {% javascripts '@jquery'%}
+            {% javascripts '@jquery'  filter='?uglifyjs2' output="assets/js/*.js" %}
               <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
@@ -210,7 +205,7 @@
               drafTerbit.customThemeCsrfToken = "{{ csrf_token('customize_theme') }}";
             </script>
 
-            {% javascripts
+            {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
               '@bootstrap_js'
               '@notify_js'
               '@jquery_ui_js'

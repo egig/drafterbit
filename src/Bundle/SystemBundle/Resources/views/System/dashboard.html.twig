@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter="scss" '@SystemBundle/Resources/scss/dashboard.scss' %}
+    {% stylesheets  filter='?uglifycss' output="assets/css/*.css" '@SystemBundle/Resources/scss/dashboard.scss' %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
@@ -53,6 +53,7 @@
     '@jquery_form'
     '@jquery_ui_js'
     '@SystemBundle/Resources/js/dashboard.js'
+     filter='?uglifyjs2' output="assets/js/*.js"
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

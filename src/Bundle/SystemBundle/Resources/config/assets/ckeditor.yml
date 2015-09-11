@@ -3,57 +3,57 @@ assetic:
     assets:
         ckeditor:
             inputs: '%vendor_dir%/web/ckeditor/ckeditor.js'
-            output: ckeditor/ckeditor.js
+            output: assets/ckeditor/ckeditor.js
         ckeditor_config:
             # we replace default
             # inputs: '%vendor_dir%/web/ckeditor/config.js'
             inputs: @SystemBundle/Resources/web/ckeditor-custom/config.js
-            output: ckeditor/config.js
+            output: assets/ckeditor/config.js
         ckeditor_styles:
             inputs: '%vendor_dir%/web/ckeditor/styles.js'
-            output: ckeditor/styles.js
+            output: assets/ckeditor/styles.js
         ckeditor_contents:
             inputs: '%vendor_dir%/web/ckeditor/contents.css'
-            output: ckeditor/contents.css
+            output: assets/ckeditor/contents.css
         ckeditor_lang_en:
             inputs: '%vendor_dir%/web/ckeditor/lang/en.js'
-            output: ckeditor/lang/en.js
+            output: assets/ckeditor/lang/en.js
         ckeditor_plugin_image:
             inputs: '%vendor_dir%/web/ckeditor/plugins/image/dialogs/image.js'
-            output: ckeditor/plugins/image/dialogs/image.js
+            output: assets/ckeditor/plugins/image/dialogs/image.js
         ckeditor_plugin_link:
             inputs: '%vendor_dir%/web/ckeditor/plugins/link/dialogs/link.js'
-            output: ckeditor/plugins/link/dialogs/link.js
+            output: assets/ckeditor/plugins/link/dialogs/link.js
         ckeditor_plugin_wpmore:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/plugins/wpmore/plugin.js
-            output: ckeditor/plugins/wpmore/plugin.js
+            output: assets/ckeditor/plugins/wpmore/plugin.js
         ckeditor_plugin_wpmore_img:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/plugins/wpmore/images/more_bug.gif
-            output: ckeditor/plugins/wpmore/images/more_bug.gif
+            output: assets/ckeditor/plugins/wpmore/images/more_bug.gif
         ckeditor_plugin_wpmore_img2:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/plugins/wpmore/images/more.gif
-            output: ckeditor/plugins/wpmore/images/more.gif
+            output: assets/ckeditor/plugins/wpmore/images/more.gif
         ckeditor_skin_bootstrap:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/skin.js
-            output: ckeditor/skins/bootstrap/skin.js
+            output: assets/ckeditor/skins/bootstrap/skin.js
         ckeditor_skin_bootstrap_images_close:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/close.png
-            output: ckeditor/skins/bootstrap/images/close.png
+            output: assets/ckeditor/skins/bootstrap/images/close.png
         ckeditor_skin_bootstrap_images_refresh:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/refresh.png
-            output: ckeditor/skins/bootstrap/images/refresh.png
+            output: assets/ckeditor/skins/bootstrap/images/refresh.png
         ckeditor_skin_bootstrap_images_lock:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/lock.png
-            output: ckeditor/skins/bootstrap/images/lock.png
+            output: assets/ckeditor/skins/bootstrap/images/lock.png
         ckeditor_skin_bootstrap_dialog:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/dialog.css
-            output: ckeditor/skins/bootstrap/dialog.css
+            output: assets/ckeditor/skins/bootstrap/dialog.css
         ckeditor_skin_bootstrap_icons:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/icons.png
-            output: ckeditor/skins/bootstrap/icons.png
+            output: assets/ckeditor/skins/bootstrap/icons.png
         ckeditor_skin_bootstrap_css:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor.css
-            output: ckeditor/skins/bootstrap/editor.css
+            output: assets/ckeditor/skins/bootstrap/editor.css
         ckeditor_skin_bootstrap_gecko_css:
             inputs: @SystemBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor_gecko.css
-            output: ckeditor/skins/bootstrap/editor_gecko.css
+            output: assets/ckeditor/skins/bootstrap/editor_gecko.css

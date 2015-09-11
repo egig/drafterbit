@@ -1,40 +1,12 @@
 (function($, drafTerbit) {
 
-    drafTerbit.pages = {};
-
     if (window.location.hash == '') {
         window.location.hash = 'all';
     }
 
     var urlHash = window.location.hash.replace('#','');
 
-    $('.page-status-filter option[value="'+urlHash+'"]').prop('selected', true);
-
-    drafTerbit.pages.dt = $("#page-data-table").dataTable(
-        {
-            responsive: true,
-            ajax: {
-                url: drafTerbit.adminUrl+"page/data/"+urlHash,
-            },
-            columns: [
-                {},
-                {},
-                {}
-            ],
-            columnDefs: [
-                {orderable: false, searchable:false, targets:[0], render: function(d,t,f,m) { return '<input type="checkbox" name="pages[]" value="'+d+'">'}},
-                {render: function(d,t,f,m) { return '<a href="'+drafTerbit.adminUrl+'page/edit/'+f[0]+'">'+d+'</a>'}, targets:1}
-            ],
-            drawCallback: function() {
-                drafTerbit.handleFooter();
-            }
-        }
-    );
-
-    drafTerbit.replaceDTSearch(drafTerbit.pages.dt);
-
-    // Checks
-    $('#page-checkall').checkAll({showIndeterminate:true});
+    drafTerbit.pages = {};
 
     filterByStatus = function(status){
 
@@ -42,8 +14,6 @@
 
         drafTerbit.pages.dt.api().ajax.url(drafTerbit.adminUrl+"page/data/"+status).load();
         window.location.hash = status;
-
-        //refresh pages index form
     }
 
     // change trash, add restore button
@@ -57,41 +27,81 @@
         }
     }
 
-    changeUncreateAction(urlHash);
+    drafTerbit.page = {
 
-    $('#page-index-form').ajaxForm({
-        beforeSubmit: function(formData, jqForm, x){
+        handleForm: function() {
+            $('#page-index-form').ajaxForm({
+                beforeSubmit: function(formData, jqForm, x){
 
-            for (var i=0; i < formData.length; i++) {
-                if(formData[i].name == 'action') {
+                    for (var i=0; i < formData.length; i++) {
+                        if(formData[i].name == 'action') {
 
-                    if (formData[i].value == 'delete') {
-                        if (confirm(__('Are you sure ? this can not be undone.'))) {
+                            if (formData[i].value == 'delete') {
+                                if (confirm(__('Are you sure ? this can not be undone.'))) {
+                                    return true;
+                                }
+                            }
+
                             return true;
                         }
                     }
 
-                    return true;
+                    return false;
+                },
+                success: function(response){
+                   $.notify(response.message, response.status);
+                    var urlHash2 = window.location.hash.replace('#','');
+                    drafTerbit.pages.dt.api().ajax.url(drafTerbit.adminUrl+"page/data/"+urlHash2).load();
                 }
-            }
-
-            return false;
-        },
-        success: function(response){
-           $.notify(response.message, response.status);
-            var urlHash2 = window.location.hash.replace('#','');
-            drafTerbit.pages.dt.api().ajax.url(drafTerbit.adminUrl+"page/data/"+urlHash2).load();
+            });
         }
-    });
 
-    //status-filter
-    $('.page-status-filter').on(
-        'change',
-        function(){
-            var s = $(this).val();
-            filterByStatus(s);
-            changeUncreateAction(s);
+        ,handleTable: function () {
+             drafTerbit.pages.dt = $("#page-data-table").dataTable(
+                {
+                    responsive: true,
+                    ajax: {
+                        url: drafTerbit.adminUrl+"page/data/"+urlHash
+                    },
+                    columns: [
+                        {},
+                        {},
+                        {}
+                    ],
+                    columnDefs: [
+                        {orderable: false, searchable:false, targets:[0], render: function(d,t,f,m) { return '<input type="checkbox" name="pages[]" value="'+d+'">'}},
+                        {render: function(d,t,f,m) { return '<a href="'+drafTerbit.adminUrl+'page/edit/'+f[0]+'">'+d+'</a>'}, targets:1},
+                    ],
+                    drawCallback: function() {
+                        drafTerbit.handleFooter();
+                    }
+                }
+            );
+            drafTerbit.replaceDTSearch(drafTerbit.pages.dt);
+
+            // Checks
+            $('#page-checkall').checkAll({showIndeterminate:true});
         }
-    );
+
+        ,handleFilter: function (){
+            changeUncreateAction(urlHash);
+
+            //status-filter
+            $('.page-status-filter').on(
+                'change',
+                function(){
+                    var s = $(this).val();
+                    filterByStatus(s);
+                    changeUncreateAction(s);
+                }
+            );
+
+            $('.page-status-filter option[value="'+urlHash+'"]').prop('selected', true);
+        }
+    }
+
+    drafTerbit.page.handleTable(urlHash);
+    drafTerbit.page.handleForm();
+    drafTerbit.page.handleFilter(urlHash);
 
 })(jQuery, drafTerbit);

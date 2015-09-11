@@ -10,8 +10,15 @@ imports:
 assetic:
     filters:
         scss:
-           load_paths:
+            load_paths:
                - '%vendor_dir%/web/bootstrap-sass/assets/stylesheets'
+            apply_to:   "\.scss$"
+        uglifyjs2:
+            # the path to the uglifyjs executable
+            bin: /usr/local/bin/uglifyjs
+        uglifycss:
+            bin: /usr/local/bin/uglifycss
+
     assets:
         notify_css:
             inputs: '%vendor_dir%/web/egig-notify/notify.css'
@@ -23,7 +30,7 @@ assetic:
             inputs: '%vendor_dir%/web/chosen/chosen.jquery.min.js'
         chosen_sprite:
             inputs: '%vendor_dir%/web/chosen/chosen-sprite.png'
-            output: css/chosen-sprite.png
+            output: assets/css/chosen-sprite.png
         datatables_css:
             inputs: '%vendor_dir%/web/datatables/media/css/jquery.dataTables.css'
         datatables_js:
