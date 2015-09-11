@@ -12,9 +12,6 @@ system:
         system:
             label: System
             children:
-                update:
-                    label: Update
-                    route: dt_system_update
                 log:
                     label: Log
                     route: dt_system_log
