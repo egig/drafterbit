@@ -97,7 +97,6 @@ class DashboardController extends Controller
             $form->add($panelForm);
         }
 
-
         $form->handleRequest($request);
 
         if($form->isValid())
