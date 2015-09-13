@@ -20,7 +20,25 @@ use Drafterbit\Bundle\SystemBundle\Entity\Panel;
  */
 class DashboardController extends Controller
 {
-	 /**
+    /**
+     * @Route("/system/dashboard/data", name="dt_system_dashboard_data")
+     * @Template("SystemBundle:Panel:index.html.twig")
+     */
+    public function dataAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $panelConfigs = $panelConfig = $em->getRepository('SystemBundle:Panel')
+            ->findBy(['user' => $this->getUser()]);;
+
+        $panels = $this->buildPanels($panelConfigs);
+
+        return [
+            'left_panels' => $panels['left'],
+            'right_panels' => $panels['right'],
+        ];
+    }
+
+	/**
      * @Route("/system/dashboard/edit/{id}", name="dt_system_dashboard_edit")
      * @Template("SystemBundle:Panel:edit.html.twig")
      */
@@ -62,6 +80,13 @@ class DashboardController extends Controller
         $form = $this->get('form.factory')->createNamedBuilder('panel')
             ->add('id', 'hidden', ['data' => $id])
             ->add('title', 'text', ['data' => $title])
+            ->add('position', 'choice', [
+                'data' => $panel->getPosition(),
+                'choices' => [
+                    'left' => 'Left',
+                    'right' => 'Right'
+                ]
+            ])
             ->add('Save', 'submit')
             ->getForm();
             
@@ -82,13 +107,14 @@ class DashboardController extends Controller
             $context = isset($data['context']) ? $data['context'] : []; 
             $context = array_merge($context, ['title' => $data['title']]);
             $panel->setContext(json_encode($context));
+            $panel->setPosition($data['position']);
             $em->persist($panel);
             $em->flush();
 
             // @todo refresh panel after edit
             return new JsonResponse([
                 'data' => [
-                    'message' => $this->get('translator')->trans('Panel successfully saved. You can see the changes on next page refresh'),
+                    'message' => $this->get('translator')->trans('Panel successfully saved.'),
                     'id' => $panel->getId(),
                 ]
             ]);
@@ -187,5 +213,43 @@ class DashboardController extends Controller
         $em->flush();
 
         return new Response();
+    }
+
+
+    /**
+     * Build panel data to be displayed;
+     *
+     * @return array
+     */
+    private function buildPanels($panelConfig)
+    {
+        $panels = ['left' => [], 'right' => []];
+
+        foreach ($panelConfig as $config) {
+
+            $panel = new \StdClass;
+            $panel->id = $config->getId();
+            $panel->sequence = $config->getSequence();
+            $panel->status = $config->getStatus();
+            $panel->context = json_decode($config->getContext());
+            $panel->title = $panel->context->title;
+            $panel->name = $config->getType();
+            $panelType = $this->get('dashboard')->getPanelType($config->getType());
+            $panel->view = $panelType->getView($panel->context);
+
+            $panels[$config->getPosition()][] = $panel;
+        }
+
+        $sortFunction = function($a, $b) {
+            if($a->sequence == $b->sequence) {
+                return 0;
+            }
+            return $b->sequence > $a->sequence ? -1 : 1;
+        };
+
+        usort($panels['left'], $sortFunction);
+        usort($panels['right'], $sortFunction);
+
+        return $panels;
     }
 }

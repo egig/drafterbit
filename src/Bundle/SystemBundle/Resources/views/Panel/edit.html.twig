@@ -8,6 +8,10 @@
 		{{ form_label(form.title, "Title") }}
 		{{ form_widget(form.title, {attr:{class:"form-control"}}) }}
 	</div>
+	<div class="form-group">
+		{{ form_label(form.position, "Position") }}
+		{{ form_widget(form.position, {attr:{class:"form-control"}}) }}
+	</div>
 
 	{% if template %}
 		{% include template with {form: form}  %}

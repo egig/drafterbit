@@ -2,6 +2,19 @@
 
 	drafTerbit.userPreferences = {
 
+		init: function(){
+			this.loadTable();
+			this.showFirstTab();
+			this.handleTablcollapse();
+			this.handlePanelEdit();
+			this.handleEditForm();
+			this.handlePanelDelete();
+		},
+
+		loadTable: function (){
+			$('.dt-panels-container').load(drafTerbit.adminUrl+'system/dashboard/data');
+		},
+
 		showFirstTab: function() {
             if (location.hash) {
                 $('a[href="'+location.hash+'"]').tab('show');
@@ -35,13 +48,14 @@
                         }
 
                         _this.find('input[name="panel[id]"]').val(response.data.id);
+                        drafTerbit.userPreferences.loadTable();
                     }
                 });
             });
         },
 
         handlePanelDelete: function() {
-        	$('.dt-panel-delete').click(function() {
+        	$(document).on('click', '.dt-panel-delete', function() {
 
         		var id = $(this).data('id');
 
@@ -66,10 +80,6 @@
         }
 	}
 
-	drafTerbit.userPreferences.showFirstTab();
-	drafTerbit.userPreferences.handleTablcollapse();
-	drafTerbit.userPreferences.handlePanelEdit();
-	drafTerbit.userPreferences.handleEditForm();
-	drafTerbit.userPreferences.handlePanelDelete();
+	drafTerbit.userPreferences.init();
 
 })(jQuery, drafTerbit);
