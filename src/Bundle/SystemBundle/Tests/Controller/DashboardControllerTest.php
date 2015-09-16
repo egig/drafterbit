@@ -24,7 +24,8 @@ class DashboardControllerTest extends WebTestCase
         $param = [
         	'panel' => [
         		'id' => 'Log',
-        		'context' => ['num' => 5],
+                'context' => ['num' => 5],
+        		'position' => 'left',
         		'title'   => 'Test Log Panel',
         		'_token'  => $csrfToken
         	]
