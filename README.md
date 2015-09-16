@@ -14,11 +14,10 @@ Following step guides you to install Drafterbit for development purpose. (I assu
     2. PHP 5.4+
     3. Database Server (Mysql suggested)
     4. [Composer](https://getcomposer.org/)
-    5. [Bower](https://bower.io/).
-    6. Sass
-    7. Uglifyjs
-    8. Uglifycss
-    8. Phing
+    5. [Bower](https://bower.io/)
+    6. [Sass](http://sass-lang.com/)
+    7. [Uglifyjs](https://github.com/mishoo/UglifyJS)
+    8. [Uglifycss](https://github.com/fmarcia/UglifyCSS)
 
 2. Go to your working directory via terminal, it is usually located at document root of your web server.
     ```shell
