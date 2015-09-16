@@ -23,6 +23,11 @@ env:
     - SYMFONY__DATATBASE_NAME=symfony
     - SYMFONY__DATATBASE_USER=root
     - SYMFONY__DATATBASE_TABLE_PREFIX=test_
+    - SYMFONY__LOCALE=en
+    - SYMFONY__SECRET=ThisTokenIsNotSoSecretChangeIt
+    - SYMFONY__ADMIN=admin
+    - SYMFONY__THEME=feather
+    - SYMFONY__UPLOAD_DIR=upload
 
 script: phpunit
 
