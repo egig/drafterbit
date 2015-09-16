@@ -28,6 +28,8 @@ env:
     - SYMFONY__ADMIN=admin
     - SYMFONY__THEME=feather
     - SYMFONY__UPLOAD_DIR=upload
+    - SYMFONY__MAILER_TRANSPORT=smtp
+    - SYMFONY__MAILER_HOST=127.0.0.1
 
 script: phpunit
 
