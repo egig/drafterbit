@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table("widget")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Drafterbit\Bundle\SystemBundle\Repository\WidgetRepository")
  */
 class Widget
 {

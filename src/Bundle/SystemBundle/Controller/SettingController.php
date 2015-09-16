@@ -94,91 +94,6 @@ class SettingController extends Controller
         ];
     }
 
-    /**
-     * @Route("/setting/widget/delete", name="dt_setting_widget_delete")
-     */
-    public function widgetDeleteAction(Request $request)
-    {
-        $id = $request->request->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $widget = $em->getRepository('SystemBundle:Widget')
-            ->find($id);
-        $em->remove($widget);
-        $em->flush();
-
-        return new Response();
-    }
-
-    /**
-     * @Route("/setting/widget/save", name="dt_setting_widget_save")
-     */
-    public function widgetSaveAction(Request $request)
-    {
-        $position = $request->request->get('position');
-        $widgetRequested = $request->request->get('widget');
-
-        $id = $widgetRequested['id'];
-
-        $em = $this->getDoctrine()->getManager();
-        $widget = $em->getRepository('SystemBundle:Widget')
-            ->find($id);
-
-        if(!$widget) {
-            $sequence = 0;
-            $widget = new Widget;
-        } else {
-            $sequence = $widget->getSequence();
-        }
-
-        $form = $this->createForm(new WidgetType, $widget);
-        $form->handleRequest($request);
-
-        if($form->isValid()) {
-            $widget = $form->getData();
-            $widget->setPosition($position);
-            $widget->setSequence($sequence);
-
-            $context = json_encode($widgetRequested);
-
-            $widget->setContext($context);
-
-            $em->persist($widget);
-            $em->flush();
-
-            return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
-        } else {
-            return new Response($form->getErrorsAsString());
-        }
-
-        // @todo return error
-    }
-
-    /**
-     * @Route("/setting/widget/sort", name="dt_setting_widget_sort")
-     */
-    public function widgetSortAction(Request $request)
-    {
-        $ids = $request->request->get('order');
-        $em = $this->getDoctrine()->getManager();
-
-        $order = 1;
-        foreach (array_filter(explode(',', $ids)) as $temp) {
-            $temp2 = explode('-', $temp);
-            $id = current($temp2);
-            //$data = ['sequence' => $order];
-
-            $widget = $em->getRepository('SystemBundle:Widget')->find($id);
-
-            $widget->setSequence($order);
-            $em->persist($widget);
-            $em->flush();
-
-            $order++;
-        }
-
-        return new Response(1);
-    }
-
     private function getThemes()
     {
         $themes_path = $this->container->getParameter('themes_path');
@@ -261,7 +176,8 @@ class SettingController extends Controller
         foreach ($positions as $position) {
 
             // get current widget
-            $widgets[$position] = $this->getWidget($position, $theme);
+            $widgets[$position] = $em->getRepository('SystemBundle:Widget')
+                ->getByThemePosition($position, $theme);
 
             usort(
                 $widgets[$position],
@@ -381,26 +297,7 @@ class SettingController extends Controller
             ]
         );
     }
-
-    /**
-     * Get widget by position and theme
-     */
-    private function getWidget($position, $theme)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('SystemBundle:Widget')
-            ->createQueryBuilder('w')
-            ->where('w.position=:position')
-            ->andWhere('w.theme=:theme')
-            ->setParameter('position', $position)
-            ->setParameter('theme', $theme)
-            ->getQuery();
-
-        $widgets = $query->getResult();
-
-        return $widgets;
-    }
-
+    
     /**
      * Flatten a multi-dimensional associative array with dots.
      *
