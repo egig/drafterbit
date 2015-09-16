@@ -1,5 +1,5 @@
 imports:
-    - { resource: parameters.yml }
+    - { resource: parameters.yml, ignore_errors: true}
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: @BlogBundle/Resources/config/system/navigation.yml }
