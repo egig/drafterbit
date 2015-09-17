@@ -18,11 +18,11 @@ before_script:
 env:
   global:
     - SYMFONY__TEST_USER=admin
-    - SYMFONY__DATATBASE_DRIVER=pdo_mysql
-    - SYMFONY__DATATBASE_HOST=127.0.0.1
-    - SYMFONY__DATATBASE_NAME=symfony
-    - SYMFONY__DATATBASE_USER=root
-    - SYMFONY__DATATBASE_TABLE_PREFIX=test_
+    - SYMFONY__DATABASE_DRIVER=pdo_mysql
+    - SYMFONY__DATABASE_HOST=127.0.0.1
+    - SYMFONY__DATABASE_NAME=symfony
+    - SYMFONY__DATABASE_USER=root
+    - SYMFONY__DATABASE_TABLE_PREFIX=test_
     - SYMFONY__LOCALE=en
     - SYMFONY__SECRET=ThisTokenIsNotSoSecretChangeIt
     - SYMFONY__ADMIN=admin
