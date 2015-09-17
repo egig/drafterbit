@@ -30,6 +30,8 @@ env:
     - SYMFONY__UPLOAD_DIR=upload
     - SYMFONY__MAILER_TRANSPORT=smtp
     - SYMFONY__MAILER_HOST=127.0.0.1
+    - SYMFONY__MAILER_USER=""
+    - SYMFONY__MAILER_PASSWORD=""
 
 script: phpunit
 
