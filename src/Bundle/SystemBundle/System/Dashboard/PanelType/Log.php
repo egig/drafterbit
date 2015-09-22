@@ -11,7 +11,7 @@ class Log extends PanelType {
 
     public function getView($context = null)
     {
-        $maxResult = $context ? $context->num : static::LOG_NUM;
+        $maxResult = isset($context->num) ? $context->num : static::LOG_NUM;
         $em = $this->container->get('doctrine')->getManager();
         $logEntities = $em->getRepository('SystemBundle:Log')
             ->createQueryBuilder('l')
