@@ -20,7 +20,7 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
  */
 class WidgetController extends Controller
 {
-	/**
+    /**
      * @Route("/setting/widget/delete", name="dt_setting_widget_delete")
      */
     public function deleteAction(Request $request)

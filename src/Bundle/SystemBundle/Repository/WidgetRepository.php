@@ -9,9 +9,9 @@ use Doctrine\ORM\Query\Expr;
 
 class WidgetRepository extends EntityRepository
 {
-	public function getByThemePosition($position, $theme)
-	{
-		$query = $this->createQueryBuilder('w')
+    public function getByThemePosition($position, $theme)
+    {
+        $query = $this->createQueryBuilder('w')
             ->where('w.position=:position')
             ->andWhere('w.theme=:theme')
             ->setParameter('position', $position)
@@ -19,5 +19,5 @@ class WidgetRepository extends EntityRepository
             ->getQuery();
 
         return $query->getResult();
-	}
+    }
 }

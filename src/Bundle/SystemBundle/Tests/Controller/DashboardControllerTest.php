@@ -22,13 +22,13 @@ class DashboardControllerTest extends WebTestCase
 
         $csrfToken = $crawler->filter('input[name="panel[_token]"]')->attr('value');
         $param = [
-        	'panel' => [
-        		'id' => 'Log',
+            'panel' => [
+                'id' => 'Log',
                 'context' => ['num' => 5],
-        		'position' => 'left',
-        		'title'   => 'Test Log Panel',
-        		'_token'  => $csrfToken
-        	]
+                'position' => 'left',
+                'title'   => 'Test Log Panel',
+                '_token'  => $csrfToken
+            ]
         ];
 
         $crawler = $client->request('POST', $url, $param);
@@ -41,9 +41,9 @@ class DashboardControllerTest extends WebTestCase
 
         $container = $client->getContainer();
         $panel = $container->get('doctrine')->getManager()
-        	->getRepository('SystemBundle:Panel')->find($panelId);
+            ->getRepository('SystemBundle:Panel')->find($panelId);
 
-       	
+           
         $this->assertEquals($panelId, $panel->getId());
 
         return $panelId;

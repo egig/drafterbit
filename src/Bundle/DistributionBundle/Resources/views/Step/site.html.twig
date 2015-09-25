@@ -1,29 +1,29 @@
 {% extends 'DistributionBundle:Step:step.html.twig' %}
 
 {% block step_title %}
-	<h2>Name your site</h2>
-	<span class="help-block">You always can change this later.</span>
+    <h2>Name your site</h2>
+    <span class="help-block">You always can change this later.</span>
 {% endblock %}
 
 {% block form %}
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-			<div class="form-group">
-				{{ form_label(form.sitename, "Site Name", {label_attr:{class:"control-label"}}) }}
-				{{ form_widget(form.sitename, {attr:{class:"form-control"}})  }}
-				{{ form_errors(form.sitename)  }}
-			</div>
-			<div class="form-group">
-				{{ form_label(form.sitedesc, "Description", {label_attr:{class:"control-label"}}) }}
-				{{ form_widget(form.sitedesc, {attr:{class:"form-control"}})  }}
-				{{ form_errors(form.sitedesc)  }}
-			</div>
-		</div>
-	</div>
-	<div class="row">
-	    <div class="col-md-4 col-md-offset-4">
-		    {{ form_widget(form.Save, {attr: {class:"btn btn-primary pull-right"}, label:"Next Step"}) }}
-	    </div>
-	</div>
-	{{ form_rest(form) }}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="form-group">
+                {{ form_label(form.sitename, "Site Name", {label_attr:{class:"control-label"}}) }}
+                {{ form_widget(form.sitename, {attr:{class:"form-control"}})  }}
+                {{ form_errors(form.sitename)  }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.sitedesc, "Description", {label_attr:{class:"control-label"}}) }}
+                {{ form_widget(form.sitedesc, {attr:{class:"form-control"}})  }}
+                {{ form_errors(form.sitedesc)  }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            {{ form_widget(form.Save, {attr: {class:"btn btn-primary pull-right"}, label:"Next Step"}) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
 {% endblock %}

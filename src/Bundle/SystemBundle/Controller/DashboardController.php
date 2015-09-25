@@ -38,7 +38,7 @@ class DashboardController extends Controller
         ];
     }
 
-	/**
+    /**
      * @Route("/system/dashboard/edit/{id}", name="dt_system_dashboard_edit")
      * @Template("SystemBundle:Panel:edit.html.twig")
      */
@@ -110,7 +110,6 @@ class DashboardController extends Controller
             $em->persist($panel);
             $em->flush();
 
-            // @todo refresh panel after edit
             return new JsonResponse([
                 'data' => [
                     'message' => $this->get('translator')->trans('Panel successfully saved.'),
@@ -155,7 +154,7 @@ class DashboardController extends Controller
             if($type) {
 
                 $panelConfig =  $em->getRepository('SystemBundle:Panel')
-                ->findOneBy(['user' => $this->getUser(), 'type' => $type]);
+                    ->findOneBy(['user' => $this->getUser(), 'type' => $type]);
 
                 $panelConfig or $panelConfig = new PanelConfig();
 
