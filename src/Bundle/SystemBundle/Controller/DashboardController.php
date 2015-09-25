@@ -27,7 +27,7 @@ class DashboardController extends Controller
     public function dataAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $panelConfigs = $panelConfig = $em->getRepository('SystemBundle:Panel')
+        $panelConfigs $em->getRepository('SystemBundle:Panel')
             ->findBy(['user' => $this->getUser()]);;
 
         $panels = $this->buildPanels($panelConfigs);
