@@ -27,11 +27,17 @@ class PostRepositoryTest extends KernelTestCase
      * @dataProvider getParam
      * 
      */
-    public function testGetByStatusAndCategory($status, $cat, $count)
+    public function testGetByStatusAndCategory($status, $catSlug, $count)
     {
+        $cat = $this->em
+            ->getRepository('BlogBundle:Category')
+            ->findOneBy(['slug' => $catSlug]);
+
+        $catId = $cat ? $cat->getId() : 0;
+
         $posts = $this->em
             ->getRepository('BlogBundle:Post')
-            ->getByStatusAndCategory($status, $cat);
+            ->getByStatusAndCategory($status, $catId);
 
         $this->assertCount($count, $posts);
     }
@@ -40,9 +46,9 @@ class PostRepositoryTest extends KernelTestCase
     {
         // Uses existed Doctrine ORM fixtures
         return [
-            ['all', 1, 1],
+            ['all', 'uncategorized', 1],
             ['all', NULL, 1],
-            ['published', 1, 1],
+            ['published', 'uncategorized', 1],
             ['published', NULL, 1],
             ['trashed', NULL, 0],
             ['pending', NULL, 0],
