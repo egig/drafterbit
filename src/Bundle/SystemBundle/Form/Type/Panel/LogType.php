@@ -14,14 +14,12 @@ class LogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('num', 'number');
+            ->add('num', 'number', ['mapped' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'required' => false,
-            'mapped' => false,
             'csrf_protection' => true,
             'intention' => 'panel_type'
         ]);
