@@ -135,6 +135,11 @@ class FrontendController extends Controller
     {
         $perPage = $this->get('system')->get('blog.post_perpage', 5);
 
+        if($perPage === '') {
+            throw new \RuntimeException("Blog Post per Page configuration detected as empty string,
+                it could be someone changes database value or validation does not work when system setting save.");
+        }
+
         $repo = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Post');
 
         switch ($filterKey) {
