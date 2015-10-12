@@ -3,6 +3,7 @@
 namespace Drafterbit\Bundle\BlogBundle\Twig\Extension;
 
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
 use Drafterbit\Bundle\BlogBundle\Form\Type\CommentType;
@@ -10,6 +11,10 @@ use Drafterbit\Bundle\BlogBundle\Entity\Comment;
 
 class BlogExtension extends \Twig_Extension
 {
+    const CATEGORY_ROUTE_NAME = 'dt_blog_category_front_view';
+    const TAG_ROUTE_NAME = 'dt_blog_tag_front_view';
+    const AUTHOR_ROUTE_NAME = 'dt_blog_author_front_view';
+
     protected $kernel;
 
     public function __construct(Kernel $kernel)
@@ -21,6 +26,9 @@ class BlogExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('blog_url', array($this, 'blogUrl')),
+            new \Twig_SimpleFunction('blog_category_url', array($this, 'blogCategoryUrl')),
+            new \Twig_SimpleFunction('blog_tag_url', array($this, 'blogTagUrl')),
+            new \Twig_SimpleFunction('blog_author_url', array($this, 'blogAuthorUrl')),
             new \Twig_SimpleFunction('comment', array($this, 'comment'))
         );
     }
@@ -75,6 +83,27 @@ class BlogExtension extends \Twig_Extension
         }
 
         return (new FrontendExtension($this->kernel))->baseUrl($path);
+    }
+
+    public function blogCategoryUrl($slug, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $container = $this->kernel->getContainer();
+        $parameters['slug'] = $slug;
+        return $container->get('router')->generate(static::CATEGORY_ROUTE_NAME, $parameters, $referenceType);
+    }
+
+    public function blogTagUrl($slug, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $container = $this->kernel->getContainer();
+        $parameters['slug'] = $slug;
+        return $container->get('router')->generate(static::TAG_ROUTE_NAME, $parameters, $referenceType);
+    }
+
+    public function blogAuthorUrl($username, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        $container = $this->kernel->getContainer();
+        $parameters['username'] = $username;
+        return $container->get('router')->generate(static::AUTHOR_ROUTE_NAME, $parameters, $referenceType);
     }
 
     /**

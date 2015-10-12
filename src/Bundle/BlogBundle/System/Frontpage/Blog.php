@@ -17,10 +17,11 @@ class Blog extends Frontpage
     {
         $routes = new RouteCollection;
 
-        $routes->add('dt_blog_category_front_home',
+        $routes->add('dt_blog_front_home',
             new Route('/', ['_controller' => 'BlogBundle:Frontend:index'])
         );
 
+        // @todo make routes/permalink customizable by user
         $routes->add('dt_blog_post_front_view', new Route('/{year}/{month}/{date}/{slug}',
             ['_controller' => 'BlogBundle:Frontend:view'],
             [
