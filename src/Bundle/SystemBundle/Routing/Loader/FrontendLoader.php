@@ -67,12 +67,21 @@ class FrontendLoader implements LoaderInterface
         $route2 = new Route('/{slug}', $defaults, $requirements);
         $routes->add('misc', $route2);
 
-        // last config: locale
-        // @todo determine available locales, not just en|id
-        $routes->addPrefix('{_locale}');
-        $routes->addRequirements([
-            '_locale' => 'en|id'
-        ]);
+        if($this->container->getParameter('multilingual'))
+        {
+            // last config: locale
+            // @todo determine available locales, not just en|id
+            $routes->addPrefix('{_locale}');
+
+            /* @todo get installed language */
+            $routes->addRequirements([
+                '_locale' => 'en|id'
+            ]);
+
+            $routes->addDefaults([
+                '_locale' => $this->container->getParameter('locale')
+            ]);
+        }
 
         return $routes;
     }
