@@ -25,3 +25,5 @@ parameters:
     theme: feather
     test_user: admin
     upload_dir: upload
+    multilingual: false
+

@@ -14,7 +14,7 @@ class ResultFormatter implements ResultFormatterInterface
     }
 
     function getUrl($item)
-    {    
+    {
         $time = strtotime($item['created_at']);
         $year = date('Y', $time);
         $month = date('m', $time);

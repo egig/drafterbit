@@ -7,16 +7,34 @@ use Symfony\Component\DependencyInjection\Container;
 
 class Engine {
 
+    /**
+     * The query prviders
+     * 
+     * @var array
+     */
     protected $queryProviders = [];
+
+    /**
+     * The Contrainer.
+     *
+     * @var Container
+     */
     protected $container;
 
+    /**
+     * The constructor
+     *
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
     }
 
     /**
-     * Do a search
+     * Populate the search engine and do the search
+     *
+     * @param string $q
      */
     public function doSearch($q)
     {
@@ -37,9 +55,9 @@ class Engine {
                 $resultFormatter = $queryProvider->getResultFormatter($this->container);
 
                 $query->setParameter(':q', "%$q%");
-                $res = $query->execute()->fetchAll();
+                $results = $query->execute()->fetchAll();
 
-                foreach ($res as $item) {
+                foreach ($results as $item) {
                     $results[] = $this->format($item, $resultFormatter);
                 }
             }
@@ -48,6 +66,13 @@ class Engine {
         return $results;
     }
 
+    /**
+     * Form search results used given result formatter
+     *
+     * @param object $item
+     * @param ResultFormatterInterface $formatter
+     * @return array
+     */
     private function format($item, ResultFormatterInterface $formatter)
     {
         return [
@@ -57,11 +82,21 @@ class Engine {
         ];
     }
 
+    /**
+     * Get regitered query providers
+     *
+     * @return array
+     */
     public function getQueryProviders()
     {
         return $this->queryProviders;
     }
 
+    /**
+     * Add a query provider
+     *
+     * @param QueryProvider $queryProvider
+     */
     public function addQueryProvider(QueryProvider $queryProvider)
     {
         $this->queryProviders[] = $queryProvider;
