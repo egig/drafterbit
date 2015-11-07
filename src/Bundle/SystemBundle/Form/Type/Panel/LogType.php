@@ -9,19 +9,24 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LogType extends AbstractType
 {
-    protected $container;
+    private $data = [];
+
+    public function __construct($data){
+
+        $this->data = $data;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('num', 'number', ['mapped' => false]);
+            ->add('num', 'number', ['mapped' => false, 'data' => $this->data->num]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'csrf_protection' => true,
-            'intention' => 'panel_type'
+            'intention' => 'panel_type',
         ]);
     }
 

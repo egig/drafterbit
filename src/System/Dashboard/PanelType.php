@@ -23,7 +23,7 @@ abstract class PanelType implements PanelTypeInterface {
         return $this->container->get('templating')->render($view, $parameters);
     }
 
-    public function getForm()
+    public function getFormType()
     {
         //..
     }

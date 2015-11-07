@@ -58,6 +58,13 @@ class Panel
     /**
      * @var string
      * 
+     * @ORM\Column(name="title", type="text", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     * 
      * @ORM\Column(name="context", type="text", nullable=true)
      */
     private $context;
@@ -175,6 +182,19 @@ class Panel
     public function setStatus($status)
     {
         return $this->status = $status;
+    }
+    
+    /**
+     * Title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        return $this->title = $title;
     }
 
     /**

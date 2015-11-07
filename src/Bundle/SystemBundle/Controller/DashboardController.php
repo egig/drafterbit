@@ -74,10 +74,9 @@ class DashboardController extends Controller
         }
 
 
-        $panelData = json_decode($panel->getContext());
-        $title = empty($panelData->title) ? $panelType->getName() : $panelData->title;
+        $title = empty($panel->getTitle()) ? $panelType->getName() : $panel->getTitle();
 
-        $form = $this->get('form.factory')->createNamedBuilder('panel')
+        $formBuilder = $this->get('form.factory')->createNamedBuilder('panel')
             ->add('id', 'hidden', ['data' => $id])
             ->add('title', 'text', ['data' => $title])
             ->add('position', 'choice', [
@@ -87,15 +86,16 @@ class DashboardController extends Controller
                     'right' => 'Right'
                 ]
             ])
-            ->add('Save', 'submit')
-            ->getForm();
-            
-        $panelForm = $panelType->getForm($panelData);
-        if($panelForm) {
-            //we need this since its not root form
-            $panelForm->getConfig()->setAutoInitialize(false);    
-            $form->add($panelForm);
+            ->add('Save', 'submit');
+
+        $panelData = json_decode($panel->getContext());
+        $panelFormType = $panelType->getFormType($panelData);        
+
+        if($panelFormType) {
+            $formBuilder->add('context', $panelFormType);
         }
+
+        $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
 
@@ -104,9 +104,9 @@ class DashboardController extends Controller
             // @todo get data from the form
             $data = $request->request->get('panel');
             $context = isset($data['context']) ? $data['context'] : []; 
-            $context = array_merge($context, ['title' => $data['title']]);
             $panel->setContext(json_encode($context));
             $panel->setPosition($data['position']);
+            $panel->setTitle($data['title']);
             $em->persist($panel);
             $em->flush();
 
@@ -230,7 +230,7 @@ class DashboardController extends Controller
             $panel->sequence = $config->getSequence();
             $panel->status = $config->getStatus();
             $panel->context = json_decode($config->getContext());
-            $panel->title = $panel->context->title;
+            $panel->title = is_null($config->getTitle()) ? $config->getType() : $config->getTitle();
             $panel->name = $config->getType();
             $panelType = $this->get('dashboard')->getPanelType($config->getType());
             $panel->view = $panelType->getView($panel->context);

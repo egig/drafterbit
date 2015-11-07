@@ -43,6 +43,7 @@ class SystemController extends Controller
     /**
      * Build panel data to be displayed;
      *
+     * @todo merge with DashboardController::buildPanels
      * @return array
      */
     private function buildPanels($panelConfig)
@@ -56,7 +57,7 @@ class SystemController extends Controller
             $panel->sequence = $config->getSequence();
             $panel->status = $config->getStatus();
             $panel->context = json_decode($config->getContext());
-            $panel->title = $panel->context->title;
+            $panel->title = $config->getTitle() ? $config->getType() : $config->getTitle();
             $panel->name = $config->getType();
             $panelType = $this->get('dashboard')->getPanelType($config->getType());
             $panel->view = $panelType->getView($panel->context);

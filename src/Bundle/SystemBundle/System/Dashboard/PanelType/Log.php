@@ -33,9 +33,9 @@ class Log extends PanelType {
         ]);
     }
 
-    public function getForm($data = null)
+    public function getFormType($data = null)
     {
-        return $this->container->get('form.factory')->create(new LogType(), $data);
+        return new LogType($data);
     }
 
     public function getFormTemplate()
