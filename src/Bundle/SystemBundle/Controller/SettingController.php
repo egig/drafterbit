@@ -31,18 +31,16 @@ class SettingController extends Controller
     {
         $fields = $this->get('dt_system.setting.field_manager')->getAll();
 
-        $mainForm = $this->get('form.factory')->createNamedBuilder('setting')
-            ->add('Save', 'submit')
-            ->getForm();
+        $settingFormBuilder = $this->get('form.factory')->createNamedBuilder('setting');
 
-        $fieldNames = [];
+        $settingFormBuilder->add('Save', 'submit');
+
         foreach ($fields as $name => $field) {
-            $form = $field->getForm();
-
-            //we need this since its not root form
-            $form->getConfig()->setAutoInitialize(false);
-            $mainForm->add($form);
+            $type = $field->getFormType();
+            $settingFormBuilder->add($name, $type);
         }
+
+        $mainForm = $settingFormBuilder->getForm();
 
         //Move system to be first
         $fields = ['system' => $fields['system']]+$fields;
@@ -53,7 +51,7 @@ class SettingController extends Controller
 
             $mainForm->handleRequest($request);
 
-            if($form->isValid()) {
+            if($mainForm->isValid()) {
 
                 $setting = $request->request->get('setting');
 

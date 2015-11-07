@@ -2,7 +2,7 @@
 
 namespace Drafterbit\System\Setting;
 
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\AbstractType;
 
 class FieldManager
 {
@@ -15,14 +15,14 @@ class FieldManager
      */
     public function addField(FieldInterface $field)
     {
-        $form = $field->getForm();
+        $type = $field->getFormType();
 
-        if(!$field->getForm() instanceof FormInterface) {
-            throw new \LogicException("Method getForm of ".get_class($form)."
-                must return instanceof FormInterface");
+        if(!$type instanceof AbstractType) {
+            throw new \LogicException("Method getFormType of ".get_class($type)."
+                must return instanceof Symfony\Component\Form\AbstractType");
         }
 
-        $this->fields[$form->getConfig()->getName()] = $field;
+        $this->fields[$type->getName()] = $field;
     }
 
     /**

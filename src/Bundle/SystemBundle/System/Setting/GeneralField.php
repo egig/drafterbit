@@ -7,11 +7,9 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\SystemType;
 
 class GeneralField extends Field {
 
-    public function getForm()
+    public function getFormType()
     {
-        return
-        $this->container->get('form.factory')
-            ->create(new SystemType($this->container));
+        return new SystemType($this->container);
     }
 
     public function getTemplate()

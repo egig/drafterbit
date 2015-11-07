@@ -10,6 +10,6 @@ interface FieldInterface
      *
      * @return Form
      */
-    public function getForm();
+    public function getFormType();
     public function getTemplate();
 }

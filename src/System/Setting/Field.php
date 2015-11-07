@@ -15,6 +15,6 @@ abstract class Field implements FieldInterface
 
     public function getName()
     {
-        return $this->getForm()->getConfig()->getName();
+        return $this->getFormType()->getName();
     }
 }

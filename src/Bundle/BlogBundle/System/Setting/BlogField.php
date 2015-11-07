@@ -7,11 +7,9 @@ use Drafterbit\Bundle\BlogBundle\Form\Type\SettingType;
 
 class BlogField extends Field {
 
-    public function getForm()
+    public function getFormType()
     {
-        return
-        $this->container->get('form.factory')
-            ->create(new SettingType($this->container->get('system')));
+        return new SettingType($this->container->get('system'));
     }
 
     public function getTemplate()
