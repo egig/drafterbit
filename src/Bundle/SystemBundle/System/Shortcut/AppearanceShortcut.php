@@ -24,4 +24,9 @@ class AppearanceShortcut extends Shortcut {
     {
         return 'fa fa-desktop';
     }
+
+    public function getTargetWindow()
+    {
+        return '_blank';
+    }
 }

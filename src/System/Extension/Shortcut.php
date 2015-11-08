@@ -25,4 +25,9 @@ abstract class Shortcut implements ContainerAwareInterface
     {
 
     }
+
+    public function getTargetWindow()
+    {
+        return '_self';
+    }
 }

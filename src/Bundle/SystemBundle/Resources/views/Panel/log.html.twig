@@ -10,7 +10,7 @@
         {% for log in logs %}
             <tr>
                 {# @todo translate date #}
-                <td width="40%;">{{ log.time|format_datetime('dd MMMM Y HH:mm', null, null ,constant('IntlDateFormatter::LONG')) }}</td>
+                <td width="40%;">{{ log.time|format_datetime('dd MMM y HH:mm', null, null ,constant('IntlDateFormatter::LONG')) }}</td>
                 <td>{{ log.activity|raw }}</td>
             </tr>
         {% endfor %}

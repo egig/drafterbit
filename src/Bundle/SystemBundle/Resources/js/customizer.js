@@ -57,14 +57,7 @@
             // listen customizer window closing
             $('#dt-customizer-closer').on('click', function(e){
                 e.preventDefault();
-
-                if (window.history.length > 1) {
-                    window.history.back();
-                } else {
-                    // this means that window opened by javascript or by user
-                    // we'll just close the window
-                    window.close();
-                }
+                window.close();
             });
         },
 
