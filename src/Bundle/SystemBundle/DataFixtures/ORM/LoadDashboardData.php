@@ -23,7 +23,7 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
         $shortcut->setType('Shortcut');
         $shortcut->setUser($this->getReference('admin-user'));
         $shortcut->setStatus(1);
-        $shortcut->setContext(json_encode(['title' => 'Shortcut']));
+        $shortcut->setTitle('Shortcut');
         $manager->persist($shortcut);
 
         $recentComment = new Panel();
@@ -32,7 +32,7 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
         $recentComment->setType('RecentComment');
         $recentComment->setUser($this->getReference('admin-user'));
         $recentComment->setStatus(1);
-        $recentComment->setContext(json_encode(['title' => 'Recent Comment']));
+        $recentComment->setTitle('Recent Comment');
         $manager->persist($recentComment);
 
         $info = new Panel();
@@ -41,16 +41,17 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
         $info->setType('Info');
         $info->setUser($this->getReference('admin-user'));
         $info->setStatus(1);
-        $info->setContext(json_encode(['title' => 'Info']));
+        $info->setTitle('Info');
         $manager->persist($info);
 
         $log = new Panel();
-        $log->setPosition('left');
+        $log->setPosition('right');
         $log->setSequence(1);
         $log->setType('Log');
         $log->setUser($this->getReference('admin-user'));
         $log->setStatus(1);
-        $log->setContext(json_encode(['title' => 'Recent Activity']));
+        $log->setTitle('Recent Activity');
+        $log->setContext(json_encode(['num' => 10]));
         $manager->persist($log);
 
         $manager->flush();
