@@ -10,6 +10,8 @@ class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // @todo Category parent-children relation level
+
         $builder
             ->add('id', 'hidden', ['mapped' => false])
             ->add('label', 'text', ['required' => true])

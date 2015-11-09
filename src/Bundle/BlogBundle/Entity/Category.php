@@ -49,11 +49,15 @@ class Category
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Drafterbit\Bundle\BlogBundle\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="\Drafterbit\Bundle\BlogBundle\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Drafterbit\Bundle\BlogBundle\Entity\Category", mappedBy="parent")
+     **/
+    private $children;
 
     public function getId()
     {
@@ -98,5 +102,10 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
     }
 }
