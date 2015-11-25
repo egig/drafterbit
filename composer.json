@@ -11,38 +11,11 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "symfony/symfony": "~2.8",
-        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
-        "doctrine/dbal": "<2.5",
-        "doctrine/doctrine-bundle": "~1.6",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.7",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.8",
-        "sensio/distribution-bundle": "~4.0",
-        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-
-        "twig/twig": "~1.2",
-        "friendsofsymfony/user-bundle": "~1.3",
         "gregwar/image": "2.0.*",
-        "cogpowered/finediff": "0.3.*",
-        "doctrine/doctrine-fixtures-bundle": "2.3.*",
-        "sonata-project/intl-bundle": "2.2.*"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "cogpowered/finediff": "0.3.*"
     },
     "config": {
         "bin-dir": "bin"
-    },
-    "extra": {
-        "symfony-app-dir": "test",
-        "symfony-web-dir": "test/web",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "test/config/parameters.yml"
-        }
     },
     "minimum-stability": "dev"
 }
