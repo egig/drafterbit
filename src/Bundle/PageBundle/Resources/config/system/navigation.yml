@@ -1,5 +1,0 @@
-system:
-    navigation:
-        page:
-            label: Page
-            route: dt_page

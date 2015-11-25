@@ -1,3 +1,0 @@
-dt_page:
-    resource: "@PageBundle/Controller"
-    type:     annotation

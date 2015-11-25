@@ -1,3 +1,0 @@
-dt_file:
-    resource: "@FileBundle/Controller"
-    type:     annotation
