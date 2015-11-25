@@ -18,8 +18,10 @@ class LogType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $num = empty($this->data->num) ? 0 : $this->data->num;
+
         $builder
-            ->add('num', 'number', ['mapped' => false, 'data' => $this->data->num]);
+            ->add('num', 'number', ['mapped' => false, 'data' => $num]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

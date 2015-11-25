@@ -17,7 +17,10 @@ class DashboardControllerTest extends WebTestCase
         $testPanel = 'Log';
         $url = $this->adminPath('system/dashboard/edit/'.$testPanel);
         $crawler = $client->request('GET', $url);
+        $this->assertEquals('200', $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->isOK());
+
+
         $this->assertContains('Edit Panel', $client->getResponse()->getContent());
 
         $csrfToken = $crawler->filter('input[name="panel[_token]"]')->attr('value');

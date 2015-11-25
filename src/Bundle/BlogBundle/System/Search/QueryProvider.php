@@ -22,7 +22,7 @@ class QueryProvider extends BaseQueryProvider {
         return $query;
     }
 
-    function getResultFormatter(Container $container)
+    function getResultFormatter(Container $container = null)
     {
         return new ResultFormatter($container);
     }
