@@ -18,7 +18,7 @@ interface FrontPageInterface
      *
      * @return RouteCollection
      */
-    public function getRoutes();
+    public function getRouteResources();
 
     /**
      * Get option for frontpage setting
