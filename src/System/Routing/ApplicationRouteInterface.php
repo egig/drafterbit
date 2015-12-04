@@ -1,10 +1,10 @@
 <?php
 
-namespace Drafterbit\System\FrontPage;
+namespace Drafterbit\System\Routing;
 
 use Symfony\Component\Routing\Route;
 
-interface FrontPageInterface
+interface ApplicationRouteInterface
 {
     /**
      * Route prefix will be used if its not used as front page
