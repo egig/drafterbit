@@ -61,7 +61,7 @@ abstract class WebTestCase extends BaseTestCase  {
         $loginManager->loginUser($firewallName, $user);
 
         // save the login token into the session and put it in a cookie
-        $token = $container->get('security.context')->getToken();
+        $token = $container->get('security.token_storage')->getToken();
         $session->set('_security_' . $firewallName, serialize($token));
         $session->save();
         $cookie = new Cookie($session->getName(), $session->getId());
