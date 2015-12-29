@@ -1,0 +1,258 @@
+{% autoescape false %}
+(function($){
+
+   // translator
+   window.__ = function(string, replace) {
+    var replace = replace || {};
+    var msg = '';
+    if(typeof drafTerbit.dict[string] == 'undefined') {
+      msg = string;
+    } else {
+      msg = drafTerbit.dict[string];
+    }
+
+    return drafTerbit.phpjs.strtr(msg, replace);
+   }
+
+  drafTerbit = {
+    baseUrl: "{{ base_url() }}",
+    adminUrl: "{{ url('dt_system_dashboard') }}",
+    contentUrl: "{{ app.request.getBasePath~'/'~upload_dir~'/' }}",
+    locale: "{{ locale }}",
+    theme: "{{ theme }}",
+    dict: {{ dict }},
+
+   //useImg used in  customizer - theme options
+   useImg: function(fallback, url) {
+      console.log(url);
+      $('#'+fallback).attr('src', url);
+      $('#input-'+fallback).val(url);
+   },
+
+    //replace datatable search box;
+    replaceDTSearch: function(dt) {
+      $('.dataTables_filter').remove();
+
+      $(document).on('keydown', "input[type=search]", function(e){
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+          e.preventDefault();
+        }}
+      );
+
+      //search filter
+      $(document).on('keyup', "input[type=search]", function(e){
+
+        var val = $(this).val();
+        dt.api().search($(this).val()).draw();
+
+      });
+    },
+
+    handleFooter: function(){
+        var h = $('body').height();
+        var hW = $(window).height();
+        var wW = $(window).innerWidth();
+
+        if(h+30 < hW && wW >= 720) {
+            $('.dt-footer').addClass('navbar-fixed-bottom');
+        } else {
+            $('.dt-footer').removeClass('navbar-fixed-bottom');
+        }
+    }
+
+  }
+})(jQuery);
+
+// @todo clean phpjs and translation
+drafTerbit.phpjs = {};
+drafTerbit.phpjs.strtr = function(str, from, to) {
+
+  var fr = '',
+    i = 0,
+    j = 0,
+    lenStr = 0,
+    lenFrom = 0,
+    tmpStrictForIn = false,
+    fromTypeStr = '',
+    toTypeStr = '',
+    istr = '';
+  var tmpFrom = [];
+  var tmpTo = [];
+  var ret = '';
+  var match = false;
+
+  // Received replace_pairs?
+  // Convert to normal from->to chars
+  if (typeof from === 'object') {
+    // Not thread-safe; temporarily set to true
+    tmpStrictForIn = drafTerbit.phpjs.ini_set('phpjs.strictForIn', false);
+    from = drafTerbit.phpjs.krsort(from);
+    drafTerbit.phpjs.ini_set('phpjs.strictForIn', tmpStrictForIn);
+
+    for (fr in from) {
+      if (from.hasOwnProperty(fr)) {
+        tmpFrom.push(fr);
+        tmpTo.push(from[fr]);
+      }
+    }
+
+    from = tmpFrom;
+    to = tmpTo;
+  }
+
+  // Walk through subject and replace chars when needed
+  lenStr = str.length;
+  lenFrom = from.length;
+  fromTypeStr = typeof from === 'string';
+  toTypeStr = typeof to === 'string';
+
+  for (i = 0; i < lenStr; i++) {
+    match = false;
+    if (fromTypeStr) {
+      istr = str.charAt(i);
+      for (j = 0; j < lenFrom; j++) {
+        if (istr == from.charAt(j)) {
+          match = true;
+          break;
+        }
+      }
+    } else {
+      for (j = 0; j < lenFrom; j++) {
+        if (str.substr(i, from[j].length) == from[j]) {
+          match = true;
+          // Fast forward
+          i = (i + from[j].length) - 1;
+          break;
+        }
+      }
+    }
+    if (match) {
+      ret += toTypeStr ? to.charAt(j) : to[j];
+    } else {
+      ret += str.charAt(i);
+    }
+  }
+
+  return ret;
+}
+
+drafTerbit.phpjs.ini_set = function(varname, newvalue) {
+
+  var oldval = '';
+  var self = this;
+
+  try {
+    this.php_js = this.php_js || {};
+  } catch (e) {
+    this.php_js = {};
+  }
+
+  this.php_js.ini = this.php_js.ini || {};
+  this.php_js.ini[varname] = this.php_js.ini[varname] || {};
+
+  oldval = this.php_js.ini[varname].local_value;
+
+  var _setArr = function (oldval) {
+    // Although these are set individually, they are all accumulated
+    if (typeof oldval === 'undefined') {
+      self.php_js.ini[varname].local_value = [];
+    }
+    self.php_js.ini[varname].local_value.push(newvalue);
+  };
+
+  switch (varname) {
+  case 'extension':
+    if (typeof this.dl === 'function') {
+      // This function is only experimental in php.js
+      this.dl(newvalue);
+    }
+    _setArr(oldval, newvalue);
+    break;
+  default:
+    this.php_js.ini[varname].local_value = newvalue;
+    break;
+  }
+
+  return oldval;
+};
+
+drafTerbit.phpjs.krsort = function(inputArr, sort_flags) {
+
+  var tmp_arr = {},
+    keys = [],
+    sorter, i, k, that = this,
+    strictForIn = false,
+    populateArr = {};
+
+  switch (sort_flags) {
+  case 'SORT_STRING':
+    // compare items as strings
+    sorter = function (a, b) {
+      return that.strnatcmp(b, a);
+    };
+    break;
+  case 'SORT_LOCALE_STRING':
+    // compare items as strings, original by the current locale (set with  i18n_loc_set_default() as of PHP6)
+    var loc = this.i18n_loc_get_default();
+    sorter = this.php_js.i18nLocales[loc].sorting;
+    break;
+  case 'SORT_NUMERIC':
+    // compare items numerically
+    sorter = function (a, b) {
+      return (b - a);
+    };
+    break;
+  case 'SORT_REGULAR':
+    // compare items normally (don't change types)
+  default:
+    sorter = function (b, a) {
+      var aFloat = parseFloat(a),
+        bFloat = parseFloat(b),
+        aNumeric = aFloat + '' === a,
+        bNumeric = bFloat + '' === b;
+      if (aNumeric && bNumeric) {
+        return aFloat > bFloat ? 1 : aFloat < bFloat ? -1 : 0;
+      } else if (aNumeric && !bNumeric) {
+        return 1;
+      } else if (!aNumeric && bNumeric) {
+        return -1;
+      }
+      return a > b ? 1 : a < b ? -1 : 0;
+    };
+    break;
+  }
+
+  // Make a list of key names
+  for (k in inputArr) {
+    if (inputArr.hasOwnProperty(k)) {
+      keys.push(k);
+    }
+  }
+  keys.sort(sorter);
+
+  // BEGIN REDUNDANT
+  this.php_js = this.php_js || {};
+  this.php_js.ini = this.php_js.ini || {};
+  // END REDUNDANT
+  strictForIn = this.php_js.ini['phpjs.strictForIn'] && this.php_js.ini['phpjs.strictForIn'].local_value && this.php_js
+    .ini['phpjs.strictForIn'].local_value !== 'off';
+  populateArr = strictForIn ? inputArr : populateArr;
+
+  // Rebuild array with sorted key names
+  for (i = 0; i < keys.length; i++) {
+    k = keys[i];
+    tmp_arr[k] = inputArr[k];
+    if (strictForIn) {
+      delete inputArr[k];
+    }
+  }
+  for (i in tmp_arr) {
+    if (tmp_arr.hasOwnProperty(i)) {
+      populateArr[i] = tmp_arr[i];
+    }
+  }
+
+  return strictForIn || populateArr;
+}
+{% endautoescape %}

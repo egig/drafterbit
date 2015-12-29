@@ -1,0 +1,20 @@
+{% for f in form %}
+    <div class="form-group col-md-6">
+        {{ form_label(f) }}
+        {% if 'choice' in f.vars.block_prefixes %}
+            {% if f.vars.expanded %}
+                <div>
+                {% for f_w in f %}
+                    <label class="checkbox-inline">
+                        {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
+                    </label>
+                {% endfor %}
+                </div>
+            {% else %}
+                {{ form_widget(f, {attr: {class:"form-control"}}) }}
+            {% endif %}
+        {% else %}
+            {{ form_widget(f, {attr: {class:"form-control"}}) }}
+        {% endif %}
+    </div>
+{% endfor %}

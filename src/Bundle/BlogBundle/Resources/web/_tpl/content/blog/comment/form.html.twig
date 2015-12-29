@@ -1,0 +1,30 @@
+<div class="form-comment" style="display:none" id="{{ form_id }}">
+    {{ form_start(form, {action:url('dt_blog_comment_submit')}) }}
+        <div>
+            {{form_label(form.authorName, 'Name')}}
+            {{form_widget(form.authorName)}}
+        </div>
+        <div>
+            {{form_label(form.authorEmail, 'Email')}}
+            {{form_widget(form.authorEmail)}}
+        </div>
+        <div>
+            {{form_label(form.authorUrl, 'URL')}}
+            {{form_widget(form.authorUrl)}}
+        </div>
+        <div>
+            {{form_label(form.content, 'Content')}}
+            {{form_widget(form.content)}}
+        </div>
+        <div>
+            {{form_widget(form.subscribe)}}
+            {{form.subscribe.vars.label}}
+        </div>
+        <div>
+            {{form_widget(form.Submit)}}
+            {% if parent != null %}
+            <a data-parent-id="{{ parent.id }}" href="javascript:;" class="cancel-reply">Cancel</a>
+            {% endif %}
+        </div>
+    {{ form_end(form) }}
+</div>

@@ -12,4 +12,5 @@ interface FieldInterface
      */
     public function getFormType();
     public function getTemplate();
+    public function getName();
 }

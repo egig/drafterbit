@@ -1,0 +1,34 @@
+You: Anda
+User: Pengguna
+Group: Grup
+
+Name: Nama
+Enabled: Aktif
+Disabled: NonAktif
+"New User": "Pengguna Baru"
+"Edit User": "Sunting Pengguna"
+"Save User": "Simpan Pengguna"
+"Save Group": "Simpan Grup"
+
+"New Group": "Grup Baru"
+"Edit Group": "Sunting Grup"
+"Group Name": "Nama Grup"
+Roles: Peranan
+
+# log
+"%author% edited user %user%": '%author% menyunting pengguna %user%'
+"%author% edited group %group%": '%author% menyunting grup %group%'
+
+Username: "Nama Pengguna"
+"Real Name": "Nama Lengkap"
+Password: "Kata Sandi"
+"Password Confirmation": "Konfirmasi Kata Sandi"
+"A little biographical information may be shown publicly": "Sedikit informasi biografis, mungkin ditampilkan ke publik"
+
+# Roles
+"View User": "Lihat Pengguna"
+"Create User": "Buat Pengguna"
+"Delete User": "Hapus Pengguna"
+"View Group": "Lihat Grup"
+"Create Group": "Buat Grup"
+"Delete Group" : "Hapus Grup"

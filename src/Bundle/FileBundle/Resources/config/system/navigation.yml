@@ -1,0 +1,5 @@
+system:
+    navigation:
+        file:
+            label: Files
+            route: dt_file

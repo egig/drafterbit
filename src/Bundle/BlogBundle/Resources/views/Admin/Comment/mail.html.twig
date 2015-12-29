@@ -1,0 +1,12 @@
+<p>New Comment On Post <a href="{{ post.url }}">{{ post.title }}</a></p>
+
+{% if comment.authorUrl %}
+    <p><a href="{{ comment.authorUrl }}">{{ comment.authorName }} :</a></p>
+{% else %}
+    <p>{{ comment.authorName }} :</p>
+{% endif %}
+
+<p>{{ comment.content }}</p>
+
+<br/>
+<p>You are receiving this email because you are subscribing to our list. <a href="{{ unsubscribe_url }}">Unsubscribe</a></p>

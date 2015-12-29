@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Dahboard and Panels -->
+        <service id="dt_system.dashboard_manager" class="Drafterbit\System\Dashboard\DashboardManager"/>
+
+        <service id="dashboard" alias="dt_system.dashboard_manager"/>
+
+        <service id="dt_system.dashboard.panel.log" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType\Log">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.dashboard.panel" />
+        </service>
+
+        <service id="dt_system.dashboard.panel.shortcuts" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType\Shortcut">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.dashboard.panel" />
+        </service>
+
+        <service id="dt_system.dashboard.panel.info" class="Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType\Info">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.dashboard.panel" />
+        </service>
+    </services>
+</container>

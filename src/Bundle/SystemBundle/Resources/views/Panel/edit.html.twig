@@ -1,0 +1,24 @@
+{{ form_start(form, {attr:{class:"dt-panel-edit-form"}, action: url('dt_system_dashboard_edit', {id:id})}) }}
+<div class="modal-header">
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{ __("Edit Panel") }}</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        {{ form_label(form.title, "Title") }}
+        {{ form_widget(form.title, {attr:{class:"form-control"}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.position, "Position") }}
+        {{ form_widget(form.position, {attr:{class:"form-control"}}) }}
+    </div>
+
+    {% if template %}
+        {% include template with {form: form}  %}
+    {% endif %}
+</div>
+<div class="modal-footer">
+    {{ form_widget(form.Save, {attr:{class:"btn btn-success"}}) }}
+
+</div>
+{{ form_end(form) }}

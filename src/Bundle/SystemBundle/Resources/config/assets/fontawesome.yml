@@ -1,0 +1,22 @@
+assetic:
+    assets:
+        fontawesome:
+            inputs: '%vendor_dir%/web/fontawesome/css/font-awesome.min.css'
+        font-awesome-otf:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/FontAwesome.otf'
+            output: 'assets/fonts/FontAwesome.otf'
+        font-awesome-eot:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.eot'
+            output: 'assets/fonts/fontawesome-webfont.eot'
+        font-awesome-svg:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.svg'
+            output: 'assets/fonts/fontawesome-webfont.svg'
+        font-awesome-ttf:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.ttf'
+            output: 'assets/fonts/fontawesome-webfont.ttf'
+        font-awesome-woff:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.woff'
+            output: 'assets/fonts/fontawesome-webfont.woff'
+        font-awesome-woff2:
+            inputs: '%vendor_dir%/web/fontawesome/fonts/fontawesome-webfont.woff'
+            output: 'assets/fonts/fontawesome-webfont.woff2'

@@ -1,0 +1,81 @@
+{% extends "SystemBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+        '@chosen_css'
+        '@SystemBundle/Resources/web/chosen-bootstrap/chosen-bootstrap.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block action %}
+    {{ form_widget(form.Save, {label: 'Save User', attr: {class: "btn btn-success"}}) }}
+    <a href="{{path('dt_user')}}" class="btn btn-default">
+        <i class="fa fa-times" style=""></i> {{ __('Close') }}
+    </a>
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form_label(form.username, __('Username'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.username, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email, __('Email'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.email, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password.first, __('Password'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.password.first, {attr:{class:"form-control", autocomplete:"off"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.password.second, __('Password Confirmation'), {label_attr:{class:"control-label"}}) }}
+            {{ form_widget(form.password.second, {attr:{class:"form-control", autocomplete:"off"}}) }}
+        </div>
+         <div class="form-group">
+            {{ form_label(form.groups, __('Group'), {label_attr:{class:"control-label" }}) }}
+            {{ form_widget(form.groups, {attr:{class:"form-control", "data-placeholder":"Select Group"}}) }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form_label(form.realname, __('Real Name'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.realname, {attr:{class:"form-control"}}) }}
+        </div>
+         <div class="form-group">
+            {{ form_label(form.url, __('Url'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.url, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.bio, __('Bio'), {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.bio, {attr:{class:"form-control"}}) }}
+             <span class="help-block">{{ __('A little biographical information may be shown publicly') }}.</span>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.enabled, 'Status', {label_attr:{class:"control-label" }}) }}
+            <div>
+                {% for el in form.enabled %}
+                    <label class="checkbox-inline">
+                        {{ form_widget(el) }}
+                        {{ __(el.vars.label) }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+        '@chosen_js'
+        '@UserBundle/Resources/js/edit.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

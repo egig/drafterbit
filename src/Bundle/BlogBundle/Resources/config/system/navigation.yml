@@ -1,0 +1,14 @@
+system:
+    navigation:
+        blog:
+            label: Blog
+            children:
+                post:
+                    label: Post
+                    route: dt_blog_post
+                category:
+                    label: Category
+                    route: dt_blog_category
+                comment:
+                    label: Comment
+                    route: dt_blog_comment

@@ -1,0 +1,12 @@
+assetic:
+    assets:
+        jquery:
+            inputs: '%vendor_dir%/web/jquery/dist/jquery.min.js'
+        jquery_checkall:
+            inputs: '%vendor_dir%/web/checkall/jquery-check-all.js'
+        jquery_form:
+            inputs: '%vendor_dir%/web/jquery-form/jquery.form.js'
+        jquery_ui_js:
+            inputs: '%vendor_dir%/web/jquery-ui/jquery-ui.min.js'
+        jquery_ui_touch_punch:
+            inputs: '%vendor_dir%/web/jqueryui-touch-punch/jquery.ui.touch-punch.min.js'

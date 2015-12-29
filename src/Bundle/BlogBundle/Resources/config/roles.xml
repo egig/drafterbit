@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="blog.roles" type="collection">
+            <parameter key="ROLE_POST_VIEW">View Post</parameter>
+            <parameter key="ROLE_POST_CREATE">Create Post</parameter>
+            <parameter key="ROLE_POST_EDIT">Edit Post</parameter>
+            <parameter key="ROLE_POST_DELETE">Delete Post</parameter>
+
+            <parameter key="ROLE_CATEGORY_VIEW">View Category</parameter>
+            <parameter key="ROLE_CATEGORY_CREATE">Create Category</parameter>
+            <parameter key="ROLE_CATEGORY_EDIT">Edit Category</parameter>
+            <parameter key="ROLE_CATEGORY_DELETE">Delete Category</parameter>
+
+            <parameter key="ROLE_COMMENT_VIEW">View Comment</parameter>
+            <parameter key="ROLE_COMMENT_DELETE">Delete Comment</parameter>
+
+            <parameter key="ROLE_BLOG_SETTING_MANAGE">Manage Blog Setting</parameter>
+        </parameter>
+    </parameters>
+</container>

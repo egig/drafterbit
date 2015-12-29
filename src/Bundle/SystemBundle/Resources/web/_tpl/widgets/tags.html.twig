@@ -1,0 +1,7 @@
+<div class="tags-widget">
+    <ul class="tags">
+    {% for tag in tags %}
+        <li class="tag"><a href="{{ tag.url }}">{{ tag.label }}</a></li>
+    {% endfor %}
+    </ul>
+</div>

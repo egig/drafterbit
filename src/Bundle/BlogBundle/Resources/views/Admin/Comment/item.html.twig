@@ -1,0 +1,15 @@
+<p>{{ content }}</p>
+
+{% if is_not_trashed %}
+    <div class="comment-action">
+        {% if status != STATUS_SPAM %}
+        <a data-status="0" data-id="{{ item_id }}" style="display:{{ display }}" class="unapprove status" href="#">{{ __('Pending') }}</a>
+        <a data-status="1" data-id="{{ item_id }}" style="display:{{ display2 }}" class="approve status" href="#">{{ __('Approve') }}</a>
+        <a data-id="{{ item_id }}" data-post-id="{{ post_id }}" class="reply" href="#">{{ __('Reply') }}</a>
+        <a data-status="2" data-id="{{ item_id }}" class="spam status" href="#">{{ __('Spam') }}</a>
+        <a data-id="{{ item_id }}" class="trash" href="#">{{ __('Trash') }}</a>
+        {% else %}
+            <a data-status="0" data-id="{{ item_id }}" class="unspam status" href="#">{{__('Not Spam') }}</a>
+        {% endif %}
+    </div>
+{% endif %}

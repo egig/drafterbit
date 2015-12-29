@@ -1,0 +1,25 @@
+{% if logs %}
+    <table width="100%" class="table table-condensed">
+        <thead>
+            <tr>
+                <th>{{ __('Time') }}</th>
+                <th>{{ __('Activity') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+                {# @todo translate date #}
+                <td width="40%;">{{ log.time|format_datetime('dd MMM y HH:mm', null, null ,constant('IntlDateFormatter::LONG')) }}</td>
+                <td>{{ log.activity|raw }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<?php else : ?>
+    <p>{{ __('No recent activity') }}</p>
+{% endif %}
+<div>
+    <a href="{{ url('dt_system_log') }}" class="btn btn-sm pull-right">{{ __('View more') }}</a>
+</div>

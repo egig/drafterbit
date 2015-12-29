@@ -17,12 +17,12 @@ class FieldManager
     {
         $type = $field->getFormType();
 
-        if(!$type instanceof AbstractType) {
-            throw new \LogicException("Method getFormType of ".get_class($type)."
-                must return instanceof Symfony\Component\Form\AbstractType");
+        if(!is_string($type)) {
+            throw new \LogicException("Method getFormType of ".get_class($field)."
+                must return class name typed string");
         }
 
-        $this->fields[$type->getName()] = $field;
+        $this->fields[$field->getName()] = $field;
     }
 
     /**

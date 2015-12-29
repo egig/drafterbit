@@ -1,0 +1,51 @@
+assetic:
+    assets:
+        bootstrap_css:
+            inputs: '%vendor_dir%/web/bootstrap/dist/css/bootstrap.min.css'
+        bootstrap_js:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+        bootstrap-fonts-eot:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot'
+            output: 'assets/fonts/bootstrap/glyphicons-halflings-regular.eot'
+        bootstrap-fonts-ttf:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf'
+            output: 'assets/fonts/bootstrap/glyphicons-halflings-regular.ttf'
+        bootstrap-fonts-svg:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg'
+            output: 'assets/fonts/bootstrap/glyphicons-halflings-regular.svg'
+        bootstrap-fonts-woff:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff'
+            output: 'assets/fonts/bootstrap/glyphicons-halflings-regular.woff'
+        bootstrap-fonts-woff2:
+            inputs: '%vendor_dir%/web/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2'
+            output: 'assets/fonts/bootstrap/glyphicons-halflings-regular.woff2'
+
+        bootstrap_colorpicker_css:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css'
+        bootstrap_colorpicker_js:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js'
+        bootstrap_colorpicker_img_alpha_h:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha-horizontal.png'
+            output: 'assets/img/bootstrap-colorpicker/alpha-horizontal.png'
+        bootstrap_colorpicker_img_alpha:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/alpha.png'
+            output: 'assets/img/bootstrap-colorpicker/alpha.png'
+        bootstrap_colorpicker_img_hue_h:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue-horizontal.png'
+            output: 'assets/img/bootstrap-colorpicker/hue-horizontal.png'
+        bootstrap_colorpicker_img_hue:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/hue.png'
+            output: 'assets/img/bootstrap-colorpicker/hue.png'
+        bootstrap_colorpicker_img_sat:
+            inputs: '%vendor_dir%/web/mjolnic-bootstrap-colorpicker/dist/img/bootstrap-colorpicker/saturation.png'
+            output: 'assets/img/bootstrap-colorpicker/saturation.png'
+
+        bootstrap_contextmenu:
+            inputs: '%vendor_dir%/web/bootstrap-contextmenu/bootstrap-contextmenu.js'
+
+        bootstrap_datetimepicker_css:
+            inputs: '%vendor_dir%/web/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'
+        bootstrap_datetimepicker_js:
+            inputs: '%vendor_dir%/web/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
+        bootstrap_tabcollapse:
+            inputs: '%vendor_dir%/web/bootstrap-tabcollapse/bootstrap-tabcollapse.js'

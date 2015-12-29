@@ -1,0 +1,142 @@
+$finder-min-height: 300px;
+$finder-tree-width: 260px;
+$finder-file-item: 120px;
+
+#dtf {
+
+    .dtf-row {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .dtf-desktop-area {
+        border: 1px solid #e1e1e1;
+    }
+
+    #dtf-tree {
+        background-color: #e5e5e5;
+        border-right: 1px solid #e1e1e1;
+    }
+
+    #dtf-area {
+        padding: 10px;
+    }
+
+    ul.dtf-file-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+
+    #dtf {
+
+        #dtf-breadcrumb {
+            display: none;
+        }
+
+        #dtf-tree {
+            display: block;
+            float: left;
+            min-height: $finder-min-height;
+            width: $finder-tree-width;
+            background-color: #e5e5e5;
+            border-right: 1px solid #e1e1e1;
+            overflow: auto;
+        }
+
+        #dtf-area {
+            min-width:468;
+            min-height: $finder-min-height;
+            margin-left: $finder-tree-width;
+
+            ul.dtf-file-list {
+
+                li.dtf-file-item {
+                    display: inline-block;
+                    text-align: center;
+                    width: $finder-file-item;
+                    height: $finder-file-item;
+
+                    .dtf-file-img {
+                        width: 100%;
+
+                        i {
+                            font-size: 3em;
+                        }
+                    }
+
+                    .dtf-file-desc {
+                        width: 100%;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                        white-space   : nowrap;
+                    }
+
+                    .dtf-item-context {
+                        display: none;
+                    }
+
+                }
+            }
+        }
+
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    #dtf {
+
+        .dt-col {
+            margin-bottom: 10px;
+        }
+
+        #dtf-breadcrumb {
+            display: block;
+            margin-top: 10px;
+            margin: 0 0 10px 0;
+        }
+
+        #dtf-tree {
+            display: none;
+        }
+
+        #dtf-area {
+            width:100%;
+            margin: 0;
+
+            ul.dtf-file-list {
+
+                li.dtf-file-item {
+                        display: block;
+                        line-height: 30px;
+
+                    .dtf-file-img {
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+
+                    .dtf-file-desc {
+                        vertical-align: middle;
+                        padding-left: 5px;
+                        display: inline-block;
+                        width: 85%;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                        white-space   : nowrap;
+                    }
+
+                    .dtf-item-context {
+                        float: right;
+                        display: inline-block;
+                    }
+                }
+            }
+
+        }
+    }
+}

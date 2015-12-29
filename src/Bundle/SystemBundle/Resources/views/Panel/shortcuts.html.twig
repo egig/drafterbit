@@ -1,0 +1,5 @@
+<ul style="list-style:none;">
+    {% for shortcut in shortcuts %}
+        <li><a target="{{ shortcut.targetWindow }}" href="{{ shortcut.url }}"><i class="{{ shortcut.iconClass }}"></i> {{ shortcut.text }}</a></li>
+    {% endfor %}
+</ul>

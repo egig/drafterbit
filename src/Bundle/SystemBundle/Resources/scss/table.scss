@@ -1,0 +1,32 @@
+@import 'drafterbit/sticky';
+
+@media (min-width: 768px) {
+    .dt-row-sticky-toolbar {
+        padding: 10px 0;
+    }
+
+    .dt-table-filter-container {
+        float: right;
+
+        .dt-table-filter {
+            width: auto;
+            max-width: 200px;
+            float: right;
+            margin-left: 5px;
+        }
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .dt-table-filter-container {
+        margin-top: 10px;
+
+        .dt-table-filter {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+
+}

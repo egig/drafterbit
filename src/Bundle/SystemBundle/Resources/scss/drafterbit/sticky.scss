@@ -1,0 +1,8 @@
+.is_stuck {
+    z-index: 998;
+}
+
+#sticky-toolbar.is_stuck {
+    box-shadow: 0px 2px 4px #e1e1e1;
+    border-top:1px solid #e1e1e1;
+}

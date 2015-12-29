@@ -1,0 +1,80 @@
+{% extends "SystemBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+        '@SystemBundle/Resources/scss/vertical-tabs.scss'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block action %}
+    {{ form_widget(form.Save, {label: 'Save Group', attr: {class: "btn btn-success", disabled:group_is_superadmin}}) }}
+    <a href="{{path('dt_user_group')}}" class="btn btn-default">
+        <i class="fa fa-times" style=""></i> {{ __('Close') }}
+    </a>
+{% endblock %}
+
+
+{% block form %}
+<div class="row row-content">
+    <div class="col-md-5">
+        <div class="form-group">
+            {{ form_label(form.name, 'Group Name', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.name, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description, 'Description', {label_attr:{class:"control-label"  }}) }}
+            {{ form_widget(form.description, {attr:{class:"form-control", disabled:group_is_superadmin}}) }}
+        </div>
+    </div>
+    <div class="col-md-7">
+
+        <label style="">{{ __('Roles') }}</label>
+        <div class="row">
+            <div class="col-md-4">
+                <ul id="dt-group-role-tab" class="nav nav-tabs tabs-left">
+                    {% for bundle,attributes in rolesGroup %}
+                        <li role="presentation"><a href="#roles-{{ bundle }}" aria-controls="roles-{{ bundle }}" role="tab" data-toggle="tab">{{ __(bundle) }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content">
+                    {% for bundle,attributes in rolesGroup %}
+                    <div role="tabpanel" class="tab-pane" id="roles-{{ bundle }}">
+                        <ul>
+                        {% for key,lebel in attributes %}
+                            {% for role in form.roles %}
+                                {% if role.vars.value == key %}
+                                    <li class="checkbox permission">
+                                        {% if group_is_superadmin %}
+                                            {{ form_widget(role, {attr:{disabled:"disabled", checked:"checked"}}) }}
+                                        {% else %}
+                                            {{ form_widget(role) }}
+                                        {% endif %}
+
+                                        {{ form_label(role, __(role.vars.label), {label_attr: {class:"control-label"}})}}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+    '@bootstrap_tabcollapse' '@UserBundle/Resources/js/group/edit.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

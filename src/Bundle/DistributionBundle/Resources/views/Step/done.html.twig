@@ -1,0 +1,16 @@
+{% extends 'DistributionBundle::layout.html.twig' %}
+
+{% block content %}
+
+<div class="row" style="margin-top:60px;">
+    <div class="col-md-6 col-md-offset-3" style="text-align:center">
+        <h2>Congratulation !</h2>
+        <span class="help-block">Installation complete. You decide what's next.</span>
+        <div>
+            <a href="{{ app.request.getBasePath~'/../admin' }}" class="btn btn-default">Go to admin</a>
+            <a href="{{ app.request.getBasePath~'/../' }}" class="btn btn-default">Go to site</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

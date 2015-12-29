@@ -1,0 +1,20 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>{{ system.sitename }}</title>
+        <description>{{ system.tagline }}</description>        
+        <link>{{ base_url }}</link>
+        <atom:link href="{{ url('dt_blog_feed') }}" rel="self" type="application/rss+xml" />
+
+    {% for post in posts %}
+        <item>
+            <title>{{ post.title }}</title>
+            <description>
+                <![CDATA[ {% autoescape false %} {{ post.feed_content}} {% endautoescape %}]]>
+            </description>
+            <pubDate>{{ post.date }}</pubDate>
+            <link>{{ blog_url(post.url) }}</link>
+            <guid isPermaLink="true">{{ post.url }}</guid>
+        </item>
+    {% endfor %}
+    </channel>
+</rss>

@@ -12,9 +12,4 @@ abstract class Field implements FieldInterface
     {
         $this->container = $container;
     }
-
-    public function getName()
-    {
-        return $this->getFormType()->getName();
-    }
 }

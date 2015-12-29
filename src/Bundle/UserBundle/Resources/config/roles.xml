@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="user.roles" type="collection">
+            <parameter key="ROLE_USER_VIEW">View User</parameter>
+            <parameter key="ROLE_USER_CREATE">Create User</parameter>
+            <parameter key="ROLE_USER_EDIT">Edit User</parameter>
+            <parameter key="ROLE_USER_DELETE">Delete User</parameter>
+            <parameter key="ROLE_GROUP_VIEW">View Group</parameter>
+            <parameter key="ROLE_GROUP_CREATE">Create Group</parameter>
+            <parameter key="ROLE_GROUP_EDIT">Edit Group</parameter>
+            <parameter key="ROLE_GROUP_DELETE">Delete Group</parameter>
+        </parameter>
+    </parameters>
+</container>

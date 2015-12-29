@@ -1,0 +1,6 @@
+imports:
+    - { resource: assets/assets.yml }
+    - { resource: "@PageBundle/Resources/config/system/navigation.yml" }
+    - { resource: "@FileBundle/Resources/config/system/navigation.yml" }
+    - { resource: "@UserBundle/Resources/config/system/navigation.yml" }
+    - { resource: "@SystemBundle/Resources/config/navigation.yml" }

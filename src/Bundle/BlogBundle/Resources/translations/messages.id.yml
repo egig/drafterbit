@@ -1,0 +1,43 @@
+# navigation
+Blog: Blog
+Post: Post
+Category: Kategori
+Comment: Komentar
+
+# post index
+"New Post": "Post Baru"
+Title: Judul
+Author: Penulis
+"Last Modified": "Terakhir Disunting"
+
+"New Category": "Kategori Baru"
+"Edit Category": "Sunting Kategori"
+Label: Label
+Description: Deskripsi
+
+Content: Konten
+"In Response to": Menanggapi
+
+# log
+"%author% edited post %post%": "%author% menyunting post %post%"
+"%author% edited category %category%": "%author% menyunting kategori %category%"
+
+"Add Category": "Tambah Kategori"
+Categories: Kategori
+"Published At": "Dipublikasikan Pada"
+
+# roles
+"View Post": "Lihat Post"
+"Create Post": "Buat Post"
+"Edit Post": "Sunting Post"
+"Delete Post": "Hapus Post"
+"View Category": "Lihat Kategori"
+"Create Category": "Buat Kategori"
+"Delete Category": "Hapus Kategori"
+"View Comment": "Lihat Komentar"
+"Delete Comment": "Hapus Komentar"
+"Manage Blog Setting": "Atur Pengaturan Blog"
+
+# coment status
+Approved: Disetujui
+Pending: Ditangguhkan

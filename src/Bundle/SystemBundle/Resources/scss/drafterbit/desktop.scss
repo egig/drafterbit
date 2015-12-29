@@ -1,0 +1,16 @@
+@media (min-width:768px) {
+
+    .dt-header-menu {
+        display:table;
+        height:76px;
+
+        .dt-user-menu-container {
+            display:table-cell;
+            vertical-align:middle;
+        }
+    }
+
+    #dt-main-menu {
+        margin-bottom: 0px;
+    }
+}

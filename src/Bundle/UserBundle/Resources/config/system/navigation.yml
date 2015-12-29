@@ -1,0 +1,11 @@
+system:
+    navigation:
+        user:
+            label: User
+            children:
+                user:
+                    label: User
+                    route: dt_user
+                group:
+                    label: Group
+                    route: dt_user_group

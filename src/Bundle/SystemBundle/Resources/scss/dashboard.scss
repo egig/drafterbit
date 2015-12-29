@@ -1,0 +1,24 @@
+.panel-container {
+    margin-top: 10px;
+
+    .panel-row {
+        min-height: 30px;
+    }
+}
+
+.placeholder {
+    border: 3px dashed #e5e5e5;
+    margin: 10px 0;
+}
+
+.panel-heading {
+    cursor: move;
+}
+
+a.dt-panel-edit-toggler {
+    color:#ccc;
+
+    &:hover {
+        color: #333;
+    }
+}
