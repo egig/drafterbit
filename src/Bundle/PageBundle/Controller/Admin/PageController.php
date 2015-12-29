@@ -158,8 +158,7 @@ class PageController extends Controller
             $pageTitle = 'New Page';
         }
 
-        $layoutOptions = $this->getLayoutOptions();
-        $form = $this->createForm(new PageType($layoutOptions), $page);
+        $form = $this->createForm(PageType::class, $page);
         $form->get('id')->setData($id);
 
         return [
@@ -190,8 +189,7 @@ class PageController extends Controller
             $isNew = true;
         }
 
-        $layoutOptions = $this->getLayoutOptions();
-        $form = $this->createForm(new PageType($layoutOptions), $page);
+        $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
          if($form->isValid()) {
@@ -253,31 +251,5 @@ class PageController extends Controller
         }
 
         return new JsonResponse($response);
-    }
-
-    /**
-     * Get layout options from current layout theme directory
-     *
-     * @todo handle the view if there is no theme
-     * @return array
-     */
-    private function getLayoutOptions()
-    {
-        $theme = $this->container->getParameter('theme');
-        $themesPath = $this->container->getParameter('themes_path');
-
-        $layouts = [];
-        if(is_dir($layoutPath = $themesPath.'/'.$theme.'/_tpl/layout')) {
-            $files = (new Finder)->depth(0)
-                ->in($layoutPath);
-        } else {
-            $files = [];
-        }
-
-        foreach ($files as $file) {
-            $layouts[$file->getfilename()] = $file->getfilename();
-        }
-
-        return $layouts;
     }
 }

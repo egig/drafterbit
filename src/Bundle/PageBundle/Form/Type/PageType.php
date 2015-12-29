@@ -2,35 +2,44 @@
 
 namespace Drafterbit\Bundle\PageBundle\Form\Type;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class PageType extends AbstractType
 {
-    private $layoutOptions = [];
+    private $container = null;
 
-    public function __construct(array $layoutOptions) {
-        $this->layoutOptions = $layoutOptions;
+    public function __construct($container) {
+        $this->container = $container;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $layoutOptions = $this->getLayoutOptions();
+
         $builder
-            ->add('id', 'hidden', ['mapped' => false])
-            ->add('title', 'text', ['required' => true])
-            ->add('slug', 'text', ['required' => true])
-            ->add('content', 'textarea')
-            ->add('layout', 'choice', [
-                    'choices' => $this->layoutOptions
+            ->add('id', HiddenType::class, ['mapped' => false])
+            ->add('title', TextType::class, ['required' => true])
+            ->add('slug', TextType::class, ['required' => true])
+            ->add('content', TextType::class)
+            ->add('layout', ChoiceType::class, [
+                    'choices' => $layoutOptions
                 ])
-            ->add('status', 'choice', [
+            ->add('status', ChoiceType::class, [
                     'choices' => [
-                        1 => 'Published',
-                        0 => 'Pending Review',
+                        'Published' => 1,
+                        'Pending Review' => 0,
                     ]
                 ])
-            ->add('Save', 'submit');
+            ->add('Save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -43,5 +52,31 @@ class PageType extends AbstractType
     public function getName()
     {
         return 'page';
+    }
+
+    /**
+     * Get layout options from current layout theme directory
+     *
+     * @todo handle the view if there is no theme
+     * @return array
+     */
+    private function getLayoutOptions()
+    {
+        $theme = $this->container->getParameter('theme');
+        $themesPath = $this->container->getParameter('themes_path');
+
+        $layouts = [];
+        if(is_dir($layoutPath = $themesPath.'/'.$theme.'/_tpl/layout')) {
+            $files = (new Finder)->depth(0)
+                ->in($layoutPath);
+        } else {
+            $files = [];
+        }
+
+        foreach ($files as $file) {
+            $layouts[$file->getfilename()] = $file->getfilename();
+        }
+
+        return $layouts;
     }
 }
