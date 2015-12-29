@@ -37,8 +37,8 @@ class GroupController extends Controller
 
             foreach ($groupIds as $id) {
                 $group = $groupManager->findGroupBy(['id' => $id]);
-                
-                try {                
+
+                try {
                     $groupManager->deleteGroup($group);
                 } catch (\Exception $e) {
 
@@ -117,7 +117,7 @@ class GroupController extends Controller
         $em = $this->getDoctrine()->getManager();
         $pageTitle = 'Edit Group';
         $group = $em->getRepository('UserBundle:Group')->find($id);
-        
+
         if(!$group and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
@@ -127,7 +127,7 @@ class GroupController extends Controller
             $pageTitle = 'New Group';
         }
 
-        $form = $this->createForm(new GroupType($roles), $group);
+        $form = $this->createForm(GroupType::class, $group);
         $form->get('id')->setData($id);
 
         return [
@@ -169,7 +169,7 @@ class GroupController extends Controller
         }
 
         // creat form
-        $form = $this->createForm(new GroupType($roles), $group);
+        $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
         if($form->isValid()) {
@@ -192,7 +192,7 @@ class GroupController extends Controller
             $formView = $form->createView();
 
             foreach ($formView as $inputName => $view) {
-                if(isset($view->vars['errors'])) {                
+                if(isset($view->vars['errors'])) {
                     foreach($view->vars['errors'] as $error) {
                         $errors[$view->vars['full_name']] = $error->getMessage();
                     }
