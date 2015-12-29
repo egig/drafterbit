@@ -13,6 +13,7 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WidgetPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProviderPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SettingFieldPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\ExtensionsPass;
+use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WebDebugToolbarPass;
 
 class SystemBundle extends Bundle
 {
@@ -28,5 +29,6 @@ class SystemBundle extends Bundle
         $container->addCompilerPass(new SearchQueryProviderPass());
         $container->addCompilerPass(new SettingFieldPass());
         $container->addCompilerPass(new ExtensionsPass());
+        $container->addCompilerPass(new WebDebugToolbarPass());
     }
 }
