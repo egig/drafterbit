@@ -47,7 +47,7 @@ class CategoryController extends Controller
             $category = new Category;
         }
 
-        $form = $this->createForm(new CategoryType, $category);
+        $form = $this->createForm(CategoryType::class, $category);
         $form->get('id')->setData($id);
 
         return [
@@ -90,7 +90,7 @@ class CategoryController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $requestCat = $request->request->get('blog_category');
+        $requestCat = $request->request->get('category');
         $id = $requestCat['id'];
 
         $em = $this->getDoctrine()->getManager();
@@ -101,7 +101,7 @@ class CategoryController extends Controller
             $isNew = true;
         }
 
-        $form = $this->createForm(new CategoryType(), $category);
+        $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if($form->isValid()) {

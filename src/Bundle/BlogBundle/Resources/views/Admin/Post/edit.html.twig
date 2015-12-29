@@ -119,7 +119,7 @@
   <script type="text/javascript" src="{{ asset_url }}"></script>
   {% endjavascripts %}
 
-  <script> {% include 'SystemBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"blog_post[content]" } %}</script>
+  <script> {% include 'SystemBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"post[content]" } %}</script>
 
   {% if post_id == 'new' %}
   <script type="text/javascript">

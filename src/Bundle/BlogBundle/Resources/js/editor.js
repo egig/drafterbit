@@ -3,8 +3,8 @@
 
     drafTerbit.blogPostEditor = {
 
-        titleSelector: 'input[name="blog_post[title]"]',
-        slugSelector: 'input[name="blog_post[slug]"]',
+        titleSelector: 'input[name="post[title]"]',
+        slugSelector: 'input[name="post[slug]"]',
 
         syncSlugAndTitle: function() {
             $(this.titleSelector).on('keyup', this.syncSlugTitle);
@@ -24,7 +24,7 @@
 
     var form = $('#post-edit-form'),
         spinner = $('i.spinner'),
-        id = $('input[name="blog_post[id]"]'),
+        id = $('input[name="post[id]"]'),
         closeText = $('.dt-editor-close-text');
 
     //magisuggest-ify tags
@@ -94,7 +94,7 @@
             },
 
             success:function(data){
-            
+
                 dirty = false;
                 spinner.removeClass('fa-spin fa-spinner');
                 spinner.addClass('fa-check');
@@ -110,7 +110,7 @@
                             }
                         }
                     }
-                
+
                     if (data.error.type == 'auth') {
                         $.notify(data.error.message, 'error');
                     }
@@ -118,7 +118,7 @@
                 } else {
                     if (data.id) {
                         id.val(data.id);
-                    
+
                         $.notify(data.message, data.status);
                         drafTerbit.blogPostEditor.desyncSlugAndTitle();
                         closeText.text(__('Close'));

@@ -6,35 +6,43 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', 'hidden', ['mapped' => false])
-            ->add('title', 'text', ['required' => true])
-            ->add('slug', 'text', ['required' => true])
-            ->add('content', 'textarea')
-            ->add('published_at', 'text', ['mapped' =>false])
-            ->add('categories', 'entity', [
+            ->add('id', HiddenType::class, ['mapped' => false])
+            ->add('title', TextType::class, ['required' => true])
+            ->add('slug', TextType::class, ['required' => true])
+            ->add('content', TextareaType::class)
+            ->add('published_at', TextType::class, ['mapped' =>false])
+            ->add('categories', EntityType::class, [
                 'class' => 'BlogBundle:Category',
-                'property' => 'label',
+                'choice_label' => 'label',
                 'multiple' => true,
                 'expanded' => true
             ])
             /*->add('tags', 'entity', [
                 'class' => 'BlogBundle:Tag',
-                'property' => 'label',
+                'choice_label' => 'label',
                 'multiple' => true,
                 'expanded' => false
             ])*/
-            ->add('status', 'choice', [
+            ->add('status', ChoiceType::class, [
                     'choices' => [
-                        1 => 'Published',
-                        0 => 'Pending Review',
+                        'Published' => 1,
+                        'Pending Review' => 0,
                     ]
                 ])
-            ->add('Save', 'submit');
+            ->add('Save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

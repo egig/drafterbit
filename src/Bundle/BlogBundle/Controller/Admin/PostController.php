@@ -170,7 +170,7 @@ class PostController extends Controller
 
 
         // @todo merge form creation with one defined in saveAction
-        $form = $this->createForm(new PostType(), $post);
+        $form = $this->createForm(PostType::class, $post);
         $form->get('id')->setData($id);
         $form->get('published_at')->setData($post->getPublishedAt()->format('Y-m-d H:i'));
 
@@ -197,7 +197,7 @@ class PostController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $requestPage = $request->request->get('blog_post');
+        $requestPage = $request->request->get('post');
         $id = $requestPage['id'];
 
         $em = $this->getDoctrine()->getManager();
@@ -236,7 +236,7 @@ class PostController extends Controller
         $tags = $em->getRepository('BlogBundle:Tag')->findBy(['label' => $tagLabels]);
         $post->setTags($tags);
 
-        $form = $this->createForm(new PostType(), $post);
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
          if($form->isValid()) {
