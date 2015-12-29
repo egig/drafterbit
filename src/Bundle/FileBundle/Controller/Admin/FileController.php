@@ -42,7 +42,7 @@ class FileController extends Controller
     {
         $op = $request->get('op');
         $path = $request->get('path');
-        
+
         $res = new JsonResponse;
 
         try {
@@ -85,7 +85,7 @@ class FileController extends Controller
         } catch (\Exception $e) {
             $data = [ 'message' => $e->getMessage(), 'status' => 'error'];
         }
-        
+
         $res->setData($data);
 
         return $res;

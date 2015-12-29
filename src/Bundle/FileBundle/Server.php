@@ -34,6 +34,11 @@ class Server {
     public function __construct($root, Filesystem $fileSystem = null)
     {
         $this->root = realpath($root);
+
+        if(!$this->root || !is_writable($this->root)) {
+            throw new \Exception("Storage root path $root is either not exist or writable");
+        }
+
         $this->fileSystem = is_null($fileSystem) ? new Filesystem : $fileSystem;
     }
 
