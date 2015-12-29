@@ -18,6 +18,6 @@ class Blog implements ApplicationRouteInterface
 
     public function getOptions()
     {
-        return ['blog' => 'Blog'];
+        return ['Blog' => 'blog'];
     }
 }

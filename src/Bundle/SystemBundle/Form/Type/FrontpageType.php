@@ -57,7 +57,7 @@ class FrontpageType extends AbstractType
 
         $options = [];
         foreach ($pages as $page) {
-            $options[$page->getSlug()] = $page->getTitle();
+            $options[$page->getTitle()] = $page->getSlug();
         }
 
         return $options;

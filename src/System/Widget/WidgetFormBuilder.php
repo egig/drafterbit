@@ -23,7 +23,7 @@ class WidgetFormBuilder
 
         $context = $widget->getContext();
 
-        $form = $widget->getFormView(new WidgetType, $data, $options);
+        $form = $widget->getFormView(WidgetType::class, $data, $options);
 
         $saveUrl = $this->container->get('router')->generate('dt_setting_widget_save');
 

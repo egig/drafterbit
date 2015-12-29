@@ -18,6 +18,6 @@ class Admin implements ApplicationRouteInterface
 
     public function getOptions()
     {
-        return ['admin' => 'Admin'];
+        //..
     }
 }

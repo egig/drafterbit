@@ -6,6 +6,10 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+
 abstract class Widget implements WidgetInterface
 {
     /**
@@ -21,7 +25,7 @@ abstract class Widget implements WidgetInterface
      * @var array
      */
     protected $context = [];
-    
+
     /**
      * Run the widget.
      *
@@ -77,19 +81,15 @@ abstract class Widget implements WidgetInterface
             'label_attr' => ['class' => 'control-label'],
             'mapped' => false
         ];
-        $form->add('title', 'text', $options);
-        
+        $form->add('title', TextType::class, $options);
+
         if($data !== null) {
             $form->get('id')->setData($data->getId());
         }
 
         $form = $this->buildForm($form);
 
-        if(! $form instanceof Form) {
-            throw new \LogicException("Method 'buildForm' must return Form instance");
-        }
-
-        $form->add('Save', 'submit', ['attr' => ['class'=> "btn btn-primary btn-xs"]]);
+        $form->add('Save', SubmitType::class, ['attr' => ['class'=> "btn btn-primary btn-xs"]]);
 
         return $form->createView();
     }

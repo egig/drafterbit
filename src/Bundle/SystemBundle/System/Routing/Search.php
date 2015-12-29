@@ -18,6 +18,6 @@ class Search implements ApplicationRouteInterface
 
     public function getOptions()
     {
-        return ['search' => 'Search'];
+        return ['Search' => 'search'];
     }
 }
