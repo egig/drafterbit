@@ -31,7 +31,7 @@ class MenuController extends Controller
             $menu->items = $this->buildFamily($items);
         }
 
-        $form = $this->createForm(new MenuType());
+        $form = $this->createForm(MenuType::class);
 
         $pages = $em->getRepository('PageBundle:Page')->findAll();
 
@@ -61,7 +61,7 @@ class MenuController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $form = $this->createForm(new MenuType(), new Menu);
+        $form = $this->createForm(MenuType::class, new Menu);
         $form->handleRequest($request);
 
          if($form->isValid()) {
@@ -114,7 +114,7 @@ class MenuController extends Controller
             ];
         }
 
-        return new JsonResponse($response);   
+        return new JsonResponse($response);
     }
 
     /**
@@ -160,7 +160,7 @@ class MenuController extends Controller
         $id = $request->request->get('id');
         $em = $this->getDoctrine()->getManager();
         $menu = $em->getRepository('SystemBundle:Menu')->find($id);
-        
+
         $items = $em->getRepository('SystemBundle:MenuItem')
             ->findBy(['menu' => $menu]);
 
