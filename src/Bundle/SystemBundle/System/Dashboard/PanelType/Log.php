@@ -33,9 +33,9 @@ class Log extends PanelType {
         ]);
     }
 
-    public function getFormType($data = null)
+    public function getFormType()
     {
-        return new LogType($data);
+        return LogType::class;
     }
 
     public function getFormTemplate()

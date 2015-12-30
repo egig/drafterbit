@@ -13,14 +13,10 @@ class LogType extends AbstractType
 {
     private $data = [];
 
-    public function __construct($data){
-
-        $this->data = $data;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $num = empty($this->data->num) ? 0 : $this->data->num;
+        // @todo fix this, find a way to not manually add data to each field
+        $num = empty($options['data']->num) ? 0 : $options['data']->num;
 
         $builder
             ->add('num', NumberType::class, ['mapped' => false, 'data' => $num]);

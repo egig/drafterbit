@@ -14,6 +14,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Drafterbit\Bundle\SystemBundle\Entity\Panel;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DashboardController extends Controller
 {
@@ -74,24 +78,25 @@ class DashboardController extends Controller
         $title = empty($panel->getTitle()) ? $panelType->getName() : $panel->getTitle();
 
         $formBuilder = $this->get('form.factory')->createNamedBuilder('panel')
-            ->add('id', 'hidden', ['data' => $id])
-            ->add('title', 'text', ['data' => $title])
-            ->add('position', 'choice', [
+            ->add('id', HiddenType::class, ['data' => $id])
+            ->add('title', TextType::class, ['data' => $title])
+            ->add('position', ChoiceType::class, [
                 'data' => $panel->getPosition(),
                 'choices' => [
-                    'left' => 'Left',
-                    'right' => 'Right'
+                    'Left' => 'left',
+                    'Right' => 'right'
                 ]
             ])
-            ->add('Save', 'submit');
+            ->add('Save', SubmitType::class);
 
         $panelData = json_decode($panel->getContext());
-        $panelFormType = $panelType->getFormType($panelData);        
+        $panelFormType = $panelType->getFormType();
 
         if($panelFormType) {
-            $formBuilder->add('context', $panelFormType);
+            $formBuilder->add('context', $panelFormType, ['data' => $panelData]);
         }
 
+        //$formBuilder->setData($panelData);
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
@@ -100,7 +105,7 @@ class DashboardController extends Controller
         {
             // @todo get data from the form
             $data = $request->request->get('panel');
-            $context = isset($data['context']) ? $data['context'] : []; 
+            $context = isset($data['context']) ? $data['context'] : [];
             $panel->setContext(json_encode($context));
             $panel->setPosition($data['position']);
             $panel->setTitle($data['title']);
@@ -123,7 +128,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * 
+     *
      * @Route("/system/dashboard/sort", name="dt_system_dashboard_sort")
      * @Method("POST")
      */
@@ -186,7 +191,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * 
+     *
      * @Route("/system/dashboard/toggle_panel", name="dt_system_dashboard_toggle_panel")
      * @Method("POST")
      */

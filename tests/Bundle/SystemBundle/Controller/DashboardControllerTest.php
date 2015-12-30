@@ -46,7 +46,6 @@ class DashboardControllerTest extends WebTestCase
         $panel = $container->get('doctrine')->getManager()
             ->getRepository('SystemBundle:Panel')->find($panelId);
 
-           
         $this->assertEquals($panelId, $panel->getId());
 
         return $panelId;
