@@ -20,7 +20,7 @@ class WebDebugToolbarListener extends BaseListener
         $theme = $request->query->get('theme');
         $token = $request->query->get('_token');
         $preview = $request->query->get('_pv');
-        
+
         if($theme and $token and $preview) {
             $this->mode = self::DISABLED;
         }

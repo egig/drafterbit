@@ -29,6 +29,9 @@ class SystemBundle extends Bundle
         $container->addCompilerPass(new SearchQueryProviderPass());
         $container->addCompilerPass(new SettingFieldPass());
         $container->addCompilerPass(new ExtensionsPass());
-        $container->addCompilerPass(new WebDebugToolbarPass());
+
+        if(php_sapi_name() !== 'cli') {
+            $container->addCompilerPass(new WebDebugToolbarPass());
+        }
     }
 }
