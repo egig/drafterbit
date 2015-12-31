@@ -229,7 +229,7 @@ class FrontendController extends Controller
         $newComment = new Comment;
         $newComment->setParent($parent);
 
-        $form = $this->createForm(new CommentType, $newComment);
+        $form = $this->createForm(CommentType::class, $newComment);
         $form->handleRequest($request);
 
         if($form->isValid()) {

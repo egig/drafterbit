@@ -58,7 +58,7 @@ class BlogExtension extends \Twig_Extension
 
         $js = '<script>'.file_get_contents($jsCommentSnippet).'</script>';
 
-        $form = $this->kernel->getContainer()->get('form.factory')->create(new CommentType);
+        $form = $this->kernel->getContainer()->get('form.factory')->create(CommentType::class);
         $form->get('post')->setData($post);
 
 
@@ -118,7 +118,7 @@ class BlogExtension extends \Twig_Extension
 
                 $newComment =  new Comment;
                 $newComment->setParent($comment);
-                $form = $this->kernel->getContainer()->get('form.factory')->create(new CommentType, $newComment);
+                $form = $this->kernel->getContainer()->get('form.factory')->create(CommentType::class, $newComment);
                 $form->get('post')->setData($comment->getPost());
 
                 $data['form'] = $form->createView();
