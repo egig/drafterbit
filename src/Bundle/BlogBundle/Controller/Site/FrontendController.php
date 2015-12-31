@@ -216,7 +216,7 @@ class FrontendController extends Controller
     public function commentSubmitAction(Request $request)
     {
         $referer = $request->server->get('HTTP_REFERER');
-        $requestedComment = $request->request->get('blog_comment');
+        $requestedComment = $request->request->get('comment');
 
         if($parentId = $requestedComment['parent']) {
             $parent = $this->getDoctrine()->getManager()

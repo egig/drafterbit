@@ -96,7 +96,6 @@ class DashboardController extends Controller
             $formBuilder->add('context', $panelFormType, ['data' => $panelData]);
         }
 
-        //$formBuilder->setData($panelData);
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
