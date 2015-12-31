@@ -8,7 +8,7 @@ use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-class FrontendLoader extends Loader
+class ViablePrefixLoader extends Loader
 {
     private $loaded = false;
     private $container;
@@ -72,7 +72,7 @@ class FrontendLoader extends Loader
         $routes->add('misc', $route2);
 
         // check if configured frontpage is not an app
-        if(!array_key_exists($frontPageConfig, $frontPageProvider->all())) {    
+        if(!array_key_exists($frontPageConfig, $frontPageProvider->all())) {
             // its page
             $defaults['slug'] = $frontPageConfig;
             $routes->add('_home', new Route('/', $defaults));
@@ -98,6 +98,6 @@ class FrontendLoader extends Loader
 
     public function supports($resource, $type = null)
     {
-        return 'frontend' === $type;
+        return 'viable_prefix' === $type;
     }
 }

@@ -6,7 +6,7 @@
 
     <import
         resource="."
-        type="frontend" />
+        type="viable_prefix" />
 
     <import
         resource="@UserBundle/Resources/config/routing/security.xml" />

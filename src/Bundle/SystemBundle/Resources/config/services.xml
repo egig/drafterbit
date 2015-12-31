@@ -62,7 +62,7 @@
         <service id="dt_system.application_route_manager" class="Drafterbit\System\Routing\ApplicationRouteManager"/>
 
         <!-- Frontend Route loader -->
-        <service id="dt_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\FrontendLoader">
+        <service id="dt_system.routing.loader" class="Drafterbit\Bundle\SystemBundle\Routing\Loader\ViablePrefixLoader">
             <argument id="service_container" type="service"/>
             <tag name="routing.loader"></tag>
         </service>
