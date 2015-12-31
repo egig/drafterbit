@@ -1,7 +1,0 @@
-# support for dynamic frontend routing
-_dt_frontend:
-    resource: .
-    type: frontend
-
-_dt_user_security:
-    resource: "@UserBundle/Resources/config/routing/security.xml"
