@@ -42,6 +42,9 @@ class ViablePrefixLoader extends Loader
                 if($resource) {
 
                     $type = 'annotation';
+                    if (method_exists($frontPage, 'getRouteResourceType')) {
+                        $type = $frontPage->getRouteResourceType();
+                    }
 
                     // Load route resources
                     $frontRoutes = $this->import($resource, $type);

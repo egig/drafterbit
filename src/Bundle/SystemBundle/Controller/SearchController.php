@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Site;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SearchController extends Controller {
 
     /**
-     * @Route("/", name="dt_system_search")
      * @Template("widgets/search/index.html.twig")
      */
     public function searchAction(Request $request)
