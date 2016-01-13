@@ -211,7 +211,7 @@ class PageController extends Controller
             $id = $page->getId();
 
             // log
-            $logger = $this->get('logger');
+            $logger = $this->get('monolog.logger.user_activity');
             $logger->info('%user% edited page %page%', ['user' => $this->getUser()->getId(), 'page' => $id]);
 
             $response = [

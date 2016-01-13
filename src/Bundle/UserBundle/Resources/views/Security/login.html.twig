@@ -29,7 +29,7 @@
             <div class="panel-body">
                 <h1 class="title">{{ system.sitename }}</h1>
                 {% if error %}
-                    <div class="alert alert-danger" role="alert">{{ error|trans({}, 'UserBundle') }}</div>
+                    <div class="alert alert-danger" role="alert">{{ error.messageKey|trans({}, 'UserBundle') }}</div>
                 {% endif %}
                 <form action="{{ path("dt_user_security_check") }}" method="post" role="form" class="form-login">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
