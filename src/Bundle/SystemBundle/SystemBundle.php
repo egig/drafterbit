@@ -30,7 +30,7 @@ class SystemBundle extends Bundle
         $container->addCompilerPass(new SettingFieldPass());
         $container->addCompilerPass(new ExtensionsPass());
 
-        if(php_sapi_name() !== 'cli') {
+        if(php_sapi_name() !== 'cli' and ($container->getParameter('kernel.environment') === 'dev')) {
             $container->addCompilerPass(new WebDebugToolbarPass());
         }
     }

@@ -12,7 +12,6 @@ class WebDebugToolbarPass implements CompilerPassInterface {
     public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('web_profiler.debug_toolbar');
-
         $definition->setClass(WebDebugToolbarListener::class);
     }
 }
