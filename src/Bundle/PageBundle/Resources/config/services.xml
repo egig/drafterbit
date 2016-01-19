@@ -11,10 +11,5 @@
             <tag name="dt_system_log.display_formatter" />
         </service>
 
-
-        <service id="dt_page.frontpage.admin" class="Drafterbit\Bundle\PageBundle\System\Routing\Admin">
-            <tag name="dt_system.frontpage"></tag>
-            <argument type="service" id="service_container"/>
-        </service>
     </services>
 </container>

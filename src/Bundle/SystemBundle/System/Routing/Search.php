@@ -13,7 +13,7 @@ class Search implements ApplicationRouteInterface
 
     public function getRouteResources()
     {
-        return '@SystemBundle/Resources/config/routing/search.xml';
+        return ['@SystemBundle/Resources/config/routing/search.xml'];
     }
 
     public function getRouteResourceType()

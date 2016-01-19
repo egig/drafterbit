@@ -17,11 +17,6 @@
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="dt_blog.frontpage.admin" class="Drafterbit\Bundle\BlogBundle\System\Routing\Admin">
-            <tag name="dt_system.frontpage"></tag>
-            <argument type="service" id="service_container"/>
-        </service>
-
         <!-- Security-->
         <!-- PENDING
         <service id="security.access.post_voter" class="Drafterbit\Bundle\BlogBundle\Security\Authorization\Voter\PostVoter">

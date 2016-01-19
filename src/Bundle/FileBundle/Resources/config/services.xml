@@ -14,10 +14,5 @@
             <argument>%upload_path%</argument>
             <argument type="service" id="filesystem" />
         </service>
-
-        <service id="dt_file.frontpage.admin" class="Drafterbit\Bundle\FileBundle\System\Routing\Admin">
-            <tag name="dt_system.frontpage"></tag>
-            <argument type="service" id="service_container"/>
-        </service>
     </services>
 </container>
