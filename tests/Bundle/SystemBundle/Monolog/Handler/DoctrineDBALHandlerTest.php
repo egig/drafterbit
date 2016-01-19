@@ -15,7 +15,7 @@ class DoctrineDBALHandlerTest extends WebTestCase
         // Dbal log handler only log info, check config.yml
         // We are gonna log dummy message the check weather
         // the message exsists or not then delete it
-        $logger = $container->get('logger');
+        $logger = $container->get('monolog.logger.user_activity');
         $logger->info($testMessage, ['foo'=> 'bar']);
 
         $repo = $container->get('doctrine')->getRepository('SystemBundle:Log');
