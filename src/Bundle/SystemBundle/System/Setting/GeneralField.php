@@ -14,7 +14,7 @@ class GeneralField extends Field {
 
     public function getTemplate()
     {
-        return 'SystemBundle:Admin/Setting/Field:system.html.twig';
+        return 'SystemBundle:Setting/Field:system.html.twig';
     }
 
     public function getName()

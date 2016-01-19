@@ -1,21 +1,13 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-/**
- * @Route("/asset")
- */
 class AssetController extends Controller
 {
-    /**
-     * @Route("/js/dt.js", name="asset_dt_js")
-     */
     public function dtJsAction()
     {
         $locale = $this->container->getParameter('locale');
@@ -25,9 +17,6 @@ class AssetController extends Controller
         return new Response($content, 200, array('Content-Type' => 'application/javascript'));
     }
 
-    /**
-     * @Route("/js/session.js", name="dt_system_asset_session_js")
-     */
     public function sessionJsAction()
     {
         $csrf = $this->get('security.csrf.token_manager');

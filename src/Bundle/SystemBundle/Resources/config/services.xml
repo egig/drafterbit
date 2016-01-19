@@ -48,15 +48,16 @@
             <argument type="service" id="translator"/>
         </service>
 
+        <service id="dt_system.frontpage.admin" class="Drafterbit\Bundle\SystemBundle\System\Routing\Admin">
+            <tag name="dt_system.frontpage"></tag>
+            <argument type="service" id="service_container"/>
+        </service>
+
         <service id="dt_system.frontpage.search" class="Drafterbit\Bundle\SystemBundle\System\Routing\Search">
             <tag name="dt_system.frontpage"></tag>
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="dt_system.frontpage.admin" class="Drafterbit\Bundle\SystemBundle\System\Routing\Admin">
-            <tag name="dt_system.frontpage"></tag>
-            <argument type="service" id="service_container"/>
-        </service>
 
         <!-- Frontpage Provider -->
         <service id="dt_system.application_route_manager" class="Drafterbit\System\Routing\ApplicationRouteManager"/>

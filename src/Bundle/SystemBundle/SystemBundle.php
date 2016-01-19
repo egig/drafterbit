@@ -14,6 +14,7 @@ use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProvi
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SettingFieldPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\ExtensionsPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WebDebugToolbarPass;
+use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\AdminRoutePass;
 
 class SystemBundle extends Bundle
 {
@@ -29,6 +30,7 @@ class SystemBundle extends Bundle
         $container->addCompilerPass(new SearchQueryProviderPass());
         $container->addCompilerPass(new SettingFieldPass());
         $container->addCompilerPass(new ExtensionsPass());
+        $container->addCompilerPass(new AdminRoutePass());
 
         if(php_sapi_name() !== 'cli' and ($container->getParameter('kernel.environment') === 'dev')) {
             $container->addCompilerPass(new WebDebugToolbarPass());

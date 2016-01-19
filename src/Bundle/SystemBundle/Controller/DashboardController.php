@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/system/dashboard/data", name="dt_system_dashboard_data")
      * @Template("SystemBundle:Panel:index.html.twig")
      */
     public function dataAction()
@@ -40,7 +39,6 @@ class DashboardController extends Controller
     }
 
     /**
-     * @Route("/system/dashboard/edit/{id}", name="dt_system_dashboard_edit")
      * @Template("SystemBundle:Panel:edit.html.twig")
      */
     public function dashboardEditAction($id, Request $request)
@@ -126,11 +124,6 @@ class DashboardController extends Controller
         ];
     }
 
-    /**
-     *
-     * @Route("/system/dashboard/sort", name="dt_system_dashboard_sort")
-     * @Method("POST")
-     */
     public function sortDashboardAction(Request $request) {
 
         $dashboardPanels = $this->get('dashboard')->getPanelTypes();
@@ -171,12 +164,10 @@ class DashboardController extends Controller
             }
         }
 
+        // @todo return proper reponse
         return new Response();
     }
 
-    /**
-     * @Route("/system/dashboard/delete", name="dt_system_dashboard_delete")
-     */
     public function dashboardDeleteAction(Request $request)
     {
         // @todo handle csrf token
@@ -189,11 +180,6 @@ class DashboardController extends Controller
         return new JsonResponse(['data' => ['status' => 'ok']]);
     }
 
-    /**
-     *
-     * @Route("/system/dashboard/toggle_panel", name="dt_system_dashboard_toggle_panel")
-     * @Method("POST")
-     */
     public function togglePanelAction(Request $request) {
 
         $name = $request->request->get('panel');

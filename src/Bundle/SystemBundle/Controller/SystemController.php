@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,7 +76,6 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/log", name="dt_system_log")
      * @Template()
      * @Security("is_granted('ROLE_LOG_VIEW')")
      */
@@ -125,10 +124,6 @@ class SystemController extends Controller
         return $data;
     }
 
-    /**
-     * @Route("/system/log/data", name="dt_system_log_data")
-     * @Template()
-     */
     public function logDataAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -155,7 +150,6 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/cache", name="dt_system_cache")
      * @Template()
      * @Security("is_granted('ROLE_CACHE_VIEW')")
      */
@@ -190,8 +184,6 @@ class SystemController extends Controller
     /**
      * Cache clearer controller
      *
-     * @Route("/system/cache/clear", name="dt_system_cache_clear")
-     * @Method("POST")
      */
     public function clearCacheAction(Request $request)
     {
@@ -217,7 +209,6 @@ class SystemController extends Controller
     }
 
     /**
-     * @Route("/system/preferences", name="dt_system_preferences")
      * @Template()
      */
     public function preferencesAction(Request $request)

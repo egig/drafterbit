@@ -1,12 +1,11 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -17,7 +16,6 @@ use Drafterbit\Bundle\SystemBundle\Entity\MenuItem;
 class MenuController extends Controller
 {
     /**
-     * @Route("/menu", name="dt_system_menu")
      * @Template("SystemBundle::menu.html.twig")
      * @Security("is_granted('ROLE_MENU_MANAGE')")
      */
@@ -56,9 +54,6 @@ class MenuController extends Controller
         return $array;
     }
 
-    /**
-     * @Route("/menu/save", name="dt_system_menu_save")
-     */
     public function saveAction(Request $request)
     {
         $form = $this->createForm(MenuType::class, new Menu);
@@ -120,7 +115,6 @@ class MenuController extends Controller
     /**
      * Actually this is also saving menu if the name changes
      *
-     * @Route("/menu/sort", name="dt_system_menu_sort")
      */
     public function sortAction(Request $request)
     {
@@ -152,9 +146,6 @@ class MenuController extends Controller
         return new JsonResponse(['message' => 'Menus '.$name.' saved', 'status' => 'success']);
     }
 
-    /**
-     * @Route("/menu/delete", name="dt_system_menu_delete")
-     */
     public function deleteAction(Request $request)
     {
         $id = $request->request->get('id');
@@ -174,9 +165,6 @@ class MenuController extends Controller
         return new Response();
     }
 
-    /**
-     * @Route("/menu/item/add", name="dt_system_menu_item_add")
-     */
     public function itemAddAction(Request $request)
     {
         $id = $request->request->get('menu_id');
@@ -200,9 +188,6 @@ class MenuController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/menu/item/delete", name="dt_system_menu_item_delete")
-     */
     public function itemDeleteAction(Request $request)
     {
         $id = $request->request->get('id');
@@ -222,9 +207,6 @@ class MenuController extends Controller
         return new Response();
     }
 
-    /**
-     * @Route("/menu/item/save", name="dt_system_menu_item_save")
-     */
     public function itemSaveAction(Request $request)
     {
         $id = $request->request->get('id');

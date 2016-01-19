@@ -35,33 +35,31 @@ class ViablePrefixLoader extends Loader
 
         $reservedBaseUrl = [$this->container->getParameter('admin')];
 
+        // @todo clean this
         foreach ($frontPageProvider->all() as $prefix => $frontPages) {
             foreach ($frontPages as $frontPage) {
                 $resources = $frontPage->getRouteResources();
 
                 if($resources) {
 
-                    foreach ($resources as $resource) {
+                    foreach ($resources as $type => $resourcesx) {
 
-                        $type = 'annotation';
-                        if (method_exists($frontPage, 'getRouteResourceType')) {
-                            $type = $frontPage->getRouteResourceType();
-                        }
+                        foreach ($resourcesx as $resource) {
 
-                        // Load route resources
-                        $frontRoutes = $this->import($resource, $type);
+                            // Load route resources
+                            $frontRoutes = $this->import($resource, $type);
 
-                        if($prefix !== $frontPageConfig) {
-                            $frontRoutes->addPrefix($frontPage->getRoutePrefix());
+                            if($prefix !== $frontPageConfig) {
+                                $frontRoutes->addPrefix($frontPage->getRoutePrefix());
 
-                            if(!in_array($prefix, $reservedBaseUrl)) {
-                                $reservedBaseUrl[] = $prefix;
+                                if(!in_array($prefix, $reservedBaseUrl)) {
+                                    $reservedBaseUrl[] = $prefix;
+                                }
                             }
+    
+                            $routes->addCollection($frontRoutes);
                         }
-
-                        $routes->addCollection($frontRoutes);
                     }
-
                 }
             }
         }

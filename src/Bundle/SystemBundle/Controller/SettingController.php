@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,6 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
 class SettingController extends Controller
 {
     /**
-     * @Route("/setting/general", name="dt_system_setting_general")
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
      * @todo Setting validation rules
@@ -252,9 +251,6 @@ class SettingController extends Controller
         return $this->get('translator')->trans($string, $param);
     }
 
-    /**
-     * @Route("/setting/theme/save", name="dt_setting_theme_save")
-     */
     public function themeSaveAction(Request $request)
     {
         $context = $request->request->get('context');

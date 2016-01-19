@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Controller\Admin;
+namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +17,6 @@ use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
 
 class WidgetController extends Controller
 {
-    /**
-     * @Route("/setting/widget/delete", name="dt_setting_widget_delete")
-     */
     public function deleteAction(Request $request)
     {
         $id = $request->request->get('id');
@@ -32,9 +29,6 @@ class WidgetController extends Controller
         return new Response();
     }
 
-    /**
-     * @Route("/setting/widget/save", name="dt_setting_widget_save")
-     */
     public function saveAction(Request $request)
     {
         $position = $request->request->get('position');
@@ -76,9 +70,6 @@ class WidgetController extends Controller
         // @todo return error
     }
 
-    /**
-     * @Route("/setting/widget/sort", name="dt_setting_widget_sort")
-     */
     public function sortAction(Request $request)
     {
         $ids = $request->request->get('order');

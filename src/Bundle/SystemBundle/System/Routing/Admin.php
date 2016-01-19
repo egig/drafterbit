@@ -6,7 +6,7 @@ use Drafterbit\System\Routing\ApplicationRouteInterface;
 
 class Admin implements ApplicationRouteInterface
 {
-    private $routeResources = ['@SystemBundle/Controller/Admin'];
+    private $routeResources = [];
 
     public function getRoutePrefix()
     {
@@ -23,7 +23,15 @@ class Admin implements ApplicationRouteInterface
         //..
     }
 
-    public function addRouteResources($resource) {
-        array_push($this->routeResources, $resource);
+    public function getRouteResourceType() {
+        return 'xml';
+    }
+
+    public function addRouteResources($resource, $type = 'annotation') {
+        if(!isset($this->routeResources[$type])) {
+            $this->routeResources[$type] = [];
+        }
+
+        array_push($this->routeResources[$type], $resource);
     }
 }
