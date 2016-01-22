@@ -104,8 +104,17 @@ class SettingController extends Controller
 
                 $theme['is_active'] = ($theme['id'] == $this->container->getParameter('theme'));
 
+                $ssImage = null;
+                if(isset($theme['screenshot'])) {
+                    $ssImage = $dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot'];
+                }
+
+                if(!file_exists($ssImage)) {
+                    $ssImage = $this->get('kernel')->getBundle('SystemBundle')->getPath().'/Resources/screenshot.jpg';
+                }
+
                 // @todo create default base64 image
-                $theme['screenshot_base64'] = $this->encodeImage($dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot']);
+                $theme['screenshot_base64'] = $this->encodeImage($ssImage);
 
                 $themes[] = $theme;
             }
@@ -185,8 +194,10 @@ class SettingController extends Controller
             $widget->form = base64_encode($form);
         }
 
-        $positions = $themeConfig['widget'];
+        // @todo validate theme config
+        $positions = isset($themeConfig['widget'])? $themeConfig['widget'] : [];
 
+        $widgets = [];
         foreach ($positions as $position) {
 
             // get current widget
@@ -223,7 +234,7 @@ class SettingController extends Controller
             'available_widget' => $availableWidgets,
             'widgets' => $widgets,
             'option_inputs' => $optionInputs,
-            'menu_positions' => $themeConfig['menu'],
+            'menu_positions' => (isset($themeConfig['menu']) ? $themeConfig['menu']: []),
             'widget_positions' => $positions,
             'menu_options' => $availableMenus,
             'theme_menu_ids' => $themeMenuIds,

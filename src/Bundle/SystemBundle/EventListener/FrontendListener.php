@@ -79,8 +79,10 @@ class FrontendListener implements EventSubscriberInterface
 
                 // @todo validate this
                 $defaultContext = [];
-                foreach ($themeConfig['option'] as $option) {
-                    $defaultContext[$option['name']] = $option['default'];
+                if(isset($themeConfig['option'])) {
+                    foreach ($themeConfig['option'] as $option) {
+                        $defaultContext[$option['name']] = $option['default'];
+                    }
                 }
 
                 $context = $this->container->get('system')->get('theme.'.$theme.'.context', '[]');
