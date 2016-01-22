@@ -17,7 +17,7 @@
             <div class="col-md-4">
                 <div class="dt-theme-item clearfix">
                     <div class="dt-screenshot-container">
-                        <img src="{{ asset('themes/'~theme.id~'/screenshot.png') }}"/>
+                        <img src="{{ theme.screenshot_base64 }}"/>
                     </div>
                     <div style="height:70px;overflow:hidden;" class="theme-property">
                         <h4>{{ theme.name }}</h4>

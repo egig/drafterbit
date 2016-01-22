@@ -103,11 +103,28 @@ class SettingController extends Controller
                 $theme = json_decode(file_get_contents($config), true);
 
                 $theme['is_active'] = ($theme['id'] == $this->container->getParameter('theme'));
+
+                // @todo create default base64 image
+                $theme['screenshot_base64'] = $this->encodeImage($dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot']);
+
                 $themes[] = $theme;
             }
         }
 
         return $themes;
+    }
+
+    /**
+     * Base64 encode theme screenshot image.
+     *
+     * @param $imagePath string
+     **/
+    private function encodeImage ($imagePath) {
+
+        $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+
+            $imgBinary = fread(fopen($imagePath, "r"), filesize($imagePath));
+            return 'data:image/' . $extension . ';base64,' . base64_encode($imgBinary);
     }
 
     /**
