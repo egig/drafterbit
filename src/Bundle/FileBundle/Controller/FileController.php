@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\FileBundle\Controller\Admin;
+namespace Drafterbit\Bundle\FileBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class FileController extends Controller
 {
     /**
-     * @Route("/file", name="dt_file")
      * @Template()
      */
     public function indexAction()
@@ -24,7 +23,6 @@ class FileController extends Controller
     }
 
     /**
-     * @Route("/file/browser", name="dt_file_browser")
      * @Template()
      */
     public function browserAction()
@@ -35,9 +33,6 @@ class FileController extends Controller
         ];
     }
 
-    /**
-     * @Route("/file/data", name="dt_file_data")
-     */
     public function dataAction(Request $request)
     {
         $op = $request->get('op');
