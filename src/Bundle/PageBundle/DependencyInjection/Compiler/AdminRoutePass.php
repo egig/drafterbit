@@ -11,6 +11,6 @@ class AdminRoutePass implements CompilerPassInterface {
 	public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('dt_system.frontpage.admin');
-        $definition->addMethodCall('addRouteResources', ['@PageBundle/Controller/Admin']);
+        $definition->addMethodCall('addRouteResources', ['@PageBundle/Resources/config/routing.xml', 'xml']);
     }
 }

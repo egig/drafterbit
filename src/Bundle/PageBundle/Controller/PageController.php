@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\PageBundle\Controller\Admin;
+namespace Drafterbit\Bundle\PageBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,10 +85,7 @@ class PageController extends Controller
         ];
     }
 
-    /**
-     * @Route("/page/data/{status}", name="dt_page_data")
-     */
-    public function data($status)
+    public function dataAction($status)
     {
         $pagesArr  = [];
         $query = $this->getDoctrine()
@@ -136,7 +133,6 @@ class PageController extends Controller
     }
 
     /**
-     * @Route("/page/edit/{id}", name="dt_page_edit")
      * @Template()
      * @todo crate permission attr constant
      * @Security("is_granted('ROLE_PAGE_EDIT')")
@@ -170,9 +166,6 @@ class PageController extends Controller
         ];
     }
 
-    /**
-     * @Route("/page/save", name="dt_page_save")
-     */
     public function saveAction(Request $request)
     {
         $requestPage = $request->request->get('page');
