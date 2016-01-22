@@ -18,7 +18,7 @@
                     <div class="revision-author">
                         <span class="label label-default"> {{ __('Rev.') }} {{rev.pos}}/{{revs|length}}</span>
                         {{ __('by') }} <a href="{{ rev.authorUrl }}">{{ rev.user.realname }}</a>
-                        <br/><span class="revision-time">{{rev.createdAt|format_datetime('dd MMMM Y, @HH:mm')}}</span>
+                        <br/><span class="revision-time">{{rev.createdAt|format_datetime('d-MM-y, @HH:mm')}}</span>
                     </div>
                     <div class="revision-toolbar">
                         <form class="ajax-form" action="{{ url('dt_blog_revision_revert') }}" method="post">

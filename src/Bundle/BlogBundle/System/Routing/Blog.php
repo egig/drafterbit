@@ -13,7 +13,7 @@ class Blog implements ApplicationRouteInterface
 
     public function getRouteResources()
     {
-        return ['annotation' => ['@BlogBundle/Controller/Site']];
+        return ['xml' => ['@BlogBundle/Resources/config/routing/blog.xml']];
     }
 
     public function getOptions()

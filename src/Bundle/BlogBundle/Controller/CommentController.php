@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Admin;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,6 @@ use Doctrine\DBAL\DBALException;
 class CommentController extends Controller
 {
     /**
-     * @Route("/blog/comment", name="dt_blog_comment")
      * @Template()
      * @Security("is_granted('ROLE_COMMENT_VIEW')")
      */
@@ -91,9 +90,6 @@ class CommentController extends Controller
         ];
     }
 
-    /**
-     * @Route("/blog/comment/data/{status}", name="dt_blog_comment_data")
-     */
     public function dataAction($status)
     {
         $query = $this->getDoctrine()->getManager()
@@ -174,12 +170,9 @@ class CommentController extends Controller
         }
 
         $data['STATUS_SPAM'] = Comment::STATUS_SPAM;
-        return $this->renderView('BlogBundle:Admin\Comment:item.html.twig', $data);
+        return $this->renderView('BlogBundle:Comment:item.html.twig', $data);
     }
 
-    /**
-     * @Route("/blog/comment/status", name="dt_blog_comment_status")
-     */
     public function statusAction(Request $request)
     {
         $id = $request->request->get('id');
@@ -199,7 +192,7 @@ class CommentController extends Controller
     /**
      * @Route("/blog/comment/quick-reply", name="dt_blog_comment_quickreply")
      */
-    public function quickReply(Request $request)
+    public function quickReplyAction(Request $request)
     {
         $postId   = $request->request->get('postId');
         $content   = $request->request->get('comment');
@@ -230,10 +223,7 @@ class CommentController extends Controller
         return new JsonResponse(['msg' => 'Comment saved', 'status' => 'success']);
     }
 
-    /**
-     * @Route("/blog/comment/quick-trash", name="dt_blog_comment_quicktrash")
-     */
-    public function quickTrash(Request $request)
+    public function quickTrashAction(Request $request)
     {
         $id = $request->request->get('id');
         $em = $this->getDoctrine()->getManager();

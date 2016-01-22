@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Admin;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,6 @@ use Drafterbit\Bundle\BlogBundle\Entity\Category;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/blog/category", name="dt_blog_category")
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_VIEW')")
      */
@@ -28,7 +27,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/blog/category/edit/{id}", name="dt_blog_category_edit")
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_EDIT')")
      */
@@ -58,9 +56,6 @@ class CategoryController extends Controller
         ];
     }
 
-    /**
-     * @Route("/blog/category/data/all", name="dt_blog_category_data")
-     */
     public function dataAction()
     {
         $categories = $this->getDoctrine()->getManager()
@@ -85,7 +80,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/blog/category/save", name="dt_blog_category_save")
      * @Template()
      */
     public function saveAction(Request $request)

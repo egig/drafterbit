@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Admin;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,6 @@ use cogpowered\FineDiff\Diff;
 class RevisionController extends Controller
 {
     /**
-     * @Route("/blog/post/{postId}/revisions", name="dt_blog_revision_view")
      * @Template()
      */
     public function viewAction($postId)
@@ -59,10 +58,6 @@ class RevisionController extends Controller
         ];
     }
 
-    /**
-     * @Route("/blog/revision/clear", name="dt_blog_revision_clear")
-     * @Template()
-     */
     public function clearAction(Request $request)
     {
         $postId = $request->request->get('id');
@@ -76,12 +71,10 @@ class RevisionController extends Controller
 
         $em->flush();
 
-        return new Response;
+        // @todo
+        return new Response();
     }
 
-    /**
-     * @Route("/blog/revision/revert", name="dt_blog_revision_revert")
-     */
     public function revertAction(Request $request)
     {
         $id = $request->request->get('id');

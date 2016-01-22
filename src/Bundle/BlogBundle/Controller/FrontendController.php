@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Site;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Doctrine\ORM\Query\Expr;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,6 @@ class FrontendController extends Controller
     const MORE_TAG = '<!--more-->';
 
     /**
-     * @Route("/", name="dt_blog_front_home" )
      * @Template("content/blog/index.html.twig")
      */
     public function indexAction(Request $request)
@@ -32,8 +31,8 @@ class FrontendController extends Controller
         $data['pagination'] = $this->getPagination($page, $request);
         return $data;
     }
+
     /**
-     * @Route("/tag/{slug}", name="dt_blog_tag_front_view" )
      * @Template("content/blog/tag/index.html.twig")
      */
     public function tagAction($slug, Request $request)
@@ -54,7 +53,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/category/{slug}", name="dt_blog_category_front_view" )
      * @Template("content/blog/category/index.html.twig")
      */
     public function categoryAction($slug, Request $request)
@@ -75,7 +73,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/author/{username}", name="dt_blog_author_front_view" )
      * @Template("content/blog/author/index.html.twig")
      */
     public function authorAction($username, Request $request)
@@ -184,8 +181,6 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/{year}/{month}/{date}/{slug}", name="dt_blog_post_front_view",
-     *   requirements={"year"="\d{4}", "month"="\d{2}", "date"="\d{2}" })
      * @Template("content/blog/view.html.twig")
      */
     public function viewAction($year, $month, $date, $slug)
@@ -333,9 +328,6 @@ class FrontendController extends Controller
         return array_unique($subscribers);
     }
 
-    /**
-     * @Route("/blog/comment/unsubscribe/{email}", name="dt_blog_comment_unsubscribe")
-     */
     public function commentUnsubscribeAction($email, Request $request)
     {
         $em = $this->getDoctrine()->getManager();

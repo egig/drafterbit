@@ -4,15 +4,16 @@ namespace Drafterbit\Bundle\BlogBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class Revision
 {
-    protected $controller;
+    protected $entityManager;
+    protected $user;
 
-    public function __construct(Controller $controller)
+    public function __construct(EntityManager $entityManager, $user)
     {
-        $this->controller = $controller;
+        $this->entityManager = $entityManager;
+        $this->user = $user;
     }
 
     /**
@@ -33,7 +34,7 @@ class Revision
             }
         }
 
-        $em = $this->controller->getDoctrine()->getManager();
+        $em = $this->entityManager;
 
         //create new
         $post = new Post();
@@ -43,11 +44,11 @@ class Revision
         $post->setSlug($new->getSlug());
         $post->setCreatedAt(new \DateTime());
         $post->setUpdatedAt(new \DateTime());
-        $post->setDeletedAt(new \DateTime('0000-00-00'));
+        $post->setDeletedAt(NULL);
         $post->setPublishedAt($new->getPublishedAt());
         $post->setStatus($new->getStatus());
 
-        $post->setUser($this->controller->getUser());
+        $post->setUser($this->user);
 
         $em->persist($post);
         $em->flush();

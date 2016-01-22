@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Admin;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PostController extends Controller
 {
     /**
-     * @Route("/blog/post", name="dt_blog_post")
      * @Template()
      * @Security("is_granted('ROLE_POST_VIEW')")
      * @todo improve indexing (filter by collumn)
@@ -135,7 +134,6 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/blog/post/edit/{id}", name="dt_blog_post_edit")
      * @Template()
      * @Security("is_granted('ROLE_POST_EDIT')")
      */
@@ -192,7 +190,6 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/blog/post/save", name="dt_blog_post_save")
      * @Template()
      */
     public function saveAction(Request $request)
@@ -259,7 +256,8 @@ class PostController extends Controller
 
             // create revision first
             if(!$isNew) {
-                (new Revision($this))->create($currentTitle, $currentContent, $post);
+                (new Revision($this->getDoctrine()->getManager(), $this->getUser()))
+                    ->create($currentTitle, $currentContent, $post);
             }
 
             $em->persist($post);
@@ -350,7 +348,6 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/setting/blog", name="dt_blog_setting")
      * @Template("BlogBundle::setting.html.twig")
      * @Security("is_granted('ROLE_BLOG_SETTING_MANAGE')")
      */

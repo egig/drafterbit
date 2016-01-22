@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Controller\Site;
+namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Doctrine\ORM\Query\Expr;
 use Symfony\Component\HttpFoundation\Request;
