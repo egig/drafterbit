@@ -95,8 +95,8 @@ class GroupController extends Controller
     }
 
     /**
-     * @Template()
      * @Security("is_granted('ROLE_GROUP_EDIT')")
+     * @Template("UserBundle:Group:edit.html.twig")
      */
     public function editAction($id)
     {
