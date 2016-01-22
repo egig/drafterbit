@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="dt_user" path="/user">
+        <default key="_controller">UserBundle:User:index</default>
+    </route>
+
+    <route id="dt_user_data" path="/user/data">
+        <default key="_controller">UserBundle:User:data</default>
+    </route>
+
+    <route id="dt_user_edit" path="/user/edit/{id}">
+        <default key="_controller">UserBundle:User:edit</default>
+    </route>
+
+    <route id="dt_user_save" path="/user/save">
+        <default key="_controller">UserBundle:User:save</default>
+    </route>
+
+    <route id="dt_user_profile" path="/user/profile">
+        <default key="_controller">UserBundle:User:profile</default>
+    </route>
+
+
+    <route id="dt_user_group" path="/user/group">
+        <default key="_controller">UserBundle:Group:index</default>
+    </route>
+
+    <route id="dt_user_group_data" path="/user/group/data/{status}">
+        <default key="_controller">UserBundle:Group:data</default>
+    </route>
+
+    <route id="dt_user_group_edit" path="/user/group/edit/{id}">
+        <default key="_controller">UserBundle:Group:edit</default>
+    </route>
+
+    <route id="dt_user_group_save" path="/user/group/save">
+        <default key="_controller">UserBundle:Group:save</default>
+    </route>
+
+</routes>

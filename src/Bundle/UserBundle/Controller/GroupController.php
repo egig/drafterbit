@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\UserBundle\Controller\Admin;
+namespace Drafterbit\Bundle\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,6 @@ use Drafterbit\Bundle\UserBundle\Form\Type\GroupType;
 class GroupController extends Controller
 {
     /**
-     * @Route("/user/group", name="dt_user_group")
      * @Template()
      * @Security("is_granted('ROLE_GROUP_VIEW')")
      */
@@ -72,9 +71,6 @@ class GroupController extends Controller
         ];
     }
 
-    /**
-     * @Route("/user/group/data/{status}", name="dt_user_group_data")
-     */
     public function dataAction($status)
     {
         $groups = $this->container->get('fos_user.group_manager')->findGroups();
@@ -99,7 +95,6 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/user/group/edit/{id}", name="dt_user_group_edit")
      * @Template()
      * @Security("is_granted('ROLE_GROUP_EDIT')")
      */
@@ -141,7 +136,6 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/user/group/save", name="dt_user_group_save")
      * @Method("POST")
      */
     public function saveAction(Request $request)

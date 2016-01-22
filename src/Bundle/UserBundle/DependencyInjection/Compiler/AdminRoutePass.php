@@ -7,10 +7,10 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
 class AdminRoutePass implements CompilerPassInterface {
-	
+
 	public function process(ContainerBuilder $container)
     {
         $definition = $container->getDefinition('dt_system.frontpage.admin');
-        $definition->addMethodCall('addRouteResources', ['@UserBundle/Controller/Admin']);
+        $definition->addMethodCall('addRouteResources', ['@UserBundle/Resources/config/routing/admin.xml', 'xml']);
     }
 }

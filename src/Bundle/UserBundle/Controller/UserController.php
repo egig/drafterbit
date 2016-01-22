@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\UserBundle\Controller\Admin;
+namespace Drafterbit\Bundle\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,6 @@ use Drafterbit\Bundle\UserBundle\Entity\User;
 class UserController extends Controller
 {
     /**
-     * @Route("/user", name="dt_user")
      * @Template()
      * @Security("is_granted('ROLE_USER_VIEW')")
      */
@@ -120,7 +119,6 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/edit/{id}", name="dt_user_edit")
      * @Template()
      * @Security("is_granted('ROLE_USER_EDIT')")
      */
@@ -152,7 +150,6 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/save", name="dt_user_save")
      * @Template()
      */
     public function saveAction(Request $request)
@@ -225,7 +222,7 @@ class UserController extends Controller
 
     /**
      * @Route("/user/profile", name="dt_user_profile")
-     * @Template("UserBundle:Admin\User:edit.html.twig")
+     * @Template("UserBundle:User:edit.html.twig")
      */
     public function profileAction(Request $request)
     {
