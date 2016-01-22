@@ -1,12 +1,14 @@
+{% import _self as dashboard %}
+
 <div class="col-md-6" id="dt-panels-left" data-pos="left">
     {% for panel in left_panels %}
-        {{_self.panel_item(panel)}}
+        {{ dashboard.panel_item(panel) }}
     {% endfor %}
 </div>
 
 <div class="col-md-6" id="dt-panels-right" data-pos="right">
     {% for panel in right_panels %}
-        {{_self.panel_item(panel)}}
+        {{ dashboard.panel_item(panel) }}
     {% endfor %}
 </div>
 

@@ -72,7 +72,7 @@ class ViablePrefixLoader extends Loader
             'slug' => "^(?!(?:%admin%|".$reservedBaseUrl."|)(?:/|$)).*$"
         );
 
-        $defaults = array('_controller' => 'PageBundle:Site\Frontend:view');
+        $defaults = array('_controller' => 'PageBundle:Frontend:view');
         $route2 = new Route('/{slug}', $defaults, $requirements);
         $routes->add('misc', $route2);
 

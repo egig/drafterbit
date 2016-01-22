@@ -1,5 +1,7 @@
 {% extends "SystemBundle::base_edit.html.twig" %}
 
+{% import _self as this %}
+
 {% block stylesheets %}
   {{ parent() }}
   {% stylesheets filter='?uglifycss' output="assets/css/*.css"
@@ -70,7 +72,7 @@
             {{ form_label(form.categories, __('Categories')) }}
             <div class="dt-categories">
               {% if form.categories|length %}
-                {{ _self.render_categories(form.categories, categories) }}
+                {{ this.render_categories(form.categories, categories) }}
               {% else %}
                 {{ form_widget(form.categories) }}
               {% endif %}

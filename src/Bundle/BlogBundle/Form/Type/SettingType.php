@@ -28,14 +28,14 @@ class SettingType extends AbstractType
             ->add('feed_shows', TextType::class, ['data' => $this->data('blog.feed_shows')])
             ->add('feed_content', ChoiceType::class, [
                 'choices' => [
-                    1 => 'Full Text',
-                    2 => 'Summary'
+                    'Full Text' => 1,
+                    'Summary' => 2
                 ],
                 'data' => $this->data('blog.feed_content')]
             )->add('comment_moderation', ChoiceType::class, [
                 'choices' => [
-                    0 => 'Never',
-                    1 => 'Always'
+                    'Never' => 0,
+                    'Always' => 1
                 ],
                 'data' => $this->data('blog.comment_moderation')]
             );

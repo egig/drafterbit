@@ -1,5 +1,7 @@
 {% extends "SystemBundle::base_nonav.html.twig" %}
 
+{% import _self as this %}
+
 {% block stylesheets %}
     {{ parent() }}
 
@@ -34,7 +36,7 @@
                   </div>
                   <div class="menu-items">
                     <label>{{ __('Menu Items') }}</label>
-                       {{ _self._print_menu_items(menu.items) }}
+                       {{ this._print_menu_items(menu.items) }}
                     <a href="#" class="btn btn-sm menu-item-adder" data-menu-id="{{ menu.id }}">{{ __('Add Menu Item') }}</a>
                   </div>
                   <div class="menu-action">
@@ -150,7 +152,7 @@
           </div>
       </div>
       {% if item.childs|length %}
-            {{ _self._print_menu_items(item.childs) }}
+            {{ this._print_menu_items(item.childs) }}
       {% endif %}
     </li>
     {% endfor %}
