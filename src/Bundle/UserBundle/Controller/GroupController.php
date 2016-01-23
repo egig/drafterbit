@@ -178,14 +178,9 @@ class GroupController extends Controller
             $response = ['message' => 'Group saved', 'status' => 'success', 'id' => $id];
         } else {
             $errors = [];
-            $formView = $form->createView();
-
-            foreach ($formView as $inputName => $view) {
-                if (isset($view->vars['errors'])) {
-                    foreach ($view->vars['errors'] as $error) {
-                        $errors[$view->vars['full_name']] = $error->getMessage();
-                    }
-                }
+            foreach ($form->getErrors(true) as $error) {
+                $name = $error->getOrigin()->createView()->vars['full_name'];
+                $errors[$name] =  $error->getMessage();
             }
 
             $response['error'] = [

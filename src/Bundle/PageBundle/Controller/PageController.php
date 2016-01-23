@@ -212,24 +212,10 @@ class PageController extends Controller
             $errors = [];
             $formView = $form->createView();
 
-            // @todo clean this, make a recursive
-            // create server, form error extractor maybe
-            foreach ($formView as $inputName => $view) {
-                if ($view->children) {
-                    foreach ($view->children as $name => $childView) {
-                        if (isset($childView->vars['errors'])) {
-                            foreach ($childView->vars['errors'] as $error) {
-                                $errors[$childView->vars['full_name']] = $error->getMessage();
-                            }
-                        }
-                    }
-                }
-
-                if (isset($view->vars['errors'])) {
-                    foreach ($view->vars['errors'] as $error) {
-                        $errors[$view->vars['full_name']] = $error->getMessage();
-                    }
-                }
+            $errors = [];
+            foreach ($form->getErrors(true) as $error) {
+                $name = $error->getOrigin()->createView()->vars['full_name'];
+                $errors[$name] =  $error->getMessage();
             }
 
             $response['error'] = [

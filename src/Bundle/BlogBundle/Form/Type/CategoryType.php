@@ -20,7 +20,7 @@ class CategoryType extends AbstractType
         $builder
             ->add('id', HiddenType::class, ['mapped' => false])
             ->add('label', TextType::class, ['required' => true])
-            ->add('slug', TextareaType::class, ['required' => true])
+            ->add('slug', TextType::class, ['required' => true])
             ->add('description', TextareaType::class)
             ->add('parent', EntityType::class, [
                 'placeholder' => 'No Parent',
