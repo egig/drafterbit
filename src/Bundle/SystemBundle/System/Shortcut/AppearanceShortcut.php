@@ -8,8 +8,10 @@ class AppearanceShortcut extends Shortcut
 {
     public function getUrl()
     {
+        $theme = $this->container->get('system')->get('theme.active');
+
         $param = [
-            'theme' => $this->container->getParameter('theme'),
+            'theme' => $theme,
             '_token' => $this->container->get('security.csrf.token_manager')->getToken('customize_theme'),
         ];
 

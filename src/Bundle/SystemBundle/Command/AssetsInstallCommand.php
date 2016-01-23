@@ -148,7 +148,7 @@ EOT
             }
         }
 
-        $theme = $this->getContainer()->getParameter('theme');
+        $theme = $this->getContainer()->get('system')->get('theme.active');
         $themesPath = $this->getContainer()->getParameter('themes_path');
         $themePath = $themesPath.'/'.$theme;
         $targetDir = $targetArg.'/themes/'.$theme.'/asset/';

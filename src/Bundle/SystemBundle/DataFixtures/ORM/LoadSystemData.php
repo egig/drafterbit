@@ -42,7 +42,8 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
             }
         }
 
-        $theme = $this->container->getParameter('theme');
+        // @todo create global accesible constant for default theme
+        $theme = 'feather';
 
         $initData = [
             'system.site_name' => $siteName,
@@ -50,6 +51,7 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
             'system.frontpage' => 'blog',
             'system.date_format' => 'd m Y',
             'system.time_format' => 'H:i',
+            'theme.active' => $theme,
             'theme.'.$theme.'.menu' => '{"main":"'.$this->getReference('main-menu')->getId().'","side":"0"}',
         ];
 

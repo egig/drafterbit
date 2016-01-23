@@ -9,10 +9,11 @@ class Info extends PanelType
     public function getView()
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
+        $theme = $this->container->get('system')->get('theme.active');
 
         $info['Time'] = date('H:i:s');
         $info['OS'] = $this->getOs();
-        $info['Theme'] = $this->container->getParameter('theme');
+        $info['Theme'] = $theme;
         $info['PHP'] = phpversion();
         $info['Server'] = $request->server->get('SERVER_SOFTWARE');
 

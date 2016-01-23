@@ -31,7 +31,8 @@ class LoadWidgetData extends AbstractFixture implements  ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        $theme = $this->container->getParameter('theme');
+        // @todo create global accesible constant for default thme
+        $theme = 'feather';
 
         $search = new Widget();
         $search->setName('search');

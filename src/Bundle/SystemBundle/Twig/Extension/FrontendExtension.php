@@ -38,7 +38,7 @@ class FrontendExtension extends \Twig_Extension
      */
     public function menu($position, $parent = null)
     {
-        $theme = $this->container->getParameter('theme');
+        $theme = $this->container->get('system')->get('theme.active');
 
         $menus = $this->container->get('system')->get('theme.'.$theme.'.menu');
 
@@ -103,7 +103,7 @@ class FrontendExtension extends \Twig_Extension
     public function themeUrl($path)
     {
         $path = trim($path, '/');
-        $theme = $this->container->getParameter('theme');
+        $theme = $this->container->get('system')->get('theme.active');
         $path = 'themes/'.$theme.'/'.$path;
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
@@ -143,7 +143,7 @@ class FrontendExtension extends \Twig_Extension
     {
         $qb = $this->container->get('database_connection')->createQueryBuilder();
 
-        $theme = $this->container->getParameter('theme');
+        $theme = $this->container->get('system')->get('theme.active');
 
         $widgets = $qb->select('*')
             ->from($this->widgetTable, 'w')

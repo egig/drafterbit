@@ -62,7 +62,7 @@ class PageType extends AbstractType
      */
     private function getLayoutOptions()
     {
-        $theme = $this->container->getParameter('theme');
+        $theme = $this->container->get('system')->get('theme.active');
         $themesPath = $this->container->getParameter('themes_path');
 
         $layouts = [];

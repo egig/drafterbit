@@ -25,7 +25,7 @@ class SystemExtension extends \Twig_Extension implements \Twig_Extension_Globals
             'version' => \Drafterbit\Drafterbit::VERSION,
         ];
 
-        return ['system' => $system];
+        return ['system' => $system, 'theme' => $model->get('theme.active')];
     }
 
     public function getFunctions()
