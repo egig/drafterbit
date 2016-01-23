@@ -63,11 +63,11 @@
     </route>
 
     <!-- SETTING -->
-    <route id="dt_system_setting_general" path="/setting/general" methods="GET">
+    <route id="dt_system_setting_general" path="/setting/general" methods="GET POST">
         <default key="_controller">SystemBundle:Setting:general</default>
     </route>
 
-    <route id="dt_system_setting_theme" path="/setting/theme" methods="GET">
+    <route id="dt_system_setting_theme" path="/setting/theme" methods="GET POST">
         <default key="_controller">SystemBundle:Setting:theme</default>
     </route>
 
@@ -92,7 +92,7 @@
         <default key="_controller">SystemBundle:System:logData</default>
     </route>
 
-    <route id="dt_system_cache" path="/system/cache" methods="GET">
+    <route id="dt_system_cache" path="/system/cache" methods="GET POST">
         <default key="_controller">SystemBundle:System:cache</default>
     </route>
 

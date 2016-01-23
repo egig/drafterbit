@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\BrowserKit\Cookie;
 use Drafterbit\Test\WebTestCase;
+use Drafterbit\Bundle\SystemBundle\Form\Type\ThemeType;
 
 class SettingControllerTest extends WebTestCase
 {
@@ -43,13 +44,41 @@ class SettingControllerTest extends WebTestCase
         $this->assertEquals($expected, 'foobar');
     }
 
-    public function testThemeAction()
+    public function testThemeActionIsWorks()
     {
-        $client = $this->getAuthorizedClient();
+        $client = $this->createAuthorizedClient();
 
         $crawler = $client->request('GET', '/'.static::$admin.'/setting/theme');
+
+        $this->assertTrue($client->getResponse()->isOK());
         
-        $this->assertContains('Theme', $client->getResponse()->getContent());
+        $csrfToken = $crawler->filter('input[name="_csrf_token"]')->attr('value');
+
+        // test csrf
+        $crawler = $client->request(
+            'POST',
+            '/'.static::$admin.'/setting/theme',
+            ['theme' => 'humble']
+        );
+
+        $this->assertEquals('302', $client->getResponse()->getStatusCode());
+        $this->assertTrue($client->getResponse()->isRedirect());
+
+        // draw theme
+        $themes = ['humble', 'feather'];
+        $theme = $themes[rand(0,1)];
+
+        $crawler = $client->request(
+            'POST',
+            '/'.static::$admin.'/setting/theme',
+            ['_csrf_token' => $csrfToken, 'theme' => $theme]
+        );
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $activeTheme = $client->getContainer()->get('system')->get('theme.active');
+        
+        $this->assertEquals($theme, $activeTheme);
     }
 
     public function testCreateDeletewidget(){

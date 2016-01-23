@@ -148,6 +148,20 @@ class System
         $this->data = [];
     }
 
+    /**
+     * Set a value of a key.
+     *
+     * @param mixed
+     */
+    public function set($key, $value)
+    {
+        if($this->isExists($key)) {
+            $this->doUpdate($key, $value);
+        } else {
+            $this->insert($key, $value);
+        }
+    }
+
     public function insert($key, $value)
     {
         $this->databaseConnection->insert($this->systemTable, ['`value`' => $value, '`key`' => $key]);

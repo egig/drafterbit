@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Drafterbit\Bundle\SystemBundle\Entity\Widget;
+use Drafterbit\Bundle\SystemBundle\Form\Type\ThemeType;
 
 class SettingController extends Controller
 {
@@ -77,16 +78,38 @@ class SettingController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_SETTING_THEME_MANAGE')")
      */
-    public function themeAction()
+    public function themeAction(Request $request)
     {
+        $theme = $request->request->get('theme');
+        $_token = $request->request->get('_csrf_token');
+
+        if($theme) {
+
+
+            if(!$this->isCsrfTokenValid(ThemeType::CSRF_TOKEN_ID, $_token)) {
+                throw new InvalidCsrfTokenException();
+            }
+
+            $this->get('system')->set('theme.active', $theme);
+        }
+
         $themes = $this->getThemes();
+        $csrfToken = $this->get('security.csrf.token_manager')
+            ->getToken(ThemeType::CSRF_TOKEN_ID);
 
         return [
             'page_title' => $this->get('translator')->trans('Theme'),
             'themes' => $themes,
+            '_token' => $csrfToken,
         ];
     }
 
+    /**
+     * Get all themes
+     *
+    * @todo move this to its own manaegment: ThemeManager
+     * @return array
+     */
     private function getThemes()
     {
         $themes_path = $this->container->getParameter('themes_path');
@@ -98,7 +121,7 @@ class SettingController extends Controller
             if (file_exists($config = $dir->getRealpath().'/theme.json')) {
                 $theme = json_decode(file_get_contents($config), true);
 
-                $theme['is_active'] = ($theme['id'] == $this->container->getParameter('theme'));
+                $theme['is_active'] = ($theme['id'] == $this->get('system')->get('theme.active'));
 
                 $ssImage = null;
                 if (isset($theme['screenshot'])) {

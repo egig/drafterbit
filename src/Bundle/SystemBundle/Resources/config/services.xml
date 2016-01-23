@@ -14,7 +14,6 @@
 
         <!-- theme -->
         <parameter key="themes_path">%kernel.root_dir%/../themes</parameter>
-        <parameter key="theme">feather</parameter>
     </parameters>
 
     <services>
@@ -69,7 +68,7 @@
         </service>
 
         <!-- Event Listener -->
-        <service id="dt_system.request.listener" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
+        <service id="dt_system.event.listener.frontent" class="Drafterbit\Bundle\SystemBundle\EventListener\FrontendListener">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="service_container" />
         </service>

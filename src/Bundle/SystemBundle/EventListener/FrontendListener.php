@@ -45,8 +45,8 @@ class FrontendListener implements EventSubscriberInterface
                 if (!$this->isCsrfTokenValid($token)) {
                     throw new AccessDeniedException();
                 }
-            } else {
-                $theme = $this->container->getParameter('theme');
+            } else  {
+                $theme = $this->container->get('system')->get('theme.active');
             }
 
             $themesPath = $this->container->getParameter('themes_path');

@@ -29,13 +29,11 @@
                         {%  if theme.is_active %}
                         <a disabled class="btn btn-xs btn-default pull-right">{{ __('Active') }}</a>
                         {% else %}
-                        <!-- @todo -->
-                        <a href="javascript:alert('Feature under construction');" class="btn btn-xs btn-default pull-right">{{ __('Activate') }}</a>
-                        <!--
                         <form method="POST">
                             <input type="hidden" name="theme" value="{{ theme.id }}">
+                            <input type="hidden" name="_csrf_token" value="{{ _token }}">
                             <input type="submit" value="Activate" class="btn btn-xs btn-success pull-right">
-                       </form> -->
+                       </form>
                         {% endif %}
                     </div>
                 </div>
