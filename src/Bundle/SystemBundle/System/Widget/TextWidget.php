@@ -21,6 +21,7 @@ class TextWidget extends Widget
     public function buildForm(Form $form)
     {
         $form->add('content', TextareaType::class, ['mapped' => false]);
+
         return $form;
     }
 }

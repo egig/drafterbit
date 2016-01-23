@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Drafterbit\Bundle\DistributionBundle\Installer\Step\DoctrineStep;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -16,13 +15,13 @@ class DoctrineStepType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder
+        $builder
             ->add('driver', ChoiceType::class, array('choices' => DoctrineStep::getDrivers()))
             ->add('name', TextType::class, array(
                     'required' => false,
                     'constraints' => array(
-                        new NotBlank()
-                    )
+                        new NotBlank(),
+                    ),
                 ))
             ->add('host', TextType::class, array('required' => false, 'data' => 'localhost'))
             ->add('path', TextType::class, array('required' => false))

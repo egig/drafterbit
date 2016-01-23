@@ -4,8 +4,8 @@ namespace Drafterbit\System\Log;
 
 use Symfony\Component\HttpKernel\Kernel;
 
-abstract class BaseEntityFormatter implements EntityFormatterInterface  {
-
+abstract class BaseEntityFormatter implements EntityFormatterInterface
+{
     protected $kernel;
 
     public function __construct(Kernel $kernel)
@@ -18,9 +18,13 @@ abstract class BaseEntityFormatter implements EntityFormatterInterface  {
         return $this->kernel;
     }
 
-    public function getName() {}
+    public function getName()
+    {
+    }
 
-    public function format($id) {}
+    public function format($id)
+    {
+    }
 
     public function getUser()
     {

@@ -7,32 +7,32 @@ use Doctrine\DBAL\Connection;
 class System
 {
     /**
-     * System table name
+     * System table name.
      *
      * @var string
      */
     protected $systemTable;
 
     /**
-     * Database connection instance
+     * Database connection instance.
      *
      * @var Doctrine\DBAL\Connection
      */
     protected $databaseConnection;
 
     /**
-     * Resolved data;
+     * Resolved data;.
      *
      * @var array
      */
     protected $data = [];
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($container)
     {
-        $this->databaseConnection =  $container->get('database_connection');
+        $this->databaseConnection = $container->get('database_connection');
 
         $this->systemTable = $container->get('doctrine')->getManager()
             ->getClassMetadata('SystemBundle:System')->getTableName();
@@ -40,7 +40,7 @@ class System
 
     public function setConnection(Connection $connection)
     {
-        $this->databaseConnection =  $connection;
+        $this->databaseConnection = $connection;
     }
 
     /**
@@ -50,12 +50,11 @@ class System
      */
     private function getData()
     {
-        if($this->data) {
+        if ($this->data) {
             return $this->data;
         }
 
         try {
-            
             $rows = $this->data = $this->databaseConnection
                 ->createQueryBuilder()
                 ->select('*')
@@ -79,14 +78,14 @@ class System
 
             // Doctrine DBAL Exception not contains proper message
             // So we will just grab the PDOException instead
-            if($e instanceof \Doctrine\DBAL\DBALException) {
+            if ($e instanceof \Doctrine\DBAL\DBALException) {
                 $e = $e->getPrevious();
             }
 
             // Either database credential not valid or system table not exists
             // We will return empty data/array due to installation issue
             // @todo determine the effect to application behaviour
-            if($e instanceof \PDOException) {
+            if ($e instanceof \PDOException) {
                 return [];
             }
 
@@ -95,7 +94,7 @@ class System
     }
 
     /**
-     * Get a value by key
+     * Get a value by key.
      */
     public function get($key, $default = null)
     {
@@ -117,7 +116,7 @@ class System
     }
 
     /**
-     * Update system data on databse
+     * Update system data on databse.
      *
      * @param array $system
      */
@@ -132,9 +131,9 @@ class System
     }
 
     /**
-     * Check if a key is exists
+     * Check if a key is exists.
      *
-     * @return  booelan
+     * @return booelan
      */
     public function isExists($key)
     {
@@ -155,7 +154,8 @@ class System
         $this->data = [];
     }
 
-    public static function deNotated(&$arr, $path, $value) {
+    public static function deNotated(&$arr, $path, $value)
+    {
         $keys = explode('.', $path);
 
         while ($key = array_shift($keys)) {
@@ -168,9 +168,10 @@ class System
     /**
      * Get an item from an array using "dot" notation.
      *
-     * @param  array   $array
-     * @param  string  $key
-     * @param  mixed   $default
+     * @param array  $array
+     * @param string $key
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public static function getNotated($array, $key, $default = null)
@@ -184,7 +185,7 @@ class System
         }
 
         foreach (explode('.', $key) as $segment) {
-            if ( ! is_array($array) || ! array_key_exists($segment, $array)) {
+            if (!is_array($array) || !array_key_exists($segment, $array)) {
                 return $default;
             }
 

@@ -6,10 +6,8 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -17,7 +15,8 @@ class PageType extends AbstractType
 {
     private $container = null;
 
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container = $container;
     }
 
@@ -31,13 +30,13 @@ class PageType extends AbstractType
             ->add('slug', TextType::class, ['required' => true])
             ->add('content', TextType::class)
             ->add('layout', ChoiceType::class, [
-                    'choices' => $layoutOptions
+                    'choices' => $layoutOptions,
                 ])
             ->add('status', ChoiceType::class, [
                     'choices' => [
                         'Published' => 1,
                         'Pending Review' => 0,
-                    ]
+                    ],
                 ])
             ->add('Save', SubmitType::class);
     }
@@ -45,7 +44,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'required' => false
+            'required' => false,
         ]);
     }
 
@@ -55,9 +54,10 @@ class PageType extends AbstractType
     }
 
     /**
-     * Get layout options from current layout theme directory
+     * Get layout options from current layout theme directory.
      *
      * @todo handle the view if there is no theme
+     *
      * @return array
      */
     private function getLayoutOptions()
@@ -66,8 +66,8 @@ class PageType extends AbstractType
         $themesPath = $this->container->getParameter('themes_path');
 
         $layouts = [];
-        if(is_dir($layoutPath = $themesPath.'/'.$theme.'/_tpl/layout')) {
-            $files = (new Finder)->depth(0)
+        if (is_dir($layoutPath = $themesPath.'/'.$theme.'/_tpl/layout')) {
+            $files = (new Finder())->depth(0)
                 ->in($layoutPath);
         } else {
             $files = [];

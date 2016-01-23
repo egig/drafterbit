@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class LogDisplayFormatterPass implements CompilerPassInterface {
-
+class LogDisplayFormatterPass implements CompilerPassInterface
+{
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('dt_system.log.display_formatter')) {

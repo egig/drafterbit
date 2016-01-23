@@ -3,12 +3,9 @@
 namespace Drafterbit\Bundle\DistributionBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
 class InstallCommand extends ContainerAwareCommand
@@ -29,7 +26,7 @@ class InstallCommand extends ContainerAwareCommand
         $this->getContainer()->get('installer')->set('account', [
             'username' => $username,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
         ]);
 
         $createSchemeCommand = $this->getApplication()->find('doctrine:schema:create');
@@ -37,14 +34,14 @@ class InstallCommand extends ContainerAwareCommand
 
         $input = new ArrayInput(['command' => 'doctrine:schema:create']);
         $returnCode = $createSchemeCommand->run($input, $output);
-        
+
         $input = new ArrayInput(['command' => 'doctrine:fixtures:load', '--append' => true]);
         $returnCode = $loadFixturesCommand->run($input, $output);
-        if($returnCode == 0) {
-            $output->writeln("fixtures successfully loaded ...");
+        if ($returnCode == 0) {
+            $output->writeln('fixtures successfully loaded ...');
         }
 
-        $output->writeln("Installation Complete.");
+        $output->writeln('Installation Complete.');
     }
 
     protected function askUsername($input, $output)
@@ -61,35 +58,36 @@ class InstallCommand extends ContainerAwareCommand
         return $username;
     }
 
-    protected function askPassword($input, $output) {
-
+    protected function askPassword($input, $output)
+    {
         $helper = $this->getHelper('question');
         $password = $helper->ask($input, $output, new Question('Password for the Administrator : '));
 
         return $password;
     }
-    
+
     protected function askEmail($input, $output)
     {
         $helper = $this->getHelper('question');
-        
+
         $email = $helper->ask($input, $output, new Question('Email for the Administrator : '));
         while (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            $output->writeln("Not a valid email");
+            $output->writeln('Not a valid email');
             $email = $helper->ask($input, $output, new Question('Email for the Administrator : '));
         }
 
         return $email;
     }
 
-    protected function validateUsername($username) {
+    protected function validateUsername($username)
+    {
 
         // each array entry is an special char allowed
         // besides the ones from ctype_alnum
-        $allowed = array(".", "-", "_");
+        $allowed = array('.', '-', '_');
 
-        if (!ctype_alnum( str_replace($allowed, '', $username ))) {
-            return "Invalid Username";
+        if (!ctype_alnum(str_replace($allowed, '', $username))) {
+            return 'Invalid Username';
         }
 
         // username is valid

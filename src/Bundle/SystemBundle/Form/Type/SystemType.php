@@ -4,11 +4,8 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Drafterbit\System\FrontPage\FrontPageProvider;
-use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -27,12 +24,12 @@ class SystemType extends AbstractType
             ->add('site_name', TextType::class, ['data' => $this->data('system.site_name')])
             ->add('site_description', TextType::class, ['data' => $this->data('system.site_description')])
             ->add('frontpage', FrontpageType::class, [
-                'data' => $this->data('system.frontpage')
+                'data' => $this->data('system.frontpage'),
             ])
             ->add('email', null, ['data' => $this->data('system.email')])
             ->add('timezone', ChoiceType::class, [
                 'data' => $this->data('system.timezone'),
-                'choices' => array_combine(timezone_identifiers_list(), timezone_identifiers_list())
+                'choices' => array_combine(timezone_identifiers_list(), timezone_identifiers_list()),
             ])
             ->add('date_format', null, ['data' => $this->data('system.date_format')])
             ->add('time_format', null, ['data' => $this->data('system.time_format')]);
@@ -44,7 +41,7 @@ class SystemType extends AbstractType
             'required' => false,
             'mapped' => false,
             'csrf_protection' => true,
-            'intention' => 'system_type'
+            'intention' => 'system_type',
         ]);
     }
 

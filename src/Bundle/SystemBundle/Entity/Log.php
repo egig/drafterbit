@@ -11,15 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Log
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+      * @ORM\Id
+      * @ORM\Column(type="integer")
+      * @ORM\GeneratedValue(strategy="AUTO")
+      */
      protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=45)
-     */
+     /**
+      * @ORM\Column(type="string", length=45)
+      */
      protected $channel;
 
     /**

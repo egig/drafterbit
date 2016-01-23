@@ -5,13 +5,12 @@ namespace Drafterbit\Bundle\DistributionBundle\Installer\Step;
 use Drafterbit\Bundle\DistributionBundle\Installer\Form\DoctrineStepType;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
-use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
 
-class DoctrineStep implements StepInterface {
-
+class DoctrineStep implements StepInterface
+{
     private $container;
 
     public function __construct($container)
@@ -53,25 +52,26 @@ class DoctrineStep implements StepInterface {
      * @todo clean table name
      * @todo create generated secret key
      */
-    public function process($data, $installer = null) {
-
+    public function process($data, $installer = null)
+    {
         return $this->testConnectionFailed($data);
     }
 
-    private function testConnectionFailed($param) {
-         $connection  = $this->container->get('doctrine.dbal.connection_factory')
+    private function testConnectionFailed($param)
+    {
+        $connection = $this->container->get('doctrine.dbal.connection_factory')
             ->createConnection($param);
 
-        try  {
+        try {
             $connection->connect();
             $connection->exec('USE '.$param['name']);
+
             return false;
         } catch (\Exception $e) {
-
-            if($e instanceof \Doctrine\DBAL\DBALException) {
+            if ($e instanceof \Doctrine\DBAL\DBALException) {
                 $e = $e->getPrevious();
             }
-            if($e instanceof \PDOException) {
+            if ($e instanceof \PDOException) {
                 return $e->getMessage();
             }
 
@@ -81,14 +81,14 @@ class DoctrineStep implements StepInterface {
 
     public function isDone()
     {
-        $installer  = $this->container->get('installer');
+        $installer = $this->container->get('installer');
 
         $param = $installer->get('doctrine');
         $installedParam = [];
         $parametersPath = $this->container->getParameter('parameters_path');
         $temp = Yaml::parse(file_get_contents($parametersPath.'/parameters.yml'));
 
-        if($temp){
+        if ($temp) {
             $parameters = $temp['parameters'];
             $installedParam['driver'] = $parameters['database_driver'];
             $installedParam['host'] = $parameters['database_host'];
@@ -100,7 +100,7 @@ class DoctrineStep implements StepInterface {
             $installedParam['path'] = isset($parameters['database_path']) ? $parameters['database_path'] : null;
         }
 
-        if($param == $installedParam) {
+        if ($param == $installedParam) {
             return !$this->testConnectionFailed($param);
         }
 
@@ -117,20 +117,20 @@ class DoctrineStep implements StepInterface {
     }
 
     /**
-     * Creat the database schema
+     * Creat the database schema.
      */
     public function createDatabaseSchema($em)
     {
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
 
-        if ( ! empty($metadatas)) {
+        if (!empty($metadatas)) {
             $schemaTool = new SchemaTool($em);
             $schemaTool->createSchema($metadatas);
         }
     }
 
     /**
-     * Load data ficures
+     * Load data ficures.
      */
     public function loadFixtures($em)
     {
@@ -157,6 +157,6 @@ class DoctrineStep implements StepInterface {
         //$executor->setLogger(function($message) use ($output) {
         //    $output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
         //});
-        $executor->execute($fixtures, TRUE);
+        $executor->execute($fixtures, true);
     }
 }

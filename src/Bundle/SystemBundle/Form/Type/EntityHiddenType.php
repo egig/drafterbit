@@ -7,7 +7,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Drafterbit\Bundle\SystemBundle\Form\DataTransformer\EntityToIdTransformer;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class EntityHiddenType extends AbstractType

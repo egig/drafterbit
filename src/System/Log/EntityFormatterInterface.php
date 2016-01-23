@@ -2,8 +2,8 @@
 
 namespace Drafterbit\System\Log;
 
-interface EntityFormatterInterface {
-
+interface EntityFormatterInterface
+{
     public function getName();
 
     public function format($id);

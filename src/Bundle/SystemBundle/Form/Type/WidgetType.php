@@ -5,7 +5,6 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class WidgetType extends AbstractType
@@ -26,7 +25,7 @@ class WidgetType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection' => true,
             'intention' => static::INTENTION,
-            'allow_extra_fields' => true
+            'allow_extra_fields' => true,
         ]);
     }
 

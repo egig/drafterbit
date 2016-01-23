@@ -17,18 +17,18 @@ class Revision
     }
 
     /**
-     * Create a post revision
+     * Create a post revision.
      *
-     * @param int $id
+     * @param int    $id
      * @param string $newTitle
      * @param string $newContent
-     * @param Post $new post object
-     * @param boolean $force
+     * @param Post   $new        post object
+     * @param bool   $force
      */
     public function create($currentTitle, $currentContent, Post $new, $force = false)
     {
-        if(!$force) {
-            if($currentTitle == $new->getTitle() &&
+        if (!$force) {
+            if ($currentTitle == $new->getTitle() &&
                 $currentContent == $new->getContent()) {
                 return;
             }
@@ -44,7 +44,7 @@ class Revision
         $post->setSlug($new->getSlug());
         $post->setCreatedAt(new \DateTime());
         $post->setUpdatedAt(new \DateTime());
-        $post->setDeletedAt(NULL);
+        $post->setDeletedAt(null);
         $post->setPublishedAt($new->getPublishedAt());
         $post->setStatus($new->getStatus());
 

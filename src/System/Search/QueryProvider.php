@@ -4,27 +4,27 @@ namespace Drafterbit\System\Search;
 
 use Symfony\Component\DependencyInjection\Container;
 
-abstract class QueryProvider {
+abstract class QueryProvider
+{
+    /**
+     * The Contrainer.
+     *
+     * @var Container
+     */
+    protected $container;
 
-	/**
-	 * The Contrainer.
-	 *
-	 * @var Container
-	 */
-	protected $container;
-
-	/**
-	 * The DatabaseConnection.
-	 *
-	 * @var Dovtrine\DBAL\Connection $connection
-	 */
+    /**
+     * The DatabaseConnection.
+     *
+     * @var Dovtrine\DBAL\Connection
+     */
     protected $databaseConnection;
 
     /**
-     * The constructor
+     * The constructor.
      *
      * @param Container $container
-     */    
+     */
     public function __construct($container)
     {
         $this->container = $container;
@@ -32,16 +32,16 @@ abstract class QueryProvider {
     }
 
     /**
-     * Get the query to be executed during search
+     * Get the query to be executed during search.
      *
      * @return Doctrine\DBAL\Query\QueryBuilder
      */
-    abstract function getQuery();
+    abstract public function getQuery();
 
-     /**
+    /**
      * Get the result formatter.
      *
      * @return
      */
-    abstract function getResultFormatter(Container $container = null);
+    abstract public function getResultFormatter(Container $container = null);
 }

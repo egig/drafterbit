@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class ExtensionsPass implements CompilerPassInterface {
-
+class ExtensionsPass implements CompilerPassInterface
+{
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('extension_manager')) {

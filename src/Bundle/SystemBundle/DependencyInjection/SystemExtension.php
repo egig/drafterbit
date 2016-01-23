@@ -14,7 +14,7 @@ class SystemExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = $this->getConfiguration($configs, $container);
-        $config = (new Processor)->processConfiguration($configuration, $configs);
+        $config = (new Processor())->processConfiguration($configuration, $configs);
         $container->setParameter(SystemBundle::NAVIGATION, $config['navigation']);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

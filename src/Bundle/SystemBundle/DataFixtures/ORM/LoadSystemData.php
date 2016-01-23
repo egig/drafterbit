@@ -17,7 +17,7 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
     private $container;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -25,7 +25,8 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @todo get user email during install
      */
     public function load(ObjectManager $manager)
@@ -33,10 +34,10 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
         $siteName = 'My Awesome Website';
         $siteDescription = 'Just an Awesome DrafTerbit Website';
 
-        if($this->container->has('installer')) {
+        if ($this->container->has('installer')) {
             $data = $this->container->get('installer')->get('site');
-            if($data) {
-                $siteName =  $data['sitename'];
+            if ($data) {
+                $siteName = $data['sitename'];
                 $siteDescription = $data['sitedesc'];
             }
         }
@@ -49,14 +50,14 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
             'system.frontpage' => 'blog',
             'system.date_format' => 'd m Y',
             'system.time_format' => 'H:i',
-            'theme.'.$theme.'.menu' => '{"main":"'.$this->getReference('main-menu')->getId().'","side":"0"}'
+            'theme.'.$theme.'.menu' => '{"main":"'.$this->getReference('main-menu')->getId().'","side":"0"}',
         ];
 
         $this->container->get('system')->update($initData);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

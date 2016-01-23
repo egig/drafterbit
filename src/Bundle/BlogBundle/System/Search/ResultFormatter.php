@@ -7,13 +7,13 @@ use Drafterbit\System\Search\ResultFormatterInterface;
 class ResultFormatter implements ResultFormatterInterface
 {
     protected $container;
-    
+
     public function __construct($container)
     {
         $this->container = $container;
     }
 
-    function getUrl($item)
+    public function getUrl($item)
     {
         $time = strtotime($item['created_at']);
         $year = date('Y', $time);
@@ -28,12 +28,12 @@ class ResultFormatter implements ResultFormatterInterface
         );
     }
 
-    function getTitle($item)
+    public function getTitle($item)
     {
         return $item['title'];
     }
 
-    function getSummary($item)
+    public function getSummary($item)
     {
         // only diplay some text
         return substr(strip_tags($item['content']), 0, 250);

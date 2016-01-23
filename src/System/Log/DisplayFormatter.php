@@ -2,7 +2,6 @@
 
 namespace Drafterbit\System\Log;
 
-use Drafterbit\System\Log\EntityFormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DisplayFormatter
@@ -21,15 +20,16 @@ class DisplayFormatter
      */
     protected $entityFormatters = [];
 
-    function addEntityFormatter(EntityFormatterInterface $entityFormatter)
+    public function addEntityFormatter(EntityFormatterInterface $entityFormatter)
     {
         $this->entityFormatters[$entityFormatter->getName()] = $entityFormatter;
     }
 
     /**
-     * Format log message
+     * Format log message.
      *
-     * @param  string $line
+     * @param string $line
+     *
      * @return string
      */
     public function format($line, $context = null)
@@ -48,7 +48,7 @@ class DisplayFormatter
     {
         $entity = trim($entityPlaceholder, '%');
 
-        if($this->hasEntityFormatter($entity)) {
+        if ($this->hasEntityFormatter($entity)) {
             return $this->getEntityFormatter($entity)->format($id);
         }
 

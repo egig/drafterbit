@@ -4,7 +4,6 @@ namespace Drafterbit\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +24,7 @@ class GroupType extends AbstractType
         $rolesGroup = $this->getRoles();
 
         $roles = [];
-        foreach($rolesGroup as $bundle => $attributes) {
+        foreach ($rolesGroup as $bundle => $attributes) {
             foreach ($attributes as $key => $value) {
                 $roles[$value] = $key;
             }
@@ -36,10 +35,10 @@ class GroupType extends AbstractType
             ->add('name', TextType::class)
             ->add('description', TextareaType::class, ['required' => false])
             ->add('roles', ChoiceType::class, [
-                'choices'  => $roles,
+                'choices' => $roles,
                 'required' => false,
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
             ])
             ->add('Save', SubmitType::class);
     }
@@ -54,12 +53,10 @@ class GroupType extends AbstractType
         $bundles = $this->container->get('kernel')->getBundles();
         $roles = [];
         foreach ($bundles as $name => $bundle) {
-
-            if($extension = $bundle->getContainerExtension()) {
-
+            if ($extension = $bundle->getContainerExtension()) {
                 $parameter = $extension->getAlias().'.roles';
                 $section = ucfirst(preg_replace('/^dt_/', '', $extension->getAlias()));
-                if($this->container->hasParameter($parameter)){
+                if ($this->container->hasParameter($parameter)) {
                     $roles[$section] = $this->container->getParameter($parameter);
                 }
             }

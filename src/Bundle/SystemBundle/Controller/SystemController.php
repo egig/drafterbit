@@ -4,15 +4,12 @@ namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\SystemBundle\Entity\Panel;
 
 class SystemController extends Controller
@@ -26,21 +23,22 @@ class SystemController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('SystemBundle:Panel');
 
-        $panelConfigs = $repo->findBy(['user' => $this->getUser()]);;
+        $panelConfigs = $repo->findBy(['user' => $this->getUser()]);
 
         $panels = $this->buildPanels($panelConfigs);
 
         return [
             'left_panels' => $panels['left'],
-            'right_panels'=> $panels['right'],
-            'page_title'  => $this->get('translator')->trans('Dashboard')
+            'right_panels' => $panels['right'],
+            'page_title' => $this->get('translator')->trans('Dashboard'),
         ];
     }
 
     /**
-     * Build panel data to be displayed;
+     * Build panel data to be displayed;.
      *
      * @todo merge with DashboardController::buildPanels
+     *
      * @return array
      */
     private function buildPanels($panelConfig)
@@ -48,8 +46,7 @@ class SystemController extends Controller
         $panels = ['left' => [], 'right' => []];
 
         foreach ($panelConfig as $config) {
-
-            $panel = new \StdClass;
+            $panel = new \StdClass();
             $panel->id = $config->getId();
             $panel->sequence = $config->getSequence();
             $panel->status = $config->getStatus();
@@ -62,10 +59,11 @@ class SystemController extends Controller
             $panels[$config->getPosition()][] = $panel;
         }
 
-        $sortFunction = function($a, $b) {
-            if($a->sequence == $b->sequence) {
+        $sortFunction = function ($a, $b) {
+            if ($a->sequence == $b->sequence) {
                 return 0;
             }
+
             return $b->sequence > $a->sequence ? -1 : 1;
         };
 
@@ -86,11 +84,11 @@ class SystemController extends Controller
         $token = $request->request->get('_token');
         $data = [
             'view_id' => $viewId,
-            'page_title' => $this->get('translator')->trans('Log')
+            'page_title' => $this->get('translator')->trans('Log'),
         ];
 
-        if($action) {
-            if(!$this->isCsrfTokenValid($viewId, $token)) {
+        if ($action) {
+            if (!$this->isCsrfTokenValid($viewId, $token)) {
                 throw $this->createAccessDeniedException();
             }
 
@@ -109,14 +107,14 @@ class SystemController extends Controller
                 case 'clear':
                     $logs = $repo->findAll();
                      foreach ($logs as $log) {
-                        $em->remove($log);
-                    }
+                         $em->remove($log);
+                     }
                     $message = 'All logs deleted';
                     break;
                 default:
                     break;
             }
-            
+
             $em->flush();
             $data['notif'] = ['message' => $this->get('translator')->trans($message), 'status' => 'success'];
         }
@@ -128,11 +126,10 @@ class SystemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $logs = $em->getRepository('SystemBundle:Log')->findAll();
-        
+
         $logs = array_reverse($logs);
         $logArr = [];
         foreach ($logs as $log) {
-            
             $data = [];
             $data[] = $log->getid();
             $data[] = date('d-m-Y H:i:s', $log->getTime());
@@ -141,9 +138,9 @@ class SystemController extends Controller
             $logArr[] = $data;
         }
 
-        $ob = new \StdClass;
+        $ob = new \StdClass();
         $ob->data = $logArr;
-        $ob->recordsTotal= count($logArr);
+        $ob->recordsTotal = count($logArr);
         $ob->recordsFiltered = count($logArr);
 
         return new jsonResponse($ob);
@@ -157,42 +154,40 @@ class SystemController extends Controller
     {
         $notif = false;
 
-        if($message = $this->get('session')->getFlashBag()->get('message')) {
-            $status =  $this->get('session')->getFlashBag()->get('status');
+        if ($message = $this->get('session')->getFlashBag()->get('message')) {
+            $status = $this->get('session')->getFlashBag()->get('status');
             $notif = ['message' => $message[0], 'status' => $status[0]];
         }
 
         $cacheDir = $this->get('kernel')->getCacheDir();
-        $finder = (new Finder)->in($cacheDir)->depth(0);
+        $finder = (new Finder())->in($cacheDir)->depth(0);
 
         $caches = [];
 
         foreach ($finder as $item) {
             $caches[] = [
                 'key' => $item->getFilename(),
-                'size' => (filesize($item->getRealPath())/1000).' kb',
+                'size' => (filesize($item->getRealPath()) / 1000).' kb',
             ];
         }
 
         return [
             'page_title' => $this->get('translator')->trans('Cache'),
             'notif' => $notif,
-            'caches' => $caches
+            'caches' => $caches,
         ];
     }
 
     /**
-     * Cache clearer controller
-     *
+     * Cache clearer controller.
      */
     public function clearCacheAction(Request $request)
     {
-        if($this->get('kernel')->getEnvironment() == 'dev') {
+        if ($this->get('kernel')->getEnvironment() == 'dev') {
             $message = $this->get('translator')
                 ->trans('Cache can\'t be cleared from web interface in dev mode');
             $status = 'warning';
         } else {
-
             $cacheDir = $this->container->getParameter('kernel.cache_dir');
             $filesystem = $this->get('filesystem');
             $this->get('cache_clearer')->clear($cacheDir);
@@ -215,7 +210,7 @@ class SystemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $panelConfigs = $panelConfig = $em->getRepository('SystemBundle:Panel')
-            ->findBy(['user' => $this->getUser()]);;
+            ->findBy(['user' => $this->getUser()]);
 
         $panels = $this->buildPanels($panelConfigs);
 
@@ -223,7 +218,7 @@ class SystemController extends Controller
             'panels' => $this->get('dashboard')->getPanelTypes(),
             'left_panels' => $panels['left'],
             'right_panels' => $panels['right'],
-            'page_title' => $this->get('translator')->trans('Preferences')
+            'page_title' => $this->get('translator')->trans('Preferences'),
         ];
     }
 }

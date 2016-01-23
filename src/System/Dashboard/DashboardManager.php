@@ -30,14 +30,14 @@ class DashboardManager
     }
 
     /**
-     * Get panel by name
+     * Get panel by name.
      *
      * @return PanelType
      */
     public function getPanelType($name)
     {
         // @todo validate name ??
-        if(isset($this->panelTypes[$name])) {
+        if (isset($this->panelTypes[$name])) {
             return $this->panelTypes[$name];
         }
 

@@ -30,7 +30,7 @@ class UserType extends AbstractType
                 'invalid_message' => 'The password fields must match',
                 'options' => array('attr' => array('class' => 'form-control')),
                 'required' => true,
-                'first_options'  => array('label' => 'Repeat Password'),
+                'first_options' => array('label' => 'Repeat Password'),
                 'second_options' => array('label' => 'Password'),
             ))
             ->add('realname', TextType::class)
@@ -42,10 +42,10 @@ class UserType extends AbstractType
                 'multiple' => true,
             ])
             ->add('enabled', ChoiceType::class, [
-                'choices'  => ['Enabled' => '1', 'Disabled' => ''],
+                'choices' => ['Enabled' => '1', 'Disabled' => ''],
                 'required' => true,
                 'multiple' => false,
-                'expanded' => true
+                'expanded' => true,
             ])
             ->add('Save', SubmitType::class);
     }
@@ -53,7 +53,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'required' => false
+            'required' => false,
         ]);
     }
 

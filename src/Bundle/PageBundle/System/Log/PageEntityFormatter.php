@@ -16,14 +16,14 @@ class PageEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $post = $em->getRepository('PageBundle:Page')->find($id);
 
-
         $url = $this->getKernel()
             ->getContainer()
             ->get('router')
             ->generate('dt_page_edit', ['id' => $id]);
 
-        if($post) {
+        if ($post) {
             $label = $post->getTitle();
+
             return '<a href="'.$url.'">'.$label.'</a>';
         }
 

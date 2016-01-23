@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Comment
+ * Comment.
  *
  * @ORM\Table("comment")
  * @ORM\Entity
@@ -18,7 +18,7 @@ class Comment
     const STATUS_SPAM = 2;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -87,14 +87,14 @@ class Comment
     private $deletedAt;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="subscribe", type="boolean")
      */
     private $subscribe;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="status", type="smallint")
      */
@@ -114,11 +114,10 @@ class Comment
      */
     private $parent;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -126,9 +125,10 @@ class Comment
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return Comment
      */
     public function setContent($content)
@@ -139,9 +139,9 @@ class Comment
     }
 
     /**
-     * Get content
+     * Get content.
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -149,9 +149,10 @@ class Comment
     }
 
     /**
-     * Set authorName
+     * Set authorName.
      *
      * @param string $authorName
+     *
      * @return Comment
      */
     public function setAuthorName($authorName)
@@ -162,9 +163,9 @@ class Comment
     }
 
     /**
-     * Get authorName
+     * Get authorName.
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorName()
     {
@@ -172,9 +173,10 @@ class Comment
     }
 
     /**
-     * Set authorEmail
+     * Set authorEmail.
      *
      * @param string $authorEmail
+     *
      * @return Comment
      */
     public function setAuthorEmail($authorEmail)
@@ -185,9 +187,9 @@ class Comment
     }
 
     /**
-     * Get authorEmail
+     * Get authorEmail.
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorEmail()
     {
@@ -195,9 +197,10 @@ class Comment
     }
 
     /**
-     * Set authorUrl
+     * Set authorUrl.
      *
      * @param string $authorUrl
+     *
      * @return Comment
      */
     public function setAuthorUrl($authorUrl)
@@ -208,9 +211,9 @@ class Comment
     }
 
     /**
-     * Get authorUrl
+     * Get authorUrl.
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorUrl()
     {
@@ -218,9 +221,10 @@ class Comment
     }
 
     /**
-     * Set author Ip address
+     * Set author Ip address.
      *
      * @param string $ipAddress
+     *
      * @return Comment
      */
     public function setAuthorIpAddress($ipAddress)
@@ -231,9 +235,9 @@ class Comment
     }
 
     /**
-     * Get authorIpAddress
+     * Get authorIpAddress.
      *
-     * @return string 
+     * @return string
      */
     public function getAuthorIpAddress()
     {
@@ -241,9 +245,10 @@ class Comment
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Comment
      */
     public function setCreatedAt($createdAt)
@@ -254,9 +259,9 @@ class Comment
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -264,9 +269,10 @@ class Comment
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Comment
      */
     public function setUpdatedAt($updatedAt)
@@ -277,9 +283,9 @@ class Comment
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -287,9 +293,10 @@ class Comment
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Comment
      */
     public function setDeletedAt($deletedAt)
@@ -300,9 +307,9 @@ class Comment
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -310,9 +317,10 @@ class Comment
     }
 
     /**
-     * Set subscribe
+     * Set subscribe.
      *
-     * @param boolean $subscribe
+     * @param bool $subscribe
+     *
      * @return Comment
      */
     public function setSubscribe($subscribe)
@@ -323,9 +331,9 @@ class Comment
     }
 
     /**
-     * Get subscribe
+     * Get subscribe.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getSubscribe()
     {
@@ -333,9 +341,10 @@ class Comment
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param boolean $status
+     * @param bool $status
+     *
      * @return Comment
      */
     public function setStatus($status)
@@ -346,9 +355,9 @@ class Comment
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getStatus()
     {
@@ -356,9 +365,10 @@ class Comment
     }
 
     /**
-     * Set post
+     * Set post.
      *
      * @param \stdClass $post
+     *
      * @return Comment
      */
     public function setPost($post)
@@ -369,9 +379,9 @@ class Comment
     }
 
     /**
-     * Get post
+     * Get post.
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getPost()
     {
@@ -379,9 +389,10 @@ class Comment
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param \stdClass $parent
+     *
      * @return Comment
      */
     public function setParent($parent)
@@ -392,9 +403,9 @@ class Comment
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getParent()
     {

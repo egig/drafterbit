@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Page
+ * Page.
  *
  * @ORM\Entity
  * @ORM\Table(name="page")
@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Page
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -83,17 +83,16 @@ class Page
     private $layout;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
     private $status;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -101,9 +100,9 @@ class Page
     }
 
     /**
-     * Get idUser
+     * Get idUser.
      *
-     * @return integer 
+     * @return int
      */
     public function getUser()
     {
@@ -111,9 +110,10 @@ class Page
     }
 
     /**
-     * Set idUser
+     * Set idUser.
      *
-     * @param integer $idUser
+     * @param int $idUser
+     *
      * @return Page
      */
     public function setUser($user)
@@ -124,9 +124,10 @@ class Page
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Page
      */
     public function setTitle($title)
@@ -137,9 +138,9 @@ class Page
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -147,9 +148,10 @@ class Page
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Page
      */
     public function setSlug($slug)
@@ -160,9 +162,9 @@ class Page
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -170,9 +172,10 @@ class Page
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return Page
      */
     public function setContent($content)
@@ -183,9 +186,9 @@ class Page
     }
 
     /**
-     * Get content
+     * Get content.
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -193,9 +196,10 @@ class Page
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Page
      */
     public function setCreatedAt($createdAt)
@@ -206,9 +210,9 @@ class Page
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -216,9 +220,10 @@ class Page
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Page
      */
     public function setUpdatedAt($updatedAt)
@@ -229,9 +234,9 @@ class Page
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -239,9 +244,10 @@ class Page
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Page
      */
     public function setDeletedAt($deletedAt)
@@ -252,9 +258,9 @@ class Page
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -262,9 +268,10 @@ class Page
     }
 
     /**
-     * Set layout
+     * Set layout.
      *
      * @param string $layout
+     *
      * @return Page
      */
     public function setLayout($layout)
@@ -275,9 +282,9 @@ class Page
     }
 
     /**
-     * Get layout
+     * Get layout.
      *
-     * @return string 
+     * @return string
      */
     public function getLayout()
     {
@@ -285,9 +292,10 @@ class Page
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param boolean $status
+     * @param bool $status
+     *
      * @return Page
      */
     public function setStatus($status)
@@ -298,9 +306,9 @@ class Page
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getStatus()
     {

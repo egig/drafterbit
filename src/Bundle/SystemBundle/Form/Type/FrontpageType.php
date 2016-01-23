@@ -3,7 +3,6 @@
 namespace Drafterbit\Bundle\SystemBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\System\FrontPage\FrontPageProvider;
@@ -27,14 +26,14 @@ class FrontpageType extends AbstractType
         // @todo simplify frontpage options
         foreach ($this->frontpageProvider->all() as $name => $frontpages) {
             foreach ($frontpages as $frontpage) {
-                if($frontpage->getOptions()) {
-                   $options = array_merge($options, $frontpage->getOptions());
+                if ($frontpage->getOptions()) {
+                    $options = array_merge($options, $frontpage->getOptions());
                 }
             }
         }
 
         $resolver->setDefaults(array(
-            'choices' => $options
+            'choices' => $options,
         ));
     }
 

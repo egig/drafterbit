@@ -2,16 +2,12 @@
 
 namespace Drafterbit\Bundle\BlogBundle\Controller;
 
-use Doctrine\ORM\Query\Expr;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Drafterbit\Bundle\BlogBundle\Entity\Comment;
 use Drafterbit\Bundle\BlogBundle\Form\Type\CommentType;
 
@@ -29,6 +25,7 @@ class FrontendController extends Controller
 
         $data['posts'] = $posts;
         $data['pagination'] = $this->getPagination($page, $request);
+
         return $data;
     }
 
@@ -41,7 +38,7 @@ class FrontendController extends Controller
 
         $posts = $this->getPostlist($page, 'tag', $slug);
 
-        if(!$posts) {
+        if (!$posts) {
             throw $this->createNotFoundException();
         }
 
@@ -61,7 +58,7 @@ class FrontendController extends Controller
 
         $posts = $this->getPostlist($page, 'category', $slug);
 
-        if(!$posts) {
+        if (!$posts) {
             throw $this->createNotFoundException();
         }
 
@@ -81,7 +78,7 @@ class FrontendController extends Controller
 
         $posts = $this->getPostlist($page, 'author', $username);
 
-        if(!$posts) {
+        if (!$posts) {
             throw $this->createNotFoundException();
         }
 
@@ -98,15 +95,15 @@ class FrontendController extends Controller
         $data['next'] = false;
 
         if ($page > 1) {
-            if($page == 2) {
+            if ($page == 2) {
                 $data['prev'] = $request->getSchemeAndHttpHost().$request->getBaseUrl().$request->getPathInfo();
             } else {
-                $data['prev'] = $this->createPageUrl($page-1, $request);
+                $data['prev'] = $this->createPageUrl($page - 1, $request);
             }
         }
 
-        if ((boolean) count($this->getPostlist($page+1, $filterKey, $filterValue))) {
-            $data['next'] = $this->createPageUrl($page+1, $request);
+        if ((boolean) count($this->getPostlist($page + 1, $filterKey, $filterValue))) {
+            $data['next'] = $this->createPageUrl($page + 1, $request);
         }
 
         return $data;
@@ -115,30 +112,31 @@ class FrontendController extends Controller
     private function createPageUrl($page, $request)
     {
         if (null !== $qs = $request->getQueryString()) {
-           $qs = '?'.$qs;
-           $qs .= '&p='.$page;
+            $qs = '?'.$qs;
+            $qs .= '&p='.$page;
         } else {
-           $qs .= '?p='.$page;
+            $qs .= '?p='.$page;
         }
 
         return $request->getSchemeAndHttpHost().$request->getBaseUrl().$request->getPathInfo().$qs;
     }
 
     /**
-     * Get pos list for front end view
+     * Get pos list for front end view.
      *
-     * @param int $page
+     * @param int    $page
      * @param string $filterKey
-     * @param mixed $filterValue
+     * @param mixed  $filterValue
+     *
      * @return array
      */
     private function getPostlist($page, $filterKey = null, $filterValue = null)
     {
         $perPage = $this->get('system')->get('blog.post_perpage', 5);
 
-        if($perPage === '') {
-            throw new \RuntimeException("Blog Post per Page configuration detected as empty string,
-                it could be someone changes database value or validation does not work when system setting save.");
+        if ($perPage === '') {
+            throw new \RuntimeException('Blog Post per Page configuration detected as empty string,
+                it could be someone changes database value or validation does not work when system setting save.');
         }
 
         $repo = $this->getDoctrine()->getManager()->getRepository('BlogBundle:Post');
@@ -161,7 +159,7 @@ class FrontendController extends Controller
         foreach ($posts as $post) {
 
             // Create post excerpt
-            if(strrpos($post->getContent(), self::MORE_TAG) !== false) {
+            if (strrpos($post->getContent(), self::MORE_TAG) !== false) {
                 $post->excerpt = current(explode(self::MORE_TAG, $post->getContent())).'&hellip;';
             } else {
                 $post->excerpt = false;
@@ -198,11 +196,11 @@ class FrontendController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        return ['post'  => $post];
+        return ['post' => $post];
     }
 
     /**
-     * Comment Submission controller
+     * Comment Submission controller.
      *
      * @Route("/comment/submit", name="dt_blog_comment_submit")
      *
@@ -213,7 +211,7 @@ class FrontendController extends Controller
         $referer = $request->server->get('HTTP_REFERER');
         $requestedComment = $request->request->get('comment');
 
-        if($parentId = $requestedComment['parent']) {
+        if ($parentId = $requestedComment['parent']) {
             $parent = $this->getDoctrine()->getManager()
                 ->getRepository('BlogBundle:Comment')
                 ->find($parentId);
@@ -221,20 +219,20 @@ class FrontendController extends Controller
             $parent = null;
         }
 
-        $newComment = new Comment;
+        $newComment = new Comment();
         $newComment->setParent($parent);
 
         $form = $this->createForm(CommentType::class, $newComment);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $comment = $form->getData();
-            $comment->setCreatedAt(new \DateTime);
-            $comment->setUpdatedAt(new \DateTime);
-            $comment->setDeletedAt(NULL);
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setUpdatedAt(new \DateTime());
+            $comment->setDeletedAt(null);
 
             // @todo status
-            if($this->get('system')->get('blog.comment_moderation')){
+            if ($this->get('system')->get('blog.comment_moderation')) {
                 $comment->setStatus(0);
             } else {
                 $comment->setStatus(1);
@@ -246,15 +244,14 @@ class FrontendController extends Controller
 
             $this->sendMails($comment);
 
-            if($this->get('system')->get('blog.comment_moderation')){
+            if ($this->get('system')->get('blog.comment_moderation')) {
                 $data['post_url'] = $referer;
+
                 return $this->render('BlogBundle:Comment:pending.html.twig', $data);
             }
 
             return new RedirectResponse($referer.'#comment-'.$comment->getId());
-
         } else {
-
             $errors = [];
 
             // @todo clean this, make a recursive
@@ -262,9 +259,8 @@ class FrontendController extends Controller
             $formView = $form->createView();
 
             foreach ($formView as $inputName => $view) {
-
-                if(isset($view->vars['errors'])) {
-                    foreach($view->vars['errors'] as $error) {
+                if (isset($view->vars['errors'])) {
+                    foreach ($view->vars['errors'] as $error) {
                         $errors[$view->vars['label']] = $error->getMessage();
                     }
                 }
@@ -273,6 +269,7 @@ class FrontendController extends Controller
             $data['post_url'] = $referer;
             $data['errors'] = $errors;
             $content = $this->renderView('BlogBundle:Comment:error.html.twig', $data);
+
             return new Response($content);
         }
     }
@@ -300,7 +297,7 @@ class FrontendController extends Controller
             'comment' => $comment,
             'post' => $post,
             'unsubscribe_url' => $this->generateUrl('dt_blog_comment_unsubscribe',
-                ['email' => $comment->getAuthorEmail()], true)
+                ['email' => $comment->getAuthorEmail()], true),
         ];
         $messageBody = $this->renderView('BlogBundle:Comment:mail.html.twig', $data);
 
@@ -320,7 +317,7 @@ class FrontendController extends Controller
         $subscribers = [];
 
         foreach ($comments as $comment) {
-            if($comment->getSubscribe()) {
+            if ($comment->getSubscribe()) {
                 $subscribers[] = $comment->getAuthorEmail();
             }
         }

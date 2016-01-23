@@ -6,8 +6,8 @@ use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 
-abstract class WebTestCase extends BaseTestCase  {
-
+abstract class WebTestCase extends BaseTestCase
+{
     public static $admin;
     protected $client;
 
@@ -17,31 +17,35 @@ abstract class WebTestCase extends BaseTestCase  {
             ->getContainer()->getParameter('admin');
     }
 
-    protected function getAuthorizedClient() {
-        if(!$this->client) {
+    protected function getAuthorizedClient()
+    {
+        if (!$this->client) {
             $this->client = $this->createAuthorizedClient();
         }
 
         return $this->client;
     }
 
-    protected function createAuthorizedClient() {
+    protected function createAuthorizedClient()
+    {
         return static::authorizeClient(static::createClient());
     }
 
     /**
-     * Create admin path
+     * Create admin path.
      *
      * @return string
      */
-    protected function adminPath($path) {
+    protected function adminPath($path)
+    {
         return '/'.static::$admin.'/'.trim($path, '/');
     }
 
     /**
-     * Create authorized client
+     * Create authorized client.
      *
      * @link http://stackoverflow.com/questions/14957807/symfony2-tests-with-fosuserbundle/27223293#27223293
+     *
      * @return Client
      */
     public static function authorizeClient(Client $client)
@@ -62,7 +66,7 @@ abstract class WebTestCase extends BaseTestCase  {
 
         // save the login token into the session and put it in a cookie
         $token = $container->get('security.token_storage')->getToken();
-        $session->set('_security_' . $firewallName, serialize($token));
+        $session->set('_security_'.$firewallName, serialize($token));
         $session->save();
         $cookie = new Cookie($session->getName(), $session->getId());
         $client->getCookieJar()->set($cookie);

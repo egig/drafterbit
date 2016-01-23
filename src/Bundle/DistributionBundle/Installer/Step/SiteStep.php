@@ -4,8 +4,8 @@ namespace Drafterbit\Bundle\DistributionBundle\Installer\Step;
 
 use Drafterbit\Bundle\DistributionBundle\Installer\Form\SiteStepType;
 
-class SiteStep implements StepInterface {
-
+class SiteStep implements StepInterface
+{
     private $container;
 
     public function __construct($container)
@@ -23,11 +23,13 @@ class SiteStep implements StepInterface {
         return 'DistributionBundle:Step:site.html.twig';
     }
 
-    public function validate($data) {
+    public function validate($data)
+    {
         return [];
     }
 
-    public function process($data, $installer = null) {
+    public function process($data, $installer = null)
+    {
         $installer->set('site', $data);
     }
 

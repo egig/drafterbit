@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 class ExtensionManager
 {
     /**
-     * Registered extension
+     * Registered extension.
      * 
      * @var Extension[]
      */
@@ -21,21 +21,20 @@ class ExtensionManager
      */
     protected $data;
 
-
     public function __construct(ContainerInterface $container)
     {
-        $this->container  = $container;
+        $this->container = $container;
     }
 
     /**
-     * Register Extension
+     * Register Extension.
      *
      * @param Extension $extension
-     */    
+     */
     public function registerExtension(Extension $extension)
     {
         $name = $extension->getName();
-        if(isset($this->extensions[$name])) {
+        if (isset($this->extensions[$name])) {
             throw new \InvalidArgumentException("Extension with name '$name' already exists");
         }
 
@@ -47,9 +46,9 @@ class ExtensionManager
      *
      * @return array
      */
-    function get($section)
+    public function get($section)
     {
-        if(isset($this->data[$section])) {
+        if (isset($this->data[$section])) {
             return $this->data[$section];
         }
 
@@ -58,12 +57,12 @@ class ExtensionManager
         $data = [];
         foreach ($this->extensions as $name => $instance) {
             if (method_exists($instance, $method)) {
-                $data =  array_merge($data, $instance->$method());
+                $data = array_merge($data, $instance->$method());
             }
         }
 
-        array_map(function($item){
-            if($item instanceof ContainerAwareInterface) {
+        array_map(function ($item) {
+            if ($item instanceof ContainerAwareInterface) {
                 $item->setContainer($this->container);
             }
         }, $data);
@@ -74,6 +73,7 @@ class ExtensionManager
     public static function studly($string)
     {
         $string = ucwords(str_replace(['-', '_'], ' ', $string));
+
         return str_replace(' ', '', $string);
     }
 }

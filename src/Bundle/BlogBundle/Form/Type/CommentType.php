@@ -5,10 +5,8 @@ namespace Drafterbit\Bundle\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Drafterbit\Bundle\SystemBundle\Form\Type\EntityHiddenType;
@@ -18,8 +16,8 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('authorName', TextType::class, ['required' => true, 'label'=>'Name'])
-            ->add('authorEmail', TextType::class, ['required' => true, 'label'=>'Email'])
+            ->add('authorName', TextType::class, ['required' => true, 'label' => 'Name'])
+            ->add('authorEmail', TextType::class, ['required' => true, 'label' => 'Email'])
             ->add('authorUrl', TextType::class)
             ->add('post', EntityHiddenType::class, [
                 'class' => 'BlogBundle:Post',
@@ -27,9 +25,9 @@ class CommentType extends AbstractType
             ->add('parent', EntityHiddenType::class, [
                 'class' => 'BlogBundle:Comment',
                 ])
-            ->add('content', TextareaType::class, ['required' => true, 'label'=>'Content'])
+            ->add('content', TextareaType::class, ['required' => true, 'label' => 'Content'])
             ->add('subscribe', CheckboxType::class, [
-                'label'    => 'Notify me of followup comments via e-mail',
+                'label' => 'Notify me of followup comments via e-mail',
                 'required' => false,
             ])
             ->add('Submit', SubmitType::class);
@@ -38,7 +36,7 @@ class CommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'required' => false
+            'required' => false,
         ]);
     }
 

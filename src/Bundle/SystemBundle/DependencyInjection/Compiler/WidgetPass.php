@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class WidgetPass implements CompilerPassInterface {
-
+class WidgetPass implements CompilerPassInterface
+{
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('dt_system.widget.manager')) {

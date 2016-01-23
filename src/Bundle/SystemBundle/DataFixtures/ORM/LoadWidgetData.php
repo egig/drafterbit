@@ -17,22 +17,23 @@ class LoadWidgetData extends AbstractFixture implements  ContainerAwareInterface
     private $container;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @todo get user email during install
      */
     public function load(ObjectManager $manager)
     {
         $theme = $this->container->getParameter('theme');
 
-        $search = new Widget;
+        $search = new Widget();
         $search->setName('search');
         $search->setTheme($theme);
         $search->setPosition('Sidebar');
@@ -41,7 +42,7 @@ class LoadWidgetData extends AbstractFixture implements  ContainerAwareInterface
 
         $manager->persist($search);
 
-        $meta = new Widget;
+        $meta = new Widget();
         $meta->setName('meta');
         $meta->setTheme($theme);
         $meta->setPosition('Sidebar');
@@ -54,7 +55,7 @@ class LoadWidgetData extends AbstractFixture implements  ContainerAwareInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

@@ -23,12 +23,14 @@ class Admin implements ApplicationRouteInterface
         //..
     }
 
-    public function getRouteResourceType() {
+    public function getRouteResourceType()
+    {
         return 'xml';
     }
 
-    public function addRouteResources($resource, $type = 'annotation') {
-        if(!isset($this->routeResources[$type])) {
+    public function addRouteResources($resource, $type = 'annotation')
+    {
+        if (!isset($this->routeResources[$type])) {
             $this->routeResources[$type] = [];
         }
 

@@ -2,8 +2,6 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Routing\Loader;
 
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -40,23 +38,21 @@ class ViablePrefixLoader extends Loader
             foreach ($frontPages as $frontPage) {
                 $resources = $frontPage->getRouteResources();
 
-                if($resources) {
-
+                if ($resources) {
                     foreach ($resources as $type => $resourcesx) {
-
                         foreach ($resourcesx as $resource) {
 
                             // Load route resources
                             $frontRoutes = $this->import($resource, $type);
 
-                            if($prefix !== $frontPageConfig) {
+                            if ($prefix !== $frontPageConfig) {
                                 $frontRoutes->addPrefix($frontPage->getRoutePrefix());
 
-                                if(!in_array($prefix, $reservedBaseUrl)) {
+                                if (!in_array($prefix, $reservedBaseUrl)) {
                                     $reservedBaseUrl[] = $prefix;
                                 }
                             }
-    
+
                             $routes->addCollection($frontRoutes);
                         }
                     }
@@ -69,7 +65,7 @@ class ViablePrefixLoader extends Loader
         // @link http://stackoverflow.com/questions/25496704/regex-match-slug-except-particular-start-words
         // @prototype  'slug' => "^(?!(?:backend|blog)(?:/|$)).*$"
         $requirements = array(
-            'slug' => "^(?!(?:%admin%|".$reservedBaseUrl."|)(?:/|$)).*$"
+            'slug' => '^(?!(?:%admin%|'.$reservedBaseUrl.'|)(?:/|$)).*$',
         );
 
         $defaults = array('_controller' => 'PageBundle:Frontend:view');
@@ -77,24 +73,24 @@ class ViablePrefixLoader extends Loader
         $routes->add('misc', $route2);
 
         // check if configured frontpage is not an app
-        if(!array_key_exists($frontPageConfig, $frontPageProvider->all())) {
+        if (!array_key_exists($frontPageConfig, $frontPageProvider->all())) {
             // its page
             $defaults['slug'] = $frontPageConfig;
             $routes->add('_home', new Route('/', $defaults));
         }
 
-        if($this->container->getParameter('multilingual')) {
+        if ($this->container->getParameter('multilingual')) {
             // last config: locale
             // @todo determine available locales, not just en|id
             $routes->addPrefix('{_locale}');
 
             /* @todo get installed language */
             $routes->addRequirements([
-                '_locale' => 'en|id'
+                '_locale' => 'en|id',
             ]);
 
             $routes->addDefaults([
-                '_locale' => $this->container->getParameter('locale')
+                '_locale' => $this->container->getParameter('locale'),
             ]);
         }
 

@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\SystemBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Menu
+ * Menu.
  *
  * @ORM\Table("menu")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Menu
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,11 +28,10 @@ class Menu
      */
     private $displayText;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -40,9 +39,10 @@ class Menu
     }
 
     /**
-     * Set displayText
+     * Set displayText.
      *
      * @param string $displayText
+     *
      * @return Menu
      */
     public function setDisplayText($displayText)
@@ -53,9 +53,9 @@ class Menu
     }
 
     /**
-     * Get displayText
+     * Get displayText.
      *
-     * @return string 
+     * @return string
      */
     public function getDisplayText()
     {

@@ -4,14 +4,8 @@ namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\SystemBundle\Entity\Widget;
 use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
 
@@ -40,17 +34,17 @@ class WidgetController extends Controller
         $widget = $em->getRepository('SystemBundle:Widget')
             ->find($id);
 
-        if(!$widget) {
+        if (!$widget) {
             $sequence = 0;
-            $widget = new Widget;
+            $widget = new Widget();
         } else {
             $sequence = $widget->getSequence();
         }
 
-        $form = $this->createForm(new WidgetType, $widget);
+        $form = $this->createForm(new WidgetType(), $widget);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $widget = $form->getData();
             $widget->setPosition($position);
             $widget->setSequence($sequence);
@@ -62,7 +56,7 @@ class WidgetController extends Controller
             $em->persist($widget);
             $em->flush();
 
-            return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' =>  $widget->getId()]);
+            return new JsonResponse(['message' => 'Widget saved', 'status' => 'success', 'id' => $widget->getId()]);
         } else {
             return new Response($form->getErrorsAsString());
         }
@@ -87,10 +81,9 @@ class WidgetController extends Controller
             $em->persist($widget);
             $em->flush();
 
-            $order++;
+            ++$order;
         }
 
         return new Response(1);
     }
-
 }

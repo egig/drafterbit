@@ -3,13 +3,11 @@
 namespace Drafterbit\Bundle\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\UserBundle\Form\Type\UserType;
 use Drafterbit\Bundle\UserBundle\Entity\User;
 
@@ -26,8 +24,8 @@ class UserController extends Controller
         $action = $request->request->get('action');
         $token = $request->request->get('_token');
 
-        if($action == 'delete') {
-            if(!$this->isCsrfTokenValid($viewId, $token)) {
+        if ($action == 'delete') {
+            if (!$this->isCsrfTokenValid($viewId, $token)) {
                 throw $this->createAccessDeniedException();
             }
             $userManager = $this->get('fos_user.user_manager');
@@ -41,17 +39,16 @@ class UserController extends Controller
 
                     // instead of $e->getCode()
                     // https://github.com/doctrine/dbal/pull/221
-                    if($e->getPrevious()->getcode() == '23000') {
-
-                        if($this->get('kernel')->getEnvironment() == 'dev') {
+                    if ($e->getPrevious()->getcode() == '23000') {
+                        if ($this->get('kernel')->getEnvironment() == 'dev') {
                             $message = $e->getMessage();
                         } else {
-                            $message = "Can not delete user(s), some users might still have associated object (post, page, etc)";
+                            $message = 'Can not delete user(s), some users might still have associated object (post, page, etc)';
                         }
 
                         return new JsonResponse([
                             'message' => $message,
-                            'status' => 'error'
+                            'status' => 'error',
                         ]);
                     }
                 }
@@ -59,7 +56,7 @@ class UserController extends Controller
 
             return new JsonResponse([
                 'message' => 'User(s) Succesfully deleted',
-                'status' => 'success'
+                'status' => 'success',
             ]);
         }
 
@@ -69,7 +66,7 @@ class UserController extends Controller
         return [
             'view_id' => $viewId,
             'groups' => $groups,
-            'page_title' => $this->get('translator')->trans('User')
+            'page_title' => $this->get('translator')->trans('User'),
         ];
     }
 
@@ -85,20 +82,19 @@ class UserController extends Controller
             ->getRepository('UserBundle:User')
             ->createQueryBuilder('u');
 
-        if($group) {
+        if ($group) {
             $queryBuilder->join('u.groups', 'g', 'WITH', 'g.id = :groupId ')
                 ->setParameter('groupId', $group);
         }
 
-        if('all' !== $status) {
-
+        if ('all' !== $status) {
             $isEnabled = $status == 'enabled' ? 1 : 0;
             $queryBuilder->where('u.enabled = :enabled')->setParameter('enabled', $isEnabled);
         }
 
         $users = $queryBuilder->getQuery()->getResult();
 
-        $usersArr  = [];
+        $usersArr = [];
 
         foreach ($users as $user) {
             $data = [];
@@ -110,9 +106,9 @@ class UserController extends Controller
             $usersArr[] = $data;
         }
 
-        $ob = new \StdClass;
+        $ob = new \StdClass();
         $ob->data = $usersArr;
-        $ob->recordsTotal= count($usersArr);
+        $ob->recordsTotal = count($usersArr);
         $ob->recordsFiltered = count($usersArr);
 
         return new JsonResponse($ob);
@@ -129,11 +125,11 @@ class UserController extends Controller
         $pageTitle = 'Edit User';
         $user = $userManager->findUserBy(['id' => $id]);
 
-        if(!$user and ($id != 'new')) {
+        if (!$user and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
 
-        if(!$user) {
+        if (!$user) {
             $user = new User();
             $pageTitle = 'New User';
         }
@@ -145,7 +141,7 @@ class UserController extends Controller
             'page_title' => $this->get('translator')->trans($pageTitle),
             'view_id' => 'user-edit',
             'action' => $this->generateUrl('dt_user_save'),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -159,7 +155,7 @@ class UserController extends Controller
 
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->findUserBy(['id' => $id]);
-        if(!$user) {
+        if (!$user) {
             $user = new User();
             $user->addRole('ROlE_ADMIN');
         }
@@ -167,13 +163,13 @@ class UserController extends Controller
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-         if($form->isValid()) {
+        if ($form->isValid()) {
 
             //save data to database
             $user = $form->getData();
 
             $password = $form->get('password')->getData();
-            if(trim($password) != '') {
+            if (trim($password) != '') {
                 $user->setPlainPassword($password);
             }
 
@@ -183,29 +179,27 @@ class UserController extends Controller
 
             // @todo
             $logger = $this->get('logger');
-            $logger->info('%author% edited user %user%', ['author'=>$this->getUser()->getId(), 'user' => $id]);
+            $logger->info('%author% edited user %user%', ['author' => $this->getUser()->getId(), 'user' => $id]);
 
             $response = ['message' => 'User saved', 'status' => 'success', 'id' => $id];
         } else {
-
             $errors = [];
             $formView = $form->createView();
 
             // @todo clean this, make a recursive
             foreach ($formView as $inputName => $view) {
-
-                if($view->children) {
+                if ($view->children) {
                     foreach ($view->children as $name => $childView) {
-                        if(isset($childView->vars['errors'])) {
-                            foreach($childView->vars['errors'] as $error) {
+                        if (isset($childView->vars['errors'])) {
+                            foreach ($childView->vars['errors'] as $error) {
                                 $errors[$childView->vars['full_name']] = $error->getMessage();
                             }
                         }
                     }
                 }
 
-                if(isset($view->vars['errors'])) {
-                    foreach($view->vars['errors'] as $error) {
+                if (isset($view->vars['errors'])) {
+                    foreach ($view->vars['errors'] as $error) {
                         $errors[$view->vars['full_name']] = $error->getMessage();
                     }
                 }
@@ -213,7 +207,7 @@ class UserController extends Controller
 
             $response['error'] = [
                 'type' => 'validation',
-                'messages' => $errors
+                'messages' => $errors,
             ];
         }
 
@@ -236,7 +230,7 @@ class UserController extends Controller
             'page_title' => $this->get('translator')->trans($pageTitle),
             'view_id' => 'user-edit',
             'action' => $this->generateUrl('dt_user_save'),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 }

@@ -7,7 +7,7 @@ use Drafterbit\System\Widget\Widget;
 
 class SearchWidget extends Widget
 {
-    function getName()
+    public function getName()
     {
         return 'search';
     }

@@ -10,6 +10,6 @@ class Drafterbit
     const RELEASE_VERSION = 0;
     const EXTRA_VERSION = 'DEV';
 
-    const END_OF_MAINTENANCE = NULL;
-    const END_OF_LIFE = NULL;
+    const END_OF_MAINTENANCE = null;
+    const END_OF_LIFE = null;
 }

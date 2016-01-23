@@ -4,8 +4,8 @@ namespace Drafterbit\Bundle\DistributionBundle\Installer\Step;
 
 use Drafterbit\Bundle\DistributionBundle\Installer\Form\AccountStepType;
 
-class AccountStep implements StepInterface {
-
+class AccountStep implements StepInterface
+{
     private $container;
 
     public function __construct($container)
@@ -26,7 +26,8 @@ class AccountStep implements StepInterface {
         return 'DistributionBundle:Step:account.html.twig';
     }
 
-    public function process($data, $installer = null) {
+    public function process($data, $installer = null)
+    {
         $installer->set('account', $data);
     }
 

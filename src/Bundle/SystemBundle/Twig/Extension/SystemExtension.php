@@ -22,17 +22,17 @@ class SystemExtension extends \Twig_Extension implements \Twig_Extension_Globals
             'navigations' => $this->getNavigations(),
             'sitename' => $model->get('system.site_name'),
             'tagline' => $model->get('system.site_description'),
-            'version' => \Drafterbit\Drafterbit::VERSION
+            'version' => \Drafterbit\Drafterbit::VERSION,
         ];
 
-        return [ 'system' => $system ];
+        return ['system' => $system];
     }
 
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('gravatar_url', array($this, 'getGravatarUrl')),
-            new \Twig_SimpleFunction('__', array($this, 'trans'))
+            new \Twig_SimpleFunction('__', array($this, 'trans')),
         );
     }
 
@@ -44,6 +44,7 @@ class SystemExtension extends \Twig_Extension implements \Twig_Extension_Globals
     public function getGravatarUrl($email, $size = 47)
     {
         $hash = md5(strtolower($email));
+
         return "http://www.gravatar.com/avatar/$hash?d=mm&s=$size";
     }
 

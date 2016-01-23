@@ -19,7 +19,7 @@ class Installer
 
     public function addStep(Step\StepInterface $step)
     {
-        $this->steps[] = $step;    
+        $this->steps[] = $step;
     }
 
     public function getStep($index)
@@ -39,7 +39,7 @@ class Installer
 
     public function read()
     {
-        $this->data = (array)json_decode(unserialize(@file_get_contents($this->cacheFile)), true);
+        $this->data = (array) json_decode(unserialize(@file_get_contents($this->cacheFile)), true);
     }
 
     public function write()
@@ -57,13 +57,14 @@ class Installer
     public function get($name)
     {
         $this->read();
+
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     public function finalize()
     {
         foreach ($this->steps as $step) {
-            if(method_exists($step, 'finalize')) {
+            if (method_exists($step, 'finalize')) {
                 $step->finalize();
             }
         }
@@ -76,10 +77,10 @@ class Installer
 
     public function getConnection()
     {
-        if(!$this->connection) {
+        if (!$this->connection) {
             $param = $this->get('doctrine');
             $param['dbname'] = $param['name'];
-            $this->connection  = $this->container->get('doctrine.dbal.connection_factory')
+            $this->connection = $this->container->get('doctrine.dbal.connection_factory')
                 ->createConnection($param);
         }
 

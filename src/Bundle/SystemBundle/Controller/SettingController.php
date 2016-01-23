@@ -4,7 +4,6 @@ namespace Drafterbit\Bundle\SystemBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,17 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use Drafterbit\Bundle\SystemBundle\Form\Type\SystemType;
 use Drafterbit\Bundle\SystemBundle\Entity\Widget;
-use Drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
-
 
 class SettingController extends Controller
 {
     /**
      * @Template()
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
+     *
      * @todo Setting validation rules
      */
     public function generalAction(Request $request)
@@ -42,16 +38,14 @@ class SettingController extends Controller
         $mainForm = $settingFormBuilder->getForm();
 
         //Move general to be first
-        $fields = ['system' => $fields['system']]+$fields;
+        $fields = ['system' => $fields['system']] + $fields;
 
         $notif['message'] = false;
 
-        if($request->isXmlHttpRequest()) {
-
+        if ($request->isXmlHttpRequest()) {
             $mainForm->handleRequest($request);
 
-            if($mainForm->isValid()) {
-
+            if ($mainForm->isValid()) {
                 $setting = $request->request->get('setting');
 
                 $setting = static::dot($setting);
@@ -62,6 +56,7 @@ class SettingController extends Controller
                 $this->get('system')->update($setting);
 
                 $response = ['message' => $this->get('translator')->trans('Setting Saved'), 'status' => 'success'];
+
                 return new JsonResponse($response);
             }
         }
@@ -71,7 +66,7 @@ class SettingController extends Controller
             'view_id' => 'setting',
             'action' => $this->generateUrl('dt_system_setting_general'),
             'form' => $mainForm->createView(),
-            'fields' => $fields
+            'fields' => $fields,
         ];
 
         return array_merge($data, $notif);
@@ -85,9 +80,10 @@ class SettingController extends Controller
     public function themeAction()
     {
         $themes = $this->getThemes();
+
         return [
             'page_title' => $this->get('translator')->trans('Theme'),
-            'themes' => $themes
+            'themes' => $themes,
         ];
     }
 
@@ -96,20 +92,20 @@ class SettingController extends Controller
         $themes_path = $this->container->getParameter('themes_path');
 
         $themes = [];
-        $dirs = (new Finder)->in($themes_path)->directories()->depth(0);
+        $dirs = (new Finder())->in($themes_path)->directories()->depth(0);
 
         foreach ($dirs as $dir) {
-            if(file_exists($config = $dir->getRealpath().'/theme.json')) {
+            if (file_exists($config = $dir->getRealpath().'/theme.json')) {
                 $theme = json_decode(file_get_contents($config), true);
 
                 $theme['is_active'] = ($theme['id'] == $this->container->getParameter('theme'));
 
                 $ssImage = null;
-                if(isset($theme['screenshot'])) {
+                if (isset($theme['screenshot'])) {
                     $ssImage = $dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot'];
                 }
 
-                if(!file_exists($ssImage)) {
+                if (!file_exists($ssImage)) {
                     $ssImage = $this->get('kernel')->getBundle('SystemBundle')->getPath().'/Resources/screenshot.jpg';
                 }
 
@@ -128,12 +124,13 @@ class SettingController extends Controller
      *
      * @param $imagePath string
      **/
-    private function encodeImage ($imagePath) {
-
+    private function encodeImage($imagePath)
+    {
         $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
 
-            $imgBinary = fread(fopen($imagePath, "r"), filesize($imagePath));
-            return 'data:image/' . $extension . ';base64,' . base64_encode($imgBinary);
+        $imgBinary = fread(fopen($imagePath, 'r'), filesize($imagePath));
+
+        return 'data:image/'.$extension.';base64,'.base64_encode($imgBinary);
     }
 
     /**
@@ -144,7 +141,7 @@ class SettingController extends Controller
     {
         // safety first
         $token = $request->query->get('_token');
-        if(!$this->isCsrfTokenValid('customize_theme', $token)) {
+        if (!$this->isCsrfTokenValid('customize_theme', $token)) {
             throw new InvalidCsrfTokenException();
         };
 
@@ -171,11 +168,9 @@ class SettingController extends Controller
         $context = json_decode($context, true);
 
         $optionInputs = [];
-        if(isset($themeConfig['option'])) {
-
+        if (isset($themeConfig['option'])) {
             foreach ($themeConfig['option'] as $option) {
-
-                if(isset($context[$option['name']])) {
+                if (isset($context[$option['name']])) {
                     $value = $context[$option['name']];
                 } else {
                     $value = isset($option['default']) ? $option['default'] : null;
@@ -187,7 +182,7 @@ class SettingController extends Controller
 
         $availableWidgets = $this->get('dt_system.widget.manager')->all();
         foreach ($availableWidgets as &$widget) {
-            $newWidget = new Widget;
+            $newWidget = new Widget();
             $newWidget->setTheme($theme);
             $newWidget->setName($widget->getName());
             $form = $this->get('dt_system.widget.form_builder')->build($widget, $newWidget);
@@ -195,7 +190,7 @@ class SettingController extends Controller
         }
 
         // @todo validate theme config
-        $positions = isset($themeConfig['widget'])? $themeConfig['widget'] : [];
+        $positions = isset($themeConfig['widget']) ? $themeConfig['widget'] : [];
 
         $widgets = [];
         foreach ($positions as $position) {
@@ -206,7 +201,7 @@ class SettingController extends Controller
 
             usort(
                 $widgets[$position],
-                function($a, $b) {
+                function ($a, $b) {
                     if ($a->getSequence() == $b->getSequence()) {
                         return $a->getId() - $b->getId();
                     }
@@ -218,7 +213,6 @@ class SettingController extends Controller
 
         foreach ($widgets as $name => &$arrayOfWidget) {
             foreach ($arrayOfWidget as &$w) {
-
                 $context = json_decode($w->getContext(), true);
 
                 $widgetObj = $this->get('dt_system.widget.manager')->get($w->getName());
@@ -234,7 +228,7 @@ class SettingController extends Controller
             'available_widget' => $availableWidgets,
             'widgets' => $widgets,
             'option_inputs' => $optionInputs,
-            'menu_positions' => (isset($themeConfig['menu']) ? $themeConfig['menu']: []),
+            'menu_positions' => (isset($themeConfig['menu']) ? $themeConfig['menu'] : []),
             'widget_positions' => $positions,
             'menu_options' => $availableMenus,
             'theme_menu_ids' => $themeMenuIds,
@@ -259,11 +253,12 @@ class SettingController extends Controller
                 break;
             case 'boolean':
                 $checked = $value ? 'checked' : '';
+
                 return '<div class="checkbox"> <label> <input name="'.$name.'" value="1" type="checkbox" '.$checked.'> '.$option['label'].' </label></div>';
                 break;
             case 'image' :
                 return '<label class="control-label">'.$option['label'].'</label>
-                <input id="input-'.$option['name'].'" type="hidden" name="'.$name.'" value="'.$value    .'">
+                <input id="input-'.$option['name'].'" type="hidden" name="'.$name.'" value="'.$value.'">
                 <div class="well well-sm"><img style="width:100%" id="'.$option['name'].'" alt="No Image" src="'.$value.'" /></div>
                 <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-default btn-xs dt-image-add">'.$this->trans('Select image').'</a>
                 <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-xs dt-image-remove">'.$this->trans('Remove image').'</a>';
@@ -285,16 +280,15 @@ class SettingController extends Controller
         $general = $request->request->get('general');
 
         $theme = $request->request->get('theme');
-        if($menus = $request->request->get('menus')) {
+        if ($menus = $request->request->get('menus')) {
             $menus = json_encode($menus);
         }
 
         if ($request->request->get('action') == 'save') {
-
             $this->container->get('system')->update(
                 [
                 'sitename' => $general['title'],
-                'tagline'=> $general['tagline'],
+                'tagline' => $general['tagline'],
                 'theme.'.$theme.'.menu' => $menus,
                 'theme.'.$theme.'.context' => json_encode($context),
                 ]
@@ -323,8 +317,9 @@ class SettingController extends Controller
     /**
      * Flatten a multi-dimensional associative array with dots.
      *
-     * @param  array   $array
-     * @param  string  $prepend
+     * @param array  $array
+     * @param string $prepend
+     *
      * @return array
      */
     public static function dot($array, $prepend = '')

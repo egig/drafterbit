@@ -13,16 +13,16 @@ use Drafterbit\Bundle\BlogBundle\Entity\Comment;
 class LoadHelloWorldPost extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
-        $tag = new Tag;
+        $tag = new Tag();
         $tag->setSlug('test tag');
         $tag->setLabel('Test Tag');
         $manager->persist($tag);
 
-        $category = new Category;
+        $category = new Category();
         $category->setSlug('uncategorized');
         $category->setLabel('Uncategorized');
         $manager->persist($category);
@@ -34,9 +34,9 @@ class LoadHelloWorldPost extends AbstractFixture implements OrderedFixtureInterf
         $post->setTitle('Hello World');
         $post->setContent('This is hello world to be edited or removed');
         $post->setUser($this->getReference('admin-user'));
-        $post->setCreatedAt(new \DateTime);
-        $post->setUpdatedAt(new \DateTime);
-        $post->setPublishedAt(new \DateTime);
+        $post->setCreatedAt(new \DateTime());
+        $post->setUpdatedAt(new \DateTime());
+        $post->setPublishedAt(new \DateTime());
         $post->setStatus(1);
         $post->setType(POST::TYPE_STANDARD);
 
@@ -50,15 +50,15 @@ class LoadHelloWorldPost extends AbstractFixture implements OrderedFixtureInterf
 
         $author = $this->getReference('admin-user');
 
-        $comment = new Comment;
+        $comment = new Comment();
         $comment->setAuthorName($author->getRealName());
         $comment->setAuthorEmail($author->getEmail());
         $comment->setAuthorUrl($author->getUrl());
         $comment->setContent('This is test comment.');
         $comment->setPost($post);
-        $comment->setCreatedAt(new \DateTime);
-        $comment->setUpdatedAt(new \DateTime);
-        $comment->setDeletedAt(NULL);
+        $comment->setCreatedAt(new \DateTime());
+        $comment->setUpdatedAt(new \DateTime());
+        $comment->setDeletedAt(null);
         $comment->setStatus(Comment::STATUS_APPROVED);
         $comment->setSubscribe(0);
 
@@ -68,7 +68,7 @@ class LoadHelloWorldPost extends AbstractFixture implements OrderedFixtureInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

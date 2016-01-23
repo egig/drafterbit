@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Drafterbit\Bundle\BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -10,41 +9,45 @@ use Doctrine\ORM\Query\Expr;
 class PostRepository extends EntityRepository
 {
     /**
-     * Get tagged posts;
+     * Get tagged posts;.
      */
     public function getStandard($page, $maxResult)
     {
         $query = $this->getPerPageQuery($page, $maxResult);
+
         return $query->getQuery()->getResult();
     }
 
     /**
-     * Get tagged posts;
+     * Get tagged posts;.
      */
     public function getByTag($tag, $page, $maxResult)
     {
         $query = $this->getPerPageQuery($page, $maxResult);
         $query->innerJoin('p.tags', 't', Expr\Join::WITH, "t.slug = '$tag'");
+
         return $query->getQuery()->getResult();
     }
 
     /**
-     * Get by category
+     * Get by category.
      */
     public function getByCategory($category, $page, $maxResult)
     {
         $query = $this->getPerPageQuery($page, $maxResult);
         $query->innerJoin('p.categories', 'c', Expr\Join::WITH, "c.slug = '$category'");
+
         return $query->getQuery()->getResult();
     }
 
     /**
-     * Get by author
+     * Get by author.
      */
     public function getByAuthor($author, $page, $maxResult)
     {
         $query = $this->getPerPageQuery($page, $maxResult);
         $query->innerJoin('p.user', 'u', Expr\Join::WITH, "u.username = '$author'");
+
         return $query->getQuery()->getResult();
     }
 
@@ -53,11 +56,12 @@ class PostRepository extends EntityRepository
      *
      * @param int $page
      * @param int $maxResult
+     *
      * @return array
      */
     private function getPerPageQuery($page, $maxResult)
     {
-        $offset = ($page*$maxResult)-$maxResult;
+        $offset = ($page * $maxResult) - $maxResult;
 
         $query = $this->createQueryBuilder('p')
             ->where("p.type = '".Post::TYPE_STANDARD."'")
@@ -68,25 +72,25 @@ class PostRepository extends EntityRepository
     }
 
     /**
-     * Get posts by status and category
+     * Get posts by status and category.
      *
      * @param string $status
-     * @param int $categoryId
+     * @param int    $categoryId
      */
     public function getByStatusAndCategory($status, $categoryId = null)
     {
         $query = $this->createQueryBuilder('p')
             ->where("p.type = '".Post::TYPE_STANDARD."'");
 
-        if($categoryId) {
+        if ($categoryId) {
             $query->join('p.categories', 'c', 'WITH', 'c.id = :categoryId ')
                 ->setParameter('categoryId', $categoryId);
         }
 
-        if($status == 'trashed') {
-            $query->andWhere("p.deletedAt is not null");
+        if ($status == 'trashed') {
+            $query->andWhere('p.deletedAt is not null');
         } else {
-            $query->andWhere("p.deletedAt is null");
+            $query->andWhere('p.deletedAt is null');
             switch ($status) {
                 case 'all':
                     break;
@@ -113,7 +117,7 @@ class PostRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('p')
         ->where('p.type  = :type')
-        ->setParameter('type', "history:".$postId)
+        ->setParameter('type', 'history:'.$postId)
         ->getQuery();
 
         return $query->getResult();

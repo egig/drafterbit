@@ -15,7 +15,7 @@ class FrontendExtension extends \Twig_Extension
         $em = $this->container->get('doctrine')->getManager();
         $this->menuItemTable = $em->getClassMetadata('SystemBundle:MenuItem')->getTableName();
         $this->widgetTable = $em->getClassMetadata('SystemBundle:Widget')->getTableName();
-   }
+    }
 
     public function getFunctions()
     {
@@ -23,18 +23,20 @@ class FrontendExtension extends \Twig_Extension
             new \Twig_SimpleFunction('theme_url', array($this, 'themeUrl')),
             new \Twig_SimpleFunction('base_url', array($this, 'baseUrl')),
             new \Twig_SimpleFunction('menu', array($this, 'menu')),
-            new \Twig_SimpleFunction('widget', array($this, 'widget'))
+            new \Twig_SimpleFunction('widget', array($this, 'widget')),
         );
     }
 
     /**
-     * Return front end menus on given position
+     * Return front end menus on given position.
      *
-     * @param  string $position
+     * @param string $position
+     *
      * @return string
+     *
      * @todo clean this
      */
-    public function menu($position, $parent = NULL)
+    public function menu($position, $parent = null)
     {
         $theme = $this->container->getParameter('theme');
 
@@ -54,7 +56,7 @@ class FrontendExtension extends \Twig_Extension
             $item['link'] = strtr($item['link'], ['%base_url%' => $baseUrl]);
 
             $item['child'] = null;
-            if($this->_menuHasChild($item['id'], $item['menu_id'])) {
+            if ($this->_menuHasChild($item['id'], $item['menu_id'])) {
                 $item['child'] = $this->menu($position, $item['id']);
             }
 
@@ -67,7 +69,7 @@ class FrontendExtension extends \Twig_Extension
         return $this->container->get('templating')->render('nav/main.html.twig', $data);
     }
 
-    public function _getMenuItems($menu_id, $parent = NULL)
+    public function _getMenuItems($menu_id, $parent = null)
     {
         $q = $this->container->get('database_connection')->createQueryBuilder();
         $q->select('mi.*');
@@ -75,7 +77,7 @@ class FrontendExtension extends \Twig_Extension
         $q->where('mi.menu_id=:menu_id');
         $q->setParameter('menu_id', $menu_id);
 
-        if(is_null($parent)) {
+        if (is_null($parent)) {
             $q->andWhere('mi.parent_id is NULL');
         } else {
             $q->andWhere('mi.parent_id=:parent_id');
@@ -104,6 +106,7 @@ class FrontendExtension extends \Twig_Extension
         $theme = $this->container->getParameter('theme');
         $path = 'themes/'.$theme.'/'.$path;
         $request = $this->container->get('request_stack')->getCurrentRequest();
+
         return $request->getSchemeAndHttpHost().$request->getBasePath().'/'.$path;
     }
 
@@ -112,11 +115,12 @@ class FrontendExtension extends \Twig_Extension
         $path = trim($path, '/');
 
         $qs = null;
-        if($param) {
+        if ($param) {
             $qs = '?'.http_build_query($param);
         }
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
+
         return $request->getUriForPath('/'.$path.$qs);
     }
 
@@ -131,12 +135,12 @@ class FrontendExtension extends \Twig_Extension
     }
 
     /**
-     * Widget template helper
+     * Widget template helper.
      *
      * @todo clean this
      */
-    public function widget($position, $titleTemplate = '{{ title }}', $contentTemplate = "{{ content }}") {
-
+    public function widget($position, $titleTemplate = '{{ title }}', $contentTemplate = '{{ content }}')
+    {
         $qb = $this->container->get('database_connection')->createQueryBuilder();
 
         $theme = $this->container->getParameter('theme');
@@ -151,7 +155,7 @@ class FrontendExtension extends \Twig_Extension
 
         usort(
             $widgets,
-            function($a, $b) {
+            function ($a, $b) {
                 if ($a['sequence'] == $b['sequence']) {
                     return $b['id'] - $a['id'];
                 }
@@ -163,12 +167,11 @@ class FrontendExtension extends \Twig_Extension
         $output = null;
 
         foreach ($widgets as $widget) {
-
             $context = json_decode($widget['context'], true);
 
             $title = '';
 
-            if(!empty($context['title'])) {
+            if (!empty($context['title'])) {
                 $title = strtr($titleTemplate, ['{{ title }}' => $context['title']]);
             }
 

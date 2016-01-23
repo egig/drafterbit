@@ -29,7 +29,7 @@ class BlogExtension extends \Twig_Extension
             new \Twig_SimpleFunction('blog_category_url', array($this, 'blogCategoryUrl')),
             new \Twig_SimpleFunction('blog_tag_url', array($this, 'blogTagUrl')),
             new \Twig_SimpleFunction('blog_author_url', array($this, 'blogAuthorUrl')),
-            new \Twig_SimpleFunction('comment', array($this, 'comment'))
+            new \Twig_SimpleFunction('comment', array($this, 'comment')),
         );
     }
 
@@ -61,12 +61,11 @@ class BlogExtension extends \Twig_Extension
         $form = $this->kernel->getContainer()->get('form.factory')->create(CommentType::class);
         $form->get('post')->setData($post);
 
-
         $formSection = $this->kernel->getContainer()->get('templating')->render('content/blog/comment/form.html.twig',
             [
-                'form' =>  $form->createView(),
+                'form' => $form->createView(),
                 'parent' => null,
-                'form_id' => 'form-comment-0'
+                'form_id' => 'form-comment-0',
             ]);
 
         return $content.$formSection.$js;
@@ -78,7 +77,7 @@ class BlogExtension extends \Twig_Extension
 
         $frontpage = $this->kernel->getContainer()->get('system')->get('system.frontpage');
 
-        if($frontpage != 'blog') {
+        if ($frontpage != 'blog') {
             $path = 'blog/'.$path;
         }
 
@@ -89,6 +88,7 @@ class BlogExtension extends \Twig_Extension
     {
         $container = $this->kernel->getContainer();
         $parameters['slug'] = $slug;
+
         return $container->get('router')->generate(static::CATEGORY_ROUTE_NAME, $parameters, $referenceType);
     }
 
@@ -96,6 +96,7 @@ class BlogExtension extends \Twig_Extension
     {
         $container = $this->kernel->getContainer();
         $parameters['slug'] = $slug;
+
         return $container->get('router')->generate(static::TAG_ROUTE_NAME, $parameters, $referenceType);
     }
 
@@ -103,20 +104,19 @@ class BlogExtension extends \Twig_Extension
     {
         $container = $this->kernel->getContainer();
         $parameters['username'] = $username;
+
         return $container->get('router')->generate(static::AUTHOR_ROUTE_NAME, $parameters, $referenceType);
     }
 
     /**
-     * Render comments reqursively
+     * Render comments reqursively.
      */
     private function renderComments($comments, $parent = null)
     {
-        $content ='';
+        $content = '';
         foreach ($comments as $comment) {
-
-            if($comment->getParent() == $parent) {
-
-                $newComment =  new Comment;
+            if ($comment->getParent() == $parent) {
+                $newComment = new Comment();
                 $newComment->setParent($comment);
                 $form = $this->kernel->getContainer()->get('form.factory')->create(CommentType::class, $newComment);
                 $form->get('post')->setData($comment->getPost());
@@ -132,7 +132,7 @@ class BlogExtension extends \Twig_Extension
             }
         }
 
-        if($content !== '') {
+        if ($content !== '') {
             $content = '<ol>'.$content.'</ol>';
         }
 

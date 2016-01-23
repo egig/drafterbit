@@ -7,11 +7,10 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Drafterbit\Bundle\PageBundle\Entity\Page;
 
-
 class LoadSamplePageData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -20,8 +19,8 @@ class LoadSamplePageData extends AbstractFixture implements OrderedFixtureInterf
         $page->setTitle('Sample Page');
         $page->setContent('This is sample page to be edited or removed');
         $page->setUser($this->getReference('admin-user'));
-        $page->setCreatedAt(new \DateTime);
-        $page->setUpdatedAt(new \DateTime);
+        $page->setCreatedAt(new \DateTime());
+        $page->setUpdatedAt(new \DateTime());
         $page->setLayout('default.html.twig');
         $page->setStatus(1);
 
@@ -32,7 +31,7 @@ class LoadSamplePageData extends AbstractFixture implements OrderedFixtureInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

@@ -16,7 +16,7 @@ class PostEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $post = $em->getRepository('BlogBundle:Post')->find($id);
 
-        if($post) {
+        if ($post) {
             $label = $post->getTitle();
         } else {
             $label = "with id $id(deleted)";
@@ -27,7 +27,7 @@ class PostEntityFormatter extends BaseEntityFormatter
             ->get('router')
             ->generate('dt_blog_post_edit', ['id' => $id]);
 
-        if($label) {
+        if ($label) {
             return '<a href="'.$url.'">'.$label.'</a>';
         }
 

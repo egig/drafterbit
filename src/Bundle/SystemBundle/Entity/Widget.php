@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\SystemBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Widget
+ * Widget.
  *
  * @ORM\Table("widget")
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Widget
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -44,7 +44,7 @@ class Widget
     private $position;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="sequence", type="integer")
      */
@@ -57,11 +57,10 @@ class Widget
      */
     private $context;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -69,9 +68,10 @@ class Widget
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Widget
      */
     public function setName($name)
@@ -82,9 +82,9 @@ class Widget
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -92,9 +92,10 @@ class Widget
     }
 
     /**
-     * Set theme
+     * Set theme.
      *
      * @param string $theme
+     *
      * @return Widget
      */
     public function setTheme($theme)
@@ -105,9 +106,9 @@ class Widget
     }
 
     /**
-     * Get theme
+     * Get theme.
      *
-     * @return string 
+     * @return string
      */
     public function getTheme()
     {
@@ -115,9 +116,10 @@ class Widget
     }
 
     /**
-     * Set position
+     * Set position.
      *
      * @param string $position
+     *
      * @return Widget
      */
     public function setPosition($position)
@@ -128,9 +130,9 @@ class Widget
     }
 
     /**
-     * Get position
+     * Get position.
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -138,9 +140,10 @@ class Widget
     }
 
     /**
-     * Set sequence
+     * Set sequence.
      *
-     * @param integer $sequence
+     * @param int $sequence
+     *
      * @return Widget
      */
     public function setSequence($sequence)
@@ -151,9 +154,9 @@ class Widget
     }
 
     /**
-     * Get sequence
+     * Get sequence.
      *
-     * @return integer 
+     * @return int
      */
     public function getSequence()
     {
@@ -161,9 +164,10 @@ class Widget
     }
 
     /**
-     * Set context
+     * Set context.
      *
      * @param string $context
+     *
      * @return Widget
      */
     public function setContext($context)
@@ -174,9 +178,9 @@ class Widget
     }
 
     /**
-     * Get context
+     * Get context.
      *
-     * @return string 
+     * @return string
      */
     public function getContext()
     {

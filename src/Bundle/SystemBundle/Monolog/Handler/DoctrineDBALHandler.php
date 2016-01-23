@@ -47,7 +47,7 @@ class DoctrineDBALHandler extends AbstractProcessingHandler
             'level' => $record['level'],
             'message' => $record['message'],
             'time' => $record['datetime']->format('U'),
-            'context' => json_encode($record['context'])
+            'context' => json_encode($record['context']),
             ]
         );
     }
@@ -62,7 +62,7 @@ class DoctrineDBALHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Get log table name
+     * Get log table name.
      *
      * @return string
      */

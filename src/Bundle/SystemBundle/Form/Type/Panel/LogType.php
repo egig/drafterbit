@@ -5,8 +5,6 @@ namespace Drafterbit\Bundle\SystemBundle\Form\Type\Panel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class LogType extends AbstractType

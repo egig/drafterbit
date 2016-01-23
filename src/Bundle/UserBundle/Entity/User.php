@@ -5,7 +5,6 @@ namespace Drafterbit\Bundle\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
-use UserBundle\Auth\Configuration;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -49,21 +48,18 @@ class User extends BaseUser
     protected $password;
 
     /**
-     *
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Assert\NotBlank()
      */
     protected $realname;
 
     /**
-     *
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Assert\Url()
      */
     protected $url;
 
     /**
-     *
      * @ORM\Column(type="string", length=500, nullable=true)
      */
     protected $bio;

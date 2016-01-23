@@ -2,17 +2,11 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Controller;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\SystemBundle\Entity\Panel;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -28,7 +22,7 @@ class DashboardController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $panelConfigs = $em->getRepository('SystemBundle:Panel')
-            ->findBy(['user' => $this->getUser()]);;
+            ->findBy(['user' => $this->getUser()]);
 
         $panels = $this->buildPanels($panelConfigs);
 
@@ -51,27 +45,25 @@ class DashboardController extends Controller
         $repo = $em->getRepository('SystemBundle:Panel');
         $panel = $repo->find($id);
 
-        if(!$panel) {
+        if (!$panel) {
             // if panel not found by given id, we'll assume id is panel name
             $panelType = $this->get('dashboard')->getPanelType($id);
 
-            if(!$panelType) {
+            if (!$panelType) {
                 throw $this->createNotFoundException();
             }
 
-            $panel = new Panel;
+            $panel = new Panel();
             $panel->setUser($this->getUser());
             $panel->setType($id);
             $panel->setPosition('left');
             $panel->setSequence(0);
             $panel->setStatus(1);
-
         } else {
 
             //get panel from dashboard manager
             $panelType = $this->get('dashboard')->getPanelType($panel->getType());
         }
-
 
         $title = empty($panel->getTitle()) ? $panelType->getName() : $panel->getTitle();
 
@@ -82,15 +74,15 @@ class DashboardController extends Controller
                 'data' => $panel->getPosition(),
                 'choices' => [
                     'Left' => 'left',
-                    'Right' => 'right'
-                ]
+                    'Right' => 'right',
+                ],
             ])
             ->add('Save', SubmitType::class);
 
         $panelData = json_decode($panel->getContext());
         $panelFormType = $panelType->getFormType();
 
-        if($panelFormType) {
+        if ($panelFormType) {
             $formBuilder->add('context', $panelFormType, ['data' => $panelData]);
         }
 
@@ -98,8 +90,7 @@ class DashboardController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             // @todo get data from the form
             $data = $request->request->get('panel');
             $context = isset($data['context']) ? $data['context'] : [];
@@ -113,19 +104,19 @@ class DashboardController extends Controller
                 'data' => [
                     'message' => $this->get('translator')->trans('Panel successfully saved.'),
                     'id' => $panel->getId(),
-                ]
+                ],
             ]);
         }
 
         return [
             'id' => $id,
             'template' => $panelType->getFormTemplate(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
-    public function sortDashboardAction(Request $request) {
-
+    public function sortDashboardAction(Request $request)
+    {
         $dashboardPanels = $this->get('dashboard')->getPanelTypes();
         $panels = array_keys($dashboardPanels);
 
@@ -134,8 +125,8 @@ class DashboardController extends Controller
 
         $order = explode(',', $order);
 
-        $order = array_map(function($el){
-            if($part = substr($el, strlen('dashboard-panel-'))) {
+        $order = array_map(function ($el) {
+            if ($part = substr($el, strlen('dashboard-panel-'))) {
                 return $part;
             };
         }, $order);
@@ -144,10 +135,8 @@ class DashboardController extends Controller
 
         $i = 1;
         foreach ($order as $type) {
-
-            if($type) {
-
-                $panelConfig =  $em->getRepository('SystemBundle:Panel')
+            if ($type) {
+                $panelConfig = $em->getRepository('SystemBundle:Panel')
                     ->findOneBy(['user' => $this->getUser(), 'type' => $type]);
 
                 $panelConfig or $panelConfig = new PanelConfig();
@@ -180,12 +169,12 @@ class DashboardController extends Controller
         return new JsonResponse(['data' => ['status' => 'ok']]);
     }
 
-    public function togglePanelAction(Request $request) {
-
+    public function togglePanelAction(Request $request)
+    {
         $name = $request->request->get('panel');
 
         $em = $this->getDoctrine()->getManager();
-        $panelConfig =  $em->getRepository('SystemBundle:Panel')
+        $panelConfig = $em->getRepository('SystemBundle:Panel')
             ->findOneBy(['user' => $this->getUser(), 'name' => $name]);
 
         $panelConfig or $panelConfig = new PanelConfig();
@@ -200,9 +189,8 @@ class DashboardController extends Controller
         return new Response();
     }
 
-
     /**
-     * Build panel data to be displayed;
+     * Build panel data to be displayed;.
      *
      * @return array
      */
@@ -211,8 +199,7 @@ class DashboardController extends Controller
         $panels = ['left' => [], 'right' => []];
 
         foreach ($panelConfig as $config) {
-
-            $panel = new \StdClass;
+            $panel = new \StdClass();
             $panel->id = $config->getId();
             $panel->sequence = $config->getSequence();
             $panel->status = $config->getStatus();
@@ -225,10 +212,11 @@ class DashboardController extends Controller
             $panels[$config->getPosition()][] = $panel;
         }
 
-        $sortFunction = function($a, $b) {
-            if($a->sequence == $b->sequence) {
+        $sortFunction = function ($a, $b) {
+            if ($a->sequence == $b->sequence) {
                 return 0;
             }
+
             return $b->sequence > $a->sequence ? -1 : 1;
         };
 

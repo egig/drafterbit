@@ -5,7 +5,6 @@ namespace Drafterbit\Bundle\SystemBundle\Security\Authorization\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-
 use Drafterbit\Bundle\SystemBundle\Security\Authorization\AttributeProvider;
 
 class BaseVoter implements VoterInterface

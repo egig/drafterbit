@@ -5,8 +5,8 @@ namespace Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType;
 use Drafterbit\System\Dashboard\PanelType;
 use Drafterbit\System\Extension\Shortcut as ShortcutItem;
 
-class Shortcut extends PanelType {
-
+class Shortcut extends PanelType
+{
     protected $shortcuts;
 
     public function getView()

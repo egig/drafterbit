@@ -16,7 +16,7 @@ class GroupEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $group = $em->getRepository('UserBundle:Group')->find($id);
 
-        if($group) {
+        if ($group) {
             $label = $group->getName();
         } else {
             $label = "with id $id(deleted)";
@@ -27,7 +27,7 @@ class GroupEntityFormatter extends BaseEntityFormatter
             ->get('router')
             ->generate('dt_user_group_edit', ['id' => $id]);
 
-        if($label) {
+        if ($label) {
             return '<a href="'.$url.'">'.$label.'</a>';
         }
 

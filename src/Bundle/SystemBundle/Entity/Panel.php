@@ -5,7 +5,7 @@ namespace Drafterbit\Bundle\SystemBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Panel
+ * Panel.
  *
  * @ORM\Table("panel")
  * @ORM\Entity
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Panel
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,7 +29,7 @@ class Panel
     private $position;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="sequence", type="integer")
      */
@@ -49,7 +49,7 @@ class Panel
     private $user;
 
     /**
-     * @var boolean
+     * @var bool
      * 
      * @ORM\Column(name="status", type="boolean")
      */
@@ -70,9 +70,9 @@ class Panel
     private $context;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -80,9 +80,10 @@ class Panel
     }
 
     /**
-     * Set position
+     * Set position.
      *
      * @param string $position
+     *
      * @return Panel
      */
     public function setPosition($position)
@@ -93,9 +94,9 @@ class Panel
     }
 
     /**
-     * Get position
+     * Get position.
      *
-     * @return string 
+     * @return string
      */
     public function getPosition()
     {
@@ -103,9 +104,10 @@ class Panel
     }
 
     /**
-     * Set sequence
+     * Set sequence.
      *
-     * @param integer $sequence
+     * @param int $sequence
+     *
      * @return Panel
      */
     public function setSequence($sequence)
@@ -116,9 +118,9 @@ class Panel
     }
 
     /**
-     * Get sequence
+     * Get sequence.
      *
-     * @return integer 
+     * @return int
      */
     public function getSequence()
     {
@@ -126,9 +128,10 @@ class Panel
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $type
+     *
      * @return Panel
      */
     public function setType($type)
@@ -139,9 +142,9 @@ class Panel
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -149,9 +152,10 @@ class Panel
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param \stdClass $user
+     *
      * @return Panel
      */
     public function setUser($user)
@@ -162,9 +166,9 @@ class Panel
     }
 
     /**
-     * Get user
+     * Get user.
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getUser()
     {
@@ -172,7 +176,7 @@ class Panel
     }
 
     /**
-     * Status
+     * Status.
      */
     public function getStatus()
     {
@@ -183,9 +187,9 @@ class Panel
     {
         return $this->status = $status;
     }
-    
+
     /**
-     * Title
+     * Title.
      */
     public function getTitle()
     {
@@ -198,7 +202,7 @@ class Panel
     }
 
     /**
-     * Context
+     * Context.
      */
     public function getContext()
     {

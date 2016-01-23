@@ -4,8 +4,8 @@ namespace Drafterbit\Bundle\SystemBundle\Security\Authorization;
 
 use Symfony\Component\HttpKernel\Kernel;
 
-class AttributeProvider {
-
+class AttributeProvider
+{
     protected $kernel;
 
     public function __construct(Kernel $kernel)
@@ -14,15 +14,14 @@ class AttributeProvider {
     }
 
     /**
-     * Get all permission attribute
+     * Get all permission attribute.
      */
     public function all()
     {
-
         $rolesGroup = $this->getPerBundle();
 
         $attr = [];
-        foreach($rolesGroup as $bundle => $attributes) {
+        foreach ($rolesGroup as $bundle => $attributes) {
             foreach ($attributes as $key => $value) {
                 $attr[$key] = $value;
             }
@@ -32,7 +31,7 @@ class AttributeProvider {
     }
 
     /**
-     * Get permission attribute per bundle
+     * Get permission attribute per bundle.
      *
      * @return array
      */
@@ -43,12 +42,10 @@ class AttributeProvider {
 
         $roles = [];
         foreach ($bundles as $name => $bundle) {
-
-            if($extension = $bundle->getContainerExtension()) {
-
+            if ($extension = $bundle->getContainerExtension()) {
                 $parameter = $extension->getAlias().'.roles';
                 $section = ucfirst(preg_replace('/^dt_/', '', $extension->getAlias()));
-                if($container->hasParameter($parameter)){
+                if ($container->hasParameter($parameter)) {
                     $roles[$section] = $container->getParameter($parameter);
                 }
             }

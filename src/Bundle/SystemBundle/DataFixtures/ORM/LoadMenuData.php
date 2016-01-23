@@ -5,15 +5,14 @@ namespace Drafterbit\Bundle\SystemBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\Bundle\SystemBundle\Entity\Menu;
 use Drafterbit\Bundle\SystemBundle\Entity\MenuItem;
 
 class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @todo get user email during install
      */
     public function load(ObjectManager $manager)
@@ -22,7 +21,7 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
         $menu->setDisplayText('main');
         $manager->persist($menu);
 
-        $home = new MenuItem;
+        $home = new MenuItem();
         $home->setDisplayText('Home');
         $home->setLink('%base_url%');
         $home->setMenu($menu);
@@ -30,7 +29,7 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($home);
 
         // @todo inject  real page
-        $samplePage = new MenuItem;
+        $samplePage = new MenuItem();
         $samplePage->setDisplayText($this->getReference('sample-page')->getTitle());
         $samplePage->setLink('%base_url%/'.$this->getReference('sample-page')->getSlug());
         $samplePage->setMenu($menu);
@@ -43,7 +42,7 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

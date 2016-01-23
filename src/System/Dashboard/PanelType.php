@@ -4,8 +4,8 @@ namespace Drafterbit\System\Dashboard;
 
 use Symfony\Component\DependencyInjection\Container;
 
-abstract class PanelType implements PanelTypeInterface {
-
+abstract class PanelType implements PanelTypeInterface
+{
     protected $container;
     protected $position = 'left';
 

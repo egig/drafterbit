@@ -2,17 +2,17 @@
 
 namespace Drafterbit\System\Dashboard;
 
-interface PanelTypeInterface {
-
+interface PanelTypeInterface
+{
     /**
-     * Get panel view
+     * Get panel view.
      *
      * @return string
      */
     public function getView();
 
     /**
-     * Get panel name
+     * Get panel name.
      *
      * @return string
      */

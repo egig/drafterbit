@@ -20,7 +20,7 @@ class ApplicationRouteManager
     {
         $prefix = $route->getRoutePrefix();
 
-        if(!isset($this->applicationRoutes[$prefix])) {
+        if (!isset($this->applicationRoutes[$prefix])) {
             $this->applicationRoutes[$prefix] = array();
         }
 

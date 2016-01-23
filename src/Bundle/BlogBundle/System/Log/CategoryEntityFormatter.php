@@ -16,7 +16,7 @@ class CategoryEntityFormatter extends BaseEntityFormatter
         $em = $this->getKernel()->getContainer()->get('doctrine')->getManager();
         $cat = $em->getRepository('BlogBundle:Category')->find($id);
 
-        if($cat) {
+        if ($cat) {
             $label = $cat->getLabel();
         } else {
             $label = "with id $id(deleted)";
@@ -27,7 +27,7 @@ class CategoryEntityFormatter extends BaseEntityFormatter
             ->get('router')
             ->generate('dt_blog_category_edit', ['id' => $id]);
 
-        if($label) {
+        if ($label) {
             return '<a href="'.$url.'">'.$label.'</a>';
         }
 

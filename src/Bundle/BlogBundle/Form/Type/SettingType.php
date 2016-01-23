@@ -5,10 +5,7 @@ namespace Drafterbit\Bundle\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Drafterbit\Bundle\SystemBundle\System\FrontpageProvider;
-
 use Drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -29,15 +26,15 @@ class SettingType extends AbstractType
             ->add('feed_content', ChoiceType::class, [
                 'choices' => [
                     'Full Text' => 1,
-                    'Summary' => 2
+                    'Summary' => 2,
                 ],
-                'data' => $this->data('blog.feed_content')]
+                'data' => $this->data('blog.feed_content'), ]
             )->add('comment_moderation', ChoiceType::class, [
                 'choices' => [
                     'Never' => 0,
-                    'Always' => 1
+                    'Always' => 1,
                 ],
-                'data' => $this->data('blog.comment_moderation')]
+                'data' => $this->data('blog.comment_moderation'), ]
             );
             //->add('Save', 'submit');
     }
@@ -46,7 +43,7 @@ class SettingType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => false,
-            'mapped' => false
+            'mapped' => false,
         ]);
     }
 

@@ -5,13 +5,11 @@ namespace Drafterbit\Bundle\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PostType extends AbstractType
@@ -23,12 +21,12 @@ class PostType extends AbstractType
             ->add('title', TextType::class, ['required' => true])
             ->add('slug', TextType::class, ['required' => true])
             ->add('content', TextareaType::class)
-            ->add('published_at', TextType::class, ['mapped' =>false])
+            ->add('published_at', TextType::class, ['mapped' => false])
             ->add('categories', EntityType::class, [
                 'class' => 'BlogBundle:Category',
                 'choice_label' => 'label',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
             ])
             /*->add('tags', 'entity', [
                 'class' => 'BlogBundle:Tag',
@@ -40,7 +38,7 @@ class PostType extends AbstractType
                     'choices' => [
                         'Published' => 1,
                         'Pending Review' => 0,
-                    ]
+                    ],
                 ])
             ->add('Save', SubmitType::class);
     }
@@ -48,7 +46,7 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'required' => false
+            'required' => false,
         ]);
     }
 

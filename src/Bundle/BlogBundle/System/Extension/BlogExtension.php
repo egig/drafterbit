@@ -5,8 +5,8 @@ namespace Drafterbit\Bundle\BlogBundle\System\Extension;
 use Drafterbit\System\Extension\Extension;
 use Drafterbit\Bundle\BlogBundle\System\Shortcut\NewPostShortcut;
 
-class BlogExtension extends Extension {
-
+class BlogExtension extends Extension
+{
     public function getName()
     {
         return 'blog';
@@ -15,7 +15,7 @@ class BlogExtension extends Extension {
     public function getShortcuts()
     {
         return [
-            new NewPostShortcut()
+            new NewPostShortcut(),
         ];
     }
 }

@@ -3,10 +3,8 @@
 namespace Drafterbit\Bundle\FileBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class FileController extends Controller
@@ -18,7 +16,7 @@ class FileController extends Controller
     {
         return [
             'locale' => $this->container->getParameter('locale'),
-            'page_title' => $this->get('translator')->trans('File')
+            'page_title' => $this->get('translator')->trans('File'),
         ];
     }
 
@@ -38,7 +36,7 @@ class FileController extends Controller
         $op = $request->get('op');
         $path = $request->get('path');
 
-        $res = new JsonResponse;
+        $res = new JsonResponse();
 
         try {
             $data = [];
@@ -76,9 +74,8 @@ class FileController extends Controller
             if ($files = $request->files->get('files')) {
                 $data = $this->get('dt_file.server')->upload($path, $files);
             }
-
         } catch (\Exception $e) {
-            $data = [ 'message' => $e->getMessage(), 'status' => 'error'];
+            $data = ['message' => $e->getMessage(), 'status' => 'error'];
         }
 
         $res->setData($data);

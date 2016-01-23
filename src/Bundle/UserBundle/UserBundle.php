@@ -13,9 +13,9 @@ class UserBundle extends Bundle
         return 'FOSUserBundle';
     }
 
-    public function build(ContainerBuilder $container) {
-
-		parent::build($container);
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
         $container->addCompilerPass(new AdminRoutePass());
-	}
+    }
 }

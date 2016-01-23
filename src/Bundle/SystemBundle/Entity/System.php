@@ -12,16 +12,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class System
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+      * @ORM\Id
+      * @ORM\Column(type="integer")
+      * @ORM\GeneratedValue(strategy="AUTO")
+      */
      protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=155)
-     * @Assert\NotBlank()
-     */
+     /**
+      * @ORM\Column(type="string", length=155)
+      * @Assert\NotBlank()
+      */
      protected $key;
 
     /**

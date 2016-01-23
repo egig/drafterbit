@@ -4,20 +4,21 @@ namespace Drafterbit\Bundle\SystemBundle\System\Shortcut;
 
 use Drafterbit\System\Extension\Shortcut;
 
-class AppearanceShortcut extends Shortcut {
-
+class AppearanceShortcut extends Shortcut
+{
     public function getUrl()
     {
         $param = [
             'theme' => $this->container->getParameter('theme'),
-            '_token' => $this->container->get('security.csrf.token_manager')->getToken('customize_theme')
+            '_token' => $this->container->get('security.csrf.token_manager')->getToken('customize_theme'),
         ];
+
         return $this->container->get('router')->generate('dt_setting_theme_customize', $param);
     }
 
     public function getText()
     {
-        return "Customize";
+        return 'Customize';
     }
 
     public function getIconClass()

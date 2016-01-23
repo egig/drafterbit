@@ -5,8 +5,6 @@ namespace Drafterbit\Bundle\BlogBundle\Security\Authorization\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-
-use Drafterbit\Bundle\SystemBundle\Security\Authorization\AttributeProvider;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
 
 class PostVoter implements VoterInterface
@@ -16,13 +14,13 @@ class PostVoter implements VoterInterface
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, [
-            self::EDIT
+            self::EDIT,
         ]);
     }
 
     public function supportsClass($class)
     {
-        $supportedClass = "Drafterbit\Bundle\BlogBundle\Entity\Post";;
+        $supportedClass = "Drafterbit\Bundle\BlogBundle\Entity\Post";
 
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
@@ -64,7 +62,7 @@ class PostVoter implements VoterInterface
         }
 
         // post is new
-        if(!$post->getUser()) {
+        if (!$post->getUser()) {
             return VoterInterface::ACCESS_GRANTED;
         }
 

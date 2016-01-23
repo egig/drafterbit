@@ -5,10 +5,10 @@ namespace Drafterbit\System\Search;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Component\DependencyInjection\Container;
 
-class Engine {
-
+class Engine
+{
     /**
-     * The query prviders
+     * The query prviders.
      * 
      * @var array
      */
@@ -22,7 +22,7 @@ class Engine {
     protected $container;
 
     /**
-     * The constructor
+     * The constructor.
      *
      * @param Container $container
      */
@@ -32,7 +32,7 @@ class Engine {
     }
 
     /**
-     * Populate the search engine and do the search
+     * Populate the search engine and do the search.
      *
      * @param string $q
      */
@@ -44,11 +44,10 @@ class Engine {
 
         if ($q) {
             foreach ($queryProviders as $queryProvider) {
-
                 $query = $queryProvider->getQuery();
 
-                if(!$query instanceof QueryBuilder) {
-                    throw new \LogicException("Method getQuery of".get_class($queryProvider).
+                if (!$query instanceof QueryBuilder) {
+                    throw new \LogicException('Method getQuery of'.get_class($queryProvider).
                         " must return an instance of Doctrine\DBAL\Query\QueryBuilder");
                 }
 
@@ -67,10 +66,11 @@ class Engine {
     }
 
     /**
-     * Form search results used given result formatter
+     * Form search results used given result formatter.
      *
-     * @param object $item
+     * @param object                   $item
      * @param ResultFormatterInterface $formatter
+     *
      * @return array
      */
     private function format($item, ResultFormatterInterface $formatter)
@@ -78,12 +78,12 @@ class Engine {
         return [
             'url' => $formatter->getUrl($item),
             'title' => $formatter->getTitle($item),
-            'summary' => $formatter->getSummary($item)
+            'summary' => $formatter->getSummary($item),
         ];
     }
 
     /**
-     * Get regitered query providers
+     * Get regitered query providers.
      *
      * @return array
      */
@@ -93,7 +93,7 @@ class Engine {
     }
 
     /**
-     * Add a query provider
+     * Add a query provider.
      *
      * @param QueryProvider $queryProvider
      */

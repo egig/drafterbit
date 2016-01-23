@@ -7,9 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-
 /**
- * Post
+ * Post.
  *
  * @ORM\Entity(repositoryClass="Drafterbit\Bundle\BlogBundle\Repository\PostRepository")
  * @ORM\Table(name="post")
@@ -22,7 +21,7 @@ class Post
     const STATUS_PUBLISHED = 1;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -88,7 +87,6 @@ class Post
      */
     private $deletedAt;
 
-
     /**
      * @var \DateTime
      *
@@ -97,7 +95,7 @@ class Post
     private $publishedAt;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
@@ -109,6 +107,7 @@ class Post
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
      * )
+     *
      * @var collection
      */
     protected $categories;
@@ -119,21 +118,22 @@ class Post
      *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )
+     *
      * @var collection
      */
     protected $tags;
 
     /**
-     *
      * @ORM\OneToMany(targetEntity="Drafterbit\Bundle\BlogBundle\Entity\Comment", mappedBy="post")
+     *
      * @var collection
      */
     protected $comments;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -141,9 +141,9 @@ class Post
     }
 
     /**
-     * Get idUser
+     * Get idUser.
      *
-     * @return integer 
+     * @return int
      */
     public function getUser()
     {
@@ -151,9 +151,10 @@ class Post
     }
 
     /**
-     * Set idUser
+     * Set idUser.
      *
-     * @param integer $idUser
+     * @param int $idUser
+     *
      * @return Page
      */
     public function setUser($user)
@@ -164,9 +165,10 @@ class Post
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Page
      */
     public function setTitle($title)
@@ -177,9 +179,9 @@ class Post
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -187,9 +189,10 @@ class Post
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
+     *
      * @return Page
      */
     public function setSlug($slug)
@@ -200,9 +203,9 @@ class Post
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -210,9 +213,10 @@ class Post
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return Page
      */
     public function setContent($content)
@@ -223,9 +227,9 @@ class Post
     }
 
     /**
-     * Get content
+     * Get content.
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -233,9 +237,10 @@ class Post
     }
 
     /**
-     * Set Type
+     * Set Type.
      *
      * @param string $type
+     *
      * @return Post
      */
     public function setType($type)
@@ -246,9 +251,9 @@ class Post
     }
 
     /**
-     * Get content
+     * Get content.
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -256,9 +261,10 @@ class Post
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
+     *
      * @return Page
      */
     public function setCreatedAt($createdAt)
@@ -269,9 +275,9 @@ class Post
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -279,9 +285,10 @@ class Post
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
+     *
      * @return Page
      */
     public function setUpdatedAt($updatedAt)
@@ -292,9 +299,9 @@ class Post
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -302,9 +309,10 @@ class Post
     }
 
     /**
-     * Set deletedAt
+     * Set deletedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Page
      */
     public function setDeletedAt($deletedAt)
@@ -315,9 +323,9 @@ class Post
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -325,9 +333,10 @@ class Post
     }
 
     /**
-     * Set publishedAt
+     * Set publishedAt.
      *
      * @param \DateTime $deletedAt
+     *
      * @return Page
      */
     public function setPublishedAt($publishedAt)
@@ -338,20 +347,20 @@ class Post
     }
 
     /**
-     * Get deletedAt
+     * Get deletedAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getPublishedAt()
     {
-        return $this->publishedAt ? $this->publishedAt : new \DateTime;
+        return $this->publishedAt ? $this->publishedAt : new \DateTime();
     }
 
-
     /**
-     * Set status
+     * Set status.
      *
-     * @param boolean $status
+     * @param bool $status
+     *
      * @return Page
      */
     public function setStatus($status)
@@ -362,9 +371,9 @@ class Post
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getStatus()
     {
@@ -372,7 +381,7 @@ class Post
     }
 
     /**
-     * Get Category
+     * Get Category.
      *
      * @return collection
      */
@@ -382,7 +391,7 @@ class Post
     }
 
     /**
-     * Get Tags
+     * Get Tags.
      *
      * @return collection
      */
@@ -392,7 +401,7 @@ class Post
     }
 
     /**
-     * Get Tags
+     * Get Tags.
      *
      * @return collection
      */
@@ -402,7 +411,7 @@ class Post
     }
 
     /**
-     * Set Category
+     * Set Category.
      *
      * @return Post
      */
@@ -414,7 +423,7 @@ class Post
     }
 
     /**
-     * Get Comments
+     * Get Comments.
      *
      * @return collection
      */
@@ -424,7 +433,7 @@ class Post
     }
 
     /**
-     * Set Comments
+     * Set Comments.
      *
      * @return Post
      */

@@ -3,10 +3,8 @@
 namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Drafterbit\Bundle\BlogBundle\Form\Type\CategoryType;
@@ -22,7 +20,7 @@ class CategoryController extends Controller
     {
         return [
             'view_id' => 'category',
-            'page_title' => $this->get('translator')->trans('Category')
+            'page_title' => $this->get('translator')->trans('Category'),
         ];
     }
 
@@ -37,12 +35,12 @@ class CategoryController extends Controller
             ->getManager()->getRepository('BlogBundle:Category')
             ->find($id);
 
-        if(!$category and ($id != 'new')) {
+        if (!$category and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
 
-        if(!$category) {
-            $category = new Category;
+        if (!$category) {
+            $category = new Category();
         }
 
         $form = $this->createForm(CategoryType::class, $category);
@@ -52,7 +50,7 @@ class CategoryController extends Controller
             'form' => $form->createView(),
             'view_id' => 'category-edit',
             'action' => $this->generateUrl('dt_blog_category_save'),
-            'page_title' => $this->get('translator')->trans('Edit Category')
+            'page_title' => $this->get('translator')->trans('Edit Category'),
         ];
     }
 
@@ -71,9 +69,9 @@ class CategoryController extends Controller
             $catArr[] = $data;
         }
 
-        $ob = new \StdClass;
+        $ob = new \StdClass();
         $ob->data = $catArr;
-        $ob->recordsTotal= count($catArr);
+        $ob->recordsTotal = count($catArr);
         $ob->recordsFiltered = count($catArr);
 
         return new JsonResponse($ob);
@@ -90,7 +88,7 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('BlogBundle:Category')->find($id);
 
-        if(!$category) {
+        if (!$category) {
             $category = new Category();
             $isNew = true;
         }
@@ -98,8 +96,7 @@ class CategoryController extends Controller
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
-
+        if ($form->isValid()) {
             $category = $form->getData();
 
             $em->persist($category);
@@ -114,29 +111,27 @@ class CategoryController extends Controller
             $response = [
                 'message' => $this->get('translator')->trans('Category saved'),
                 'status' => 'success',
-                'id' => $id
+                'id' => $id,
             ];
         } else {
-
             $errors = [];
             $formView = $form->createView();
 
             // @todo clean this, make a recursive
             // create service, FormErrorExtractor maybe
             foreach ($formView as $inputName => $view) {
-
-                if($view->children) {
+                if ($view->children) {
                     foreach ($view->children as $name => $childView) {
-                        if(isset($childView->vars['errors'])) {
-                            foreach($childView->vars['errors'] as $error) {
+                        if (isset($childView->vars['errors'])) {
+                            foreach ($childView->vars['errors'] as $error) {
                                 $errors[$childView->vars['full_name']] = $error->getMessage();
                             }
                         }
                     }
                 }
 
-                if(isset($view->vars['errors'])) {
-                    foreach($view->vars['errors'] as $error) {
+                if (isset($view->vars['errors'])) {
+                    foreach ($view->vars['errors'] as $error) {
                         $errors[$view->vars['full_name']] = $error->getMessage();
                     }
                 }
@@ -144,7 +139,7 @@ class CategoryController extends Controller
 
             $response['error'] = [
                 'type' => 'validation',
-                'messages' => $errors
+                'messages' => $errors,
             ];
         }
 

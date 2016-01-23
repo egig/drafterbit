@@ -3,26 +3,23 @@
 namespace Drafterbit\Bundle\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\BlogBundle\Form\Type\PostType;
 use Drafterbit\Bundle\BlogBundle\Form\Type\SettingType;
 use Drafterbit\Bundle\BlogBundle\Entity\Post;
 use Drafterbit\Bundle\BlogBundle\Entity\Tag;
 use Drafterbit\Bundle\BlogBundle\Model\Revision;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 class PostController extends Controller
 {
     /**
      * @Template()
      * @Security("is_granted('ROLE_POST_VIEW')")
+     *
      * @todo improve indexing (filter by collumn)
      */
     public function indexAction(Request $request)
@@ -30,20 +27,20 @@ class PostController extends Controller
         $viewId = 'post';
         $em = $this->getDoctrine()->getManager();
 
-        if($action = $request->request->get('action')) {
+        if ($action = $request->request->get('action')) {
 
             // safety first
             $token = $request->request->get('_token');
-            if(!$this->isCsrfTokenValid($viewId, $token)) {
+            if (!$this->isCsrfTokenValid($viewId, $token)) {
                 throw $this->createAccessDeniedException();
             }
 
             $posts = $request->request->get('posts');
 
-            if(!$posts) {
+            if (!$posts) {
                 return new JsonResponse([
                     'status' => 'error',
-                    'message' => $this->get('translator')->trans('Please make selection first')
+                    'message' => $this->get('translator')->trans('Please make selection first'),
                 ]);
             }
 
@@ -58,7 +55,7 @@ class PostController extends Controller
                         $em->persist($post);
                         break;
                     case 'restore':
-                        $post->setDeletedAt(NULL);
+                        $post->setDeletedAt(null);
                         $status = 'success';
                         $message = 'Post(s) restored';
                         $em->persist($post);
@@ -95,7 +92,7 @@ class PostController extends Controller
         return [
             'view_id' => $viewId,
             'categories' => $categories,
-            'page_title' => $this->get('translator')->trans('Post')
+            'page_title' => $this->get('translator')->trans('Post'),
         ];
     }
 
@@ -108,14 +105,14 @@ class PostController extends Controller
         $categoryId = $request->query->get('category');
 
         $em = $this->getDoctrine()->getManager();
-        $pagesArr  = [];
+        $pagesArr = [];
 
         $posts = $em->getRepository('BlogBundle:Post')->
             getByStatusAndCategory($status, $categoryId);
 
         foreach ($posts as $post) {
             $data = [];
-            $data['id'] = $post->getId();;
+            $data['id'] = $post->getId();
             $data['title'] = $post->getTitle();
             $data['author'] = $post->getUser()->getRealName();
             $data['user_id'] = $post->getUser()->getId();
@@ -125,9 +122,9 @@ class PostController extends Controller
             $pagesArr[] = $data;
         }
 
-        $ob = new \StdClass;
+        $ob = new \StdClass();
         $ob->data = $pagesArr;
-        $ob->recordsTotal= count($pagesArr);
+        $ob->recordsTotal = count($pagesArr);
         $ob->recordsFiltered = count($pagesArr);
 
         return new JsonResponse($ob);
@@ -143,11 +140,11 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('BlogBundle:Post')->find($id);
 
-        if(!$post and ($id != 'new')) {
+        if (!$post and ($id != 'new')) {
             throw  $this->createNotFoundException();
         }
 
-        if(!$post) {
+        if (!$post) {
             $post = new Post();
             $pageTitle = 'New Post';
         }
@@ -157,15 +154,13 @@ class PostController extends Controller
 
         $tags = $em->getRepository('BlogBundle:Tag')->findAll();
 
-        $tagOptions = array_map(function($item) {
+        $tagOptions = array_map(function ($item) {
             return $item->getLabel();
         }, $tags);
 
-
-        $postTags = array_map(function($item) {
+        $postTags = array_map(function ($item) {
             return $item->getLabel();
         }, $post->getTags()->toArray());
-
 
         // @todo merge form creation with one defined in saveAction
         $form = $this->createForm(PostType::class, $post);
@@ -184,8 +179,8 @@ class PostController extends Controller
             'post_id' => $id,
             'view_id' => 'post-edit',
             'revisions' => $revisions,
-            'action' =>  $this->generateUrl('dt_blog_post_save'),
-            'page_title' => $this->get('translator')->trans($pageTitle)
+            'action' => $this->generateUrl('dt_blog_post_save'),
+            'page_title' => $this->get('translator')->trans($pageTitle),
         ];
     }
 
@@ -201,7 +196,7 @@ class PostController extends Controller
         $post = $em->getRepository('BlogBundle:Post')->find($id);
 
         $isNew = false;
-        if(!$post) {
+        if (!$post) {
             $post = new Post();
             $isNew = true;
         }
@@ -213,12 +208,12 @@ class PostController extends Controller
         // tags needs sparate input
         $tagLabels = $request->request->get('tags');
 
-        if($tagLabels) {
+        if ($tagLabels) {
             foreach ($tagLabels as $label) {
                 $tag = $em->getRepository('BlogBundle:Tag')->findOneBy(['label' => $tagLabels]);
 
-                if(!$tag) {
-                    $tag = new Tag;
+                if (!$tag) {
+                    $tag = new Tag();
                     $tag->setLabel($label);
                     $tag->setSlug(static::slug($label));
 
@@ -236,26 +231,26 @@ class PostController extends Controller
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
-         if($form->isValid()) {
+        if ($form->isValid()) {
 
             //save data to database
             $post = $form->getData();
             $publishedAt = $form->get('published_at')->getData();
 
             $post->setUser($this->getUser());
-            $post->setUpdatedAt(new \DateTime);
+            $post->setUpdatedAt(new \DateTime());
             $post->setPublishedAt(new \DateTime($publishedAt));
 
-            if($isNew) {
-                $post->setCreatedAt(new \DateTime);
-                $post->setDeletedAt(NULL);
+            if ($isNew) {
+                $post->setCreatedAt(new \DateTime());
+                $post->setDeletedAt(null);
 
                 // @todo create revision
                 $post->setType(Post::TYPE_STANDARD);
             }
 
             // create revision first
-            if(!$isNew) {
+            if (!$isNew) {
                 (new Revision($this->getDoctrine()->getManager(), $this->getUser()))
                     ->create($currentTitle, $currentContent, $post);
             }
@@ -267,33 +262,31 @@ class PostController extends Controller
 
             // log
             $logger = $this->get('logger');
-            $logger->info("%author% edited post %post%", ['author' => $this->getUser()->getId(), 'post' => $id]);
+            $logger->info('%author% edited post %post%', ['author' => $this->getUser()->getId(), 'post' => $id]);
 
             $response = [
                 'message' => $this->get('translator')->trans('Post saved'),
                 'status' => 'success',
-                'id' => $id];
+                'id' => $id, ];
         } else {
-
             $errors = [];
             $formView = $form->createView();
 
             // @todo clean this, make a recursive
             // create service, FormErrorExtractor maybe
             foreach ($formView as $inputName => $view) {
-
-                if($view->children) {
+                if ($view->children) {
                     foreach ($view->children as $name => $childView) {
-                        if(isset($childView->vars['errors'])) {
-                            foreach($childView->vars['errors'] as $error) {
+                        if (isset($childView->vars['errors'])) {
+                            foreach ($childView->vars['errors'] as $error) {
                                 $errors[$childView->vars['full_name']] = $error->getMessage();
                             }
                         }
                     }
                 }
 
-                if(isset($view->vars['errors'])) {
-                    foreach($view->vars['errors'] as $error) {
+                if (isset($view->vars['errors'])) {
+                    foreach ($view->vars['errors'] as $error) {
                         $errors[$view->vars['full_name']] = $error->getMessage();
                     }
                 }
@@ -301,7 +294,7 @@ class PostController extends Controller
 
             $response['error'] = [
                 'type' => 'validation',
-                'messages' => $errors
+                'messages' => $errors,
             ];
         }
 
@@ -309,7 +302,7 @@ class PostController extends Controller
     }
 
     /**
-     * Get post revisions
+     * Get post revisions.
      *
      * @return array
      */
@@ -319,7 +312,7 @@ class PostController extends Controller
             ->getManager()->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where('p.type=:type')
-            ->setParameter('type', "history:".$id)
+            ->setParameter('type', 'history:'.$id)
             ->orderBy('p.createdAt', 'desc')
             ->getQuery();
 
@@ -331,6 +324,7 @@ class PostController extends Controller
      *
      * @param string $title
      * @param string $separator
+     *
      * @return string
      */
     public static function slug($title, $separator = '-')
@@ -344,6 +338,7 @@ class PostController extends Controller
 
         // Replace all separator characters and whitespace by a single separator
         $title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
+
         return trim($title, $separator);
     }
 
@@ -357,28 +352,27 @@ class PostController extends Controller
 
         // @todo validation
         $notif['success'] = false;
-        if($blogSetting) {
+        if ($blogSetting) {
             $settingData = [
                 'blog.post_perpage' => $blogSetting['post_perpage'],
                 'blog.feed_shows' => $blogSetting['feed_shows'],
                 'blog.feed_content' => $blogSetting['feed_content'],
-                'blog.comment_moderation' => $blogSetting['comment_moderation']
+                'blog.comment_moderation' => $blogSetting['comment_moderation'],
             ];
             $this->get('system')->update($settingData);
             $notif['success'] = [
-                'message' => 'Setting saved'
+                'message' => 'Setting saved',
             ];
         }
 
         $form = $this->createForm(new SettingType($this->get('system')));
-        $data =  [
+        $data = [
             'action' => $this->generateUrl('dt_blog_setting'),
             'view_id' => 'blog_setting',
             'page_title' => $this->get('translator')->trans('Blog Setting'),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
 
-        return $data+$notif;
+        return $data + $notif;
     }
-
 }

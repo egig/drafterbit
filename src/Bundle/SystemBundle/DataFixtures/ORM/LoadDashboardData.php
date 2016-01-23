@@ -5,14 +5,13 @@ namespace Drafterbit\Bundle\SystemBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drafterbit\Bundle\SystemBundle\Entity\Panel;
 
 class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
      * @todo get user email during install
      */
     public function load(ObjectManager $manager)
@@ -58,7 +57,7 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrder()
     {

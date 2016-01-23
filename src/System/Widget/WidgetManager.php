@@ -5,17 +5,16 @@ namespace Drafterbit\System\Widget;
 class WidgetManager
 {
     /**
-     * Registered widgets
+     * Registered widgets.
      *
      * @var array
      */
     protected $widgets = [];
 
     /**
-     * Register a widget;
+     * Register a widget;.
      *
-     * @param  Drafterbit\WidgetInterface $widget
-     * @return void
+     * @param Drafterbit\WidgetInterface $widget
      */
     public function register(WidgetInterface $widget)
     {
@@ -23,9 +22,10 @@ class WidgetManager
     }
 
     /**
-     * Get a widget by name;
+     * Get a widget by name;.
      *
-     * @param  string $nameegis
+     * @param string $nameegis
+     *
      * @return Drafterbit\WidgetInterface
      */
     public function get($name)
@@ -34,7 +34,7 @@ class WidgetManager
     }
 
     /**
-     * Get all registered widgets
+     * Get all registered widgets.
      *
      * @return array
      */

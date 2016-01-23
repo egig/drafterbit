@@ -22,18 +22,17 @@ class TablePrefixSubscriber implements \Doctrine\Common\EventSubscriber
     {
         $classMetadata = $args->getClassMetadata();
         if ($classMetadata->isInheritanceTypeSingleTable() && !$classMetadata->isRootEntity()) {
-                            // if we are in an inheritance hierarchy, only apply this once
+            // if we are in an inheritance hierarchy, only apply this once
             return;
         }
 
-        $classMetadata->setTableName($this->prefix . $classMetadata->getTableName());
+        $classMetadata->setTableName($this->prefix.$classMetadata->getTableName());
 
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {
             if ($mapping['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY) {
                 $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
-                $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;
+                $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix.$mappedTableName;
             }
         }
     }
-
 }

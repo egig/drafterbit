@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * MenuItem
+ * MenuItem.
  *
  * @ORM\Table("menu_item")
  * @ORM\Entity
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MenuItem
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,7 +23,6 @@ class MenuItem
     private $id;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="\Drafterbit\Bundle\SystemBundle\Entity\Menu")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      */
@@ -45,23 +44,22 @@ class MenuItem
     private $link;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="sequence", type="smallint")
      */
     private $sequence;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="\Drafterbit\Bundle\SystemBundle\Entity\MenuItem")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -69,9 +67,10 @@ class MenuItem
     }
 
     /**
-     * Set menu
+     * Set menu.
      *
      * @param \stdClass $menu
+     *
      * @return MenuItem
      */
     public function setMenu($menu)
@@ -82,9 +81,9 @@ class MenuItem
     }
 
     /**
-     * Get menu
+     * Get menu.
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getMenu()
     {
@@ -92,9 +91,10 @@ class MenuItem
     }
 
     /**
-     * Set displayText
+     * Set displayText.
      *
      * @param string $displayText
+     *
      * @return MenuItem
      */
     public function setDisplayText($displayText)
@@ -105,9 +105,9 @@ class MenuItem
     }
 
     /**
-     * Get displayText
+     * Get displayText.
      *
-     * @return string 
+     * @return string
      */
     public function getDisplayText()
     {
@@ -115,9 +115,10 @@ class MenuItem
     }
 
     /**
-     * Set link
+     * Set link.
      *
      * @param string $link
+     *
      * @return MenuItem
      */
     public function setLink($link)
@@ -128,9 +129,9 @@ class MenuItem
     }
 
     /**
-     * Get link
+     * Get link.
      *
-     * @return string 
+     * @return string
      */
     public function getLink()
     {
@@ -138,9 +139,10 @@ class MenuItem
     }
 
     /**
-     * Set sequence
+     * Set sequence.
      *
-     * @param integer $sequence
+     * @param int $sequence
+     *
      * @return MenuItem
      */
     public function setSequence($sequence)
@@ -151,9 +153,9 @@ class MenuItem
     }
 
     /**
-     * Get sequence
+     * Get sequence.
      *
-     * @return integer 
+     * @return int
      */
     public function getSequence()
     {
@@ -161,9 +163,10 @@ class MenuItem
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param \stdClass $parent
+     *
      * @return MenuItem
      */
     public function setParent($parent)
@@ -174,9 +177,9 @@ class MenuItem
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
-     * @return \stdClass 
+     * @return \stdClass
      */
     public function getParent()
     {

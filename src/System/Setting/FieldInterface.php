@@ -4,9 +4,8 @@ namespace Drafterbit\System\Setting;
 
 interface FieldInterface
 {
-
     /**
-     * Get th form
+     * Get th form.
      *
      * @return Form
      */

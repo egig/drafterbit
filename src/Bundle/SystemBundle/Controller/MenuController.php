@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 use Drafterbit\Bundle\SystemBundle\Form\Type\MenuType;
 use Drafterbit\Bundle\SystemBundle\Entity\Menu;
 use Drafterbit\Bundle\SystemBundle\Entity\MenuItem;
@@ -35,8 +34,8 @@ class MenuController extends Controller
 
         return [
             'form' => $form->createView(),
-            'menus' =>  $menus,
-            'page_title' => $this->get('translator')->trans('Menus')
+            'menus' => $menus,
+            'page_title' => $this->get('translator')->trans('Menus'),
         ];
     }
 
@@ -44,7 +43,7 @@ class MenuController extends Controller
     {
         $array = [];
         foreach ($items as $item) {
-            if($item->getParent() == $parent) {
+            if ($item->getParent() == $parent) {
                 $item->childs = $this->buildFamily($items, $item);
 
                 $array[] = $item;
@@ -56,10 +55,10 @@ class MenuController extends Controller
 
     public function saveAction(Request $request)
     {
-        $form = $this->createForm(MenuType::class, new Menu);
+        $form = $this->createForm(MenuType::class, new Menu());
         $form->handleRequest($request);
 
-         if($form->isValid()) {
+        if ($form->isValid()) {
 
             //save data to database
             $menu = $form->getData();
@@ -75,29 +74,27 @@ class MenuController extends Controller
 
             $response = [
                 'slug' => $menu->getDisplayText(),
-                'id' => $id
+                'id' => $id,
             ];
         } else {
-
             $errors = [];
             $formView = $form->createView();
 
             // @todo clean this, make a recursive
             // create service, FormErrorExtractor maybe
             foreach ($formView as $inputName => $view) {
-
-                if($view->children) {
+                if ($view->children) {
                     foreach ($view->children as $name => $childView) {
-                        if(isset($childView->vars['errors'])) {
-                            foreach($childView->vars['errors'] as $error) {
+                        if (isset($childView->vars['errors'])) {
+                            foreach ($childView->vars['errors'] as $error) {
                                 $errors[$childView->vars['full_name']] = $error->getMessage();
                             }
                         }
                     }
                 }
 
-                if(isset($view->vars['errors'])) {
-                    foreach($view->vars['errors'] as $error) {
+                if (isset($view->vars['errors'])) {
+                    foreach ($view->vars['errors'] as $error) {
                         $errors[$view->vars['full_name']] = $error->getMessage();
                     }
                 }
@@ -105,7 +102,7 @@ class MenuController extends Controller
 
             $response['error'] = [
                 'type' => 'validation',
-                'messages' => $errors
+                'messages' => $errors,
             ];
         }
 
@@ -113,8 +110,7 @@ class MenuController extends Controller
     }
 
     /**
-     * Actually this is also saving menu if the name changes
-     *
+     * Actually this is also saving menu if the name changes.
      */
     public function sortAction(Request $request)
     {
@@ -129,9 +125,8 @@ class MenuController extends Controller
         $em->flush();
 
         $menuItemRepo = $em->getRepository('SystemBundle:MenuItem');
-        if($items) {
+        if ($items) {
             foreach ($items as $data) {
-
                 $parent = $menuItemRepo->find($data['parent']);
 
                 $item = $menuItemRepo->find($data['id']);
@@ -171,7 +166,7 @@ class MenuController extends Controller
         $em = $this->getDoctrine()->getManager();
         $menu = $em->getRepository('SystemBundle:Menu')->find($id);
 
-        $item = new MenuItem;
+        $item = new MenuItem();
         $item->setDisplayText('New Menu Item');
         $item->setLink('#');
         $item->setMenu($menu);
@@ -180,11 +175,11 @@ class MenuController extends Controller
         $em->flush();
 
         return new JsonResponse([
-            "label" => $item->getDisplayText(),
-            "menu_id" => $item->getMenu()->getId(),
-            "parent_id" => 0,
-            "link" => "#",
-            "id"=> $item->getId(),
+            'label' => $item->getDisplayText(),
+            'menu_id' => $item->getMenu()->getId(),
+            'parent_id' => 0,
+            'link' => '#',
+            'id' => $item->getId(),
         ]);
     }
 
@@ -221,7 +216,7 @@ class MenuController extends Controller
 
         $errors = $this->get('validator')->validate($item);
 
-        if((boolean) count($errors)) {
+        if ((boolean) count($errors)) {
             $messages = [];
 
             foreach ($errors as $error) {
@@ -231,11 +226,10 @@ class MenuController extends Controller
             $response = [
                 'error' => [
                     'type' => 'validation',
-                    'messages' => $messages
-                ]
+                    'messages' => $messages,
+                ],
             ];
-        }else {
-
+        } else {
             $em->persist($item);
             $em->flush();
 

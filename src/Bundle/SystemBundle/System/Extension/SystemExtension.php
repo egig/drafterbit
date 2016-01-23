@@ -5,8 +5,8 @@ namespace Drafterbit\Bundle\SystemBundle\System\Extension;
 use Drafterbit\System\Extension\Extension;
 use Drafterbit\Bundle\SystemBundle\System\Shortcut\AppearanceShortcut;
 
-class SystemExtension extends Extension {
-
+class SystemExtension extends Extension
+{
     public function getName()
     {
         return 'system';
@@ -15,7 +15,7 @@ class SystemExtension extends Extension {
     public function getShortcuts()
     {
         return [
-            new AppearanceShortcut()
+            new AppearanceShortcut(),
         ];
     }
 }

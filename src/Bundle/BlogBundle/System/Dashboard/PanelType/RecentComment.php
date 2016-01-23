@@ -4,8 +4,8 @@ namespace Drafterbit\Bundle\BlogBundle\System\Dashboard\PanelType;
 
 use Drafterbit\System\Dashboard\PanelType;
 
-class RecentComment extends PanelType {
-
+class RecentComment extends PanelType
+{
     public function getView()
     {
         $em = $this->container->get('doctrine')->getManager();
@@ -17,7 +17,7 @@ class RecentComment extends PanelType {
             ->getResult();
 
         return $this->renderView('BlogBundle:Panel:recent_comment.html.twig', [
-            'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 

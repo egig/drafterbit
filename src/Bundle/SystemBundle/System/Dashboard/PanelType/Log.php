@@ -5,8 +5,8 @@ namespace Drafterbit\Bundle\SystemBundle\System\Dashboard\PanelType;
 use Drafterbit\System\Dashboard\PanelType;
 use Drafterbit\Bundle\SystemBundle\Form\Type\Panel\LogType;
 
-class Log extends PanelType {
-
+class Log extends PanelType
+{
     const LOG_NUM = 10;
 
     public function getView($context = null)
@@ -20,16 +20,16 @@ class Log extends PanelType {
             ->getQuery()
             ->getResult();
 
-        $logs = array_map(function($log){
+        $logs = array_map(function ($log) {
             return [
                 'time' => (new \DateTime())->setTimestamp($log->getTime()),
                 'activity' => $this->container
-                    ->get('dt_system.log.display_formatter')->format($log->getMessage(), $log->getContext())
+                    ->get('dt_system.log.display_formatter')->format($log->getMessage(), $log->getContext()),
             ];
         }, $logEntities);
 
         return $this->renderView('SystemBundle:Panel:log.html.twig', [
-            'logs' => $logs
+            'logs' => $logs,
         ]);
     }
 
@@ -40,7 +40,7 @@ class Log extends PanelType {
 
     public function getFormTemplate()
     {
-        return "SystemBundle:Panel:edit/log.html.twig";
+        return 'SystemBundle:Panel:edit/log.html.twig';
     }
 
     public function getName()

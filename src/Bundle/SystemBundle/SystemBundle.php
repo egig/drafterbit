@@ -4,10 +4,8 @@ namespace Drafterbit\Bundle\SystemBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\LogDisplayFormatterPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\ApplicationRoutePass;
-use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\FrontendTemplatingPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\DashboardPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\WidgetPass;
 use Drafterbit\Bundle\SystemBundle\DependencyInjection\Compiler\SearchQueryProviderPass;
@@ -32,7 +30,7 @@ class SystemBundle extends Bundle
         $container->addCompilerPass(new ExtensionsPass());
         $container->addCompilerPass(new AdminRoutePass());
 
-        if(php_sapi_name() !== 'cli' and ($container->getParameter('kernel.environment') === 'dev')) {
+        if (php_sapi_name() !== 'cli' and ($container->getParameter('kernel.environment') === 'dev')) {
             $container->addCompilerPass(new WebDebugToolbarPass());
         }
     }

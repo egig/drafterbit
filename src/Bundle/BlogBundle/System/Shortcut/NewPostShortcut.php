@@ -4,8 +4,8 @@ namespace Drafterbit\Bundle\BlogBundle\System\Shortcut;
 
 use Drafterbit\System\Extension\Shortcut;
 
-class NewPostShortcut extends Shortcut {
-    
+class NewPostShortcut extends Shortcut
+{
     public function getUrl()
     {
         return $this->container->get('router')
@@ -14,7 +14,7 @@ class NewPostShortcut extends Shortcut {
 
     public function getText()
     {
-        return "New Post";
+        return 'New Post';
     }
 
     public function getIconClass()

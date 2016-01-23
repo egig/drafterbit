@@ -1,11 +1,8 @@
 <?php
 
-
 namespace Drafterbit\Bundle\SystemBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Drafterbit\Bundle\BlogBundle\Entity\Post;
-use Doctrine\ORM\Query\Expr;
 
 class WidgetRepository extends EntityRepository
 {

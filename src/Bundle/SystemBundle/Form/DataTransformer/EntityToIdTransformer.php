@@ -12,12 +12,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 class EntityToIdTransformer implements DataTransformerInterface
 {
     /**
-    * @var ObjectManager
-    */
+     * @var ObjectManager
+     */
     protected $objectManager;
     /**
-    * @var string
-    */
+     * @var string
+     */
     protected $class;
     public function __construct(ObjectManager $objectManager, $class)
     {
@@ -30,14 +30,14 @@ class EntityToIdTransformer implements DataTransformerInterface
         if (null === $entity) {
             return;
         }
-    
+
         return $entity->getId();
     }
 
     public function reverseTransform($id)
     {
         if (!$id) {
-            return null;
+            return;
         }
 
         $entity = $this->objectManager->getRepository($this->class)->find($id);

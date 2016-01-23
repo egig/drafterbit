@@ -5,10 +5,8 @@ namespace Drafterbit\System\Widget;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Form;
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
 
 abstract class Widget implements WidgetInterface
 {
@@ -31,21 +29,22 @@ abstract class Widget implements WidgetInterface
      *
      * @return string
      */
-    abstract function run($context = null);
+    abstract public function run($context = null);
 
     /**
      * Get the widget name.
      *
      * @return string
      */
-    abstract function getName();
+    abstract public function getName();
 
     /**
      * Get the widget name.
-     *s
+     *s.
+     *
      * @return Form
      */
-    abstract function buildForm(Form $form);
+    abstract public function buildForm(Form $form);
 
     /**
      * Widget construction.
@@ -58,7 +57,7 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * Get contecxt type, mostly declared on each widget
+     * Get contecxt type, mostly declared on each widget.
      *
      * @return array
      */
@@ -68,28 +67,29 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * Get form view of the widget
+     * Get form view of the widget.
      *
      * @return FormView
+     *
      * @todo clean this
      */
     public function getFormView($type, $data = null, $options = [])
     {
         $form = $this->container->get('form.factory')->create($type, $data, []);
         $options = [
-            'attr' =>  ['class' => 'form-control input-sm'],
+            'attr' => ['class' => 'form-control input-sm'],
             'label_attr' => ['class' => 'control-label'],
-            'mapped' => false
+            'mapped' => false,
         ];
         $form->add('title', TextType::class, $options);
 
-        if($data !== null) {
+        if ($data !== null) {
             $form->get('id')->setData($data->getId());
         }
 
         $form = $this->buildForm($form);
 
-        $form->add('Save', SubmitType::class, ['attr' => ['class'=> "btn btn-primary btn-xs"]]);
+        $form->add('Save', SubmitType::class, ['attr' => ['class' => 'btn btn-primary btn-xs']]);
 
         return $form->createView();
     }
@@ -98,7 +98,6 @@ abstract class Widget implements WidgetInterface
      * Set widget data.
      *
      * @param array $data
-     * @return void
      */
     public function setContext($context)
     {
@@ -106,13 +105,13 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * Get Context
+     * Get Context.
      *
      * @return mixed
      */
     public function getContext($id = null)
     {
-        if($id) {
+        if ($id) {
             return isset($this->context[$id]) ? $this->context[$id]  : null;
         }
 
@@ -120,9 +119,9 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * Determine if widget has a context
+     * Determine if widget has a context.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasContext($id)
     {

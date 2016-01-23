@@ -3,13 +3,11 @@
 namespace Drafterbit\Bundle\SystemBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Drafterbit\Bundle\SystemBundle\Controller\FrontendController;
 
 class FrontendListener implements EventSubscriberInterface
 {
@@ -29,7 +27,7 @@ class FrontendListener implements EventSubscriberInterface
     }
 
     /**
-     * Change twig path on frontend controller
+     * Change twig path on frontend controller.
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -41,14 +39,12 @@ class FrontendListener implements EventSubscriberInterface
         // If the page requested is not admin area then we
         // change theme path according to theme and add
         // theme context data
-        if(strpos($request->getPathInfo(), '/'.$admin) !== 0) {
-            if($theme = $request->query->get('theme')) {
-
+        if (strpos($request->getPathInfo(), '/'.$admin) !== 0) {
+            if ($theme = $request->query->get('theme')) {
                 $token = $request->query->get('_token');
-                if(!$this->isCsrfTokenValid($token)) {
+                if (!$this->isCsrfTokenValid($token)) {
                     throw new AccessDeniedException();
                 }
-
             } else {
                 $theme = $this->container->getParameter('theme');
             }
@@ -60,26 +56,25 @@ class FrontendListener implements EventSubscriberInterface
             // @todo create template structure spec
             // @todo optimize this, maybe put during compilation
             foreach ($kernel->getBundles() as $name => $bundle) {
-                if(is_dir($bundleTemplatePath = $bundle->getPath().'/Resources/web/_tpl')) {
+                if (is_dir($bundleTemplatePath = $bundle->getPath().'/Resources/web/_tpl')) {
                     $this->container->get('twig.loader')->prependPath($bundleTemplatePath);
                 }
             }
 
             // prepend theme path
-            if(is_dir($themeTemplatePath = $themesPath.'/'.$theme.'/_tpl')) {
+            if (is_dir($themeTemplatePath = $themesPath.'/'.$theme.'/_tpl')) {
                 $this->container->get('twig.loader')->prependPath($themeTemplatePath);
             }
 
             // add global theme context, first we need populate the default
             $themesPath = $this->container->getParameter('themes_path');
 
-            if(is_file($file = $themesPath.'/'.$theme.'/theme.json')) {
-
+            if (is_file($file = $themesPath.'/'.$theme.'/theme.json')) {
                 $themeConfig = json_decode(file_get_contents($file), true);
 
                 // @todo validate this
                 $defaultContext = [];
-                if(isset($themeConfig['option'])) {
+                if (isset($themeConfig['option'])) {
                     foreach ($themeConfig['option'] as $option) {
                         $defaultContext[$option['name']] = $option['default'];
                     }
@@ -94,11 +89,10 @@ class FrontendListener implements EventSubscriberInterface
                     $this->container->get('twig')->addGlobal($key, $value);
                 }
             }
-
         } else {
 
             // restrict some browser
-            if(preg_match('/(?i)msie [1-9]/', $request->server->get('HTTP_USER_AGENT'))) {
+            if (preg_match('/(?i)msie [1-9]/', $request->server->get('HTTP_USER_AGENT'))) {
                 // if IE<=9
                 exit('Browser not supported yet, sorry. :(');
             }
@@ -108,7 +102,7 @@ class FrontendListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::CONTROLLER => array('onKernelController')
+            KernelEvents::CONTROLLER => array('onKernelController'),
         );
     }
 
@@ -119,6 +113,7 @@ class FrontendListener implements EventSubscriberInterface
         }
 
         $id = 'customize_theme';
+
         return $this->container->get('security.csrf.token_manager')->isTokenValid(new CsrfToken($id, $token));
     }
 }
