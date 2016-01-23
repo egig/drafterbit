@@ -73,6 +73,10 @@
             <argument type="service" id="service_container" />
         </service>
 
+        <service id="dt_system.event.listener.cli_response" class="Drafterbit\Bundle\SystemBundle\EventListener\CLIResponseListener">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
         <!-- Search -->
         <service id="dt_system.search.engine" class="Drafterbit\System\Search\Engine">
             <argument type="service" id="service_container" />

@@ -13,6 +13,6 @@ class FrontendControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/non-existing-page');
 
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode() );
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
 }
