@@ -1,20 +1,18 @@
 {% for f in form %}
     <div class="form-group col-md-6">
-        {{ form_label(f) }}
-        {% if 'choice' in f.vars.block_prefixes %}
-            {% if f.vars.expanded %}
-                <div>
-                {% for f_w in f %}
-                    <label class="checkbox-inline">
-                        {{ form_widget(f_w) }} {{ __(f_w.vars.label) }}
-                    </label>
-                {% endfor %}
-                </div>
-            {% else %}
-                {{ form_widget(f, {attr: {class:"form-control"}}) }}
-            {% endif %}
-        {% else %}
+        {% if 'post_path' != f.vars.name %}
+            {{ form_label(f) }}
             {{ form_widget(f, {attr: {class:"form-control"}}) }}
         {% endif %}
     </div>
 {% endfor %}
+<div class="form-group col-md-12">
+    {{ form_label(form.post_path, 'Permalinks') }}
+    {% for c in form.post_path %}
+        <div class="radio">
+            <label>
+              {{ form_widget(c) }} <code>{{ c.vars.label }}</code>
+            </label>
+        </div>
+    {% endfor %}
+</div>

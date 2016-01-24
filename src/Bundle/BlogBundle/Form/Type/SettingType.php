@@ -28,15 +28,22 @@ class SettingType extends AbstractType
                     'Full Text' => 1,
                     'Summary' => 2,
                 ],
-                'data' => $this->data('blog.feed_content'), ]
-            )->add('comment_moderation', ChoiceType::class, [
+                'data' => $this->data('blog.feed_content'), ])
+            ->add('comment_moderation', ChoiceType::class, [
                 'choices' => [
                     'Never' => 0,
                     'Always' => 1,
                 ],
                 'data' => $this->data('blog.comment_moderation'), ]
-            );
-            //->add('Save', 'submit');
+            )
+            ->add('post_path', ChoiceType::class, [
+                'choices' => [
+                    '/{_locale}/{year}/{month}/{date}/{slug}' => '/{_locale}/{year}/{month}/{date}/{slug}',
+                    '/{year}/{month}/{date}/{slug}' => '/{year}/{month}/{date}/{slug}',
+                    '/{year}/{month}/{slug}' => '/{year}/{month}/{slug}',
+                ],
+                'data' => $this->data('blog.post_path'),
+                'expanded' => true ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

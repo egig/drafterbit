@@ -165,33 +165,44 @@ class FrontendController extends Controller
                 $post->excerpt = false;
             }
 
+
             // Create post url
             $dateObject = $post->getPublishedAt();
             $year = $dateObject->format('Y');
             $month = $dateObject->format('m');
             $date = $dateObject->format('d');
             $slug = $post->getSlug();
-            $post->url = $this->generateUrl('dt_blog_post_front_view',
-                ['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
+            $param = $this->resolveMandatoryParam(['year' => $year, 'month' => $month, 'date' => $date, 'slug' => $slug]);
+
+            $post->url = $this->generateUrl('dt_blog_post_front_view', $param);
         }
 
         return $posts;
     }
 
+    private function resolveMandatoryParam($param) {
+        $route = $this->get('router')->getRouteCollection()->get('dt_blog_post_front_view');
+
+        $path = $route->getPath();
+
+        $matchedKeys = array_filter(array_keys($param), function($key) use ($path) {
+            return strpos($path, '{'.$key.'}') !== false;
+        });
+
+        return array_intersect_key($param, array_flip($matchedKeys));
+    }
+
     /**
      * @Template("content/blog/view.html.twig")
      */
-    public function viewAction($year, $month, $date, $slug)
+    public function viewAction($slug, $year = null, $month = null, $date = null)
     {
-        $time = new \DateTime("$year-$month-$date");
-
         $post = $this->getDoctrine()->getManager()
             ->getRepository('BlogBundle:Post')
             ->createQueryBuilder('p')
             ->where('p.slug=:slug')
             ->andWhere('p.type=:type')
-            ->andWhere('p.publishedAt >= :publishedAt')
-            ->setParameters(['slug' => $slug, 'type' => 'standard', 'publishedAt' => $time])
+            ->setParameters(['slug' => $slug, 'type' => 'standard'])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

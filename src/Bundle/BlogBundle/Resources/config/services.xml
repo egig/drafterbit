@@ -57,5 +57,10 @@
             <tag name="dt_system.extensions" />
         </service>
 
+         <service id="dt_blog.routing.loader" class="Drafterbit\Bundle\BlogBundle\Routing\Loader\BlogLoader">
+            <argument id="system" type="service"/>
+            <tag name="routing.loader"></tag>
+        </service>
+
     </services>
 </container>

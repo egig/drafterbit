@@ -24,12 +24,12 @@
         <default key="_controller">BlogBundle:Frontend:author</default>
     </route>
 
-    <route id="dt_blog_post_front_view" path="/{year}/{month}/{date}/{slug}" methods="GET">
+   <!-- <route id="dt_blog_post_front_view" path="/{year}/{month}/{date}/{slug}" methods="GET">
         <default key="_controller">BlogBundle:Frontend:view</default>
         <requirement key="year">\d{4}</requirement>
         <requirement key="month">\d{2}</requirement>
         <requirement key="date">\d{2}</requirement>
-    </route>
+    </route>-->
 
     <route id="dt_blog_comment_submit" path="/comment/submit" methods=" POST">
         <default key="_controller">BlogBundle:Frontend:commentSubmit</default>

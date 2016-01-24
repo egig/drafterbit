@@ -50,7 +50,7 @@
         <default key="_controller">SystemBundle:Menu:delete</default>
     </route>
 
-    <route id="dt_system_menu_item_add" path="/menu/item/add" methods="GET">
+    <route id="dt_system_menu_item_add" path="/menu/item/add" methods="POST">
         <default key="_controller">SystemBundle:Menu:itemAdd</default>
     </route>
 
