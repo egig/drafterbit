@@ -31,7 +31,7 @@
         <requirement key="date">\d{2}</requirement>
     </route>
 
-    <route id="dt_blog_comment_submit" path="comment/submit" methods="GET">
+    <route id="dt_blog_comment_submit" path="/comment/submit" methods=" POST">
         <default key="_controller">BlogBundle:Frontend:commentSubmit</default>
     </route>
 

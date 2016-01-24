@@ -202,8 +202,6 @@ class FrontendController extends Controller
     /**
      * Comment Submission controller.
      *
-     * @Route("/comment/submit", name="dt_blog_comment_submit")
-     *
      * @param Request $request
      **/
     public function commentSubmitAction(Request $request)
