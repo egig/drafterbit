@@ -58,7 +58,7 @@
         <default key="_controller">SystemBundle:Menu:itemDelete</default>
     </route>
 
-    <route id="dt_system_menu_item_save" path="/menu/item/save" methods="GET">
+    <route id="dt_system_menu_item_save" path="/menu/item/save" methods="POST">
         <default key="_controller">SystemBundle:Menu:itemSave</default>
     </route>
 
