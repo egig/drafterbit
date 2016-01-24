@@ -253,17 +253,9 @@ class FrontendController extends Controller
             return new RedirectResponse($referer.'#comment-'.$comment->getId());
         } else {
             $errors = [];
-
-            // @todo clean this, make a recursive
-            // create service, FormErrorExtractor maybe
-            $formView = $form->createView();
-
-            foreach ($formView as $inputName => $view) {
-                if (isset($view->vars['errors'])) {
-                    foreach ($view->vars['errors'] as $error) {
-                        $errors[$view->vars['label']] = $error->getMessage();
-                    }
-                }
+            foreach ($form->getErrors(true) as $error) {
+                $name = $error->getOrigin()->createView()->vars['label'];
+                $errors[$name] =  $error->getMessage();
             }
 
             $data['post_url'] = $referer;
