@@ -13,7 +13,6 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * {@inheritdoc}
      *
-     * @todo get user email during install
      */
     public function load(ObjectManager $manager)
     {
@@ -28,7 +27,6 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
         $home->setSequence(0);
         $manager->persist($home);
 
-        // @todo inject  real page
         $samplePage = new MenuItem();
         $samplePage->setDisplayText($this->getReference('sample-page')->getTitle());
         $samplePage->setLink('%base_url%/'.$this->getReference('sample-page')->getSlug());

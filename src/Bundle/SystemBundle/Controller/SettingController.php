@@ -132,7 +132,6 @@ class SettingController extends Controller
                     $ssImage = $this->get('kernel')->getBundle('SystemBundle')->getPath().'/Resources/screenshot.jpg';
                 }
 
-                // @todo create default base64 image
                 $theme['screenshot_base64'] = $this->encodeImage($ssImage);
 
                 $themes[] = $theme;

@@ -41,6 +41,7 @@ class SettingType extends AbstractType
                     '/{_locale}/{year}/{month}/{date}/{slug}' => '/{_locale}/{year}/{month}/{date}/{slug}',
                     '/{year}/{month}/{date}/{slug}' => '/{year}/{month}/{date}/{slug}',
                     '/{year}/{month}/{slug}' => '/{year}/{month}/{slug}',
+                    '/{year}/{month}/{slug}' => '/{year}/{month}/{slug}',
                 ],
                 'data' => $this->data('blog.post_path'),
                 'expanded' => true ]);
