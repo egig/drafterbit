@@ -152,7 +152,7 @@
           </div>
       </div>
       {% if item.childs|length %}
-            {{ this._print_menu_items(item.childs) }}
+            {{ _self._print_menu_items(item.childs) }}
       {% endif %}
     </li>
     {% endfor %}
