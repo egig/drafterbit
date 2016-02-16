@@ -113,10 +113,5 @@
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="dt_system.extensions.system" class="Drafterbit\Bundle\SystemBundle\System\Extension\SystemExtension">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.extensions" />
-        </service>
-
     </services>
 </container>
