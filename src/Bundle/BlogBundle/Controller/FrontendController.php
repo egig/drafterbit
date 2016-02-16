@@ -277,8 +277,8 @@ class FrontendController extends Controller
 
     private function sendMails($comment)
     {
-        $from = $this->get('system')->get('email');
-        $sitename = $this->get('system')->get('sitename');
+        $from = $this->get('system')->get('system.email');
+        $sitename = $this->get('system')->get('system.site_name');
         $subsribers = $this->getSubscribers($comment->getPost());
         array_unshift($subsribers, $from);
         $subject = $this->get('translator')->trans('New Comment Notification');

@@ -40,7 +40,7 @@
         <default key="_controller">BlogBundle:Category:save</default>
     </route>
 
-    <route id="dt_blog_comment" path="/blog/comment" methods="GET">
+    <route id="dt_blog_comment" path="/blog/comment" methods="GET POST">
         <default key="_controller">BlogBundle:Comment:index</default>
     </route>
 
