@@ -14,7 +14,6 @@ use Drafterbit\Bundle\PageBundle\Entity\Page;
 class PageController extends Controller
 {
     /**
-     * @Route("/page", name="dt_page")
      * @Template()
      * @Security("is_granted('ROLE_PAGE_VIEW')")
      */
