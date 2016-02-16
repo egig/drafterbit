@@ -38,7 +38,7 @@
         <default key="_controller">SystemBundle:Menu:index</default>
     </route>
 
-    <route id="dt_system_menu_save" path="/menu/save" methods="GET">
+    <route id="dt_system_menu_save" path="/menu/save" methods="POST">
         <default key="_controller">SystemBundle:Menu:save</default>
     </route>
 
