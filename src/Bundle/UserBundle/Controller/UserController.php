@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Drafterbit\Bundle\UserBundle\Form\Type\UserType;
+use Drafterbit\Bundle\UserBundle\Form\Type\ProfileType;
 use Drafterbit\Bundle\UserBundle\Entity\User;
 
 class UserController extends Controller
@@ -150,7 +151,12 @@ class UserController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $requestUser = $request->request->get('user');
+        if($requestUser = $request->request->get('profile')) {
+            $formClass = ProfileType::class;
+        } else  if($requestUser = $request->request->get('user')) {
+            $formClass = UserType::class;
+        }
+
         $id = $requestUser['id'];
 
         $userManager = $this->get('fos_user.user_manager');
@@ -160,7 +166,7 @@ class UserController extends Controller
             $user->addRole('ROlE_ADMIN');
         }
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm($formClass, $user);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -200,14 +206,14 @@ class UserController extends Controller
 
     /**
      * @Route("/user/profile", name="dt_user_profile")
-     * @Template("UserBundle:User:edit.html.twig")
+     * @Template("UserBundle:User:profile.html.twig")
      */
     public function profileAction(Request $request)
     {
         $pageTitle = 'Profile';
         $user = $this->getUser();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(ProfileType::class, $user);
         $form->get('id')->setData($user->getId());
 
         return [
