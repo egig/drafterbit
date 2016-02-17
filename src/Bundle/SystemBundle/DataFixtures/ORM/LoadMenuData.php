@@ -12,7 +12,6 @@ class LoadMenuData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritdoc}
-     *
      */
     public function load(ObjectManager $manager)
     {

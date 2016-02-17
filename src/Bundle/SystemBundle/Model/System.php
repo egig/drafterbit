@@ -155,7 +155,7 @@ class System
      */
     public function set($key, $value)
     {
-        if($this->isExists($key)) {
+        if ($this->isExists($key)) {
             $this->doUpdate($key, $value);
         } else {
             $this->insert($key, $value);

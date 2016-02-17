@@ -120,7 +120,7 @@ class CategoryController extends Controller
             $errors = [];
             foreach ($form->getErrors(true) as $error) {
                 $name = $error->getOrigin()->createView()->vars['full_name'];
-                $errors[$name] =  $error->getMessage();
+                $errors[$name] = $error->getMessage();
             }
 
             $response['error'] = [

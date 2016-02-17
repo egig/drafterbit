@@ -31,7 +31,7 @@ class BlogLoader extends Loader
         $path = $this->system->get('blog.post_path', '/{_locale}/{year}/{month}/{date}/{slug}');
 
         $defaults = ['_controller' => 'BlogBundle:Frontend:view'];
-        $requirements = ['year' => '\d{4}', 'month' => '\d{2}', 'date' =>'\d{2}'];
+        $requirements = ['year' => '\d{4}', 'month' => '\d{2}', 'date' => '\d{2}'];
         $postRoute = new Route($path, $defaults, $requirements);
 
         $routes->add('dt_blog_post_front_view', $postRoute);
@@ -40,6 +40,7 @@ class BlogLoader extends Loader
         if ('blog' !== $frontPageConfig) {
             $routes->addPrefix('blog');
         }
+
         return $routes;
     }
 

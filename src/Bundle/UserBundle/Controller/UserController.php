@@ -151,9 +151,9 @@ class UserController extends Controller
      */
     public function saveAction(Request $request)
     {
-        if($requestUser = $request->request->get('profile')) {
+        if ($requestUser = $request->request->get('profile')) {
             $formClass = ProfileType::class;
-        } else  if($requestUser = $request->request->get('user')) {
+        } elseif ($requestUser = $request->request->get('user')) {
             $formClass = UserType::class;
         }
 
@@ -192,7 +192,7 @@ class UserController extends Controller
             $errors = [];
             foreach ($form->getErrors(true) as $error) {
                 $name = $error->getOrigin()->createView()->vars['full_name'];
-                $errors[$name] =  $error->getMessage();
+                $errors[$name] = $error->getMessage();
             }
 
             $response['error'] = [

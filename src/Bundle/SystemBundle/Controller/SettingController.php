@@ -83,10 +83,8 @@ class SettingController extends Controller
         $theme = $request->request->get('theme');
         $_token = $request->request->get('_csrf_token');
 
-        if($theme) {
-
-
-            if(!$this->isCsrfTokenValid(ThemeType::CSRF_TOKEN_ID, $_token)) {
+        if ($theme) {
+            if (!$this->isCsrfTokenValid(ThemeType::CSRF_TOKEN_ID, $_token)) {
                 throw new InvalidCsrfTokenException();
             }
 
@@ -105,9 +103,10 @@ class SettingController extends Controller
     }
 
     /**
-     * Get all themes
+     * Get all themes.
      *
-    * @todo move this to its own manaegment: ThemeManager
+     * @todo move this to its own manaegment: ThemeManager
+     *
      * @return array
      */
     private function getThemes()

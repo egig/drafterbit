@@ -15,11 +15,11 @@ class CLIResponseListener  implements EventSubscriberInterface
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if(php_sapi_name() == 'cli') {
+        if (php_sapi_name() == 'cli') {
             $exception = $event->getException();
 
             $statusCode = 500;
-            if($exception instanceof HttpExceptionInterface) {
+            if ($exception instanceof HttpExceptionInterface) {
                 $statusCode = $exception->getStatusCode();
             }
 

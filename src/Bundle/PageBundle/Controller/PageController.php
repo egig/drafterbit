@@ -5,7 +5,6 @@ namespace Drafterbit\Bundle\PageBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Drafterbit\Bundle\PageBundle\Form\Type\PageType;
@@ -214,7 +213,7 @@ class PageController extends Controller
             $errors = [];
             foreach ($form->getErrors(true) as $error) {
                 $name = $error->getOrigin()->createView()->vars['full_name'];
-                $errors[$name] =  $error->getMessage();
+                $errors[$name] = $error->getMessage();
             }
 
             $response['error'] = [

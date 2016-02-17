@@ -44,7 +44,7 @@ class SettingType extends AbstractType
                     '/{year}/{month}/{slug}' => '/{year}/{month}/{slug}',
                 ],
                 'data' => $this->data('blog.post_path'),
-                'expanded' => true ]);
+                'expanded' => true, ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
