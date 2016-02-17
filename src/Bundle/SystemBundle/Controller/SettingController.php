@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Drafterbit\Bundle\SystemBundle\Entity\Widget;
 use Drafterbit\Bundle\SystemBundle\Form\Type\ThemeType;
+use Drafterbit\System\Util;
 
 class SettingController extends Controller
 {
@@ -49,7 +50,7 @@ class SettingController extends Controller
             if ($mainForm->isValid()) {
                 $setting = $request->request->get('setting');
 
-                $setting = static::dot($setting);
+                $setting = Util::dot($setting);
 
                 unset($setting['Save']);
                 unset($setting['_token']);
@@ -131,27 +132,13 @@ class SettingController extends Controller
                     $ssImage = $this->get('kernel')->getBundle('SystemBundle')->getPath().'/Resources/screenshot.jpg';
                 }
 
-                $theme['screenshot_base64'] = $this->encodeImage($ssImage);
+                $theme['screenshot_base64'] = Util::encodeImage($ssImage);
 
                 $themes[] = $theme;
             }
         }
 
         return $themes;
-    }
-
-    /**
-     * Base64 encode theme screenshot image.
-     *
-     * @param $imagePath string
-     **/
-    private function encodeImage($imagePath)
-    {
-        $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
-
-        $imgBinary = fread(fopen($imagePath, 'r'), filesize($imagePath));
-
-        return 'data:image/'.$extension.';base64,'.base64_encode($imgBinary);
     }
 
     public function themeSaveAction(Request $request)
@@ -184,28 +171,5 @@ class SettingController extends Controller
                 'url' => $url,
             ]
         );
-    }
-
-    /**
-     * Flatten a multi-dimensional associative array with dots.
-     *
-     * @param array  $array
-     * @param string $prepend
-     *
-     * @return array
-     */
-    public static function dot($array, $prepend = '')
-    {
-        $results = [];
-
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $results = array_merge($results, static::dot($value, $prepend.$key.'.'));
-            } else {
-                $results[$prepend.$key] = $value;
-            }
-        }
-
-        return $results;
     }
 }
