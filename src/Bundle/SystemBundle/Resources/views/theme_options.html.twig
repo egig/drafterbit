@@ -1,0 +1,25 @@
+{% set name = "context["~option.name~"]" %}
+
+{% if option.type == 'string' %}
+<label class="control-label">{{ option.label }}</label>
+<input class="form-control input-sm" type="string" name="{{ name }}" value="{{ value }}">
+
+{% elseif option.type == 'color' %}
+<label class="control-label">{{ option.label }}</label>
+<input class="form-control input-sm dt-color-picker" type="string" name="{{ name }}" value="{{ value }}">
+
+
+{% elseif option.type == 'image' %}
+<label class="control-label">{{ option.label }}</label>
+<input id="input-{{ option.name }}" type="hidden" name="{{ name }}" value="{{ value }}">
+<div class="well well-sm"><img style="width:100%" id="{{ option.name }}" alt="No Image" src="{{ value }}" /></div>
+<a href="javascript:;" data-fallback="{{ option.name }}" class="btn btn-default btn-xs dt-image-add">{{ "Select image"|trans }}</a>
+<a href="javascript:;" data-fallback="{{ option.name }}" class="btn btn-xs dt-image-remove">{{ "Remove image"|trans }}</a>
+
+{% elseif option.type == "boolean" %}
+    {% set checked = value ? "checked" : "" %}
+    <div class="checkbox"> <label> <input name="{{ name }}" value="1" type="checkbox" {{ checked }}> {{ option.label }} </label></div>
+
+{% else %}
+    <div><em>Unsupported option type: {{  option.type }}</em></div>
+{% endif %}

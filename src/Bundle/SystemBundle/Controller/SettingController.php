@@ -197,7 +197,7 @@ class SettingController extends Controller
                     $value = isset($option['default']) ? $option['default'] : null;
                 }
 
-                $optionInputs[] = $this->createOptionInput($option, $value);
+                $optionInputs[] = $this->renderView('SystemBundle::theme_options.html.twig', ['option' => $option, 'value' => $value]);
             }
         }
 
@@ -256,45 +256,6 @@ class SettingController extends Controller
         ];
     }
 
-    /**
-     * @todo clean this
-     */
-    private function createOptionInput($option, $value)
-    {
-        $name = "context[{$option['name']}]";
-
-        switch ($option['type']) {
-            case 'string':
-                return '<label class="control-label">'.$option['label'].'</label>
-                <input class="form-control input-sm" type="string" name="'.$name.'" value="'.$value.'">';
-                break;
-            case 'color':
-                return '<label class="control-label">'.$option['label'].'</label>
-                <input class="form-control input-sm dt-color-picker" type="string" name="'.$name.'" value="'.$value.'">';
-                break;
-            case 'boolean':
-                $checked = $value ? 'checked' : '';
-
-                return '<div class="checkbox"> <label> <input name="'.$name.'" value="1" type="checkbox" '.$checked.'> '.$option['label'].' </label></div>';
-                break;
-            case 'image' :
-                return '<label class="control-label">'.$option['label'].'</label>
-                <input id="input-'.$option['name'].'" type="hidden" name="'.$name.'" value="'.$value.'">
-                <div class="well well-sm"><img style="width:100%" id="'.$option['name'].'" alt="No Image" src="'.$value.'" /></div>
-                <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-default btn-xs dt-image-add">'.$this->trans('Select image').'</a>
-                <a href="javascript:;" data-fallback="'.$option['name'].'" class="btn btn-xs dt-image-remove">'.$this->trans('Remove image').'</a>';
-                break;
-            default:
-                return '<div><em>Unsupported option type: '.$option['type'].'</em></div>';
-                break;
-        }
-    }
-
-    public function trans($string, $param = [])
-    {
-        return $this->get('translator')->trans($string, $param);
-    }
-
     public function themeSaveAction(Request $request)
     {
         $context = $request->request->get('context');
@@ -328,7 +289,7 @@ class SettingController extends Controller
 
         return new JsonResponse(
             [
-                'message' => $this->trans('Theme Saved'),
+                'message' => $this->get('translator')->trans('Theme Saved'),
                 'status' => 'success',
                 'url' => $url,
             ]
