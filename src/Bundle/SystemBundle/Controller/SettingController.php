@@ -170,7 +170,10 @@ class SettingController extends Controller
 
         $themesPath = $this->container->getParameter('themes_path');
 
-        $themeConfig = json_decode(file_get_contents($themesPath.'/'.$theme.'/theme.json'), true);
+        $themeConfig = json_decode(file_get_contents(
+                $themesPath.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.'theme.json'), true
+            )
+        ;
 
         $availableMenus = [];
 
@@ -182,8 +185,8 @@ class SettingController extends Controller
             $availableMenus[$menu->getId()] = $menu->getDisplayText();
         }
 
-        $context = $this->get('system')->get('theme.'.$theme.'.context', '');
-        $themeMenus = $this->get('system')->get('theme.'.$theme.'.menu', '');
+        $context = $this->get('system')->get(sprintf('theme.%s.context', $theme), '');
+        $themeMenus = $this->get('system')->get(sprintf('theme.%s.menu', $theme), '');
         $themeMenuIds = json_decode($themeMenus, true);
 
         $context = json_decode($context, true);
@@ -276,14 +279,6 @@ class SettingController extends Controller
                 ]
             );
         }
-
-        // @todo
-        // $c_data = [
-        //    'siteName' => $general['title'],
-        //    'siteDesc' => $general['tagline'],
-        //   'theme.'.$theme.'.context' => json_encode($context)
-        // ];
-        // $this['session']->set('customize_data', $c_data);
 
         $url = $request->request->get('url');
 
