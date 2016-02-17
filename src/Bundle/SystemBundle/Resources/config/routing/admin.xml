@@ -72,7 +72,7 @@
     </route>
 
     <route id="dt_setting_theme_customize" path="/setting/theme/customize" methods="GET">
-        <default key="_controller">SystemBundle:Setting:customizer</default>
+        <default key="_controller">SystemBundle:Customizer:customize</default>
     </route>
 
     <route id="dt_setting_theme_save" path="/setting/theme/save" methods="POST">
