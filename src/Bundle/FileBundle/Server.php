@@ -226,7 +226,7 @@ class Server
      */
     protected function format($file)
     {
-        $path = trim($this->fileSystem->makePathRelative($file->getRealPath(), $this->root), '/');
+        $path = '/'.trim($this->fileSystem->makePathRelative($file->getRealPath(), $this->root), '/');
 
         $type = 'file';
 
@@ -236,13 +236,19 @@ class Server
             $type = 'image';
         }
 
-        return [
+        $item = [
             'thumbnail' => isset($file->thumbnail) ? $file->thumbnail : false,
             'base64' => isset($file->thumbnail) ? $this->getBase64Image($file->thumbnail) : false,
             'type' => $type,
-            'path' => $path,
-            'label' => $file->getFileName(),
+            'path' => '#'.$path, // clean this,path must be started with #
+            'text' => $file->getFileName(),
         ];
+
+        if ($file->isDir()) {
+            $item['nodes'] = [];
+        }
+
+        return $item;
     }
 
     /**
@@ -346,8 +352,8 @@ class Server
                 'thumbnail' => 'false',
                 'base64' => 'false',
                 'type' => $type,
-                'path' => $this->fileSystem->makePathRelative($file->getRealpath(), $this->root),
-                'label' => $file->getFilename(),
+                'path' => '#'.$this->fileSystem->makePathRelative($file->getRealpath(), $this->root), // @todo clean this path must be started with #
+                'text' => $file->getFilename(),
             ];
         }
 
