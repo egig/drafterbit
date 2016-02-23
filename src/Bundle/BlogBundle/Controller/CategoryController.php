@@ -16,8 +16,53 @@ class CategoryController extends Controller
      * @Template()
      * @Security("is_granted('ROLE_CATEGORY_VIEW')")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $viewId = 'category';
+
+        if ($action = $request->request->get('action')) {
+
+            // safety first
+            $token = $request->request->get('_token');
+            if (!$this->isCsrfTokenValid($viewId, $token)) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $categories = $request->request->get('categories');
+
+            if (!$categories) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => $this->get('translator')->trans('Please make selection first'),
+                ]);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($categories as $id) {
+                $category = $em->getRepository('BlogBundle:Category')->find($id);
+
+                switch ($action) {
+                    case 'delete':
+
+                        $em->remove($category);
+
+                        $status = 'success';
+                        $message = 'Ctegories deleted permanently';
+                        break;
+                    default:
+                        break;
+                }
+
+                $em->flush();
+            }
+
+            return new JsonResponse([
+                'status' => $status,
+                'message' => $this->get('translator')->trans($message),
+            ]);
+        }
+
         return [
             'view_id' => 'category',
             'page_title' => $this->get('translator')->trans('Category'),

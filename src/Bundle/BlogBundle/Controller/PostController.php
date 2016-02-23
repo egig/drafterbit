@@ -84,7 +84,7 @@ class PostController extends Controller
             return new JsonResponse([
                 'status' => $status,
                 'message' => $this->get('translator')->trans($message),
-                ]);
+            ]);
         }
 
         $categories = $em->getRepository('BlogBundle:Category')->findAll();

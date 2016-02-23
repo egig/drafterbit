@@ -24,7 +24,7 @@
         <default key="_controller">BlogBundle:Post:index</default>
     </route>
 
-    <route id="dt_blog_category" path="/blog/category" methods="GET">
+    <route id="dt_blog_category" path="/blog/category" methods="GET POST">
         <default key="_controller">BlogBundle:Category:index</default>
     </route>
 
