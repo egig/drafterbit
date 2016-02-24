@@ -48,7 +48,7 @@ class CategoryController extends Controller
                         $em->remove($category);
 
                         $status = 'success';
-                        $message = 'Ctegories deleted permanently';
+                        $message = 'Categories deleted permanently';
                         break;
                     default:
                         break;
