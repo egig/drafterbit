@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Drafterbit\Bundle\SystemBundle\Entity\Widget;
 use Drafterbit\Bundle\SystemBundle\Form\Type\ThemeType;
 use Drafterbit\System\Util;
 

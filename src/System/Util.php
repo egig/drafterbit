@@ -2,9 +2,9 @@
 
 namespace Drafterbit\System;
 
-class Util {
-
-	/**
+class Util
+{
+    /**
      * Flatten a multi-dimensional associative array with dots.
      *
      * @param array  $array

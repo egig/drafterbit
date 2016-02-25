@@ -2,21 +2,16 @@
 
 namespace Drafterbit\Bundle\SystemBundle\Controller;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Drafterbit\Bundle\SystemBundle\Entity\Widget;
-use Drafterbit\Bundle\SystemBundle\Form\Type\ThemeType;
 
 class CustomizerController extends Controller
 {
-	/**
+    /**
      * @Route("/setting/theme/customize", name="dt_setting_theme_customize")
      * @Template()
      */
