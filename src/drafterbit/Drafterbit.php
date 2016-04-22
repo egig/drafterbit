@@ -2,7 +2,7 @@
 
 namespace drafterbit;
 
-class drafterbit
+class Drafterbit
 {
     const VERSION = '0.4.0';
     const MAJOR_VERSION = 0;

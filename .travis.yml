@@ -34,7 +34,7 @@ env:
     - SYMFONY__MAILER_HOST=127.0.0.1
     - SYMFONY__MAILER_USER=""
     - SYMFONY__MAILER_PASSWORD=""
-    - SYMFONY__MULTILINGUAL""
+    - SYMFONY__MULTILINGUAL=""
 
 script: phpunit
 
