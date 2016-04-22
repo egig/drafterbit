@@ -148,7 +148,9 @@ EOT
             }
         }
 
-        $theme = $this->getContainer()->get('system')->get('theme.active');
+        // @todo verify is it necessary to connect to database
+        // during this operation
+        $theme = $this->getContainer()->get('system')->get('theme.active', 'feather');
         $themesPath = $this->getContainer()->getParameter('themes_path');
         $themePath = $themesPath.'/'.$theme;
         $targetDir = $targetArg.'/themes/'.$theme.'/asset/';
