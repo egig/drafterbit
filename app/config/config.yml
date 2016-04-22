@@ -10,9 +10,9 @@ imports:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Drafterbit\Bundle\UserBundle\Entity\User
+    user_class: drafterbit\Bundle\UserBundle\Entity\User
     group:
-        group_class: Drafterbit\Bundle\UserBundle\Entity\Group
+        group_class: drafterbit\Bundle\UserBundle\Entity\Group
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -31,7 +31,7 @@ framework:
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
     templating:
-        engines: ['twig', 'php'] #Drafterbit needs php  templating engine in order create view on controller
+        engines: ['twig', 'php'] #drafterbit needs php  templating engine in order create view on controller
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~

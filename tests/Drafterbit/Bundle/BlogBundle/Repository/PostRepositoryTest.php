@@ -1,6 +1,6 @@
 <?php
 
-namespace Drafterbit\Bundle\BlogBundle\Tests\Repository;
+namespace drafterbit\Bundle\BlogBundle\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

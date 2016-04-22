@@ -20,7 +20,7 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    #Drafterbit parameters
+    #drafterbit parameters
     admin: admin
     test_user: admin
     upload_dir: var/storage

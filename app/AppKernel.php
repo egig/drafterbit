@@ -30,12 +30,12 @@ class AppKernel extends Kernel
         $bundles[] = new FOS\UserBundle\FOSUserBundle();
         $bundles[] = new Symfony\Bundle\AsseticBundle\AsseticBundle();
 
-        $bundles[] = new Drafterbit\Bundle\BlogBundle\BlogBundle();
-        $bundles[] = new Drafterbit\Bundle\PageBundle\PageBundle();
-        $bundles[] = new Drafterbit\Bundle\FileBundle\FileBundle();
-        $bundles[] = new Drafterbit\Bundle\UserBundle\UserBundle();
-        $bundles[] = new Drafterbit\Bundle\SystemBundle\SystemBundle();
-        $bundles[] = new Drafterbit\Bundle\DistributionBundle\DistributionBundle();
+        $bundles[] = new drafterbit\Bundle\BlogBundle\BlogBundle();
+        $bundles[] = new drafterbit\Bundle\PageBundle\PageBundle();
+        $bundles[] = new drafterbit\Bundle\FileBundle\FileBundle();
+        $bundles[] = new drafterbit\Bundle\UserBundle\UserBundle();
+        $bundles[] = new drafterbit\Bundle\SystemBundle\SystemBundle();
+        $bundles[] = new drafterbit\Bundle\DistributionBundle\DistributionBundle();
 
         return $bundles;
     }

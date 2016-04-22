@@ -1,11 +1,11 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Tests\Controller;
+namespace drafterbit\Bundle\SystemBundle\Tests\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use Drafterbit\Test\WebTestCase;
+use drafterbit\Test\WebTestCase;
 
 class SystemControllerTest extends WebTestCase
 {

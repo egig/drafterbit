@@ -1,8 +1,8 @@
 <?php
 
-namespace Drafterbit\Bundle\SystemBundle\Tests\Monolog\Handler;
+namespace drafterbit\Bundle\SystemBundle\Tests\Monolog\Handler;
 
-use Drafterbit\Test\WebTestCase;
+use drafterbit\Test\WebTestCase;
 
 class DoctrineDBALHandlerTest extends WebTestCase
 {

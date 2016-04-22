@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="dt_log_display_formatter.user" class="drafterbit\Bundle\UserBundle\System\Log\UserEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="dt_system_log.display_formatter" />
+        </service>
+        <service id="dt_log_display_formatter.group" class="drafterbit\Bundle\UserBundle\System\Log\GroupEntityFormatter">
+            <argument type="service" id="kernel" />
+            <tag name="dt_system_log.display_formatter" />
+        </service>
+    </services>
+</container>
