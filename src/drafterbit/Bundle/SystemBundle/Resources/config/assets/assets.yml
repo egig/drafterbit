@@ -15,9 +15,9 @@ assetic:
             apply_to:   "\\.scss$"
         uglifyjs2:
             # the path to the uglifyjs executable
-            bin: /usr/local/bin/uglifyjs
+            bin: %uglifyjs_path%
         uglifycss:
-            bin: /usr/local/bin/uglifycss
+            bin: %uglifycss_path%
 
     assets:
         notify_css:
@@ -46,7 +46,7 @@ assetic:
         magicsuggest_js:
             inputs: '%vendor_dir%/web/magicsuggest/magicsuggest-min.js'
         nested_sortable:
-            inputs: '%vendor_dir%/web/nestedSortable/jquery.ui.nestedSortable.js'
+            inputs: '%vendor_dir%/web/nestedSortable/jquery.mjs.nestedSortable.js'
         qs:
             inputs: '%vendor_dir%/web/qs/dist/qs.js'
         sticky_kit:
