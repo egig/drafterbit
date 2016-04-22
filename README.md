@@ -6,6 +6,8 @@ Drafterbit is self-hosted web software you can use to create a website, yes, lik
 
 [![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg)](https://travis-ci.org/drafterbit/drafterbit)
 
+[![Coverage Status](https://coveralls.io/repos/github/drafterbit/drafterbit/badge.svg?branch=master)](https://coveralls.io/github/drafterbit/drafterbit?branch=master)
+
 ## Install
 For now you can just do the following step to get it running (I assume you use Ubuntu):
 

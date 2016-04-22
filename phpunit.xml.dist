@@ -23,11 +23,11 @@
 
     <filter>
         <whitelist>
-            <directory>vendor/drafterbit/drafterbit/src</directory>
+            <directory>src</directory>
             <exclude>
-                <directory>vendor/drafterbit/drafterbit/src/*Bundle/Resources</directory>
-                <directory>vendor/drafterbit/drafterbit/src/*/*Bundle/Resources</directory>
-                <directory>vendor/drafterbit/drafterbit/src/*/Bundle/*Bundle/Resources</directory>
+                <directory>src/*Bundle/Resources</directory>
+                <directory>src/*/*Bundle/Resources</directory>
+                <directory>src/*/Bundle/*Bundle/Resources</directory>
             </exclude>
         </whitelist>
     </filter>
