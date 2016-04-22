@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="drafterbit" default="main">
+    <property name="version" value="0.4.0-dev"/>
+
+     <target name="clean">
+
+        <fileset dir="./_build/vendor" id="unusedVendorFiles">
+
+            <exclude name="cogpowered/finediff/src/**" />
+            <include name="cogpowered/finediff/**" />
+
+            <exclude name="doctrine/**/lib/**" />
+            <exclude name="doctrine/**/LICENSE" />
+            <exclude name="doctrine/*bundle/**" />
+            <include name="doctrine/doctrine-bundle/Tests/**" />
+            <include name="doctrine/doctrine-cache-bundle/Tests/**" />
+            <include name="doctrine/**" />
+
+            <exclude name="drafterbit/drafterbit/src/**" />
+            <exclude name="drafterbit/drafterbit/LICENSE" />
+            <include name="drafterbit/drafterbit/**/*" />
+
+            <include name="friendofsymfony/**/Tests/**" />
+            <include name="incenteev/**/Tests/**" />
+
+            <exclude name="jdorn/sql-formatter/lib/**" />
+            <exclude name="jdorn/sql-formatter/LICENSE.txt" />
+            <include name="jdorn/sql-formatter/**" />
+
+            <exclude name="gregwar/cache/Gregwar/Cache/*.php" />
+            <exclude name="gregwar/cache/Gregwar/Cache/LICENSE" />
+            <include name="gregwar/cache/Gregwar/Cache/**" />
+
+            <exclude name="gregwar/image/Gregwar/Image/Adapter/**" />
+            <exclude name="gregwar/image/Gregwar/Image/Exceptions/**" />
+            <exclude name="gregwar/image/Gregwar/Image/Source/**" />
+            <exclude name="gregwar/image/Gregwar/Image/*.php" />
+            <exclude name="gregwar/image/Gregwar/Image/LICENSE" />
+            <include name="gregwar/image/Gregwar/Image/**" />
+
+            <exclude name="kriswallsmith/assetic/src/**" />
+            <exclude name="kriswallsmith/assetic/LICENSE" />
+            <include name="kriswallsmith/assetic/**" />
+
+            <exclude name="monolog/monolog/src/**" />
+            <exclude name="monolog/monolog/LICENSE" />
+            <include name="monolog/monolog/**" />
+
+            <exclude name="psr/log/Psr/**" />
+            <exclude name="psr/log/LICENSE" />
+            <include name="psr/log/**" />
+
+            <include name="sensio/**/Tests/**" />
+            <include name="sonata-project/**/Tests/**" />
+
+            <exclude name="swiftmailer/swiftmailer/lib/**" />
+            <exclude name="swiftmailer/swiftmailer/LICENSE" />
+            <include name="swiftmailer/swiftmailer/**" />
+
+            <include name="symfony/symfony/src/Symfony/Component/**/Tests/**" />
+            <include name="symfony/symfony/src/Symfony/Component/**/CHANGELOG.md" />
+            <include name="symfony/symfony/src/Symfony/Component/**/README.md" />
+            <include name="symfony/symfony/src/Symfony/Component/**/composer.json" />
+            <include name="symfony/symfony/src/Symfony/Component/**/phpunit.xml.dist" />
+            <exclude name="symfony/symfony/src/Symfony/Component/**/LICENSE" />
+
+            <exclude name="twig/twig/lib/**" />
+            <exclude name="twig/twig/LICENSE" />
+            <include name="twig/twig/**" />
+
+        </fileset>
+
+       <delete includeemptydirs="true">
+            <fileset refid="unusedVendorFiles" />
+       </delete>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: main                       -->
+    <!-- ============================================  -->
+    <target name="main" depends="clean">
+
+        <tar destfile="./drafterbit-${version}.tar.gz">
+            <fileset dir="./_build">
+                <include name="**" />
+            </fileset>
+        </tar>
+
+        <zip destfile="./drafterbit-${version}.zip">
+            <fileset dir="./_build">
+                <include name="**" />
+            </fileset>
+        </zip>
+
+        <delete dir="./_build" includeemptydirs="true" />
+
+    </target>
+</project>

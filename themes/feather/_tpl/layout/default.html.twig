@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>{{ system.sitename }}</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="{{ system.tagline }}" />
+        <link rel="stylesheet" href="{{ theme_url('asset/css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ theme_url('asset/css/skeleton.css') }}">
+        <link rel="stylesheet" href="{{ theme_url('asset/css/style.css') }}">
+        {% block head %}{% endblock %}
+
+        <style type="text/css">
+            body {
+                color: {{ fontColor }};
+            }
+
+            #header {
+                padding: 30px 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            {% if displayHeaderImage %}
+                #header {
+                    background: url("{{ headerImage }}") no-repeat scroll center right;
+                    background-size:contain;
+             }
+            {% endif %}
+
+            #header a {
+                color: inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">            
+                    <div class="twelve columns" id="header">
+                        <h1 class="site-title"><a href="{{ base_url() }}">{{ system.sitename }}</a></h1>
+                        <h2 class="site-description">{{ system.tagline }}</h2>
+                    </div>
+                    <div class="twelve columns">
+                        {% autoescape false %}
+                            {{ menu('main') }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Main Page Content and Sidebar -->
+                        <!-- Main Content -->
+                        <div class="eight columns" role="content">
+                            {% block content %}{% endblock %}
+                           </div>
+                           <!-- End Main Content -->
+
+                        <!-- Sidebar -->
+                        <aside  class="four columns">
+                            {% autoescape false %}
+                            {{ widget('Sidebar',
+                                '<h4>{{ title }}</h4>',
+                                '<div class="widget">{{ content }}</div>'
+                            ) }}
+                            {% endautoescape %}
+                        </aside>
+                        <!-- End Sidebar -->
+                </div>
+            </div>
+
+              <!-- Footer -->
+            <div class="container row">
+                <footer class="twelve columns">
+                    {% autoescape false %}
+                    <div>
+                        {{ widget('Bottom',
+                            '<h4>{{ title }}</h4>',
+                            '<div class="widget">{{ content }}</div>'
+                        ) }}
+                      <p>&copy; {{ system.sitename }}</p>
+                    </div>
+                    {% endautoescape %}
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>

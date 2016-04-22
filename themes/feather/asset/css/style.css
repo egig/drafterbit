@@ -1,0 +1,168 @@
+/* GLOBAL */
+body {
+    font-size: 14px;
+    background-color: #F2F1F0;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: Georgia, serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* FORM */
+.label {
+    display: block;
+}
+
+input[type="email"], input[type="search"], input[type="text"], input[type="password"], textarea, select {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    box-shadow: none;
+    height: 28px;
+    padding:2px 5px;
+    box-sizing: border-box;
+}
+
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+    background-color: transparent;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    height: 28px;
+    letter-spacing: 0.1rem;
+    line-height: 28px;
+    padding: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.wrapper {
+    margin: 10px 0px;
+}
+
+.container {
+    background: #fff;
+    padding: 0 15px;
+}
+
+aside {
+    margin-left: 2%  !important;
+    padding: 10px;
+    border-left: 1px solid #F2F1F0;
+}
+
+/* HEADER */
+.site-title {
+    font-size: 42px;
+    padding-top: 20px;
+    margin-bottom: 5px;
+}
+
+.site-description {
+    font-size: 20px;
+    font-weight: normal;
+    padding: 0;
+    color:#686868;
+}
+
+/* MAIN NAVIGATION */
+ul.nav {
+    background: white;
+    list-style: none;
+    border-top: 1px solid #F2F1F0;
+    border-bottom: 1px solid #F2F1F0;
+}
+
+ul.nav li {
+    display: inline-block;
+    padding: 0.4em 1em;
+    margin: 0;
+}
+
+ul.nav li:hover {
+    background: #F2F1F0;
+}
+
+ul.nav li a {
+    color: inherit;
+}
+
+ul.nav li a.active {
+    font-weight: bold;
+}
+
+ul.nav li ul.nav {
+    position: absolute;
+    margin-top: 6px;
+    margin-left: 10px;
+    padding: 0;
+    display: none;
+}
+
+ul.nav li:hover ul.nav {
+    display: block;
+}
+
+ul.nav li ul.nav li {
+    display: block;
+}
+
+
+/* POST INDEX */
+
+.post .meta {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+
+.comments {
+    margin-top: 20px;
+}   
+.comments ol {
+    list-style: none;
+}
+
+.search-result ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.search-result ol li.item {
+    margin-bottom: 15px;
+}
+
+.search-result ol li.item h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/*tags widgets*/
+.tags-widget ul.tags {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.tags-widget ul.tags li.tag {
+    display: inline-block;
+    margin: 1px;
+    padding: 1.5px 6px;
+    background: #e1e1e1;
+    border-radius: 2px;
+}
+
+.tags-widget ul.tags li.tag a {
+    color: inherit;
+}
