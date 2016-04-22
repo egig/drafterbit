@@ -11,7 +11,6 @@ before_script:
   - chmod -R 0777 var
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:fixtures:load --env=test --append
 
