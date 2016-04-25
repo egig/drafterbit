@@ -12,8 +12,10 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="drafterbit Test Suite">
+            <directory>./src/drafterbit/System/*/Tests/</directory>
+            <directory>./src/drafterbit/System/*/*/Tests/</directory>
+            <directory>./src/drafterbit/Bundle/*/Tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -23,11 +25,14 @@
 
     <filter>
         <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
+            <directory>./src/drafterbit</directory>
+             <exclude>
+                <directory>./src/drafterbit/System/*/Tests</directory>
+                <directory>./src/drafterbit/System/*/*/Tests</directory>
+                <directory>./src/drafterbit/Bundle/*/Tests</directory>
+                <directory>./src/drafterbit/Bundle/*/Resources</directory>
+                <directory>./src/drafterbit/System/*/Resources</directory>
+                <directory>./src/drafterbit/System/*/*/Resources</directory>
             </exclude>
         </whitelist>
     </filter>
