@@ -71,11 +71,11 @@
         <div class="form-group">
             {{ form_label(form.categories, __('Categories')) }}
             <div class="dt-categories">
-              {% if form.categories|length %}
-                {{ this.render_categories(form.categories, categories) }}
-              {% else %}
-                {{ form_widget(form.categories) }}
-              {% endif %}
+              <ul>
+              {% for c in form.categories %}
+                <li>{{ form_widget(c) }} {{ c.vars.label }}</li>
+              {% endfor %}
+              <ul>
             </div>
         </div>
         <div class="form-group tags-input-wrapper">
@@ -85,21 +85,6 @@
     </div>
 </div>
 {% endblock %}
-
-{% macro render_categories(form_ctg, categories, parent) %}
-  <ol>
-    {% for category in categories %}
-      {% if category.parent ==  parent %}
-          {% for form_cat in form_ctg %}
-            {% if form_cat.vars.value ==  category.id %}
-              {{ form_widget(form_cat) }} {{ form_cat.vars.label }}
-            {% endif %}
-          {% endfor %}
-          {{ _self.render_categories(form_ctg, categories, category) }}
-      {% endif %}
-    {% endfor %}
-  </ol>
-{% endmacro %}
 
 {% block javascripts %}
   {{parent()}}

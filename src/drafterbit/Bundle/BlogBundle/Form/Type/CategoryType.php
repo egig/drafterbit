@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CategoryType extends AbstractType
 {
@@ -22,13 +21,6 @@ class CategoryType extends AbstractType
             ->add('label', TextType::class, ['required' => true])
             ->add('slug', TextType::class, ['required' => true])
             ->add('description', TextareaType::class)
-            ->add('parent', EntityType::class, [
-                'placeholder' => 'No Parent',
-                'required' => false,
-                'choice_label' => 'label',
-                'class' => 'BlogBundle:Category',
-                ]
-            )
             ->add('Save', SubmitType::class);
     }
 
