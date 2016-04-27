@@ -2,9 +2,9 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Routing;
 
-use drafterbit\System\Routing\ApplicationRouteInterface;
+use drafterbit\System\Application;
 
-class Blog implements ApplicationRouteInterface
+class Blog extends Application
 {
     public function getRoutePrefix()
     {

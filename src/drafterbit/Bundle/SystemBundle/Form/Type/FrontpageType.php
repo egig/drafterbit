@@ -24,7 +24,7 @@ class FrontpageType extends AbstractType
         $options = $this->getPageOptions();
 
         // @todo simplify frontpage options
-        foreach ($this->frontpageProvider->all() as $name => $frontpages) {
+        foreach ($this->frontpageProvider->getRoutes() as $name => $frontpages) {
             foreach ($frontpages as $frontpage) {
                 if ($frontpage->getOptions()) {
                     $options = array_merge($options, $frontpage->getOptions());

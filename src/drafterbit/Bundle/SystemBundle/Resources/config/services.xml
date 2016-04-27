@@ -59,11 +59,17 @@
 
 
         <!-- Frontpage Provider -->
-        <service id="dt_system.application_route_manager" class="drafterbit\System\Routing\ApplicationRouteManager"/>
+        <service id="dt_system.application_route_manager" class="drafterbit\System\ApplicationManager"/>
 
         <!-- Frontend Route loader -->
         <service id="dt_system.routing.loader" class="drafterbit\Bundle\SystemBundle\Routing\Loader\ViablePrefixLoader">
-            <argument id="service_container" type="service"/>
+            <argument id="dt_system.application_route_manager" type="service"/>
+            <argument id="system" type="service"/>
+            <argument type="collection">
+                <argument >%admin%</argument>
+            </argument>
+            <argument>%multilingual%</argument>
+            <argument>%locale%</argument>
             <tag name="routing.loader"></tag>
         </service>
 

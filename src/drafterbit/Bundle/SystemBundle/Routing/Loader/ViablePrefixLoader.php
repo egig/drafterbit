@@ -5,15 +5,26 @@ namespace drafterbit\Bundle\SystemBundle\Routing\Loader;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use drafterbit\System\ApplicationManager;
 
 class ViablePrefixLoader extends Loader
 {
     private $loaded = false;
-    private $container;
+    private $applicationManager;
+    private $systemModel;
+    private $isMultilingual;
+    private $locale;
+    private $reservedBaseUrls;
 
-    public function __construct($container)
+    public function __construct(ApplicationManager $applicationManager, $systemModel, $reservedBaseUrls, $isMultilingual, $locale)
     {
-        $this->container = $container;
+        $this->applicationManager = $applicationManager;
+        $this->systemModel        = $systemModel;
+        $this->reservedBaseUrls   = $reservedBaseUrls;
+        $this->isMultilingual     = $isMultilingual;
+        $this->locale             = $locale;
+
+        $this->frontPageConfig = $this->systemModel->get('system.frontpage', 'blog');
     }
 
     /**
@@ -27,14 +38,22 @@ class ViablePrefixLoader extends Loader
 
         $routes = new RouteCollection();
 
-        $frontPageConfig = $this->container->get('system')->get('system.frontpage', 'blog');
+        $this->loadAllRoutes($routes);
+        $this->addDefaultRoutes($routes);
 
-        $frontPageProvider = $this->container->get('dt_system.application_route_manager');
+        return $routes;
+    }
 
-        $reservedBaseUrl = [$this->container->getParameter('admin')];
-
+    /**
+     * Add all routes;
+     *
+     * @return void
+     * @author 
+     **/
+    private function loadAllRoutes(&$routes)
+    {
         // @todo clean this
-        foreach ($frontPageProvider->all() as $prefix => $frontPages) {
+        foreach ($this->applicationManager->getRoutes() as $prefix => $frontPages) {
             foreach ($frontPages as $frontPage) {
                 $resources = $frontPage->getRouteResources();
 
@@ -45,11 +64,11 @@ class ViablePrefixLoader extends Loader
                             // Load route resources
                             $frontRoutes = $this->import($resource, $type);
 
-                            if ($prefix !== $frontPageConfig) {
+                            if ($prefix !== $this->frontPageConfig) {
                                 $frontRoutes->addPrefix($frontPage->getRoutePrefix());
 
-                                if (!in_array($prefix, $reservedBaseUrl)) {
-                                    $reservedBaseUrl[] = $prefix;
+                                if (!in_array($prefix, $this->reservedBaseUrls)) {
+                                    $this->reservedBaseUrls[] = $prefix;
                                 }
                             }
 
@@ -59,13 +78,22 @@ class ViablePrefixLoader extends Loader
                 }
             }
         }
+    }
 
-        $reservedBaseUrl = implode('|', $reservedBaseUrl);
+    /**
+     * Add default routes
+     *
+     * @return RouteCollection
+     * @author 
+     **/
+    private function addDefaultRoutes(&$routes)
+    {
+        $reservedBaseUrl = implode('|', $this->reservedBaseUrls);
 
         // @link http://stackoverflow.com/questions/25496704/regex-match-slug-except-particular-start-words
         // @prototype  'slug' => "^(?!(?:backend|blog)(?:/|$)).*$"
         $requirements = array(
-            'slug' => '^(?!(?:%admin%|'.$reservedBaseUrl.'|)(?:/|$)).*$',
+            'slug' => '^(?!(?:'.$reservedBaseUrl.'|)(?:/|$)).*$',
         );
 
         $defaults = array('_controller' => 'PageBundle:Frontend:view');
@@ -73,13 +101,12 @@ class ViablePrefixLoader extends Loader
         $routes->add('misc', $route2);
 
         // check if configured frontpage is not an app
-        if (!array_key_exists($frontPageConfig, $frontPageProvider->all())) {
-            // its page
-            $defaults['slug'] = $frontPageConfig;
+        if (!$this->applicationManager->hasPrefix($this->frontPageConfig)) {
+            $defaults['slug'] = $this->frontPageConfig;
             $routes->add('_home', new Route('/', $defaults));
         }
 
-        if ($this->container->getParameter('multilingual')) {
+        if ($this->isMultilingual) {
             // last config: locale
             // @todo determine available locales, not just en|id
             $routes->addPrefix('{_locale}');
@@ -90,11 +117,9 @@ class ViablePrefixLoader extends Loader
             ]);
 
             $routes->addDefaults([
-                '_locale' => $this->container->getParameter('locale'),
+                '_locale' => $this->locale,
             ]);
         }
-
-        return $routes;
     }
 
     public function supports($resource, $type = null)
