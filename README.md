@@ -26,9 +26,7 @@ For now you can just do the following step to get it running (I assume you use U
     cd drafterbit
     ```
 
-5. Check app configuration, e.g by visitting `http://localhost/drafterbit/web/config.php`
-    ```
- then fix major problem appeared on your screen if any.
+5. Check app configuration, e.g by visitting `http://localhost/drafterbit/web/config.php` then fix major problem appeared on your screen if any.
 
 6. Install web dependencies
     ```shell
