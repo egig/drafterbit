@@ -15,7 +15,7 @@ class FrontpageType extends AbstractType
 
     public function __construct(ContainerInterface $container)
     {
-        $this->frontpageProvider = $container->get('dt_system.application_route_manager');
+        $this->frontpageProvider = $container->get('drafterbit.system.application_manager');
         $this->container = $container;
     }
 

@@ -47,23 +47,23 @@
             <argument type="service" id="translator"/>
         </service>
 
-        <service id="dt_system.frontpage.admin" class="drafterbit\Bundle\SystemBundle\System\Routing\Admin">
-            <tag name="dt_system.frontpage"></tag>
+        <service id="drafterbit.system.application.admin" class="drafterbit\Bundle\SystemBundle\System\Routing\Admin">
+            <tag name="drafterbit.system.application"></tag>
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="dt_system.frontpage.search" class="drafterbit\Bundle\SystemBundle\System\Routing\Search">
-            <tag name="dt_system.frontpage"></tag>
+        <service id="drafterbit.system.application.search" class="drafterbit\Bundle\SystemBundle\System\Routing\Search">
+            <tag name="drafterbit.system.application"></tag>
             <argument type="service" id="service_container"/>
         </service>
 
 
         <!-- Frontpage Provider -->
-        <service id="dt_system.application_route_manager" class="drafterbit\System\ApplicationManager"/>
+        <service id="drafterbit.system.application_manager" class="drafterbit\System\ApplicationManager"/>
 
         <!-- Frontend Route loader -->
         <service id="dt_system.routing.loader" class="drafterbit\Bundle\SystemBundle\Routing\Loader\ViablePrefixLoader">
-            <argument id="dt_system.application_route_manager" type="service"/>
+            <argument id="drafterbit.system.application_manager" type="service"/>
             <argument id="system" type="service"/>
             <argument type="collection">
                 <argument >%admin%</argument>

@@ -12,8 +12,8 @@
             <argument type="service" id="kernel" />
         </service>
         
-        <service id="dt_blog.frontpage" class="drafterbit\Bundle\BlogBundle\System\Routing\Blog">
-            <tag name="dt_system.frontpage"></tag>
+        <service id="drafterbit.system.application.blog" class="drafterbit\Bundle\BlogBundle\System\Routing\Blog">
+            <tag name="drafterbit.system.application"></tag>
             <argument type="service" id="service_container"/>
         </service>
 

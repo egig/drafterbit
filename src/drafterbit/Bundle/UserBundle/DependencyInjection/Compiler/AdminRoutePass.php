@@ -9,7 +9,7 @@ class AdminRoutePass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('dt_system.frontpage.admin');
+        $definition = $container->getDefinition('drafterbit.system.application.admin');
         $definition->addMethodCall('addRouteResources', ['@UserBundle/Resources/config/routing/admin.xml', 'xml']);
     }
 }

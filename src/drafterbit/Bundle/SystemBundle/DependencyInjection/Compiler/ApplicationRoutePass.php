@@ -10,16 +10,16 @@ class ApplicationRoutePass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('dt_system.application_route_manager')) {
+        if (!$container->hasDefinition('drafterbit.system.application_manager')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'dt_system.application_route_manager'
+            'drafterbit.system.application_manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'dt_system.frontpage'
+            'drafterbit.system.application'
         );
 
         foreach ($taggedServices as $id => $tags) {
