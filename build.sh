@@ -28,7 +28,6 @@ cp -Rf ${PWD}/src         ${PWD}/_build/src
 cp -Rf ${PWD}/var         ${PWD}/_build/var
 cp -Rf ${PWD}/vendor      ${PWD}/_build/vendor
 cp -Rf ${PWD}/web/assets  ${PWD}/_build/web/assets
-cp -Rf ${PWD}/web/themes      ${PWD}/_build/web/themes
 cp -Rf ${PWD}/web/app.php     ${PWD}/_build/web/app.php
 cp -Rf ${PWD}/web/config.php     ${PWD}/_build/web/config.php
 cp -Rf ${PWD}/web/install.php     ${PWD}/_build/web/install.php

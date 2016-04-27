@@ -13,7 +13,7 @@
         <parameter key="admin">admin</parameter>
 
         <!-- theme -->
-        <parameter key="themes_path">%kernel.root_dir%/../themes</parameter>
+        <parameter key="themes_path">%kernel.root_dir%/../theme</parameter>
     </parameters>
 
     <services>
