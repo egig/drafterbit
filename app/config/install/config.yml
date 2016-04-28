@@ -1,6 +1,9 @@
 parameters:
     parameters_path: "%kernel.root_dir%/config"
 
+imports:
+    - { resource: ../parameters.yml }
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
@@ -8,16 +11,13 @@ fos_user:
     group:
         group_class: drafterbit\Bundle\UserBundle\Entity\Group
 
-imports:
-    - { resource: parameters.yml }
-    - { resource: "@SystemBundle/Resources/config/system.yml" }
 
 framework:
     secret:          install
     templating:
         engines: ['twig', 'php']
     router:
-        resource: "%kernel.root_dir%/config/routing_install.yml"
+        resource: "%kernel.root_dir%/config/install/routing.yml"
     form: ~
     csrf_protection: ~
     session:
@@ -55,7 +55,6 @@ security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        FOS\UserBundle\Model\UserInterface: sha512
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -71,8 +70,6 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-        fos_userbundle:
-            id: fos_user.user_provider.username_email
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -84,22 +81,7 @@ security:
 
         main:
             pattern: ^/
-            #form_login:
-            #    provider: fos_userbundle
-        #        csrf_provider: form.csrf_provider
-    #            login_path: drafterbit_user_security_login
-#                check_path: drafterbit_user_security_check
-#                default_target_path: drafterbit_system_dashboard
             anonymous:    true
-            logout:
-                path: drafterbit_user_security_logout
-                target: drafterbit_user_security_login
-
-    # with these settings you can restrict or allow access for different parts
-    # of your application based on roles, ip, host or methods
-    # http://symfony.com/doc/current/cookbook/security/access_control.html
-    access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
 #web_profiler:
 #    toolbar: true

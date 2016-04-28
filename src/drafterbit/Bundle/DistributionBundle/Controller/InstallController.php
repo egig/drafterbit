@@ -11,10 +11,6 @@ class InstallController extends Controller
 {
     public function startAction(Request $request)
     {
-        if (!$request->query->get('config_pass')) {
-            return new RedirectResponse($request->getBasePath().'/config.php');
-        }
-
         return $this->redirectToRoute('_install_step');
     }
 

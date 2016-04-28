@@ -1,9 +1,6 @@
 #!/bin/env bash
 
-rm -Rf ${PWD}/_build
-rm -Rf ${PWD}/web/assetic
-rm -Rf ${PWD}/web/assets
-rm -Rf ${PWD}/web/bundles
+phing prepare
 
 echo dumping...
 php bin/console assets:install web --env=prod --quiet
@@ -11,13 +8,7 @@ php bin/console assetic:dump --env=prod --quiet
 composer dump-autoload --optimize
 
 echo clean dumping junks...
-rm -Rf ${PWD}/var/cache/dev
-rm -Rf ${PWD}/var/cache/prod
-rm -Rf ${PWD}/var/cache/test
-rm -Rf ${PWD}/var/cache/install
-rm -Rf ${PWD}/var/storage
-rm -f ${PWD}/var/logs/dev.log
-rm -f ${PWD}/var/logs/prod.log
+phing clean_dumping_junks
 
 echo copying...
 mkdir ${PWD}/_build
@@ -36,8 +27,6 @@ cp -Rf ${PWD}/web/favicon.ico ${PWD}/_build/web/favicon.ico
 cp -Rf ${PWD}/web/.htaccess   ${PWD}/_build/web/.htaccess
 cp -Rf ${PWD}/web/apple-touch-icon.png      ${PWD}/_build/web/apple-touch-icon.png
 cp -Rf ${PWD}/_build/app/config/parameters.yml.dist ${PWD}/_build/app/config/parameters.yml
-
-mkdir ${PWD}/_build/var/storage
 
 chmod -R 0777 ${PWD}/_build/var
 chmod 0777  ${PWD}/_build/app/config/parameters.yml

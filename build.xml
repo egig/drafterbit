@@ -3,6 +3,34 @@
 <project name="drafterbit" default="main">
     <property name="version" value="0.4.0-dev"/>
 
+     <target name="prepare">
+
+        <delete dir="./_build" ></delete>
+        <delete dir="./web/assets" ></delete>
+        <delete dir="./web/assetic" ></delete>
+        <delete dir="./web/bundles" ></delete>
+        <delete dir="./web/themes" ></delete>
+     </target>
+
+    <target name="clean_dumping_junks">
+
+       <delete includeemptydirs="true">
+            <fileset dir="./var">
+                <exclude name="cache/.gitkeep"/>
+                <exclude name="logs/.gitkeep"/>
+                <exclude name="sessions/.gitkeep"/>
+                <exclude name="storage/.gitkeep"/>
+                <exclude name="bootstrap.php.cache"/>
+                <exclude name="SymfonyRequirements.php"/>
+
+                <include name="cache/**/*"/>
+                <include name="logs/**/*"/>
+                <include name="sessions/**/*"/>
+                <include name="storage/**/*"/>
+            </fileset>
+       </delete>
+     </target>
+
      <target name="clean">
 
         <fileset dir="./_build/vendor" id="unusedVendorFiles">
@@ -10,6 +38,7 @@
             <exclude name="cogpowered/finediff/src/**" />
             <include name="cogpowered/finediff/**" />
 
+            <exclude name="doctrine/**/src/**" />
             <exclude name="doctrine/**/lib/**" />
             <exclude name="doctrine/**/LICENSE" />
             <exclude name="doctrine/*bundle/**" />

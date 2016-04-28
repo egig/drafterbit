@@ -20,3 +20,5 @@
 /web/bundles/
 /web/assetic/
 /web/assets/
+*.zip
+*.tar.gz
