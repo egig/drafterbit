@@ -1,6 +1,6 @@
 <?php
 
-namespace drafterbit\Bundle\DistributionBundle\Command;
+namespace drafterbit\Bundle\SystemBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
