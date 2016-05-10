@@ -119,5 +119,9 @@
             <argument type="service" id="service_container" />
         </service>
 
+        <service id="installer" class="drafterbit\Bundle\CoreBundle\Installer">
+            <argument id="service_container" type="service"/>
+        </service>
+
     </services>
 </container>

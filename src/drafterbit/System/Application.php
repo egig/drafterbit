@@ -23,15 +23,6 @@ abstract class Application
         return $this->routeResources;
     }
 
-    /**
-     * Get option for frontpage setting.
-     *
-     * @return array
-     */
-    public function getOptions() {
-        return [];
-    }
-
     public function addRouteResources($resource, $type = 'annotation')
     {
         if (!isset($this->routeResources[$type])) {

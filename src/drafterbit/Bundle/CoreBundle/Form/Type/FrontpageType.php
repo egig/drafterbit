@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use drafterbit\System\FrontPage\FrontPageProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use drafterbit\System\FrontPageApplicationInterface;
 
 class FrontpageType extends AbstractType
 {
@@ -21,16 +22,24 @@ class FrontpageType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $options = $this->getPageOptions();
+        $pageOptions = $this->getPageOptions();
 
         // @todo simplify frontpage options
+        $appOptions = [];
         foreach ($this->frontpageProvider->getRoutes() as $name => $frontpages) {
             foreach ($frontpages as $frontpage) {
-                if ($frontpage->getOptions()) {
-                    $options = array_merge($options, $frontpage->getOptions());
+
+                if ($frontpage instanceof FrontPageApplicationInterface) {
+                    $appOptions = array_merge($appOptions,
+                        [$frontpage->getBasePath() => $frontpage->getName()]);
                 }
             }
         }
+
+        $options = [
+            "Page" => $pageOptions,
+            "App" => $appOptions
+        ];
 
         $resolver->setDefaults(array(
             'choices' => $options,

@@ -3,8 +3,9 @@
 namespace drafterbit\Bundle\BlogBundle\System\Routing;
 
 use drafterbit\System\Application;
+use drafterbit\System\FrontPageApplicationInterface;
 
-class Blog extends Application
+class Blog extends Application implements FrontPageApplicationInterface
 {
     public function getRoutePrefix()
     {
@@ -19,5 +20,13 @@ class Blog extends Application
     public function getOptions()
     {
         return ['Blog' => 'blog'];
+    }
+
+    public function getName() {
+        return "Blog";
+    }
+
+    public function getBasePath() {
+        return $this->getRoutePrefix();
     }
 }

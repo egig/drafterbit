@@ -3,8 +3,9 @@
 namespace drafterbit\Bundle\CoreBundle\System\Routing;
 
 use drafterbit\System\Application;
+use drafterbit\System\FrontPageApplicationInterface;
 
-class Search extends Application
+class Search extends Application implements FrontPageApplicationInterface
 {
     public function getRoutePrefix()
     {
@@ -16,8 +17,11 @@ class Search extends Application
         return ['xml' => ['@CoreBundle/Resources/config/routing/search.xml']];
     }
 
-    public function getOptions()
-    {
-        return ['Search' => 'search'];
+    public function  getName() {
+        return "Search";
+    }
+
+    public function getBasePath() {
+        return $this->getRoutePrefix();
     }
 }
