@@ -1,4 +1,4 @@
-system:
+core:
     navigation:
         page:
             label: Page

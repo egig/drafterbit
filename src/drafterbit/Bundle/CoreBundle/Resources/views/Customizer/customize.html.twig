@@ -1,0 +1,240 @@
+{# @todo Fix view in mobile #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ page_title }} | {{ system.sitename~' Administrator' }}</title>
+
+        {% block stylesheets %}
+            {% stylesheets
+              '@CoreBundle/Resources/scss/drafterbit-bootstrap.scss'
+              '@CoreBundle/Resources/scss/drafterbit.scss'
+              '@CoreBundle/Resources/scss/customizer.scss'
+              '@fontawesome'
+              '@notify_css'
+              '@bootstrap_colorpicker_css'
+               filter='?uglifycss' output="assets/css/*.css"
+            %}
+              <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+
+    </head>
+
+    <body>
+        <div id="dt-widget-availables">
+            <div class="header">
+                <h3>{{ __('Available Widgets') }}</h3>
+            </div>
+            <ul>
+              {% for widget in available_widget %}
+                  <li>
+                      <a data-ui="{{ widget.form }}" data-name="{{ widget.name }}" class="dt-widget-item" href="javascript:;">{{ widget.name }}</a>
+                  </li>
+              {% endfor %}
+            </ul>
+        </div>
+
+        <div id="dt-iframe-container">
+            <iframe name="preview" width="100%" height="100%" src="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme'), _pv:1}) }}" sandbox="allow-same-origin allow-scripts"> </iframe>
+        </div>
+        <div id="customizer">
+            <div class="col-container">
+                <div class="col">
+                    <form action="{{ url('dt_setting_theme_save') }}" method="POST" id="customizer-form" class="customizer-ajax-form">
+                    <input type="hidden" name="csrf" value="{{ csrf_token('customize_theme') }}"/>
+                    <input type="hidden" name="url" value="{{ base_url('', {theme:theme, _token:csrf_token('customize_theme')}) }}"/>
+                    <input type="hidden" name="theme" value="{{ theme }}"/>
+                    <div class="section">
+                        <a href="#" id="dt-customizer-closer" class="btn btn-default btn-xs">{{ __('Close') }}</a>
+                        <button type="submit" name="action" value="save" class="btn btn-primary btn-xs pull-right">{{ __('Save') }}</button>
+
+                        {# pending #}
+                        <!-- <button type="submit" name="action" value="update-preview" class="btn btn-primary btn-xs pull-right" style="margin-right:5px;">{{ __('Update Preview') }}</button> -->
+                    </div>
+
+                    <div class="section customizer-input" id="general-section">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent=".customizer-input" href="#collapseOne">
+                                      {{ __('Title') }} &amp; {{ __('Tagline')  }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                <div class="form-group">
+                                  <label>{{  __('Title') }}</label>
+                                  <input class="form-control input-sm" type="text" name="general[title]" value="{{ system.sitename }}"/>
+                                </div>
+                                <div class="form-group">
+                                  <label>{{ __('Tagline') }}</label>
+                                  <textarea class="form-control input-sm" type="text" name="general[tagline]">{{ system.tagline }}</textarea>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent=".customizer-input" href="#menu-options">
+                                  {{ __('Theme Option') }}</i>
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="menu-options" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                {% for html in option_inputs %}
+                                  {% autoescape false %}
+                                  {{ html }}
+                                  {% endautoescape %}
+                                {% endfor %}
+                              </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent=".customizer-input" href="#collapse-two">
+                                  {{ __('Navigation') }}
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapse-two" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                <div class="col-md-10 menus-section" style="padding:5px;">
+                                  {% for pos in menu_positions %}
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent=".menus-section" href="#{{ pos }}-menu-position">
+                                                {{ pos }}
+                                            </a>
+                                          </h4>
+                                        </div>
+                                        <div id="{{ pos }}-menu-position" class="panel-collapse collapse">
+                                          <div class="sortable panel-body {{ pos }}-menu-container">
+                                            <select data-pos="{{ pos }}" name="menus[{{ pos }}]" class="form-control input-sm">
+                                                {% for id,option in menu_options %}
+                                                  <option {% if (pos in theme_menu_ids|keys) and (id == attribute(theme_menu_ids, pos))  %} selected="selected" {% endif %} value="{{ id }}">{{ option }}</option>
+                                                {% endfor %}
+                                            </select>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-md-1" style="padding:5px;">
+                                  <button class="btn btn-default btn-sm menu-selector" type="button"><i class="fa fa-bars"></i></button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a class="widget-section" href="#">
+                                  {{ __('Widget') }} <i class="fa fa-angle-right pull-right"></i>
+                                </a>
+                              </h4>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <div class="section">
+                        <a href="#" class="btn btn-default btn-xs widget-section-back">{{ __('Back') }}</a>
+                    </div>
+                    <div class="section" id="widget-section">
+                        <h2>Widgets</h2>
+                        {% for pos in widget_positions  %}
+                             <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#widget-section" href="#{{ pos }}-widget-position">
+                                        {{ pos }}
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="{{ pos }}-widget-position" class="panel-collapse collapse widget-position">
+                                  <div class="panel-body widget-container {{ pos }}-widget-container">
+                                    <div class="widget-sortable">
+                                      {% for widget in attribute(widgets, pos) %}
+                                          <div class="panel panel-default widget-item-container" id="{{ widget.id }}-widget-item-container">
+                                              <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                  <a data-toggle="collapse" data-parent=".{{ pos }}-widget-container > .widget-sortable" href="#widget-{{ widget.id }}">
+                                                    {{ widget.name }}
+                                                  </a>
+                                                </h4>
+                                              </div>
+                                              <div id="widget-{{ widget.id }}" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    {% autoescape false %}
+                                                      {{ widget.form }}
+                                                    {% endautoescape %}
+                                                </div>
+                                              </div>
+                                          </div>
+                                      {% endfor %}
+                                    </div>
+                                    <div class="well well-sm" style="margin-top:5px;">
+                                        <a class="dt-widget-adder" data-position="{{ pos }}" data-theme="{{ theme }}" href="#available-widget-dialog">{{ __('Add widget') }}</a>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                         {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div> <!--/customizer-->
+
+        <!-- script -->
+        {% block javascripts %}
+            {% javascripts '@jquery'  filter='?uglifyjs2' output="assets/js/*.js" %}
+              <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script src="{{ url('asset_dt_js') }}"></script>
+            <script src="{{ url('dt_system_asset_session_js') }}"></script>
+            <script type="text/javascript">
+              drafTerbit.customThemeCsrfToken = "{{ csrf_token('customize_theme') }}";
+            </script>
+
+            {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+              '@bootstrap_js'
+              '@notify_js'
+              '@jquery_ui_js'
+              '@jquery_form'
+              '@nunjucks'
+              '@bootstrap_colorpicker_js'
+              '@CoreBundle/Resources/js/customizer.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+        {% endblock %}
+
+
+      {% verbatim %}
+        <script id="widget-item-template" type="text/x-nunjucks-template">
+          <div class="panel panel-default widget-item-container">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent=".widget-container" href="#widget-{{ widgetId }}">{{ widgetName }}</a>
+                </h4>
+              </div>
+              <div id="widget-{{ widgetId }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                  {{ widgetUi }}
+                </div>
+              </div>
+          </div>
+        </script>
+      {% endverbatim %}
+    </body>
+</html>

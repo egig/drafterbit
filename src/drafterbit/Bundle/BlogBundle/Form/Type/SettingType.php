@@ -5,7 +5,7 @@ namespace drafterbit\Bundle\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use drafterbit\Bundle\SystemBundle\Model\System as SystemModel;
+use drafterbit\Bundle\CoreBundle\Model\System as SystemModel;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 

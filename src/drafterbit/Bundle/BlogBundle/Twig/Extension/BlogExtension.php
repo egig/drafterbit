@@ -4,7 +4,7 @@ namespace drafterbit\Bundle\BlogBundle\Twig\Extension;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use drafterbit\Bundle\SystemBundle\Twig\Extension\FrontendExtension;
+use drafterbit\Bundle\CoreBundle\Twig\Extension\FrontendExtension;
 use drafterbit\Bundle\BlogBundle\Entity\Post;
 use drafterbit\Bundle\BlogBundle\Form\Type\CommentType;
 use drafterbit\Bundle\BlogBundle\Entity\Comment;

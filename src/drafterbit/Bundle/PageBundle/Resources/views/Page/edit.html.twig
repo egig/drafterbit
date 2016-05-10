@@ -1,4 +1,4 @@
-{% extends "SystemBundle::base_edit.html.twig" %}
+{% extends "CoreBundle::base_edit.html.twig" %}
 
 {% block action %}
     {{ form_widget(form.Save, {label:__('Save Page'), attr:{class:"btn btn-success"}}) }}
@@ -44,7 +44,7 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <script> {% include 'SystemBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"page[content]" } %}</script>
+    <script> {% include 'CoreBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"page[content]" } %}</script>
 
     {% if page_id == 'new' %}
     <script type="text/javascript">

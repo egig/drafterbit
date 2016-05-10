@@ -1,0 +1,160 @@
+{% extends "CoreBundle::base_nonav.html.twig" %}
+
+{% import _self as this %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@CoreBundle/Resources/scss/vertical-tabs.scss'
+    '@CoreBundle/Resources/scss/menus.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+<div class="container dt-menu-container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul id="dt-menu-tab" class="nav nav-tabs tabs-left">
+                {% for menu in menus %}
+                    <li role="presentation"><a href="#{{ menu.displayText }}" aria-controls="{{ menu.displayText }}" role="tab" data-toggle="tab">{{ menu.displayText }}</a></li>
+                {% endfor %}
+                  <li><a href="#add-menu" data-toggle="tab" id="menu-adder"><i class="fa fa-plus"></i></a></li>
+            </ul>
+        </div>
+        <div class="col-md-9 tab-content">
+            {% for menu in menus %}
+                <div role="tabpanel" class="tab-pane" id="{{ menu.displayText }}">
+                  <div class="clearfix menu-setting">
+                    <div class="col-md-4 menu-name" style="padding:0">
+                      <label>{{ __('Display Text') }}</label>
+                      <input type="text" name="name" class="form-control input-sm" value="{{ menu.displayText }}"/>
+                      <input type="hidden" name="id" value="{{ menu.id }}"/>
+                    </div>
+                  </div>
+                  <div class="menu-items">
+                    <label>{{ __('Menu Items') }}</label>
+                       {{ this._print_menu_items(menu.items) }}
+                    <a href="#" class="btn btn-sm menu-item-adder" data-menu-id="{{ menu.id }}">{{ __('Add Menu Item') }}</a>
+                  </div>
+                  <div class="menu-action">
+                      <a href="#" class="btn btn-sm btn-default menu-item-saver">{{ __('Save') }}</a>
+                      <a href="#" class="btn btn-sm btn-primary menu-item-selector" data-id="{{ menu.id }}">{{ __('Select') }}</a>
+                      <a href="#" class="btn btn-sm menu-delete" data-id="{{ menu.id }}">{{ __('Delete') }}</a>
+                  </div>
+                </div>
+            {% endfor %}
+
+            <div role="tabpanel" class="tab-pane" id="add-menu">
+            {{ form_start(form, {attr:{class:"menu-add-form"}, action:url('dt_system_menu_save')}) }}
+                <div class="clearfix menu-setting">
+                  <div class="col-md-4" style="padding:0">
+                  {{ form_label(form.display_text, "Display Text") }}
+                  {{ form_widget(form.display_text, {attr:{class:"form-control input-sm"}}) }}
+
+                  {{ form_widget(form.Submit, {attr:{class:"btn btn-default btn-sm", style:"margin-top:10px;"}}) }}
+                  </div>
+                </div>
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% verbatim %}
+<script id="menu-item-template" type="text/x-nunjucks-template">
+  <div class="panel panel-default menu-item-container">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+      <a href="#new-menu-{{id}}" data-parent=".menu-items li" data-toggle="collapse" aria-expanded="false">
+        {{label}}
+      </a>
+      </h4>
+    </div>
+    <div class="panel-collapse collapse" id="new-menu-{{id}}" aria-expanded="false">
+        <form method="POST" class="menu-form" action="{{formAction}}">
+        <div class="panel-body">
+          <div class="form-group">
+            <label>Label</label>
+            <input type="text" value="{{label}}" name="displayText" class="form-control input-sm menu-label">
+          </div>
+
+          <div class="form-group">
+            <label>Link</label>
+            <input type="text" value="#" name="link" class="form-control input-sm">
+          </div>
+
+          <input type="hidden" value="{{id}}" name="id">
+          <div class="form-group">
+            <button class="btn btn-xs btn-primary">Save</button>
+            <a class="btn btn-xs delete-menu-item" href="#">Remove</a>
+          </div>
+
+        </div>
+      </form>
+      </div>
+  </div>
+</script>
+{% endverbatim %}
+
+{% endblock %}
+
+{% block javascripts %}
+     {{ parent() }}
+     {% javascripts
+        '@jquery_ui_js'
+        '@jquery_form'
+        '@nunjucks'
+        '@nested_sortable'
+        '@bootstrap_tabcollapse'
+        '@CoreBundle/Resources/js/menus.js'
+         filter='?uglifyjs2' output="assets/js/*.js"
+     %}
+     <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
+{% endblock %}
+
+{% macro _print_menu_items(items) %}
+  <ol class="menu-sortable">
+      {%  for item in items %}
+    <li id="{{ item.id }}">
+      <div class="panel panel-default menu-item-container">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a href="#menu-{{ item.id }}" data-parent=".menu-items li" data-toggle="collapse" aria-expanded="false">
+                {{ item.displayText }}
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse collapse" id="menu-{{ item.id }}" aria-expanded="false">
+            <form method="POST" class="menu-form" action="{{ url('dt_system_menu_item_save') }}">
+            <div class="panel-body">
+              <div class="form-group">
+                <label>Display Text</label>
+                <input type="text" value="{{ item.displayText }}" name="displayText" class="form-control input-sm menu-label">
+              </div>
+
+              <div class="form-group">
+                <label>Link</label>
+                <input type="text" value="{{ item.link }}" name="link" class="form-control input-sm">
+              </div>
+
+              <input type="hidden" value="{{ item.id }}" name="id">
+              <div class="form-group">
+                <button class="btn btn-xs btn-primary">Save</button>
+                <a class="btn btn-xs delete-menu-item" href="#">Remove</a>
+              </div>
+
+            </div>
+          </form>
+          </div>
+      </div>
+      {% if item.childs|length %}
+            {{ _self._print_menu_items(item.childs) }}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+{% endmacro %}

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- widget -->
+        <service id="dt_system.widget.form_builder" class="drafterbit\System\Widget\WidgetFormBuilder">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="dt_system.widget.manager" class="drafterbit\System\Widget\WidgetManager">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="dt_system.widget.search" class="drafterbit\Bundle\CoreBundle\System\Widget\SearchWidget">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.widget" />
+        </service>
+
+        <service id="dt_system.widget.text" class="drafterbit\Bundle\CoreBundle\System\Widget\TextWidget">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.widget" />
+        </service>
+
+        <service id="dt_system.widget.meta" class="drafterbit\Bundle\CoreBundle\System\Widget\MetaWidget">
+            <argument type="service" id="service_container" />
+            <tag name="dt_system.widget" />
+        </service>
+    </services>
+</container>

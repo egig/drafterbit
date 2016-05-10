@@ -1,4 +1,4 @@
-{% extends "SystemBundle::base_edit.html.twig" %}
+{% extends "CoreBundle::base_edit.html.twig" %}
 
 {% import _self as this %}
 
@@ -106,7 +106,7 @@
   <script type="text/javascript" src="{{ asset_url }}"></script>
   {% endjavascripts %}
 
-  <script> {% include 'SystemBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"post[content]" } %}</script>
+  <script> {% include 'CoreBundle:Asset:ckeditor.js.twig' with {ckeditor_ctn:"post[content]" } %}</script>
 
   {% if post_id == 'new' %}
   <script type="text/javascript">

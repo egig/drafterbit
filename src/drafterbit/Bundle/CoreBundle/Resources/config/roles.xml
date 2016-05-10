@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!-- TODO move this to tagged services -->
+    <parameters>
+        <parameter key="core.roles" type="collection">
+            <parameter key="ROLE_LOG_VIEW">View Log</parameter>
+            <parameter key="ROLE_LOG_DELETE">Delete Log</parameter>
+            <parameter key="ROLE_CACHE_VIEW">View Cache</parameter>
+            <parameter key="ROLE_CACHE_RENEW">Renew Cache</parameter>
+
+            <parameter key="ROLE_MENU_MANAGE">Manage Menus</parameter>
+            <parameter key="ROLE_SETTING_GENERAL_MANAGE">Manage General Setting</parameter>
+            <parameter key="ROLE_SETTING_THEME_MANAGE">Manage Theme Setting</parameter>
+        </parameter>
+    </parameters>
+</container>

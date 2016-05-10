@@ -1,0 +1,59 @@
+# todo compplete this
+assetic:
+    assets:
+        ckeditor:
+            inputs: '%vendor_dir%/web/ckeditor/ckeditor.js'
+            output: assets/ckeditor/ckeditor.js
+        ckeditor_config:
+            # we replace default
+            # inputs: '%vendor_dir%/web/ckeditor/config.js'
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/config.js"
+            output: assets/ckeditor/config.js
+        ckeditor_styles:
+            inputs: '%vendor_dir%/web/ckeditor/styles.js'
+            output: assets/ckeditor/styles.js
+        ckeditor_contents:
+            inputs: '%vendor_dir%/web/ckeditor/contents.css'
+            output: assets/ckeditor/contents.css
+        ckeditor_lang_en:
+            inputs: '%vendor_dir%/web/ckeditor/lang/en.js'
+            output: assets/ckeditor/lang/en.js
+        ckeditor_plugin_image:
+            inputs: '%vendor_dir%/web/ckeditor/plugins/image/dialogs/image.js'
+            output: assets/ckeditor/plugins/image/dialogs/image.js
+        ckeditor_plugin_link:
+            inputs: '%vendor_dir%/web/ckeditor/plugins/link/dialogs/link.js'
+            output: assets/ckeditor/plugins/link/dialogs/link.js
+        ckeditor_plugin_wpmore:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/plugins/wpmore/plugin.js"
+            output: assets/ckeditor/plugins/wpmore/plugin.js
+        ckeditor_plugin_wpmore_img:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/plugins/wpmore/images/more_bug.gif"
+            output: assets/ckeditor/plugins/wpmore/images/more_bug.gif
+        ckeditor_plugin_wpmore_img2:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/plugins/wpmore/images/more.gif"
+            output: assets/ckeditor/plugins/wpmore/images/more.gif
+        ckeditor_skin_bootstrap:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/skin.js"
+            output: assets/ckeditor/skins/bootstrap/skin.js
+        ckeditor_skin_bootstrap_images_close:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/close.png"
+            output: assets/ckeditor/skins/bootstrap/images/close.png
+        ckeditor_skin_bootstrap_images_refresh:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/refresh.png"
+            output: assets/ckeditor/skins/bootstrap/images/refresh.png
+        ckeditor_skin_bootstrap_images_lock:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/images/lock.png"
+            output: assets/ckeditor/skins/bootstrap/images/lock.png
+        ckeditor_skin_bootstrap_dialog:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/dialog.css"
+            output: assets/ckeditor/skins/bootstrap/dialog.css
+        ckeditor_skin_bootstrap_icons:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/icons.png"
+            output: assets/ckeditor/skins/bootstrap/icons.png
+        ckeditor_skin_bootstrap_css:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor.css"
+            output: assets/ckeditor/skins/bootstrap/editor.css
+        ckeditor_skin_bootstrap_gecko_css:
+            inputs: "@CoreBundle/Resources/web/ckeditor-custom/skins/bootstrap/editor_gecko.css"
+            output: assets/ckeditor/skins/bootstrap/editor_gecko.css

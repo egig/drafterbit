@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="asset_dt_js" path="/asset/js/dt.js" methods="GET">
+        <default key="_controller">CoreBundle:Asset:dtJs</default>
+    </route>
+
+    <route id="dt_system_asset_session_js" path="/asset/js/session.js" methods="GET">
+        <default key="_controller">CoreBundle:Asset:sessionJs</default>
+    </route>
+
+    <!-- DASHBOARD -->
+    <route id="dt_system_dashboard_data" path="/system/dashboard/data" methods="GET">
+        <default key="_controller">CoreBundle:Dashboard:data</default>
+    </route>
+
+    <route id="dt_system_dashboard_edit" path="/system/dashboard/edit/{id}" methods="GET POST">
+        <default key="_controller">CoreBundle:Dashboard:dashboardEdit</default>
+    </route>
+
+    <route id="dt_system_dashboard_sort" path="/system/dashboard/sort" methods="POST">
+        <default key="_controller">CoreBundle:Dashboard:sortDashboard</default>
+    </route>
+
+    <route id="dt_system_dashboard_delete" path="/system/dashboard/delete" methods="POST">
+        <default key="_controller">CoreBundle:Dashboard:dashboardDelete</default>
+    </route>
+
+    <route id="dt_system_dashboard_toggle_panel" path="/system/dashboard/toggle_panel" methods="POST">
+        <default key="_controller">CoreBundle:Dashboard:togglePanel</default>
+    </route>
+
+    <!-- MENU -->
+    <route id="dt_system_menu" path="/menu" methods="GET">
+        <default key="_controller">CoreBundle:Menu:index</default>
+    </route>
+
+    <route id="dt_system_menu_save" path="/menu/save" methods="POST">
+        <default key="_controller">CoreBundle:Menu:save</default>
+    </route>
+
+    <route id="dt_system_menu_sort" path="/menu/sort" methods="GET">
+        <default key="_controller">CoreBundle:Menu:sort</default>
+    </route>
+
+    <route id="dt_system_menu_delete" path="/menu/delete" methods="GET">
+        <default key="_controller">CoreBundle:Menu:delete</default>
+    </route>
+
+    <route id="dt_system_menu_item_add" path="/menu/item/add" methods="POST">
+        <default key="_controller">CoreBundle:Menu:itemAdd</default>
+    </route>
+
+    <route id="dt_system_menu_item_delete" path="/menu/item/delete" methods="GET">
+        <default key="_controller">CoreBundle:Menu:itemDelete</default>
+    </route>
+
+    <route id="dt_system_menu_item_save" path="/menu/item/save" methods="POST">
+        <default key="_controller">CoreBundle:Menu:itemSave</default>
+    </route>
+
+    <!-- SETTING -->
+    <route id="dt_system_setting_general" path="/setting/general" methods="GET POST">
+        <default key="_controller">CoreBundle:Setting:general</default>
+    </route>
+
+    <route id="dt_system_setting_theme" path="/setting/theme" methods="GET POST">
+        <default key="_controller">CoreBundle:Setting:theme</default>
+    </route>
+
+    <route id="dt_setting_theme_customize" path="/setting/theme/customize" methods="GET">
+        <default key="_controller">CoreBundle:Customizer:customize</default>
+    </route>
+
+    <route id="dt_setting_theme_save" path="/setting/theme/save" methods="POST">
+        <default key="_controller">CoreBundle:Setting:themeSave</default>
+    </route>
+
+    <!-- SYSTEM -->
+    <route id="dt_system_dashboard" path="/" methods="GET">
+        <default key="_controller">CoreBundle:System:dashboard</default>
+    </route>
+
+    <route id="dt_system_log" path="/system/log" methods="GET POST">
+        <default key="_controller">CoreBundle:System:log</default>
+    </route>
+
+    <route id="dt_system_log_data" path="/system/log/data" methods="GET">
+        <default key="_controller">CoreBundle:System:logData</default>
+    </route>
+
+    <route id="dt_system_cache" path="/system/cache" methods="GET POST">
+        <default key="_controller">CoreBundle:System:cache</default>
+    </route>
+
+    <route id="dt_system_cache_clear" path="/system/cache/clear" methods="POST">
+        <default key="_controller">CoreBundle:System:clearCache</default>
+    </route>
+
+    <route id="dt_system_preferences" path="/system/preferences" methods="GET">
+        <default key="_controller">CoreBundle:System:preferences</default>
+    </route>
+
+    <!-- WIDGET -->
+    <route id="dt_setting_widget_delete" path="/setting/widget/delete" methods="GET">
+        <default key="_controller">CoreBundle:Widget:delete</default>
+    </route>
+
+    <route id="dt_setting_widget_save" path="/setting/widget/delete" methods="GET">
+        <default key="_controller">CoreBundle:Widget:save</default>
+    </route>
+
+    <route id="dt_setting_widget_sort" path="/setting/widget/sort" methods="GET">
+        <default key="_controller">CoreBundle:Widget:sort</default>
+    </route>
+
+</routes>

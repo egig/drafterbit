@@ -1,0 +1,44 @@
+{% extends "CoreBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@CoreBundle/Resources/scss/setting/theme.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container dt-themes-container">
+    <div class="row">
+        {% for theme in themes %}
+            <div class="col-md-4">
+                <div class="dt-theme-item clearfix">
+                    <div class="dt-screenshot-container">
+                        <img src="{{ theme.screenshot_base64 }}"/>
+                    </div>
+                    <div style="height:70px;overflow:hidden;" class="theme-property">
+                        <h4>{{ theme.name }}</h4>
+                        <form method="GET" target="_blank" action="{{ url('dt_setting_theme_customize') }}">
+                            <input type="hidden" name="_token" value="{{csrf_token('customize_theme')}}">
+                            <input type="hidden" name="theme" value="{{theme.id}}">
+                            <button target="_blank" class="btn btn-xs btn-primary pull-right" style="margin-left:5px;">{{ __('Customize') }}</button>
+                       </form>
+                        {%  if theme.is_active %}
+                        <a disabled class="btn btn-xs btn-default pull-right">{{ __('Active') }}</a>
+                        {% else %}
+                        <form method="POST">
+                            <input type="hidden" name="theme" value="{{ theme.id }}">
+                            <input type="hidden" name="_csrf_token" value="{{ _token }}">
+                            <input type="submit" value="Activate" class="btn btn-xs btn-success pull-right">
+                       </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

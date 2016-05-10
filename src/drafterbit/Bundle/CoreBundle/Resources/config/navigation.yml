@@ -1,0 +1,20 @@
+core:
+    navigation:
+        setting:
+            label: Setting
+            children:
+                general:
+                    label: General
+                    route: dt_system_setting_general
+                theme:
+                    label: Theme
+                    route: dt_system_setting_theme
+        system:
+            label: System
+            children:
+                log:
+                    label: Log
+                    route: dt_system_log
+                cache:
+                    label: Cache
+                    route: dt_system_cache

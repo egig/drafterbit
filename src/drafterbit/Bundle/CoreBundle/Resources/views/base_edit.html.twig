@@ -1,0 +1,35 @@
+{% extends "CoreBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@CoreBundle/Resources/scss/edit.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {attr:{id: view_id~"-form"}, action: action}) }}
+        <div class="sticky-toolbar-wrapper" id="sticky-toolbar">
+            <div class="container">
+                <div class="row dt-row-sticky-toolbar">
+                    <div class="col-md-12">
+                        {% block action %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            {% block form %}{% endblock %}
+         </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+ {% block javascripts %}
+     {{ parent() }}
+     {% javascripts '@jquery_form' '@sticky_kit' filter='?uglifyjs2' output="assets/js/*.js" %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
+ {% endblock %}

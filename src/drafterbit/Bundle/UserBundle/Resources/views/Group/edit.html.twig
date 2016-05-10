@@ -1,9 +1,9 @@
-{% extends "SystemBundle::base_edit.html.twig" %}
+{% extends "CoreBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter='?uglifycss' output="assets/css/*.css"
-        '@SystemBundle/Resources/scss/vertical-tabs.scss'
+        '@CoreBundle/Resources/scss/vertical-tabs.scss'
     %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}

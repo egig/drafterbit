@@ -1,0 +1,82 @@
+{% extends "CoreBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+    '@CoreBundle/Resources/scss/preferences.scss'
+    '@CoreBundle/Resources/scss/vertical-tabs.scss'
+     filter='?uglifycss' output="assets/css/*.css"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="dt-preferences-tab" class="nav nav-tabs tabs-left">
+                    <li role="presentation"><a href="#pref-dashboard" aria-controls="" role="tab" data-toggle="tab">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="pref-dashboard">
+                        <button data-toggle="modal" data-target="#dt-available-panels" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> {{ __('Add Panel') }}</button>
+                        <div class="row dt-panels-container">
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal in" id="dt-available-panels">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{ __('Select Panel Type') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">{{ __('Available Panel Types') }}</h5>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="nav nav-stacked">
+                                {% for panel in panels %}
+                                    <li><a data-id="{{ panel.name }}" data-toggle="modal" data-target="#dt-panel-edit-modal" href="#">{{ panel.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal in" id="dt-panel-edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                //..
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    '@jquery_form'
+    '@bootstrap_tabcollapse'
+    '@CoreBundle/Resources/js/preferences.js' 
+     filter='?uglifyjs2' output="assets/js/*.js"
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

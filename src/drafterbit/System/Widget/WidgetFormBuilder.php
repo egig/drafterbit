@@ -4,7 +4,7 @@ namespace drafterbit\System\Widget;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\DependencyInjection\Container;
-use drafterbit\Bundle\SystemBundle\Form\Type\WidgetType;
+use drafterbit\Bundle\CoreBundle\Form\Type\WidgetType;
 
 class WidgetFormBuilder
 {

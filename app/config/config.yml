@@ -5,7 +5,7 @@ imports:
     - { resource: assetic.yml }
     - { resource: system.yml }
     - { resource: "@BlogBundle/Resources/config/system/navigation.yml" }
-    - { resource: "@SystemBundle/Resources/config/system.yml" }
+    - { resource: "@CoreBundle/Resources/config/system.yml" }
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'

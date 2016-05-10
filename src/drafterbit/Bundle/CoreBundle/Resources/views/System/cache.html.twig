@@ -1,0 +1,55 @@
+{% extends "CoreBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets  filter='?uglifycss' output="assets/css/*.css" '@CoreBundle/Resources/scss/cache.scss' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row dt-cache-toolbar">
+        {% if is_granted('ROLE_CACHE_RENEW') %}
+        <div class="col-md-8">
+            <form method="POST" action="{{ url('dt_system_cache_clear') }}">
+                <button type="submit" name="renew" value="1" class="btn btn-default">{{ __('Renew Cache') }}</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-condensed table-bordered" id="log-data-table">
+                <thead>
+                    <tr>
+                        <th width="70%">{{ __('Key') }}</th>
+                        <th width="30%">{{ __('Size') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cache in caches %}
+                        <tr>
+                            <td>{{ cache.key }}</td>
+                            <td>{{ cache.size }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+
+    {% if notif %}
+        <script type="text/javascript">
+            $.notify("{{ notif.message }}", "{{ notif.status }}");
+        </script>>
+    {% endif %}
+
+{% endblock %}

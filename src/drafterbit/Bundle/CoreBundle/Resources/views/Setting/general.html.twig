@@ -1,0 +1,54 @@
+{% extends "CoreBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@CoreBundle/Resources/scss/vertical-tabs.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block action %}
+    {{ form_widget(form.Save, {label: __("Save"), attr:{class:"btn btn-success"}}) }}
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <div class="col-md-3">
+        <ul id="dt-setting-tab" class="nav nav-tabs tabs-left">
+            {% for name,field in fields %}
+                <li role="presentation"><a href="#setting-{{ field.name }}" aria-controls="setting-{{ field.name }}" role="tab" data-toggle="tab">{{ field.name|capitalize }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="tab-content">
+            {% for field in form %}
+                {% if field.vars.name not in ['Save', '_token'] %}
+                <div role="tabpanel" class="tab-pane" id="setting-{{ field.vars.name }}">
+                    {% include attribute(fields, field.vars.name).template with {form: field}  %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+    '@bootstrap_tabcollapse' '@CoreBundle/Resources/js/setting/general.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% if message %}
+        <script type="text/javascript">
+        {% autoescape 'js' %}
+        $.notify('{{ message.text }}', '{{ message.status }}');
+        {% endautoescape %}
+        </script>
+    {% endif %}
+{% endblock %}

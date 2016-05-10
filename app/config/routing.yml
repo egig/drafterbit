@@ -3,7 +3,7 @@ imports:
     type: blog
 
 _dt_system:
-    resource: "@SystemBundle/Resources/config/routing.xml"
+    resource: "@CoreBundle/Resources/config/routing.xml"
 
 
 

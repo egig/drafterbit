@@ -1,4 +1,4 @@
-system:
+core:
     navigation:
         blog:
             label: Blog

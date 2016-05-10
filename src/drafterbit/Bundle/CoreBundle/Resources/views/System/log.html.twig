@@ -1,0 +1,39 @@
+{% extends "CoreBundle::base_index.html.twig" %}
+
+{% block action %}
+        {% if is_granted('ROLE_LOG_DELETE') %}
+            <button class="btn btn-default" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
+            <button class="btn btn-default" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
+        {% endif %}
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="log-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="log-checkall" type="checkbox">
+                </th>
+                <th width="30%">{{ __('Time') }}</th>
+                <th width="70%">{{ __('Activity') }}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@CoreBundle/Resources/js/log.js'
+         filter='?uglifyjs2' output="assets/js/*.js"
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% if notif is defined %}
+        <script type="text/javascript">
+            $.notify("{{ notif.message }}", "{{ notif.status }}");
+        </script>
+    {% endif %}
+
+{% endblock %}

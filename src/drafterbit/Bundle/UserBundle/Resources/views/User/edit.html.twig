@@ -1,10 +1,10 @@
-{% extends "SystemBundle::base_edit.html.twig" %}
+{% extends "CoreBundle::base_edit.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter='?uglifycss' output="assets/css/*.css"
         '@chosen_css'
-        '@SystemBundle/Resources/web/chosen-bootstrap/chosen-bootstrap.css'
+        '@CoreBundle/Resources/web/chosen-bootstrap/chosen-bootstrap.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}

@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use drafterbit\Bundle\SystemBundle\Form\Type\EntityHiddenType;
+use drafterbit\Bundle\CoreBundle\Form\Type\EntityHiddenType;
 
 class CommentType extends AbstractType
 {
