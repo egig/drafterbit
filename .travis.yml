@@ -8,7 +8,7 @@ php:
 
 before_script:
   - mysql -e 'create database symfony;'
-  - chmod -R 0777 var
+  - chmod -R 0777 tests/application/var
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
   - php bin/console doctrine:schema:create --env=test
