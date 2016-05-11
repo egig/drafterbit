@@ -25,5 +25,6 @@ parameters:
     test_user: admin
     upload_dir: var/storage
     multilingual: false
+    vendor_dir: %kernel.root_dir%/../../../vendor
     uglifyjs_path: /usr/local/bin/uglifyjs
     uglifycss_path: /usr/local/bin/uglifycss

@@ -5,7 +5,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="test/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -13,23 +13,18 @@
 
     <testsuites>
         <testsuite name="drafterbit Test Suite">
-            <directory>./src/drafterbit/System/*/Tests/</directory>
-            <directory>./src/drafterbit/System/*/*/Tests/</directory>
-            <directory>./src/drafterbit/Bundle/*/Tests/</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
     <php>
-        <server name="KERNEL_DIR" value="app/" />
+        <server name="KERNEL_DIR" value="tests/application/app/" />
     </php>
 
     <filter>
         <whitelist>
             <directory>./src/drafterbit</directory>
              <exclude>
-                <directory>./src/drafterbit/System/*/Tests</directory>
-                <directory>./src/drafterbit/System/*/*/Tests</directory>
-                <directory>./src/drafterbit/Bundle/*/Tests</directory>
                 <directory>./src/drafterbit/Bundle/*/Resources</directory>
                 <directory>./src/drafterbit/System/*/Resources</directory>
                 <directory>./src/drafterbit/System/*/*/Resources</directory>

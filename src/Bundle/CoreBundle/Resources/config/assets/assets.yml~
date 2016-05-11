@@ -1,0 +1,50 @@
+imports:
+    - { resource: bootstrap.yml }
+    - { resource: ckeditor.yml }
+    - { resource: fontawesome.yml }
+    - { resource: jquery.yml }
+
+assetic:
+    filters:
+        scss:
+            load_paths:
+               - '%vendor_dir%/web/bootstrap-sass/assets/stylesheets'
+            apply_to:   "\\.scss$"
+        uglifyjs2:
+            # the path to the uglifyjs executable
+            bin: %uglifyjs_path%
+        uglifycss:
+            bin: %uglifycss_path%
+
+    assets:
+        notify_css:
+            inputs: '%vendor_dir%/web/egig-notify/notify.css'
+        notify_js:
+            inputs: '%vendor_dir%/web/egig-notify/notify.js'
+        chosen_css:
+            inputs: '%vendor_dir%/web/chosen/chosen.min.css'
+        chosen_js:
+            inputs: '%vendor_dir%/web/chosen/chosen.jquery.min.js'
+        chosen_sprite:
+            inputs: '%vendor_dir%/web/chosen/chosen-sprite.png'
+            output: assets/css/chosen-sprite.png
+        datatables_css:
+            inputs: '%vendor_dir%/web/datatables/media/css/jquery.dataTables.css'
+        datatables_js:
+            inputs: '%vendor_dir%/web/datatables/media/js/jquery.dataTables.js'
+        finder_js:
+            inputs: '%vendor_dir%/web/finder/dist/js/finder.min.js'
+        finder_css:
+            inputs: '%vendor_dir%/web/finder/dist/css/finder.css'
+        nunjucks:
+            inputs: '%vendor_dir%/web/nunjucks/browser/nunjucks.min.js'
+        magicsuggest_css:
+            inputs: '%vendor_dir%/web/magicsuggest/magicsuggest-min.css'
+        magicsuggest_js:
+            inputs: '%vendor_dir%/web/magicsuggest/magicsuggest-min.js'
+        nested_sortable:
+            inputs: '%vendor_dir%/web/nestedSortable/jquery.mjs.nestedSortable.js'
+        qs:
+            inputs: '%vendor_dir%/web/qs/dist/qs.js'
+        sticky_kit:
+            inputs: '%vendor_dir%/web/sticky-kit/jquery.sticky-kit.min.js'
