@@ -1,20 +1,20 @@
 {
     "name": "drafterbit/drafterbit",
     "license": "proprietary",
-    "type": "project",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "drafterbit\\": "src/"
-        },
-        "classmap": [
-            "tests/application/app/AppKernel.php",
-            "tests/application/app/AppCache.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/dist/app/AppKernel.php",
+            "tests/dist/app/AppCache.php"
+        ]
     },
     "require": {
         "php": ">=5.5.9",

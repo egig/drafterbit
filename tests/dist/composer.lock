@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8fb382b48c9c9e38e21d712b1a54d616",
-    "content-hash": "a3cd40960562672a86f1a8088d6646fe",
+    "hash": "5e46df67d73efd7b0a7d4debaf91e845",
+    "content-hash": "78562da9b4d4e62789204222c2644ad1",
     "packages": [
         {
             "name": "cogpowered/finediff",
@@ -823,6 +823,58 @@
                 "orm"
             ],
             "time": "2016-01-05 21:34:58"
+        },
+        {
+            "name": "drafterbit/drafterbit",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/drafterbit/drafterbit.git",
+                "reference": "180ebe2d24fccb211886e7bb6a9fc33b88a65285"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/drafterbit/drafterbit/zipball/180ebe2d24fccb211886e7bb6a9fc33b88a65285",
+                "reference": "180ebe2d24fccb211886e7bb6a9fc33b88a65285",
+                "shasum": ""
+            },
+            "require": {
+                "cogpowered/finediff": "0.3.*",
+                "doctrine/doctrine-bundle": "^1.6",
+                "doctrine/doctrine-cache-bundle": "^1.2",
+                "doctrine/orm": "^2.5",
+                "friendsofsymfony/user-bundle": "~2.0@dev",
+                "gregwar/image": "2.0.*",
+                "incenteev/composer-parameter-handler": "^2.0",
+                "php": ">=5.5.9",
+                "sensio/distribution-bundle": "^5.0",
+                "sensio/framework-extra-bundle": "^3.0.2",
+                "sonata-project/intl-bundle": "dev-master",
+                "symfony/assetic-bundle": "^2.7",
+                "symfony/monolog-bundle": "^2.8",
+                "symfony/swiftmailer-bundle": "^2.3",
+                "symfony/symfony": "3.0.*"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^2.3",
+                "sensio/generator-bundle": "^3.0",
+                "symfony/phpunit-bridge": "^2.7"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "drafterbit\\": "src/"
+                },
+                "classmap": [
+                    "tests/application/app/AppKernel.php",
+                    "tests/application/app/AppCache.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "time": "2016-05-11 04:11:10"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -2490,6 +2542,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "drafterbit/drafterbit": 20,
         "friendsofsymfony/user-bundle": 20,
         "sonata-project/intl-bundle": 20
     },
