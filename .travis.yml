@@ -16,27 +16,27 @@ before_script:
   - php bin/console doctrine:fixtures:load --env=test --append
   - cd ../../
 
-env:
-  global:
-    - SYMFONY__TEST_USER=admin
-    - SYMFONY__DATABASE_DRIVER=pdo_mysql
-    - SYMFONY__DATABASE_HOST=127.0.0.1
-    - SYMFONY__DATABASE_PORT=""
-    - SYMFONY__DATABASE_PASSWORD=""
-    - SYMFONY__DATABASE_NAME=symfony
-    - SYMFONY__DATABASE_USER=root
-    - SYMFONY__DATABASE_TABLE_PREFIX=test_
-    - SYMFONY__LOCALE=en
-    - SYMFONY__SECRET=ThisTokenIsNotSoSecretChangeIt
-    - SYMFONY__ADMIN=admin
-    - SYMFONY__THEME=feather
-    - SYMFONY__UPLOAD_DIR=upload
-    - SYMFONY__MAILER_TRANSPORT=smtp
-    - SYMFONY__MAILER_HOST=127.0.0.1
-    - SYMFONY__MAILER_USER=""
-    - SYMFONY__MAILER_PASSWORD=""
-    - SYMFONY__MULTILINGUAL=""
-    - SYMFONY__VENDOR_DIR="%kernel.root_dir%/../../../vendor"
+#env:
+#  global:
+#    - SYMFONY__TEST_USER=admin
+#    - SYMFONY__DATABASE_DRIVER=pdo_mysql
+#    - SYMFONY__DATABASE_HOST=127.0.0.1
+#    - SYMFONY__DATABASE_PORT=""
+#    - SYMFONY__DATABASE_PASSWORD=""
+#    - SYMFONY__DATABASE_NAME=symfony
+#    - SYMFONY__DATABASE_USER=root
+#    - SYMFONY__DATABASE_TABLE_PREFIX=test_
+#   - SYMFONY__LOCALE=en
+#   - SYMFONY__SECRET=ThisTokenIsNotSoSecretChangeIt
+#   - SYMFONY__ADMIN=admin
+#   - SYMFONY__THEME=feather
+#  - SYMFONY__UPLOAD_DIR=upload
+#    - SYMFONY__MAILER_TRANSPORT=smtp
+#    - SYMFONY__MAILER_HOST=127.0.0.1
+#    - SYMFONY__MAILER_USER=""
+#    - SYMFONY__MAILER_PASSWORD=""
+#    - SYMFONY__MULTILINGUAL=""
+#    - SYMFONY__VENDOR_DIR="%kernel.root_dir%/../vendor"
 
 script: phpunit
 

@@ -3,7 +3,7 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-class AppKernel extends Kernel
+class TestKernel extends Kernel
 {
     public function registerBundles()
     {
@@ -46,12 +46,12 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        return $this->getRootDir().'/var/cache/'.$this->getEnvironment();
     }
 
     public function getLogDir()
     {
-        return dirname(__DIR__).'/var/logs';
+        return $this->getRootDir().'/var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -10,11 +10,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        },
-        "classmap": [
-            "tests/dist/app/AppKernel.php",
-            "tests/dist/app/AppCache.php"
-        ]
+        }
     },
     "require": {
         "php": ">=5.5.9",

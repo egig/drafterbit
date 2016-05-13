@@ -18,16 +18,34 @@
     </testsuites>
 
     <php>
-        <server name="KERNEL_DIR" value="tests/dist/app/" />
+        <server name="KERNEL_DIR" value="tests" />
+        <server name="SYMFONY__VENDOR_DIR" value="%kernel.root_dir%/../vendor" />
+        <server name="SYMFONY__SECRET" value="secret" />
+        <server name="SYMFONY__ADMIN" value="admin" />
+        <server name="SYMFONY__UPLOAD_DIR" value="var/storage" />
+        <server name="SYMFONY__MAILER_TRANSPORT" value="smtp" />
+        <server name="SYMFONY__MAILER_HOST" value="127.0.0.1" />
+        <server name="SYMFONY__MAILER_USER" value="" />
+        <server name="SYMFONY__MAILER_PASSWORD" value="" />
+        <server name="SYMFONY__MULTILINGUAL" value="false" />
+        <server name="SYMFONY__DATABASE_DRIVER" value="pdo_mysql" />
+        <server name="SYMFONY__DATABASE_HOST" value="127.0.0.1" />
+        <server name="SYMFONY__DATABASE_port" value="" />
+        <server name="SYMFONY__DATABASE_USER" value="root" />
+        <server name="SYMFONY__DATABASE_PASSWORD" value="" />
+        <server name="SYMFONY__DATABASE_NAME" value="symfony" />
+        <server name="SYMFONY__DATABASE_TABLE_PREFIX" value="dt_" />
+        <server name="SYMFONY__UGLIFYJS_PATH" value="" />
+        <server name="SYMFONY__UGLIFYCSS_PATH" value="" />
     </php>
 
     <filter>
         <whitelist>
-            <directory>./src/drafterbit</directory>
+            <directory>./src</directory>
              <exclude>
-                <directory>./src/drafterbit/Bundle/*/Resources</directory>
-                <directory>./src/drafterbit/System/*/Resources</directory>
-                <directory>./src/drafterbit/System/*/*/Resources</directory>
+                <directory>./src/Bundle/*/Resources</directory>
+                <directory>./src/System/*/Resources</directory>
+                <directory>./src/System/*/*/Resources</directory>
             </exclude>
         </whitelist>
     </filter>
