@@ -8,13 +8,10 @@ php:
 
 before_script:
   - mysql -e 'create database symfony;'
-  - chmod -R 0777 tests/dist/var
+  - mysql -e 'symfony < tests/fistures.sql;'
+  - chmod -R 0777 tests/var
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  - cd tests/dist
-  - php bin/console doctrine:schema:create --env=test
-  - php bin/console doctrine:fixtures:load --env=test --append
-  - cd ../../
 
 #env:
 #  global:
