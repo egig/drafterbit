@@ -36,6 +36,7 @@ env:
     - SYMFONY__MAILER_USER=""
     - SYMFONY__MAILER_PASSWORD=""
     - SYMFONY__MULTILINGUAL=""
+    - SYMFONY__VENDOR_DIR="%kernel.root_dir%/../../../vendor"
 
 script: phpunit
 
