@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: dt_install_test
+-- Host: localhost    Database: symfony
 -- ------------------------------------------------------
 -- Server version	5.5.49-0ubuntu0.14.04.1
 
