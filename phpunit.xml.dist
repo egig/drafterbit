@@ -37,6 +37,9 @@
         <server name="SYMFONY__DATABASE_TABLE_PREFIX" value="dt_" />
         <server name="SYMFONY__UGLIFYJS_PATH" value="" />
         <server name="SYMFONY__UGLIFYCSS_PATH" value="" />
+
+        <!-- @todo there must be not required a test user param-->
+        <server name="SYMFONY__TEST_USER" value="admin" />
     </php>
 
     <filter>
