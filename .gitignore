@@ -14,3 +14,4 @@ phpunit.xml
 !/tests/var/storage
 /tests/var/storage/*
 !/tests/var/storage/.gitkeep
+/coverage
