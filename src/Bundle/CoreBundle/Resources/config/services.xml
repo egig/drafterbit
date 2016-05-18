@@ -13,7 +13,7 @@
         <parameter key="admin">admin</parameter>
 
         <!-- theme -->
-        <parameter key="themes_path">%kernel.root_dir%/../theme</parameter>
+        <parameter key="themes_path">%kernel.root_dir%/../themes</parameter>
     </parameters>
 
     <services>
@@ -121,6 +121,9 @@
 
         <service id="installer" class="drafterbit\Bundle\CoreBundle\Installer">
             <argument id="service_container" type="service"/>
+        </service>
+
+        <service id="drafterbit.theme_manager" class="drafterbit\System\ThemeManager">
         </service>
 
     </services>

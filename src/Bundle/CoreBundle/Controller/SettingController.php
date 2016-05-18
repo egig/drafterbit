@@ -111,29 +111,30 @@ class SettingController extends Controller
      */
     private function getThemes()
     {
-        $themes_path = $this->container->getParameter('themes_path');
-
         $themes = [];
-        $dirs = (new Finder())->in($themes_path)->directories()->depth(0);
 
-        foreach ($dirs as $dir) {
-            if (file_exists($config = $dir->getRealpath().'/theme.json')) {
-                $theme = json_decode(file_get_contents($config), true);
+        foreach ($this->get('drafterbit.theme_manager')->getPaths() as $themes_path) {
+            $dirs = (new Finder())->in($themes_path)->directories()->depth(0);
 
-                $theme['is_active'] = ($theme['id'] == $this->get('system')->get('theme.active'));
+            foreach ($dirs as $dir) {
+                if (file_exists($config = $dir->getRealpath().'/theme.json')) {
+                    $theme = json_decode(file_get_contents($config), true);
 
-                $ssImage = null;
-                if (isset($theme['screenshot'])) {
-                    $ssImage = $dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot'];
+                    $theme['is_active'] = ($theme['id'] == $this->get('system')->get('theme.active'));
+
+                    $ssImage = null;
+                    if (isset($theme['screenshot'])) {
+                        $ssImage = $dir->getRealpath().DIRECTORY_SEPARATOR.$theme['screenshot'];
+                    }
+
+                    if (!file_exists($ssImage)) {
+                        $ssImage = $this->get('kernel')->getBundle('CoreBundle')->getPath().'/Resources/screenshot.jpg';
+                    }
+
+                    $theme['screenshot_base64'] = Util::encodeImage($ssImage);
+
+                    $themes[] = $theme;
                 }
-
-                if (!file_exists($ssImage)) {
-                    $ssImage = $this->get('kernel')->getBundle('CoreBundle')->getPath().'/Resources/screenshot.jpg';
-                }
-
-                $theme['screenshot_base64'] = Util::encodeImage($ssImage);
-
-                $themes[] = $theme;
             }
         }
 

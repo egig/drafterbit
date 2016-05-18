@@ -12,4 +12,15 @@ class Drafterbit
 
     const END_OF_MAINTENANCE = null;
     const END_OF_LIFE = null;
+
+    /**
+     * Get core themes path. Default relative to this file.
+     *
+     * @return string
+     * @author 
+     **/
+ 	public static function getCoreThemePath() {
+
+ 		return dirname(__DIR__).'/themes';
+ 	}
 }

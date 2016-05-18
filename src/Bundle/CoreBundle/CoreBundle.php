@@ -13,6 +13,7 @@ use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\SettingFieldPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\ExtensionsPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\WebDebugToolbarPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\AdminRoutePass;
+use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\AddThemePathPass;
 
 class CoreBundle extends Bundle
 {
@@ -29,6 +30,7 @@ class CoreBundle extends Bundle
         $container->addCompilerPass(new SettingFieldPass());
         $container->addCompilerPass(new ExtensionsPass());
         $container->addCompilerPass(new AdminRoutePass());
+        $container->addCompilerPass(new AddThemePathPass());
 
         if (php_sapi_name() !== 'cli' and ($container->getParameter('kernel.environment') === 'dev')) {
             $container->addCompilerPass(new WebDebugToolbarPass());

@@ -150,15 +150,24 @@ EOT
 
         // @todo verify is it necessary to connect to database
         // during this operation
-        $theme = $this->getContainer()->get('system')->get('theme.active', 'feather');
-        $themesPath = $this->getContainer()->getParameter('themes_path');
-        $themePath = $themesPath.'/'.$theme;
-        $targetDir = $targetArg.'/themes/'.$theme.'/asset/';
-        $originDir = $themePath.'/asset';
 
         try {
-            $this->filesystem->remove($targetDir);
-            $method = $this->absoluteSymlinkWithFallback($originDir, $targetDir);
+            $themesPath = $this->getContainer()->get('drafterbit.theme_manager')->getPaths();
+
+            $theme = $this->getContainer()->get('system')->get('theme.active', 'feather');
+
+            foreach ($themesPath as $path) {
+
+                if(is_dir($themePath = $path.'/'.$theme)) {
+
+                    $targetDir = $targetArg.'/themes/'.$theme.'/asset/';
+                    $originDir = $themePath.'/asset';
+
+                    $this->filesystem->remove($targetDir);
+                    $method = $this->absoluteSymlinkWithFallback($originDir, $targetDir);
+                    break;
+                }
+            }
 
             if (self::METHOD_COPY === $method) {
                 $copyUsed = true;
