@@ -25,10 +25,12 @@ class CustomizerController extends Controller
 
         $theme = $request->query->get('theme');
 
-        $themesPath = $this->container->getParameter('themes_path');
+        $themeManager = $this->get('drafterbit.theme_manager');
+
+        $themePath = $themeManager->getPath($theme);
 
         $themeConfig = json_decode(file_get_contents(
-                $themesPath.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.'theme.json'), true
+                $themePath.DIRECTORY_SEPARATOR.'theme.json'), true
             )
         ;
 
