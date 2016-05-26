@@ -35,6 +35,7 @@ class FrontendListener implements EventSubscriberInterface
         $request = $event->getRequest();
 
         $admin = $this->container->getParameter('admin');
+        $themeManager = $this->container->get('drafterbit.theme_manager');
 
         // If the page requested is not admin area then we
         // change theme path according to theme and add
@@ -49,8 +50,6 @@ class FrontendListener implements EventSubscriberInterface
                 $theme = $this->container->get('system')->get('theme.active');
             }
 
-            $themesPath = $this->container->getParameter('themes_path');
-
             $kernel = $this->container->get('kernel');
 
             // @todo create template structure spec
@@ -62,14 +61,11 @@ class FrontendListener implements EventSubscriberInterface
             }
 
             // prepend theme path
-            if (is_dir($themeTemplatePath = $themesPath.'/'.$theme.'/views')) {
+            if (is_dir($themeTemplatePath = $themeManager->getPath($theme).DIRECTORY_SEPARATOR.'views')) {
                 $this->container->get('twig.loader')->prependPath($themeTemplatePath);
             }
 
-            // add global theme context, first we need populate the default
-            $themesPath = $this->container->getParameter('themes_path');
-
-            if (is_file($file = $themesPath.'/'.$theme.'/theme.json')) {
+            if (is_file($file = $themeManager->getPath($theme).DIRECTORY_SEPARATOR.'theme.json')) {
                 $themeConfig = json_decode(file_get_contents($file), true);
 
                 // @todo validate this
