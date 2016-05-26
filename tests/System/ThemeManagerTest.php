@@ -17,9 +17,9 @@ class ThemeManagerTest extends \PHPUnit_Framework_testCase
 	function testAddPath() {
 		
 		$tm  = new  ThemeManager();
-		$tm->addPath('foo');
+		$tm->addPath(__DIR__.'/../themes_testpath');
 
-		$this->assertTrue(in_array('foo', $tm->getPaths()));
+		$this->assertTrue(in_array(__DIR__.'/../themes_testpath', $tm->getPaths()));
 		$this->assertCount(2, $tm->getPaths());
 	}
 }
