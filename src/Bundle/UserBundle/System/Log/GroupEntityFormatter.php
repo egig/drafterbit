@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\UserBundle\System\Log;
 
-use drafterbit\System\Log\BaseEntityFormatter;
+use drafterbit\Core\Log\BaseEntityFormatter;
 
 class GroupEntityFormatter extends BaseEntityFormatter
 {

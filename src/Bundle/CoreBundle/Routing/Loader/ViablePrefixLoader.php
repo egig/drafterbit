@@ -5,7 +5,7 @@ namespace drafterbit\Bundle\CoreBundle\Routing\Loader;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use drafterbit\System\ApplicationManager;
+use drafterbit\Core\ApplicationManager;
 
 class ViablePrefixLoader extends Loader
 {

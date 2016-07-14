@@ -6,7 +6,7 @@
 
     <services>
         <!-- Dahboard and Panels -->
-        <service id="dt_system.dashboard_manager" class="drafterbit\System\Dashboard\DashboardManager"/>
+        <service id="dt_system.dashboard_manager" class="drafterbit\Core\Dashboard\DashboardManager"/>
 
         <service id="dashboard" alias="dt_system.dashboard_manager"/>
 

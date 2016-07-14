@@ -34,7 +34,7 @@ class PostControllerTest extends WebTestCase
     public function testFeedAction()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', 'feed.xml');
+        $crawler = $client->request('GET', 'blog/feed.xml');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode() );
         $this->assertEquals('application/xml', $client->getResponse()->headers->get('Content-Type'));
     }

@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\CoreBundle\System\Setting;
 
-use drafterbit\System\Setting\Field;
+use drafterbit\Core\Setting\Field;
 use drafterbit\Bundle\CoreBundle\Form\Type\SystemType;
 
 class GeneralField extends Field

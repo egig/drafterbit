@@ -2,8 +2,8 @@
 
 namespace drafterbit\Bundle\CoreBundle\System\Dashboard\PanelType;
 
-use drafterbit\System\Dashboard\PanelType;
-use drafterbit\System\Extension\Shortcut as ShortcutItem;
+use drafterbit\Core\Dashboard\PanelType;
+use drafterbit\Core\Extension\Shortcut as ShortcutItem;
 
 class Shortcut extends PanelType
 {

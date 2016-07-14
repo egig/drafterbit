@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use drafterbit\Bundle\CoreBundle\Form\Type\ThemeType;
-use drafterbit\System\Util;
+use drafterbit\Core\Util;
 
 class SettingController extends Controller
 {

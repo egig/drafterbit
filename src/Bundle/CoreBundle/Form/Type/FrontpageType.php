@@ -5,9 +5,9 @@ namespace drafterbit\Bundle\CoreBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use drafterbit\System\FrontPage\FrontPageProvider;
+use drafterbit\Core\FrontPage\FrontPageProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use drafterbit\System\FrontPageApplicationInterface;
+use drafterbit\Core\FrontPageApplicationInterface;
 
 class FrontpageType extends AbstractType
 {

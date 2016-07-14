@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Extension;
 
-use drafterbit\System\Extension\Extension;
+use drafterbit\Core\Extension\Extension;
 use drafterbit\Bundle\BlogBundle\System\Shortcut\NewPostShortcut;
 
 class BlogExtension extends Extension

@@ -7,11 +7,11 @@
     <services>
 
         <!-- widget -->
-        <service id="dt_system.widget.form_builder" class="drafterbit\System\Widget\WidgetFormBuilder">
+        <service id="dt_system.widget.form_builder" class="drafterbit\Core\Widget\WidgetFormBuilder">
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="dt_system.widget.manager" class="drafterbit\System\Widget\WidgetManager">
+        <service id="dt_system.widget.manager" class="drafterbit\Core\Widget\WidgetManager">
             <argument type="service" id="service_container" />
         </service>
 

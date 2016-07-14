@@ -2,8 +2,8 @@
 
 namespace drafterbit\Bundle\CoreBundle\System\Routing;
 
-use drafterbit\System\Application;
-use drafterbit\System\FrontPageApplicationInterface;
+use drafterbit\Core\Application;
+use drafterbit\Core\FrontPageApplicationInterface;
 
 class Search extends Application implements FrontPageApplicationInterface
 {

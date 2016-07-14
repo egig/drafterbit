@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Setting;
 
-use drafterbit\System\Setting\Field;
+use drafterbit\Core\Setting\Field;
 use drafterbit\Bundle\BlogBundle\Form\Type\SettingType;
 
 class BlogField extends Field

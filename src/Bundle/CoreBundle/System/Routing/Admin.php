@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\CoreBundle\System\Routing;
 
-use drafterbit\System\Application;
+use drafterbit\Core\Application;
 
 class Admin extends Application
 {

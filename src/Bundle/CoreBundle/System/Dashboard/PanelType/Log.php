@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\CoreBundle\System\Dashboard\PanelType;
 
-use drafterbit\System\Dashboard\PanelType;
+use drafterbit\Core\Dashboard\PanelType;
 use drafterbit\Bundle\CoreBundle\Form\Type\Panel\LogType;
 
 class Log extends PanelType

@@ -2,8 +2,8 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Routing;
 
-use drafterbit\System\Application;
-use drafterbit\System\FrontPageApplicationInterface;
+use drafterbit\Core\Application;
+use drafterbit\Core\FrontPageApplicationInterface;
 
 class Blog extends Application implements FrontPageApplicationInterface
 {

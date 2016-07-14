@@ -43,7 +43,7 @@
         </service>
 
         <!-- Log Displayer -->
-        <service id="dt_system.log.display_formatter" class="drafterbit\System\Log\DisplayFormatter">
+        <service id="dt_system.log.display_formatter" class="drafterbit\Core\Log\DisplayFormatter">
             <argument type="service" id="translator"/>
         </service>
 
@@ -59,7 +59,7 @@
 
 
         <!-- Frontpage Provider -->
-        <service id="drafterbit.system.application_manager" class="drafterbit\System\ApplicationManager"/>
+        <service id="drafterbit.system.application_manager" class="drafterbit\Core\ApplicationManager"/>
 
         <!-- Frontend Route loader -->
         <service id="dt_system.routing.loader" class="drafterbit\Bundle\CoreBundle\Routing\Loader\ViablePrefixLoader">
@@ -84,7 +84,7 @@
         </service>
 
         <!-- Search -->
-        <service id="dt_system.search.engine" class="drafterbit\System\Search\Engine">
+        <service id="dt_system.search.engine" class="drafterbit\Core\Search\Engine">
             <argument type="service" id="service_container" />
         </service>
 
@@ -102,7 +102,7 @@
         </service>
 
         <!-- setting -->
-        <service id="dt_system.setting.field_manager" class="drafterbit\System\Setting\FieldManager"/>
+        <service id="dt_system.setting.field_manager" class="drafterbit\Core\Setting\FieldManager"/>
 
         <service id="dt_system.setting.field.general" class="drafterbit\Bundle\CoreBundle\System\Setting\GeneralField">
             <argument type="service" id="service_container" />
@@ -115,7 +115,7 @@
         </service>
 
         <!-- Extensions -->
-        <service id="extension_manager" class="drafterbit\System\Extension\ExtensionManager">
+        <service id="extension_manager" class="drafterbit\Core\Extension\ExtensionManager">
             <argument type="service" id="service_container" />
         </service>
 
@@ -123,7 +123,7 @@
             <argument id="service_container" type="service"/>
         </service>
 
-        <service id="drafterbit.theme_manager" class="drafterbit\System\ThemeManager">
+        <service id="drafterbit.theme_manager" class="drafterbit\Core\ThemeManager">
         </service>
 
     </services>

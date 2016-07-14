@@ -3,7 +3,7 @@
 namespace drafterbit\Bundle\CoreBundle\System\Widget;
 
 use Symfony\Component\Form\Form;
-use drafterbit\System\Widget\Widget;
+use drafterbit\Core\Widget\Widget;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TextWidget extends Widget

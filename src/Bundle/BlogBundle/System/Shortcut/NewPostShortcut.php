@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Shortcut;
 
-use drafterbit\System\Extension\Shortcut;
+use drafterbit\Core\Extension\Shortcut;
 
 class NewPostShortcut extends Shortcut
 {

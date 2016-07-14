@@ -2,7 +2,7 @@
 
 namespace drafterbit\Bundle\BlogBundle\System\Dashboard\PanelType;
 
-use drafterbit\System\Dashboard\PanelType;
+use drafterbit\Core\Dashboard\PanelType;
 
 class RecentComment extends PanelType
 {
