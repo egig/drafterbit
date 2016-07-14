@@ -25,15 +25,6 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
         $shortcut->setTitle('Shortcut');
         $manager->persist($shortcut);
 
-        $recentComment = new Panel();
-        $recentComment->setPosition('left');
-        $recentComment->setSequence(1);
-        $recentComment->setType('RecentComment');
-        $recentComment->setUser($this->getReference('admin-user'));
-        $recentComment->setStatus(1);
-        $recentComment->setTitle('Recent Comment');
-        $manager->persist($recentComment);
-
         $info = new Panel();
         $info->setPosition('right');
         $info->setSequence(0);
