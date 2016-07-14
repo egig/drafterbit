@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 class Server
 {
     /**
-     * Root of filesystem to browse;.
+     * Root of filesystem to browse.
      *
      * @var string
      */
