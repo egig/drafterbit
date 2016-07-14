@@ -4,7 +4,6 @@ imports:
     - { resource: services.yml }
     - { resource: assetic.yml }
     - { resource: system.yml }
-    - { resource: "@BlogBundle/Resources/config/system/navigation.yml" }
     - { resource: "@CoreBundle/Resources/config/system.yml" }
 
 fos_user:
