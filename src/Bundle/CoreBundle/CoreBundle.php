@@ -10,7 +10,6 @@ use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\DashboardPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\WidgetPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\SearchQueryProviderPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\SettingFieldPass;
-use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\ExtensionsPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\WebDebugToolbarPass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\AdminRoutePass;
 use drafterbit\Bundle\CoreBundle\DependencyInjection\Compiler\AddThemePathPass;
@@ -28,7 +27,6 @@ class CoreBundle extends Bundle
         $container->addCompilerPass(new WidgetPass());
         $container->addCompilerPass(new SearchQueryProviderPass());
         $container->addCompilerPass(new SettingFieldPass());
-        $container->addCompilerPass(new ExtensionsPass());
         $container->addCompilerPass(new AdminRoutePass());
         $container->addCompilerPass(new AddThemePathPass());
 

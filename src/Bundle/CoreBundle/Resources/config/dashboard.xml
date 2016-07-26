@@ -15,11 +15,6 @@
             <tag name="dt_system.dashboard.panel" />
         </service>
 
-        <service id="dt_system.dashboard.panel.shortcuts" class="drafterbit\Bundle\CoreBundle\System\Dashboard\PanelType\Shortcut">
-            <argument type="service" id="service_container" />
-            <tag name="dt_system.dashboard.panel" />
-        </service>
-
         <service id="dt_system.dashboard.panel.info" class="drafterbit\Bundle\CoreBundle\System\Dashboard\PanelType\Info">
             <argument type="service" id="service_container" />
             <tag name="dt_system.dashboard.panel" />

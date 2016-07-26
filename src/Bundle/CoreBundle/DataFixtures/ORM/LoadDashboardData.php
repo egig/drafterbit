@@ -16,15 +16,6 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
      */
     public function load(ObjectManager $manager)
     {
-        $shortcut = new Panel();
-        $shortcut->setPosition('left');
-        $shortcut->setSequence(0);
-        $shortcut->setType('Shortcut');
-        $shortcut->setUser($this->getReference('admin-user'));
-        $shortcut->setStatus(1);
-        $shortcut->setTitle('Shortcut');
-        $manager->persist($shortcut);
-
         $info = new Panel();
         $info->setPosition('right');
         $info->setSequence(0);
@@ -35,7 +26,7 @@ class LoadDashboardData extends AbstractFixture implements OrderedFixtureInterfa
         $manager->persist($info);
 
         $log = new Panel();
-        $log->setPosition('right');
+        $log->setPosition('left');
         $log->setSequence(1);
         $log->setType('Log');
         $log->setUser($this->getReference('admin-user'));
