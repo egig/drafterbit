@@ -5,8 +5,9 @@ CKEDITOR.replace('{{ ckeditor_ctn }}', {
     extraPlugins: 'wpmore',
     filebrowserWindowWidth  : 1040,
     filebrowserWindowHeight : 453,
-    filebrowserImageBrowseUrl : "{{ url('dt_file_browser') }}"
-
+    
+    // @todo make event here to add filebrowserImageBrowseUrl
+    // {# filebrowserImageBrowseUrl : "{{ url('dt_file_browser') }}" #}
     // Custom config. skin and plugins is handled by assetic
     // customConfig : "{{ asset('config.js') }}",
 });
