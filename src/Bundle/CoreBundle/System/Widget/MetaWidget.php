@@ -18,7 +18,6 @@ class MetaWidget extends Widget
         $admin = $this->container->getParameter('admin');
         $items = [
             ['link' => $baseUrl.'/'.$admin, 'label' => 'Site Admin'],
-            ['link' => $baseUrl.'/feed.xml', 'label' => 'Feed RSS'],
             ['link' => 'http://drafterbit', 'label' => 'drafterbit.org'],
         ];
 
