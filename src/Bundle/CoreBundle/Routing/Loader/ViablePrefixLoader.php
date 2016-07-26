@@ -24,7 +24,7 @@ class ViablePrefixLoader extends Loader
         $this->isMultilingual     = $isMultilingual;
         $this->locale             = $locale;
 
-        $this->frontPageConfig = $this->systemModel->get('system.frontpage', 'blog');
+        $this->frontPageConfig = $this->systemModel->get('system.frontpage', null);
     }
 
     /**

@@ -13,11 +13,7 @@ class SearchController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $data['q'] = $q = $request->query->get('q');
-
-        if (!$q) {
-            throw $this->createNotFoundException();
-        }
+        $data['q'] = $q = $request->query->get('q', '{no query specified}');
 
         $results = $this->get('search_engine')->doSearch($q);
 
