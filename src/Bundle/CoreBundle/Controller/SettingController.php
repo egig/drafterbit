@@ -21,6 +21,7 @@ class SettingController extends Controller
      * @Security("is_granted('ROLE_SETTING_GENERAL_MANAGE')")
      *
      * @todo Setting validation rules
+     * @todo Clear cache on save
      */
     public function generalAction(Request $request)
     {

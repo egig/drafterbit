@@ -48,7 +48,7 @@ class LoadSystemData extends AbstractFixture implements ContainerAwareInterface,
         $initData = [
             'system.site_name' => $siteName,
             'system.site_description' => $siteDescription,
-            'system.frontpage' => 'blog',
+            'system.frontpage' => 'sample-page',
             'system.date_format' => 'd m Y',
             'system.time_format' => 'H:i',
             'theme.active' => $theme,
