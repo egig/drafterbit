@@ -38,11 +38,6 @@ class TestKernel extends Kernel
         return $bundles;
     }
 
-    public function getRootDir()
-    {
-        return __DIR__;
-    }
-
     public function getCacheDir()
     {
         return $this->getRootDir().'/var/cache/'.$this->getEnvironment();
