@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <form class="" action="/signup" method="post" id="signupForm">
+        Email <input type="text" name="email"/>
+        <br/>
+        Password <input type="text" name="password"/>
+        <br/>
+        <button type="submit" name="submit">Submit</button>
+    </form>
+
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"> </script>
+    <script type="text/javascript" src="bower_components/jquery-form/jquery.form.js"> </script>
+    <script type="text/javascript">
+        (function($){
+            $(signupForm).ajaxForm({
+                success:function(res) {
+                    console.log(res);
+                }
+            });
+
+        })(jQuery);
+    </script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout_index.html" %}
+
+{% block filter %}
+    <select name="status-filter" class="dt-table-filter form-control filter user-status-filter">
+        <option value="all" selected >- Status -</option>
+        <option value="enabled" >{{ __('Enabled') }}</option>
+        <option value="disabled" >{{ __('Disabled') }}</option>
+    </select>
+    <select name="group-filter" class="dt-table-filter form-control filter user-group-filter">
+        <option value="0" >- {{ __('Group') }} -</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block action %}
+    <a href="/users/edit/new" class="btn btn-success">
+        <i class="fa fa-plus" style=""></i> {{ __('New User') }}
+    </a>
+
+    <button class="btn btn-default uncreate-action" type="submit" name="action" value="delete">
+        <i class="fa fa-trash-o"></i> {{ __('Delete') }}
+    </button>
+
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="users-data-table">
+        <thead>
+            <tr>
+                <th class="all sorting" width="15">
+                    <input id="users-checkall" type="checkbox">
+                </th>
+                <th class="desktop">{{ __('Name') }}</th>
+                <th class="all">{{ __('Email') }}</th>
+                <th class="all">{{ __('Status') }}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="/js/users/index.js"> </script>
+    <script type="text/javascript">
+        drafTerbit.user.handleIndexTable('#users-data-table', '{{ token }}');
+        drafTerbit.user.handleIndexForm('#user-index-form');
+        drafTerbit.user.listenTableFilter('.user-status-filter', '.user-group-filter', '.filter');
+    </script>
+{% endblock%}

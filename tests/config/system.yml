@@ -1,5 +1,0 @@
-core:
-    navigation:
-        dashboard:
-            label: Dashboard
-            route: dt_system_dashboard

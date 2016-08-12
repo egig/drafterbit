@@ -1,0 +1,19 @@
+{
+  "name": "drafterbit",
+  "version": "2.0.0-dev",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drafterbit/drafterbit.git"
+  },
+  "author": "Egi Gundari <egigundari@gmial.com> (http://egig.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drafterbit/drafterbit/issues"
+  },
+  "homepage": "https://github.com/drafterbit/drafterbit#readme"
+}
