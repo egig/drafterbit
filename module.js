@@ -21,6 +21,14 @@ module.exports = Obj.extend({
      }
 
      return require(path.join(this.dirname, 'routes'));
+  },
+
+  getPublicPath: function(){
+    if(typeof this.dirname === 'undefined') {
+      throw "Module is not yet initialized"
+    }
+
+    return path.join(this.dirname, 'public');
   }
 
 });

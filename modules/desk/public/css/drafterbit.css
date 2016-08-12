@@ -1,0 +1,104 @@
+/* Footer */
+/* ------------------------------- */
+.dt-footer {
+  background: #ffffff;
+  border-top: 1px solid #e1e1e1;
+  color: #777;
+  font-size: 0.9em;
+  margin-top: 20px; }
+  .dt-footer .navbar-text {
+    margin: 5px 0; }
+
+/* Dropdown Carret */
+/* ------------------------------- */
+.dropdown-menu .dropdown-caret {
+  float: left;
+  height: 10px;
+  left: 12px;
+  overflow: hidden;
+  position: absolute;
+  top: -10px;
+  width: 18px; }
+
+.dropdown-menu-right .dropdown-caret {
+  left: auto;
+  right: 12px; }
+
+.dropdown-caret .caret-outer,
+.dropdown-caret .caret-inner {
+  display: inline-block;
+  left: 0;
+  margin-left: -1px;
+  position: absolute;
+  top: 0; }
+
+.dropdown-caret .caret-outer {
+  border-bottom: 10px solid rgba(0, 0, 0, 0.1);
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  height: auto;
+  left: 0;
+  top: 0;
+  width: auto; }
+
+.dropdown-caret .caret-inner {
+  border-bottom: 10px solid rgba(255, 255, 255, 0.98);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  left: 1px;
+  top: 1px; }
+
+#sticky-toolbar {
+  background: #fff; }
+
+@media (min-width: 768px) {
+  .dt-header-menu {
+    display: table;
+    height: 76px; }
+    .dt-header-menu .dt-user-menu-container {
+      display: table-cell;
+      vertical-align: middle; }
+  #dt-main-menu {
+    margin-bottom: 0px; } }
+
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: hidden;
+    position: relative; }
+  .navbar {
+    border-left: 0px;
+    border-right: 0px; }
+  #dt-site-title {
+    font-size: 24px; }
+  .dt-off-canvas {
+    z-index: 999999;
+    position: fixed;
+    background-color: #E7E7E7;
+    top: 0px;
+    bottom: 0px;
+    right: -240px;
+    width: 240px;
+    overflow: auto;
+    border-right: 1px solid #e1e1e1;
+    padding: 0 10px; }
+    .dt-off-canvas ul:not(:first-child) {
+      margin-left: 5px; }
+    .dt-off-canvas ul li {
+      display: block;
+      padding: 5px 0;
+      border-bottom: 1px solid #e1e1e1; }
+    .dt-off-canvas a.navbar-link i,
+    .dt-off-canvas .dropdown-caret {
+      display: none; }
+    .dt-off-canvas .dropdown-menu {
+      position: relative;
+      width: 100%;
+      box-shadow: none;
+      border: none;
+      background: inherit; }
+    .dt-off-canvas .navbar-nav {
+      margin: 0; }
+  .navbar-header:after {
+    clear: left; }
+  .dt-footer {
+    position: relative; } }

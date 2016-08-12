@@ -1,0 +1,47 @@
+{% extends "@desk/layout.html" %}
+
+{% block css %}
+    {{ super() }}
+
+    <link rel="stylesheet" href="/desk/plugins/dataTables/dataTables-bootstrap.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/desk/plugins/dataTables/dataTables.responsive.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/desk/css/table.css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+
+{% block content %} <form method="POST" id="{{ viewId }}-index-form" >
+    <div id="sticky-toolbar">
+        <div class="container action-filter-container">
+            <div class="row dt-row-sticky-toolbar">
+                <div class="col-md-12">
+                    {% block action %} {% endblock %}
+
+                    <div class="dt-table-filter-container clearfix">
+                        <input type="search" class="dt-table-filter form-control" placeholder="{{ __('Search') }}">
+                        {% block filter %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content">
+           <div class="col-md-12 table-responsive">
+                {% block table %} {% endblock %}
+            </div>
+        </div>
+     </div>
+    <input type="hidden" name="_token" value=""/>
+</form>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="/bower_components/datatables/media/js/jquery.dataTables.min.js"> </script>
+    <script type="text/javascript" src="/plugins/dataTables/dataTables-bootstrap.js"> </script>
+    <script type="text/javascript" src="/plugins/dataTables/dataTables.responsive.js"> </script>
+    <script type="text/javascript" src="/bower_components/checkall/jquery-check-all.min.js"> </script>
+    <script type="text/javascript" src="/bower_components/jquery-form/jquery.form.js"> </script>
+    <script type="text/javascript" src="/bower_components/qs/dist/qs.js"> </script>
+{% endblock %}

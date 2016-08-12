@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block action %}
-    <a href="/users/edit/new" class="btn btn-success">
+    <a href="/desk/user/edit/new" class="btn btn-success">
         <i class="fa fa-plus" style=""></i> {{ __('New User') }}
     </a>
 
@@ -42,7 +42,7 @@
 
 {% block js %}
     {{ super() }}
-    <script type="text/javascript" src="/js/users/index.js"> </script>
+    <script type="text/javascript" src="/user/js/users/index.js"> </script>
     <script type="text/javascript">
         drafTerbit.user.handleIndexTable('#users-data-table', '{{ token }}');
         drafTerbit.user.handleIndexForm('#user-index-form');

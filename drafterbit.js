@@ -22,6 +22,7 @@ module.exports = function(root, app){
         _initDB();
         var nunjucksEnv =  _initViews();
         _initBaseMiddlewares();
+        _initStaticMiddlewares();
         _initSecurityMiddleware();
 
         // add req user to nunjucks env as global
@@ -46,10 +47,18 @@ module.exports = function(root, app){
         });
 
         _initErrorhandler();
+
+        app.set('drafterbit', this);
         return true;
     }
 
-    var _initSecurityMiddleware =function(){
+    var _initStaticMiddlewares = function() {
+      for(var name in _modules) {
+          app.use('/'+name, express.static( _modules[name].getPublicPath()));
+      }
+    }
+
+    var _initSecurityMiddleware = function(){
       // JWT simple auth setup, we redirect unauthorized to login page
       // @todo move secret to config
       app.use(/^\/desk/,expressJWT({

@@ -1,0 +1,33 @@
+{% extends "@desk/layout.html" %}
+
+{% block css %}
+    {{ super() }}
+
+    <link rel="stylesheet" href="/desk/css/edit.css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+    <form class="form" method="post">
+        <div class="sticky-toolbar-wrapper" id="sticky-toolbar">
+            <div class="container">
+                <div class="row dt-row-sticky-toolbar">
+                    <div class="col-md-12">
+                        {% block action %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            {% block form %}{% endblock %}
+          </div>
+         </div>
+  </form>
+{% endblock %}
+
+ {% block js %}
+     {{ super() }}
+
+    <script type="text/javascript" src="/bower_components/jquery-form/jquery.form.js"> </script>
+ {% endblock %}
