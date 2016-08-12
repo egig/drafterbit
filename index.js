@@ -1,2 +1,2 @@
-exports = module.exports = require('./app');
+exports = module.exports = require('./drafterbit');
 exports.Module = require('./module');
