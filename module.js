@@ -29,6 +29,22 @@ module.exports = Obj.extend({
     }
 
     return path.join(this.dirname, 'public');
+  },
+
+  getMigrationPath: function(){
+    if(typeof this.dirname === 'undefined') {
+      throw "Module is not yet initialized"
+    }
+
+    return path.join(this.dirname, 'migrations');
+  },
+
+  getSeedPath: function(){
+    if(typeof this.dirname === 'undefined') {
+      throw "Module is not yet initialized"
+    }
+
+    return path.join(this.dirname, 'seeds');
   }
 
 });

@@ -47,8 +47,6 @@ module.exports = function(root, app){
         });
 
         _initErrorhandler();
-
-        app.set('drafterbit', this);
         return true;
     }
 
@@ -189,6 +187,12 @@ module.exports = function(root, app){
       boot: function() {
           var modulePaths =  this.registerApp();
           return _boot(modulePaths);
-      }
+      },
+      getModules: function() {
+        return _modules;
+      },
+      getModule: function(name) {
+        return _modules[name];
+      },
     }
 };
