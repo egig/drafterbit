@@ -9,12 +9,16 @@ var flash = require('connect-flash');
 var express = require('express');
 var expressJWT = require('express-jwt');
 var fs = require('fs');
+var Module = require('./module');
 
 var nunjucksModuleLoader = require('./nunjucks/module-loader');
 
 var jwt = require('jsonwebtoken');
 
 module.exports = function(root, app){
+
+    var config = require(path.join(root, 'config.js'));
+    app.set('secret', config.secret);
 
     var _modules = [];
     var _boot = function(paths) {
@@ -60,7 +64,7 @@ module.exports = function(root, app){
       // JWT simple auth setup, we redirect unauthorized to login page
       // @todo move secret to config
       app.use(/^\/desk/,expressJWT({
-          secret:'s3cr3t',
+          secret: config.secret,
           getToken: function fromHeaderOrQuerystring (req) {
               if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
                   return req.headers.authorization.split(' ')[1];
@@ -93,13 +97,12 @@ module.exports = function(root, app){
       app.use(express.static(path.join(root, 'public')));
       app.use('/bower_components', express.static(path.join(root, 'bower_components')));
 
-      app.use(session({ secret: 's3cr3t' })); // session secret
+      app.use(session({ secret: config.secret })); // session secret
       app.use(flash()); // use connect-flash for flash messages stored in session
     }
 
     var _initDB = function(){
-      var knexFile = require(path.join(root, 'knexfile.js'));
-      var knex = require('knex')(knexFile[app.get('env')]);
+      var knex = require('knex')(config.db);
       app.set('knex', knex);
     }
 
@@ -150,10 +153,34 @@ module.exports = function(root, app){
             return s;
         })
 
+      nunjucksEnv.addGlobal('system', {
+          navigations: {
+            dashboard: {
+              url: '/desk',
+              label: 'Dashboard',
+            },
+            user: {
+              url: '/desk/user',
+              label: 'User',
+            },
+          }
+        });
+
         return nunjucksEnv;
     }
 
     var _initModules = function(paths){
+
+      // create main/fallback module first
+      var mainModule = Module.extend({
+          getName: function() {
+              return config.mainModuleName;
+          }
+      });
+
+      var mM = new mainModule();
+      mM.dirname = root;
+      _modules[mM.getName()] = mM;
 
       for(var i=0;i<paths.length;i++){
 
@@ -185,7 +212,7 @@ module.exports = function(root, app){
     return {
       root: root,
       boot: function() {
-          var modulePaths =  this.registerApp();
+          var modulePaths =  this.registerModules();
           return _boot(modulePaths);
       },
       getModules: function() {

@@ -3,6 +3,11 @@ var router  = express.Router();
 var jwt = require('jsonwebtoken');
 
 router.get('/login', function(req, res) {
+
+  if(req.headers.referer) {
+    req.session.pageBeforeLogin = req.headers.referer;
+  }
+
     res.render('@security/login.html');
 });
 
@@ -17,7 +22,12 @@ router.post('/login', function(req, res) {
 
     var next = '/desk';
 
-    var token = jwt.sign({email: req.body._email }, 's3cr3t');
+    if(req.session.pageBeforeLogin) {
+      next = req.session.pageBeforeLogin;
+      req.session.pageBeforeLogin = null;
+    }
+
+    var token = jwt.sign({email: req.body._email }, req.app.get('secret'));
 
     req.session.JWToken = token;
 

@@ -6,6 +6,7 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         knex('users').insert(
           {
+            id: 1, //@todo reference this in user group
             username: 'admin',
             realname: 'Admin Kece',
             bio: 'Admin Kece',

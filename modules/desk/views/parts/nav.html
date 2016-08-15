@@ -13,8 +13,36 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="dt-off-canvas">
       <ul class="nav navbar-nav">
-          {# todo #}
-      </ul>
+        {% for n,nav in system.navigations %}
+            {% if nav.children %}
+                <li class="dropdown">
+                    <a class="navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
+                        {{ __(nav.label) }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <div class="dropdown-caret">
+                          <span class="caret-outer"></span>
+                          <span class="caret-inner"></span>
+                        </div>
+
+                        {% for name,child in nav.children %}
+                            <li>
+                                <a id="nav-{{name}}" href="{{url(child.route)}}">{{ __(child.label) }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- /.dropdown -->
+                </li>
+
+            {% else %}
+                 <li>
+                    <a id="nav-{{ n }}" class="navbar-link"  href="{{ nav.url }}">
+                        {{ __(nav.label) }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

@@ -15,12 +15,16 @@ module.exports = Obj.extend({
      return path.join(this.dirname, 'views');
   },
 
-  getRoutes: function() {
+  getRoutesPath: function() {
      if(typeof this.dirname === 'undefined') {
        throw "Module is not yet initialized"
      }
 
-     return require(path.join(this.dirname, 'routes'));
+     return path.join(this.dirname, 'routes');
+  },
+
+  getRoutes: function() {
+     return require(this.getRoutesPath());
   },
 
   getPublicPath: function(){

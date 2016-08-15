@@ -1,1 +1,17 @@
-test view from desk
+{% extends '@desk/layout.html' %}
+
+<div class="container">
+    <div class="row panel-container">
+        <div class="panel-row col-md-6" id="dt-panels-left" data-pos="left">
+            {% for panel in left_panels %}
+                {{ dashboard.display_panel(panel) }}
+            {% endfor %}
+        </div>
+
+        <div class="panel-row col-md-6" id="dt-panels-right" data-pos="right">
+            {% for panel in right_panels %}
+                {{ dashboard.display_panel(panel) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
