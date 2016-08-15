@@ -10,7 +10,7 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img width="28px;" class="dt-profile-avatar" src="" alt="{{ user.email }}"/>
+                            <img width="28px;" class="dt-profile-avatar" src="{{ gravatar(user.email) }}" alt="{{ user.email }}"/>
                             <!--<i class="fa fa-caret-down"></i>-->
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
