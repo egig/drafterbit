@@ -1,5 +1,11 @@
 {% extends "layout_edit.html" %}
 
+{% block css %}
+{{ super() }}
+  <link rel="stylesheet" href="/bower_components/chosen/chosen.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/desk/plugins/chosen-bootstrap/chosen-bootstrap.css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
 {% block action %}
     <button type="submit" name="button" class="btn btn-success">{{ __('Save') }}</button>
     <a href="javascript:;" class="btn btn-default">
@@ -27,7 +33,7 @@
         </div>
         <div class="form-group">
            <label for="groups">{{ __('Group') }}</label>
-           <select class="form-control" name="groups" multiple>
+           <select class="form-control" name="groups" multiple id="user_groups">
              <option value="" >Administrator</option>
            </select>
         </div>
@@ -42,8 +48,8 @@
          <input type="text" name="url" value="" class="form-control">
       </div>
       <div class="form-group">
-         <label for="username">{{ __('Bio') }}</label>
-         <input type="text" name="bio" value="" class="form-control">
+         <label for="bio">{{ __('Bio') }}</label>
+         <textarea name="bio" value="" class="form-control"></textarea>
       </div>
       <div class="form-group">
         <label for="status">{{ __('Status') }}</label>
@@ -59,5 +65,6 @@
 
 {% block js %}
   {{ super() }}
-  <script type="text/javascript" src=""></script>
+  <script type="text/javascript" src="/bower_components/chosen/chosen.jquery.js"></script>
+  <script type="text/javascript" src="/user/js/users/edit.js"></script>
 {% endblock %}
