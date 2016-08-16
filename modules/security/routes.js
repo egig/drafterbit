@@ -21,7 +21,6 @@ router.post('/login', function(req, res) {
     }
 
     var next = '/desk';
-
     if(req.session.pageBeforeLogin) {
       next = req.session.pageBeforeLogin;
       req.session.pageBeforeLogin = null;
@@ -32,17 +31,6 @@ router.post('/login', function(req, res) {
     req.session.JWToken = token;
 
     res.redirect(next);
-
-    /*User.findOne({where: {email: req.body.email}}).then(function(user){
-
-        // @todo validate password
-        if(!user){
-            return res.status(403).send('Invalid username or password');
-        }
-
-        var token = jwt.sign({email: req.body.email}, 's3cr3t');
-        return res.status(200).json(token);
-    });*/
 });
 
 router.get('/signup', function(req, res) {

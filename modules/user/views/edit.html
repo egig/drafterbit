@@ -34,7 +34,9 @@
         <div class="form-group">
            <label for="groups">{{ __('Group') }}</label>
            <select class="form-control" name="groups" multiple id="user_groups">
-             <option value="" >Administrator</option>
+             {% for group in groups %}
+             <option value="{{ group.id }}" >{{ group.name }}</option>
+             {% endfor %}
            </select>
         </div>
     </div>

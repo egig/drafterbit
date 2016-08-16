@@ -10,7 +10,14 @@ exports.seed = function(knex, Promise) {
             name: 'Administrator',
             description: 'Boss of the site',
             permissions: '[]',
-          }),
+          }
+        ),
+        knex('groups').insert({
+          id: 2, //@todo reference this in user group
+          name: 'User',
+          description: 'Just user',
+          permissions: '[]',
+        })
       ]);
     });
 };
