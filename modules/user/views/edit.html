@@ -17,19 +17,19 @@
     <div class="col-md-4">
         <div class="form-group">
            <label for="username">{{ __('Username') }}</label>
-           <input type="text" name="username" value="" class="form-control">
+           <input type="text" name="username" value="{{ data.username }}" class="form-control">
         </div>
         <div class="form-group">
            <label for="email">{{ __('Email') }}</label>
-           <input type="email" name="email" value="" class="form-control">
+           <input type="email" name="email" value="{{ data.email }}" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
            <label for="email">{{ __('Password') }}</label>
-           <input type="password" name="password" value="" class="form-control">
+           <input type="password" name="password" value="" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
            <label for="email">{{ __('Password Confirmation') }}</label>
-           <input type="password" name="password_confirm" value="" class="form-control">
+           <input type="password" name="password_confirm" value="" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
            <label for="groups">{{ __('Group') }}</label>
@@ -43,21 +43,21 @@
     <div class="col-md-4">
       <div class="form-group">
          <label for="realname">{{ __('Real Name') }}</label>
-         <input type="text" name="realname" value="" class="form-control">
+         <input type="text" name="realname" value="{{ data.realname }}" class="form-control">
       </div>
       <div class="form-group">
          <label for="url">{{ __('Url') }}</label>
-         <input type="text" name="url" value="" class="form-control">
+         <input type="text" name="url" value="{{ data.url }}" class="form-control">
       </div>
       <div class="form-group">
          <label for="bio">{{ __('Bio') }}</label>
-         <textarea name="bio" value="" class="form-control"></textarea>
+         <textarea name="bio" value="{{ data.bio }}" class="form-control"></textarea>
       </div>
       <div class="form-group">
         <label for="status">{{ __('Status') }}</label>
         <div>
            <label class="checkbox-inline">
-             <input type="checkbox" name="status" value="didabled" > Disabled
+             <input type="checkbox" name="status" value="didasaled" {% if data.status == 0 %}checked="checked"{% endif %} /> Disabled
            </label>
         </div>
       </div>

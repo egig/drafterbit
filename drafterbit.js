@@ -157,6 +157,7 @@ module.exports = function(root, app){
             return gravatar.url(email, {s: 47});
         })
 
+      // @todo move this to config
       nunjucksEnv.addGlobal('system', {
           navigations: {
             dashboard: {

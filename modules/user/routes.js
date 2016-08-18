@@ -39,16 +39,27 @@ router.get('/desk/user/edit/:id', function(req, res){
     knex('groups').select('*').then(function(groups){
       var user = {};
       if(id === 'new') {
+
         user.email = null;
         user.password = null;
+        user.url = null;
+        user.bio = null;
+        user.username = null;
+        user.realname = null;
+        user.groups = [];
 
         res.render('@user/edit.html', {data: user, groups: groups });
 
       } else {
 
         knex('users').first('*').where('id', id).then(function(user){
-            res.json(user);
 
+          knex('users').select('*').where('user_id', user.id).then(function(groups){
+            user.groups = groups;
+
+            res.render('@user/edit.html', {data: user, groups: groups });
+
+          });
         });
 
       }
