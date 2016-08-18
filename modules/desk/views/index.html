@@ -1,10 +1,20 @@
 {% extends '@desk/layout.html' %}
 
+{% block content %}
 <div class="container">
     <div class="row panel-container">
         <div class="panel-row col-md-6" id="dt-panels-left" data-pos="left">
-            {% for panel in left_panels %}
-                {{ dashboard.display_panel(panel) }}
+            {% for panel in panels %}
+              <div class="panel-item" id="dashboard-panel-{{ panel.name }}">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h3 class="panel-title">{{ panel.title }}</h3>
+                      </div>
+                      <div class="panel-body">
+                        {{ panel.title }}
+                      </div>
+                  </div>
+              </div>
             {% endfor %}
         </div>
 
@@ -15,3 +25,4 @@
         </div>
     </div>
 </div>
+{% endblock %}

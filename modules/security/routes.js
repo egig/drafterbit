@@ -8,7 +8,9 @@ router.get('/login', function(req, res) {
     req.session.pageBeforeLogin = req.headers.referer;
   }
 
-    res.render('@security/login.html');
+  var loginError = req.flash('loginError');
+
+  res.render('@security/login.html', {loginError: loginError});
 });
 
 router.post('/login', function(req, res) {
@@ -21,16 +23,31 @@ router.post('/login', function(req, res) {
     }
 
     var next = '/desk';
-    if(req.session.pageBeforeLogin) {
+    /*if(req.session.pageBeforeLogin) {
       next = req.session.pageBeforeLogin;
       req.session.pageBeforeLogin = null;
-    }
+    }*/
 
-    var token = jwt.sign({email: req.body._email }, req.app.get('secret'));
+    var  knex = req.app.get('knex');
 
-    req.session.JWToken = token;
+    knex('users').first().where({
+      email: req.body._email,
+      password: req.body._password // @todo encryption
+    }).then(function(user){
+      console.log(user);
 
-    res.redirect(next);
+      if(user) {
+        var token = jwt.sign(user, req.app.get('secret'));
+
+        req.session.JWToken = token;
+
+        return res.redirect(next);
+      } else {
+        req.flash('loginError', 'User not found');
+        return res.redirect('/login');
+      }
+    });
+
 });
 
 router.get('/signup', function(req, res) {

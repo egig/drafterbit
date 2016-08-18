@@ -23,6 +23,9 @@
         <div class="panel panel-default dt-form-login-panel">
             <div class="panel-body">
                 <h1 class="title">App Name</h1>
+                {% if loginError.length %}
+                <div class="alert alert-danger">{{ loginError }}</div>
+                {% endif %}
                 <form action="login" method="post" role="form" class="form-login" id="loginForm">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
