@@ -27,7 +27,7 @@
 
                         {% for name,child in nav.children %}
                             <li>
-                                <a id="nav-{{name}}" href="{{url(child.route)}}">{{ __(child.label) }}</a>
+                                <a id="nav-{{ name }}" href="{{ child.url }}">{{ __(child.label) }}</a>
                             </li>
                         {% endfor %}
                     </ul>

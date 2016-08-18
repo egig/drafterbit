@@ -164,8 +164,18 @@ module.exports = function(root, app){
               label: 'Dashboard',
             },
             user: {
-              url: '/desk/user',
+              url: '#',
               label: 'User',
+              children: {
+                users: {
+                    url: '/desk/user',
+                    label: 'User',
+                },
+                groups: {
+                  url: '/desk/user/group',
+                  label: 'Group',
+                }
+              }
             },
           }
         });
