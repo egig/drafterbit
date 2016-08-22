@@ -152,6 +152,9 @@ module.exports = function(root, app){
         // @todo translation
             return s;
         })
+      nunjucksEnv.addGlobal('isExists', function(el, arr){
+        return arr.indexOf(el) !== -1;
+      })
       nunjucksEnv.addGlobal('gravatar', function(email){
             var gravatar = require('gravatar');
             return gravatar.url(email, {s: 47});

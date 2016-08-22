@@ -8,7 +8,7 @@
 
 {% block action %}
     <button type="submit" name="button" class="btn btn-success">{{ __('Save') }}</button>
-    <a href="javascript:;" class="btn btn-default">
+    <a href="/desk/user" class="btn btn-default">
         <i class="fa fa-times" style=""></i> {{ __('Close') }}
     </a>
 {% endblock %}
@@ -35,7 +35,13 @@
            <label for="groups">{{ __('Group') }}</label>
            <select class="form-control" name="groups" multiple id="user_groups">
              {% for group in groups %}
-             <option value="{{ group.id }}" >{{ group.name }}</option>
+             <option value="{{ group.id }}"
+              {% if isExists(group.id, data.groupIds) %}
+                selected="selected"
+              {% endif %}
+             >
+               {{ group.name }}
+             </option>
              {% endfor %}
            </select>
         </div>
