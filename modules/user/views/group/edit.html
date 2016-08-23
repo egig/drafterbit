@@ -1,0 +1,26 @@
+{% extends "@desk/layout_edit.html" %}
+
+{% block action %}
+    <button type="submit" name="submit" class="btn btn-success">Save Group</button>
+    <a href="/desk/user/group" class="btn btn-default">
+        <i class="fa fa-times" style=""></i> {{ __('Close') }}
+    </a>
+{% endblock %}
+
+{% block form %}
+    <div class="col-md-5">
+        <div class="form-group">
+           <label for="name" class="control-label">{{ __('Group Name') }}</label>
+           <input type="text" name="name" value="{{ data.name }}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="description" class="control-label">{{ __('Description') }}</label>
+          <textarea name="description" rows="4" cols="40" class="form-control">{{ data.description }}</textarea>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src=""></script>
+{% endblock %}

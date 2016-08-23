@@ -24,7 +24,7 @@ module.exports = function(root, app){
     var _boot = function(paths) {
         _initModules(paths);
         _initDB();
-        var nunjucksEnv =  _initViews();
+        var nunjucksEnv = _initViews();
         _initBaseMiddlewares();
         _initStaticMiddlewares();
         _initSecurityMiddleware();
@@ -93,7 +93,8 @@ module.exports = function(root, app){
 
     var _initBaseMiddlewares = function() {
       app.use(logger('dev'));
-      app.use(bodyParser.urlencoded({ extended: false }));
+      app.use(bodyParser.urlencoded({ extended: true }));
+      app.use(bodyParser.json());
       app.use(cookieParser());
       app.use(express.static(path.join(root, 'public')));
       app.use('/bower_components', express.static(path.join(root, 'bower_components')));
@@ -229,7 +230,6 @@ module.exports = function(root, app){
     }
 
     return {
-      root: root,
       boot: function() {
           var modulePaths =  this.registerModules();
           return _boot(modulePaths);

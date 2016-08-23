@@ -29,7 +29,6 @@ router.get('/data', function(req, res) {
     });
 });
 
-
 router.get('/edit/:id', function(req, res){
     var id = req.params.id;
     var knex = req.app.get('knex');
@@ -78,6 +77,13 @@ router.get('/edit/:id', function(req, res){
 
       }
     });
+});
+
+router.post('/save', function(req, res){
+  var a = req.body;
+
+  console.log(a);
+  res.end();
 });
 
 module.exports = router;

@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form" method="post">
+    <form
+      {% block formAttribute %}
+        class="form" method="post"
+      {% endblock %}
+    >
         <div class="sticky-toolbar-wrapper" id="sticky-toolbar">
             <div class="container">
                 <div class="row dt-row-sticky-toolbar">
