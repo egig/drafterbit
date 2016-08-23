@@ -44,7 +44,7 @@
     {{ super() }}
     <script type="text/javascript" src="/user/js/users/index.js"> </script>
     <script type="text/javascript">
-        drafTerbit.user.handleIndexTable('#users-data-table', '{{ token }}');
+        drafTerbit.user.handleIndexTable('#users-data-table', '{{ _jwtToken }}');
         drafTerbit.user.handleIndexForm('#user-index-form');
         drafTerbit.user.listenTableFilter('.user-status-filter', '.user-group-filter', '.filter');
     </script>

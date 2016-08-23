@@ -26,4 +26,7 @@
 {% block js %}
     {{ super() }}
     <script type="text/javascript" src="/user/js/group/index.js"> </script>
+    <script type="text/javascript">
+      drafTerbit.group.handleIndexTable('{{ _jwtToken }}')
+    </script>
 {% endblock %}

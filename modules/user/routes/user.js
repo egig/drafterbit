@@ -9,8 +9,6 @@ router.get('/', function(req, res) {
     knex('users').select('*').then(function(users){
         res.render('@user/index.html', {
             users: users,
-             __: function(s) {return s},
-             token: req.session.JWToken
          });
     });
 });

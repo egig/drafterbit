@@ -34,6 +34,7 @@ module.exports = function(root, app){
           try {
             if(req.user) {
               nunjucksEnv.addGlobal('user', req.user);
+              nunjucksEnv.addGlobal('_jwtToken', req.session.JWToken);
             }
           } catch (e) {
             console.log(e);
