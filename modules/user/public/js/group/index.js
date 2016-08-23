@@ -6,11 +6,11 @@
         {
             responsive: true,
             ajax: {
-                url: drafTerbit.adminUrl+"user/group/data/all",
+                url: drafTerbit.deskUrl+"user/group/data/all",
             },
             columnDefs: [
                 {orderable: false, searchable:false, targets:0, render: function(d,t,f,m){ return '<input type="checkbox" name="group[]" value="'+d+'">' }},
-                {targets:1, render: function(d,t,f,m){ return '<a class="role-edit-link" href="'+drafTerbit.adminUrl+'user/group/edit/'+f[0]+'">'+d+'</a>' }}
+                {targets:1, render: function(d,t,f,m){ return '<a class="role-edit-link" href="'+drafTerbit.deskUrl+'user/group/edit/'+f[0]+'">'+d+'</a>' }}
             ]
         }
     );
@@ -31,7 +31,7 @@
                 },
                 success: function(res){
                     $.notify(res.message, res.status);
-                      drafTerbit.group.dt.api().ajax.url(drafTerbit.adminUrl+"user/group/data/all").load();
+                      drafTerbit.group.dt.api().ajax.url(drafTerbit.deskUrl+"user/group/data/all").load();
                 }
             }
         );

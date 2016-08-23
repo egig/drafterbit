@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/desk/user', function(req, res) {
+router.get('/', function(req, res) {
 
     var knex = req.app.get('knex');
 
@@ -15,7 +15,7 @@ router.get('/desk/user', function(req, res) {
     });
 });
 
-router.get('/desk/user/data', function(req, res) {
+router.get('/data', function(req, res) {
 
     var knex = req.app.get('knex');
 
@@ -32,7 +32,7 @@ router.get('/desk/user/data', function(req, res) {
 });
 
 
-router.get('/desk/user/edit/:id', function(req, res){
+router.get('/edit/:id', function(req, res){
     var id = req.params.id;
     var knex = req.app.get('knex');
 
