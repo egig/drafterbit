@@ -96,7 +96,8 @@ router.post('/save', function(req, res){
       bio: u.bio,
       status: u.status,
     }).then(function(a) {
-      res.json({id: a})
+      res.json({id: a[0], status: 'success', message: "Users saved"});
+
     });
   } else {
     knex('users').where('id', u.id).update({
@@ -108,7 +109,8 @@ router.post('/save', function(req, res){
       bio: u.bio,
       status: u.status,
     }).then(function(a) {
-      res.json({id: a})
+      res.json({id: u.id, status: 'success', message: "Users saved"});
+
     });
   }
 
@@ -120,7 +122,7 @@ router.post('/delete', function(req, res){
   // @todo validation
   var knex = req.app.get('knex');
   knex('users').whereIn('id', req.body.users).del().then(function(){
-    res.json({status: 200});
+    res.json({status: 'success', message: "Users deleted"});
   })
 
 });
