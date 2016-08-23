@@ -19,6 +19,7 @@
 
 {% block form %}
 {# @todo add csrf #}
+    <input type="hidden" name="user[id]" value="{{ data.id }}" class="form-control">
     <div class="col-md-4">
         <div class="form-group">
            <label for="username">{{ __('Username') }}</label>

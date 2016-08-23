@@ -9,7 +9,10 @@
 {% endblock %}
 
 
-{% block content %} <form method="POST" id="{{ viewId }}-index-form" >
+{% block content %}
+<form
+  {% block formAttribute %} method="post" {% endblock %}
+>
     <div id="sticky-toolbar">
         <div class="container action-filter-container">
             <div class="row dt-row-sticky-toolbar">

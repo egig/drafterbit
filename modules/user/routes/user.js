@@ -37,6 +37,7 @@ router.get('/edit/:id', function(req, res){
       var user = {};
       if(id === 'new') {
 
+        user.id = id;
         user.email = null;
         user.password = null;
         user.url = null;
@@ -80,10 +81,48 @@ router.get('/edit/:id', function(req, res){
 });
 
 router.post('/save', function(req, res){
-  var a = req.body;
+  var u = req.body.user;
 
-  console.log(a);
-  res.end();
+  // @todo validation
+  var knex = req.app.get('knex');
+
+  if(u.id === 'new') {
+    knex('users').insert({
+      username: u.username,
+      email: u.email,
+      password: u.password,
+      realname: u.realname,
+      url: u.url,
+      bio: u.bio,
+      status: u.status,
+    }).then(function(a) {
+      res.json({id: a})
+    });
+  } else {
+    knex('users').where('id', u.id).update({
+      username: u.username,
+      email: u.email,
+      password: u.password,
+      realname: u.realname,
+      url: u.url,
+      bio: u.bio,
+      status: u.status,
+    }).then(function(a) {
+      res.json({id: a})
+    });
+  }
+
+});
+
+router.post('/delete', function(req, res){
+  var u = req.body.user;
+
+  // @todo validation
+  var knex = req.app.get('knex');
+  knex('users').whereIn('id', req.body.users).del().then(function(){
+    res.json({status: 200});
+  })
+
 });
 
 module.exports = router;
