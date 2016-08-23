@@ -10,7 +10,24 @@ router.get('/desk', function(req, res) {
       .then(function(dashboard){
         knex('panels').select('*').where({dashboard_id: dashboard.id})
           .then(function(panels){
-            res.render('@desk/index.html', {panels: panels});
+
+            var leftPanels = [];
+            var rightPanels = [];
+
+            for(var i=0;i<panels.length;i++){
+               if(panels[i].position === 'left') {
+                 leftPanels.push(panels[i]);
+               }
+
+               if(panels[i].position === 'right') {
+                 rightPanels.push(panels[i]);
+               }
+            }
+
+            res.render('@desk/index.html', {
+              leftPanels: leftPanels,
+              rightPanels: rightPanels,
+            });
           });
       });
 });
