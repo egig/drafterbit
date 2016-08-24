@@ -3,24 +3,24 @@ var path = require('path');
 
 module.exports = Obj.extend({
 
+  _getDir: function(){
+    if(typeof this.dirname === 'undefined') {
+      throw "Module is not yet initialized"
+    }
+
+    return this.dirname;
+  },
+
   getName: function() {
     throw "Module do not have 'getName' method.";
   },
 
   getViewPath: function() {
-     if(typeof this.dirname === 'undefined') {
-       throw "Module is not yet initialized"
-     }
-
-     return path.join(this.dirname, 'views');
+     return path.join(this._getDir(), 'views');
   },
 
   getRoutesPath: function() {
-     if(typeof this.dirname === 'undefined') {
-       throw "Module is not yet initialized"
-     }
-
-     return path.join(this.dirname, 'routes');
+     return path.join(this._getDir(), 'routes');
   },
 
   getRoutes: function() {
@@ -28,27 +28,15 @@ module.exports = Obj.extend({
   },
 
   getPublicPath: function(){
-    if(typeof this.dirname === 'undefined') {
-      throw "Module is not yet initialized"
-    }
-
-    return path.join(this.dirname, 'public');
+    return path.join(this._getDir(), 'public');
   },
 
   getMigrationPath: function(){
-    if(typeof this.dirname === 'undefined') {
-      throw "Module is not yet initialized"
-    }
-
-    return path.join(this.dirname, 'migrations');
+    return path.join(this._getDir(), 'migrations');
   },
 
   getSeedPath: function(){
-    if(typeof this.dirname === 'undefined') {
-      throw "Module is not yet initialized"
-    }
-
-    return path.join(this.dirname, 'seeds');
+    return path.join(this._getDir(), 'seeds');
   }
 
 });
