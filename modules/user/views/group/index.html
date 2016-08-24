@@ -1,5 +1,10 @@
 {% extends "@desk/layout_index.html" %}
 
+{% block pageTitle %}
+  {{ __('User Group') }}
+{% endblock %}
+
+
 {% block action %}
         <a href="/desk/user/group/edit/new" class="btn btn-success">
             <i class="fa fa-plus" style=""></i> {{ __('New Group') }}

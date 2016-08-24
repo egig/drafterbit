@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="/desk/plugins/chosen-bootstrap/chosen-bootstrap.css" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 
+{% block pageTitle %}
+  {{ __('Edit User') }}
+{% endblock %}
+
 {% block formAttribute %}
   {{ super() }} id="user-edit-form" action="/desk/user/save"
 {% endblock %}

@@ -30,7 +30,8 @@ router.get('/edit/:id', function(req, res){
   var knex = req.app.get('knex');
 
   knex('groups').first('*').where({id: id}).then(function(group){
-    res.render('@user/group/edit.html', {data: group});
+    var permissions = req.app.get('permissions');
+    res.render('@user/group/edit.html', {data: group, permissions: permissions});
   });
 
 })
