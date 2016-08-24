@@ -206,17 +206,20 @@ module.exports = function(root, app){
       for(var i=0;i<paths.length;i++){
 
         if(_isRelative(paths[i])) {
-            var moduleF = require(path.resolve(root, paths[i]));
-            var m = new moduleF(app);
-            m.resolvedPath = path.resolve(root, paths[i]);
+          var rP = path.resolve(root, paths[i]);
+          var moduleF = require(rP);
+          var m = new moduleF(app);
+          m.resolvedPath = rP;
+
         } else if(path.isAbsolute(paths[i])) {
-             var moduleF = require(paths[i]);
-             var m = new moduleF(app);
-             m.resolvedPath = paths[i];
+          var moduleF = require(paths[i]);
+          var m = new moduleF(app);
+          m.resolvedPath = paths[i];
+
         } else {
-           var moduleF = require(paths[i]);
-           var m = new moduleF(app);
-           m.resolvedPath = require.resolve(paths[i]);
+          var moduleF = require(paths[i]);
+          var m = new moduleF(app);
+          m.resolvedPath = require.resolve(paths[i]);
         }
 
         if(fs.lstatSync(m.resolvedPath).isDirectory()) {
