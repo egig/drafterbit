@@ -160,31 +160,12 @@ module.exports = function(root, app){
       })
       nunjucksEnv.addGlobal('gravatar', function(email){
             var gravatar = require('gravatar');
-            return gravatar.url(email, {s: 47});
+            return gravatar.url(email, {s: 49});
         })
 
       // @todo move this to config
       nunjucksEnv.addGlobal('system', {
-          navigations: {
-            dashboard: {
-              url: '/desk',
-              label: 'Dashboard',
-            },
-            user: {
-              url: '#',
-              label: 'User',
-              children: {
-                users: {
-                    url: '/desk/user',
-                    label: 'User',
-                },
-                groups: {
-                  url: '/desk/user/group',
-                  label: 'Group',
-                }
-              }
-            },
-          }
+          navigations: require('./navigations')
         });
 
         return nunjucksEnv;

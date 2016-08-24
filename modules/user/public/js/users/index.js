@@ -46,7 +46,10 @@
                           {data: 'realname', render: renderCol2 },
                           {data: 'email'},
                           {data: 'status', render: renderCol3}
-                      ]
+                      ],
+                      drawCallback: function() {
+                          drafTerbit.handleFooter();
+                      }
                     }
                 );
 

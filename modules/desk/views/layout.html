@@ -7,9 +7,10 @@
         <title>title</title>
 
         {% block css %}
-        <link rel="stylesheet" href="/desk/css/drafterbit-bootstrap.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/desk/css/drafterbit.css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/bower_components/egig-notify/notify.css">
+          <link rel="stylesheet" href="/desk/css/drafterbit-bootstrap.css" media="screen" title="no title" charset="utf-8">
+          <link rel="stylesheet" href="/desk/css/drafterbit.css" media="screen" title="no title" charset="utf-8">
+          <link rel="stylesheet" href="/bower_components/egig-notify/notify.css">
+          <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
         {% endblock %}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -74,6 +75,17 @@
 
                   });
                 },
+                handleFooter: function(){
+                    var h = $('body').height();
+                    var hW = $(window).height();
+                    var wW = $(window).innerWidth();
+
+                    if(h+30 < hW && wW >= 720) {
+                        $('.dt-footer').addClass('navbar-fixed-bottom');
+                    } else {
+                        $('.dt-footer').removeClass('navbar-fixed-bottom');
+                    }
+                }
             };
         </script>
         {% endblock %}
