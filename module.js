@@ -3,6 +3,10 @@ var path = require('path');
 
 module.exports = Obj.extend({
 
+  init: function(app) {
+
+  },
+
   _getDir: function(){
     if(typeof this.dirname === 'undefined') {
       throw "Module is not yet initialized"

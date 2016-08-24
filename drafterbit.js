@@ -199,7 +199,7 @@ module.exports = function(root, app){
           }
       });
 
-      var mM = new mainModule();
+      var mM = new mainModule(app);
       mM.dirname = root;
       _modules[mM.getName()] = mM;
 
@@ -207,15 +207,15 @@ module.exports = function(root, app){
 
         if(_isRelative(paths[i])) {
             var moduleF = require(path.resolve(root, paths[i]));
-            var m = new moduleF();
+            var m = new moduleF(app);
             m.resolvedPath = path.resolve(root, paths[i]);
         } else if(path.isAbsolute(paths[i])) {
              var moduleF = require(paths[i]);
-             var m = new moduleF();
+             var m = new moduleF(app);
              m.resolvedPath = paths[i];
         } else {
            var moduleF = require(paths[i]);
-           var m = new moduleF();
+           var m = new moduleF(app);
            m.resolvedPath = require.resolve(paths[i]);
         }
 

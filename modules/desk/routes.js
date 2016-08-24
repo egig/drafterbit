@@ -15,6 +15,9 @@ router.get('/desk', function(req, res) {
             var rightPanels = [];
 
             for(var i=0;i<panels.length;i++){
+
+               panels[i].view = req.app.get('panelManager').getPanel(panels[i].type).getView();
+
                if(panels[i].position === 'left') {
                  leftPanels.push(panels[i]);
                }
