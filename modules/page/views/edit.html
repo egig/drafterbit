@@ -47,14 +47,14 @@
     <script type="text/javascript" src="/page/js/editor.js"> </script>
 
     <script type="text/javascript">
+    CKEDITOR.plugins.addExternal( 'wpmore', '/desk/plugins/ckeditor-custom/plugins/wpmore/', 'plugin.js' );
     CKEDITOR.replace('content', {
 
         language: drafTerbit.locale,
         customConfig : "/desk/plugins/ckeditor-custom/config.js",
-        skin: 'bootstrap,/desk/plugins/ckeditor-custom/skins/bootstrap/'
+        skin: 'bootstrap,/desk/plugins/ckeditor-custom/skins/bootstrap/',
+        extraPlugins: 'wpmore'
 
-        //skin: "bootstrap",
-        //extraPlugins: 'wpmore',
         // filebrowserWindowWidth  : 1040,
         // filebrowserWindowHeight : 453,
         // filebrowserImageBrowseUrl : "/desk/file/browser"
