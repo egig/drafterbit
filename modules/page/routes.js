@@ -29,7 +29,9 @@ router.get('/desk/page/edit/:id', function(req, res) {
 
 router.get('/:slug?', function(req, res, next) {
 
-  var slug = req.params.slug;
+  var frontpage = 'sample-page1'; // @todo get fronrpage from db
+  var slug = req.params.slug || frontpage;
+
   var knex = req.app.get('knex');
   knex('pages').first().where('slug', slug).then(function(page){
 
