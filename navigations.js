@@ -8,7 +8,7 @@ module.exports = {
     url: '/desk/page',
     label: 'Pages',
   },
-  page: {
+  file: {
     url: '/desk/file',
     label: 'Files',
   },
