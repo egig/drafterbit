@@ -6,7 +6,11 @@ module.exports = {
   },
   page: {
     url: '/desk/page',
-    label: 'Page',
+    label: 'Pages',
+  },
+  page: {
+    url: '/desk/file',
+    label: 'Files',
   },
   user: {
     url: '#',
