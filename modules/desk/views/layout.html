@@ -50,12 +50,14 @@
         <script type="text/javascript" src="/bower_components/egig-notify/notify.js"></script>
         <script type="text/javascript" src="/desk/js/responsive.js"></script>
         <script type="text/javascript">
-        // @todo
+        // @todo move drafTerbit script to its own file
+        // @todo translation
         window.__ = function(s) {
             return s;
         }
 
             window.drafTerbit = {
+                locale: 'en', // @todo move locale to configurable
                 deskUrl: '/desk/',
                 replaceDTSearch: function(dt) {
                   $('.dataTables_filter').remove();

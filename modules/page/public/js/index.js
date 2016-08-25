@@ -65,7 +65,7 @@
                     },
                     columns: [
                         {data: 'id', orderable: false, searchable:false, render: function(d,t,f,m) { return '<input type="checkbox" name="pages[]" value="'+d+'">'}},
-                        {data: 'title', render: function(d,t,f,m) { return '<a href="'+drafTerbit.adminUrl+'page/edit/'+f.id+'">'+d+'</a>'}},
+                        {data: 'title', render: function(d,t,f,m) { return '<a href="'+drafTerbit.deskUrl+'page/edit/'+f.id+'">'+d+'</a>'}},
                         {data: 'updated_at'}
                     ],
                     drawCallback: function() {

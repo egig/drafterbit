@@ -1,5 +1,9 @@
 {% extends '@desk/layout_index.html' %}
 
+{% block pageTitle %}
+  {{ __('Pages') }}
+{% endblock %}
+
 {% block action %}
 <a href="/desk/page/edit/new" class="btn btn-success">
     <i class="fa fa-plus" style=""></i> {{ __('New Page') }}

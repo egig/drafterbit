@@ -23,4 +23,9 @@ router.get('/desk/page/data', function(req, res) {
 
 });
 
+router.get('/desk/page/edit/:id', function(req, res) {
+  res.render('@page/edit.html');
+
+});
+
 module.exports = router;
