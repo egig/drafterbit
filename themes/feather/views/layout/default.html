@@ -4,9 +4,9 @@
         <title>{{ system.sitename }}</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="{{ system.tagline }}" />
-        <link rel="stylesheet" href="{{ theme_url('asset/css/normalize.css') }}">
-        <link rel="stylesheet" href="{{ theme_url('asset/css/skeleton.css') }}">
-        <link rel="stylesheet" href="{{ theme_url('asset/css/style.css') }}">
+        <link rel="stylesheet" href="/theme/css/normalize.css">
+        <link rel="stylesheet" href="/theme/css/skeleton.css">
+        <link rel="stylesheet" href="/theme/css/style.css">
         {% block head %}{% endblock %}
 
         <style type="text/css">
@@ -35,18 +35,16 @@
     <body>
         <div class="wrapper">
             <div class="container">
-                <div class="row">            
+                <div class="row">
                     <div class="twelve columns" id="header">
-                        <h1 class="site-title"><a href="{{ base_url() }}">{{ system.sitename }}</a></h1>
+                        <h1 class="site-title"><a href="/">{{ system.sitename }}</a></h1>
                         <h2 class="site-description">{{ system.tagline }}</h2>
                     </div>
                     <div class="twelve columns">
-                        {% autoescape false %}
-                            {{ menu('main') }}
-                        {% endautoescape %}
+                            {# @todo menu('main') #}
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <!-- Main Page Content and Sidebar -->
                         <!-- Main Content -->
@@ -57,12 +55,10 @@
 
                         <!-- Sidebar -->
                         <aside  class="four columns">
-                            {% autoescape false %}
-                            {{ widget('Sidebar',
+                            {# @todo widget('Sidebar',
                                 '<h4>{{ title }}</h4>',
                                 '<div class="widget">{{ content }}</div>'
-                            ) }}
-                            {% endautoescape %}
+                            ) #}
                         </aside>
                         <!-- End Sidebar -->
                 </div>
@@ -71,15 +67,13 @@
               <!-- Footer -->
             <div class="container row">
                 <footer class="twelve columns">
-                    {% autoescape false %}
                     <div>
-                        {{ widget('Bottom',
+                        {# widget('Bottom',
                             '<h4>{{ title }}</h4>',
                             '<div class="widget">{{ content }}</div>'
-                        ) }}
+                        ) #}
                       <p>&copy; {{ system.sitename }}</p>
                     </div>
-                    {% endautoescape %}
                 </footer>
             </div>
         </div>

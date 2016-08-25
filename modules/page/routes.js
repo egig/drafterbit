@@ -37,7 +37,7 @@ router.get('/:slug?', function(req, res, next) {
       return res.render('@theme/404.html')
     }
 
-    res.end(page.title);
+    res.render('@theme/content/page/view.html', {page: page});
 
   }).catch(function(e){
      next(e);

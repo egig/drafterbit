@@ -16,6 +16,11 @@ module.exports = Module.extend({
   getViewPath() {
     // @todo get this from theme manager
     return __dirname+'/../../themes/'+this._theme+'/views';
+  },
+
+  getPublicPath() {
+    // @todo get this from theme manager
+    return __dirname+'/../../themes/'+this._theme+'/public';
   }
 
 });
