@@ -37,4 +37,23 @@ router.get('/desk', function(req, res) {
       });
 });
 
+router.get('/desk/system/log', function(req, res) {
+  res.render('@desk/system/log.html');
+})
+
+router.get('/desk/system/log/data', function(req, res) {
+  var knex = req.app.get('knex');
+
+  knex('logs').select('*').then(function(logs){
+      var content = {
+          recordsTotal: logs.length,
+          recordsFiltered: logs.length,
+          data: logs
+      }
+
+      res.json(content);
+
+  });
+})
+
 module.exports = router;

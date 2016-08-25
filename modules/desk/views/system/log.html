@@ -1,0 +1,26 @@
+{% extends "@desk/layout_index.html" %}
+
+{% block action %}
+    <button class="btn btn-default" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
+    <button class="btn btn-default" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="log-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="log-checkall" type="checkbox">
+                </th>
+                <th width="30%">{{ __('Time') }}</th>
+                <th width="70%">{{ __('Activity') }}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+
+    <script type="text/javascript" src="/desk/js/log.js"></script>
+{% endblock %}
