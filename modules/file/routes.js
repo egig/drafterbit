@@ -6,4 +6,9 @@ router.get('/desk/file', function(req, res) {
 
 });
 
+router.get('/desk/file/data', function(req, res) {
+  res.json([]);
+});
+
+
 module.exports = router;
