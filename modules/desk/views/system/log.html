@@ -1,5 +1,9 @@
 {% extends "@desk/layout_index.html" %}
 
+{% block pageTitle %}
+  {{ __('Logs') }}
+{% endblock %}
+
 {% block action %}
     <button class="btn btn-default" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
     <button class="btn btn-default" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
