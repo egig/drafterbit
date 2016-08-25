@@ -19,11 +19,12 @@
     "mysql": "^2.11.1",
     "nunjucks": "^2.4.2",
     "serve-favicon": "~2.3.0",
-    "validator": "^5.5.0"
+    "validator": "^5.5.0",
+    "winston": "^2.2.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/_mocha --reporter spec"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/drafterbit/drafterbit.git"

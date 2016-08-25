@@ -4,6 +4,8 @@ var router  = express.Router();
 router.get('/desk', function(req, res) {
 
     var knex = req.app.get('knex');
+    var appLogger = req.app.get('appLogger');
+    appLogger.log("info", req.user.realname+" visited dashboard");
 
     var userId = req.user.id;
     knex('dashboards').first().where({user_id: userId, status: 1})

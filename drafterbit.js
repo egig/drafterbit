@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var express = require('express');
 var expressJWT = require('express-jwt');
 var fs = require('fs');
+var winston = require('winston');
 var Module = require('./module');
 
 var nunjucksModuleLoader = require('./nunjucks/module-loader');
@@ -25,6 +26,7 @@ module.exports = function(root, app){
     var _boot = function(paths) {
         _initModules(paths);
         _initDB();
+        _initAppLogger();
         var nunjucksEnv = _initViews();
         _initBaseMiddlewares();
         _initStaticMiddlewares();
@@ -54,6 +56,19 @@ module.exports = function(root, app){
 
         _initErrorhandler();
         return true;
+    }
+
+    var _initAppLogger = function() {
+
+      winstonKnex = require('./winston/transports/knex')
+
+      var appLogger = new (winston.Logger)({
+        transports: [
+          new (winston.transports.Knex)({ tableName: 'logs', knexInstance: app.get('knex')  })
+        ]
+      });
+
+      app.set('appLogger', appLogger);
     }
 
     var _initStaticMiddlewares = function() {
