@@ -1,0 +1,17 @@
+<span>by <a href="{{ blog_author_url(post.user.username) }}">{{ post.user.realname }}</a></span> |
+<span>{{ post.publishedAt|date }}</span> 
+{% if post.categories|length %}
+<span>Posted in 
+    {% for category in post.categories %}
+        <span><a href="{{ blog_category_url(category.slug) }}">{{ category.label }}</a></span>
+    {% endfor %}
+</span>
+</span>
+{% endif %}
+
+{% if post.tags|length %}
+    |
+    {% for tag in post.tags %}
+        <span><a href="{{ blog_tag_url(tag.slug) }}">#{{ tag.label }}</a></span>
+    {% endfor %}
+{% endif %}

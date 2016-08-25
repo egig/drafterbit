@@ -151,8 +151,12 @@ module.exports = function(root, app){
     }
 
     var _initRoutes = function() {
+      // @todo add route priority options
       for(var name in _modules) {
-          app.use('/', _modules[name].getRoutes());
+        var routes = _modules[name].getRoutes();
+        if(routes) {
+          app.use('/', routes);
+        }
       }
     }
 

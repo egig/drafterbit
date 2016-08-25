@@ -24,9 +24,14 @@ var ModuleLoader = nunjucks.FileSystemLoader.extend({
 
             if(name.indexOf('@') === 0) {
                 var tmp = name.split('/');
-                var app = tmp.shift().substr(1);
+                var module = tmp.shift().substr(1);
 
-                var basePath = this.modules[app].getViewPath();
+                // @todo move this to module manager
+                if(!this.modules[module]) {
+                  throw Error("Unregistered module: '"+module+"'");
+                }
+
+                var basePath = this.modules[module].getViewPath();
                 var fName =  tmp.join('/');
 
                 var tempName = path.join(basePath, fName);

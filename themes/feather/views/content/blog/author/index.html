@@ -1,0 +1,8 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block content %}
+<h3>Author: {{user.realname}}</h3>
+<div>{{user.bio}}</div>
+
+	{% include 'content/blog/post/index.html.twig' %}
+{% endblock %}

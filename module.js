@@ -28,7 +28,15 @@ module.exports = Obj.extend({
   },
 
   getRoutes: function() {
-     return require(this.getRoutesPath());
+
+    try {
+      return require(this.getRoutesPath());
+    } catch (e) {
+      // do nothing, routes is not required
+
+    } finally {
+      // do nothing, routes is not required
+    }
   },
 
   getPublicPath: function(){
