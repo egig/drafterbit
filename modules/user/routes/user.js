@@ -127,4 +127,36 @@ router.post('/delete', function(req, res){
 
 });
 
+router.get('/profile', function(req, res) {
+
+  var user = req.user;
+  var knex = req.app.get('knex');
+
+  knex('groups').select('*').then(function(groups){
+
+    knex('users_groups').select('*').where('user_id', user.id).then(function(users_groups){
+
+      var ugids = [];
+      for(var i=0;i<users_groups.length;i++){
+        ugids.push(users_groups[i].group_id);
+      }
+
+      knex('groups').select('*').whereIn('id', ugids).then(function(ug){
+
+        user.groups = ug;
+        user.groupIds = [];
+
+        for(var i=0;i<user.groups.length;i++){
+          user.groupIds.push(user.groups[i].id);
+        }
+
+        res.render('@user/edit.html', {data: user, groups: groups });
+      })
+
+    });
+  });
+
+
+});
+
 module.exports = router;
