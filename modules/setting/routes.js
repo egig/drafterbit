@@ -11,4 +11,9 @@ router.get('/desk/setting/menu', function(req, res) {
 
 });
 
+router.get('/desk/setting/themes', function(req, res) {
+  res.render('@setting/themes.html');
+
+});
+
 module.exports = router;

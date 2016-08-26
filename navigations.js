@@ -38,6 +38,10 @@ module.exports = {
         url: '/desk/setting/menu',
         label: 'Menus'
       },
+      themes: {
+        url: '/desk/setting/themes',
+        label: 'Themes'
+      },
     }
   },
   system: {
