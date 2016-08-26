@@ -6,4 +6,9 @@ router.get('/desk/setting/general', function(req, res) {
 
 });
 
+router.get('/desk/setting/menu', function(req, res) {
+  res.render('@setting/menu.html');
+
+});
+
 module.exports = router;

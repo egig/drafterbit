@@ -33,7 +33,11 @@ module.exports = {
       general: {
         url: '/desk/setting/general',
         label: 'General'
-      }
+      },
+      menu: {
+        url: '/desk/setting/menu',
+        label: 'Menus'
+      },
     }
   },
   system: {
