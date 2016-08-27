@@ -12,7 +12,16 @@ router.get('/desk/setting/menu', function(req, res) {
 });
 
 router.get('/desk/setting/themes', function(req, res) {
-  res.render('@setting/themes.html');
+
+  var themes = req.app.get('themeManager').getThemes();
+
+  res.render('@setting/themes.html', { themes: themes });
+
+});
+
+router.get('/desk/setting/theme/customize', function(req, res) {
+
+  res.render('@setting/theme_customize.html');
 
 });
 

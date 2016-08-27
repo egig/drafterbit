@@ -46,6 +46,7 @@ module.exports = function(root, app){
         });
 
         _initRoutes();
+        _initThemes();
 
         // not found handle
         app.use(function(req, res, next) {
@@ -56,6 +57,13 @@ module.exports = function(root, app){
 
         _initErrorhandler();
         return true;
+    }
+
+    var _initThemes =  function(){
+      var ThemeManager = require('./theme-manager');
+      var themeManager = new ThemeManager(root);
+
+      app.set('themeManager', themeManager);
     }
 
     var _initAppLogger = function() {

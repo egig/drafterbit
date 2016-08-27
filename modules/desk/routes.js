@@ -56,4 +56,11 @@ router.get('/desk/system/log/data', function(req, res) {
   });
 })
 
+router.get('/desk/js/drafterbit.js', function(req, res){
+
+  res.header('Content-type','text/javascript');
+  res.render('@desk/drafterbit.js');
+
+});
+
 module.exports = router;
