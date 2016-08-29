@@ -6,7 +6,7 @@ describe('ModulePathResolver', function(){
 
 
     // @todo create one instance
-    var ModulePathResolver = require('../module-path-resolver');
+    var ModulePathResolver = require('../src/module-path-resolver');
     var mPR = new ModulePathResolver(__dirname);
 
     assert.equal('/some-absolute-module', mPR.resolve('/some-absolute-module'))
@@ -14,7 +14,7 @@ describe('ModulePathResolver', function(){
 
   it('shoulds return proper relative path', function(){
 
-    var ModulePathResolver = require('../module-path-resolver');
+    var ModulePathResolver = require('../src/module-path-resolver');
     var mPR = new ModulePathResolver(__dirname);
     var expected = path.join(__dirname, 'test-relative-module');
 
@@ -23,7 +23,7 @@ describe('ModulePathResolver', function(){
 
   it('shoulds return proper global path', function(){
 
-    var ModulePathResolver = require('../module-path-resolver');
+    var ModulePathResolver = require('../src/module-path-resolver');
     var mPR = new ModulePathResolver(__dirname);
     var expected = require.resolve('util');
 

@@ -1,6 +1,6 @@
-var drafterbit = require('./../../../drafterbit');
+var Module = require('./../../module');
 
-module.exports = drafterbit.Module.extend({
+module.exports = Module.extend({
 
   init: function(app) {
 
