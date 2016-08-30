@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('title');
       table.string('slug');
+      table.integer('author_id');
       table.text('content');
       table.boolean('status');
       table.timestamps();

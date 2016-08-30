@@ -4,6 +4,16 @@ module.exports = {
     url: '/desk',
     label: 'Dashboard',
   },
+  blog: {
+    url: "#",
+    label: "Blog",
+    children: {
+      post: {
+        url: '/desk/blog/post',
+        label: 'Posts'
+      }
+    }
+  },
   page: {
     url: '/desk/page',
     label: 'Pages',

@@ -3,6 +3,6 @@ var router = express.Router();
 
 var post = require('./post');
 
-router.use('/desk/post', post);
+router.use('/desk/blog/post', post);
 
 module.exports = router;
