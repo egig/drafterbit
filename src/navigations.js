@@ -11,7 +11,15 @@ module.exports = {
       post: {
         url: '/desk/blog/post',
         label: 'Posts'
-      }
+      },
+      category: {
+        url: '/desk/blog/category',
+        label: 'Category'
+      },
+      comments: {
+        url: '/desk/blog/comments',
+        label: 'Comments'
+      },
     }
   },
   page: {
