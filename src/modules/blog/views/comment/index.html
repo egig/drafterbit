@@ -1,0 +1,51 @@
+{# @todo Fix view in mobile #}
+{% extends "CoreBundle::base_index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@BlogBundle/Resources/scss/comment/index.scss' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block filter %}
+<div style="display:inline-block; float:right;margin-left:5px;">
+    <select name="filter" class="form-control {{ view_id }}-status-filter">
+        <option value="active" >- {{ __('Status') }} -</option>
+        <option value="approved" >{{ __('Approved') }}</option>
+        <option value="pending" >{{ __('Pending') }}</option>
+        <option value="spam" >{{ __('Spam') }}</option>
+        <option value="trashed" >{{ __('Trashed') }}</option>
+    </select>
+</div>
+{% endblock %}
+
+{% block action %}
+<button class="btn btn-default uncreate-action" type="submit" name="action" value="trash">
+    <i class="fa fa-trash-o"></i> {{ __('Trash') }}
+</button>
+{% endblock %}
+
+{% block table %}
+    <table class="table table-hover table-condensed" id="{{ view_id }}-data-table">
+        <thead>
+            <tr>
+                <th class="sorting" width="15">
+                    <input id="{{ view_id }}-checkall" type="checkbox">
+                </th>
+                <th width="25%">{{ __('Author') }}</th>
+                <th width="55%">{{ __('Content') }}</th>
+                <th width="20%">{{ __('In Response to') }}</th>
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+    '@BlogBundle/Resources/js/comment/index.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

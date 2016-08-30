@@ -4,11 +4,12 @@
 
     drafTerbit.cats.dt =  $("#category-data-table").dataTable({
         ajax: {
-            url: drafTerbit.adminUrl+"blog/category/data/all",
+            url: drafTerbit.deskUrl+"blog/category/data",
         },
-        columnDefs: [
-            {orderable: false, searchable:false, targets:0, render: function(d,t,f,m) { return '<input type="checkbox" name="categories[]" value="'+d+'">'}},
-            {render: function(d,t,f,m){ return '<a href="'+drafTerbit.adminUrl+'blog/category/edit/'+f[0]+'">'+d+'</a>'}, targets:1},
+        columns: [
+          {data:'id',orderable: false, searchable:false, render: function(d,t,f,m) { return '<input type="checkbox" name="categories[]" value="'+d+'">'}},
+          {data:'label', render: function(d,t,f,m){ return '<a href="'+drafTerbit.deskUrl+'blog/category/edit/'+f.id+'">'+d+'</a>'} },
+          {data:'description'}
         ]
     });
 

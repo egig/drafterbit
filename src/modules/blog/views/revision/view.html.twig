@@ -1,0 +1,57 @@
+{% extends "CoreBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+    '@BlogBundle/Resources/scss/revision.scss' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+<div class="revisions">
+    {% for rev in revs %}
+    <div class="revision" id="rev-{{rev.id}}">
+        <div class="container-fluid revision-head sticky">
+            <div class="container">
+                <div class="row row-sticky-toolbar" style="margin:10px 0;">
+                    <div class="revision-author">
+                        <span class="label label-default"> {{ __('Rev.') }} {{rev.pos}}/{{revs|length}}</span>
+                        {{ __('by') }} <a href="{{ rev.authorUrl }}">{{ rev.user.realname }}</a>
+                        <br/><span class="revision-time">{{rev.createdAt|format_datetime('d-MM-y, @HH:mm')}}</span>
+                    </div>
+                    <div class="revision-toolbar">
+                        <form class="ajax-form" action="{{ url('dt_blog_revision_revert') }}" method="post">
+                            <input type="hidden" name="id" value="{{ rev.id }}">
+                            <input type="hidden" name="post-id" value="{{ post_id }}">
+                            <button  class="btn btn-sm btn-default pull-right" type="submit" name="action" value="revert"> <i class="fa fa-refresh"></i> {{ __('Revert') }} </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% autoescape false %}
+                    <h2><code>{{ rev.diff_title }}</code></h2>
+                    <code> {{ rev.diff_content }}</code>
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{ parent() }}
+    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+        '@sticky_kit'
+        '@BlogBundle/Resources/js/revision.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock  %}

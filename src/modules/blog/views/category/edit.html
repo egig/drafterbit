@@ -1,0 +1,43 @@
+{% extends "CoreBundle::base_edit.html.twig" %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets filter='?uglifycss' output="assets/css/*.css"
+  '@BlogBundle/Resources/scss/category/edit.scss' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+  {% endstylesheets %}
+{% endblock %}
+
+{% block action %}
+  {{ form_widget(form.Save, {attr:{class:"btn btn-success"}}) }}
+  <a class="btn btn-default" href="{{ url('dt_blog_category') }}">
+      <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
+  </a>
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form_label(form.label) }}
+            {{ form_widget(form.label, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.slug) }}
+            {{ form_widget(form.slug, {attr:{class:"form-control"}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {attr:{class:"form-control"}}) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
+  '@BlogBundle/Resources/js/category/edit.js' %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+{% endblock %}
