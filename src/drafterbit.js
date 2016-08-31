@@ -1,4 +1,6 @@
 var path = require('path');
+var fs = require('fs');
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -8,10 +10,10 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var express = require('express');
 var expressJWT = require('express-jwt');
-var fs = require('fs');
+var expressValidator = require('express-validator');
 var winston = require('winston');
-var Module = require('./module');
 
+var Module = require('./module');
 var nunjucksModuleLoader = require('./nunjucks/module-loader');
 
 var jwt = require('jsonwebtoken');
@@ -119,6 +121,7 @@ module.exports = function(root, app){
       app.use(logger('dev'));
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(bodyParser.json());
+      app.use(expressValidator());
       app.use(cookieParser());
       app.use(express.static(path.join(root, 'public')));
       app.use('/bower_components', express.static(path.join(root, 'bower_components')));

@@ -23,26 +23,38 @@
 
     form.ajaxForm(
         {
+          error: function(xhr) {
+            var data = xhr.responseJSON;
+            if (data.errors) {
+                if (data.errorType == 'validation') {
+                    for (var i in data.errors) {
+
+                        var inputCtn = $(':input[name="'+data.errors[i].param+'"]').closest('.form-group');
+                        inputCtn.addClass('has-error');
+
+                        if (!inputCtn.children('.error-msg').length) {
+                            inputCtn.append('<span class="help-block error-msg">'+data.errors[i].msg+'</span>');
+                        }
+                    }
+                }
+            }
+          },
             success: function(data){
 
                 dirty = false;
 
-                if (data.error) {
-                    if (data.error.type == 'validation') {
-                        for (name in data.error.messages) {
-                            inputName = (name == 'roles') ? 'roles[]' : name;
+                if (data.errors) {
+                    if (data.errorType == 'validation') {
+                        for (err in data.errors) {
 
-                            var inputCtn = $(':input[name="'+inputName+'"]').closest('.form-group');
+
+                            var inputCtn = $(':input[name="'+err.param+'"]').closest('.form-group');
                             inputCtn.addClass('has-error');
 
                             if (!inputCtn.children('.error-msg').length) {
-                                inputCtn.append('<span class="help-block error-msg">'+data.error.messages[name]+'</span>');
+                                inputCtn.append('<span class="help-block error-msg">'+err.msg+'</span>');
                             }
                         }
-                    }
-
-                    if (data.error.type == 'auth') {
-                        $.notify(data.error.message, 'error');
                     }
 
                 } else {
