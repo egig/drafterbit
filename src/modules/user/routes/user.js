@@ -17,7 +17,14 @@ router.get('/data', function(req, res) {
 
   var knex = req.app.get('knex');
 
-  knex('users').select('*').then(function(users){
+  var UserModel = require('../models/user');
+  var uM = new UserModel({knex: knex});
+
+  uM.getAll(function(err, users) {
+    if(err) {
+      return console.log(err)
+    }
+
     var content = {
       recordsTotal: users.length,
       recordsFiltered: users.length,
@@ -25,7 +32,8 @@ router.get('/data', function(req, res) {
     }
     res.json(content);
 
-  });
+  })
+
 });
 
 router.get('/edit/:id', function(req, res){
