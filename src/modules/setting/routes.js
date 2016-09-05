@@ -7,7 +7,21 @@ router.get('/desk/setting/general', function(req, res) {
 });
 
 router.get('/desk/setting/menu', function(req, res) {
-  res.render('@setting/menu.html');
+
+  var knex = req.app.get('knex');
+  var MenuModel = require('./models/menu');
+  var mM = new MenuModel({knex: knex});
+
+  mM.getAll(function(err, menus){
+    if(err) {
+      return console.log(err);
+    }
+
+    var data = {
+      menus: menus
+    }
+    res.render('@setting/menu.html', data);
+  });
 
 });
 

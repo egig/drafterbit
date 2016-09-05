@@ -17,7 +17,7 @@
         <div class="col-md-3">
             <ul id="dt-menu-tab" class="nav nav-tabs tabs-left">
                 {% for menu in menus %}
-                    <li role="presentation"><a href="#{{ menu.displayText }}" aria-controls="{{ menu.displayText }}" role="tab" data-toggle="tab">{{ menu.displayText }}</a></li>
+                    <li role="presentation"><a href="#{{ menu.name }}" aria-controls="{{ menu.name }}" role="tab" data-toggle="tab">{{ menu.name }}</a></li>
                 {% endfor %}
                   <li><a href="#add-menu" data-toggle="tab" id="menu-adder"><i class="fa fa-plus"></i></a></li>
             </ul>
@@ -28,7 +28,7 @@
                   <div class="clearfix menu-setting">
                     <div class="col-md-4 menu-name" style="padding:0">
                       <label>{{ __('Display Text') }}</label>
-                      <input type="text" name="name" class="form-control input-sm" value="{{ menu.displayText }}"/>
+                      <input type="text" name="name" class="form-control input-sm" value="{{ menu.name }}"/>
                       <input type="hidden" name="id" value="{{ menu.id }}"/>
                     </div>
                   </div>
@@ -50,9 +50,9 @@
 
                 <div class="clearfix menu-setting">
                   <div class="col-md-4" style="padding:0">
-                  <label for="name">{{ __('Name') }}</label>
-                  <input type="text" name="name" value="" class="form-control input-sm">
-                  <button type="submit" name="action" class="btn btn-default btn-sm" style="margin-top:10px"></button>
+                    <label for="name">{{ __('Name') }}</label>
+                    <input type="text" name="name" value="" class="form-control input-sm">
+                    <button type="submit" name="action" class="btn btn-default btn-sm" style="margin-top:10px">{{ __('Save') }}</button>
                   </div>
                 </div>
           </form>
