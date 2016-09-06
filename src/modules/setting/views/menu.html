@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-9 tab-content">
             {% for menu in menus %}
-                <div role="tabpanel" class="tab-pane" id="{{ menu.displayText }}">
+                <div role="tabpanel" class="tab-pane" id="{{ menu.name }}">
                   <div class="clearfix menu-setting">
                     <div class="col-md-4 menu-name" style="padding:0">
                       <label>{{ __('Display Text') }}</label>
@@ -39,7 +39,6 @@
                   </div>
                   <div class="menu-action">
                       <a href="#" class="btn btn-sm btn-default menu-item-saver">{{ __('Save') }}</a>
-                      <a href="#" class="btn btn-sm btn-primary menu-item-selector" data-id="{{ menu.id }}">{{ __('Select') }}</a>
                       <a href="#" class="btn btn-sm menu-delete" data-id="{{ menu.id }}">{{ __('Delete') }}</a>
                   </div>
                 </div>
@@ -118,16 +117,16 @@
         <div class="panel-heading">
           <h4 class="panel-title">
             <a href="#menu-{{ item.id }}" data-parent=".menu-items li" data-toggle="collapse" aria-expanded="false">
-                {{ item.displayText }}
+                {{ item.display_text }}
             </a>
           </h4>
         </div>
         <div class="panel-collapse collapse" id="menu-{{ item.id }}" aria-expanded="false">
-            <form method="POST" class="menu-form" action="{{ url('dt_system_menu_item_save') }}">
+            <form method="POST" class="menu-form" action="">
             <div class="panel-body">
               <div class="form-group">
                 <label>Display Text</label>
-                <input type="text" value="{{ item.displayText }}" name="displayText" class="form-control input-sm menu-label">
+                <input type="text" value="{{ item.display_text }}" name="display_text" class="form-control input-sm menu-label">
               </div>
 
               <div class="form-group">

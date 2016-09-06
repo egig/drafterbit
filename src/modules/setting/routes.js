@@ -20,6 +20,9 @@ router.get('/desk/setting/menu', function(req, res) {
     var data = {
       menus: menus
     }
+
+    console.log(menus);
+
     res.render('@setting/menu.html', data);
   });
 
