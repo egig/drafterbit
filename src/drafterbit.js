@@ -191,7 +191,20 @@ module.exports = function(root, app){
       nunjucksEnv.addGlobal('gravatar', function(email){
             var gravatar = require('gravatar');
             return gravatar.url(email, {s: 49});
-        })
+        });
+
+       var knex = app.get('knex');
+       var MenuModel = require('./modules/setting/models/menu.js');
+       var mM = new MenuModel({knex: knex});
+
+       // @todo move 'main'
+       mM.getByName('main', function(err, menuItems){
+         if(err) {
+           return console.log(err);
+         }
+
+         nunjucksEnv.addGlobal('_menuItems', menuItems);
+       });
 
       // @todo move this to config
       nunjucksEnv.addGlobal('system', {

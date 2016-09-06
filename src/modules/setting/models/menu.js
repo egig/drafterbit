@@ -22,6 +22,21 @@ var MenuModel = Model.extend({
     }).catch(function(e){
       callback(e);
     });
+  },
+
+  getByName: function(name, callback) {
+    var _this = this;
+    this.knex('menus').first('*').where('name', name).then(function(menu){
+
+      _this.knex('menu_items').select('*').where('menu_id', menu.id)
+        .then(function(menuItems) {
+
+          return callback(null, menuItems);
+        })
+
+    }).catch(function(e){
+      return callback(e);
+    });
   }
 })
 
