@@ -21,12 +21,13 @@ var jwt = require('jsonwebtoken');
 module.exports = function(root, app){
 
     var config = [];
-    app.set('secret', config.secret);
-    app.set('permissions', config.permissions);
 
     var _modules = [];
     var _boot = function(paths) {
         config = _initConfig();
+        app.set('secret', config.secret);
+        app.set('permissions', config.permissions);
+
         _initModules(paths);
         _initDB();
         _initAppLogger();
