@@ -1,12 +1,9 @@
 {# @todo Fix view in mobile #}
-{% extends "CoreBundle::base_index.html.twig" %}
+{% extends "@desk/layout_index.html" %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets filter='?uglifycss' output="assets/css/*.css"
-    '@BlogBundle/Resources/scss/comment/index.scss' %}
-    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
-    {% endstylesheets %}
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/blog/css/comment/index.css"/>
 {% endblock %}
 
 {% block filter %}
@@ -28,7 +25,7 @@
 {% endblock %}
 
 {% block table %}
-    <table class="table table-hover table-condensed" id="{{ view_id }}-data-table">
+    <table class="table table-hover table-condensed" id="comment-data-table">
         <thead>
             <tr>
                 <th class="sorting" width="15">
@@ -42,10 +39,7 @@
     </table>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {% javascripts filter='?uglifyjs2' output="assets/js/*.js"
-    '@BlogBundle/Resources/js/comment/index.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="/blog/js/comment/index.js"></script>
 {% endblock %}

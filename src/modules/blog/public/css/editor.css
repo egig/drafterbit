@@ -1,0 +1,112 @@
+.dt- {
+
+  &categories {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 5px;
+  }
+
+  &categories ul {
+    list-style:none;
+    padding-left:15px;
+  }
+  
+  &categories > ul {
+    padding-left:0px;
+  }
+  
+  &revisions-container {
+
+    ol {
+        font-size: 0.96em;
+        list-style: none;
+        padding-left: 25px;
+    }
+    
+    .panel-heading {
+        border-bottom: none;
+    }
+  }
+  
+}
+
+
+
+/* datetimepicker hack */
+.datetimepicker {
+    
+    top: 425px !important;
+    
+    table tr td.active {
+
+      &:active,
+      &:hover:active,
+      &.disabled:active,
+      &.disabled:hover:active,
+      &.active,
+      &.active:hover,
+      &.disabled.active,
+      &.disabled.active:hover {
+        background-color: #e1e1e1;
+      }
+    
+      &,
+      &:hover,
+      &.disabled,
+      &.disabled:hover {
+        background-color: #e1e1e1;
+        background-image: none;
+        background-repeat: no-repeat;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        color: inherit;
+        text-shadow:none;
+      }
+    }
+
+    table tr td span.active {
+
+      &:hover,
+      &:hover:hover,
+      &.disabled:hover,
+      &.disabled:hover:hover,
+      &:active,
+      &:hover:active,
+      &.disabled:active,
+      &.disabled:hover:active,
+      &.active,
+      &.active:hover,
+      &.disabled.active,
+      &.disabled.active:hover,
+      &.disabled,
+      &.disabled:hover,
+      &.disabled.disabled,
+      &.disabled.disabled:hover,
+      &[disabled],
+      &[disabled]:hover,
+      &.disabled[disabled],
+      &.disabled[disabled]:hover {
+        background-color: #e1e1e1;
+
+      }
+    }
+    
+    table tr td span.active {
+      &,
+      &:hover,
+      &.disabled,
+      &.disabled:hover {
+        background-color: #e1e1e1;
+        background-image: none;
+        background-repeat: no-repeat;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        color: inherit;
+        text-shadow:none;
+      }
+    }
+}
+
+
+
+
+
+

@@ -5,7 +5,7 @@
     if (window.location.hash == '') {
         window.location.hash = 'active';
     }
-    
+
     var urlHash = window.location.hash.replace('#','');
 
     $('.comment-status-filter option[value="'+urlHash+'"]').prop('selected', true);
@@ -13,9 +13,12 @@
     // datatables
     drafTerbit.comments.dt =  $("#comment-data-table").dataTable(
         {
-            columnDefs: [
-                {orderable: false, searchable:false, targets:[0]}
-            ]
+          columns: [
+            { data: 'id', orderable: false, searchable: false },
+            { data: 'author_name'},
+            { data: 'content'},
+            { data: 'post_id'},
+          ]
         }
     );
 
@@ -41,7 +44,7 @@
             var status = $(this).data('status');
 
             $.post(
-                drafTerbit.adminUrl+'blog/comment/status',
+                drafTerbit.deskUrl+'blog/comment/status',
                 {
                     id: $(this).data('id'),
                     status: status,
@@ -128,7 +131,7 @@
         'click',
         '.inline-form-submit',
         function(){
-        
+
             var comment = $(this).parent().siblings('textarea').val();
             if (comment.trim() !== '') {
                 $.post(
@@ -153,14 +156,14 @@
 
     filterByStatus = function(status){
 
-        drafTerbit.comments.dt.api().ajax.url(drafTerbit.adminUrl+"blog/comment/data/"+status).load(
+        drafTerbit.comments.dt.api().ajax.url(drafTerbit.deskUrl+"blog/comment/data").load(
             function(){
 
                 window.location.hash = status;
                 stylePendingRow();
             }
         );
-        
+
         //refresh pages index form
     }
 

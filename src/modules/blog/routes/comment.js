@@ -3,20 +3,19 @@ var router = express.Router();
 
 router.get('/', function(req, res){
 
-    res.render('@blog/category/index.html');
+    res.render('@blog/comment/index.html');
 });
-
 
 router.get('/data', function(req, res){
   var knex = req.app.get('knex');
 
-  knex('categories').select('*').then(function(categories){
+  knex('comments').select('*').then(function(comments){
 
 
       var content = {
-          recordsTotal: categories.length,
-          recordsFiltered: categories.length,
-          data: categories
+          recordsTotal: comments.length,
+          recordsFiltered: comments.length,
+          data: comments
       }
 
       res.json(content);

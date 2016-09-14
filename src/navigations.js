@@ -17,7 +17,7 @@ module.exports = {
         label: 'Category'
       },
       comments: {
-        url: '/desk/blog/comments',
+        url: '/desk/blog/comment',
         label: 'Comments'
       },
     }

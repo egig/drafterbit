@@ -1,0 +1,45 @@
+.revision-author {
+    display: inline-block;
+}
+
+.revision-time {
+    font-size: 0.9em;
+}
+
+.revision-toolbar {
+    float: right;
+    margin-top: 2.5px;
+}
+
+.revision:not(:last-child) {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+code {
+    color: inherit;
+    background-color: transparent;
+}
+
+del, ins {
+    text-decoration: none;
+}
+
+del *,
+del {
+    background-color: #F8CBCB;
+}
+
+ins *,
+ins {
+    background-color: #A6F3A6;
+}
+
+.revision-head {
+    background-color: #ffffff !important;
+    z-index: 1029;
+}
+
+.is_stuck {
+    box-shadow: 1px 1px 4px #e1e1e1;
+
+}
