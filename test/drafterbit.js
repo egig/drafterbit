@@ -3,28 +3,13 @@ var express = require('express');
 
 describe('drafterbit', function(){
 
-    /* @todo mock object
-    describe('#boot', function(){
-        it('should not error', function(){
+    describe('boot method', function(){
+        it('should throw error if no registerModules defined', function(){
 
             var app = express();
-            var drafterbit = require('../modules/drafterbit')(__dirname, app);
-
-            assert.equal(true, drafterbit.boot());
+            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
+            assert.throws(drafterbitApp.boot, Error);
         });
-    });*/
 
-    describe('nunjucks module loader', function(){
-        it('should return proper results', function(){
-
-            var nunjucksModuleLoader = require('../src/nunjucks/module-loader');
-
-            var apps = [require('../src/modules/desk')];
-            var i = new nunjucksModuleLoader(apps);
-
-            assert.equal(null, i.getSource('dont-exists.html'));
-
-        });
     });
-
 });

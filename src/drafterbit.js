@@ -20,12 +20,13 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(root, app){
 
-    var config = require(path.join(root, 'config.js'));
+    var config = [];
     app.set('secret', config.secret);
     app.set('permissions', config.permissions);
 
     var _modules = [];
     var _boot = function(paths) {
+        config = _initConfig();
         _initModules(paths);
         _initDB();
         _initAppLogger();
@@ -59,6 +60,10 @@ module.exports = function(root, app){
 
         _initErrorhandler();
         return true;
+    }
+
+    var _initConfig = function() {
+      return require(path.join(root, 'config.js'));
     }
 
     var _initThemes =  function(){
@@ -259,6 +264,11 @@ module.exports = function(root, app){
 
     return {
       boot: function() {
+
+          if(this.registerModules === undefined) {
+            throw Error("Drafterbit app must declare registerModules method before boot");
+          }
+
           var modulePaths =  this.registerModules();
           return _boot(modulePaths);
       },
