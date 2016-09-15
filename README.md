@@ -2,7 +2,7 @@
 
 ## What is Drafterbit ?
 
-Drafterbit is self-hosted web software you can use to create a website, yes, like WordPress, built with nodejs. Currently still in early phase. More at <http://drafterbit.org>
+Drafterbit is self-hosted web software you can use to create a website, yes, like WordPress, built with nodejs. Currently still in early phase.
 
 [![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg)](https://travis-ci.org/drafterbit/drafterbit)
 
