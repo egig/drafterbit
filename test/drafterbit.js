@@ -11,5 +11,13 @@ describe('drafterbit', function(){
             assert.throws(drafterbitApp.boot, Error);
         });
 
+        it('should throw error if no config file', function(){
+
+            var app = express();
+            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
+            drafterbitApp.registerModules = function() { return [] };
+            assert.throws(drafterbitApp.boot, Error);
+        });
+
     });
 });

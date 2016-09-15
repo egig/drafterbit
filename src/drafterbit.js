@@ -12,11 +12,10 @@ var express = require('express');
 var expressJWT = require('express-jwt');
 var expressValidator = require('express-validator');
 var winston = require('winston');
+var jwt = require('jsonwebtoken');
 
 var Module = require('./module');
 var nunjucksModuleLoader = require('./nunjucks/module-loader');
-
-var jwt = require('jsonwebtoken');
 
 module.exports = function(root, app){
 
@@ -64,7 +63,12 @@ module.exports = function(root, app){
     }
 
     var _initConfig = function() {
-      return require(path.join(root, 'config.js'));
+      var p = path.join(root, 'config.js');
+      if(fs.accessSync(p, fs.constants.F_OK)) {
+        throw new Error("You must create config.js in your project");
+      }
+
+      return require(p);
     }
 
     var _initThemes =  function(){
