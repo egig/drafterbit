@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-  var knex = req.app.get('knex');
-
-  knex('groups').select('*')
   res.render('@user/group/index.html');
 })
 

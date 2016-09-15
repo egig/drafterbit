@@ -13,6 +13,7 @@ var expressJWT = require('express-jwt');
 var expressValidator = require('express-validator');
 var winston = require('winston');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
 
 var Module = require('./module');
 var nunjucksModuleLoader = require('./nunjucks/module-loader');
@@ -267,7 +268,7 @@ module.exports = function(root, app){
       }
     }
 
-    return {
+    var dtInstance =  {
       boot: function() {
 
           if(this.registerModules === undefined) {
@@ -284,4 +285,7 @@ module.exports = function(root, app){
         return _modules[name];
       },
     }
+
+    return _.extend(dtInstance, app);
+
 };
