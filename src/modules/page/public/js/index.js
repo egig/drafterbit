@@ -8,7 +8,7 @@
 
     drafTerbit.pages = {};
 
-    filterByStatus = function(status){
+    let filterByStatus = function(status){
 
         var status = status || 'all';
 
@@ -17,7 +17,7 @@
     }
 
     // change trash, add restore button
-    changeUncreateAction = function(s){
+    let changeUncreateAction = function(s){
         if (s === 'trashed') {
             $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
             $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-default pages-restore"><i class="fa fa-refresh"></i> '+__('Restore')+' </button>');

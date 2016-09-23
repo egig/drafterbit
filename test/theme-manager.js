@@ -7,7 +7,7 @@ describe('drafterbit', function(){
 
         it('should be able to hold themes', function(){
 
-          var ThemeManager = require('../src/theme-manager');
+          var ThemeManager = require('../lib/theme-manager');
           var tM = new ThemeManager(__dirname);
 
           assert.equal(0, tM.getThemes().length);
@@ -15,7 +15,7 @@ describe('drafterbit', function(){
         });
 
         it('should be able to add theme path', function(){
-          var ThemeManager = require('../src/theme-manager');
+          var ThemeManager = require('../lib/theme-manager');
           var tM = new ThemeManager(__dirname);
 
           var T = require('./test-theme');

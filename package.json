@@ -27,7 +27,8 @@
   "scripts": {
     "test": "./node_modules/.bin/_mocha --reporter spec",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec",
-    "babel": "./node_modules/.bin/babel src -d lib"
+    "babel": "rm -rf ./lib && ./node_modules/.bin/babel ./src -d ./lib --copy-files",
+    "build": "npm run babel"
   },
   "repository": {
     "type": "git",

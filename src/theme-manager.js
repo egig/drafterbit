@@ -1,27 +1,31 @@
+class ThemeManager {
 
-var ThemeManager = function(root) {
+  constructor(root) {
 
-  var ModulePathResolver = require('./module-path-resolver');
-  this._modulePathResolver = new ModulePathResolver(root);
-}
+    this._themes = [];
+    this._themesByName = [];
 
-ThemeManager.prototype._themes = [];
-ThemeManager.prototype._themesByName = [];
-ThemeManager.prototype.getThemes = function() {
-  return this._themes;
-}
+    const ModulePathResolver = require('./module-path-resolver');
+    this._modulePathResolver = new ModulePathResolver(root);
+  }
 
-ThemeManager.prototype.addThemePath = function(themePath) {
-  var p = this._modulePathResolver.resolve(themePath)
-  var T = require(p)
-  var t = new T(this)
-  t.dirname = p;
-  this._themesByName[t.getName()] = t;
-  this._themes.push(t)
-}
+  getThemes() {
+    return this._themes;
+  }
 
-ThemeManager.prototype.getTheme = function(n) {
-  return this._themesByName[n];
+  addThemePath(themePath) {
+    let p = this._modulePathResolver.resolve(themePath)
+    let T = require(p)
+    let t = new T(this)
+    t.dirname = p;
+    this._themesByName[t.getName()] = t;
+    this._themes.push(t)
+  }
+
+  getTheme(n) {
+    return this._themesByName[n];
+  }
+
 }
 
 module.exports = ThemeManager;

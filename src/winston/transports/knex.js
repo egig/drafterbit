@@ -1,11 +1,11 @@
-var knex = require("knex");
-var util = require("util");
-var winston = require("winston");
+const knex = require("knex");
+const util = require("util");
+const winston = require("winston");
 
 //
 // Export the constructor
 //
-var Knex = exports.Knex = winston.transports.Knex = function(options) {
+const Knex = exports.Knex = winston.transports.Knex = function(options) {
 
     this.name = "knex";
     this.level = options.level || "info";

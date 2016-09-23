@@ -81,7 +81,7 @@ module.exports = function(root, app){
 
     var _initAppLogger = function() {
 
-      winstonKnex = require('./winston/transports/knex')
+      var winstonKnex = require('./winston/transports/knex')
 
       var appLogger = new (winston.Logger)({
         transports: [

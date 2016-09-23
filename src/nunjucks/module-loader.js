@@ -1,14 +1,14 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var nunjucks = require('nunjucks');
-var lib = require('nunjucks/src/lib');
+const fs = require('fs');
+const path = require('path');
+const nunjucks = require('nunjucks');
+const lib = require('nunjucks/src/lib');
 
 // Node <0.7.1 compatibility
-var existsSync = fs.existsSync || path.existsSync;
+const existsSync = fs.existsSync || path.existsSync;
 
-var ModuleLoader = nunjucks.FileSystemLoader.extend({
+const ModuleLoader = nunjucks.FileSystemLoader.extend({
         async: false,
 
         init: function(modules, opts) {
@@ -23,18 +23,18 @@ var ModuleLoader = nunjucks.FileSystemLoader.extend({
         getSource: function(name) {
 
             if(name.indexOf('@') === 0) {
-                var tmp = name.split('/');
-                var module = tmp.shift().substr(1);
+                let tmp = name.split('/');
+                let module = tmp.shift().substr(1);
 
                 // @todo move this to module manager
                 if(!this.modules[module]) {
                   throw Error("Unregistered module: '"+module+"'");
                 }
 
-                var basePath = this.modules[module].getViewPath();
-                var fName =  tmp.join('/');
+                let basePath = this.modules[module].getViewPath();
+                let fName =  tmp.join('/');
 
-                var tempName = path.join(basePath, fName);
+                let tempName = path.join(basePath, fName);
                 if(!existsSync(tempName)) {
                   return null;
                 }
