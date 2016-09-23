@@ -15,7 +15,8 @@ const winston = require('winston');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 
-const Module = require('./module');
+import Module from './module';
+
 const nunjucksModuleLoader = require('./nunjucks/module-loader');
 
 module.exports = function(root, app){
@@ -228,11 +229,11 @@ module.exports = function(root, app){
     var _initModules = function(paths){
 
       // create main/fallback module first
-      var mainModule = Module.extend({
-          getName: function() {
+      class mainModule extends Module {
+          getName() {
               return config.mainModuleName;
           }
-      });
+      }
 
       var mM = new mainModule(app);
       mM.dirname = root;

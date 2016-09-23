@@ -1,26 +1,26 @@
-var Module = require('./../../module');
+import Module from './../../module';
 
-module.exports = Module.extend({
+class ThemeModule extends  Module {
 
-  _theme: null,
-  init: function(app) {
-
-    // @todo create theme manager
+  constructor(app) {
+    super(app);
     this._theme = 'feather';
-  },
+  }
 
-  getName: function() {
-      return 'theme';
-  },
+  getName(){
+   return 'theme';
+  }
 
   getViewPath() {
     // @todo get this from theme manager
     return __dirname+'/../../themes/'+this._theme+'/views';
-  },
+  }
 
   getPublicPath() {
     // @todo get this from theme manager
     return __dirname+'/../../themes/'+this._theme+'/public';
   }
 
-});
+}
+
+export default ThemeModule;

@@ -1,9 +1,9 @@
-var Module = require('./../../module')
+import Module from './../../module';
 
-var BlogModule = Module.extend({
-  getName: function(){
+class BlogModule extends  Module {
+  getName(){
    return 'blog';
   }
-})
+}
 
-module.exports = BlogModule;
+export default BlogModule;
