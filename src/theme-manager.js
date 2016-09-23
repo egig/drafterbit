@@ -1,4 +1,4 @@
-class ThemeManager {
+export default class {
 
   constructor(root) {
 
@@ -27,5 +27,3 @@ class ThemeManager {
   }
 
 }
-
-module.exports = ThemeManager;
