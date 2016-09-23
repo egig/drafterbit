@@ -7,14 +7,14 @@ describe('drafterbit', function(){
         it('should throw error if no registerModules defined', function(){
 
             var app = express();
-            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
+            var drafterbitApp = require('../lib/drafterbit')(__dirname, app);
             assert.throws(drafterbitApp.boot, Error);
         });
 
         it('should throw error if no config file', function(){
 
             var app = express();
-            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
+            var drafterbitApp = require('../lib/drafterbit')(__dirname, app);
             drafterbitApp.registerModules = function() { return [] };
             assert.throws(drafterbitApp.boot, Error);
         });
