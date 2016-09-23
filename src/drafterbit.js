@@ -1,22 +1,22 @@
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
+const fs = require('fs');
 
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var nunjucks = require('nunjucks');
-var session = require('express-session');
-var flash = require('connect-flash');
-var express = require('express');
-var expressJWT = require('express-jwt');
-var expressValidator = require('express-validator');
-var winston = require('winston');
-var jwt = require('jsonwebtoken');
-var _ = require('lodash');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const nunjucks = require('nunjucks');
+const session = require('express-session');
+const flash = require('connect-flash');
+const express = require('express');
+const expressJWT = require('express-jwt');
+const expressValidator = require('express-validator');
+const winston = require('winston');
+const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
-var Module = require('./module');
-var nunjucksModuleLoader = require('./nunjucks/module-loader');
+const Module = require('./module');
+const nunjucksModuleLoader = require('./nunjucks/module-loader');
 
 module.exports = function(root, app){
 
@@ -269,7 +269,7 @@ module.exports = function(root, app){
     }
 
     var dtInstance =  {
-      boot: function() {
+      boot() {
 
           if(this.registerModules === undefined) {
             throw Error("Drafterbit app must declare registerModules method before boot");
@@ -278,10 +278,11 @@ module.exports = function(root, app){
           var modulePaths =  this.registerModules();
           return _boot(modulePaths);
       },
-      getModules: function() {
+      getModules() {
         return _modules;
       },
-      getModule: function(name) {
+
+      getModule(name) {
         return _modules[name];
       },
     }
