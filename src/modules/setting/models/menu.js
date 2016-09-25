@@ -1,7 +1,7 @@
-var Model = require('../../../model');
+import Model from '../../../model';
 
-var MenuModel = Model.extend({
-  getAll: function(callback) {
+class MenuModel extends Model {
+  getAll(callback) {
 
     var _this = this;
     this.knex('menus').select('*').then(function(menus){
@@ -22,9 +22,9 @@ var MenuModel = Model.extend({
     }).catch(function(e){
       callback(e);
     });
-  },
+  }
 
-  getByName: function(name, callback) {
+  getByName(name, callback) {
     var _this = this;
     this.knex('menus').first('*').where('name', name).then(function(menu){
 
@@ -38,8 +38,7 @@ var MenuModel = Model.extend({
       return callback(e);
     });
   }
-})
-
+}
 
 // @link http://mostafa-samir.github.io/async-iterative-patterns-pt1/
 function IterateOver(list, iterator, callback) {
@@ -60,4 +59,4 @@ function IterateOver(list, iterator, callback) {
     }
 }
 
-module.exports = MenuModel;
+export default MenuModel;

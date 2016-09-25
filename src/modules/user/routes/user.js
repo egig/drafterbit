@@ -17,8 +17,7 @@ router.get('/data', function(req, res) {
 
   var knex = req.app.get('knex');
 
-  var UserModel = require('../models/user');
-  var uM = new UserModel({knex: knex});
+  var uM = req.app.model('@user/user');
 
   uM.getAll(function(err, users) {
     if(err) {

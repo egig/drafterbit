@@ -8,9 +8,7 @@ router.get('/desk/setting/general', function(req, res) {
 
 router.get('/desk/setting/menu', function(req, res) {
 
-  var knex = req.app.get('knex');
-  var MenuModel = require('./models/menu');
-  var mM = new MenuModel({knex: knex});
+  var mM = req.app.model('@setting/menu');
 
   mM.getAll(function(err, menus){
     if(err) {

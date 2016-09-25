@@ -20,12 +20,41 @@ import nunjucksModuleLoader from './nunjucks/module-loader';
 
 const drafterbit = express.application;
 
+drafterbit.model = function(name) {
+
+    if(typeof this._models[name] !== 'undefined') {
+      return this._models[name];
+    }
+
+    if(name.indexOf('@') === 0) {
+        let tmp = name.split('/');
+        let module = tmp.shift().substr(1);
+
+        // @todo move this to module manager
+        if(!this._modules[module]) {
+          throw Error("Unregistered module: '"+module+"'");
+        }
+
+        let basePath = this._modules[module].getModelPath();
+        let fName =  tmp.join('/');
+
+        name = path.join(basePath, fName);
+    }
+
+    let ModelClass = require(name);
+    let knex = this.get('db');
+    this._models[name] = new ModelClass({ knex: knex });
+
+    return this._models[name];
+}
+
 drafterbit.load = function load(_ROOT) {
   if(this.registerModules === undefined) {
     throw Error("Drafterbit app must declare registerModules method before boot");
   }
 
   this._ROOT = _ROOT;
+  this._models = [];
   this._modules = [];
   this._modulePaths =  this.registerModules();
   this._initConfig();
@@ -208,6 +237,7 @@ drafterbit._initAppLogger = function() {
 drafterbit._initDB = function(){
   let knex = require('knex')(this._CONFIG.db);
   this.set('knex', knex);
+  this.set('db', knex); // alias
 }
 
 drafterbit._initConfig = function() {
