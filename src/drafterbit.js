@@ -19,9 +19,6 @@ import Module from './module';
 import nunjucksModuleLoader from './nunjucks/module-loader';
 
 const drafterbit = express.application;
-const _isRelative = function(filename) {
-    return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
-}
 
 drafterbit.load = function load(_ROOT) {
   if(this.registerModules === undefined) {
@@ -37,8 +34,6 @@ drafterbit.load = function load(_ROOT) {
 }
 
 drafterbit._boot = function() {
-
-  this._initModules();
   this._initDB();
   this._initAppLogger();
   this._initViews();
@@ -99,6 +94,9 @@ drafterbit._initErrorhandler = function() {
 drafterbit._initThemes =  function(){
   let ThemeManager = require('./theme-manager');
   let themeManager = new ThemeManager(this._ROOT);
+
+  themeManager.addThemePath(__dirname+'/themes/feather');
+  themeManager.addThemePath(__dirname+'/themes/humble');
 
   this.set('themeManager', themeManager);
 }
@@ -236,7 +234,6 @@ drafterbit._initRoutes = function() {
 }
 
 drafterbit._initModules = function(){
-
   // create main/fallback module first
   class mainModule extends Module {
       getName() {
