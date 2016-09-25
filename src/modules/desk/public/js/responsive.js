@@ -76,7 +76,7 @@ $(function(){
             $('.navbar-toggle').click(
                 function(){
 
-                    leftOffset = $('.dt-off-canvas').css('right');
+                    let leftOffset = $('.dt-off-canvas').css('right');
                     if (leftOffset === '0px') {
                         $('.dt-off-canvas').animate({right:-240}, 300);
                         $('body').animate({right:0}, 300);

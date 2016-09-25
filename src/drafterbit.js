@@ -249,24 +249,15 @@ drafterbit._initModules = function(){
   mM.dirname = this._ROOT;
   this._modules[mM.getName()] = mM;
 
+  const ModulePathResolver = require('./module-path-resolver');
+  this._modulePathResolver = new ModulePathResolver(this._ROOT);
+
   for(var i=0;i<this._modulePaths.length;i++){
 
-    if(_isRelative(this._modulePaths[i])) {
-      var rP = path.resolve(this._ROOT, this._modulePaths[i]);
-      var moduleF = require(rP);
-      var m = new moduleF(this);
-      m.resolvedPath = rP;
-
-    } else if(path.isAbsolute(this._modulePaths[i])) {
-      var moduleF = require(this._modulePaths[i]);
-      var m = new moduleF(this);
-      m.resolvedPath = this.modulePaths[i];
-
-    } else {
-      var moduleF = require(this.modulePaths[i]);
-      var m = new moduleF(this);
-      m.resolvedPath = require.resolve(this.modulePaths[i]);
-    }
+    let rP = this._modulePathResolver.resolve(this._modulePaths[i])
+    let moduleF = require(rP);
+    let m = new moduleF(this);
+    m.resolvedPath = rP;
 
     if(fs.lstatSync(m.resolvedPath).isDirectory()) {
       m.dirname = m.resolvedPath;
