@@ -114,7 +114,18 @@ router.post('/save', function(req, res){
       bio: u.bio,
       status: u.status,
     }).then(function(a) {
-      res.json({id: a[0], status: 'success', message: "Users saved"});
+
+      knex('users_groups').where('user_id', a[0]).delete().then(function(){
+
+          let quaries = [];
+          for(let i=0; i<u.groups.length; i++) {
+            quaries.push(knex('users_groups').insert({ user_id: a[0], group_id: u.groups[i] }));
+          }
+
+          knex.Promise.all(quaries).then(function(){
+            res.json({id: a[0], status: 'success', message: "Users saved"});
+          })
+      });
 
     });
   } else {
@@ -131,10 +142,22 @@ router.post('/save', function(req, res){
       user.password = bcrypt.hashSync(u.password);
     }
 
-    knex('users').where('id', u.id).update(user).then(function(a) {
-      res.json({id: u.id, status: 'success', message: "Users saved"});
+    knex('users').where('id', u.id).update(user)
+      .then(function(a) {
 
-    });
+        knex('users_groups').where('user_id', u.id).delete().then(function(){
+
+            let quaries = [];
+            for(let i=0; i<u.groups.length; i++) {
+              quaries.push(knex('users_groups').insert({ user_id: u.id, group_id: u.groups[i] }));
+            }
+
+            knex.Promise.all(quaries).then(function(){
+                res.json({id: u.id, status: 'success', message: "Users saved"});
+            })
+
+        });
+      });
   }
 
 });

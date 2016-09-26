@@ -18,7 +18,6 @@ router.get('/desk/page/data', function(req, res) {
       }
 
       res.json(content);
-
   });
 
 });

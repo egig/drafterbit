@@ -69,7 +69,7 @@
     );
 
     // check form before leaving page
-    dirty = false;
+    let dirty = false;
 
     window.onbeforeunload = (function() {
 
