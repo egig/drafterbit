@@ -15,22 +15,19 @@ router.get('/', function(req, res) {
 
 router.get('/data', function(req, res) {
 
-  var knex = req.app.get('knex');
+  const uM = req.app.model('@user/user');
 
-  var uM = req.app.model('@user/user');
+  uM.getAll().then(function(users) {
 
-  uM.getAll(function(err, users) {
-    if(err) {
-      return console.log(err)
-    }
-
-    var content = {
+    let content = {
       recordsTotal: users.length,
       recordsFiltered: users.length,
       data: users
     }
     res.json(content);
 
+  }).catch(function(e){
+    return console.log(e);
   })
 
 });
