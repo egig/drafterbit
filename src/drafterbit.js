@@ -195,7 +195,8 @@ drafterbit._initViews = function() {
   this._nunjucksEnv = new nunjucks.Environment(
       new nunjucksModuleLoader(this._modules, {paths: viewPaths}),
       {
-          autoescape: false
+          autoescape: false,
+          throwOnUndefined: true
       }
   );
   this._nunjucksEnv.express(this);

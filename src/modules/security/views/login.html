@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/img/ico/favicon.ico">
 
-    <title>Login | {{ system.sitename }}</title>
+    <title>Login</title>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -27,27 +27,18 @@
                 <div class="alert alert-danger">{{ loginError }}</div>
                 {% endif %}
                 <form action="login" method="post" role="form" class="form-login" id="loginForm">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        <input type="hidden" name="_csrf_token" value="" />
 
-                        <input type="text" id="email" name="_email" value="{{ last_username }}" required="required" placeholder="Email" class="form-control input-sm"/>
+                        <input type="text" id="email" name="_email" value="" required="required" placeholder="Email" class="form-control input-sm"/>
 
                         <input type="password" id="password" name="_password" required="required" placeholder="Password" class="form-control input-sm"/>
-
-              {# PENDNG
-                        <div class="checkbox" style="display:inline-block;">
-                            <label for="remember_me">
-                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                            {{ 'security.login.remember_me'|trans({}, 'UserBundle') }}
-                            </label>
-                        </div>
-              #}
 
                         <input type="submit" id="_submit" name="_submit" value="submit" class="btn btn-primary form-control" />
                  </form>
             </div>
         </div>
         <div class="copyright dt-brand">
-            <p>{{ appname }} &copy; 2016</p>
+            <p>AppName &copy; 2016</p>
         </div>
     </div> <!-- /container -->
   </body>
