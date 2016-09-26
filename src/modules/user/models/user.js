@@ -1,13 +1,13 @@
-var Model = require('../../../model');
+import Model from '../../../model';
 
-var UserModel = Model.extend({
-  getAll: function(callback) {
+class UserModel extends Model {
+  getAll(callback) {
     this.knex('users').select('*').then(function(users){
       callback(null, users)
     }).catch(function(e){
       callback(e);
     });
   }
-})
+}
 
-module.exports = UserModel;
+export default UserModel;

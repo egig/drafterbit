@@ -19,8 +19,33 @@ import Module from './module';
 import nunjucksModuleLoader from './nunjucks/module-loader';
 
 const drafterbit = express.application;
-const _isRelative = function(filename) {
-    return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
+
+drafterbit.model = function(name) {
+
+    if(typeof this._models[name] !== 'undefined') {
+      return this._models[name];
+    }
+
+    if(name.indexOf('@') === 0) {
+        let tmp = name.split('/');
+        let module = tmp.shift().substr(1);
+
+        // @todo move this to module manager
+        if(!this._modules[module]) {
+          throw Error("Unregistered module: '"+module+"'");
+        }
+
+        let basePath = this._modules[module].getModelPath();
+        let fName =  tmp.join('/');
+
+        name = path.join(basePath, fName);
+    }
+
+    let ModelClass = require(name);
+    let knex = this.get('db');
+    this._models[name] = new ModelClass({ knex: knex });
+
+    return this._models[name];
 }
 
 drafterbit.load = function load(_ROOT) {
@@ -29,6 +54,7 @@ drafterbit.load = function load(_ROOT) {
   }
 
   this._ROOT = _ROOT;
+  this._models = [];
   this._modules = [];
   this._modulePaths =  this.registerModules();
   this._initConfig();
@@ -37,8 +63,6 @@ drafterbit.load = function load(_ROOT) {
 }
 
 drafterbit._boot = function() {
-
-  this._initModules();
   this._initDB();
   this._initAppLogger();
   this._initViews();
@@ -99,6 +123,9 @@ drafterbit._initErrorhandler = function() {
 drafterbit._initThemes =  function(){
   let ThemeManager = require('./theme-manager');
   let themeManager = new ThemeManager(this._ROOT);
+
+  themeManager.addThemePath(__dirname+'/themes/feather');
+  themeManager.addThemePath(__dirname+'/themes/humble');
 
   this.set('themeManager', themeManager);
 }
@@ -210,6 +237,7 @@ drafterbit._initAppLogger = function() {
 drafterbit._initDB = function(){
   let knex = require('knex')(this._CONFIG.db);
   this.set('knex', knex);
+  this.set('db', knex); // alias
 }
 
 drafterbit._initConfig = function() {
@@ -236,7 +264,6 @@ drafterbit._initRoutes = function() {
 }
 
 drafterbit._initModules = function(){
-
   // create main/fallback module first
   class mainModule extends Module {
       getName() {

@@ -15,6 +15,10 @@ export default class Module {
     throw "Module do not have 'getName' method.";
   }
 
+  getModelPath() {
+     return path.join(this._getDir(), 'models');
+  }
+
   getViewPath() {
      return path.join(this._getDir(), 'views');
   }
