@@ -20,6 +20,16 @@ import nunjucksModuleLoader from './nunjucks/module-loader';
 
 const drafterbit = express.application;
 
+
+drafterbit.getModule = function(name) {
+
+  if( !(name in this._modules)) {
+    throw Error("Unregistered module: '"+name+"'");
+  }
+
+  return this._modules[name];
+}
+
 drafterbit.model = function(name) {
 
     if(typeof this._models[name] !== 'undefined') {

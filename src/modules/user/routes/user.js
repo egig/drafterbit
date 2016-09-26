@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
+import bcrypt from  'bcrypt-nodejs';
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -79,7 +80,7 @@ router.get('/edit/:id', function(req, res){
 });
 
 router.post('/save', function(req, res){
-  var u = req.body.user;
+  let u = req.body.user;
 
   // validation
   req.checkBody('user[username]', 'Username should not be empty').notEmpty();
@@ -107,7 +108,7 @@ router.post('/save', function(req, res){
     knex('users').insert({
       username: u.username,
       email: u.email,
-      password: u.password,
+      password: bcrypt.hashSync(u.password),
       realname: u.realname,
       url: u.url,
       bio: u.bio,
@@ -117,15 +118,20 @@ router.post('/save', function(req, res){
 
     });
   } else {
-    knex('users').where('id', u.id).update({
+    let user = {
       username: u.username,
       email: u.email,
-      password: u.password,
       realname: u.realname,
       url: u.url,
       bio: u.bio,
       status: u.status,
-    }).then(function(a) {
+    };
+
+    if(u.password.trim() !== '') {
+      user.password = bcrypt.hashSync(u.password);
+    }
+
+    knex('users').where('id', u.id).update(user).then(function(a) {
       res.json({id: u.id, status: 'success', message: "Users saved"});
 
     });

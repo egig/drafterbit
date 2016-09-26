@@ -1,3 +1,4 @@
+import bcrypt from  'bcrypt-nodejs';
 
 exports.seed = function(knex, Promise) {
   return knex('users').del()
@@ -12,7 +13,7 @@ exports.seed = function(knex, Promise) {
             bio: 'Admin Kece',
             url: 'http://drafterbit.org',
             email: 'demo@drafterbit.org',
-            password: 'foo',
+            password: bcrypt.hashSync('demo'),
             status: 1
           }),
       ]);
