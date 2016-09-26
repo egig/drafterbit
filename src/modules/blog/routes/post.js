@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-
     res.render('@blog/post/index.html');
 });
 
@@ -11,7 +10,6 @@ router.get('/data', function(req, res){
   var knex = req.app.get('knex');
 
   knex('posts').select('*').then(function(posts){
-
 
       var content = {
           recordsTotal: posts.length,
@@ -22,6 +20,13 @@ router.get('/data', function(req, res){
       res.json(content);
 
   });
-})
+});
+
+router.get('/edit/:id', function(req, res){
+    res.render('@blog/post/edit.html', {
+      tags: '[]',
+      tag_options: '[]'
+    });
+});
 
 module.exports = router;
