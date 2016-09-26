@@ -211,19 +211,23 @@ drafterbit._initViews = function() {
       return gravatar.url(email, {s: 49});
   });
 
- let knex = this.get('knex');
- let MenuModel = require('./modules/setting/models/menu.js');
- let mM = new MenuModel({knex: knex});
+   let mM = this.model('@setting/menu');
 
- // @todo move 'main'
- let _this = this;
- mM.getByName('main', function(err, menuItems){
-   if(err) {
-     return console.log(err);
-   }
+   // @todo move 'main'
+   let _this = this;
+   mM.getAll(function(err, menus){
+     if(err) {
+       return console.log(err);
+     }
 
-   _this._nunjucksEnv.addGlobal('_menuItems', menuItems);
- });
+     // lets create keyed menus
+     let m = [];
+     for(let i in menus) {
+       m[menus[i].name] = menus[i].items;
+     }
+
+     _this._nunjucksEnv.addGlobal('_menus', m);
+   });
 
   this._nunjucksEnv.addGlobal('system', {
     navigations: require('./navigations')
