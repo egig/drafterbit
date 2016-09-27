@@ -34,7 +34,7 @@
             <div class="panel-collapse collapse" id="revisions" aria-expanded="false">
                 <div class="panel-body">
                     <div class="pull-right">
-                        <a class="clear-history" href="#" data-post-id="{{ post_id }}"><i class="fa fa-times"></i> {{ __('Clear') }}</a>
+                        <a class="clear-history" href="#" data-post-id="{{ post.id }}"><i class="fa fa-times"></i> {{ __('Clear') }}</a>
                     </div>
                     <ol style="list-style:none">
                       {% for revision in revisions %}
@@ -91,7 +91,7 @@
   </script>
 
   <script type="text/javascript" src="/bower_components/ckeditor/ckeditor.js"> </script>
-  <script type="text/javascript" src="/bower_components/magicsuggest/magicsuggest-min.js"> </script>
+  <script type="text/javascript" src="/bower_components/magicsuggest/magicsuggest.js"> </script>
   <script type="text/javascript" src="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"> </script>
   <script type="text/javascript" src="/blog/js/post/editor.js"> </script>
   <script type="text/javascript">

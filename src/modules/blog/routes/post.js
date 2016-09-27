@@ -23,10 +23,17 @@ router.get('/data', function(req, res){
 });
 
 router.get('/edit/:id', function(req, res){
-    res.render('@blog/post/edit.html', {
-      tags: '[]',
-      tag_options: '[]'
-    });
+
+  let post = {
+    title: '',
+    slug: '',
+  };
+
+  res.render('@blog/post/edit.html', {
+    tags: '[]',
+    tag_options: '[]',
+    post: post
+  });
 });
 
 module.exports = router;
