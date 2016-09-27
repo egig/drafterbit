@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/blog/css/editor.css" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 
+{% block pageTitle %}
+  {{ __('Edit Post') }}
+{% endblock %}
+
 {% block action %}
   <button type="button" name="button" class="btn btn-success">{{ __('Save') }}</button>
   <a class="btn btn-default" href="/desk/blog">

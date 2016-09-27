@@ -48,8 +48,8 @@
         'expand',
         function(c){
 
-            pos = $('.ms-sel-ctn').find('input').position();
-            h = $('.ms-sel-ctn').find('input').height();
+            let pos = $('.ms-sel-ctn').find('input').position();
+            let h = $('.ms-sel-ctn').find('input').height();
 
             var ctn = $('.ms-res-ctn');
 

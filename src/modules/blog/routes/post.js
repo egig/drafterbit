@@ -31,7 +31,7 @@ router.get('/edit/:id', function(req, res){
 
   res.render('@blog/post/edit.html', {
     tags: '[]',
-    tag_options: '[]',
+    tag_options: "['Test']",
     post: post
   });
 });

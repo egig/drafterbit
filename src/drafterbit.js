@@ -279,11 +279,12 @@ drafterbit._initRoutes = function() {
 }
 
 drafterbit._initModules = function(){
+  let _this = this;
   // create main/fallback module first
   class mainModule extends Module {
       getName() {
           // return config.mainModuleName;
-          return "__main__";
+          return _this._CONFIG.mainModuleName;
       }
   }
 
