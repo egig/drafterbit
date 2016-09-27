@@ -1,5 +1,6 @@
 (function($, tagOptions, tags, CKEDITOR){
 
+  let dirty = false;
 
     drafTerbit.blogPostEditor = {
 
@@ -83,7 +84,7 @@
             dataType: 'json',
             beforeSerialize: function() {
                 // fixes ckeditor content
-                for (instance in CKEDITOR.instances) {
+                for (let instance in CKEDITOR.instances) {
                     CKEDITOR.instances[instance].updateElement();
                 }
             },
@@ -139,7 +140,7 @@
             }
         );
 
-        for (instance in CKEDITOR.instances) {
+        for (let instance in CKEDITOR.instances) {
             CKEDITOR.instances[instance].on(
                 'change',
                 function(){

@@ -11,9 +11,13 @@
   {{ __('Edit Post') }}
 {% endblock %}
 
+{% block formAttribute %}
+  {{ super() }} id="post-edit-form" action="/desk/blog/post/save"
+{% endblock %}
+
 {% block action %}
-  <button type="button" name="button" class="btn btn-success">{{ __('Save') }}</button>
-  <a class="btn btn-default" href="/desk/blog">
+  <button type="submit" name="button" class="btn btn-success">{{ __('Save') }}</button>
+  <a class="btn btn-default" href="/desk/blog/post">
       <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
   </a>
 {% endblock %}
@@ -24,7 +28,7 @@
           <input type="text" name="post[title]" value="{{ post.title }}" class="form-control input-lg" placeholder="Title">
          </div>
          <div class="form-group">
-          <textarea name="content" rows="8" cols="40"></textarea>
+          <textarea name="post[content]" rows="8" cols="40">{{ post.content }}</textarea>
          </div>
          {# todo if revisions %}
           <div class="panel panel-default dt-revisions-container">
@@ -59,31 +63,31 @@
         </div>
         <div class="form-group">
             <label for="status">Status</label>
-            <select class="form-control" name="status">
-              <option value="">Draft</option>
-              <option value="">Pending Review</option>
-              <option value="">Published</option>
+            <select class="form-control" name="post[status]">
+              <option value="0">Pending Review</option>
+              <option value="1">Published</option>
             </select>
         </div>
          <div class="form-group">
           <label for="published_at">Published At</label>
-          <input type="text" name="published_at" value="" class="form-control publish-date">
+          <input type="text" name="post[published_at]" value="{{ post.published_at }}" class="form-control publish-date">
          </div>
         <div class="form-group">
           <label for="categories">Categories</label>
             <div class="dt-categories">
               <ul>
-              {% for c in form.categories %}
-                <li>{{ form_widget(c) }} {{ c.vars.label }}</li>
+              {% for c in categories %}
+                <li><input type="checkbox" name="post[categories]" value="{{ c.id }}">{{ c.label }}</li>
               {% endfor %}
               <ul>
             </div>
         </div>
         <div class="form-group tags-input-wrapper">
             <label>{{ __('Tags') }}</label>
-            <input placeholder="Tags" id="tags" name="tags"/>
+            <input placeholder="Tags" id="tags" name="post[tags]"/>
          </div>
     </div>
+    <input type="hidden" name="post[id]" value="{{ post.id }}">
 {% endblock %}
 
 {% block js %}
@@ -101,7 +105,7 @@
   <script type="text/javascript">
 
     CKEDITOR.plugins.addExternal( 'wpmore', '/desk/plugins/ckeditor-custom/plugins/wpmore/', 'plugin.js' );
-    CKEDITOR.replace('content', {
+    CKEDITOR.replace('post[content]', {
 
         language: drafTerbit.locale,
         customConfig : "/desk/plugins/ckeditor-custom/config.js",
