@@ -10,7 +10,7 @@ router.get('/', function(req, res){
 
 router.get('/data', function(req, res){
 
-  req.app.model('@blog/post').getAll(function(err, posts){
+  req.app.model('@blog/post').getAll().then(function(posts){
 
       var content = {
           recordsTotal: posts.length,

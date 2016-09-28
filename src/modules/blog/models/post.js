@@ -2,9 +2,9 @@ import Model from '../../../model';
 
 class PostModel extends Model {
 
-  getAll(callback) {
+  getAll() {
     var _this = this;
-    this.knex('posts').select('*').then(function(posts){
+    return this.knex('posts').select('*').then(function(posts){
 
       if(!posts) {
         return callback(null, []);
@@ -21,9 +21,7 @@ class PostModel extends Model {
         }));
       }
 
-      _this.knex.Promise.all(pmss).then(function(posts){
-        callback(null, posts);
-      });
+      return _this.knex.Promise.all(pmss);
     });
   }
 
