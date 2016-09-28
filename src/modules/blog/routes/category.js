@@ -39,26 +39,37 @@ router.post('/data', function(req, res){
 });
 
 router.get('/edit/:id', function(req, res){
+
   let id = req.params.id;
+  let cM = req.app.model('@blog/category');
+
   if('new' == id) {
-    let viewData = {
-      category: {
-        id: id,
-        label: '',
-        slug: '',
-        description: ''
-      }
-    }
-    res.render('@blog/category/edit.html', viewData);
 
-  } else {
-    let cM = req.app.model('@blog/category');
-    cM.getOneById(req.params.id).then(function(category){
+    cM.getAll().then(function(parents){
       let viewData = {
-        category: category
+        category: {
+          id: id,
+          label: '',
+          slug: '',
+          description: ''
+        },
+        parent_options: parents
       }
-
       res.render('@blog/category/edit.html', viewData);
+
+    });
+  } else {
+    cM.getOneById(req.params.id).then(function(category){
+
+      cM.getPossibleParents(req.params.id).then(function(parents){
+        let viewData = {
+          category: category,
+          parent_options: parents
+        }
+
+        res.render('@blog/category/edit.html', viewData);
+
+      });
     })
   }
 })
@@ -88,6 +99,7 @@ router.post('/save', function(req, res){
       label: postData.label,
       slug: postData.slug,
       description: postData.description,
+      parent_id: postData.parent,
     }
 
     cM.insert(insertData).then(function(a){
@@ -104,6 +116,7 @@ router.post('/save', function(req, res){
       label: postData.label,
       slug: postData.slug,
       description: postData.description,
+      parent_id: postData.parent
     }
 
     cM.update(postData.id, updateData).then(function(a){

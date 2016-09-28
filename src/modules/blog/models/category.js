@@ -20,6 +20,12 @@ class CategoryModel extends Model {
   delete(ids) {
     return this.knex('categories').whereIn('id', ids).delete();
   }
+
+  getPossibleParents(id) {
+    return this.knex('categories').whereNot(
+      {id: id, parent_id: id}
+    ).select('*');
+  }
 }
 
 export default CategoryModel;
