@@ -16,6 +16,10 @@ module.exports = {
         url: '/desk/blog/category',
         label: 'Category'
       },
+      tags: {
+        url: '/desk/blog/tag',
+        label: 'Tags'
+      },
       comments: {
         url: '/desk/blog/comment',
         label: 'Comments'
