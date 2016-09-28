@@ -85,7 +85,7 @@
                 columns: [
                     {data: 'id', orderable: false, searchable:false, render: function(d,t,f,m) { return '<input type="checkbox" name="posts[]" value="'+d+'">'}},
                     {data: 'title', render: function(d,t,f,m){ return '<a href="'+drafTerbit.deskUrl+'blog/post/edit/'+f.id+'">'+d+'</a>'}},
-                    {data: 'author_id', render: function(d,t,f,m){ return '<a href="'+drafTerbit.deskUrl+'user/edit/'+f.user_id+'">'+d+'</a>'}},
+                    {data: 'author_id', render: function(d,t,f,m){ return '<a href="'+drafTerbit.deskUrl+'user/edit/'+d+'">'+f.author.realname+'</a>'}},
                     {data: 'updated_at'},
                 ],
                 ajax: {
