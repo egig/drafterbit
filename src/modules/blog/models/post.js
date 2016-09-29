@@ -2,6 +2,18 @@ import Model from '../../../model';
 
 class PostModel extends Model {
 
+  setCategories(postId, categories) {
+    let _this = this;
+    return this.knex('posts_categories').where('post_id', postId).delete().then(function(){
+      let q=[];
+      for (let i = 0; i < categories.length; i++) {
+        categories[i]
+        q.push(_this.knex('posts_categories').insert({post_id: postId, category_id: categories[i] }))
+      }
+      return _this.knex.Promise.all(q);
+    })
+  }
+
   getAll() {
     var _this = this;
     return this.knex('posts').select('*').then(function(posts){
@@ -26,7 +38,20 @@ class PostModel extends Model {
   }
 
   getOneById(id){
-    return this.knex('posts').first().where('id', id);
+    let _this = this;
+    return this.knex('posts').first().where('id', id).then(function(post){
+      return _this.knex('posts_categories').where('post_id', id).select('*').then(function(pc){
+
+        let categoryIds = [];
+        for(let i=0; i<pc.length; i++) {
+          categoryIds.push(pc[i].category_id);
+        }
+
+        post.categoryIds = categoryIds;
+
+        return _this.knex.Promise.resolve(post);
+      })
+    });
   }
 
   insert(p) {

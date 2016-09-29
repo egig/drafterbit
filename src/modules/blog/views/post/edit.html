@@ -1,5 +1,21 @@
 {% extends "@desk/layout_edit.html" %}
 
+{% macro print_categories(categories, postCatIds) %}
+<ul>
+{% for c in categories %}
+  <li><input type="checkbox" name="post[categories]" value="{{ c.id }}"
+      {% if c.id in postCatIds %}
+      checked="checked"
+      {% endif %}
+    >{{ c.label }}
+    {% if c.childrens.length %}
+      {{ print_categories(c.childrens, postCatIds) }}
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>
+{% endmacro %}
+
 {% block css %}
   {{ super() }}
   <link rel="stylesheet" href="/bower_components/magicsuggest/magicsuggest-min.css" media="screen" title="no title" charset="utf-8">
@@ -75,11 +91,7 @@
         <div class="form-group">
           <label for="categories">Categories</label>
             <div class="dt-categories">
-              <ul>
-              {% for c in categories %}
-                <li><input type="checkbox" name="post[categories]" value="{{ c.id }}">{{ c.label }}</li>
-              {% endfor %}
-              <ul>
+              {{ print_categories(category_options, post.categoryIds) }}
             </div>
         </div>
         <div class="form-group tags-input-wrapper">

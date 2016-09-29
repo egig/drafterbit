@@ -7,7 +7,6 @@ router.get('/', function(req, res){
     res.render('@blog/post/index.html');
 });
 
-
 router.get('/data', function(req, res){
 
   req.app.model('@blog/post').getAll().then(function(posts){
@@ -23,39 +22,63 @@ router.get('/data', function(req, res){
   });
 });
 
+function _getChilds(parentId, categories) {
+  let childs = [];
+  for(let i=0; i<categories.length; i++) {
+    if (categories[i].parent_id == parentId) {
+      childs.push(categories[i]);
+    }
+  }
+
+  if(childs.length > 0) {
+    for(let i=0; i<childs.length; i++) {
+      childs[i].childrens = _getChilds(childs[i].id, categories);
+    }
+  }
+
+  return childs;
+}
+
 router.get('/edit/:id', function(req, res){
 
-  if(req.params.id !== 'new') {
-    let pM = req.app.model('@blog/post');
-    pM.getOneById(req.params.id).then(function(p){
+  let cM = req.app.model('@blog/category');
+  cM.getAll().then(function(categories){
 
-      let viewData = {
-        post: p,
-        tags: '[]',
-        tag_options: "['Test']",
-      }
-
-      res.render('@blog/post/edit.html', viewData);
-
-    })
-  } else {
-
-    let post = {
-      id: req.params.id,
-      title: '',
-      slug: '',
-      content: '',
-      published_at: moment().format('YYYY-MM-D hh:mm:ss')
-    }
+    let categoryTree = _getChilds(0, categories);
 
     let viewData = {
-      post: post,
-      tags: '[]',
       tag_options: "['Test']",
+      category_options: categoryTree
     }
 
-    res.render('@blog/post/edit.html', viewData);
-  }
+    if(req.params.id !== 'new') {
+      let pM = req.app.model('@blog/post');
+      pM.getOneById(req.params.id).then(function(p){
+
+        viewData.post= p;
+        viewData.tags= '[]';
+
+        res.render('@blog/post/edit.html', viewData);
+
+      })
+    } else {
+
+      let post = {
+        id: req.params.id,
+        title: '',
+        slug: '',
+        content: '',
+        published_at: moment().format('YYYY-MM-D hh:mm:ss'),
+        categoryIds: [],
+      }
+
+      viewData.post= post;
+      viewData.tags= '[]';
+
+      res.render('@blog/post/edit.html', viewData);
+    }
+
+  })
 });
 
 router.post('/save', function(req, res){
@@ -75,14 +98,15 @@ router.post('/save', function(req, res){
     }
 
     pM.insert(insertData).then(function(a){
+      pM.setCategories(a[0], postData.categories).then(function(){
+        let response = {
+          id: a[0],
+          message: "Post saved",
+          status: "success",
+        }
 
-      let response = {
-        id: a[0],
-        message: "Post saved",
-        status: "success",
-      }
-
-      res.json(response);
+        res.json(response);
+      });
     })
   } else {
     let updateData = {
@@ -94,14 +118,15 @@ router.post('/save', function(req, res){
     }
 
     pM.update(postData.id, updateData, function(err){
+      pM.setCategories(postData.id, postData.categories).then(function(){
+        let response = {
+          id: postData.id,
+          message: "Post updated",
+          status: "success",
+        }
 
-      let response = {
-        id: postData.id,
-        message: "Post updated",
-        status: "success",
-      }
-
-      res.json(response);
+        res.json(response);
+      })
     })
   }
 
