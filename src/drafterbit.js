@@ -143,7 +143,11 @@ drafterbit._initThemes =  function(){
 drafterbit._initSecurityMiddleware = function(){
   // JWT simple auth setup, we redirect unauthorized to login page
   // @todo move secret to config
-  this.use(/^\/desk/,expressJWT({
+
+  // remove slash
+  let basePath = this._CONFIG.basePath.replace(/^\/|\/$/g, '');
+
+  this.use('(^\/'+basePath+')', expressJWT({
       secret: this._CONFIG.secret,
       getToken: function fromHeaderOrQuerystring (req) {
           if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -156,13 +160,14 @@ drafterbit._initSecurityMiddleware = function(){
 
           return null;
         }
-  }).unless({path: ['/login', '/signup']}));
+  }).unless({path: [this._CONFIG.basePath+'/login', this._CONFIG.basePath+'/signup']}));
 
+  let _this = this;
   this.use(function (err, req, res, next) {
 
       // @todo check if request is ajax and return json
     if (err.name === 'UnauthorizedError') {
-      res.redirect('/login');
+      res.redirect(_this._CONFIG.basePath+'/login');
     } else {
        // @why this is not executed ??
        // console.log(req.user);
@@ -172,7 +177,11 @@ drafterbit._initSecurityMiddleware = function(){
 
 drafterbit._initStaticMiddlewares = function() {
   for(var name in this._modules) {
-      this.use('/'+name, express.static( this._modules[name].getPublicPath()));
+    if(name === this._CONFIG.mainModuleName) {
+      continue;
+    }
+
+    this.use('/'+name, express.static( this._modules[name].getPublicPath()));
   }
 }
 
@@ -271,9 +280,16 @@ drafterbit._initConfig = function() {
 drafterbit._initRoutes = function() {
   // @todo add route priority options
   for(var name in this._modules) {
-    var routes = this._modules[name].getRoutes();
-    if(routes) {
+
+    let routes = this._modules[name].getRoutes();
+
+    if(name === this._CONFIG.mainModuleName) {
       this.use('/', routes);
+      continue;
+    }
+
+    if(routes) {
+      this.use(this._CONFIG.basePath, routes);
     }
   }
 }
@@ -283,7 +299,6 @@ drafterbit._initModules = function(){
   // create main/fallback module first
   class mainModule extends Module {
       getName() {
-          // return config.mainModuleName;
           return _this._CONFIG.mainModuleName;
       }
   }

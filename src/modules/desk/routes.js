@@ -1,7 +1,7 @@
 var express = require('express');
 var router  = express.Router();
 
-router.get('/desk', function(req, res) {
+router.get('/', function(req, res) {
 
     var knex = req.app.get('knex');
     var appLogger = req.app.get('appLogger');
@@ -37,11 +37,11 @@ router.get('/desk', function(req, res) {
       });
 });
 
-router.get('/desk/system/log', function(req, res) {
+router.get('/system/log', function(req, res) {
   res.render('@desk/system/log.html');
 })
 
-router.get('/desk/system/log/data', function(req, res) {
+router.get('/system/log/data', function(req, res) {
   var knex = req.app.get('knex');
 
   knex('logs').select('*').then(function(logs){
@@ -56,7 +56,7 @@ router.get('/desk/system/log/data', function(req, res) {
   });
 })
 
-router.get('/desk/js/drafterbit.js', function(req, res){
+router.get('/js/drafterbit.js', function(req, res){
 
   res.header('Content-type','text/javascript');
   res.render('@desk/drafterbit.js');

@@ -1,12 +1,12 @@
 var express = require('express');
 var router  = express.Router();
 
-router.get('/desk/page', function(req, res) {
+router.get('/page', function(req, res) {
   res.render('@page/index.html');
 
 });
 
-router.get('/desk/page/data', function(req, res) {
+router.get('/page/data', function(req, res) {
 
   var knex = req.app.get('knex');
 
@@ -22,7 +22,7 @@ router.get('/desk/page/data', function(req, res) {
 
 });
 
-router.get('/desk/page/edit/:id', function(req, res) {
+router.get('/page/edit/:id', function(req, res) {
   res.render('@page/edit.html');
 });
 
