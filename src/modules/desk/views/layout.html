@@ -31,14 +31,6 @@
         {% include '@desk/parts/nav.html' %}
 
         <div>
-            <div class="container">
-                <div class="row">
-                  <div class="col-lg-12">
-                      <h2>{% block pageTitle %}untitled{% endblock %}</h2>
-                  </div>
-                </div>
-            </div>
-
             {% block content %}{% endblock %}
         </div>
         {% include '@desk/parts/footer.html' %}

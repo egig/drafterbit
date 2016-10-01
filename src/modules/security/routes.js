@@ -61,7 +61,7 @@ router.post('/signup', function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.session.JWToken = null;
-    res.redirect('/login');
+    res.redirect(req.app.deskUrl('/login'));
 });
 
 

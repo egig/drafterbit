@@ -21,6 +21,10 @@ import nunjucksModuleLoader from './nunjucks/module-loader';
 const drafterbit = express.application;
 
 
+drafterbit.deskUrl = function(path) {
+  return this._CONFIG.basePath+'/'+path.replace(/^\/|\/$/g, '');
+}
+
 drafterbit.getModule = function(name) {
 
   if( !(name in this._modules)) {
@@ -243,7 +247,11 @@ drafterbit._initViews = function() {
     navigations: require('./navigations')
   });
 
+  this._nunjucksEnv.addGlobal('deskUrl', function(path) {
+    return _this.deskUrl(path);
+  });
 }
+
 
 drafterbit._initAppLogger = function() {
 

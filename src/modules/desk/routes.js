@@ -7,6 +7,7 @@ router.get('/', function(req, res) {
     var appLogger = req.app.get('appLogger');
     appLogger.log("info", req.user.realname+" visited dashboard");
 
+    /* @todo pendin feature
     var userId = req.user.id;
     knex('dashboards').first().where({user_id: userId, status: 1})
       .then(function(dashboard){
@@ -34,7 +35,9 @@ router.get('/', function(req, res) {
               rightPanels: rightPanels,
             });
           });
-      });
+      });*/
+
+      res.render('@desk/index.html', {});
 });
 
 router.get('/system/log', function(req, res) {

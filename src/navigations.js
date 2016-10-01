@@ -20,19 +20,11 @@ module.exports = {
         url: '/desk/blog/tag',
         label: 'Tags'
       },
-      comments: {
-        url: '/desk/blog/comment',
-        label: 'Comments'
-      },
     }
   },
   page: {
     url: '/desk/page',
     label: 'Pages',
-  },
-  file: {
-    url: '/desk/file',
-    label: 'Files',
   },
   user: {
     url: '#',
@@ -48,24 +40,6 @@ module.exports = {
       }
     }
   },
-  setting: {
-    url: '#',
-    label: 'Setting',
-    children: {
-      general: {
-        url: '/desk/setting/general',
-        label: 'General'
-      },
-      menu: {
-        url: '/desk/setting/menu',
-        label: 'Menus'
-      },
-      themes: {
-        url: '/desk/setting/themes',
-        label: 'Themes'
-      },
-    }
-  },
   system: {
     url: '#',
     label: 'System',
@@ -75,6 +49,5 @@ module.exports = {
         label: 'Log'
       }
     }
-  },
-
+  }
 }

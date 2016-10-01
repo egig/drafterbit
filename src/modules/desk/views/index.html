@@ -1,11 +1,15 @@
 {% extends '@desk/layout.html' %}
 
-{% block pageTitle %}
-  {{ __('Dashboard') }}
-{% endblock %}
-
 {% block content %}
 <div class="container">
+  <div class="row">
+    <div class="col-md-12" style="text-align:center; margin-top:100px;">
+      Hello, {{ user.realname }}
+    </div>
+  </div>
+
+
+{# PENDING
     <div class="row panel-container">
         <div class="panel-row col-md-6" id="dt-panels-left" data-pos="left">
             {% for panel in leftPanels %}
@@ -37,5 +41,6 @@
           {% endfor %}
         </div>
     </div>
+#}
 </div>
 {% endblock %}
