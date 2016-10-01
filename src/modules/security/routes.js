@@ -37,12 +37,12 @@ router.post('/login', function(req, res) {
 
       if(!user) {
         req.flash('loginError', 'User not found');
-        return res.redirect('/login');
+        return res.redirect(req.app.deskUrl('/login'));
       }
 
       if(!bcrypt.compareSync(req.body._password, user.password)) {
         req.flash('loginError', 'Password or email incorrect');
-        return res.redirect('/login');
+        return res.redirect(req.app.deskUrl('/login'));
       }
 
       var token = jwt.sign(user, req.app.get('secret'));
