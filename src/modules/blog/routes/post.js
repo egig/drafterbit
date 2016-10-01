@@ -100,6 +100,19 @@ router.post('/save', function(req, res){
   let pM = req.app.model('@blog/post');
   let tM = req.app.model('@blog/tag');
 
+  req.checkBody('post[title]', 'Title should not be empty').notEmpty();
+  req.checkBody('post[slug]', 'Slug should not be empty').notEmpty();
+
+  var errors = req.validationErrors();
+  if(errors) {
+      var responseBody = {
+        errorType: 'validation',
+        errors: errors
+      }
+      res.json(responseBody, 400);
+      return;
+  }
+
   if(postData.id == 'new') {
 
     let insertData = {
