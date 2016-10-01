@@ -7,8 +7,18 @@ class PostModel extends Model {
     return this.knex('posts_categories').where('post_id', postId).delete().then(function(){
       let q=[];
       for (let i = 0; i < categories.length; i++) {
-        categories[i]
         q.push(_this.knex('posts_categories').insert({post_id: postId, category_id: categories[i] }))
+      }
+      return _this.knex.Promise.all(q);
+    })
+  }
+
+  setTags(postId, tagIds) {
+    let _this = this;
+    return this.knex('posts_tags').where('post_id', postId).delete().then(function(){
+      let q=[];
+      for (let i = 0; i < tagIds.length; i++) {
+        q.push(_this.knex('posts_tags').insert({post_id: postId, tag_id: tagIds[i] }))
       }
       return _this.knex.Promise.all(q);
     })
@@ -49,7 +59,19 @@ class PostModel extends Model {
 
         post.categoryIds = categoryIds;
 
-        return _this.knex.Promise.resolve(post);
+        return _this.knex('posts_tags').where('post_id', id).then(function(pt){
+
+          let tagIds = [];
+          for(let i=0; i<pt.length; i++) {
+            tagIds.push(pt[i].tag_id);
+          }
+
+          return _this.knex('tags').whereIn('id', tagIds).then(function(tags){
+
+            post.tags = tags;
+            return _this.knex.Promise.resolve(post);
+          });
+        });
       })
     });
   }

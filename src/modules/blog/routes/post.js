@@ -42,42 +42,55 @@ function _getChilds(parentId, categories) {
 router.get('/edit/:id', function(req, res){
 
   let cM = req.app.model('@blog/category');
+  let tM = req.app.model('@blog/tag');
+
   cM.getAll().then(function(categories){
 
-    let categoryTree = _getChilds(0, categories);
+    tM.getAll().then(function(tags) {
 
-    let viewData = {
-      tag_options: "['Test']",
-      category_options: categoryTree
-    }
+      let categoryTree = _getChilds(0, categories);
+      let tagOptionArray = [];
+      for(let i=0;i<tags.length;i++) {
+        tagOptionArray.push('"'+tags[i].label+'"');
+      }
 
-    if(req.params.id !== 'new') {
-      let pM = req.app.model('@blog/post');
-      pM.getOneById(req.params.id).then(function(p){
+      let viewData = {
+        tag_options: '['+tagOptionArray.join(',')+']',
+        category_options: categoryTree
+      }
 
-        viewData.post= p;
+      if(req.params.id !== 'new') {
+        let pM = req.app.model('@blog/post');
+        pM.getOneById(req.params.id).then(function(p){
+
+          let tagArray = [];
+          for(let i=0;i<p.tags.length;i++) {
+            tagArray.push('"'+p.tags[i].label+'"');
+          }
+          viewData.post= p;
+          viewData.tags= '['+tagArray.join(',')+']';
+
+          res.render('@blog/post/edit.html', viewData);
+        })
+
+      } else {
+
+        let post = {
+          id: req.params.id,
+          title: '',
+          slug: '',
+          content: '',
+          published_at: moment().format('YYYY-MM-D hh:mm:ss'),
+          categoryIds: [],
+        }
+
+        viewData.post= post;
         viewData.tags= '[]';
 
         res.render('@blog/post/edit.html', viewData);
-
-      })
-    } else {
-
-      let post = {
-        id: req.params.id,
-        title: '',
-        slug: '',
-        content: '',
-        published_at: moment().format('YYYY-MM-D hh:mm:ss'),
-        categoryIds: [],
       }
 
-      viewData.post= post;
-      viewData.tags= '[]';
-
-      res.render('@blog/post/edit.html', viewData);
-    }
-
+    });
   })
 });
 
@@ -85,6 +98,7 @@ router.post('/save', function(req, res){
 
   let postData = req.body.post;
   let pM = req.app.model('@blog/post');
+  let tM = req.app.model('@blog/tag');
 
   if(postData.id == 'new') {
 
@@ -95,19 +109,28 @@ router.post('/save', function(req, res){
       published_at: postData.published_at,
       created_at: moment().format('YYYY-MM-D hh:mm:ss'),
       updated_at: moment().format('YYYY-MM-D hh:mm:ss'),
+      author_id: req.user.id
     }
 
     pM.insert(insertData).then(function(a){
       pM.setCategories(a[0], postData.categories).then(function(){
-        let response = {
-          id: a[0],
-          message: "Post saved",
-          status: "success",
-        }
+        // handle post tags
+        tM.insertIfNotExists(postData.tags).then(function(tagIds) {
+          pM.setTags(a[0], tagIds).then(function(){
 
-        res.json(response);
+            let response = {
+              id: a[0],
+              message: "Post saved",
+              status: "success",
+            }
+
+            res.json(response);
+          })
+
+        });
       });
     })
+
   } else {
     let updateData = {
       title: postData.title,
@@ -119,13 +142,21 @@ router.post('/save', function(req, res){
 
     pM.update(postData.id, updateData, function(err){
       pM.setCategories(postData.id, postData.categories).then(function(){
-        let response = {
-          id: postData.id,
-          message: "Post updated",
-          status: "success",
-        }
 
-        res.json(response);
+        tM.insertIfNotExists(postData.tags).then(function(tagIds) {
+          pM.setTags(postData.id, tagIds).then(function(){
+
+            let response = {
+              id: postData.id,
+              message: "Post Updated",
+              status: "success",
+            }
+
+            res.json(response);
+          })
+
+        });
+
       })
     })
   }

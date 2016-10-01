@@ -5,8 +5,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         // Inserts seed entries
-        knex('categories').insert({id: 1, label: 'Test Category 1', slug: 'test-category-1', parent_id: null, description: 'test description'}),
-        knex('categories').insert({id: 2, label: 'Test Category 2', slug: 'test-category-2', parent_id: null, description: 'test description'}),
+        knex('categories').insert({id: 1, label: 'Test Category 1', slug: 'test-category-1', parent_id: 0, description: 'test description'}),
+        knex('categories').insert({id: 2, label: 'Test Category 2', slug: 'test-category-2', parent_id: 0, description: 'test description'}),
         knex('categories').insert({id: 3, label: 'Test Category 3', slug: 'test-category-3', parent_id: 1,    description: 'test description'})
       ]);
     });
