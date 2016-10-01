@@ -41,11 +41,21 @@ router.get('/edit/:id', function(req, res){
       var User = require('../entity/user');
       var user = new User();
 
-      if(id === 'new') {
-        user.id = id;
-        user.groupIds = [];
+      if(req.params.id === 'new') {
+        let user = {
+          id: req.params.id,
+          username : '',
+          realname : '',
+          email : '',
+          bio : '',
+          url : '',
+          status : 0,
+          groupIds: []
+        }
 
-        res.render('@user/edit.html', {data: user, groups: groups });
+        let viewData = {user: user, groups: groups }
+
+        res.render('@user/edit.html', viewData);
 
       } else {
 
@@ -68,7 +78,7 @@ router.get('/edit/:id', function(req, res){
                   user.groupIds.push(user.groups[i].id);
                 }
 
-                res.render('@user/edit.html', {data: user, groups: groups });
+                res.render('@user/edit.html', {user: user, groups: groups });
 
               })
 

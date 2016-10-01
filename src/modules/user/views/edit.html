@@ -23,15 +23,15 @@
 
 {% block form %}
 {# @todo add csrf #}
-    <input type="hidden" name="user[id]" value="{{ data.id }}" class="form-control">
+    <input type="hidden" name="user[id]" value="{{ user.id }}" class="form-control">
     <div class="col-md-4">
         <div class="form-group">
            <label for="username">{{ __('Username') }}</label>
-           <input type="text" name="user[username]" value="{{ data.username }}" class="form-control">
+           <input type="text" name="user[username]" value="{{ user.username }}" class="form-control">
         </div>
         <div class="form-group">
            <label for="email">{{ __('Email') }}</label>
-           <input type="email" name="user[email]" value="{{ data.email }}" class="form-control" autocomplete="off">
+           <input type="email" name="user[email]" value="{{ user.email }}" class="form-control" autocomplete="off">
         </div>
         <div class="form-group">
            <label for="email">{{ __('Password') }}</label>
@@ -46,7 +46,7 @@
            <select class="form-control" name="user[groups][]" multiple id="user_groups">
              {% for group in groups %}
              <option value="{{ group.id }}"
-              {% if isExists(group.id, data.groupIds) %}
+              {% if isExists(group.id, user.groupIds) %}
                 selected="selected"
               {% endif %}
              >
@@ -59,21 +59,21 @@
     <div class="col-md-4">
       <div class="form-group">
          <label for="realname">{{ __('Real Name') }}</label>
-         <input type="text" name="user[realname]" value="{{ data.realname }}" class="form-control">
+         <input type="text" name="user[realname]" value="{{ user.realname }}" class="form-control">
       </div>
       <div class="form-group">
          <label for="url">{{ __('Url') }}</label>
-         <input type="text" name="user[url]" value="{{ data.url }}" class="form-control">
+         <input type="text" name="user[url]" value="{{ user.url }}" class="form-control">
       </div>
       <div class="form-group">
          <label for="bio">{{ __('Bio') }}</label>
-         <textarea name="user[bio]" value="{{ data.bio }}" class="form-control"></textarea>
+         <textarea name="user[bio]" value="{{ user.bio }}" class="form-control"></textarea>
       </div>
       <div class="form-group">
         <label for="status">{{ __('Status') }}</label>
         <div>
            <label class="checkbox-inline">
-             <input type="checkbox" name="user[status]" value="didasaled" {% if data.status == 0 %}checked="checked"{% endif %} /> Disabled
+             <input type="checkbox" name="user[status]" value="didasaled" {% if user.status == 0 %}checked="checked"{% endif %} /> Disabled
            </label>
         </div>
       </div>

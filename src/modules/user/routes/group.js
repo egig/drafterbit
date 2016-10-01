@@ -23,13 +23,27 @@ router.get('/data', function(req, res) {
 
 
 router.get('/edit/:id', function(req, res){
-  var id = req.params.id;
-  var knex = req.app.get('knex');
+  let id = req.params.id;
+  let knex = req.app.get('knex');
+  let permissions = req.app.get('permissions');
 
-  knex('groups').first('*').where({id: id}).then(function(group){
-    var permissions = req.app.get('permissions');
-    res.render('@user/group/edit.html', {data: group, permissions: permissions});
-  });
+  if(req.params.id === 'new') {
+    let group = {
+      name: '',
+      description: '',
+    }
+
+    let viewData = {
+      group: group,
+      permissions: permissions
+    }
+
+    res.render('@user/group/edit.html', viewData);
+  } else {
+    knex('groups').first('*').where({id: id}).then(function(group){
+      res.render('@user/group/edit.html', {group: group, permissions: permissions});
+    });
+  }
 
 })
 
