@@ -84,14 +84,16 @@ drafterbit._boot = function() {
   this._initStaticMiddlewares();
   this._initSecurityMiddleware();
 
-  // add req user to nunjucks env as global
+  // add req to nunjucks env as global
+  // this must be defined after security
   let _this = this;
   this.use(function(req, res, next){
     try {
-      if(req.user) {
-        _this._nunjucksEnv.addGlobal('user', req.user);
+//      if(req.user) {
+//        _this._nunjucksEnv.addGlobal('user', req.user);
+        _this._nunjucksEnv.addGlobal('req', req);
         _this._nunjucksEnv.addGlobal('_jwtToken', req.session.JWToken);
-      }
+//      }
     } catch (e) {
       console.log(e);
     }
@@ -201,6 +203,7 @@ drafterbit._initBaseMiddlewares = function() {
   this.use(session({ secret: this._CONFIG.secret })); // session secret
   this.use(flash()); // use connect-flash for flash messages stored in session
 }
+
 
 drafterbit._initViews = function() {
 
