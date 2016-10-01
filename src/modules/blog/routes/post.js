@@ -22,6 +22,17 @@ router.get('/data', function(req, res){
   });
 });
 
+router.post('/data', function(req, res){
+
+  if(req.body.delete) {
+    let pM = req.app.model('@blog/post');
+    pM.delete(req.body.posts).then(function() {
+      res.json([]);
+    });
+  }
+
+});
+
 function _getChilds(parentId, categories) {
   let childs = [];
   for(let i=0; i<categories.length; i++) {

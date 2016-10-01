@@ -6,13 +6,17 @@
 {% endblock %}
 
 
+{% block formAttribute %}
+  {{ super() }} id="post-index-form" action="{{ deskUrl('/blog/post/data') }}"
+{% endblock %}
+
 {% block action %}
     <a href="/desk/blog/post/edit/new" class="btn btn-success">
         <i class="fa fa-plus" style=""></i> {{ __('New Post') }}
     </a>
 
-    <button class="btn btn-default uncreate-action" type="submit" name="action" value="trash">
-        <i class="fa fa-trash-o"></i> {{ __('Trash') }}
+    <button class="btn btn-default uncreate-action" type="submit" name="delete" value="1">
+        <i class="fa fa-trash-o"></i> {{ __('Delete') }}
     </button>
 {% endblock %}
 
@@ -38,6 +42,5 @@
     <script type="text/javascript">
         drafTerbit.blog.post.handleIndexForm('#post-index-form');
         drafTerbit.blog.post.handleIndexTable('#post-data-table', '#post-checkall');
-        drafTerbit.blog.post.handleFilter('.post-status-filter', '.post-category-filter', '.filter');
     </script>
 {% endblock %}

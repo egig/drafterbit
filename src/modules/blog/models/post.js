@@ -86,6 +86,16 @@ class PostModel extends Model {
       callback();
     });
   }
+
+  delete(ids){
+    let _this = this;
+    return this.knex('posts_tags').whereIn('post_id', ids).delete().then(function() {
+      return _this.knex('posts_categories').whereIn('post_id', ids).delete().then(function(){
+        return _this.knex('posts').whereIn('id', ids).delete();
+      });
+    });
+  }
+
 }
 
 export default PostModel;

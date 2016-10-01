@@ -1,22 +1,5 @@
 (function($, drafTerbit) {
 
-    if (window.location.hash == '') {
-        window.location.hash = '#category=0&status=all';
-    }
-
-    var hash = window.location.hash.substr(1);
-
-    // change trash, add restore button
-    var changeActions = function(s){
-        if (s === 'trashed') {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Delete')).val('delete');
-            $('.uncreate-action').before('<button type="submit" name="action" value="restore" class="btn btn-default posts-restore"><i class="fa fa-refresh"></i> '+__('Restore')+'</button>');
-        } else {
-            $('.uncreate-action').html('<i class="fa fa-trash-o"></i> '+__('Trash')).val('trash');
-            $('.posts-restore').remove();
-        }
-    }
-
     drafTerbit.blog = {};
     drafTerbit.blog.post = {
 
@@ -25,9 +8,9 @@
                     beforeSubmit: function(formData, jqForm, x){
 
                         for (var i=0; i < formData.length; i++) {
-                            if(formData[i].name == 'action') {
+                            if(formData[i].name == 'delete') {
 
-                                if (formData[i].value == 'delete') {
+                                if (formData[i].value == 1) {
                                     if (confirm(__('Are you sure ? this can not be undone.'))) {
                                         return true;
                                     }
@@ -48,6 +31,7 @@
             );
         },
 
+        /*
         handleFilter: function (statusFilterSelector, categoryFilterSelector, filterSelector) {
 
             var param = Qs.parse(hash);
@@ -74,9 +58,7 @@
                 var status = $(statusFilterSelector).val();
                 changeActions($(this).val());
             });
-
-            changeActions($(statusFilterSelector).val());
-        },
+        },*/
 
         handleIndexTable: function (selector, checkSelector) {
 
@@ -89,9 +71,10 @@
                     {data: 'updated_at'},
                 ],
                 ajax: {
+                  /*
                     data: function(data) {
                         return Qs.parse(hash);
-                    },
+                    },*/
                     url: drafTerbit.deskUrl+"blog/post/data",
                 }
             });
