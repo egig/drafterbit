@@ -29,8 +29,10 @@ router.get('/edit/:id', function(req, res){
 
   if(req.params.id === 'new') {
     let group = {
+      id: req.params.id,
       name: '',
       description: '',
+      permissions: [],
     }
 
     let viewData = {
@@ -41,10 +43,63 @@ router.get('/edit/:id', function(req, res){
     res.render('@user/group/edit.html', viewData);
   } else {
     knex('groups').first('*').where({id: id}).then(function(group){
+      group.permissions = JSON.parse(group.permissions);
       res.render('@user/group/edit.html', {group: group, permissions: permissions});
     });
   }
 
 })
+
+router.post('/save', function(req, res){
+
+  req.checkBody('group[name]', 'Name should not be empty').notEmpty();
+
+  let errors = req.validationErrors();
+  if(errors) {
+      var responseBody = {
+        errorType: 'validation',
+        errors: errors
+      }
+      res.json(responseBody, 400);
+      return;
+  }
+
+  let postData = req.body.group;
+  let gM = req.app.model('@user/group');
+
+  if(postData.id=== 'new') {
+
+    let insertData = {
+      name: postData.name,
+      description: postData.description,
+      permissions: JSON.stringify(postData.permissions)
+    }
+
+    gM.insert(insertData).then(function(a){
+      let response = {
+        id: a[0],
+        status: 'success',
+        message: 'Group saved',
+      }
+      res.json(response);
+    });
+  } else {
+    let updateData = {
+      name: postData.name,
+      description: postData.description,
+      permissions: JSON.stringify(postData.permissions)
+    }
+
+    gM.update(postData.id, updateData).then(function(){
+      let response = {
+        id: postData.id,
+        status: 'success',
+        message: 'Group updated',
+      }
+      res.json(response);
+    });
+  }
+
+});
 
 module.exports = router;
