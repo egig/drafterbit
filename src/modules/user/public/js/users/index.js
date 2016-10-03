@@ -32,8 +32,9 @@
             handleIndexTable: function(tableSelector, token) {
                 drafTerbit.user.dt =  $(tableSelector).dataTable(
                   {
-                      processing: true,
-                      serverSide: true,
+                      // @todo pending feature
+                      // processing: true,
+                      // serverSide: true,
                       responsive: true,
                       ajax: {
                           /*data: function(data) {

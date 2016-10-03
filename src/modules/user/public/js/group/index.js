@@ -6,7 +6,8 @@
         handleIndexTable: function(token) {
           drafTerbit.group.dt =   $("#group-data-table").dataTable(
               {
-                  serverSide: true,
+                // @todo pending feature
+                //  serverSide: true,
                   responsive: true,
                   ajax: {
                       url: drafTerbit.deskUrl+"user/group/data?token="+token
