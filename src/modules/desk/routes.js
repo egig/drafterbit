@@ -59,6 +59,16 @@ router.get('/system/log/data', function(req, res) {
   });
 })
 
+router.post('/system/log/data', function(req, res){
+
+  if(req.body.clear) {
+    const lM = req.app.model('@desk/log').clear().then(function(){
+      res.json({ status: 'success', message: 'Logs deleted' });
+
+    });
+  }
+});
+
 router.get('/js/drafterbit.js', function(req, res){
 
   res.header('Content-type','text/javascript');
