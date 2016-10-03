@@ -206,7 +206,7 @@ router.get('/profile', function(req, res) {
           user.groupIds.push(user.groups[i].id);
         }
 
-        res.render('@user/edit.html', {data: user, groups: groups });
+        res.render('@user/profile.html', {user: user, groups: groups });
       })
 
     });
