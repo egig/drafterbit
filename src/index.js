@@ -19,4 +19,3 @@ function createApplication(_ROOT) {
 
 exports = module.exports = createApplication;
 exports.Module = require('./module');
-exports.Object = require('./object');
