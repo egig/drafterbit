@@ -257,7 +257,7 @@ drafterbit._initConfig = function() {
   this._CONFIG = require(p);
   this.set('_CONFIG', this._CONFIG);
   this.set('secret', this._CONFIG.secret);
-  this.set('permissions', this._CONFIG.permissions);
+  this.set('permissions', require('./permissions'));
 }
 
 drafterbit._initRoutes = function() {
