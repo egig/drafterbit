@@ -124,6 +124,9 @@ router.post('/save', function(req, res){
       return;
   }
 
+  let postDataCat = postData.categories || [];
+  let postDataTags = postData.tags || [];
+
   if(postData.id == 'new') {
 
     let insertData = {
@@ -137,9 +140,9 @@ router.post('/save', function(req, res){
     }
 
     pM.insert(insertData).then(function(a){
-      pM.setCategories(a[0], postData.categories).then(function(){
+      pM.setCategories(a[0], postDataCat).then(function(){
         // handle post tags
-        tM.insertIfNotExists(postData.tags).then(function(tagIds) {
+        tM.insertIfNotExists(postDataTags).then(function(tagIds) {
           pM.setTags(a[0], tagIds).then(function(){
 
             let response = {
@@ -165,9 +168,9 @@ router.post('/save', function(req, res){
     }
 
     pM.update(postData.id, updateData, function(err){
-      pM.setCategories(postData.id, postData.categories).then(function(){
+      pM.setCategories(postData.id, postDataCat).then(function(){
 
-        tM.insertIfNotExists(postData.tags).then(function(tagIds) {
+        tM.insertIfNotExists(postDataTags).then(function(tagIds) {
           pM.setTags(postData.id, tagIds).then(function(){
 
             let response = {
