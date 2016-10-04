@@ -38,8 +38,6 @@ router.get('/edit/:id', function(req, res){
     var knex = req.app.get('knex');
 
     knex('groups').select('*').then(function(groups){
-      var User = require('../entity/user');
-      var user = new User();
 
       if(req.params.id === 'new') {
         let user = {
