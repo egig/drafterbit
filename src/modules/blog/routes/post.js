@@ -4,7 +4,7 @@ import moment from 'moment';
 const router = express.Router();
 
 router.get('/', function(req, res){
-    res.render('@blog/post/index.html');
+    res.render('@blog/post/index');
 });
 
 router.get('/data', function(req, res){
@@ -81,7 +81,7 @@ router.get('/edit/:id', function(req, res){
           viewData.post= p;
           viewData.tags= '['+tagArray.join(',')+']';
 
-          res.render('@blog/post/edit.html', viewData);
+          res.render('@blog/post/edit', viewData);
         })
 
       } else {
@@ -98,7 +98,7 @@ router.get('/edit/:id', function(req, res){
         viewData.post= post;
         viewData.tags= '[]';
 
-        res.render('@blog/post/edit.html', viewData);
+        res.render('@blog/post/edit', viewData);
       }
 
     });

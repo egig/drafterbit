@@ -11,7 +11,7 @@ router.get('/login', function(req, res) {
 
   var loginError = req.flash('loginError');
 
-  res.render('@security/login.html', {loginError: loginError});
+  res.render('@security/login', {loginError: loginError});
 });
 
 router.post('/login', function(req, res) {
@@ -52,7 +52,7 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/signup', function(req, res) {
-    res.render('signup.html');
+    res.render('signup');
 });
 
 router.post('/signup', function(req, res) {

@@ -30,18 +30,18 @@ router.get('/', function(req, res) {
                }
             }
 
-            res.render('@desk/index.html', {
+            res.render('@desk/index', {
               leftPanels: leftPanels,
               rightPanels: rightPanels,
             });
           });
       });*/
 
-      res.render('@desk/index.html', {});
+      res.render('@desk/index', {});
 });
 
 router.get('/system/log', function(req, res) {
-  res.render('@desk/system/log.html');
+  res.render('@desk/system/log');
 })
 
 router.get('/system/log/data', function(req, res) {

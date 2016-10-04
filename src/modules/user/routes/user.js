@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   var knex = req.app.get('knex');
 
   knex('users').select('*').then(function(users) {
-    res.render('@user/index.html', {
+    res.render('@user/index', {
       users: users
     });
   });
@@ -55,7 +55,7 @@ router.get('/edit/:id', function(req, res){
 
         let viewData = {user: user, groups: groups }
 
-        res.render('@user/edit.html', viewData);
+        res.render('@user/edit', viewData);
 
       } else {
 
@@ -78,7 +78,7 @@ router.get('/edit/:id', function(req, res){
                   user.groupIds.push(user.groups[i].id);
                 }
 
-                res.render('@user/edit.html', {user: user, groups: groups });
+                res.render('@user/edit', {user: user, groups: groups });
 
               })
 
@@ -206,7 +206,7 @@ router.get('/profile', function(req, res) {
           user.groupIds.push(user.groups[i].id);
         }
 
-        res.render('@user/profile.html', {user: user, groups: groups });
+        res.render('@user/profile', {user: user, groups: groups });
       })
 
     });

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-  res.render('@user/group/index.html');
+  res.render('@user/group/index');
 })
 
 router.get('/data', function(req, res) {
@@ -40,11 +40,11 @@ router.get('/edit/:id', function(req, res){
       permissions: permissions
     }
 
-    res.render('@user/group/edit.html', viewData);
+    res.render('@user/group/edit', viewData);
   } else {
     knex('groups').first('*').where({id: id}).then(function(group){
       group.permissions = JSON.parse(group.permissions);
-      res.render('@user/group/edit.html', {group: group, permissions: permissions});
+      res.render('@user/group/edit', {group: group, permissions: permissions});
     });
   }
 

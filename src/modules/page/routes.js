@@ -3,7 +3,7 @@ var router  = express.Router();
 const moment = require('moment');
 
 router.get('/page', function(req, res) {
-  res.render('@page/index.html');
+  res.render('@page/index');
 
 });
 
@@ -53,7 +53,7 @@ router.get('/page/edit/:id', function(req, res) {
       page: page
     }
 
-    res.render('@page/edit.html', viewData);
+    res.render('@page/edit', viewData);
   } else {
     let pM = req.app.model('@page/page');
     pM.getOneById(req.params.id).then(function(page){
@@ -62,7 +62,7 @@ router.get('/page/edit/:id', function(req, res) {
         page: page
       }
 
-      res.render('@page/edit.html', viewData);
+      res.render('@page/edit', viewData);
     });
   }
 
@@ -144,9 +144,9 @@ router.get('/:slug?', function(req, res, next) {
   knex('pages').first().where('slug', slug).then(function(page){
 
     if(!page) {
-      return res.render('@theme/404.html')
+      return res.render('@theme/404')
     }
-    res.render('@theme/content/page/view.html', {page: page});
+    res.render('@theme/content/page/view', {page: page});
 
   }).catch(function(e){
      next(e);

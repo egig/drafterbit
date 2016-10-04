@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res){
 
-    res.render('@blog/tag/index.html');
+    res.render('@blog/tag/index');
 });
 
 
@@ -47,7 +47,7 @@ router.get('/edit/:id', function(req, res){
         description: ''
       }
     }
-    res.render('@blog/tag/edit.html', viewData);
+    res.render('@blog/tag/edit', viewData);
 
   } else {
     let tM = req.app.model('@blog/tag');
@@ -56,7 +56,7 @@ router.get('/edit/:id', function(req, res){
         tag: tag
       }
 
-      res.render('@blog/tag/edit.html', viewData);
+      res.render('@blog/tag/edit', viewData);
     })
   }
 })

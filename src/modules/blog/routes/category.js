@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res){
 
-    res.render('@blog/category/index.html');
+    res.render('@blog/category/index');
 });
 
 
@@ -55,7 +55,7 @@ router.get('/edit/:id', function(req, res){
         },
         parent_options: parents
       }
-      res.render('@blog/category/edit.html', viewData);
+      res.render('@blog/category/edit', viewData);
 
     });
   } else {
@@ -67,7 +67,7 @@ router.get('/edit/:id', function(req, res){
           parent_options: parents
         }
 
-        res.render('@blog/category/edit.html', viewData);
+        res.render('@blog/category/edit', viewData);
 
       });
     })

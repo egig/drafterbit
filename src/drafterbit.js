@@ -117,7 +117,7 @@ drafterbit._initErrorhandler = function() {
   if (this.get('env') === 'development') {
     this.use(function(err, req, res, next) {
       res.status(err.status || 500);
-      res.render('error.html', {
+      res.render('error', {
         message: err.message,
         error: err
       });
@@ -128,7 +128,7 @@ drafterbit._initErrorhandler = function() {
   // no stacktraces leaked to user
   this.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error.html', {
+    res.render('error', {
       message: err.message,
       error: {}
     });
@@ -225,6 +225,8 @@ drafterbit._initViews = function() {
   this._nunjucksEnv.addGlobal('deskUrl', function(path) {
     return _this.deskUrl(path);
   });
+
+  this.set('view engine', 'html');
 }
 
 
