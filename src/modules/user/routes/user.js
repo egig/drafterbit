@@ -114,6 +114,8 @@ router.post('/save', function(req, res){
   // @todo validation
   var knex = req.app.get('knex');
 
+  let postDataGroups = u.groups || [];
+
   if(u.id === 'new') {
     knex('users').insert({
       username: u.username,
@@ -125,11 +127,15 @@ router.post('/save', function(req, res){
       status: u.status,
     }).then(function(a) {
 
+      if(!postDataGroups.length) {
+        return res.json({id: a[0], status: 'success', message: "Users saved"});
+      }
+
       knex('users_groups').where('user_id', a[0]).delete().then(function(){
 
           let quaries = [];
-          for(let i=0; i<u.groups.length; i++) {
-            quaries.push(knex('users_groups').insert({ user_id: a[0], group_id: u.groups[i] }));
+          for(let i=0; i<postDataGroups.length; i++) {
+            quaries.push(knex('users_groups').insert({ user_id: a[0], group_id: postDataGroups[i] }));
           }
 
           knex.Promise.all(quaries).then(function(){
@@ -152,14 +158,20 @@ router.post('/save', function(req, res){
       user.password = bcrypt.hashSync(u.password);
     }
 
+
+    // @todo clean this
     knex('users').where('id', u.id).update(user)
       .then(function(a) {
+
+        if(!postDataGroups.length) {
+          return res.json({id: u.id, status: 'success', message: "Users saved"});
+        }
 
         knex('users_groups').where('user_id', u.id).delete().then(function(){
 
             let quaries = [];
-            for(let i=0; i<u.groups.length; i++) {
-              quaries.push(knex('users_groups').insert({ user_id: u.id, group_id: u.groups[i] }));
+            for(let i=0; i<postDataGroups.length; i++) {
+              quaries.push(knex('users_groups').insert({ user_id: u.id, group_id: postDataGroups[i] }));
             }
 
             knex.Promise.all(quaries).then(function(){
@@ -167,6 +179,7 @@ router.post('/save', function(req, res){
             })
 
         });
+
       });
   }
 
