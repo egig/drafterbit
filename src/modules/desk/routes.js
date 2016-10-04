@@ -7,37 +7,7 @@ router.get('/', function(req, res) {
     var appLogger = req.app.get('appLogger');
     appLogger.log("info", req.user.realname+" visited dashboard");
 
-    /* @todo pendin feature
-    var userId = req.user.id;
-    knex('dashboards').first().where({user_id: userId, status: 1})
-      .then(function(dashboard){
-        knex('panels').select('*').where({dashboard_id: dashboard.id})
-          .then(function(panels){
-
-            var leftPanels = [];
-            var rightPanels = [];
-
-            for(var i=0;i<panels.length;i++){
-
-               panels[i].view = req.app.get('panelManager').getPanel(panels[i].type).getView();
-
-               if(panels[i].position === 'left') {
-                 leftPanels.push(panels[i]);
-               }
-
-               if(panels[i].position === 'right') {
-                 rightPanels.push(panels[i]);
-               }
-            }
-
-            res.render('@desk/index', {
-              leftPanels: leftPanels,
-              rightPanels: rightPanels,
-            });
-          });
-      });*/
-
-      res.render('@desk/index', {});
+    res.render('@desk/index', {});
 });
 
 router.get('/system/log', function(req, res) {
