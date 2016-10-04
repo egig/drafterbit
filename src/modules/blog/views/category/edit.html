@@ -24,6 +24,8 @@
 {% endblock %}
 
 {% block form %}
+<input type="hidden" name="category[id]" value="{{ category.id }}">
+<div class="row">
     <div class="col-md-4">
         <div class="form-group">
           <label for="category[label]">{{ __('Label') }}</label>
@@ -47,7 +49,7 @@
           <textarea name="category[description]" rows="8" cols="40" class="form-control">{{ category.description }}</textarea>
         </div>
     </div>
-    <input type="hidden" name="category[id]" value="{{ category.id }}">
+</div>
 {% endblock %}
 
 {% block js %}

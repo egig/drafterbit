@@ -39,6 +39,8 @@
 {% endblock %}
 
 {% block form %}
+<input type="hidden" name="post[id]" value="{{ post.id }}">
+<div class="row">
     <div class="clearfix col-md-9">
         <div class="form-group">
           <input type="text" name="post[title]" value="{{ post.title }}" class="form-control input-lg" placeholder="Title">
@@ -99,7 +101,7 @@
             <input placeholder="Tags" id="tags" name="post[tags]"/>
          </div>
     </div>
-    <input type="hidden" name="post[id]" value="{{ post.id }}">
+</div>
 {% endblock %}
 
 {% block js %}

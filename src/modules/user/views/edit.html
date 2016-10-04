@@ -23,7 +23,8 @@
 
 {% block form %}
 {# @todo add csrf #}
-    <input type="hidden" name="user[id]" value="{{ user.id }}" class="form-control">
+<input type="hidden" name="user[id]" value="{{ user.id }}" class="form-control">
+<div class="row">
     <div class="col-md-4">
         <div class="form-group">
            <label for="username">{{ __('Username') }}</label>
@@ -78,6 +79,7 @@
         </div>
       </div>
     </div>
+</div>
 
 {% endblock %}
 

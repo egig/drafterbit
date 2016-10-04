@@ -17,6 +17,8 @@
 {% endblock %}
 
 {% block form %}
+<input type="hidden" name="page[id]" value="{{ page.id }}">
+<div class="row">
     <div class="col-md-9">
         <div class="form-group">
             <input type="text" name="page[title]" value="{{ page.title }}" placeholder="{{ __('Title') }}" class="form-control input-lg">
@@ -43,7 +45,7 @@
            </select>
          </div>
     </div>
-    <input type="hidden" name="page[id]" value="{{ page.id }}">
+</div>
 {% endblock %}
 
 {% block js %}

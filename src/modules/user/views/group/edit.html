@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block form %}
+<div class="row">
   <input type="hidden" name="group[id]" value="{{ group.id }}">
     <div class="col-md-8">
         <div class="form-group">
@@ -27,38 +28,45 @@
           <textarea name="group[description]" rows="4" cols="40" class="form-control">{{ group.description }}</textarea>
         </div>
     </div>
-    <div class="clearfix"></div>
+</div>
+<div class="row">
+
     <div class="col-md-8">
       <h4>{{ __('Permissions') }}</h4>
     </div>
     <div class="clearfix"></div>
-    {% for ns, permission in permissions %}
-    <div class="panel-row col-md-4">
-      <div class="panel-item">
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h3 class="panel-title">{{ ns }}</h3>
-              </div>
-              <div class="panel-body">
-                <!-- @todo move this inline style --->
-                <ul style="list-style:none;padding:0;warning:0;">
-                {% for id, label in permission %}
-                  <li>
-                    <div class="checkbox">
-                      <label><input type="checkbox" name="group[permissions]" value="{{ id }}"
-                        {% if (isExists(id, group.permissions)) %}
-                          checked="checked"
-                        {% endif %}
-                        > {{ label }}</label>
-                    </div>
-                  </li>
-                {% endfor %}
-                </ul>
-              </div>
-          </div>
+    <div class="col-md-8">
+      <div class="row">
+      {% for ns, permission in permissions %}
+      <div class="panel-row col-md-6">
+        <div class="panel-item">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ ns }}</h3>
+                </div>
+                <div class="panel-body" style="max-height:200px;overflow:auto;">
+                  <!-- @todo move this inline style --->
+                  <ul style="list-style:none;padding:0;warning:0;">
+                  {% for id, label in permission %}
+                    <li>
+                      <div class="checkbox">
+                        <label><input type="checkbox" name="group[permissions]" value="{{ id }}"
+                          {% if (isExists(id, group.permissions)) %}
+                            checked="checked"
+                          {% endif %}
+                          > {{ label }}</label>
+                      </div>
+                    </li>
+                  {% endfor %}
+                  </ul>
+                </div>
+            </div>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}
 
