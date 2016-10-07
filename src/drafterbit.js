@@ -20,11 +20,22 @@ import nunjucksModuleLoader from './nunjucks/module-loader';
 
 const drafterbit = express.application;
 
-
+/**
+ *  Get deskUrl appended by given path.
+ *
+ * @param strin path
+ * @return string
+ */
 drafterbit.deskUrl = function(path) {
   return this._CONFIG.basePath+'/'+path.replace(/^\/|\/$/g, '');
 }
 
+/**
+ * Get a module by name;
+ *
+ * @param strin name
+ * @return object
+ */
 drafterbit.getModule = function(name) {
 
   if( !(name in this._modules)) {
@@ -34,6 +45,12 @@ drafterbit.getModule = function(name) {
   return this._modules[name];
 }
 
+/**
+ * Get modle by given name.
+ *
+ * @param strin name
+ * @return object
+ */
 drafterbit.model = function(name) {
 
     if(typeof this._models[name] !== 'undefined') {
@@ -62,10 +79,22 @@ drafterbit.model = function(name) {
     return this._models[name];
 }
 
+/**
+ * This function can be overrided on app
+ *
+ * @return array
+ */
+drafterbit.registerModules = function(){
+  return [];
+}
+
+/**
+ * Load application from directory, this function must be called once
+ * before run application to load routes, models, etc.
+ *
+ * @param string _ROOT
+ */
 drafterbit.load = function load(_ROOT) {
-  if(this.registerModules === undefined) {
-    throw Error("Drafterbit app must declare registerModules method before boot");
-  }
 
   this._ROOT = _ROOT;
   this._models = [];
@@ -76,6 +105,12 @@ drafterbit.load = function load(_ROOT) {
   this._boot();
 }
 
+
+/**
+ * Boot the application.
+ *
+ * @return boolean
+ */
 drafterbit._boot = function() {
   this._initDB();
   this._initAppLogger();
@@ -89,11 +124,8 @@ drafterbit._boot = function() {
   let _this = this;
   this.use(function(req, res, next){
     try {
-//      if(req.user) {
-//        _this._nunjucksEnv.addGlobal('user', req.user);
         _this._nunjucksEnv.addGlobal('req', req);
         _this._nunjucksEnv.addGlobal('_jwtToken', req.session.JWToken);
-//      }
     } catch (e) {
       console.log(e);
     }
@@ -113,6 +145,11 @@ drafterbit._boot = function() {
   return true;
 }
 
+/**
+ * Init error handler, this must be called in the end
+ * @see drafterbit._boot
+ *
+ */
 drafterbit._initErrorhandler = function() {
   if (this.get('env') === 'development') {
     this.use(function(err, req, res, next) {
@@ -135,6 +172,11 @@ drafterbit._initErrorhandler = function() {
   });
 }
 
+/**
+ * Init security, for now, we simply use JWT auth.
+ *
+ * @return undefined
+ */
 drafterbit._initSecurityMiddleware = function(){
   // JWT simple auth setup, we redirect unauthorized to login page
   // @todo move secret to config
@@ -170,6 +212,11 @@ drafterbit._initSecurityMiddleware = function(){
   });
 }
 
+/**
+ * We create path to each public path in module.
+ *
+ * @return undefined
+ */
 drafterbit._initStaticMiddlewares = function() {
   for(var name in this._modules) {
     if(name === this._CONFIG.mainModuleName) {
@@ -180,6 +227,11 @@ drafterbit._initStaticMiddlewares = function() {
   }
 }
 
+/**
+ * Setting mandatory middleware such as session, logger, etc.
+ *
+ * @return undefined
+ */
 drafterbit._initBaseMiddlewares = function() {
   this.use(logger('dev'));
   this.use(bodyParser.urlencoded({ extended: true }));
@@ -193,7 +245,12 @@ drafterbit._initBaseMiddlewares = function() {
   this.use(flash()); // use connect-flash for flash messages stored in session
 }
 
-
+/**
+ * We use nunjucks as default template engine.
+ * Here we setup the environment and set express view engine to html.
+ *
+ * @return undefined
+ */
 drafterbit._initViews = function() {
 
   let viewPaths = [this._ROOT+'/views'];
@@ -229,7 +286,11 @@ drafterbit._initViews = function() {
   this.set('view engine', 'html');
 }
 
-
+/**
+ * We'll try to log user activity to database.
+ *
+ * @return undefined
+ */
 drafterbit._initAppLogger = function() {
 
   let winstonKnex = require('./winston/transports/knex')
@@ -243,27 +304,42 @@ drafterbit._initAppLogger = function() {
   this.set('appLogger', appLogger);
 }
 
+/**
+ * Simply user knexjs as database access library.
+ *
+ * @return undefined
+ */
 drafterbit._initDB = function(){
   let knex = require('knex')(this._CONFIG.db);
   this.set('knex', knex);
   this.set('db', knex); // alias
 }
 
+/**
+ * Init configuration, must be called first.
+ *
+ * @see drafterbit._boot
+ * @todo distinguish per environment
+ * @todo validate config file content
+ */
 drafterbit._initConfig = function() {
   let p = path.join(this._ROOT, 'config.js');
   if(fs.accessSync(p, fs.constants.F_OK)) {
     throw new Error("You must create config.js in your project root director");
   }
 
-  // @todo validate config
   this._CONFIG = require(p);
   this.set('_CONFIG', this._CONFIG);
   this.set('secret', this._CONFIG.secret);
   this.set('permissions', require('./permissions'));
 }
 
+/**
+ * Init routing.
+ * @todo add route priority options
+ *
+ */
 drafterbit._initRoutes = function() {
-  // @todo add route priority options
   for(var name in this._modules) {
 
     let routes = this._modules[name].getRoutes();
@@ -279,6 +355,9 @@ drafterbit._initRoutes = function() {
   }
 }
 
+/**
+ * Init modules.
+ */
 drafterbit._initModules = function(){
   let _this = this;
   // create main/fallback module first
