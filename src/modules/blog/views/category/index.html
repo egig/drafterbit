@@ -4,12 +4,17 @@
   {{ __('Categories') }}
 {% endblock %}
 
+{% block formAttribute %}
+  {{ super() }}
+  id="category-index-form" action="/desk/blog/category/data"
+{% endblock %}
+
 {% block action %}
-    <a href="/blog/category/edit/new" class="btn btn-success">
+    <a href="/desk/blog/category/edit/new" class="btn btn-success">
         <i class="fa fa-plus" style=""></i> {{ __('New Category') }}
     </a>
 
-    <button class="btn btn-default uncreate-action" type="submit" name="action" value="delete">
+    <button class="btn btn-default uncreate-action" type="submit" name="delete" value="1">
         <i class="fa fa-trash-o"></i> {{ __('Delete') }}
     </button>
 {% endblock %}
@@ -19,7 +24,7 @@
         <thead>
             <tr>
                 <th class="sorting" width="15">
-                    <input id="{{ view_id }}-checkall" type="checkbox">
+                    <input id="category-checkall" type="checkbox">
                 </th>
                 <th width="30%">{{ __('Label') }}</th>
                 <th width="70%">{{ __('Description') }}</th>

@@ -1,22 +1,19 @@
 var assert = require('assert');
-var express = require('express');
 
 describe('drafterbit', function(){
 
-    describe('boot method', function(){
+    describe('load method', function(){
         it('should throw error if no registerModules defined', function(){
 
-            var app = express();
-            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
-            assert.throws(drafterbitApp.boot, Error);
+            var drafterbitApp = require('../lib/index')();
+            assert.throws(drafterbitApp.load, Error);
         });
 
         it('should throw error if no config file', function(){
 
-            var app = express();
-            var drafterbitApp = require('../src/drafterbit')(__dirname, app);
+          var drafterbitApp = require('../lib/index')();
             drafterbitApp.registerModules = function() { return [] };
-            assert.throws(drafterbitApp.boot, Error);
+            assert.throws(drafterbitApp.load, Error);
         });
 
     });

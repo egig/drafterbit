@@ -1,8 +1,9 @@
-var Module = require('./../../module');
+import Module from './../../module';
 
-module.exports = Module.extend({
-
-  getName: function() {
-      return 'page';
+class PageModule extends  Module {
+  getName(){
+   return 'page';
   }
-});
+}
+
+export default PageModule;

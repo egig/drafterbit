@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
+import bcrypt from  'bcrypt-nodejs';
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -7,7 +8,7 @@ router.get('/', function(req, res) {
   var knex = req.app.get('knex');
 
   knex('users').select('*').then(function(users) {
-    res.render('@user/index.html', {
+    res.render('@user/index', {
       users: users
     });
   });
@@ -15,23 +16,19 @@ router.get('/', function(req, res) {
 
 router.get('/data', function(req, res) {
 
-  var knex = req.app.get('knex');
+  const uM = req.app.model('@user/user');
 
-  var UserModel = require('../models/user');
-  var uM = new UserModel({knex: knex});
+  uM.getAll().then(function(users) {
 
-  uM.getAll(function(err, users) {
-    if(err) {
-      return console.log(err)
-    }
-
-    var content = {
+    let content = {
       recordsTotal: users.length,
       recordsFiltered: users.length,
       data: users
     }
     res.json(content);
 
+  }).catch(function(e){
+    return console.log(e);
   })
 
 });
@@ -41,14 +38,22 @@ router.get('/edit/:id', function(req, res){
     var knex = req.app.get('knex');
 
     knex('groups').select('*').then(function(groups){
-      var User = require('../entity/user');
-      var user = new User();
 
-      if(id === 'new') {
-        user.id = id;
-        user.groupIds = [];
+      if(req.params.id === 'new') {
+        let user = {
+          id: req.params.id,
+          username : '',
+          realname : '',
+          email : '',
+          bio : '',
+          url : '',
+          status : 0,
+          groupIds: []
+        }
 
-        res.render('@user/edit.html', {data: user, groups: groups });
+        let viewData = {user: user, groups: groups }
+
+        res.render('@user/edit', viewData);
 
       } else {
 
@@ -71,7 +76,7 @@ router.get('/edit/:id', function(req, res){
                   user.groupIds.push(user.groups[i].id);
                 }
 
-                res.render('@user/edit.html', {data: user, groups: groups });
+                res.render('@user/edit', {user: user, groups: groups });
 
               })
 
@@ -83,7 +88,7 @@ router.get('/edit/:id', function(req, res){
 });
 
 router.post('/save', function(req, res){
-  var u = req.body.user;
+  let u = req.body.user;
 
   // validation
   req.checkBody('user[username]', 'Username should not be empty').notEmpty();
@@ -107,32 +112,73 @@ router.post('/save', function(req, res){
   // @todo validation
   var knex = req.app.get('knex');
 
+  let postDataGroups = u.groups || [];
+
   if(u.id === 'new') {
     knex('users').insert({
       username: u.username,
       email: u.email,
-      password: u.password,
+      password: bcrypt.hashSync(u.password),
       realname: u.realname,
       url: u.url,
       bio: u.bio,
       status: u.status,
     }).then(function(a) {
-      res.json({id: a[0], status: 'success', message: "Users saved"});
+
+      if(!postDataGroups.length) {
+        return res.json({id: a[0], status: 'success', message: "Users saved"});
+      }
+
+      knex('users_groups').where('user_id', a[0]).delete().then(function(){
+
+          let quaries = [];
+          for(let i=0; i<postDataGroups.length; i++) {
+            quaries.push(knex('users_groups').insert({ user_id: a[0], group_id: postDataGroups[i] }));
+          }
+
+          knex.Promise.all(quaries).then(function(){
+            res.json({id: a[0], status: 'success', message: "Users saved"});
+          })
+      });
 
     });
   } else {
-    knex('users').where('id', u.id).update({
+    let user = {
       username: u.username,
       email: u.email,
-      password: u.password,
       realname: u.realname,
       url: u.url,
       bio: u.bio,
       status: u.status,
-    }).then(function(a) {
-      res.json({id: u.id, status: 'success', message: "Users saved"});
+    };
 
-    });
+    if(u.password.trim() !== '') {
+      user.password = bcrypt.hashSync(u.password);
+    }
+
+
+    // @todo clean this
+    knex('users').where('id', u.id).update(user)
+      .then(function(a) {
+
+        if(!postDataGroups.length) {
+          return res.json({id: u.id, status: 'success', message: "Users saved"});
+        }
+
+        knex('users_groups').where('user_id', u.id).delete().then(function(){
+
+            let quaries = [];
+            for(let i=0; i<postDataGroups.length; i++) {
+              quaries.push(knex('users_groups').insert({ user_id: u.id, group_id: postDataGroups[i] }));
+            }
+
+            knex.Promise.all(quaries).then(function(){
+                res.json({id: u.id, status: 'success', message: "Users saved"});
+            })
+
+        });
+
+      });
   }
 
 });
@@ -171,7 +217,7 @@ router.get('/profile', function(req, res) {
           user.groupIds.push(user.groups[i].id);
         }
 
-        res.render('@user/edit.html', {data: user, groups: groups });
+        res.render('@user/profile', {user: user, groups: groups });
       })
 
     });

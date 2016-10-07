@@ -1,8 +1,9 @@
-var Module = require('./../../module');
+import Module from './../../module';
 
-module.exports = Module.extend({
+class SecurityModule extends  Module {
+  getName(){
+   return 'security';
+  }
+}
 
-    getName: function() {
-        return 'security';
-    }
-});
+export default SecurityModule;

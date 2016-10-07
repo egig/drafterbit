@@ -1,6 +1,6 @@
 (function($, drafTerbit) {
 
-    var dt = $("#log-data-table").dataTable(
+    let dt = $("#log-data-table").dataTable(
         {
             ajax: {
                 url: drafTerbit.deskUrl+'system/log/data'
@@ -19,5 +19,19 @@
     drafTerbit.replaceDTSearch(dt);
 
     $('#log-checkall').checkAll({showIndeterminate:true});
+
+    // handle inder form
+    $('#log-index-form').ajaxForm(
+        {
+            beforeSend: function(){
+              return confirm(__('Are you sure you want to clear logs, this con not be undone ?'));
+            },
+            success: function(response){
+                $.notify(response.message, response.status);
+                dt.api().ajax.reload();
+            }
+        }
+    );
+
 
 })(jQuery,drafTerbit);

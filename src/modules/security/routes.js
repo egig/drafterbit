@@ -1,6 +1,7 @@
-var express = require('express');
-var router  = express.Router();
-var jwt = require('jsonwebtoken');
+import express from 'express';
+const router = express.Router();
+import jwt from 'jsonwebtoken';
+import bcrypt from  'bcrypt-nodejs';
 
 router.get('/login', function(req, res) {
 
@@ -10,7 +11,7 @@ router.get('/login', function(req, res) {
 
   var loginError = req.flash('loginError');
 
-  res.render('@security/login.html', {loginError: loginError});
+  res.render('@security/login', {loginError: loginError});
 });
 
 router.post('/login', function(req, res) {
@@ -32,26 +33,26 @@ router.post('/login', function(req, res) {
 
     knex('users').first().where({
       email: req.body._email,
-      password: req.body._password // @todo encryption
     }).then(function(user){
-      console.log(user);
 
-      if(user) {
-        var token = jwt.sign(user, req.app.get('secret'));
-
-        req.session.JWToken = token;
-
-        return res.redirect(next);
-      } else {
+      if(!user) {
         req.flash('loginError', 'User not found');
-        return res.redirect('/login');
+        return res.redirect(req.app.deskUrl('/login'));
       }
-    });
 
+      if(!bcrypt.compareSync(req.body._password, user.password)) {
+        req.flash('loginError', 'Password or email incorrect');
+        return res.redirect(req.app.deskUrl('/login'));
+      }
+
+      var token = jwt.sign(user, req.app.get('secret'));
+      req.session.JWToken = token;
+      return res.redirect(next);
+    });
 });
 
 router.get('/signup', function(req, res) {
-    res.render('signup.html');
+    res.render('signup');
 });
 
 router.post('/signup', function(req, res) {
@@ -60,7 +61,7 @@ router.post('/signup', function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.session.JWToken = null;
-    res.redirect('/login');
+    res.redirect(req.app.deskUrl('/login'));
 });
 
 

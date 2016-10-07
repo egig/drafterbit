@@ -1,292 +1,395 @@
-const path = require('path');
-const fs = require('fs');
+import fs from 'fs';
+import path from 'path';
 
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const nunjucks = require('nunjucks');
-const session = require('express-session');
-const flash = require('connect-flash');
-const express = require('express');
-const expressJWT = require('express-jwt');
-const expressValidator = require('express-validator');
-const winston = require('winston');
-const jwt = require('jsonwebtoken');
-const _ = require('lodash');
+import favicon from 'serve-favicon';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import nunjucks from 'nunjucks';
+import session from 'express-session';
+import flash from 'connect-flash';
+import express from 'express';
+import expressJWT from 'express-jwt';
+import expressValidator from 'express-validator';
+import winston from 'winston';
+import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
-const Module = require('./module');
-const nunjucksModuleLoader = require('./nunjucks/module-loader');
+import Module from './module';
+import nunjucksModuleLoader from './nunjucks/module-loader';
 
-module.exports = function(root, app){
+const drafterbit = express.application;
 
-    var config = [];
+/**
+ *  Get deskUrl appended by given path.
+ *
+ * @param strin path
+ * @return string
+ */
+drafterbit.deskUrl = function(path) {
+  return this._CONFIG.basePath+'/'+path.replace(/^\/|\/$/g, '');
+}
 
-    var _modules = [];
-    var _boot = function(paths) {
-        config = _initConfig();
-        app.set('secret', config.secret);
-        app.set('permissions', config.permissions);
+/**
+ * Get a module by name;
+ *
+ * @param strin name
+ * @return object
+ */
+drafterbit.getModule = function(name) {
 
-        _initModules(paths);
-        _initDB();
-        _initAppLogger();
-        var nunjucksEnv = _initViews();
-        _initBaseMiddlewares();
-        _initStaticMiddlewares();
-        _initSecurityMiddleware();
+  if( !(name in this._modules)) {
+    throw Error("Unregistered module: '"+name+"'");
+  }
 
-        // add req user to nunjucks env as global
-        app.use(function(req, res, next){
-          try {
-            if(req.user) {
-              nunjucksEnv.addGlobal('user', req.user);
-              nunjucksEnv.addGlobal('_jwtToken', req.session.JWToken);
-            }
-          } catch (e) {
-            console.log(e);
-          }
-          next();
-        });
+  return this._modules[name];
+}
 
-        _initRoutes();
-        _initThemes();
+/**
+ * Get modle by given name.
+ *
+ * @param strin name
+ * @return object
+ */
+drafterbit.model = function(name) {
 
-        // not found handle
-        app.use(function(req, res, next) {
-          var err = new Error('Not Found');
-          err.status = 404;
-          next(err);
-        });
-
-        _initErrorhandler();
-        return true;
+    if(typeof this._models[name] !== 'undefined') {
+      return this._models[name];
     }
 
-    var _initConfig = function() {
-      var p = path.join(root, 'config.js');
-      if(fs.accessSync(p, fs.constants.F_OK)) {
-        throw new Error("You must create config.js in your project");
-      }
+    if(name.indexOf('@') === 0) {
+        let tmp = name.split('/');
+        let module = tmp.shift().substr(1);
 
-      return require(p);
-    }
-
-    var _initThemes =  function(){
-      var ThemeManager = require('./theme-manager');
-      var themeManager = new ThemeManager(root);
-
-      app.set('themeManager', themeManager);
-    }
-
-    var _initAppLogger = function() {
-
-      var winstonKnex = require('./winston/transports/knex')
-
-      var appLogger = new (winston.Logger)({
-        transports: [
-          new (winston.transports.Knex)({ tableName: 'logs', knexInstance: app.get('knex')  })
-        ]
-      });
-
-      app.set('appLogger', appLogger);
-    }
-
-    var _initStaticMiddlewares = function() {
-      for(var name in _modules) {
-          app.use('/'+name, express.static( _modules[name].getPublicPath()));
-      }
-    }
-
-    var _initSecurityMiddleware = function(){
-      // JWT simple auth setup, we redirect unauthorized to login page
-      // @todo move secret to config
-      app.use(/^\/desk/,expressJWT({
-          secret: config.secret,
-          getToken: function fromHeaderOrQuerystring (req) {
-              if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-                  return req.headers.authorization.split(' ')[1];
-              } else if (req.query && req.query.token) {
-                  return req.query.token;
-              } else if (req.session.JWToken) {
-                  return req.session.JWToken;
-              }
-
-              return null;
-            }
-      }).unless({path: ['/login', '/signup']}));
-
-      app.use(function (err, req, res, next) {
-
-          // @todo check if request is ajax and return json
-        if (err.name === 'UnauthorizedError') {
-          res.redirect('/login');
-        } else {
-           // @why this is not executed ??
-           // console.log(req.user);
-        }
-      });
-    }
-
-    var _initBaseMiddlewares = function() {
-      app.use(logger('dev'));
-      app.use(bodyParser.urlencoded({ extended: true }));
-      app.use(bodyParser.json());
-      app.use(expressValidator());
-      app.use(cookieParser());
-      app.use(express.static(path.join(root, 'public')));
-      app.use('/bower_components', express.static(path.join(root, 'bower_components')));
-
-      app.use(session({ secret: config.secret })); // session secret
-      app.use(flash()); // use connect-flash for flash messages stored in session
-    }
-
-    var _initDB = function(){
-      var knex = require('knex')(config.db);
-      app.set('knex', knex);
-    }
-
-    var _initErrorhandler = function() {
-      if (app.get('env') === 'development') {
-        app.use(function(err, req, res, next) {
-          res.status(err.status || 500);
-          res.render('error.html', {
-            message: err.message,
-            error: err
-          });
-        });
-      }
-
-      // production error handler
-      // no stacktraces leaked to user
-      app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error.html', {
-          message: err.message,
-          error: {}
-        });
-      });
-    }
-
-    var _isRelative = function(filename) {
-        return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
-    }
-
-    var _initRoutes = function() {
-      // @todo add route priority options
-      for(var name in _modules) {
-        var routes = _modules[name].getRoutes();
-        if(routes) {
-          app.use('/', routes);
-        }
-      }
-    }
-
-    var _initViews = function() {
-      // init view
-      var viewPaths = [root+'/views'];
-      var nunjucksEnv = new nunjucks.Environment(
-          new nunjucksModuleLoader(_modules, {paths: viewPaths}),
-          {
-              autoescape: false
-          }
-      );
-      nunjucksEnv.express(app);
-      nunjucksEnv.addGlobal('__', function(s){
-        // @todo translation
-            return s;
-        })
-      nunjucksEnv.addGlobal('isExists', function(el, arr){
-        return arr.indexOf(el) !== -1;
-      })
-      nunjucksEnv.addGlobal('gravatar', function(email){
-            var gravatar = require('gravatar');
-            return gravatar.url(email, {s: 49});
-        });
-
-       var knex = app.get('knex');
-       var MenuModel = require('./modules/setting/models/menu.js');
-       var mM = new MenuModel({knex: knex});
-
-       // @todo move 'main'
-       mM.getByName('main', function(err, menuItems){
-         if(err) {
-           return console.log(err);
-         }
-
-         nunjucksEnv.addGlobal('_menuItems', menuItems);
-       });
-
-      // @todo move this to config
-      nunjucksEnv.addGlobal('system', {
-          navigations: require('./navigations')
-        });
-
-        return nunjucksEnv;
-    }
-
-    var _initModules = function(paths){
-
-      // create main/fallback module first
-      var mainModule = Module.extend({
-          getName: function() {
-              return config.mainModuleName;
-          }
-      });
-
-      var mM = new mainModule(app);
-      mM.dirname = root;
-      _modules[mM.getName()] = mM;
-
-      for(var i=0;i<paths.length;i++){
-
-        if(_isRelative(paths[i])) {
-          var rP = path.resolve(root, paths[i]);
-          var moduleF = require(rP);
-          var m = new moduleF(app);
-          m.resolvedPath = rP;
-
-        } else if(path.isAbsolute(paths[i])) {
-          var moduleF = require(paths[i]);
-          var m = new moduleF(app);
-          m.resolvedPath = paths[i];
-
-        } else {
-          var moduleF = require(paths[i]);
-          var m = new moduleF(app);
-          m.resolvedPath = require.resolve(paths[i]);
+        // @todo move this to module manager
+        if(!this._modules[module]) {
+          throw Error("Unregistered module: '"+module+"'");
         }
 
-        if(fs.lstatSync(m.resolvedPath).isDirectory()) {
-          m.dirname = m.resolvedPath;
-        } else {
-          m.dirname = path.dirname(m.resolvedPath);
-        }
+        let basePath = this._modules[module].getModelPath();
+        let fName =  tmp.join('/');
 
-        // @todo validate name
-        _modules[m.getName()] = m;
-      }
+        name = path.join(basePath, fName);
     }
 
-    var dtInstance =  {
-      boot() {
+    let ModelClass = require(name);
+    let knex = this.get('db');
+    this._models[name] = new ModelClass({ knex: knex });
 
-          if(this.registerModules === undefined) {
-            throw Error("Drafterbit app must declare registerModules method before boot");
+    return this._models[name];
+}
+
+/**
+ * This function can be overrided on app
+ *
+ * @return array
+ */
+drafterbit.registerModules = function(){
+  return [];
+}
+
+/**
+ * Load application from directory, this function must be called once
+ * before run application to load routes, models, etc.
+ *
+ * @param string _ROOT
+ */
+drafterbit.load = function load(_ROOT) {
+
+  this._ROOT = _ROOT;
+  this._models = [];
+  this._modules = [];
+  this._modulePaths =  this.registerModules();
+  this._initConfig();
+  this._initModules();
+  this._boot();
+}
+
+
+/**
+ * Boot the application.
+ *
+ * @return boolean
+ */
+drafterbit._boot = function() {
+  this._initDB();
+  this._initAppLogger();
+  this._initViews();
+  this._initBaseMiddlewares();
+  this._initStaticMiddlewares();
+  this._initSecurityMiddleware();
+
+  // add req to nunjucks env as global
+  // this must be defined after security
+  let _this = this;
+  this.use(function(req, res, next){
+    try {
+        _this._nunjucksEnv.addGlobal('req', req);
+        _this._nunjucksEnv.addGlobal('_jwtToken', req.session.JWToken);
+    } catch (e) {
+      console.log(e);
+    }
+    next();
+  });
+
+  this._initRoutes();
+
+  // not found handle
+  this.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+
+  this._initErrorhandler();
+  return true;
+}
+
+/**
+ * Init error handler, this must be called in the end
+ * @see drafterbit._boot
+ *
+ */
+drafterbit._initErrorhandler = function() {
+  if (this.get('env') === 'development') {
+    this.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+    });
+  }
+
+  // production error handler
+  // no stacktraces leaked to user
+  this.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: {}
+    });
+  });
+}
+
+/**
+ * Init security, for now, we simply use JWT auth.
+ *
+ * @return undefined
+ */
+drafterbit._initSecurityMiddleware = function(){
+  // JWT simple auth setup, we redirect unauthorized to login page
+  // @todo move secret to config
+
+  // remove slash
+  let basePath = this._CONFIG.basePath.replace(/^\/|\/$/g, '');
+
+  this.use('(^\/'+basePath+')', expressJWT({
+      secret: this._CONFIG.secret,
+      getToken: function fromHeaderOrQuerystring (req) {
+          if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+              return req.headers.authorization.split(' ')[1];
+          } else if (req.query && req.query.token) {
+              return req.query.token;
+          } else if (req.session.JWToken) {
+              return req.session.JWToken;
           }
 
-          var modulePaths =  this.registerModules();
-          return _boot(modulePaths);
-      },
-      getModules() {
-        return _modules;
-      },
+          return null;
+        }
+  }).unless({path: [this._CONFIG.basePath+'/login', this._CONFIG.basePath+'/signup']}));
 
-      getModule(name) {
-        return _modules[name];
-      },
+  let _this = this;
+  this.use(function (err, req, res, next) {
+
+      // @todo check if request is ajax and return json
+    if (err.name === 'UnauthorizedError') {
+      res.redirect(_this._CONFIG.basePath+'/login');
+    } else {
+       // @why this is not executed ??
+       // console.log(req.user);
+    }
+  });
+}
+
+/**
+ * We create path to each public path in module.
+ *
+ * @return undefined
+ */
+drafterbit._initStaticMiddlewares = function() {
+  for(var name in this._modules) {
+    if(name === this._CONFIG.mainModuleName) {
+      continue;
     }
 
-    return _.extend(dtInstance, app);
+    this.use('/'+name, express.static( this._modules[name].getPublicPath()));
+  }
+}
 
-};
+/**
+ * Setting mandatory middleware such as session, logger, etc.
+ *
+ * @return undefined
+ */
+drafterbit._initBaseMiddlewares = function() {
+  this.use(logger('dev'));
+  this.use(bodyParser.urlencoded({ extended: true }));
+  this.use(bodyParser.json());
+  this.use(expressValidator());
+  this.use(cookieParser());
+  this.use(express.static(path.join(this._ROOT, 'public')));
+  this.use('/bower_components', express.static(path.join(this._ROOT, 'bower_components')));
+
+  this.use(session({ secret: this._CONFIG.secret })); // session secret
+  this.use(flash()); // use connect-flash for flash messages stored in session
+}
+
+/**
+ * We use nunjucks as default template engine.
+ * Here we setup the environment and set express view engine to html.
+ *
+ * @return undefined
+ */
+drafterbit._initViews = function() {
+
+  let viewPaths = [this._ROOT+'/views'];
+  this._nunjucksEnv = new nunjucks.Environment(
+      new nunjucksModuleLoader(this._modules, {paths: viewPaths}),
+      {
+          autoescape: false,
+          throwOnUndefined: true
+      }
+  );
+  this._nunjucksEnv.express(this);
+  this._nunjucksEnv.addGlobal('__', function(s){
+    // @todo translation
+        return s;
+    })
+  this._nunjucksEnv.addGlobal('isExists', function(el, arr){
+    return arr.indexOf(el) !== -1;
+  })
+  this._nunjucksEnv.addGlobal('gravatar', function(email){
+      var gravatar = require('gravatar');
+      return gravatar.url(email, {s: 49});
+  });
+
+  this._nunjucksEnv.addGlobal('system', {
+    navigations: require('./navigations')
+  });
+
+  let _this = this;
+  this._nunjucksEnv.addGlobal('deskUrl', function(path) {
+    return _this.deskUrl(path);
+  });
+
+  this.set('view engine', 'html');
+}
+
+/**
+ * We'll try to log user activity to database.
+ *
+ * @return undefined
+ */
+drafterbit._initAppLogger = function() {
+
+  let winstonKnex = require('./winston/transports/knex')
+
+  let appLogger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.Knex)({ tableName: 'logs', knexInstance: this.get('knex')  })
+    ]
+  });
+
+  this.set('appLogger', appLogger);
+}
+
+/**
+ * Simply user knexjs as database access library.
+ *
+ * @return undefined
+ */
+drafterbit._initDB = function(){
+  let knex = require('knex')(this._CONFIG.db);
+  this.set('knex', knex);
+  this.set('db', knex); // alias
+}
+
+/**
+ * Init configuration, must be called first.
+ *
+ * @see drafterbit._boot
+ * @todo distinguish per environment
+ * @todo validate config file content
+ */
+drafterbit._initConfig = function() {
+  let p = path.join(this._ROOT, 'config.js');
+  if(fs.accessSync(p, fs.constants.F_OK)) {
+    throw new Error("You must create config.js in your project root director");
+  }
+
+  this._CONFIG = require(p);
+  this.set('_CONFIG', this._CONFIG);
+  this.set('secret', this._CONFIG.secret);
+  this.set('permissions', require('./permissions'));
+}
+
+/**
+ * Init routing.
+ * @todo add route priority options
+ *
+ */
+drafterbit._initRoutes = function() {
+  for(var name in this._modules) {
+
+    let routes = this._modules[name].getRoutes();
+
+    if(name === this._CONFIG.mainModuleName) {
+      this.use('/', routes);
+      continue;
+    }
+
+    if(routes) {
+      this.use(this._CONFIG.basePath, routes);
+    }
+  }
+}
+
+/**
+ * Init modules.
+ */
+drafterbit._initModules = function(){
+  let _this = this;
+  // create main/fallback module first
+  class mainModule extends Module {
+      getName() {
+          return _this._CONFIG.mainModuleName;
+      }
+  }
+
+  var mM = new mainModule(this);
+  mM.dirname = this._ROOT;
+  this._modules[mM.getName()] = mM;
+
+  const ModulePathResolver = require('./module-path-resolver');
+  this._modulePathResolver = new ModulePathResolver(this._ROOT);
+
+  for(var i=0;i<this._modulePaths.length;i++){
+
+    let rP = this._modulePathResolver.resolve(this._modulePaths[i])
+    let moduleF = require(rP);
+    let m = new moduleF(this);
+    m.resolvedPath = rP;
+
+    if(fs.lstatSync(m.resolvedPath).isDirectory()) {
+      m.dirname = m.resolvedPath;
+    } else {
+      m.dirname = path.dirname(m.resolvedPath);
+    }
+
+    // @todo validate name
+    this._modules[m.getName()] = m;
+  }
+}
+
+export default drafterbit;

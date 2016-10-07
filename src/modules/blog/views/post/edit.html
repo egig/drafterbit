@@ -1,0 +1,149 @@
+{% extends "@desk/layout_edit.html" %}
+
+{% macro print_categories(categories, postCatIds) %}
+<ul>
+{% for c in categories %}
+  <li><input type="checkbox" name="post[categories]" value="{{ c.id }}"
+      {% if c.id in postCatIds %}
+      checked="checked"
+      {% endif %}
+    >{{ c.label }}
+    {% if c.childrens.length %}
+      {{ print_categories(c.childrens, postCatIds) }}
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>
+{% endmacro %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" href="/bower_components/magicsuggest/magicsuggest-min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/blog/css/editor.css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block pageTitle %}
+  {{ __('Edit Post') }}
+{% endblock %}
+
+{% block formAttribute %}
+  {{ super() }} id="post-edit-form" action="/desk/blog/post/save"
+{% endblock %}
+
+{% block action %}
+  <button type="submit" name="button" class="btn btn-success">{{ __('Save') }}</button>
+  <a class="btn btn-default" href="/desk/blog/post">
+      <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
+  </a>
+{% endblock %}
+
+{% block form %}
+<input type="hidden" name="post[id]" value="{{ post.id }}">
+<div class="row">
+    <div class="clearfix col-md-9">
+        <div class="form-group">
+          <input type="text" name="post[title]" value="{{ post.title }}" class="form-control input-lg" placeholder="Title">
+         </div>
+         <div class="form-group">
+          <textarea name="post[content]" rows="8" cols="40">{{ post.content }}</textarea>
+         </div>
+         {# todo if revisions %}
+          <div class="panel panel-default dt-revisions-container">
+            <div class="panel-heading">
+              <h5 class="panel-title" style="font-size:14px;text-align:center">
+                <a href="#revisions" data-parent="" data-toggle="collapse" aria-expanded="false">
+                    {{ __('Revisions') }} ({{ revisions|length }})
+                </a>
+              </h5>
+            </div>
+            <div class="panel-collapse collapse" id="revisions" aria-expanded="false">
+                <div class="panel-body">
+                    <div class="pull-right">
+                        <a class="clear-history" href="#" data-post-id="{{ post.id }}"><i class="fa fa-times"></i> {{ __('Clear') }}</a>
+                    </div>
+                    <ol style="list-style:none">
+                      {% for revision in revisions %}
+                            <li>
+                                <a href="">{{ revision.user.realname }}</a>
+                                (<a href="">{{ revision.createdAt|date('d F Y, @H:i') }}</a>)
+                            </li>
+                      {% endfor %}
+                    </ol>
+                </div>
+              </div>
+          </div>
+         {% endif #}
+    </div>
+    <div class="clearfix col-md-3">
+        <div class="form-group" >
+          <input type="text" name="post[slug]" value="{{ post.slug }}" placeholder="Slug" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" name="post[status]">
+              <option value="0">Pending Review</option>
+              <option value="1">Published</option>
+            </select>
+        </div>
+         <div class="form-group">
+          <label for="published_at">Published At</label>
+          <input type="text" name="post[published_at]" value="{{ post.published_at }}" class="form-control publish-date">
+         </div>
+        <div class="form-group">
+          <label for="categories">Categories</label>
+            <div class="dt-categories">
+              {{ print_categories(category_options, post.categoryIds) }}
+            </div>
+        </div>
+        <div class="form-group tags-input-wrapper">
+            <label>{{ __('Tags') }}</label>
+            <input placeholder="Tags" id="tags" name="post[tags]"/>
+         </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+
+  <script>
+    var tagOptions = {{ tag_options }};
+    var tags = {{ tags }} // json encoded
+  </script>
+
+  <script type="text/javascript" src="/bower_components/ckeditor/ckeditor.js"> </script>
+  <script type="text/javascript" src="/bower_components/magicsuggest/magicsuggest.js"> </script>
+  <script type="text/javascript" src="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"> </script>
+  <script type="text/javascript" src="/blog/js/post/editor.js"> </script>
+  <script type="text/javascript">
+
+    CKEDITOR.plugins.addExternal( 'wpmore', '/desk/plugins/ckeditor-custom/plugins/wpmore/', 'plugin.js' );
+    CKEDITOR.replace('post[content]', {
+
+        language: drafTerbit.locale,
+        customConfig : "/desk/plugins/ckeditor-custom/config.js",
+        skin: 'bootstrap,/desk/plugins/ckeditor-custom/skins/bootstrap/',
+        extraPlugins: 'wpmore'
+
+        // filebrowserWindowWidth  : 1040,
+        // filebrowserWindowHeight : 453,
+        // filebrowserImageBrowseUrl : "/desk/file/browser"
+    });
+
+    // handle footer position
+    CKEDITOR.on("instanceReady", function(event)
+    {
+        var h = $('.page-wrapper').height();
+        var hW = $(window).innerHeight();
+
+        if(h+30 > hW) {
+            $('.footer').removeClass('navbar-fixed-bottom');
+        }
+    });
+
+  {% if post_id == 'new' %}
+    drafTerbit.blogPostEditor.syncSlugAndTitle();
+  {% endif %}
+  </script>
+{% endblock %}

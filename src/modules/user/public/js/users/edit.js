@@ -2,7 +2,7 @@
     $('#user_groups').chosen();
 
     var form = $('#user-edit-form'),
-        id = $('input[name="id"]');
+        id = $('input[name="user[id]"]');
 
     //form
     $('#user_roles_chosen input', ':input').on(
@@ -69,7 +69,7 @@
     );
 
     // check form before leaving page
-    dirty = false;
+    let dirty = false;
 
     window.onbeforeunload = (function() {
 

@@ -4,7 +4,7 @@ var router = express.Router();
 var user = require('./user');
 var group = require('./group');
 
-router.use('/desk/user', user);
-router.use('/desk/user/group', group);
+router.use('/user', user);
+router.use('/user/group', group);
 
 module.exports = router;

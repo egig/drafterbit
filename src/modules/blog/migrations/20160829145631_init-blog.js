@@ -7,7 +7,9 @@ exports.up = function(knex, Promise) {
       table.integer('author_id');
       table.text('content');
       table.boolean('status');
-      table.timestamps();
+      table.dateTime('published_at').notNullable();
+      table.dateTime('created_at').notNullable();
+      table.dateTime('updated_at').notNullable();
     })
 };
 

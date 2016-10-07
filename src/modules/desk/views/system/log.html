@@ -4,9 +4,12 @@
   {{ __('Logs') }}
 {% endblock %}
 
+{% block formAttribute %}
+  {{ super() }} id="log-index-form" action="{{ deskUrl('/system/log/data') }}"
+{% endblock %}
+
 {% block action %}
-    <button class="btn btn-default" type="submit" name="action" value="delete">{{ __('Delete') }}</button>
-    <button class="btn btn-default" type="submit" name="action" value="clear">{{ __('Clear') }}</button>
+    <button class="btn btn-default" type="submit" name="clear" value="1">{{ __('Clear') }}</button>
 {% endblock %}
 
 {% block table %}

@@ -4,6 +4,11 @@
   {{ __('Edit Page') }}
 {% endblock %}
 
+{% block formAttribute %}
+  {{ super() }}
+  id="page-edit-form" action="{{ deskUrl('/page/save') }}"
+{% endblock %}
+
 {% block action %}
     <button type="submit" name="action" class="btn btn-success">{{ __('Save Page') }}</button>
     <a class="btn btn-default" href="/desk/page">
@@ -12,32 +17,35 @@
 {% endblock %}
 
 {% block form %}
+<input type="hidden" name="page[id]" value="{{ page.id }}">
+<div class="row">
     <div class="col-md-9">
         <div class="form-group">
-            <input type="text" name="title" value="" placeholder="{{ __('Title') }}" class="form-control input-lg">
+            <input type="text" name="page[title]" value="{{ page.title }}" placeholder="{{ __('Title') }}" class="form-control input-lg">
          </div>
          <div class="form-group">
-            <textarea name="content" rows="8" cols="40"></textarea>
+            <textarea name="page[content]" rows="8" cols="40">{{ page.content }}</textarea>
          </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-          <input type="text" name="slug" value="" class="form-control" placeholder="{{ __('Slug') }}">
+          <input type="text" name="page[slug]" value="{{ page.slug }}" class="form-control" placeholder="{{ __('Slug') }}">
         </div>
         <div class="form-group">
           <label for="status" class="control-label">{{ __('Status') }}</label>
-          <select class="form-control" name="status">
+          <select class="form-control" name="page[status]">
             <option value="1">{{ __('Published') }}</option>
             <option value="2">{{ __('Pending Review') }}</option>
           </select>
          </div>
          <div class="form-group">
            <label for="layout" class="control-label">{{ __('Layout') }}</label>
-           <select class="form-control" name="status">
+           <select class="form-control" name="page[layout]">
              <option value="default">{{ __('Default') }}</option>
            </select>
          </div>
     </div>
+</div>
 {% endblock %}
 
 {% block js %}
@@ -48,7 +56,7 @@
 
     <script type="text/javascript">
     CKEDITOR.plugins.addExternal( 'wpmore', '/desk/plugins/ckeditor-custom/plugins/wpmore/', 'plugin.js' );
-    CKEDITOR.replace('content', {
+    CKEDITOR.replace('page[content]', {
 
         language: drafTerbit.locale,
         customConfig : "/desk/plugins/ckeditor-custom/config.js",

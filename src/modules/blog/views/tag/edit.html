@@ -1,0 +1,42 @@
+{% extends "@desk/layout_edit.html" %}
+
+{% block pageTitle %}
+  {{ __('Edit Tag') }}
+{% endblock %}
+
+{% block formAttribute %}
+  {{ super() }}
+  id="tag-edit-form" action="/desk/blog/tag/save"
+{% endblock %}
+
+{% block action %}
+  <button type="submit" name="save" value="1" class="btn btn-success">{{ __('Save') }}</button>
+  <a class="btn btn-default" href="/desk/blog/tag">
+      <i class="fa fa-times" style="color: #A94442;"></i> <span class="dt-editor-close-text">{{ __('Cancel') }}</span>
+  </a>
+{% endblock %}
+
+{% block form %}
+<div class="row">
+    <input type="hidden" name="tag[id]" value="{{ tag.id }}">
+    <div class="col-md-4">
+        <div class="form-group">
+          <label for="label">{{ __('Label') }}</label>
+          <input type="text" name="tag[label]" value="{{ tag.label }}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="slug">{{ __('Slug') }}</label>
+          <input type="text" name="tag[slug]" value="{{ tag.slug }}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="description">{{ __('Description') }}</label>
+          <textarea name="tag[description]" rows="8" cols="40" class="form-control">{{ tag.description }}</textarea>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  <script type="text/javascript" src="/blog/js/tag/edit.js"></script>
+{% endblock %}

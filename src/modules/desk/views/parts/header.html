@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-9 col-xs-10">
-                <h1 id="dt-site-title">{{ system.sitename }} <small class="hidden-xs">Administrator</small></h1>
+                <h1 id="dt-site-title">{# system.sitename #} <small class="hidden-xs">Administrator</small></h1>
             </div>
             <div class="col-md-6 col-sm-3 col-xs-2 dt-header-menu clearfix">
                 <div class="dt-user-menu-container">
@@ -10,7 +10,7 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class=" navbar-link dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img width="28px;" class="dt-profile-avatar" src="{{ gravatar(user.email) }}" alt="{{ user.realname }}"/>
+                            <img width="28px;" class="dt-profile-avatar" src="{{ gravatar(req.user.email) }}" alt="{{ req.user.realname }}"/>
                             <!--<i class="fa fa-caret-down"></i>-->
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -20,8 +20,10 @@
                             </div>
                             <li> <a href="/" target="_blank">Visit Site <i class="fa fa-external-link"></i> </a> </li>
                             <li><a href="/desk/user/profile">Profile</a> </li>
-                            <li><a href="/desk/user/preference">Preferences</a> </li>
-                            <li><a href="/logout">Logout</a> </li>
+                            {# PENDING
+                              <li><a href="/desk/user/preference">Preferences</a> </li>
+                            #}
+                            <li><a href="{{ deskUrl('/logout') }}">Logout</a> </li>
                         </ul>
                         <!-- /.dropdown-user -->
                     </li>
