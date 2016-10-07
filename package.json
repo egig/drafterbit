@@ -50,5 +50,11 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "supertest": "^2.0.0"
-  }
+  },
+  "files": [
+    "README.md",
+    "src/*",
+    "lib/*",
+    "CHANGELOG.md"
+  ]
 }
