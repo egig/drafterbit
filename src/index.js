@@ -3,7 +3,7 @@ var mixin = require('merge-descriptors');
 var proto = require('./drafterbit');
 var express = require('express');
 
-function createApplication(_ROOT) {
+function createApplication() {
   var app = function(req, res, next) {
     app.handle(req, res, next);
   };
