@@ -5,8 +5,13 @@ import session from 'express-session';
 import { SheetsRegistry } from 'jss';
 import Main from './Main';
 import { SESSION_SECRET } from '../../config';
+import appRoute from './middlewares/app-route';
+import ModuleManager from '../ModuleManager';
+import PageModule from '../common/modules/page/PageModule';
 
 const app = express();
+const moduleManager = new ModuleManager(app);
+moduleManager.registerModule(new PageModule());
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -19,6 +24,9 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname+'/../../public'));
+
+moduleManager.initialize();
+app.use(appRoute);
 
 app.get('*', function (req, res) {
 
