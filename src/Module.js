@@ -7,8 +7,8 @@ class Module {
         return this._prefix;
     }
 
-    addRoutes(app) {
-
+    getReactRoutes() {
+    	return[];
     }
 }
 

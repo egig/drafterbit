@@ -10,6 +10,7 @@ import ModuleManager from '../ModuleManager';
 import PageModule from '../common/modules/page/PageModule';
 
 const app = express();
+
 const moduleManager = new ModuleManager(app);
 moduleManager.registerModule(new PageModule());
 

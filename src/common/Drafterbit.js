@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+//import PageModule from './modules/page/PageModule';
+import SubRoutes from './SubRoutes';
+import reactRoutes from './modules/page/reactRoutes';
 
 class Home extends React.Component {
     render() {
@@ -8,17 +11,28 @@ class Home extends React.Component {
     }
 }
 
-const Drafterbit = function (props) {
+class Drafterbit extends React.Component {
 
-    let state = props.store.getState();
+	constructor(props) {
+		super(props);
+	}
 
-    return (
-        <Provider store={props.store}>
-            <Switch>
-                <Route path="/" exact component={Home} />
-            </Switch>
-        </Provider>
-    );
-};
+	render() {
+
+		let state = this.props.store.getState();
+
+		return (
+			<Provider store={this.props.store}>
+				<Switch>
+					<Route path="/" exact component={Home} />
+					{reactRoutes.map((route, i) => (
+						<SubRoutes key={i} {...route}/>
+					))}
+				</Switch>
+			</Provider>
+		);
+
+	}
+}
 
 module.exports = Drafterbit;
