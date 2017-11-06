@@ -27,4 +27,4 @@ const Main = function Main(url = '/', sheets, state) {
 };
 
 
-module.exports = Main;
+export default Main;

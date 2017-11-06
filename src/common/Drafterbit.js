@@ -1,8 +1,12 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import Login from './modules/user/components/Login';
-import ForgetPassword from './modules/user/components/ForgetPassword';
+
+class Home extends React.Component {
+	render() {
+		return(<h1>Home</h1>)
+	}
+}
 
 const Drafterbit = function (props) {
 
@@ -11,8 +15,7 @@ const Drafterbit = function (props) {
 	return (
 		<Provider store={props.store}>
 				<Switch>
-					<Route path="/user/login" exact component={Login} />
-					<Route path="/user/forget_password" component={ForgetPassword} />
+					<Route path="/" exact component={Home} />
 				</Switch>
 		</Provider>
 	);

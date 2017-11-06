@@ -1,4 +1,4 @@
-const app = require('./build/server');
+const app = require('./build/server').default;
 const config = require('./config');
 
 let port = config.PORT || 8080;

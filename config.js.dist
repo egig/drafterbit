@@ -1,3 +1,4 @@
 module.exports = {
-	PORT: 9292,
+	PORT: 3000,
+	SESSION_SECRET: 'secr3t'
 }
