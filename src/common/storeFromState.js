@@ -7,5 +7,5 @@ const rootReducer = require('./reducers');
 const middlewares = [thunk];
 
 module.exports = function storeFromState(defaultState) {
-	return createStore(rootReducer, defaultState, applyMiddleware(...middlewares));
+    return createStore(rootReducer, defaultState, applyMiddleware(...middlewares));
 };

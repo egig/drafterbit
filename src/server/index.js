@@ -17,10 +17,10 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
 app.use(session({
-	secret: SESSION_SECRET,
-	cookie: { maxAge: 24 * 60 * 60 * 30 },
-	resave: true,
-	saveUninitialized: true,
+    secret: SESSION_SECRET,
+    cookie: { maxAge: 24 * 60 * 60 * 30 },
+    resave: true,
+    saveUninitialized: true,
 }));
 
 app.use(express.static(__dirname+'/../../public'));
@@ -30,13 +30,13 @@ app.use(appRoute);
 
 app.get('*', function (req, res) {
 
-	delete require.cache[require.resolve('../common/defaultState')];
-	let defaultState = require('../common/defaultState');
+    delete require.cache[require.resolve('../common/defaultState')];
+    let defaultState = require('../common/defaultState');
 
-	const sheets = new SheetsRegistry();
+    const sheets = new SheetsRegistry();
 
-	let html = Main(req.url, sheets, defaultState);
-	return res.send(`<!DOCTYPE html>${html}`);
+    let html = Main(req.url, sheets, defaultState);
+    return res.send(`<!DOCTYPE html>${html}`);
 });
 
 export default app;

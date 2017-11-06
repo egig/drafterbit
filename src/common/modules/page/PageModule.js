@@ -3,13 +3,13 @@ import routes from './routes';
 
 class PageModule extends Module {
 
-	getPrefix() {
-		return '/page';
-	}
+    getPrefix() {
+        return '/page';
+    }
 
-	getRoutes() {
-		return routes;
-	}
+    getRoutes() {
+        return routes;
+    }
 }
 
 export default PageModule;
