@@ -13,26 +13,26 @@ class Home extends React.Component {
 
 class Drafterbit extends React.Component {
 
-	constructor(props) {
-		super(props);
-	}
+    constructor(props) {
+        super(props);
+    }
 
-	render() {
+    render() {
 
-		let state = this.props.store.getState();
+        let state = this.props.store.getState();
 
-		return (
-			<Provider store={this.props.store}>
-				<Switch>
-					<Route path="/" exact component={Home} />
-					{reactRoutes.map((route, i) => (
-						<SubRoutes key={i} {...route}/>
-					))}
-				</Switch>
-			</Provider>
-		);
+        return (
+            <Provider store={this.props.store}>
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    {reactRoutes.map((route, i) => (
+                        <SubRoutes key={i} {...route}/>
+                    ))}
+                </Switch>
+            </Provider>
+        );
 
-	}
+    }
 }
 
 module.exports = Drafterbit;

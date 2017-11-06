@@ -3,13 +3,13 @@ import routes from './routes';
 
 class ApiModule extends Module {
 
-	getPrefix() {
-		return '/api';
-	}
+    getPrefix() {
+        return '/api';
+    }
 
-	getRoutes() {
-		return routes;
-	}
+    getRoutes() {
+        return routes;
+    }
 }
 
 export default ApiModule;

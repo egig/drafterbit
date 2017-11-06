@@ -7,3 +7,4 @@ public/*
 !public/css/
 !public/.gitkeep
 config.js
+npm-debug.log*

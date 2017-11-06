@@ -7,6 +7,7 @@
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.0",
@@ -47,7 +48,8 @@
     "babel": "babel ./src -d ./build",
     "start": "npm run babel && webpack && node server.js",
     "build": "npm run babel && webpack",
-    "dev": "webpack && node server.js --env development"
+    "dev": "webpack && node server.js --env development",
+    "linter": "./node_modules/.bin/eslint --fix ./src"
   },
   "author": "",
   "license": "ISC",
