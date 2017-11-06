@@ -10,7 +10,8 @@ const Html = function (props) {
                 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-                <link rel="stylesheet" type="text/css" href="/css/react-md.indigo-blue.min.css" />
+		            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+		            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
                 <link rel="stylesheet" type="text/css" href="/css/common.css"  />
             </head>
             <body>
