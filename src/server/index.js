@@ -8,6 +8,7 @@ import { SESSION_SECRET } from '../../config';
 import appRoute from './middlewares/app-route';
 import ModuleManager from '../ModuleManager';
 import PageModule from '../common/modules/page/PageModule';
+import apiRoutes from '../api/routes';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(session({
 app.use(express.static(__dirname+'/../../public'));
 
 moduleManager.initialize();
+app.use('/api', apiRoutes);
 app.use(appRoute);
 
 app.get('*', function (req, res) {
