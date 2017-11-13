@@ -14,7 +14,6 @@ const doLogin = (email, password) => (dispatch) => {
         password
     }).then(user => {
         dispatch(setUser(user));
-
     });
 };
 

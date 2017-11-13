@@ -22,6 +22,7 @@ router.post('/user/login', function (req, res) {
 
                 password.compare(rawPassword, hashedPassword, (err, isMatch) => {
                     if(isMatch) {
+                    	  req.session.user = doc;
                         res.json(doc);
                     } else {
                         res.status(403);

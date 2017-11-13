@@ -9,6 +9,7 @@ import appRoute from './middlewares/app-route';
 import ModuleManager from '../ModuleManager';
 import PageModule from '../common/modules/page/PageModule';
 import apiRoutes from '../api/routes';
+import authMiddleware from './middlewares/auth';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname+'/../../public'));
+app.use(authMiddleware);
 
 moduleManager.initialize();
 app.use('/api', apiRoutes);
@@ -37,6 +39,11 @@ app.get('*', function (req, res) {
     let defaultState = require('../common/defaultState');
 
     const sheets = new SheetsRegistry();
+
+    // TODO make statelessm, use token each request
+    if(req.user) {
+    	defaultState.user.currentUser = req.user;
+    }
 
     let html = Main(req.url, sheets, defaultState);
     return res.send(`<!DOCTYPE html>${html}`);

@@ -1,10 +1,20 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const SubRoutes = (route) => (
-    <Route path={route.path} render={props => (
-        <route.component {...props} routes={route.routes}/>
-    )}/>
+    <Route path={route.path} render={props => {
+	    if(!route.isPublic) {
+	    	return (
+			    route.currentUser.name ? <route.component {...props} routes={route.routes}/> :
+				    <Redirect to={{pathname: '/admin/login', state: {from: props.location}}}/>
+		    )
+	    }
+
+	    return <route.component {...props} routes={route.routes}/>;
+    }}/>
 );
 
-export default SubRoutes;
+export default connect(state => ({
+		currentUser: state.user.currentUser
+	}))(SubRoutes);

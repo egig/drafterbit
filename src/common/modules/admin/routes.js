@@ -3,10 +3,11 @@ import Login from '../user/components/Login';
 
 let routes = [
     { path: '/admin/login',
-        component: Login
+      component: Login,
+	    isPublic: true
     },
     { path: '/admin',
-        component: Dashboard
+      component: Dashboard
     }
 ];
 
