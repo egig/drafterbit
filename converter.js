@@ -1,5 +1,5 @@
 const {SheetsRegistry} =  require('react-jss');
-const serverView = require('./build/serverView');
+const serverView = require('./build/server/Main').default;
 
 
 //const { SheetsRegistry } = require('jss');
