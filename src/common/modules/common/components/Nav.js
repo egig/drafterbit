@@ -16,7 +16,7 @@ class Nav extends React.Component {
 				        Content
 			        </p>
 			        <ul className="menu-list">
-				        <li><a href="/"><span className="icon is-small"><i className="fa fa-pencil-square-o"></i></span> Posts</a></li>
+				        <li><a href="/content/new"><span className="icon is-small"><i className="fa fa-pencil-square-o"></i></span> New Content</a></li>
 				        <li><a href="/"><span className="icon is-small"><i className="fa fa-desktop"></i></span> Categories</a></li>
 				        <li><a href="/"><span className="icon is-small"><i className="fa fa-table"></i></span> Tags</a></li>
 			        </ul>

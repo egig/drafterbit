@@ -2,6 +2,7 @@ import React from 'react';
 import  { Editor } from 'slate-react';
 import { Value } from 'slate';
 import injectSheet from 'react-jss'
+import Layout from '../../common/components/Layout';
 
 const initialValue = Value.fromJSON({
 	document: {
@@ -37,7 +38,7 @@ const styles = {
 	}
 };
 
-class Home extends React.Component {
+class ContentEditor extends React.Component {
 
 	state = {
 		value:initialValue
@@ -51,16 +52,18 @@ class Home extends React.Component {
 
 		let { classes } = this.props;
 		return (
-			<div className={classes.container}>
-				<div className={classes.editorContainer}>
-					<Editor
-						value={this.state.value}
-						onChange={this.onChange}
-					/>
+			<Layout>
+				<div className={classes.container}>
+					<div className={classes.editorContainer}>
+						<Editor
+							value={this.state.value}
+							onChange={this.onChange}
+						/>
+					</div>
 				</div>
-			</div>
+			</Layout>
 		)
 	}
 }
 
-export default injectSheet(styles, {inject: false})(Home);
+export default injectSheet(styles, {inject: false})(ContentEditor);
