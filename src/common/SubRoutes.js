@@ -3,11 +3,11 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const SubRoutes = (route) => (
-    <Route path={route.path} render={props => {
+    <Route path={route.path} exact={true} render={props => {
 	    if(!route.isPublic) {
 	    	return (
 			    route.currentUser.name ? <route.component {...props} routes={route.routes}/> :
-				    <Redirect to={{pathname: '/admin/login', state: {from: props.location}}}/>
+				    <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
 		    )
 	    }
 

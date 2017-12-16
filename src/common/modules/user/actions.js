@@ -9,11 +9,11 @@ const setUser = (user) => {
 
 const doLogin = (email, password) => (dispatch) => {
 
-    axios.post('/api/user/login', {
+    return axios.post('/api/user/login', {
         email,
         password
-    }).then(user => {
-        dispatch(setUser(user));
+    }).then(response => {
+        return dispatch(setUser(response.data));
     });
 };
 

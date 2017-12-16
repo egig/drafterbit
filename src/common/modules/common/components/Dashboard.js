@@ -1,12 +1,12 @@
 import React from 'react';
-import Nav from './Nav';
+import Layout from './Layout';
 
 class Dashboard extends React.Component {
     render() {
         return (
-            <span>
-                <Nav />
-            </span>
+	        <Layout>
+		        Hallo This is Dashboard
+	        </Layout>
         );
     }
 }

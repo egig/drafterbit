@@ -10,6 +10,7 @@ import ModuleManager from '../ModuleManager';
 import PageModule from '../common/modules/page/PageModule';
 import apiRoutes from '../api/routes';
 import authMiddleware from './middlewares/auth';
+import jwt from 'express-jwt';
 
 const app = express();
 
@@ -28,10 +29,16 @@ app.use(session({
 
 app.use(express.static(__dirname+'/../../public'));
 app.use(authMiddleware);
+// app.use(jwt({ secret:SESSION_SECRET}).unless({path: ['/login']}));
 
 moduleManager.initialize();
 app.use('/api', apiRoutes);
 app.use(appRoute);
+
+app.get('/logout', (req, res) => {
+	req.session.destroy();
+	res.redirect('/admin/login');
+});
 
 app.get('*', function (req, res) {
 

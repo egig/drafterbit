@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import actions from '../actions';
+import { withRouter } from 'react-router-dom'
 
 class Login extends React.Component {
 
@@ -16,9 +17,11 @@ class Login extends React.Component {
         let email = form.email.value;
         let password = form.password.value;
 
-        console.log(this.props);
-
-        this.props.doLogin(email, password);
+        this.props.doLogin(email, password)
+	        .then((r)=> {
+        	  console.log(this.props.currentUser);
+	        	this.props.history.push('/');
+	        });
     }
 
     render() {
@@ -62,7 +65,7 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.user.currentUser
     };
 };
 

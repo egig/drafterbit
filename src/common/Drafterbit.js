@@ -2,12 +2,11 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import SubRoutes from './SubRoutes';
-import adminRoutes from './modules/admin/routes';
-import Home from './modules/common/components/Home';
+import commonRoutes from './modules/common/routes';
 import ReactRouteManager from '../ReactRouteManager';
 
 let routeManager = new ReactRouteManager();
-routeManager.addRoutes(adminRoutes);
+routeManager.addRoutes(commonRoutes);
 
 class Drafterbit extends React.Component {
 
@@ -22,7 +21,6 @@ class Drafterbit extends React.Component {
         return (
             <Provider store={this.props.store}>
                 <Switch>
-                    <Route path="/" exact component={Home} />
                     {routeManager.getRoutes().map((route, i) => (
                         <SubRoutes key={i} {...route}/>
                     ))}
