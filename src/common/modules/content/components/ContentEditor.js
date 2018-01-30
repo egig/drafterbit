@@ -9,13 +9,27 @@ const initialValue = Value.fromJSON({
 		nodes: [
 			{
 				kind: 'block',
+				type: 'h1',
+				nodes: [
+					{
+						kind: 'text',
+						leaves: [
+							{
+								text: 'test h1'
+							}
+						]
+					}
+				]
+			},
+			{
+				kind: 'block',
 				type: 'paragraph',
 				nodes: [
 					{
 						kind: 'text',
 						leaves: [
 							{
-								text: ''
+								text: 'test'
 							}
 						]
 					}
@@ -38,6 +52,10 @@ const styles = {
 	}
 };
 
+function H1Node(props) {
+	return <h1>{props.children}</h1>
+}
+
 class ContentEditor extends React.Component {
 
 	state = {
@@ -46,6 +64,28 @@ class ContentEditor extends React.Component {
 
 	onChange = ({ value }) => {
 		this.setState({ value })
+	}
+
+	onKeyDown = (event, change) => {
+		if(event.key === "Enter") {
+			this.onEnter(event, change);
+		}
+	}
+
+	renderNode = ({node, ...props}) => {
+		switch (node.type) {
+			case 'h1': return <H1Node {...props} />
+		}
+	}
+
+
+	onEnter = (event, change) => {
+		const { value } = change
+		if (value.isExpanded) return
+
+		event.preventDefault()
+		change.splitBlock().setBlock('paragraph')
+		return true
 	}
 
 	render() {
@@ -58,8 +98,11 @@ class ContentEditor extends React.Component {
 						<Editor
 							value={this.state.value}
 							onChange={this.onChange}
+							onKeyDown={this.onKeyDown}
+							renderNode={this.renderNode}
 						/>
 					</div>
+					<button className="btn">Add</button>
 				</div>
 			</Layout>
 		)

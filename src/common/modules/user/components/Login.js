@@ -26,39 +26,25 @@ class Login extends React.Component {
 
     render() {
         return (
-            <section className="hero is-fullheight">
-                <div className="hero-body">
-                    <div className="container has-text-centered">
-                        <div className="column is-4 is-offset-4">
-                            <div className="box">
-                                <h3 className="title has-text-grey">Login</h3>
-                                <p className="subtitle has-text-grey">Please login to proceed.</p>
-                                <form onSubmit={(e) => {
-                                    e.preventDefault();
-                                    this.doLogin(e);
-                                }}>
-                                    <div className="field">
-                                        <div className="control">
-                                            <input className="input is-large" type="email" placeholder="Your Email" autoFocus="" name="email" />
-                                        </div>
-                                    </div>
-                                    <div className="field">
-                                        <div className="control">
-                                            <input className="input is-large" type="password" placeholder="Your Password" name="password" />
-                                        </div>
-                                    </div>
-                                    <button type="submit" className="button is-block is-info is-large is-fullwidth">Login</button>
-                                </form>
-                            </div>
-                            <p className="has-text-grey">
-                                <a href="../">Sign Up</a> &nbsp;·&nbsp;
-                                <a href="../">Forgot Password</a> &nbsp;·&nbsp;
-                                <a href="../">Need Help?</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+	        <div className="row justify-content-md-center">
+		        <div className="col col-md-4">
+			        <form onSubmit={(e) => {
+					        e.preventDefault();
+					        this.doLogin(e);
+				        }}>
+				        <div className="form-group">
+					        <label htmlFor="exampleInputEmail1">Email address</label>
+					        <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+						        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+				        </div>
+				        <div className="form-group">
+					        <label htmlFor="exampleInputPassword1">Password</label>
+					        <input type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+				        </div>
+				        <button type="submit" className="btn btn-primary">Login</button>
+			        </form>
+		        </div>
+	        </div>
         );
     }
 }

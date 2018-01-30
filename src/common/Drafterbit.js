@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import SubRoutes from './SubRoutes';
 import contentRoutes from './modules/content/routes';
 import commonRoutes from './modules/common/routes';
+import projectRoutes from './modules/project/routes';
 import ReactRouteManager from '../ReactRouteManager';
 
 let routeManager = new ReactRouteManager();
+routeManager.addRoutes(projectRoutes);
 routeManager.addRoutes(contentRoutes);
 routeManager.addRoutes(commonRoutes);
 
