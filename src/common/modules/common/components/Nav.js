@@ -4,30 +4,27 @@ class Nav extends React.Component {
 
     render() {
         return(
-	        <aside className="column is-2">
-		        <nav className="menu">
-			        <p className="menu-label">
-				        General
-			        </p>
-			        <ul className="menu-list">
-				        <li><a href="/"><span className="icon is-small"><i className="fa fa-tachometer"></i></span> Dashboard</a></li>
-			        </ul>
-			        <p className="menu-label">
-				        Content
-			        </p>
-			        <ul className="menu-list">
-				        <li><a href="/content/new"><span className="icon is-small"><i className="fa fa-pencil-square-o"></i></span> New Content</a></li>
-				        <li><a href="/"><span className="icon is-small"><i className="fa fa-desktop"></i></span> Categories</a></li>
-				        <li><a href="/"><span className="icon is-small"><i className="fa fa-table"></i></span> Tags</a></li>
-			        </ul>
-			        <p className="menu-label">
-				        User
-			        </p>
-			        <ul className="menu-list">
-				        <li><a><span className="icon is-small"><i className="fa fa-bug"></i></span> Manage Users</a></li>
-			        </ul>
-		        </nav>
-	        </aside>
+	        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+		        <div className="container">
+			        <a className="navbar-brand" href="#">Drafterbit</a>
+			        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+				        <span className="navbar-toggler-icon"/>
+			        </button>
+			        <div className="collapse navbar-collapse" id="navbarText">
+				        <ul className="navbar-nav mr-auto">
+					        <li className="nav-item active">
+						        <a className="nav-link" href="#">Dashboard <span className="sr-only">(current)</span></a>
+					        </li>
+					        <li className="nav-item">
+						        <a className="nav-link" href="#">Project</a>
+					        </li>
+					        <li className="nav-item">
+						        <a className="nav-link" href="#">Contents</a>
+					        </li>
+				        </ul>
+			        </div>
+		        </div>
+	        </nav>
         );
     }
 }
