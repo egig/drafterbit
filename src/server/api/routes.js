@@ -1,7 +1,7 @@
 import express from 'express';
 let router = express.Router();
-import password from '../common/lib/password';
-import config from '../../config';
+import password from '../../common/lib/password';
+import config from '../../../config';
 
 const MongoClient = require('mongodb').MongoClient;
 

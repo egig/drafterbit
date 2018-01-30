@@ -8,7 +8,7 @@ import { SESSION_SECRET } from '../../config';
 import appRoute from './middlewares/app-route';
 import ModuleManager from '../ModuleManager';
 import PageModule from '../common/modules/page/PageModule';
-import apiRoutes from '../api/routes';
+import apiRoutes from './api/routes';
 import authMiddleware from './middlewares/auth';
 import jwt from 'express-jwt';
 
@@ -33,7 +33,6 @@ app.use(authMiddleware);
 
 moduleManager.initialize();
 app.use('/api', apiRoutes);
-app.use(appRoute);
 
 app.get('/logout', (req, res) => {
 	req.session.destroy();
