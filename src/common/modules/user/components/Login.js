@@ -33,13 +33,12 @@ class Login extends React.Component {
 					        this.doLogin(e);
 				        }}>
 				        <div className="form-group">
-					        <label htmlFor="exampleInputEmail1">Email address</label>
-					        <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-						        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+					        <label htmlFor="exampleInputEmail1">Email</label>
+					        <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
 				        </div>
 				        <div className="form-group">
 					        <label htmlFor="exampleInputPassword1">Password</label>
-					        <input type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+					        <input type="password" name="password" className="form-control" id="exampleInputPassword1"/>
 				        </div>
 				        <button type="submit" className="btn btn-primary">Login</button>
 			        </form>
