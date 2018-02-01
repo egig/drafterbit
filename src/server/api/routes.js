@@ -2,6 +2,7 @@ import express from 'express';
 let router = express.Router();
 import password from '../../common/lib/password';
 import config from '../../../config';
+import _ from 'lodash';
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -114,13 +115,34 @@ router.patch('/users/:name', (req, res) => {
 
 		const collection = db.collection('users');
 
-		collection.updateOne({name: req.params.name}, {$set: req.body}, (err, r) => {
+		let doc  = {};
+		if(typeof req.body.email !== "undefined") {
+			doc.email = req.body.email;
+		}
 
-			res.json({
-				message: "OK"
+		// TODO clean this
+		if(typeof req.body.password !== "undefined") {
+			password.hash(req.body.password, (err, hashedPassword) => {
+				doc.password = hashedPassword;
+
+				collection.updateOne({name: req.params.name}, {$set: doc}, (err, r) => {
+
+					res.json({
+						message: "OK"
+					});
+
+				});
+
 			});
+		} else {
+			collection.updateOne({name: req.params.name}, {$set: doc}, (err, r) => {
 
-		});
+				res.json({
+					message: "OK"
+				});
+
+			});
+		}
 
 	});
 });
