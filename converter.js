@@ -1,17 +1,10 @@
-const {SheetsRegistry} =  require('react-jss');
-const serverView = require('./build/server/Main').default;
-
-
-//const { SheetsRegistry } = require('jss');
-// const { styles } = require('./build/Button');
-//
-// const sheet = jss.createStyleSheet(styles);
-
-//sheet.attached = true;
-//const sheets = new SheetsRegistry();
-// sheets.add(sheet);
+const jss = require('./jss-config');
+const {SheetsRegistry} = require('jss');
 
 const sheets = new SheetsRegistry();
-serverView('/', sheets);
+const sheet = jss.createStyleSheet(require('./src/common/modules/user/components/Login.style')).attach();
+const sheet2 = jss.createStyleSheet(require('./src/common/modules/content/components/ContentEditor.style')).attach();
+sheets.add(sheet);
+sheets.add(sheet2);
 
 console.log(sheets.toString());

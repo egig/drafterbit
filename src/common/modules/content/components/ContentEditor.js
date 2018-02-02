@@ -109,4 +109,4 @@ class ContentEditor extends React.Component {
 	}
 }
 
-export default injectSheet(styles, {inject: false})(ContentEditor);
+export default injectSheet(styles)(ContentEditor);

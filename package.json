@@ -17,7 +17,7 @@
     "express-session": "^1.15.3",
     "immutable": "^3.8.2",
     "jsonwebtoken": "^8.1.0",
-    "jss": "^7.1.1",
+    "jss": "^9.6.0",
     "jss-nested": "^4.0.1",
     "lodash": "^4.17.4",
     "mime-types": "^2.1.16",

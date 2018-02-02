@@ -6,7 +6,7 @@ const SubRoutes = (route) => (
     <Route path={route.path} exact={true} render={props => {
 	    if(!route.isPublic) {
 	    	return (
-			    route.currentUser.name ? <route.component {...props} routes={route.routes}/> :
+			    (!!route.currentUser && route.currentUser.name) ? <route.component {...props} routes={route.routes}/> :
 				    <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
 		    )
 	    }
