@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import SubRoutes from './SubRoutes';
 import contentRoutes from './modules/content/routes';
-import commonRoutes from './modules/common/routes';
+import commonRoutes from './modules/user/routes';
 import projectRoutes from './modules/project/routes';
 import ReactRouteManager from '../ReactRouteManager';
 

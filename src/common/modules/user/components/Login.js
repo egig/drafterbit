@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom'
 import actions from '../actions';
 import Style from './Login.style';
 import jss from '../../../../../jss-config';
@@ -46,9 +47,9 @@ class Login extends React.Component {
 
 			        <div className="form-group">
 				        <label htmlFor="password" className={classes.labelWidth}>Password
-					        <a href="/forgot-password" className="float-right">
+					        <Link to="/forgot-password" className="float-right">
 						        Forgot Password?
-					        </a>
+					        </Link>
 				        </label>
 				        <input id="password" type="password" className={`form-control ${classes.formControlBorder}`} name="password" required data-eye />
 			        </div>
@@ -60,12 +61,12 @@ class Login extends React.Component {
 			        </div>
 
 			        <div className={`form-group no-margin ${classes.noMargin}`}>
-				        <button type="submit" className="btn btn-primary btn-block">
+				        <button type="submit" className={`btn btn-primary btn-block ${classes.btnPadding}`}>
 					        Login
 				        </button>
 			        </div>
 			        <div className={`${classes.marginTop20} text-center`}>
-				        Don't have an account? <a href="/register">Create account</a>
+				        Don't have an account? <Link to="/register">Create account</Link>
 			        </div>
 		        </form>
 	        </AuthCard>

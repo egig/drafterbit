@@ -4,10 +4,6 @@ module.exports = {
 		borderWidth: "2.3px",
 	},
 
-	labelWidth: {
-		width: "100%",
-	},
-
 	btnBlockPadding: {
 		padding: "12px 10px"
 	},
@@ -23,5 +19,4 @@ module.exports = {
 	btnPadding: {
 		padding: "12px 10px"
 	}
-
 }
