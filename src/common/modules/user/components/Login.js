@@ -6,6 +6,7 @@ import actions from '../actions';
 import Style from './Login.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
+import { translate } from 'react-i18next';
 
 class Login extends React.Component {
 
@@ -30,9 +31,10 @@ class Login extends React.Component {
     render() {
 
 	    let classes = this.props.classNames;
+	    const { t } = this.props;
 
         return (
-	        <AuthCard title="Login">
+	        <AuthCard title={t('login:title')}>
 		        <form onSubmit={(e) => {
 			        e.preventDefault();
 			        this.doLogin(e);
@@ -81,4 +83,8 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default withStyle(Style)(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withStyle(Style)(
+	translate('login')(
+		connect(mapStateToProps, mapDispatchToProps)(Login)
+	)
+);

@@ -1,4 +1,5 @@
 module.exports = {
+    DEBUG: false
 	PORT: 3000,
 	SESSION_SECRET: 'secr3t',
 	MONGODB_URL: 'mongodb://localhost:27017/drafterbit'
