@@ -1,18 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import Style from './Register.style';
-import jss from '../../../../../jss-config';
 import AuthCard from './AuthCard';
-
-
-// TODO create HOC for jss
+import withStyle from '../../../withStyle';
 
 class Register extends React.Component {
 
 	render() {
 
-		const sheet = jss.createStyleSheet(Style);
-		let { classes } = sheet;
+		let classes = this.props.classNames;
 
 		return (
 			<AuthCard title="Register">
@@ -52,4 +48,4 @@ class Register extends React.Component {
 	}
 }
 
-export default Register;
+export default withStyle(Style)(Register);

@@ -28,6 +28,7 @@
     "querystring": "^0.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-i18next": "^7.3.4",
     "react-jss": "^6.1.1",
     "react-md": "^1.0.15",
     "react-redux": "^5.0.5",

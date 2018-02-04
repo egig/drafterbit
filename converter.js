@@ -1,4 +1,4 @@
-const jss = require('./jss-config');
+const jss = require('./src/jss-config');
 const {SheetsRegistry} = require('jss');
 
 

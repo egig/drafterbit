@@ -1,11 +1,12 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { Switch } from 'react-router';
 import SubRoutes from './SubRoutes';
 import contentRoutes from './modules/content/routes';
 import commonRoutes from './modules/user/routes';
 import projectRoutes from './modules/project/routes';
 import ReactRouteManager from '../ReactRouteManager';
+import PropTypes from 'prop-types';
 
 let routeManager = new ReactRouteManager();
 routeManager.addRoutes(projectRoutes);
@@ -13,15 +14,7 @@ routeManager.addRoutes(contentRoutes);
 routeManager.addRoutes(commonRoutes);
 
 class Drafterbit extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-
-        let state = this.props.store.getState();
-
         return (
             <Provider store={this.props.store}>
                 <Switch>
@@ -33,6 +26,18 @@ class Drafterbit extends React.Component {
         );
 
     }
+
+		getChildContext() {
+			return {
+				drafterbit: this.props.drafterbit,
+				jss: this.props.jss,
+			};
+		}
 }
+
+Drafterbit.childContextTypes = {
+	drafterbit: PropTypes.object.isRequired,
+	jss: PropTypes.object.isRequired
+};
 
 module.exports = Drafterbit;

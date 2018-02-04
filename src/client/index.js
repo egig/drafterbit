@@ -4,6 +4,10 @@ import Drafterbit from '../common/Drafterbit';
 import { BrowserRouter } from 'react-router-dom';
 import storeFromState from '../common/storeFromState';
 import moment from 'moment';
+import createJSSInstance from '../createJSSInstance';
+
+const jss = createJSSInstance();
+const drafterbit = {}; //TODO
 
 moment.locale('id', {
     months: 'januari_februari_maret_april_mei_juni_juli_agustus_september_oktober_november_desember'.split('_'),
@@ -14,7 +18,7 @@ const store = storeFromState(window.__PRELOADED_STATE);
 
 ReactDOM.render(
     <BrowserRouter>
-        <Drafterbit store={store} />
+        <Drafterbit store={store} jss={jss} drafterbit={drafterbit} />
     </BrowserRouter>, document.getElementById('app'));
 
 

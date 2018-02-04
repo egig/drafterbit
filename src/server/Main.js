@@ -3,8 +3,8 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import Drafterbit from '../common/Drafterbit';
 import Html from './Html';
-const {SheetsRegistryProvider} =  require('react-jss');
 import storeFromState from '../common/storeFromState';
+import createJSSInstance from '../createJSSInstance';
 
 const Main = function Main(url = '/', sheets, state) {
 
@@ -14,11 +14,12 @@ const Main = function Main(url = '/', sheets, state) {
         __PRELOADED_STATE: state
     };
 
+    const jss = createJSSInstance();
+    const drafterbit = {}; // TODO;
+
     data.children = ReactDOMServer.renderToString(
         <StaticRouter location={url} context={context}>
-            <SheetsRegistryProvider registry={sheets}>
-                <Drafterbit store={store}/>
-            </SheetsRegistryProvider>
+            <Drafterbit store={store} jss={jss} drafterbit={drafterbit}/>
         </StaticRouter>
     );
 

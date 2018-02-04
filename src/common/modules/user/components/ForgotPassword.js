@@ -1,18 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import Style from './ForgotPassword.style';
-import jss from '../../../../../jss-config';
 import AuthCard from './AuthCard';
-
-
-// TODO create HOC for jss
+import withStyle from '../../../withStyle';
 
 class ForgotPassword extends React.Component {
 
 	render() {
 
-		const sheet = jss.createStyleSheet(Style);
-		let { classes } = sheet;
+		let classes = this.props.classNames;
 
 		return (
 			<AuthCard title="Forgot Password">
@@ -37,4 +32,4 @@ class ForgotPassword extends React.Component {
 	}
 }
 
-export default ForgotPassword;
+export default withStyle(Style)(ForgotPassword);

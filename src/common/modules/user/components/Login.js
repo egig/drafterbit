@@ -4,10 +4,8 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom'
 import actions from '../actions';
 import Style from './Login.style';
-import jss from '../../../../../jss-config';
 import AuthCard from './AuthCard';
-
-// TODO create HOC for jss
+import withStyle from '../../../withStyle';
 
 class Login extends React.Component {
 
@@ -31,8 +29,7 @@ class Login extends React.Component {
 
     render() {
 
-    	const sheet = jss.createStyleSheet(Style);
-	    let { classes } = sheet;
+	    let classes = this.props.classNames;
 
         return (
 	        <AuthCard title="Login">
@@ -84,4 +81,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withStyle(Style)(connect(mapStateToProps, mapDispatchToProps)(Login));

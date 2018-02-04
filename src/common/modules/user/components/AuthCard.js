@@ -1,14 +1,12 @@
 import React from 'react';
 import Style from './AuthCard.style';
-import jss from '../../../../../jss-config';
+import withStyle from '../../../withStyle';
 
-// TODO create HOC for jss
 class AuthCard extends React.Component {
 
 	render() {
 
-		const sheet = jss.createStyleSheet(Style);
-		let { classes } = sheet;
+		let classes = this.props.classNames;
 
 		return (
 			<section className="h-100 my-login-page">
@@ -35,4 +33,4 @@ class AuthCard extends React.Component {
 	}
 }
 
-export default AuthCard;
+export default withStyle(Style)(AuthCard);
