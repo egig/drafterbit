@@ -19,8 +19,6 @@ const Main = function Main(url = '/', sheets, state) {
     const drafterbit = {}; // TODO;
 	  const i18n = createI18nextInstance();
 
-	  console.log("TITLE", i18n.t("title"));
-
     data.children = ReactDOMServer.renderToString(
         <StaticRouter location={url} context={context}>
             <Drafterbit store={store} jss={jss} drafterbit={drafterbit} i18n={i18n} />

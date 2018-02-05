@@ -9,7 +9,7 @@ class AuthCard extends React.Component {
 		let classes = this.props.classNames;
 
 		return (
-			<section className="h-100 my-login-page">
+			<div className="h-100 my-login-page">
 				<div className="container h-100">
 					<div className="row justify-content-md-center h-100">
 						<div className={classes.cardWrapper}>
@@ -28,7 +28,7 @@ class AuthCard extends React.Component {
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
 		);
 	}
 }

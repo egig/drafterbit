@@ -11,7 +11,7 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 
 		// react i18next special options (optional)
 		react: {
-			wait: false,
+			wait: true,
 			bindI18n: 'languageChanged loaded',
 			bindStore: 'added removed',
 			nsMode: 'default'

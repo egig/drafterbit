@@ -18,7 +18,7 @@ moment.locale('id', {
 
 const store = storeFromState(window.__PRELOADED_STATE);
 
-ReactDOM.render(
+ReactDOM.hydrate(
     <BrowserRouter>
         <Drafterbit store={store} jss={jss} drafterbit={drafterbit} i18n={i18n} />
     </BrowserRouter>, document.getElementById('app'));
