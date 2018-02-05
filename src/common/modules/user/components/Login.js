@@ -2,16 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom'
+import { translate } from 'react-i18next';
 import actions from '../actions';
 import Style from './Login.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
-import { translate } from 'react-i18next';
 
 class Login extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+        	errorText: ''
+        }
 
         this.doLogin = this.doLogin.bind(this);
     }
@@ -23,9 +27,24 @@ class Login extends React.Component {
 
         this.props.doLogin(email, password)
 	        .then((r)=> {
-        	  console.log(this.props.currentUser);
+        	  // TODO get referer
 	        	this.props.history.push('/');
-	        });
+	        }).catch(error => {
+
+	        let message;
+
+	        if (error.response) {
+		        message = error.response.data.message;
+	        } else if (error.request) {
+		        message = "ERROR unknown";
+	        } else {
+		        message = error.message;
+	        }
+
+	        this.setState({
+	        	errorText: message
+	        })
+        });
     }
 
     render() {
@@ -35,6 +54,11 @@ class Login extends React.Component {
 
         return (
 	        <AuthCard title={t('login:title')}>
+		        {this.state.errorText &&
+			        <div className="alert alert-warning" role="alert">
+				        {this.state.errorText}
+			        </div>
+		        }
 		        <form onSubmit={(e) => {
 			        e.preventDefault();
 			        this.doLogin(e);

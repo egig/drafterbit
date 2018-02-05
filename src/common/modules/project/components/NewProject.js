@@ -10,7 +10,7 @@ class NewProject extends React.Component {
 						<form >
 							<div className="form-group">
 								<label htmlFor="exampleInputEmail1">Project Name</label>
-								<input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+								<input type="text" name="project_name" className="form-control" />
 							</div>
 							<button type="submit" className="btn btn-primary">Create</button>
 						</form>

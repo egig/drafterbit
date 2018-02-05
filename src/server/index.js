@@ -36,7 +36,7 @@ app.use('/api', apiRoutes);
 
 app.get('/logout', (req, res) => {
 	req.session.destroy();
-	res.redirect('/admin/login');
+	res.redirect('/login');
 });
 
 app.get('*', function (req, res) {
