@@ -56,7 +56,6 @@ class Login extends React.Component {
         return (
 	        <AuthCard title={t('login:title')}>
 		        <Helmet>
-			        <meta charSet="utf-8" />
 			        <title>Login - draferbit</title>
 		        </Helmet>
 

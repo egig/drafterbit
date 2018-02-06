@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Style from './ForgotPassword.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
@@ -11,8 +12,10 @@ class ForgotPassword extends React.Component {
 
 		return (
 			<AuthCard title="Forgot Password">
+				<Helmet>
+					<title>Forgot Password - draferbit</title>
+				</Helmet>
 				<form >
-
 					<div className="form-group">
 						<label htmlFor="email">E-Mail</label>
 						<input type="email" name="email" className={`form-control ${classes.formControlBorder}`} id="email" aria-describedby="emailHelp"/>

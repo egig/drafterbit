@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet';
 import Style from './Register.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
@@ -12,6 +13,9 @@ class Register extends React.Component {
 
 		return (
 			<AuthCard title="Register">
+				<Helmet>
+					<title>Register - draferbit</title>
+				</Helmet>
 				<form >
 					<div className="form-group">
 						<label htmlFor="email">Name</label>
