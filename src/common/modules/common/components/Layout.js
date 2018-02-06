@@ -14,7 +14,7 @@ class Layout extends React.Component {
 		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="#">drafterbit</a>
 		      <ul className="navbar-nav px-3">
 		        <li className="nav-item text-nowrap">
-		          <a className="nav-link" href="#">Sign out</a>
+		          <a className="nav-link" href="/logout">Logout</a>
 		        </li>
 		      </ul>
 		    </nav>
@@ -73,7 +73,7 @@ class Layout extends React.Component {
 		        </nav>
 
 		        <main role="main" className={`col-md-9 ml-sm-auto col-lg-10 pt-3 px-4`}>
-		          <h2>Section title</h2>
+		          <h2>{this.props.title}</h2>
 			        {this.props.children}
 		        </main>
 		      </div>
@@ -82,5 +82,10 @@ class Layout extends React.Component {
 		);
 	}
 }
+
+Layout.defaultProps = {
+	title: "Untitled Page"
+};
+
 
 export default withStyle(Style)(Layout);

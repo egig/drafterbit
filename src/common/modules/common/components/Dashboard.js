@@ -8,7 +8,7 @@ class Dashboard extends React.Component {
 	    const { t } = this.props;
 
 	    return (
-	        <Layout>
+		    <Layout title={t('dashboard:layout_title')}>
 		        <div className="row justify-content-center">
 			        <div className="col-4">
 				        {t('dashboard:no_project_text')} &nbsp;

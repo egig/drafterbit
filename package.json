@@ -33,6 +33,7 @@
     "querystring": "^0.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-helmet": "^5.2.0",
     "react-i18next": "^7.3.4",
     "react-jss": "^6.1.1",
     "react-md": "^1.0.15",
@@ -64,7 +65,8 @@
     "build": "npm run babel && webpack",
     "dev": "webpack && node server.js --env development",
     "linter": "./node_modules/.bin/eslint --fix ./src",
-    "styledump": "node converter.js > public/css/common.css"
+    "styledump": "node converter.js > public/css/common.css",
+    "lng": "rm -R ./public/locales && cp -R ./locales ./public"
   },
   "author": "",
   "license": "ISC",

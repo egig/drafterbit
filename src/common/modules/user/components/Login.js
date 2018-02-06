@@ -7,6 +7,7 @@ import actions from '../actions';
 import Style from './Login.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
+import { Helmet } from 'react-helmet';
 
 class Login extends React.Component {
 
@@ -54,6 +55,11 @@ class Login extends React.Component {
 
         return (
 	        <AuthCard title={t('login:title')}>
+		        <Helmet>
+			        <meta charSet="utf-8" />
+			        <title>Login - draferbit</title>
+		        </Helmet>
+
 		        {this.state.errorText &&
 			        <div className="alert alert-warning" role="alert">
 				        {this.state.errorText}

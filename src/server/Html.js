@@ -5,7 +5,7 @@ const Html = function (props) {
     return (
         <html>
             <head>
-                <title>page_title</title>
+	            {props.head.title.toComponent()}
 		            <meta charSet="utf-8" />
 		            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		            <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />

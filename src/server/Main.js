@@ -6,6 +6,7 @@ import Html from './Html';
 import storeFromState from '../common/storeFromState';
 import createJSSInstance from '../createJSSInstance';
 import createI18nextInstance from '../createI18nextInstance';
+import { Helmet } from 'react-helmet';
 
 const Main = function Main(url = '/', sheets, state) {
 
@@ -24,6 +25,9 @@ const Main = function Main(url = '/', sheets, state) {
             <Drafterbit store={store} jss={jss} drafterbit={drafterbit} i18n={i18n} />
         </StaticRouter>
     );
+
+		const head = Helmet.renderStatic();
+		data.head = head;
 
     return ReactDOMServer.renderToStaticMarkup(<Html {...data} />);
 };
