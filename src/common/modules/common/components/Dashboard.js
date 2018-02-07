@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
 
 	    return (
 		    <Layout title={t('dashboard:layout_title')}>
-		        <div className="row justify-content-center">
+		        <div className="row justify-content-center mt-4">
 			        <div className="col-4">
 				        {t('dashboard:no_project_text')} &nbsp;
 				        <Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>

@@ -24,7 +24,7 @@
     "immutable": "^3.8.2",
     "jsonwebtoken": "^8.1.0",
     "jss": "^9.6.0",
-    "jss-nested": "^4.0.1",
+    "jss-nested": "^6.0.1",
     "lodash": "^4.17.4",
     "mime-types": "^2.1.16",
     "moment": "^2.18.1",
@@ -61,7 +61,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel ./src -d ./build",
-    "start": "npm run babel && webpack && node server.js",
+    "start": "npm run styledump && npm run lng && npm run babel && webpack && node server.js",
     "build": "npm run babel && webpack",
     "dev": "webpack && node server.js --env development",
     "linter": "./node_modules/.bin/eslint --fix ./src",
