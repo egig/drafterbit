@@ -3,7 +3,8 @@
   "layout_title_new": "Create new project",
   "new_form": {
     "project_name": "Project Name",
-    "create": "Create"
+    "create": "Create",
+    "cancel": "Cancel",
   },
   "no_project_text": "You still have no project",
   "add_project_btn_text": "Create One"

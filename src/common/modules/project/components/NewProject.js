@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../common/components/Layout';
 import { translate } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 class NewProject extends React.Component {
 	render() {
@@ -14,7 +15,10 @@ class NewProject extends React.Component {
 								<label htmlFor="exampleInputEmail1">{t("project:new_form.project_name")}</label>
 								<input type="text" name="project_name" className="form-control" />
 							</div>
-							<button type="submit" className="btn btn-primary">{t("project:new_form.create")}</button>
+							<div className="form-group">
+								<button type="submit" className="btn btn-primary">{t("project:new_form.create")}</button>
+								<Link to="/" className="btn btn-link ml-1">{t("project:new_form.cancel")}</Link>
+							</div>
 						</form>
 					</div>
 				</div>

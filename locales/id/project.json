@@ -3,7 +3,8 @@
   "layout_title_new": "Buat proyek baru",
   "new_form": {
     "project_name": "Nama proyek",
-    "create": "Buat"
+    "create": "Buat",
+    "cancel": "Batal"
   },
   "no_project_text": "Belum ada proyek.",
   "add_project_btn_text": "Buat Proyek"
