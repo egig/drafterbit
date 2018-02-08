@@ -27,6 +27,7 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 		};
 	} else {
 		i18n.use(i18nextSyncFsBackend);
+		options.debug = false;
 		options.lng = 'id'; // TODO get this from request
 		options.backend = {
 			loadPath: __dirname + '/../locales/{{lng}}/{{ns}}.json',

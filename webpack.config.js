@@ -3,7 +3,7 @@ module.exports = {
 		contentBase: "./public",
 		hot: true
 	},
-	entry: './build/client/index',
+	entry: ['babel-polyfill', './build/client/index'],
 	output: {
 		filename: 'public/bundle.js'
 	},

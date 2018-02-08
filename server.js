@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 const app = require('./build/server').default;
 const config = require('./config');
 

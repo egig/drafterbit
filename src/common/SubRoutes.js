@@ -15,6 +15,8 @@ const SubRoutes = (route) => (
     }}/>
 );
 
-export default connect(state => ({
+export default connect(
+
+	state => ({
 		currentUser: state.user.currentUser
 	}))(SubRoutes);

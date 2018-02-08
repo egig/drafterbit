@@ -3,11 +3,19 @@ import withStyle from '../../../withStyle';
 import Style from './Layout.style';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
+import actions from '../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Layout extends React.Component {
+
+	componentDidMount() {
+		this.props.getProjects();
+	}
+
 	render() {
 
-		let { classNames, t } = this.props;
+		let { classNames, t, projects } = this.props;
 
 		return (
 			<span>
@@ -16,6 +24,9 @@ class Layout extends React.Component {
 					<form className={classNames.navbarForm}>
 						<select className={classNames.navbarProjectSelector}>
 							<option>{t('layout.select_project')}</option>
+							{projects.map((p,i) => {
+								return (<option key={i} value={p.id}>{p.name}</option>)
+							})}
 						</select>
 					</form>
 		      <ul className="navbar-nav px-3">
@@ -36,5 +47,17 @@ Layout.defaultProps = {
 	title: "Untitled Page"
 };
 
+const mapStateToProps = (state) => {
+	return {
+		projects: state.project.projects
+	};
+};
 
-export default translate()(withStyle(Style)(Layout));
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators(actions, dispatch);
+};
+
+
+export default translate()(withStyle(Style)(
+	connect(mapStateToProps, mapDispatchToProps)(Layout
+	)));

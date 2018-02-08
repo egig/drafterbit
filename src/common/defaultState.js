@@ -3,5 +3,8 @@ module.exports = {
         loggedIn: 0,
         currentUser: {},
         users: []
-    }
+    },
+	project: {
+    	projects: []
+	}
 };
