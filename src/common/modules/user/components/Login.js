@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom'
-import { translate } from 'react-i18next';
 import actions from '../actions';
 import Style from './Login.style';
 import AuthCard from './AuthCard';
@@ -51,9 +50,9 @@ class Login extends React.Component {
     render() {
 
 	    let classes = this.props.classNames;
-	    const { t } = this.props;
+	    let t = s => s;
 
-        return (
+	    return (
 	        <AuthCard title={t('login:title')}>
 		        <Helmet>
 			        <title>Login - draferbit</title>
@@ -113,7 +112,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withStyle(Style)(
-	translate('login')(
 		connect(mapStateToProps, mapDispatchToProps)(Login)
-	)
 );

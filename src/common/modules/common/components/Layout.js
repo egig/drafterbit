@@ -2,7 +2,6 @@ import React from 'react';
 import withStyle from '../../../withStyle';
 import Style from './Layout.style';
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,7 +14,8 @@ class Layout extends React.Component {
 
 	render() {
 
-		let { classNames, t, projects } = this.props;
+		let { classNames, projects } = this.props;
+		let t = s => s;
 
 		return (
 			<span>
@@ -58,6 +58,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default translate()(withStyle(Style)(
-	connect(mapStateToProps, mapDispatchToProps)(Layout
-	)));
+export default withStyle(Style)(
+	connect(mapStateToProps, mapDispatchToProps)(Layout));

@@ -5,17 +5,11 @@ import session from 'express-session';
 import { SheetsRegistry } from 'jss';
 import Main from './Main';
 import { SESSION_SECRET } from '../../config';
-import appRoute from './middlewares/app-route';
 import ModuleManager from '../ModuleManager';
-import PageModule from '../common/modules/page/PageModule';
 import apiRoutes from './api/routes';
 import authMiddleware from './middlewares/auth';
-import jwt from 'express-jwt';
 
 const app = express();
-
-const moduleManager = new ModuleManager(app);
-moduleManager.registerModule(new PageModule());
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -31,7 +25,6 @@ app.use(express.static(__dirname+'/../../public'));
 app.use(authMiddleware);
 // app.use(jwt({ secret:SESSION_SECRET}).unless({path: ['/login']}));
 
-moduleManager.initialize();
 app.use('/api', apiRoutes);
 
 app.get('/logout', (req, res) => {
@@ -46,12 +39,17 @@ app.get('*', function (req, res) {
 
     const sheets = new SheetsRegistry();
 
-    // TODO make statelessm, use token each request
     if(req.user) {
     	defaultState.user.currentUser = req.user;
     }
 
-    let html = Main(req.url, sheets, defaultState);
+    let main = Main(req.url, sheets, defaultState);
+    let html = main.html;
+
+    if(main.context.location) {
+    	return res.redirect(main.context.url);
+    }
+
     return res.send(`<!DOCTYPE html>${html}`);
 });
 
