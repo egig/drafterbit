@@ -9,14 +9,6 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 	let options = {
 		fallbackLng: 'en',
 		debug: true, // TODO get this from app config not directly from file
-
-		// react i18next special options (optional)
-		react: {
-			wait: true,
-			bindI18n: 'languageChanged loaded',
-			bindStore: 'added removed',
-			nsMode: 'default'
-		}
 	};
 
 	if(browser) {
@@ -26,6 +18,7 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 		options.backend = {
 			loadPath: '/locales/{{lng}}/{{ns}}.json',
 			crossDomain: false,
+			allowMultiLoading: true
 		};
 	} else {
 		options.debug = false;
