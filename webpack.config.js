@@ -8,6 +8,7 @@ module.exports = {
 		filename: 'public/bundle.js'
 	},
 	node: {
-		fs: 'empty'
+		fs: 'empty',
+		XMLHttpRequest: 'empty'
 	}
 };

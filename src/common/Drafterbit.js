@@ -24,13 +24,15 @@ class Drafterbit extends React.Component {
 			return {
 				drafterbit: this.props.drafterbit,
 				jss: this.props.jss,
+				languageContext: this.props.languageContext
 			};
 		}
 }
 
 Drafterbit.childContextTypes = {
 	drafterbit: PropTypes.object.isRequired,
-	jss: PropTypes.object.isRequired
+	jss: PropTypes.object.isRequired,
+	languageContext: PropTypes.object.isRequired
 };
 
 module.exports = Drafterbit;

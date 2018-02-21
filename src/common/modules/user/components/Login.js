@@ -7,6 +7,7 @@ import Style from './Login.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
 import { Helmet } from 'react-helmet';
+import translate from '../../../../translate';
 
 class Login extends React.Component {
 
@@ -50,7 +51,7 @@ class Login extends React.Component {
     render() {
 
 	    let classes = this.props.classNames;
-	    let t = s => s;
+	    let t = this.props.t;
 
 	    return (
 	        <AuthCard title={t('login:title')}>
@@ -111,6 +112,6 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default withStyle(Style)(
+export default translate(['login'])(withStyle(Style)(
 		connect(mapStateToProps, mapDispatchToProps)(Login)
-);
+));

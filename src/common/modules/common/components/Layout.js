@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import translate from '../../../../translate';
 
 class Layout extends React.Component {
 
@@ -14,8 +15,7 @@ class Layout extends React.Component {
 
 	render() {
 
-		let { classNames, projects } = this.props;
-		let t = s => s;
+		let { classNames, projects, t } = this.props;
 
 		return (
 			<span>
@@ -58,5 +58,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default withStyle(Style)(
-	connect(mapStateToProps, mapDispatchToProps)(Layout));
+export default translate(['translation'])(withStyle(Style)(
+	connect(mapStateToProps, mapDispatchToProps)(Layout)));

@@ -5,31 +5,59 @@ import Drafterbit from '../common/Drafterbit';
 import Html from './Html';
 import storeFromState from '../common/storeFromState';
 import createJSSInstance from '../createJSSInstance';
+import createI18nextInstance from '../createI18nextInstance';
 import { Helmet } from 'react-helmet';
+
+const i18n = createI18nextInstance();
 
 const Main = function Main(url = '/', sheets, state) {
 
     const store = storeFromState(state);
     const context = {};
     let data = {
-        __PRELOADED_STATE: state
+        __PRELOADED_STATE__: state
     };
 
     const jss = createJSSInstance();
     const drafterbit = {}; // TODO;
 
+		let languageContext = {
+			namespaces: [],
+			i18n: i18n
+		};
+
     data.children = ReactDOMServer.renderToString(
         <StaticRouter location={url} context={context}>
-            <Drafterbit store={store} jss={jss} drafterbit={drafterbit} />
+            <Drafterbit store={store}
+                        jss={jss}
+                        drafterbit={drafterbit}
+                        languageContext={languageContext} />
         </StaticRouter>
     );
 
+		let language = languageContext.i18n.languages[0];
+		let namespaces = languageContext.namespaces;
+		let languageResources = {};
+
+		namespaces.map(ns => {
+			let languageObject = require(`../../locales/${language}/${ns}.json`);
+			languageContext.i18n.addResourceBundle(language, ns, languageObject);
+			if(typeof languageResources[language] === 'undefined') {
+				languageResources[language] = {};
+			}
+
+			languageResources[language][ns] = languageObject;
+		});
+
 		data.head = Helmet.renderStatic();
+		data.__PRELOADED_LANGUAGE_RESOURCES__ = languageResources;
+
 		let html = ReactDOMServer.renderToStaticMarkup(<Html {...data} />);
 
     return {
     	context,
-	    html
+	    html,
+	    languageContext
     }
 };
 

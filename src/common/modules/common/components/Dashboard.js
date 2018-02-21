@@ -2,12 +2,13 @@ import React from 'react';
 import Layout from './Layout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import translate from '../../../../translate';
 
 class Dashboard extends React.Component {
 
 		renderProjects() {
 			const { projects } = this.props;
-			let t = s => s;
+			let t = this.props.t;
 
 			if(!projects.length) {
 				return (
@@ -28,7 +29,7 @@ class Dashboard extends React.Component {
 		}
 
     render() {
-	    let t = s => s;
+	    let t = this.props.t;
 
 	    return (
 		    <Layout title={t('dashboard:layout_title')}>
@@ -46,4 +47,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default translate(['dashboard'])(connect(mapStateToProps)(Dashboard));

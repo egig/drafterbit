@@ -1,6 +1,7 @@
 import React from 'react';
 import Style from './AuthCard.style';
 import withStyle from '../../../withStyle';
+import translate from '../../../../translate';
 
 class AuthCard extends React.Component {
 

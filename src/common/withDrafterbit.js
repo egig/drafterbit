@@ -13,10 +13,10 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
 		}
 	}
 
-	DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`,
-		DrafterbitHOC.contextTypes = {
-			drafterbit: React.PropTypes.object.isRequired,
-		};
+	DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
+	DrafterbitHOC.contextTypes = {
+		drafterbit: React.PropTypes.object.isRequired,
+	};
 
 	return DrafterbitHOC;
 };

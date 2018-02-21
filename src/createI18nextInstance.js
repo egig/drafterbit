@@ -1,9 +1,10 @@
 import i18n from 'i18next';
 import i18nextXHRBackend from 'i18next-xhr-backend';
-import i18nextSyncFsBackend from 'i18next-sync-fs-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 const createI18nextInstance = function createI18nextInstance(browser = false) {
+
+	const i18nInstance = i18n.createInstance();
 
 	let options = {
 		fallbackLng: 'en',
@@ -19,29 +20,21 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 	};
 
 	if(browser) {
-		i18n.use(i18nextXHRBackend);
-		i18n.use(LanguageDetector);
+		i18nInstance.use(i18nextXHRBackend);
+		i18nInstance.use(LanguageDetector);
+		options.resources = window.__PRELOADED_LANGUAGE_RESOURCES__;
 		options.backend = {
 			loadPath: '/locales/{{lng}}/{{ns}}.json',
-			crossDomain: false
+			crossDomain: false,
 		};
 	} else {
-		i18n.use(i18nextSyncFsBackend);
 		options.debug = false;
 		options.lng = 'id'; // TODO get this from request
-		options.backend = {
-			loadPath: __dirname + '/../locales/{{lng}}/{{ns}}.json',
-			addPath: __dirname + '/../locales/{{lng}}/{{ns}}.missing.json',
-			jsonIndent: 2
-		};
-
-		options.ns = [ 'login' ];
-		options.initImmediate = false; // This is necessary for this sync version
 	}
 
-	i18n.init(options);
+	i18nInstance.init(options);
 
-	return i18n;
+	return i18nInstance;
 };
 
 
