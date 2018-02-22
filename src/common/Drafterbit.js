@@ -4,8 +4,10 @@ import { Switch } from 'react-router';
 import PropTypes from 'prop-types';
 import ProtectedRoute from './ProtectedRoute';
 import { Route } from 'react-router-dom';
-import Login from '../common/modules/user/components/Login';
-import Dashboard from '../common/modules/common/components/Dashboard';
+import Login from './modules/user/components/Login';
+import Dashboard from './modules/common/components/Dashboard';
+import NewProject from './modules/project/components/NewProject';
+import ProjectDashboard from './modules/project/components/ProjectDashboard';
 
 class Drafterbit extends React.Component {
     render() {
@@ -13,7 +15,9 @@ class Drafterbit extends React.Component {
             <Provider store={this.props.store}>
             <Switch>
               <Route path="/login" component={Login} />
-              <ProtectedRoute path="/" component={Dashboard} />
+	            <ProtectedRoute path="/project/new" component={NewProject} />
+	            <ProtectedRoute path="/project/:projectId" component={ProjectDashboard} />
+	            <ProtectedRoute path="/" component={Dashboard} />
             </Switch>
             </Provider>
         );

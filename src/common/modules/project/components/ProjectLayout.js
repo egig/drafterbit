@@ -1,13 +1,9 @@
 import React from 'react';
-import withStyle from '../../../withStyle';
-import { translate } from 'react-i18next';
 import Layout from '../../common/components/Layout';
 import ProjectNav from './ProjectNav';
 
 class ProjectLayout extends React.Component {
 	render() {
-
-		let { classNames, t } = this.props;
 
 		return (
 			<Layout title={this.props.titel}>
@@ -26,4 +22,4 @@ Layout.defaultProps = {
 };
 
 
-export default translate()(withStyle(Style)(ProjectLayout));
+export default ProjectLayout;

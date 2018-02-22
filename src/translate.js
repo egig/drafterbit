@@ -32,10 +32,11 @@ module.exports = function translate(namespaces) {
 			}
 
 			componentDidMount() {
-				console.log("DM ", namespaces);
 
 				let lng = this.context.languageContext.i18n.languages[0];
-				let nsPromise = namespaces.map((ns) => {
+				let nsPromise = namespaces.filter((ns) => {
+					return !this.context.languageContext.i18n.hasResourceBundle(lng, ns);
+				}).map((ns) => {
 					return axios.get(`/locales/${lng}/${ns}.json`)
 						.then(response => ({ns, resource: response.data}))
 				});

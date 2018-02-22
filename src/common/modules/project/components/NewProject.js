@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../common/components/Layout';
-import { translate } from 'react-i18next';
+import translate from '../../../../translate';
 import { Link } from 'react-router-dom';
 
 class NewProject extends React.Component {

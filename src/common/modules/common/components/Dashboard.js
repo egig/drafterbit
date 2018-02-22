@@ -14,7 +14,6 @@ class Dashboard extends React.Component {
 				return (
 					<div className="col-4">
 						{t('dashboard:no_project_text')} &nbsp;
-						<Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
 					</div>
 				)
 			}
@@ -22,8 +21,9 @@ class Dashboard extends React.Component {
 			return (
 				<ul>
 					{projects.map((item,i) => {
-						return <li key={i}><a href="">{item.name}</a></li>
+						return <li key={i}><Link to={`/project/${item.id}`}>{item.name}</Link></li>
 					})}
+					<li><Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link></li>
 				</ul>
 			)
 		}

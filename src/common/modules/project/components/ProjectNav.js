@@ -1,10 +1,12 @@
 import React from 'react';
-import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Style from './ProjectNav.style';
+import withStyle from '../../../withStyle';
 
-class Dashboard extends React.Component {
+class ProjectNav extends React.Component {
 	render() {
-		const { t } = this.props;
+
+		let { classNames } = this.props;
 
 		return (
 			<nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
@@ -12,13 +14,13 @@ class Dashboard extends React.Component {
 					<ul className="nav flex-column">
 						<li className="nav-item">
 							<Link className="nav-link active" to="/">
-								<span data-feather="home"></span>
+								<span data-feather="home"/>
 								Dashboard <span className="sr-only">(current)</span>
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to="/projects">
-								<span data-feather="shopping-cart"></span>
+								<span data-feather="shopping-cart"/>
 								Projects
 							</Link>
 						</li>
@@ -62,4 +64,4 @@ class Dashboard extends React.Component {
 	}
 }
 
-export default translate(['dashboard'])(Dashboard);
+export default withStyle(Style)(ProjectNav);
