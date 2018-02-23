@@ -1,9 +1,8 @@
 import drafterbit from 'drafterbit';
 
-
 const setProjects = (projects) => {
 	return {
-		type: 'PROJECT_SET',
+		type: '@project/SET_PROJECTS',
 		payload: projects
 	};
 };
