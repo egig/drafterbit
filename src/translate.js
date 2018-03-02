@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
-import ExecutionEnvironment from 'exenv';
-import shallowEqual from 'shallowequal';
+// @flow
+
+import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-module.exports = function translate(namespaces) {
+module.exports = function translate(namespaces: Array<string>) {
 
 	function getDisplayName(WrappedComponent) {
 		return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 	}
 
-	return function wrap(WrappedComponent) {
+	return function wrap(WrappedComponent: Object) {
 		if (typeof WrappedComponent !== 'function') {
 			throw new Error('Expected WrappedComponent to be a React component.');
 		}
 
-		class Translate extends Component {
+		type Props = {};
+		type State = {
+			loadedAt:any
+		};
 
-			constructor(props, context) {
+		class Translate extends React.Component<Props, State> {
+
+			constructor(props: Object, context: Object) {
 				super(props, context);
 				this.state = {
 					loadedAt: new Date()

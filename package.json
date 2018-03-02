@@ -53,8 +53,10 @@
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^4.10.0",
     "eslint-plugin-react": "^7.4.0",
+    "flow-bin": "^0.66.0",
     "nodemon": "^1.11.0",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.1",
@@ -63,12 +65,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel ./src -d ./build",
-    "start": "npm run styledump && npm run lng && npm run babel && webpack && node server.js",
+    "start": "npm run babel && npm run styledump && npm run lng && webpack && node server.js",
     "build": "npm run babel && webpack",
     "dev": "webpack && node server.js --env development",
     "linter": "./node_modules/.bin/eslint --fix ./src",
     "styledump": "node converter.js > public/css/common.css",
-    "lng": "rm -R ./public/locales && cp -R ./locales ./public"
+    "lng": "rm -R ./public/locales && cp -R ./locales ./public",
+    "flow": "flow"
   },
   "author": "",
   "license": "ISC",

@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,7 +10,11 @@ import withStyle from '../../../withStyle';
 import { Helmet } from 'react-helmet';
 import translate from '../../../../translate';
 
-class Login extends React.Component {
+class Login extends React.Component<{
+	doLogin: Function,
+	t: Function,
+	classNames: Object,
+	history: Object}, {errorText: string}> {
 
     constructor(props) {
         super(props);
@@ -17,17 +22,18 @@ class Login extends React.Component {
         this.state = {
         	errorText: ''
         }
-
-        this.doLogin = this.doLogin.bind(this);
     }
 
-    doLogin(e) {
+    doLogin = (e) => {
         let form = e.target;
         let email = form.email.value;
         let password = form.password.value;
 
         this.props.doLogin(email, password)
 	        .then((r)=> {
+
+        	console.log("OK", r);
+
         	  // TODO get referer
 	        	this.props.history.push('/');
 	        }).catch(error => {

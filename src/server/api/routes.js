@@ -2,48 +2,26 @@ import express from 'express';
 let router = express.Router();
 import password from '../../common/lib/password';
 import config from '../../../config';
-import _ from 'lodash';
-
-const MongoClient = require('mongodb').MongoClient;
+import axios from 'axios';
 
 router.post('/user/login', function (req, res) {
 
-    let email = req.body.email;
-    let rawPassword = req.body.password;
+	(async function () {
 
-    MongoClient.connect(config.MONGODB_URL, function(err, db) {
+		try {
+			let response = await axios.post('http://localhost:3003/v1/users/session', req.body);
+			let user = response.data;
+			req.session.user = user;
+			res.send(user);
 
-        const collection = db.collection('users');
-        collection.find({'email': email}).limit(1).next(function(err, doc) {
-            db.close();
-
-            if(doc) {
-                let hashedPassword = doc.password;
-                delete doc.password;
-
-                password.compare(rawPassword, hashedPassword, (err, isMatch) => {
-                    if(isMatch) {
-                    	  req.session.user = doc;
-                        res.json(doc);
-                    } else {
-                        res.status(403);
-                        res.json({
-                            message: 'Wrong email or password.'
-                        });
-                    }
-
-                });
-
-            } else {
-                res.status(403);
-                res.json({
-                    message: 'Wrong email or password.'
-                });
-            }
-
-        });
-
-    });
+		} catch (e) {
+			res.status(500);
+			res.send({
+				message: e.message
+			})
+		}
+		
+	})();
 
 });
 
