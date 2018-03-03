@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Style from './ProjectNav.style';
 import withStyle from '../../../withStyle';
+import { withRouter } from 'react-router';
 
 class ProjectNav extends React.Component {
 	render() {
 
-		let { classNames } = this.props;
+		let { classNames, match } = this.props;
 
 		return (
 			<nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
@@ -19,7 +20,7 @@ class ProjectNav extends React.Component {
 					</h6>
 					<ul className="nav flex-column">
 						<li className="nav-item">
-							<Link className="nav-link" to="/">
+							<Link className="nav-link" to={`/project/${match.params.project_id}`}>
 								<span data-feather="home"/>
 								Dashboard <span className="sr-only">(current)</span>
 							</Link>
@@ -67,4 +68,4 @@ class ProjectNav extends React.Component {
 	}
 }
 
-export default withStyle(Style)(ProjectNav);
+export default withRouter(withStyle(Style)(ProjectNav));

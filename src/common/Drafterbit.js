@@ -16,7 +16,7 @@ class Drafterbit extends React.Component {
             <Switch>
               <Route path="/login" component={Login} />
 	            <ProtectedRoute path="/project/new" component={NewProject} />
-	            <ProtectedRoute path="/project/:projectId" component={ProjectDashboard} />
+	            <ProtectedRoute path="/project/:project_id" component={ProjectDashboard} />
 	            <ProtectedRoute path="/" component={Dashboard} />
             </Switch>
             </Provider>
