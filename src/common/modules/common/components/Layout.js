@@ -22,7 +22,7 @@ class Layout extends React.Component {
 				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
 		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="#">drafterbit</a>
 					<form className={classNames.navbarForm}>
-						<select className={classNames.navbarProjectSelector}>
+						<select className={classNames.navbarProjectSelector} value={this.props.project.id}>
 							<option>{t('layout.select_project')}</option>
 							{projects.map((p,i) => {
 								return (<option key={i} value={p.id}>{p.name}</option>)
@@ -49,6 +49,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = (state) => {
 	return {
+		project: state.project.project,
 		projects: state.project.projects
 	};
 };

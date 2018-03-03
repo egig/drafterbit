@@ -1,10 +1,13 @@
 module.exports = {
-    user: {
-        loggedIn: 0,
-        currentUser: {},
-        users: []
-    },
+  user: {
+      loggedIn: 0,
+      currentUser: {},
+      users: []
+  },
 	project: {
-    	projects: []
+    	projects: [],
+    	project: {
+    		content_types: []
+	    }
 	}
 };

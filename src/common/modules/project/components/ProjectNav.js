@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Style from './ProjectNav.style';
 import withStyle from '../../../withStyle';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 class ProjectNav extends React.Component {
 	render() {
@@ -34,12 +35,16 @@ class ProjectNav extends React.Component {
 						</Link>
 					</h6>
 					<ul className="nav flex-column mb-2">
-						<li className="nav-item">
-							<Link className="nav-link" to="/project/projectId/content-types/ctId">
-							<span data-feather="file-text"/>
-								Article
-							</Link>
-						</li>
+						{this.props.project.content_types.map((ct, i) => {
+							return (
+								<li className="nav-item" key={i}>
+									<Link className="nav-link" to={`/project/${this.props.project.id}/${ct.slug}`}>
+										<span data-feather="file-text"/>
+										{ct.name}
+									</Link>
+								</li>
+							)
+						})}
 					</ul>
 
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
@@ -68,4 +73,10 @@ class ProjectNav extends React.Component {
 	}
 }
 
-export default withRouter(withStyle(Style)(ProjectNav));
+const mapStateToProps = (state) => {
+	return {
+		project: state.project.project
+	};
+};
+
+export default withRouter(withStyle(Style)(connect(mapStateToProps)(ProjectNav)));

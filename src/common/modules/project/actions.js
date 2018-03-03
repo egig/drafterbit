@@ -12,7 +12,7 @@ const getProject = (projectId) => (dispatch) => {
 	let client = drafterbit.createClient({});
 	client.getProject(projectId)
 		.then((project) => {
-			return dispatch(setProject(projects))
+			return dispatch(setProject(project))
 		});
 };
 
