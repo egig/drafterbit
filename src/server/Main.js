@@ -26,14 +26,16 @@ const Main = function Main(url = '/', sheets, state) {
 			i18n: i18n
 		};
 
-    data.children = ReactDOMServer.renderToString(
-        <StaticRouter location={url} context={context}>
-            <Drafterbit store={store}
-                        jss={jss}
-                        drafterbit={drafterbit}
-                        languageContext={languageContext} />
-        </StaticRouter>
-    );
+		const  Component = (
+			<StaticRouter location={url} context={context}>
+				<Drafterbit store={store}
+				            jss={jss}
+				            drafterbit={drafterbit}
+				            languageContext={languageContext} />
+			</StaticRouter>
+		);
+		// Scan context
+		ReactDOMServer.renderToString(Component);
 
 		let language = languageContext.i18n.languages[0];
 		let namespaces = languageContext.namespaces;
@@ -52,7 +54,9 @@ const Main = function Main(url = '/', sheets, state) {
 		data.head = Helmet.renderStatic();
 		data.__PRELOADED_LANGUAGE_RESOURCES__ = languageResources;
 
-		let html = ReactDOMServer.renderToStaticMarkup(<Html {...data} />);
+		data.children = ReactDOMServer.renderToString(Component);
+
+	let html = ReactDOMServer.renderToStaticMarkup(<Html {...data} />);
 
     return {
     	context,
