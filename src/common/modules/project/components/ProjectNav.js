@@ -55,7 +55,7 @@ class ProjectNav extends React.Component {
 					</h6>
 					<ul className="nav flex-column mb-2">
 						<li className="nav-item">
-							<Link className="nav-link" to="/project/projectId/content-types/ctId">
+							<Link className="nav-link" to={`/project/${this.props.project.id}/content_types`}>
 								<span data-feather="file-text"/>
 								Content Types
 							</Link>

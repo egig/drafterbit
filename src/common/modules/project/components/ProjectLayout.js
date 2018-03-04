@@ -1,8 +1,18 @@
 import React from 'react';
 import Layout from '../../common/components/Layout';
 import ProjectNav from './ProjectNav';
+import actions from '../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class ProjectLayout extends React.Component {
+
+	componentDidMount(){
+		//TODO check if this is server-preloaded
+		this.props.getProject(this.props.match.params.project_id);
+	}
+
 	render() {
 
 		return (
@@ -21,5 +31,14 @@ Layout.defaultProps = {
 	title: "Untitled Page"
 };
 
+const mapStateToProps = (state) => {
+	return {
+		project: state.project.project
+	};
+};
 
-export default ProjectLayout;
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators(actions, dispatch);
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectLayout));

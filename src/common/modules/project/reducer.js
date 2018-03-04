@@ -8,6 +8,11 @@ export default function reducer(state = {}, action) {
 			return Object.assign({}, state, {
 				project: action.payload
 			});
+
+		case '@project/SET_CONTENT_TYPES':
+			return Object.assign({}, state, {
+				contentTypes: action.payload
+			});
 	}
 
 	return state;

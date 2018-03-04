@@ -7,6 +7,22 @@ const setProject = (projects) => {
 	};
 };
 
+const setContentTypes = (contentTypes) => {
+	return {
+		type: '@project/SET_CONTENT_TYPES',
+		payload: contentTypes
+	};
+};
+
+
+
+const getContentTypes = (projectId) => (dispatch) => {
+	let client = drafterbit.createClient({});
+	client.getContentTypes(projectId)
+		.then((contentTypes) => {
+			return dispatch(setContentTypes(contentTypes))
+		});
+};
 
 const getProject = (projectId) => (dispatch) => {
 	let client = drafterbit.createClient({});
@@ -17,5 +33,6 @@ const getProject = (projectId) => (dispatch) => {
 };
 
 export default {
-	getProject
+	getProject,
+	getContentTypes
 };
