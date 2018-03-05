@@ -9,6 +9,7 @@ import Dashboard from './modules/common/components/Dashboard';
 import NewProject from './modules/project/components/NewProject';
 import ProjectDashboard from './modules/project/components/ProjectDashboard';
 import ContentTypes from './modules/project/components/ContentTypes';
+import ContentType from './modules/project/components/ContentType';
 
 class Drafterbit extends React.Component {
     render() {
@@ -16,6 +17,7 @@ class Drafterbit extends React.Component {
             <Provider store={this.props.store}>
             <Switch>
               <Route path="/login" component={Login} />
+	            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
 	            <ProtectedRoute path="/project/new" component={NewProject} />
 	            <ProtectedRoute path="/project/:project_id" component={ProjectDashboard} />

@@ -13,6 +13,10 @@ export default function reducer(state = {}, action) {
 			return Object.assign({}, state, {
 				contentTypes: action.payload
 			});
+		case '@project/SET_CONTENT_TYPE':
+			return Object.assign({}, state, {
+				contentType: action.payload
+			});
 	}
 
 	return state;

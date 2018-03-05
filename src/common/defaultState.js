@@ -9,6 +9,9 @@ module.exports = {
     project: {
       content_types: []
     },
-		contentTypes: []
+		contentType: {
+    	fields: []
+		},
+		contentTypes: [],
 	}
 };
