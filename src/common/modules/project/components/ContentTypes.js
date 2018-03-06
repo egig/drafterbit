@@ -27,7 +27,7 @@ class ContentTypes extends React.Component {
 							{this.props.contentTypes.map(ct => {
 								return (
 									<tr>
-										<td><a href={`/project/${this.props.project.id}/content_types/${ct.id}`}>{ct.name}</a></td>
+										<td><Link to={`/project/${this.props.project.id}/content_types/${ct.id}`}>{ct.name}</Link></td>
 									</tr>
 								)
 							})}

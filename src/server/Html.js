@@ -9,6 +9,8 @@ const Html = function (props) {
 		            <meta charSet="utf-8" />
 		            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		            <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />
+	              {/*<!--TODO include react-table only when we need it -->*/}
+                <link rel="stylesheet" type="text/css" href="/css/react-table.css"  />
                 <link rel="stylesheet" type="text/css" href="/css/common.css"  />
             </head>
             <body>

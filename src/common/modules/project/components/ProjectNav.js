@@ -38,7 +38,7 @@ class ProjectNav extends React.Component {
 						{this.props.project.content_types.map((ct, i) => {
 							return (
 								<li className="nav-item" key={i}>
-									<Link className="nav-link" to={`/project/${this.props.project.id}/${ct.slug}`}>
+									<Link className="nav-link" to={`/project/${this.props.project.id}/contents/${ct.slug}`}>
 										<span data-feather="file-text"/>
 										{ct.name}
 									</Link>
