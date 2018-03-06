@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import ProtectedRoute from './ProtectedRoute';
 import { Route } from 'react-router-dom';
 import Login from './modules/user/components/Login';
+import Register from './modules/user/components/Register';
+import RegisterSuccess from './modules/user/components/RegisterSuccess';
 import Dashboard from './modules/common/components/Dashboard';
 import NewProject from './modules/project/components/NewProject';
 import ProjectDashboard from './modules/project/components/ProjectDashboard';
@@ -18,6 +20,8 @@ class Drafterbit extends React.Component {
             <Provider store={this.props.store}>
             <Switch>
               <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/register-success" component={RegisterSuccess} />
 	            <ProtectedRoute path="/project/:project_id/contents/:slug" component={Contents} />
 	            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />

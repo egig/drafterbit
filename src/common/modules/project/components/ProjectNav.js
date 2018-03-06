@@ -61,9 +61,9 @@ class ProjectNav extends React.Component {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" to="/project/projectId/content-types/ctId">
+							<Link className="nav-link" to={`/project/${this.props.project.id}/api-keys`}>
 								<span data-feather="file-text"/>
-								Credentials
+								Api Keys
 							</Link>
 						</li>
 					</ul>

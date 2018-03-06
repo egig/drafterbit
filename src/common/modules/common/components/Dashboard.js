@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
 					{projects.map((item,i) => {
 						return <li key={i}><Link to={`/project/${item.id}`}>{item.name}</Link></li>
 					})}
-					<li><Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link></li>
 				</ul>
 			)
 		}
@@ -35,6 +34,8 @@ class Dashboard extends React.Component {
 		    <Layout title={t('dashboard:layout_title')}>
 		        <div className="row justify-content-center mt-4">
 			        {this.renderProjects()}
+			        <br/>
+				        <Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
 		        </div>
 	        </Layout>
         );

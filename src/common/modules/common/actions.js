@@ -8,9 +8,9 @@ const setProjects = (projects) => {
 };
 
 
-const getProjects = () => (dispatch) => {
+const getProjects = (userId) => (dispatch) => {
 	let client = drafterbit.createClient({});
-	client.getProjects()
+	client.getProjects(userId)
 		.then((projects) => {
 			return dispatch(setProjects(projects))
 		});

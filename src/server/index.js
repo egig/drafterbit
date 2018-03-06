@@ -5,9 +5,8 @@ import session from 'express-session';
 import { SheetsRegistry } from 'jss';
 import Main from './Main';
 import { SESSION_SECRET } from '../../config';
-import ModuleManager from '../ModuleManager';
-import apiRoutes from './api/routes';
 import authMiddleware from './middlewares/auth';
+import drafterbit from 'drafterbit';
 
 const app = express();
 
@@ -25,7 +24,27 @@ app.use(express.static(__dirname+'/../../public'));
 app.use(authMiddleware);
 // app.use(jwt({ secret:SESSION_SECRET}).unless({path: ['/login']}));
 
-app.use('/api', apiRoutes);
+app.post('/login', function (req, res) {
+
+	(async function () {
+
+		try {
+			let client = drafterbit.createClient({});
+			let user = await client.createUserSession(req.body.email, req.body.password);
+			req.session.user = user;
+			res.send(user);
+
+		} catch (e) {
+ 			console.log(e);
+			res.status(e.status || 500);
+			res.send({
+				message: e.message
+			})
+		}
+
+	})();
+
+});
 
 app.get('/logout', (req, res) => {
 	req.session.destroy();

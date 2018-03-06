@@ -10,7 +10,7 @@ import translate from '../../../../translate';
 class Layout extends React.Component {
 
 	componentDidMount() {
-		this.props.getProjects();
+		this.props.getProjects(this.props.user.id);
 	}
 
 	render() {
@@ -49,6 +49,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = (state) => {
 	return {
+		user: state.user.currentUser,
 		project: state.project.project,
 		projects: state.project.projects
 	};

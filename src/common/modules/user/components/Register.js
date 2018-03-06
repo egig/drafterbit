@@ -4,8 +4,22 @@ import { Helmet } from 'react-helmet';
 import Style from './Register.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
+import drafterbit from 'drafterbit';
 
 class Register extends React.Component {
+
+	onSubmit(form) {
+		return drafterbit.createClient({})
+			.createUser(
+				form.first_name.value,
+				form.last_name.value,
+				form.email.value,
+				form.password.value
+			)
+			.then(response => {
+				this.props.history.push('/register-success');
+			});
+	}
 
 	render() {
 
@@ -16,20 +30,28 @@ class Register extends React.Component {
 				<Helmet>
 					<title>Register - draferbit</title>
 				</Helmet>
-				<form >
+				<form onSubmit={(e) => {
+					e.preventDefault();
+					this.onSubmit(e.target);
+				}}>
 					<div className="form-group">
-						<label htmlFor="email">Name</label>
-						<input type="text" name="name" className={`form-control ${classes.formControlBorder}`} id="name" aria-describedby="emailHelp"/>
+						<label htmlFor="first_name">First Name</label>
+						<input type="text" name="first_name" className={`form-control ${classes.formControlBorder}`} id="first_name" required/>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="last_name">Last Name</label>
+						<input type="text" name="last_sname" className={`form-control ${classes.formControlBorder}`} id="last_name" required/>
 					</div>
 
 					<div className="form-group">
 						<label htmlFor="email">E-Mail</label>
-						<input type="email" name="email" className={`form-control ${classes.formControlBorder}`} id="email" aria-describedby="emailHelp"/>
+						<input type="email" name="email" className={`form-control ${classes.formControlBorder}`} id="email" required/>
 					</div>
 
 					<div className="form-group">
 						<label htmlFor="password">Password</label>
-						<input id="password" type="password" className={`form-control ${classes.formControlBorder}`} name="password" required data-eye />
+						<input id="password" type="password" className={`form-control ${classes.formControlBorder}`} name="password" required />
 					</div>
 
 					<div className="form-group">
