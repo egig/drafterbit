@@ -8,6 +8,12 @@ import { withRouter } from 'react-router';
 
 class ProjectLayout extends React.Component {
 
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.match.params.project_id !== this.props.match.params.project_id) {
+			this.props.getProject(nextProps.match.params.project_id);
+		}
+	}
+
 	componentDidMount(){
 		//TODO check if this is server-preloaded
 		this.props.getProject(this.props.match.params.project_id);

@@ -79,4 +79,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default withRouter(withStyle(Style)(connect(mapStateToProps)(ProjectNav)));
+export default withRouter(connect(mapStateToProps)(withStyle(Style)(ProjectNav)));

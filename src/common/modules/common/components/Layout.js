@@ -1,16 +1,22 @@
 import React from 'react';
 import withStyle from '../../../withStyle';
 import Style from './Layout.style';
-import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import translate from '../../../../translate';
+import { withRouter } from 'react-router';
 
 class Layout extends React.Component {
 
 	componentDidMount() {
 		this.props.getProjects(this.props.user.id);
+	}
+
+	onProjectChange(select) {
+		if(select.value != 0) {
+			this.props.history.push(`/project/${select.value}`);
+		}
 	}
 
 	render() {
@@ -22,8 +28,10 @@ class Layout extends React.Component {
 				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
 		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="#">drafterbit</a>
 					<form className={classNames.navbarForm}>
-						<select className={classNames.navbarProjectSelector} value={this.props.project.id}>
-							<option>{t('layout.select_project')}</option>
+						<select onChange={(e) => {
+							this.onProjectChange(e.target);
+						}} className={classNames.navbarProjectSelector} value={this.props.project.id}>
+							<option value={0}>{t('layout.select_project')}</option>
 							{projects.map((p,i) => {
 								return (<option key={i} value={p.id}>{p.name}</option>)
 							})}
@@ -60,5 +68,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default translate(['translation'])(withStyle(Style)(
-	connect(mapStateToProps, mapDispatchToProps)(Layout)));
+export default translate(['translation'])(withRouter(withStyle(Style)(
+	connect(mapStateToProps, mapDispatchToProps)(Layout))));
