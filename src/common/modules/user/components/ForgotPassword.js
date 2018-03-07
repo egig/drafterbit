@@ -6,6 +6,11 @@ import withStyle from '../../../withStyle';
 
 class ForgotPassword extends React.Component {
 
+	onSubmit(from) {
+		// TODO send email
+		this.props.history.push('forgot-password-requested');
+	}
+
 	render() {
 
 		let classes = this.props.classNames;
@@ -15,7 +20,7 @@ class ForgotPassword extends React.Component {
 				<Helmet>
 					<title>Forgot Password - draferbit</title>
 				</Helmet>
-				<form >
+				<form onSubmit={(e) => { e.preventDefault(); this.onSubmit(e.target) }}>
 					<div className="form-group">
 						<label htmlFor="email">E-Mail</label>
 						<input type="email" name="email" className={`form-control ${classes.formControlBorder}`} id="email" aria-describedby="emailHelp"/>

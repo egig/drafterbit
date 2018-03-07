@@ -17,6 +17,10 @@ export default function reducer(state = {}, action) {
 			return Object.assign({}, state, {
 				contentType: action.payload
 			});
+		case '@project/SET_API_KEYS':
+			return Object.assign({}, state, {
+				apiKeys: action.payload
+			});
 	}
 
 	return state;
