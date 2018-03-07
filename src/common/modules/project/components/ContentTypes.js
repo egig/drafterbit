@@ -24,9 +24,9 @@ class ContentTypes extends React.Component {
 								</tr>
 							</thead>
 							<tbody>
-							{this.props.contentTypes.map(ct => {
+							{this.props.contentTypes.map((ctmi) => {
 								return (
-									<tr>
+									<tr key={i}>
 										<td><Link to={`/project/${this.props.project.id}/content_types/${ct.id}`}>{ct.name}</Link></td>
 									</tr>
 								)

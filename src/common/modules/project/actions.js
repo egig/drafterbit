@@ -46,8 +46,17 @@ const getProject = (projectId) => (dispatch) => {
 		});
 };
 
+const createProject = (projectName, projectDescription, userId) => (dispatch) => {
+	let client = drafterbit.createClient({});
+	return client.createProject(projectName, projectDescription, userId)
+		.then((project) => {
+			return dispatch(setProject(project))
+		});
+};
+
 export default {
 	getProject,
 	getContentTypes,
-	getContentType
+	getContentType,
+	createProject
 };
