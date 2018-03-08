@@ -66,7 +66,7 @@ class Login extends React.Component<{
 		        </Helmet>
 
 		        {this.state.errorText &&
-			        <div className="alert alert-warning" role="alert">
+			        <div id="error_text" className="alert alert-warning" role="alert">
 				        {this.state.errorText}
 			        </div>
 		        }
