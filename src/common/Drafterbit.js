@@ -16,6 +16,7 @@ import ContentTypes from './modules/project/components/ContentTypes';
 import ContentType from './modules/project/components/ContentType';
 import Contents from './modules/content/components/Contents';
 import ApiKeys from './modules/setting/components/ApiKeys';
+import ProjectSetting from './modules/setting/components/ProjectSetting';
 
 class Drafterbit extends React.Component {
     render() {
@@ -31,6 +32,7 @@ class Drafterbit extends React.Component {
 	            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
 	            <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />
+	            <ProtectedRoute path="/project/:project_id/settings" component={ProjectSetting} />
 	            <ProtectedRoute path="/project/new" component={NewProject} />
 	            <ProtectedRoute path="/project/:project_id" component={ProjectDashboard} />
 	            <ProtectedRoute path="/" component={Dashboard} />

@@ -52,7 +52,7 @@ class ProjectNav extends React.Component {
 					</h6>
 					<ul className="nav flex-column mb-2">
 						<li className="nav-item">
-							<Link className="nav-link" to={`/project/settings`}>
+							<Link className="nav-link" to={`/project/${this.props.project.id}/settings`}>
 								General
 							</Link>
 						</li>

@@ -13,6 +13,10 @@ module.exports = {
 		boxShadow: "inset -1px 0 0 rgba(0, 0, 0, .25)"
 	},
 
+	navbarBrandImg: {
+		maxWidth: '98px',
+	},
+
 	navbarForm: {
 		width: "100%",
 		'& $navbarProjectSelector': {
