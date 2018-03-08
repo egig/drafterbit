@@ -13,6 +13,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "bootstrap": "^4.0.0",
+    "chromedriver": "^2.36.0",
     "cookie-parser": "^1.4.3",
     "exenv": "^1.2.2",
     "express": "^4.15.0",
@@ -59,6 +60,9 @@
     "eslint-plugin-react": "^7.4.0",
     "flow-bin": "^0.66.0",
     "nodemon": "^1.11.0",
+    "wdio-chromedriver-service": "^0.1.2",
+    "wdio-mocha-framework": "^0.5.13",
+    "webdriverio": "^4.12.0",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-hot-middleware": "^2.17.1"
@@ -73,7 +77,8 @@
     "styledump": "node converter.js > public/css/common.css",
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
     "flow": "flow",
-    "copy-css": "cp node_modules/react-table/react-table.css public/css"
+    "copy-css": "cp node_modules/react-table/react-table.css public/css",
+    "wdio": "wdio"
   },
   "author": "",
   "license": "ISC",

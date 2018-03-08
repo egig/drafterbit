@@ -62,7 +62,7 @@ class Login extends React.Component<{
 	    return (
 	        <AuthCard title={t('login:title')}>
 		        <Helmet>
-			        <title>Login - draferbit</title>
+			        <title>Login - Drafterbit</title>
 		        </Helmet>
 
 		        {this.state.errorText &&

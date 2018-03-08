@@ -35,7 +35,6 @@ app.post('/login', function (req, res) {
 			res.send(user);
 
 		} catch (e) {
- 			console.log(e);
 			res.status(e.status || 500);
 			res.send({
 				message: e.message
