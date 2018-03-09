@@ -14,6 +14,7 @@ import NewProject from './modules/project/components/NewProject';
 import ProjectDashboard from './modules/project/components/ProjectDashboard';
 import ContentTypes from './modules/project/components/ContentTypes';
 import ContentType from './modules/project/components/ContentType';
+import NewContentType from './modules/project/components/ContentType/NewContentType';
 import Contents from './modules/content/components/Contents';
 import ApiKeys from './modules/setting/components/ApiKeys';
 import ProjectSetting from './modules/setting/components/ProjectSetting';
@@ -29,6 +30,7 @@ class Drafterbit extends React.Component {
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
 	            <ProtectedRoute path="/project/:project_id/contents/:slug" component={Contents} />
+	            <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
 	            <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />

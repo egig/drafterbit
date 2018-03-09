@@ -30,7 +30,7 @@ class ProjectNav extends React.Component {
 					<ul className="nav flex-column mb-2">
 						{!this.props.project.content_types.length &&
 							<li className="nav-item">
-								<Link className="nav-link" to={`/project/${this.props.project.id}/content_types/add`}>
+								<Link className="nav-link" to={`/project/${this.props.project.id}/content_types/new`}>
 									<i className="icon-plus"/> Add Content Type
 								</Link>
 							</li>
