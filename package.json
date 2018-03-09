@@ -46,6 +46,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "shallowequal": "^1.0.2",
+    "simple-line-icons": "^2.4.1",
     "slate": "^0.31.7",
     "slate-react": "^0.10.22",
     "validate.js": "^0.11.1",
@@ -77,7 +78,7 @@
     "styledump": "node converter.js > public/css/common.css",
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
     "flow": "flow",
-    "copy-css": "cp node_modules/react-table/react-table.css public/css",
+    "copy-css": "cp -R node_modules/react-table public/vendor && cp -R node_modules/simple-line-icons public/vendor ",
     "wdio": "wdio"
   },
   "author": "",

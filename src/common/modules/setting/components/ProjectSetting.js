@@ -10,7 +10,7 @@ class ProjectSetting extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title="Api Keys">
+			<ProjectLayout title="Setting">
 				<div className="row">
 					<div className="col-6">
 						<h3>Project Detail</h3>

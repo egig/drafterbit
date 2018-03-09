@@ -14,24 +14,24 @@ class ProjectNav extends React.Component {
 			<nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
 				<div className={classNames.sidebarSticky}>
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-						<span>General</span>
+						<span><i className="icon-home"/> Dashboard</span>
 					</h6>
 					<ul className="nav flex-column">
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${match.params.project_id}`}>
-								Dashboard <span className="sr-only">(current)</span>
+								 Home
 							</Link>
 						</li>
 					</ul>
 
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-						<span>Content</span>
+						<span><i className="icon-docs"/> Content</span>
 					</h6>
 					<ul className="nav flex-column mb-2">
 						{!this.props.project.content_types.length &&
 							<li className="nav-item">
 								<Link className="nav-link" to={`/project/${this.props.project.id}/content_types/add`}>
-										+ Add Content Type
+									<i className="icon-plus"/> Add Content Type
 								</Link>
 							</li>
 						}
@@ -48,12 +48,12 @@ class ProjectNav extends React.Component {
 					</ul>
 
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-						<span>Setting</span>
+						<span><i className="icon-settings"/> Setting</span>
 					</h6>
 					<ul className="nav flex-column mb-2">
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${this.props.project.id}/settings`}>
-								General
+								 General
 							</Link>
 						</li>
 						<li className="nav-item">
