@@ -4,8 +4,33 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import drafterbit from 'drafterbit';
 
 class ProjectSetting extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			name: props.project.name,
+			description: props.project.description
+		}
+	}
+
+	onSubmit(form) {
+		drafterbit.createClient({}).updateProject(
+			this.props.project.id,
+			form.project_name.value,
+			form.project_description.value);
+	}
+
+	doShutdownProject(form) {
+		// TODO create alert before delete
+		drafterbit.createClient({}).deleteProject(form.id.value)
+			.then(r => {
+				this.props.history.push('/')
+				})
+	}
 
 	render() {
 
@@ -14,14 +39,25 @@ class ProjectSetting extends React.Component {
 				<div className="row">
 					<div className="col-6">
 						<h3>Project Detail</h3>
-						<form>
+						<form onSubmit={(e) => {
+							e.preventDefault();
+							this.onSubmit(e.target);
+						}}>
 							<div className="form-group">
 								<label htmlFor="project_name">Name</label>
-								<input className="form-control" type="text" name="project_name" value={this.props.project.name}/>
+								<input onChange={e => {
+									this.setState({
+										name: e.target.value
+									})
+								}} className="form-control" type="text" name="project_name" value={this.state.name}/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="project_description">Description</label>
-								<textarea className="form-control" name="project_description" value={this.props.project.description}/>
+								<textarea onChange={e => {
+									this.setState({
+										description: e.target.value
+									})
+								}} className="form-control" name="project_description" value={this.state.description}/>
 							</div>
 							<div className="form-group">
 								<button type="submit" className="btn btn-primary">Save</button>
@@ -30,7 +66,13 @@ class ProjectSetting extends React.Component {
 						<h3>Shutdown Project</h3>
 						<div>
 							<p>Your data will be permanently deleted. This action cannot be undone.</p>
-							<a href="#" className="btn btn-danger">Shutdown Project</a>
+							<form onSubmit={e => {
+								e.preventDefault();
+								this.doShutdownProject(e.target);
+							}}>
+								<input type="hidden" name="id" value={this.props.project.id}/>
+								<button href="#" className="btn btn-danger">Shutdown Project</button>
+							</form>
 						</div>
 					</div>
 				</div>
