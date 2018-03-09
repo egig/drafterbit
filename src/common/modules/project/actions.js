@@ -50,7 +50,7 @@ const createProject = (projectName, projectDescription, userId) => (dispatch) =>
 	let client = drafterbit.createClient({});
 	return client.createProject(projectName, projectDescription, userId)
 		.then((project) => {
-			return dispatch(setProject(project))
+			return true;
 		});
 };
 

@@ -24,7 +24,7 @@ const Main = function Main(url = '/', sheets, state) {
 		let languageContext = {
 			namespaces: [],
 			i18n: i18n
-		};
+		} ;
 
 		const  Component = (
 			<StaticRouter location={url} context={context}>
