@@ -17,6 +17,7 @@ class ContentTypes extends React.Component {
 			<ProjectLayout title="Content Types">
 				<div className="row justify-content-center">
 					<div className="col-12">
+						<Link to={`/project/${this.props.project.id}/content_types/new`} className="btn btn-success">Add Content Type</Link>
 						<table className="table">
 							<thead>
 								<tr>

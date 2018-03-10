@@ -49,7 +49,9 @@ class Layout extends React.Component {
 				<div className="container-fluid">
 					{this.props.children}
 		    </div>
-				<LoaderTrap isActive={this.props.isAjaxLoading} />
+				{this.props.isAjaxLoading &&
+					<LoaderTrap />
+				}
 			</span>
 		);
 	}

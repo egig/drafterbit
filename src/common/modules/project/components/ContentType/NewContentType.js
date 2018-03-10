@@ -78,40 +78,42 @@ class NewContentType extends React.Component {
 						</form>
 					</div>
 				</div>
-				<Modal isActive={this.state.fieldDialogActive}>
-					<div>
-						<form onSubmit={e => {
-							e.preventDefault();
-							let form = e.target;
-							this.addField({
-								name: form.name.value,
-								label: form.label.value,
-								type: form.type.value
-							});
+				{this.state.fieldDialogActive &&
+					<Modal>
+						<div>
+							<form onSubmit={e => {
+								e.preventDefault();
+								let form = e.target;
+								this.addField({
+									name: form.name.value,
+									label: form.label.value,
+									type: form.type.value
+								});
 
-							form.reset();
-						}}>
-							<h4>Add Field</h4>
-							<div className="form-group">
-								<label htmlFor="label">Label</label>
-								<input type="text" className="form-control" name="label" id="label"/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="name">Name</label>
-								<input type="text" className="form-control" name="name" id="name"/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="type">Type</label>
-								<select className="form-control" id="type">
-									<option value="1">Short Text</option>
-									<option value="2">Long Text</option>
-								</select>
-							</div>
-							<button className="btn btn-success">Add Field</button>&nbsp;
-							<button onClick={e => {e.preventDefault(); this.setState({fieldDialogActive: false}) }} className="btn btn-light">Cancel</button>
-						</form>
-					</div>
-				</Modal>
+								form.reset();
+							}}>
+								<h4>Add Field</h4>
+								<div className="form-group">
+									<label htmlFor="label">Label</label>
+									<input type="text" className="form-control" name="label" id="label"/>
+								</div>
+								<div className="form-group">
+									<label htmlFor="name">Name</label>
+									<input type="text" className="form-control" name="name" id="name"/>
+								</div>
+								<div className="form-group">
+									<label htmlFor="type">Type</label>
+									<select className="form-control" id="type">
+										<option value="1">Short Text</option>
+										<option value="2">Long Text</option>
+									</select>
+								</div>
+								<button className="btn btn-success">Add Field</button>&nbsp;
+								<button onClick={e => {e.preventDefault(); this.setState({fieldDialogActive: false}) }} className="btn btn-light">Cancel</button>
+							</form>
+						</div>
+					</Modal>
+				}
 			</ProjectLayout>
 		);
 	}
