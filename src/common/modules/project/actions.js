@@ -73,11 +73,25 @@ const createContentType = (name, slug, description, projectId, fields) => (dispa
 		});
 };
 
+const deleteContentType = (contentTypeId) => (dispatch) => {
+
+	dispatch(setAjaxLoading(true));
+
+	// TODO create dt client singleton
+	let client = drafterbit.createClient({});
+	return client.deleteContentType(contentTypeId)
+		.then((project) => {
+			return dispatch(setAjaxLoading(false));
+		});
+};
+
+
 
 export default {
 	getProject,
 	getContentTypes,
 	getContentType,
 	createProject,
-	createContentType
+	createContentType,
+	deleteContentType
 };
