@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import translate from '../../../../translate';
 import { withRouter } from 'react-router';
+import LoaderTrap from '../../../components/LoaderTrap';
 
 class Layout extends React.Component {
 
@@ -48,6 +49,7 @@ class Layout extends React.Component {
 				<div className="container-fluid">
 					{this.props.children}
 		    </div>
+				<LoaderTrap isActive={this.props.isAjaxLoading} />
 			</span>
 		);
 	}
@@ -61,7 +63,8 @@ const mapStateToProps = (state) => {
 	return {
 		user: state.user.currentUser,
 		project: state.project.project,
-		projects: state.project.projects
+		projects: state.project.projects,
+		isAjaxLoading: state.common.isAjaxLoading
 	};
 };
 

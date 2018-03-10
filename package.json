@@ -79,6 +79,7 @@
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
     "flow": "flow",
     "copy-css": "cp -R node_modules/react-table public/vendor && cp -R node_modules/simple-line-icons public/vendor ",
+    "copy-img": "cp -R img public",
     "wdio": "wdio"
   },
   "author": "",

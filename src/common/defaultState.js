@@ -1,4 +1,7 @@
 module.exports = {
+	common: {
+		isAjaxLoading: false
+	},
   user: {
     loggedIn: 0,
     currentUser: {},

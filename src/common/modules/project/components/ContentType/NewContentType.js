@@ -22,13 +22,26 @@ class NewContentType extends React.Component {
 		})
 	}
 
+	onSubmit(form) {
+		this.props.createContentType(
+			form.name.value,
+			form.slug.value,
+			form.description.value,
+			this.props.project.id,
+			this.state.fields
+		);
+	}
+
 	render() {
 
 		return (
 			<ProjectLayout title={`New Content Type `}>
 				<div className="row">
 					<div className="col-6">
-						<form>
+						<form onSubmit={e => {
+							e.preventDefault();
+							this.onSubmit(e.target);
+						}}>
 							<div className="form-group">
 								<label htmlFor="name">Name</label>
 								<input type="text" className="form-control" name="name"/>
@@ -106,7 +119,8 @@ class NewContentType extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		contentType: state.project.contentType,
+		project: state.project.project,
+		contentType: state.project.contentType
 	}
 }
 

@@ -21,6 +21,13 @@ const setContentType = (contentType) => {
 	};
 };
 
+const setAjaxLoading = (isLoading) => {
+	return {
+		type: '@common/SET_AJAX_LOADING',
+		payload: isLoading
+	};
+};
+
 
 const getContentTypes = (projectId) => (dispatch) => {
 	let client = drafterbit.createClient({});
@@ -54,9 +61,23 @@ const createProject = (projectName, projectDescription, userId) => (dispatch) =>
 		});
 };
 
+const createContentType = (name, slug, description, projectId, fields) => (dispatch) => {
+
+	dispatch(setAjaxLoading(true));
+
+	let client = drafterbit.createClient({});
+	return client.createContentType(name, slug, description, projectId, fields)
+		.then((ct) => {
+			dispatch(setAjaxLoading(false));
+
+		});
+};
+
+
 export default {
 	getProject,
 	getContentTypes,
 	getContentType,
-	createProject
+	createProject,
+	createContentType
 };
