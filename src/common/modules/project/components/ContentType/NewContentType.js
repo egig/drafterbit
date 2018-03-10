@@ -10,8 +10,16 @@ class NewContentType extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fieldDialogActive: false
+			fieldDialogActive: false,
+			fields: []
 		}
+	}
+
+	addField(f) {
+		this.setState({
+			fields: this.state.fields.concat([f]),
+			fieldDialogActive: false
+		})
 	}
 
 	render() {
@@ -35,6 +43,13 @@ class NewContentType extends React.Component {
 							</div>
 							<div className="form-group">
 								<label htmlFor="description">Fields</label>
+								{!!this.state.fields.length &&
+									<ul>
+										{this.state.fields.map((f,i) => {
+										return (<li>{f.name}</li>)
+									})}
+									</ul>
+								}
 								<div>
 									<button onClick={e => {
 										e.preventDefault();
@@ -45,28 +60,38 @@ class NewContentType extends React.Component {
 								</div>
 							</div>
 							<div className="form-group">
-								<button className="btn btn-success">Save</button>
+								<button type="submit" className="btn btn-success">Save</button>
 							</div>
 						</form>
 					</div>
 				</div>
 				<Modal isActive={this.state.fieldDialogActive}>
 					<div>
-						<form>
+						<form onSubmit={e => {
+							e.preventDefault();
+							let form = e.target;
+							this.addField({
+								name: form.name.value,
+								label: form.label.value,
+								type: form.type.value
+							});
+
+							form.reset();
+						}}>
 							<h4>Add Field</h4>
 							<div className="form-group">
 								<label htmlFor="label">Label</label>
-								<input type="text" className="form-control" name="label"/>
+								<input type="text" className="form-control" name="label" id="label"/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="name">Name</label>
-								<input type="text" className="form-control" name="name"/>
+								<input type="text" className="form-control" name="name" id="name"/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="type">Type</label>
-								<select className="form-control">
-									<option>Short Text</option>
-									<option>Long Text</option>
+								<select className="form-control" id="type">
+									<option value="1">Short Text</option>
+									<option value="2">Long Text</option>
 								</select>
 							</div>
 							<button className="btn btn-success">Add Field</button>&nbsp;
