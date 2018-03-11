@@ -86,6 +86,17 @@ const deleteContentType = (contentTypeId) => (dispatch) => {
 };
 
 
+const updateContentType = (contentTypeId, name, slug, description) => (dispatch) => {
+	dispatch(setAjaxLoading(true));
+
+	let client = drafterbit.createClient({});
+	return client.updateContentType(contentTypeId, name, slug, description)
+		.then((project) => {
+			return dispatch(setAjaxLoading(false));
+		});
+};
+
+
 
 export default {
 	getProject,
@@ -93,5 +104,6 @@ export default {
 	getContentType,
 	createProject,
 	createContentType,
-	deleteContentType
+	deleteContentType,
+	updateContentType
 };

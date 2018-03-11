@@ -7,6 +7,28 @@ import { connect } from 'react-redux';
 
 class ContentType extends React.Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			id: '',
+			name: '',
+			slug: '',
+			description: '',
+			fields: []
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+
+		this.setState({
+			id: nextProps.contentType.id,
+			name: nextProps.contentType.name,
+			slug: nextProps.contentType.slug,
+			description: nextProps.contentType.description,
+			fields: nextProps.contentType.fields
+		})
+	}
+
 	componentDidMount() {
 		this.props.getContentType(this.props.match.params.content_type_id);
 	}
@@ -19,14 +41,51 @@ class ContentType extends React.Component {
 			})
 	}
 
+	onSubmit(form) {
+		this.props.updateContentType(
+			this.state.id,
+			form.name.value,
+			form.slug.value,
+			form.description.value
+		)
+	}
+
 	render() {
 
 		return (
 			<ProjectLayout title={`Content Type: ${this.props.contentType.name}`}>
+				<div className="col-6">
+					<form onSubmit={e => {
+						e.preventDefault();
+						this.onSubmit(e.target);
+					}}>
+						<div className="form-group">
+							<label>Name</label>
+							<input onChange={e => {
+								this.setState({name: e.target.value})
+							}} className="form-control" type="text" name="name" id="name" value={this.state.name} />
+						</div>
+						<div className="form-group">
+							<label>Slug</label>
+							<input onChange={e => {
+								this.setState({slug: e.target.value})
+							}} className="form-control" type="text" name="slug" id="slug"  value={this.state.slug} />
+						</div>
+						<div className="form-group">
+							<label>Description</label>
+							<input onChange={e => {
+								this.setState({description: e.target.value})
+							}} className="form-control" type="text" name="description" id="description"  value={this.state.description} />
+						</div>
+						<div className="form-group">
+							<button type="submit" className="btn btn-success">Save</button>
+						</div>
+					</form>
+				</div>
 				<div className="row justify-content-center">
 					<div className="col-12">
 						<form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
-							<input type="hidden" name="id" id="id" value={this.props.contentType.id} />
+							<input type="hidden" name="id" id="id" value={this.state.id} />
 							<button type="submit" className="btn btn-danger">Delete Content Type</button>
 						</form>
 						<h2>Fields</h2>
@@ -38,7 +97,7 @@ class ContentType extends React.Component {
 							</tr>
 							</thead>
 							<tbody>
-							{this.props.contentType.fields.map((f,i) => {
+							{this.state.fields.map((f,i) => {
 								return (
 									<tr key={i}>
 										<td>{f.name}</td>
