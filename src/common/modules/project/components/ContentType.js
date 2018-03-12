@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Notify from '../../../components/Notify';
 
 class ContentType extends React.Component {
 
@@ -14,7 +15,8 @@ class ContentType extends React.Component {
 			name: '',
 			slug: '',
 			description: '',
-			fields: []
+			fields: [],
+			notifyText: ''
 		}
 	}
 
@@ -47,7 +49,11 @@ class ContentType extends React.Component {
 			form.name.value,
 			form.slug.value,
 			form.description.value
-		)
+		).then(r => {
+			this.setState({
+				notifyText: "Content type successfully saved."
+			})
+		})
 	}
 
 	render() {
@@ -109,6 +115,9 @@ class ContentType extends React.Component {
 						</table>
 					</div>
 				</div>
+				{this.state.notifyText &&
+					<Notify messages={[this.state.notifyText]} />
+				}
 			</ProjectLayout>
 		);
 	}
