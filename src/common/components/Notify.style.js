@@ -5,6 +5,10 @@ module.exports = {
 		left: "50%",
 		transform: "translate(-50%, -50%)"
 	},
+	alertComponent: {
+		borderRadius: "2px",
+		minWidth: "360px"
+	},
 	notifyEnter: {
 		top: 0,
 		opacity: 0.01

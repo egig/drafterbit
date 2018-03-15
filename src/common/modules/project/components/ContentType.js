@@ -116,7 +116,7 @@ class ContentType extends React.Component {
 					</div>
 				</div>
 				{this.state.notifyText &&
-					<Notify messages={[this.state.notifyText]} />
+					<Notify type="success" message={this.state.notifyText} />
 				}
 			</ProjectLayout>
 		);

@@ -8,7 +8,7 @@ class Notify extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			messages: props.messages
+			messages: [props.message]
 		};
 
 		this.c = null;
@@ -16,7 +16,7 @@ class Notify extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			messages: nextProps.messages
+			messages: [nextProps.message]
 		})
 	}
 
@@ -60,8 +60,14 @@ class Notify extends React.Component {
 				{this.state.messages.map((m,i) => {
 					return (
 						<div key={i} className={classNames.notifyWrapper}>
-							<div className="alert alert-success">
-								{m}
+							<div className={`alert alert-${this.props.type} ${classNames.alertComponent}`}>
+								<button onClick={e => {
+									this.setState({
+										messages: []
+									})
+									window.clearTimeout(this.c);
+								}} type="button" className="close" data-dismiss="alert">&times;</button>
+								<p>{m}</p>
 							</div>
 						</div>
 					)

@@ -9,6 +9,7 @@ import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
 import { Helmet } from 'react-helmet';
 import translate from '../../../../translate';
+import Notify from '../../../components/Notify';
 
 class Login extends React.Component<{
 	doLogin: Function,
@@ -31,9 +32,6 @@ class Login extends React.Component<{
 
         this.props.doLogin(email, password)
 	        .then((r)=> {
-
-        	console.log("OK", r);
-
         	  // TODO get referer
 	        	this.props.history.push('/');
 	        }).catch(error => {
@@ -66,9 +64,7 @@ class Login extends React.Component<{
 		        </Helmet>
 
 		        {this.state.errorText &&
-			        <div id="error_text" className="alert alert-warning" role="alert">
-				        {this.state.errorText}
-			        </div>
+			        <Notify type="warning" message={this.state.errorText} />
 		        }
 		        <form onSubmit={(e) => {
 			        e.preventDefault();
