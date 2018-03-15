@@ -17,5 +17,8 @@ module.exports = {
 		},
 		contentTypes: [],
 		apiKeys: []
+	},
+	content: {
+		ctFields: {}
 	}
 };

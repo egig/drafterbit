@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import ProjectLayout from '../../project/components/ProjectLayout';
+import { Link } from 'react-router-dom';
 
 class Contents extends React.Component {
 
@@ -28,17 +29,22 @@ class Contents extends React.Component {
 			}, {
 				Header: props => <span>Friend Age</span>, // Custom header components!
 				accessor: 'friend.age'
-			}]
+			}];
 
-				return (
+		let projectId = this.props.match.params.project_id;
+		let slug = this.props.match.params.content_type_slug;
+		let addUrl = `/project/${projectId}/contents/${slug}/new`;
+
+			return (
 					<ProjectLayout>
-					<ReactTable
-						data={data}
-						columns={columns}
-						defaultPageSize="10"
-					/>
-					</ProjectLayout>
-						)
+						<Link className="btn btn-success" to={addUrl} >Add</Link>
+						<ReactTable
+							data={data}
+							columns={columns}
+							defaultPageSize="10"
+						/>
+						</ProjectLayout>
+				)
 	}
 }
 
