@@ -14,10 +14,25 @@ const setContentTypeField = (projects) => {
 	};
 };
 
+const setContents = (contents) => {
+	return {
+		type: '@content/SET_CONTENTS',
+		payload: contents
+	};
+};
+
+const getContents = (contentTypeId) => (dispatch) => {
+	let client = drafterbit.createClient({});
+	client.getContents(contentTypeId)
+		.then((contents) => {
+			return dispatch(setContents(contents))
+		});
+};
+
 
 const getContentTypeFields = (projectId, ctSlug) => (dispatch) => {
 	let client = drafterbit.createClient({});
-	client.getContentTypeFields(projectId, ctSlug)
+	return client.getContentTypeFields(projectId, ctSlug)
 		.then((contentType) => {
 			return dispatch(setContentTypeField(contentType))
 		});
@@ -37,5 +52,6 @@ const createContent = (contentTypeId, formData) => (dispatch) => {
 
 export default {
 	getContentTypeFields,
-	createContent
+	createContent,
+	getContents
 };

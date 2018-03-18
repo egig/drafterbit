@@ -4,6 +4,10 @@ export default function reducer(state = {}, action) {
 			return Object.assign({}, state, {
 				ctFields: action.payload
 			});
+		case '@content/SET_CONTENTS':
+			return Object.assign({}, state, {
+				contents: action.payload
+			});
 	}
 
 	return state;
