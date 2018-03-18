@@ -1,5 +1,12 @@
 import drafterbit from 'drafterbit';
 
+const setAjaxLoading = (isLoading) => {
+	return {
+		type: '@common/SET_AJAX_LOADING',
+		payload: isLoading
+	};
+};
+
 const setContentTypeField = (projects) => {
 	return {
 		type: '@content/SET_CT_FIELD',
@@ -17,6 +24,18 @@ const getContentTypeFields = (projectId, ctSlug) => (dispatch) => {
 };
 
 
+const createContent = (contentTypeId, formData) => (dispatch) => {
+
+	dispatch(setAjaxLoading(true));
+
+	let client = drafterbit.createClient({});
+	return client.createContent(contentTypeId, formData)
+		.then((project) => {
+			return dispatch(setAjaxLoading(false));
+		});
+};
+
 export default {
-	getContentTypeFields
+	getContentTypeFields,
+	createContent
 };
