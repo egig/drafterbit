@@ -15,6 +15,7 @@ class ApiKeys extends React.Component {
 
 		return (
 			<ProjectLayout title="Api Keys">
+				<Link className="btn btn-success" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
 				<div className="row justify-content-center">
 					<div className="col-12">
 						<table className="table">
