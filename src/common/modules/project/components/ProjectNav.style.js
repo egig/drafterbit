@@ -28,7 +28,7 @@ module.exports = {
 	},
 
 	sidebarHeading: {
-		fontSize: ".75rem",
+		fontSize: "1em",
 		textTransform: "uppercase",
 	}
 }

@@ -14,12 +14,12 @@ class ProjectNav extends React.Component {
 			<nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
 				<div className={classNames.sidebarSticky}>
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-						<span><i className="icon-home"/> Dashboard</span>
+						<span><i className="icon-grid"/> Dashboard</span>
 					</h6>
 					<ul className="nav flex-column">
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${match.params.project_id}`}>
-								 Home
+								<i className="icon-home"/> Home
 							</Link>
 						</li>
 					</ul>
@@ -40,7 +40,7 @@ class ProjectNav extends React.Component {
 							return (
 								<li className="nav-item" key={i}>
 									<Link className="nav-link" to={`/project/${this.props.project.id}/contents/${ct.slug}`}>
-										{ct.name}
+										<i className="icon-doc"/> {ct.name}
 									</Link>
 								</li>
 							)
@@ -48,22 +48,22 @@ class ProjectNav extends React.Component {
 					</ul>
 
 					<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-						<span><i className="icon-settings"/> Setting</span>
+						<span><i className="icon-equalizer"/> Setting</span>
 					</h6>
 					<ul className="nav flex-column mb-2">
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${this.props.project.id}/settings`}>
-								 General
+								<i className="icon-settings"/> General
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${this.props.project.id}/content_types`}>
-								Content Types
+								<i className="icon-puzzle"/> Content Types
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to={`/project/${this.props.project.id}/api_keys`}>
-								Api Keys
+								<i className="icon-key"/> Api Keys
 							</Link>
 						</li>
 					</ul>
