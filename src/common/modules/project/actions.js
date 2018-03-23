@@ -97,7 +97,6 @@ const updateContentType = (contentTypeId, name, slug, description) => (dispatch)
 };
 
 
-
 export default {
 	getProject,
 	getContentTypes,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Notify from '../../../components/Notify';
 
 class ApiKeyNew extends React.Component {
 
@@ -11,7 +12,8 @@ class ApiKeyNew extends React.Component {
 		super(props);
 
 		this.state = {
-			restrictedType: 0
+			restrictedType: 0,
+			successText: ""
 		}
 	}
 
@@ -21,20 +23,40 @@ class ApiKeyNew extends React.Component {
 		});
 	}
 
+	onSubmit(form) {
+
+		let restrictionValue = this.state.restrictedType === 0 ? null : form.restriction_value.value;
+
+		this.props.createApiKey(
+			this.props.project.id,
+			form.name.value,
+			form.key.value,
+			this.state.restrictedType,
+			restrictionValue
+		).then(r => {
+			this.setState({
+				successText: "Api key successfully created"
+			})
+		});
+	}
+
 	render() {
 
 		return (
 			<ProjectLayout title="Create Api Key">
 				<div className="row">
 					<div className="col-6">
-						<form>
+						<form onSubmit={e => {
+							e.preventDefault();
+							this.onSubmit(e.target);
+						}}>
 							<div className="form-group">
 								<label htmlFor="name">Name</label>
 								<input type="text" name="name" id="name" className="form-control"/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="key">Key</label>
-								<input type="text" name="key" id="key" className="form-control" readOnly="readOnly"/>
+								<input type="text" name="key" id="key" className="form-control" readOnly="readOnly" value="GENERATED"/>
 							</div>
 							<fieldset className="form-group">
 								<legend>Restriction Type</legend>
@@ -103,6 +125,9 @@ class ApiKeyNew extends React.Component {
 						</form>
 					</div>
 				</div>
+				{this.state.successText &&
+					<Notify type="success" message={this.state.successText} />
+				}
 			</ProjectLayout>
 		);
 	}

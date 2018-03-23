@@ -1,5 +1,12 @@
 import drafterbit from 'drafterbit';
 
+const setAjaxLoading = (isLoading) => {
+	return {
+		type: '@common/SET_AJAX_LOADING',
+		payload: isLoading
+	};
+};
+
 const setApiKeys = (contentTypes) => {
 	return {
 		type: '@project/SET_API_KEYS',
@@ -16,6 +23,18 @@ const getApiKeys = (projectId) => (dispatch) => {
 		});
 };
 
+const createApiKey = (projectId, name, key, restrictionType, restrictionValue) => (dispatch) => {
+	dispatch(setAjaxLoading(true));
+
+
+	let client = drafterbit.createClient({});
+	return client.createApiKey(projectId, name, key, restrictionType, restrictionValue)
+		.then((project) => {
+			return 	dispatch(setAjaxLoading(false));
+		});
+};
+
 export default {
-	getApiKeys
+	getApiKeys,
+	createApiKey
 };
