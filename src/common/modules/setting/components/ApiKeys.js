@@ -29,7 +29,7 @@ class ApiKeys extends React.Component {
 							{this.props.apiKeys.map((a,i) => {
 								return (
 									<tr key={i}>
-										<td><Link to={`/project/${this.props.project.id}/api_keys/${a.id}`}>{a.name}</Link></td>
+										<td><Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link></td>
 										<td>{a.key}</td>
 									</tr>
 								)

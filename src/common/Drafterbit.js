@@ -19,6 +19,7 @@ import Contents from './modules/content/components/Contents';
 import ContentNew from './modules/content/components/ContentNew';
 import ApiKeys from './modules/setting/components/ApiKeys';
 import ApiKeyNew from './modules/setting/components/ApiKeyNew';
+import ApiKeyEdit from './modules/setting/components/ApiKeyEdit';
 import ProjectSetting from './modules/setting/components/ProjectSetting';
 
 class Drafterbit extends React.Component {
@@ -36,6 +37,7 @@ class Drafterbit extends React.Component {
 	            <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
 	            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
+	            <ProtectedRoute path="/project/:project_id/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
 	            <ProtectedRoute path="/project/:project_id/api_keys/new" component={ApiKeyNew} />
 	            <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />
 	            <ProtectedRoute path="/project/:project_id/settings" component={ProjectSetting} />

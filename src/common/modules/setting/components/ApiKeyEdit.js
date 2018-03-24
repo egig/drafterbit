@@ -5,16 +5,33 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
+import drafterbit from 'drafterbit';
 
-class ApiKeyEdit extends React.Component {
+class ApiKeyNew extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			restrictedType: 0,
-			successText: ""
+			successText: "",
+			apiKeyName: "",
+			apiKeyValue: "",
+			restrictionValue: ""
 		}
+	}
+
+	componentDidMount() {
+		let client = drafterbit.createClient({});
+		client.getApiKey(this.props.match.params.api_key_id)
+			.then(r => {
+				this.setState({
+					restrictedType: r.restriction_type,
+					apiKeyName: r.name,
+					apiKeyValue: r.key,
+					restrictionValue: r.restriction_value
+				});
+			});
 	}
 
 	handleRestrictionTypeChange(e) {
@@ -26,16 +43,18 @@ class ApiKeyEdit extends React.Component {
 	onSubmit(form) {
 
 		let restrictionValue = this.state.restrictedType === 0 ? null : form.restriction_value.value;
+		let apiKeyId = this.props.match.params.api_key_id
 
-		this.props.createApiKey(
-			this.props.project.id,
-			form.name.value,
-			form.key.value,
+		let client = drafterbit.createClient({});
+		client.updateApiKey(
+			this.props.match.params.api_key_id,
+			this.state.apiKeyName,
+			this.state.apiKeyValue,
 			this.state.restrictedType,
-			restrictionValue
+			this.state.restrictionValue,
 		).then(r => {
 			this.setState({
-				successText: "Api key successfully created"
+				successText: "Api key successfully updated"
 			})
 		});
 	}
@@ -52,11 +71,11 @@ class ApiKeyEdit extends React.Component {
 						}}>
 							<div className="form-group">
 								<label htmlFor="name">Name</label>
-								<input type="text" name="name" id="name" className="form-control"/>
+								<input type="text" name="name" id="name" className="form-control" value={this.state.apiKeyName}/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="key">Key</label>
-								<input type="text" name="key" id="key" className="form-control" readOnly="readOnly" value="GENERATED"/>
+								<input type="text" name="key" id="key" className="form-control" readOnly="readOnly" value={this.state.apiKeyValue}/>
 							</div>
 							<fieldset className="form-group">
 								<legend>Restriction Type</legend>
@@ -101,6 +120,7 @@ class ApiKeyEdit extends React.Component {
 							<div className="form-group">
 								<label htmlFor="restriction_value">HTTP Referer</label>
 								<input type="text"
+								       value={this.state.restrictionValue}
 								       name="restriction_value"
 								       placeholder="http://localhost"
 								       id="restriction_value"
@@ -109,14 +129,15 @@ class ApiKeyEdit extends React.Component {
 							}
 
 							{this.state.restrictedType == 2 &&
-								<div className="form-group">
-									<label htmlFor="restriction_value">IP Address</label>
-									<input type="text"
-									       name="restriction_value"
-									       placeholder="127.0.0.1"
-									       id="restriction_value"
-									       className="form-control"/>
-								</div>
+							<div className="form-group">
+								<label htmlFor="restriction_value">IP Address</label>
+								<input type="text"
+								       value={this.state.restrictionValue}
+								       name="restriction_value"
+								       placeholder="127.0.0.1"
+								       id="restriction_value"
+								       className="form-control"/>
+							</div>
 							}
 
 							<div className="form-group">
@@ -126,7 +147,7 @@ class ApiKeyEdit extends React.Component {
 					</div>
 				</div>
 				{this.state.successText &&
-					<Notify type="success" message={this.state.successText} />
+				<Notify type="success" message={this.state.successText} />
 				}
 			</ProjectLayout>
 		);
@@ -144,4 +165,4 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators(actions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApiKeyEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(ApiKeyNew);
