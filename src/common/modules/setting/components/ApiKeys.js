@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import TableA from '../../../components/Table/TableA';
 
 class ApiKeys extends React.Component {
 
@@ -13,29 +14,26 @@ class ApiKeys extends React.Component {
 
 	render() {
 
+		let columns = [
+			{
+				label: "Name",
+				accessor: "name",
+				render: (a) => {
+					return <Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link>;
+				}
+			},
+			{
+				label: "Key",
+				accessor: "key"
+			}
+		];
+
 		return (
 			<ProjectLayout title="Api Keys">
 				<Link className="btn btn-success" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
 				<div className="row justify-content-center">
 					<div className="col-12">
-						<table className="table">
-							<thead>
-							<tr>
-								<th>Name</th>
-								<th>Key</th>
-							</tr>
-							</thead>
-							<tbody>
-							{this.props.apiKeys.map((a,i) => {
-								return (
-									<tr key={i}>
-										<td><Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link></td>
-										<td>{a.key}</td>
-									</tr>
-								)
-							})}
-							</tbody>
-						</table>
+						<TableA columns={columns} data={this.props.apiKeys} />
 					</div>
 				</div>
 			</ProjectLayout>

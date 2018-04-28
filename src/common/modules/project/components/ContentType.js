@@ -95,7 +95,7 @@ class ContentType extends React.Component {
 							<button type="submit" className="btn btn-danger">Delete Content Type</button>
 						</form>
 						<h2>Fields</h2>
-						<table className="table">
+						<table className="table table-sm table-bordered">
 							<thead>
 							<tr>
 								<th>Name</th>

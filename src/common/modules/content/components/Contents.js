@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactTable from 'react-table';
 import ProjectLayout from '../../project/components/ProjectLayout';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
+import TableA from '../../../components/Table/TableA';
 
 class Contents extends React.Component {
 
@@ -63,21 +63,8 @@ class Contents extends React.Component {
 			return (
 					<ProjectLayout>
 						<Link className="btn btn-success" to={addUrl} >Add</Link>
-						<table className="table table-sm table-bordered">
-							<thead>
-								<tr>
-									{columns.map((column,i) => (<th key={i}>{column.label}</th>))}
-								</tr>
-							</thead>
-							<tbody>
-								{data.map((item, i) => (
-									<tr key={i}>
-										{columns.map((column,i) => (<td key={i}>{item[column.accessor]}</td>))}
-									</tr>
-								))}
-							</tbody>
-						</table>
-						</ProjectLayout>
+						<TableA data={data} columns={columns} />
+					</ProjectLayout>
 				)
 	}
 }
