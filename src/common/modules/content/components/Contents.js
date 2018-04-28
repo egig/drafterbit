@@ -37,14 +37,21 @@ class Contents extends React.Component {
 		});
 
 		const columns = [{
-				Header: '#ID',
+				label: '#ID',
 				accessor: 'id' // String-based value accessors!
 			}
 		];
 
+		// this.props.ctFields.fields.map(f => {
+		// 	columns.push({
+		// 		Header: f.label,
+		// 		accessor: f.name
+		// 	})
+		// });
+
 		this.props.ctFields.fields.map(f => {
 			columns.push({
-				Header: f.label,
+				label: f.label,
 				accessor: f.name
 			})
 		});
@@ -56,11 +63,20 @@ class Contents extends React.Component {
 			return (
 					<ProjectLayout>
 						<Link className="btn btn-success" to={addUrl} >Add</Link>
-						<ReactTable
-							data={data}
-							columns={columns}
-							defaultPageSize={10}
-						/>
+						<table className="table table-sm table-bordered">
+							<thead>
+								<tr>
+									{columns.map((column,i) => (<th key={i}>{column.label}</th>))}
+								</tr>
+							</thead>
+							<tbody>
+								{data.map((item, i) => (
+									<tr key={i}>
+										{columns.map((column,i) => (<td key={i}>{item[column.accessor]}</td>))}
+									</tr>
+								))}
+							</tbody>
+						</table>
 						</ProjectLayout>
 				)
 	}

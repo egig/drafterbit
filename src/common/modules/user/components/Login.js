@@ -64,7 +64,9 @@ class Login extends React.Component<{
 		        </Helmet>
 
 		        {this.state.errorText &&
-			        <Notify type="warning" message={this.state.errorText} />
+			        <div className="alert alert-warning">
+				        {this.state.errorText}
+			        </div>
 		        }
 		        <form onSubmit={(e) => {
 			        e.preventDefault();
