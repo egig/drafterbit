@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import TableA from '../../../components/Table/TableA';
+import Card from '../../../components/Card/Card';
 
 class Contents extends React.Component {
 
@@ -62,8 +63,10 @@ class Contents extends React.Component {
 
 			return (
 					<ProjectLayout>
-						<Link className="btn btn-success" to={addUrl} >Add</Link>
-						<TableA data={data} columns={columns} />
+						<Card headerText="Contents">
+							<Link className="btn btn-success btn-sm mb-3" to={addUrl} >Add</Link>
+							<TableA data={data} columns={columns} />
+						</Card>
 					</ProjectLayout>
 				)
 	}

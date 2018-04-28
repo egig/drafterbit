@@ -3,6 +3,7 @@ import Layout from './Layout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import translate from '../../../../translate';
+import Card from '../../../components/Card/Card'
 
 class Dashboard extends React.Component {
 
@@ -19,13 +20,11 @@ class Dashboard extends React.Component {
 			}
 
 			return (
-				<div className="col-4">
-					<ul>
-						{projects.map((item,i) => {
-							return <li key={i}><Link to={`/project/${item.id}`}>{item.name}</Link></li>
-						})}
-					</ul>
-				</div>
+				<ul className="list-group">
+					{projects.map((item,i) => {
+						return <li key={i} className="list-group-item"><Link to={`/project/${item.id}`}>{item.name}</Link></li>
+					})}
+				</ul>
 			)
 		}
 
@@ -33,15 +32,17 @@ class Dashboard extends React.Component {
 	    let t = this.props.t;
 
 	    return (
-		    <Layout title={t('dashboard:layout_title')}>
-		        <div className="row justify-content-center mt-4">
-			        {this.renderProjects()}
-			        <div className="col-4">
-			          <Link className="btn btn-primary" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
-			        </div>
-		        </div>
-	        </Layout>
-        );
+		    <Layout>
+			    <div className="row justify-content-md-center mt-4">
+				    <div className="col col-md-6">
+					    <Card headerText="Projects">
+						    {this.renderProjects()}
+						    <Link className="btn btn-primary mt-3" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
+					    </Card>
+				    </div>
+			    </div>
+		    </Layout>
+	    );
     }
 }
 

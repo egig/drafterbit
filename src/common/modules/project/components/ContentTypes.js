@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import TableA from '../../../components/Table/TableA'
+import Card from '../../../components/Card/Card'
 
 class ContentTypes extends React.Component {
 
@@ -14,28 +16,14 @@ class ContentTypes extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title="Content Types">
-				<div className="row justify-content-center">
-					<div className="col-12">
-						<Link to={`/project/${this.props.project.id}/content_types/new`} className="btn btn-success">Add Content Type</Link>
-						<table className="table table-sm table-bordered">
-							<thead>
-								<tr>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody>
-							{this.props.contentTypes.map((ct,i) => {
-								return (
-									<tr key={i}>
-										<td><Link to={`/project/${this.props.project.id}/content_types/${ct.id}`}>{ct.name}</Link></td>
-									</tr>
-								)
-							})}
-							</tbody>
-						</table>
-					</div>
-				</div>
+			<ProjectLayout>
+				<Card headerText="Content Types">
+					<TableA data={this.props.contentTypes} columns={[
+						{label: "Name", render: (item) => {
+							return <Link to={`/project/${this.props.project.id}/content_types/${item.id}`}>{item.name}</Link>
+						}}
+					]} />
+				</Card>
 			</ProjectLayout>
 		);
 	}

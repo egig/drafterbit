@@ -5,6 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TableA from '../../../components/Table/TableA';
+import Card from '../../../components/Card/Card';
 
 class ApiKeys extends React.Component {
 
@@ -29,13 +30,11 @@ class ApiKeys extends React.Component {
 		];
 
 		return (
-			<ProjectLayout title="Api Keys">
-				<Link className="btn btn-success" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
-				<div className="row justify-content-center">
-					<div className="col-12">
-						<TableA columns={columns} data={this.props.apiKeys} />
-					</div>
-				</div>
+			<ProjectLayout>
+				<Card headerText="Api Keys">
+					<Link className="btn btn-success btn-sm mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
+					<TableA columns={columns} data={this.props.apiKeys} />
+				</Card>
 			</ProjectLayout>
 		);
 	}

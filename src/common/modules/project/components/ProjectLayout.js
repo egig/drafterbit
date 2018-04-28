@@ -24,8 +24,7 @@ class ProjectLayout extends React.Component {
 		return (
 			<Layout title={this.props.titel}>
 				<ProjectNav />
-				<main role="main" className={`col-md-9 ml-sm-auto col-lg-10 pt-3 px-4`}>
-					<h2>{this.props.title}</h2>
+				<main role="main" className={`col-md-9 ml-sm-auto col-lg-10 pt-3`}>
 					{this.props.children}
 				</main>
 			</Layout>
