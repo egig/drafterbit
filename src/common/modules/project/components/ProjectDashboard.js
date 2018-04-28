@@ -3,7 +3,7 @@ import ProjectLayout from './ProjectLayout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import drafterbit from 'drafterbit';
-
+import Card from '../../../components/Card/Card';
 
 class ProjectDashboard extends React.Component {
 
@@ -28,23 +28,20 @@ class ProjectDashboard extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title="Project Dashboard">
+			<ProjectLayout>
+				<Card headerText="Project Dashboard">
 					{!this.props.project.content_types.length &&
-					<div className="row justify-content-center">
 						<div className="col-6">
 							<p>There is no content type yet :(</p>
 							<Link to={`/project/${this.props.project.id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
 						</div>
-					</div>
 					}
 
-				<div className="row">
-					<div>
-							{this.state.contentTypeStat.map((item,i) => {
-								return <p key={i}>{item.name } : {item.content_count}</p>
-							})}
-						</div>
-				</div>
+					{this.state.contentTypeStat.map((item,i) => {
+						return <p key={i}>{item.name } : {item.content_count}</p>
+					})}
+
+				</Card>
 			</ProjectLayout>
 		);
 	}
