@@ -5,6 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
+import Card from '../../../components/Card/Card';
 
 class ApiKeyEdit extends React.Component {
 
@@ -43,9 +44,10 @@ class ApiKeyEdit extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title="Create Api Key">
+			<ProjectLayout>
 				<div className="row">
 					<div className="col-6">
+						<Card headerText="Create Api Key" >
 						<form onSubmit={e => {
 							e.preventDefault();
 							this.onSubmit(e.target);
@@ -123,6 +125,7 @@ class ApiKeyEdit extends React.Component {
 								<button type="submit" className="btn btn-success">Save</button>
 							</div>
 						</form>
+						</Card>
 					</div>
 				</div>
 				{this.state.successText &&

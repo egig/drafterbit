@@ -32,7 +32,7 @@ class ApiKeys extends React.Component {
 		return (
 			<ProjectLayout>
 				<Card headerText="Api Keys">
-					<Link className="btn btn-success btn-sm mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
+					<Link className="btn btn-success mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
 					<TableA columns={columns} data={this.props.apiKeys} />
 				</Card>
 			</ProjectLayout>

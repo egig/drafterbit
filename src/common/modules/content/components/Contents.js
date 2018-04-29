@@ -64,7 +64,7 @@ class Contents extends React.Component {
 			return (
 					<ProjectLayout>
 						<Card headerText="Contents">
-							<Link className="btn btn-success btn-sm mb-3" to={addUrl} >Add</Link>
+							<Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
 							<TableA data={data} columns={columns} />
 						</Card>
 					</ProjectLayout>

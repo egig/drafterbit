@@ -5,6 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
+import Card from '../../../components/Card/Card';
 
 class ContentType extends React.Component {
 
@@ -59,42 +60,47 @@ class ContentType extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title={`Content Type: ${this.props.contentType.name}`}>
-				<div className="col-6">
-					<form onSubmit={e => {
-						e.preventDefault();
-						this.onSubmit(e.target);
-					}}>
-						<div className="form-group">
-							<label>Name</label>
-							<input onChange={e => {
-								this.setState({name: e.target.value})
-							}} className="form-control" type="text" name="name" id="name" value={this.state.name} />
-						</div>
-						<div className="form-group">
-							<label>Slug</label>
-							<input onChange={e => {
-								this.setState({slug: e.target.value})
-							}} className="form-control" type="text" name="slug" id="slug"  value={this.state.slug} />
-						</div>
-						<div className="form-group">
-							<label>Description</label>
-							<input onChange={e => {
-								this.setState({description: e.target.value})
-							}} className="form-control" type="text" name="description" id="description"  value={this.state.description} />
-						</div>
-						<div className="form-group">
-							<button type="submit" className="btn btn-success">Save</button>
-						</div>
-					</form>
-				</div>
-				<div className="row justify-content-center">
-					<div className="col-12">
+			<ProjectLayout>
+				<div className="col-6 mb-3">
+					<Card headerText={`Edit Content Type : ${this.props.contentType.name}`}>
+						<form onSubmit={e => {
+							e.preventDefault();
+							this.onSubmit(e.target);
+						}}>
+							<div className="form-group">
+								<label>Name</label>
+								<input onChange={e => {
+									this.setState({name: e.target.value})
+								}} className="form-control" type="text" name="name" id="name" value={this.state.name} />
+							</div>
+							<div className="form-group">
+								<label>Slug</label>
+								<input onChange={e => {
+									this.setState({slug: e.target.value})
+								}} className="form-control" type="text" name="slug" id="slug"  value={this.state.slug} />
+							</div>
+							<div className="form-group">
+								<label>Description</label>
+								<input onChange={e => {
+									this.setState({description: e.target.value})
+								}} className="form-control" type="text" name="description" id="description"  value={this.state.description} />
+							</div>
+							<div className="form-group">
+								<button type="submit" className="btn btn-success">Save</button>
+							</div>
+						</form>
+					</Card>
+					<div className="mb-3" />
+
+					<Card headerText={`Delete Content Type : ${this.props.contentType.name}`}>
 						<form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
 							<input type="hidden" name="id" id="id" value={this.state.id} />
 							<button type="submit" className="btn btn-danger">Delete Content Type</button>
 						</form>
-						<h2>Fields</h2>
+					</Card>
+					<div className="mb-3" />
+
+					<Card headerText="Fields">
 						<table className="table table-sm table-bordered">
 							<thead>
 							<tr>
@@ -113,7 +119,8 @@ class ContentType extends React.Component {
 							})}
 							</tbody>
 						</table>
-					</div>
+					</Card>
+
 				</div>
 				{this.state.notifyText &&
 					<Notify type="success" message={this.state.notifyText} />

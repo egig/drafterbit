@@ -5,6 +5,7 @@ import actions from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from '../../../../components/Modal';
+import Card from '../../../../components/Card/Card';
 
 class NewContentType extends React.Component {
 	constructor(props) {
@@ -35,47 +36,49 @@ class NewContentType extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title={`New Content Type `}>
+			<ProjectLayout>
 				<div className="row">
 					<div className="col-6">
-						<form onSubmit={e => {
-							e.preventDefault();
-							this.onSubmit(e.target);
-						}}>
-							<div className="form-group">
-								<label htmlFor="name">Name</label>
-								<input type="text" className="form-control" name="name"/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="slug">Slug</label>
-								<input type="text" className="form-control" name="slug"/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="description">Description</label>
-								<textarea className="form-control" name="description"/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="description">Fields</label>
-								{!!this.state.fields.length &&
-									<ul>
-										{this.state.fields.map((f,i) => {
-										return (<li>{f.name}</li>)
-									})}
-									</ul>
-								}
-								<div>
-									<button onClick={e => {
-										e.preventDefault();
-										this.setState({
-											fieldDialogActive: true
-										})
-									}} className="btn btn-success btn-sm"><i className="icon-plus"/> Add Field</button>
+						<Card headerText="New Content Type" >
+							<form onSubmit={e => {
+								e.preventDefault();
+								this.onSubmit(e.target);
+							}}>
+								<div className="form-group">
+									<label htmlFor="name">Name</label>
+									<input type="text" className="form-control" name="name"/>
 								</div>
-							</div>
-							<div className="form-group">
-								<button type="submit" className="btn btn-success">Save</button>
-							</div>
-						</form>
+								<div className="form-group">
+									<label htmlFor="slug">Slug</label>
+									<input type="text" className="form-control" name="slug"/>
+								</div>
+								<div className="form-group">
+									<label htmlFor="description">Description</label>
+									<textarea className="form-control" name="description"/>
+								</div>
+								<div className="form-group">
+									<label htmlFor="description">Fields</label>
+									{!!this.state.fields.length &&
+										<ul>
+											{this.state.fields.map((f,i) => {
+											return (<li>{f.name}</li>)
+										})}
+										</ul>
+									}
+									<div>
+										<button onClick={e => {
+											e.preventDefault();
+											this.setState({
+												fieldDialogActive: true
+											})
+										}} className="btn btn-success btn-sm"><i className="icon-plus"/> Add Field</button>
+									</div>
+								</div>
+								<div className="form-group">
+									<button type="submit" className="btn btn-success">Save</button>
+								</div>
+							</form>
+						</Card>
 					</div>
 				</div>
 				{this.state.fieldDialogActive &&

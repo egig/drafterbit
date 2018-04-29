@@ -5,6 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import drafterbit from 'drafterbit';
+import Card from '../../../components/Card/Card';
 
 class ProjectSetting extends React.Component {
 
@@ -35,45 +36,48 @@ class ProjectSetting extends React.Component {
 	render() {
 
 		return (
-			<ProjectLayout title="Setting">
+			<ProjectLayout>
 				<div className="row">
 					<div className="col-6">
-						<h3>Project Detail</h3>
-						<form onSubmit={(e) => {
-							e.preventDefault();
-							this.onSubmit(e.target);
-						}}>
-							<div className="form-group">
-								<label htmlFor="project_name">Name</label>
-								<input onChange={e => {
-									this.setState({
-										name: e.target.value
-									})
-								}} className="form-control" type="text" name="project_name" value={this.state.name}/>
-							</div>
-							<div className="form-group">
-								<label htmlFor="project_description">Description</label>
-								<textarea onChange={e => {
-									this.setState({
-										description: e.target.value
-									})
-								}} className="form-control" name="project_description" value={this.state.description}/>
-							</div>
-							<div className="form-group">
-								<button type="submit" className="btn btn-primary">Save</button>
-							</div>
-						</form>
-						<h3>Shutdown Project</h3>
-						<div>
-							<p>Your data will be permanently deleted. This action cannot be undone.</p>
-							<form onSubmit={e => {
+						<Card headerText="Project Detail">
+							<form onSubmit={(e) => {
 								e.preventDefault();
-								this.doShutdownProject(e.target);
+								this.onSubmit(e.target);
 							}}>
-								<input type="hidden" name="id" value={this.props.project.id}/>
-								<button href="#" className="btn btn-danger">Shutdown Project</button>
+								<div className="form-group">
+									<label htmlFor="project_name">Name</label>
+									<input onChange={e => {
+										this.setState({
+											name: e.target.value
+										})
+									}} className="form-control" type="text" name="project_name" value={this.state.name}/>
+								</div>
+								<div className="form-group">
+									<label htmlFor="project_description">Description</label>
+									<textarea onChange={e => {
+										this.setState({
+											description: e.target.value
+										})
+									}} className="form-control" name="project_description" value={this.state.description}/>
+								</div>
+								<div className="form-group">
+									<button type="submit" className="btn btn-primary">Save</button>
+								</div>
 							</form>
-						</div>
+						</Card>
+						<div className="mb-3" />
+						<Card headerText="Shutdown Project">
+							<div>
+								<p>Your data will be permanently deleted. This action cannot be undone.</p>
+								<form onSubmit={e => {
+									e.preventDefault();
+									this.doShutdownProject(e.target);
+								}}>
+									<input type="hidden" name="id" value={this.props.project.id}/>
+									<button href="#" className="btn btn-danger">Shutdown Project</button>
+								</form>
+							</div>
+						</Card>
 					</div>
 				</div>
 			</ProjectLayout>

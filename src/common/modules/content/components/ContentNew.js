@@ -5,6 +5,7 @@ import actions from '../actions';
 import ProjectLayout from '../../project/components/ProjectLayout';
 import Field from './Field';
 import Notify from '../../../components/Notify';
+import Card from '../../../components/Card/Card';
 
 class ContentNew extends React.Component {
 
@@ -32,25 +33,28 @@ class ContentNew extends React.Component {
 	}
 
 	render() {
-		return (<ProjectLayout>
-			<div className="col-6">
-				<form onSubmit={e => {
-					e.preventDefault();
-					this.onSubmit(e.target);
-				}} >
-					{this.props.ctFields.fields.map((f,i) => {
-						return <Field onChange={e => {
-							this.formData[f.name] = e.target.value;
-						}} key={i} field={f} />
-					})}
-					<div className="form-group">
-						<button type="submit" className="btn btn-success">Save</button>
-					</div>
-				</form>
-			</div>
-			{this.state.successText &&
-				<Notify type="success" message={this.state.successText} />
-			}
+		return (
+			<ProjectLayout>
+				<div className="col-6">
+					<Card headerText="Add Content" >
+						<form onSubmit={e => {
+							e.preventDefault();
+							this.onSubmit(e.target);
+						}} >
+							{this.props.ctFields.fields.map((f,i) => {
+								return <Field onChange={e => {
+									this.formData[f.name] = e.target.value;
+								}} key={i} field={f} />
+							})}
+							<div className="form-group">
+								<button type="submit" className="btn btn-success">Save</button>
+							</div>
+						</form>
+					</Card>
+				</div>
+				{this.state.successText &&
+					<Notify type="success" message={this.state.successText} />
+				}
 		</ProjectLayout>);
 	}
 }
