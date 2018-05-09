@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import ProjectLayout from '../../project/components/ProjectLayout';
+import ContentManagerLayout from './Manager/ContentManagerLayout';
 import Field from './Field';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
@@ -34,7 +34,7 @@ class ContentNew extends React.Component {
 
 	render() {
 		return (
-			<ProjectLayout>
+			<ContentManagerLayout>
 				<div className="col-6">
 					<Card headerText="Add Content" >
 						<form onSubmit={e => {
@@ -55,7 +55,7 @@ class ContentNew extends React.Component {
 				{this.state.successText &&
 					<Notify type="success" message={this.state.successText} />
 				}
-		</ProjectLayout>);
+		</ContentManagerLayout>);
 	}
 }
 

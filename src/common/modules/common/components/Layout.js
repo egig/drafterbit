@@ -27,7 +27,7 @@ class Layout extends React.Component {
 		return (
 			<span>
 				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
-		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="#">
+		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="/">
 			      <img  className={classNames.navbarBrandImg} src="/img/drafterbit-logo-invert.png" alt="drafterbit"/>
 		      </a>
 					<form className={classNames.navbarForm}>
@@ -40,6 +40,15 @@ class Layout extends React.Component {
 							})}
 						</select>
 					</form>
+					{this.props.project.id &&
+					<ul className="navbar-nav px-3">
+						<li className="nav-item text-nowrap">
+								<a className="nav-link active" href={`/project/${this.props.project.id}/contents`}>
+									Content Manager <i className="icon-share-alt"/>
+								</a>
+							</li>
+					</ul>
+					}
 		      <ul className="navbar-nav px-3">
 		        <li className="nav-item text-nowrap">
 		          <a className="nav-link" href="/logout">Logout</a>

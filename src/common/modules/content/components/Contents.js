@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectLayout from '../../project/components/ProjectLayout';
+import ContentManagerLayout from './Manager/ContentManagerLayout';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
@@ -62,12 +62,12 @@ class Contents extends React.Component {
 		let addUrl = `/project/${projectId}/contents/${slug}/new`;
 
 			return (
-					<ProjectLayout>
+					<ContentManagerLayout>
 						<Card headerText="Contents">
 							<Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
 							<TableA data={data} columns={columns} />
 						</Card>
-					</ProjectLayout>
+					</ContentManagerLayout>
 				)
 	}
 }

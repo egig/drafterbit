@@ -1,0 +1,68 @@
+import React from 'react';
+import ContentManagerLayout from './ContentManagerLayout';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import drafterbit from 'drafterbit';
+import Card from '../../../../components/Card/Card';
+
+class ProjectDashboard extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			contentTypeStat: []
+		}
+	}
+
+	componentDidMount() {
+		let client  = drafterbit.createClient({});
+		client.getProjectStat(this.props.match.params.project_id)
+			.then(r => {
+				this.setState({
+					contentTypeStat: r.content_type
+				});
+			})
+	}
+
+	render() {
+
+		return (
+			<ContentManagerLayout>
+				<Card headerText="Project Dashboard">
+					{!this.props.project.content_types.length &&
+					<div className="col-6">
+						<p>There is no content type yet :(</p>
+						<Link to={`/project/${this.props.project.id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
+					</div>
+					}
+
+					{!!this.state.contentTypeStat.length &&
+					<div className="col col-md-4">
+						<ul className="list-group">
+							{this.state.contentTypeStat.map((item,i) => {
+
+								return (
+									<li key={i} class="list-group-item d-flex justify-content-between align-items-center">
+										{item.name }
+										<span class="badge badge-primary badge-pill">{item.content_count}</span>
+									</li>
+								)
+							})}
+						</ul>
+					</div>
+					}
+
+				</Card>
+			</ContentManagerLayout>
+		);
+	}
+}
+
+const mapStateToProps = (state) => {
+	return {
+		project: state.project.project
+	}
+};
+
+export default connect(mapStateToProps)(ProjectDashboard);
