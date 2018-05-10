@@ -55,7 +55,7 @@ class ProjectSetting extends React.Component {
 								<div className="form-group">
 									<label htmlFor="project_description">Description</label>
 									<textarea onChange={e => {
-										this.setState({c
+										this.setState({
 											description: e.target.value
 										})
 									}} className="form-control" name="project_description" value={this.state.description}/>
