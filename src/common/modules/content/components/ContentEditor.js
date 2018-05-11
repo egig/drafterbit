@@ -1,7 +1,8 @@
 import React from 'react';
-import  { Editor } from 'slate-react';
+import  { Editor, findNode } from 'slate-react';
 import { Value } from 'slate';
-import injectSheet from 'react-jss'
+import Style from './ContentEditor.style'
+import withStyle from '../../../withStyle';
 import ContentManagerLayout from './Manager/ContentManagerLayout';
 
 const initialValue = Value.fromJSON({
@@ -39,24 +40,16 @@ const initialValue = Value.fromJSON({
 	}
 });
 
-const styles = {
-	container: {
-		background: "#e1e1e1",
-		minHeight: '600px'
-	},
-	editorContainer: {
-		background: "#FFFFFF",
-		width: "600px",
-		margin: "auto",
-		padding: '10px'
-	}
-};
-
 function H1Node(props) {
 	return <h1>{props.children}</h1>
 }
 
 class ContentEditor extends React.Component {
+
+
+	componentDidMount() {
+
+	}
 
 	state = {
 		value:initialValue
@@ -72,6 +65,10 @@ class ContentEditor extends React.Component {
 		}
 	}
 
+	onKeyUp = (event, change) => {
+		this.getCurrentNode(change);
+	}
+
 	renderNode = ({node, ...props}) => {
 		switch (node.type) {
 			case 'h1': return <H1Node {...props} />
@@ -80,33 +77,62 @@ class ContentEditor extends React.Component {
 
 
 	onEnter = (event, change) => {
-		const { value } = change
-		if (value.isExpanded) return
+		const { value } = change;
+		if (value.isExpanded) return;
 
 		event.preventDefault()
 		change.splitBlock().setBlock('paragraph')
 		return true
 	}
 
+	// onFocus = (event, change) => {
+	//
+	// 	this.getCurrentNode(change);
+	// };
+
+	getCurrentNode = (change) => {
+
+		const node = change.value.document.getNode(change.value.focusKey);
+		if(node.text === "") {
+			const selection = window.getSelection();
+			if(selection.rangeCount > 0) {
+				const range = selection.getRangeAt(0);
+				const rect = range.getBoundingClientRect();
+				document.getElementById('inlineTooltip').style.position = "absolute";
+				document.getElementById('inlineTooltip').style.top = rect.top+"px";
+				document.getElementById('inlineTooltip').style.left = rect.left+"px";
+				document.getElementById('inlineTooltip').style.display = "block";
+			}
+		} else {
+			document.getElementById('inlineTooltip').style.display = "none";
+		}
+	}
+
+	componentDidUpdate() {
+		this.getCurrentNode(this.state.value.change());
+	}
+
 	render() {
 
-		let { classes } = this.props;
+		let { classNames } = this.props;
 		return (
 			<ContentManagerLayout>
-				<div className={classes.container}>
-					<div className={classes.editorContainer}>
+				<div className={classNames.container}>
+					<div className={classNames.editorContainer}>
 						<Editor
 							value={this.state.value}
 							onChange={this.onChange}
 							onKeyDown={this.onKeyDown}
+							onKeyUp={this.onKeyUp}
 							renderNode={this.renderNode}
+						  onFocus={this.onFocus}
 						/>
 					</div>
-					<button className="btn">Add</button>
+					<button id="inlineTooltip" className="btn">Add</button>
 				</div>
 			</ContentManagerLayout>
 		)
 	}
 }
 
-export default injectSheet(styles)(ContentEditor);
+export default withStyle(Style)(ContentEditor);

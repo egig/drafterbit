@@ -28,7 +28,7 @@ class ContentManagerLayout extends React.Component {
 		return (
 			<span>
 				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
-		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href={`/projects/${this.props.project.id}/contents`}>
+		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href={`/project/${this.props.project.id}/contents`}>
 			      {this.props.project.name}
 		      </a>
 					<ul className="navbar-nav px-3">

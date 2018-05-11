@@ -22,12 +22,14 @@ import ApiKeys from './modules/setting/components/ApiKeys';
 import ApiKeyNew from './modules/setting/components/ApiKeyNew';
 import ApiKeyEdit from './modules/setting/components/ApiKeyEdit';
 import ProjectSetting from './modules/setting/components/ProjectSetting';
+import ContentEditor from './modules/content/components/ContentEditor';
 
 class Drafterbit extends React.Component {
     render() {
         return (
             <Provider store={this.props.store}>
             <Switch>
+              <Route path="/editorx" component={ContentEditor} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/register-success" component={RegisterSuccess} />
