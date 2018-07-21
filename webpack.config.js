@@ -9,6 +9,8 @@ module.exports = {
 	},
 	node: {
 		fs: 'empty',
-		XMLHttpRequest: 'empty'
+		XMLHttpRequest: 'empty',
+		child_process: 'empty',
+		existsSync: 'empty'
 	}
 };

@@ -1,6 +1,6 @@
 const axios = require("axios");
 // TODO use config library nconf
-const config = require('./../../config');
+const config = require('./../../config.json');
 const handleAxiosError = require('./handleAxiosError');
 
 class Client {
