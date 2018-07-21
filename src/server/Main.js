@@ -8,9 +8,9 @@ import createJSSInstance from '../createJSSInstance';
 import createI18nextInstance from '../createI18nextInstance';
 import { Helmet } from 'react-helmet';
 
-const i18n = createI18nextInstance();
-
 const Main = function Main(url = '/', sheets, state) {
+
+		const i18n = createI18nextInstance(false, state.common.language, state.common.languages );
 
     const store = storeFromState(state);
     const context = {};
@@ -37,7 +37,7 @@ const Main = function Main(url = '/', sheets, state) {
 		// Scan context
 		ReactDOMServer.renderToString(Component);
 
-		let language = languageContext.i18n.languages[0];
+		let language = languageContext.i18n.options.lng;
 		let namespaces = languageContext.namespaces;
 		let languageResources = {};
 

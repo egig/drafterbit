@@ -2,13 +2,15 @@ import i18n from 'i18next';
 import i18nextXHRBackend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-const createI18nextInstance = function createI18nextInstance(browser = false) {
+const createI18nextInstance = function createI18nextInstance(browser = false, defaultLanguage = 'en', defaultLanguages = ['en', 'id']) {
 
 	const i18nInstance = i18n.createInstance();
 
 	let options = {
-		fallbackLng: 'en',
+		fallbackLng: defaultLanguage,
 		debug: true, // TODO get this from app config not directly from file
+		lng: defaultLanguage,
+		lngs: defaultLanguages
 	};
 
 	if(browser) {
@@ -20,9 +22,6 @@ const createI18nextInstance = function createI18nextInstance(browser = false) {
 			crossDomain: false,
 			allowMultiLoading: true
 		};
-	} else {
-		options.debug = false;
-		options.lng = 'id'; // TODO get this from request
 	}
 
 	i18nInstance.init(options);

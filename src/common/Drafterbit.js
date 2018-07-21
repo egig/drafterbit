@@ -8,6 +8,7 @@ import Login from './modules/user/components/Login';
 import Register from './modules/user/components/Register';
 import RegisterSuccess from './modules/user/components/RegisterSuccess';
 import ForgotPassword from './modules/user/components/ForgotPassword';
+import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
 import Dashboard from './modules/common/components/Dashboard';
 import NewProject from './modules/project/components/NewProject';
@@ -35,6 +36,7 @@ class Drafterbit extends React.Component {
               <Route path="/register-success" component={RegisterSuccess} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
+              <Route path="/reset-password" component={ResetPassword} />
 	            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
 	            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
 	            <ProtectedRoute path="/project/:project_id/contents" component={ContentManagerDashboard} />

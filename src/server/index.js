@@ -6,10 +6,23 @@ import { SheetsRegistry } from 'jss';
 import Main from './Main';
 import { SESSION_SECRET } from '../../config';
 import authMiddleware from './middlewares/auth';
+import i18next from 'i18next';
 import drafterbit from 'drafterbit';
+
+// TODO we can not use import for i18next-express-middleware
+const i18nextExpressMiddleware = require('i18next-express-middleware');
+
+i18next
+	.use(i18nextExpressMiddleware.LanguageDetector)
+	.init({
+		preload: ['en', 'id'],
+	});
 
 const app = express();
 
+app.use(i18nextExpressMiddleware.handle(i18next, {
+	removeLngFromUrl: false
+}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
@@ -54,6 +67,9 @@ app.get('*', function (req, res) {
 
     delete require.cache[require.resolve('../common/defaultState')];
     let defaultState = require('../common/defaultState');
+
+    defaultState.common.language = req.language;
+    defaultState.common.languages = req.languages;
 
     const sheets = new SheetsRegistry();
 

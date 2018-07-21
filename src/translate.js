@@ -38,7 +38,7 @@ module.exports = function translate(namespaces: Array<string>) {
 
 			componentDidMount() {
 
-				let lng = this.context.languageContext.i18n.languages[0];
+				let lng = this.context.languageContext.i18n.options.lng;
 				let nsPromise = namespaces.filter((ns) => {
 					return !this.context.languageContext.i18n.hasResourceBundle(lng, ns);
 				}).map((ns) => {

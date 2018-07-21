@@ -21,6 +21,7 @@
     "express-session": "^1.15.3",
     "i18next": "^10.3.0",
     "i18next-browser-languagedetector": "^2.1.0",
+    "i18next-express-middleware": "^1.2.0",
     "i18next-node-fs-backend": "^1.0.0",
     "i18next-sync-fs-backend": "^1.0.0",
     "i18next-xhr-backend": "^1.5.1",

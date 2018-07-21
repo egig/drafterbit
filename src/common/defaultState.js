@@ -1,5 +1,7 @@
 module.exports = {
 	common: {
+		language: "en",
+		languages: ["en", "id"],
 		isAjaxLoading: false
 	},
   user: {
