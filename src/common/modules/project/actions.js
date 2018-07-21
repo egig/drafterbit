@@ -1,4 +1,4 @@
-import drafterbit from 'drafterbit';
+import apiClient from '../../../apiClient';
 
 const setProject = (projects) => {
 	return {
@@ -30,7 +30,7 @@ const setAjaxLoading = (isLoading) => {
 
 
 const getContentTypes = (projectId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getContentTypes(projectId)
 		.then((contentTypes) => {
 			return dispatch(setContentTypes(contentTypes))
@@ -38,7 +38,7 @@ const getContentTypes = (projectId) => (dispatch) => {
 };
 
 const getContentType = (contentTypeId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getContentType(contentTypeId)
 		.then((contentType) => {
 			return dispatch(setContentType(contentType))
@@ -46,7 +46,7 @@ const getContentType = (contentTypeId) => (dispatch) => {
 };
 
 const getProject = (projectId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getProject(projectId)
 		.then((project) => {
 			return dispatch(setProject(project))
@@ -54,7 +54,7 @@ const getProject = (projectId) => (dispatch) => {
 };
 
 const createProject = (projectName, projectDescription, userId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.createProject(projectName, projectDescription, userId)
 		.then((project) => {
 			return true;
@@ -65,7 +65,7 @@ const createContentType = (name, slug, description, projectId, fields) => (dispa
 
 	dispatch(setAjaxLoading(true));
 
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.createContentType(name, slug, description, projectId, fields)
 		.then((ct) => {
 			dispatch(setAjaxLoading(false));
@@ -78,7 +78,7 @@ const deleteContentType = (contentTypeId) => (dispatch) => {
 	dispatch(setAjaxLoading(true));
 
 	// TODO create dt client singleton
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.deleteContentType(contentTypeId)
 		.then((project) => {
 			return dispatch(setAjaxLoading(false));
@@ -89,7 +89,7 @@ const deleteContentType = (contentTypeId) => (dispatch) => {
 const updateContentType = (contentTypeId, name, slug, description) => (dispatch) => {
 	dispatch(setAjaxLoading(true));
 
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.updateContentType(contentTypeId, name, slug, description)
 		.then((project) => {
 			return dispatch(setAjaxLoading(false));

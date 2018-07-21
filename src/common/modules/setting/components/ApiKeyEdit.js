@@ -5,7 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
-import drafterbit from 'drafterbit'
+import apiClient from '../../../../apiClient';
 import Card from '../../../components/Card/Card';
 
 class ApiKeyNew extends React.Component {
@@ -23,7 +23,7 @@ class ApiKeyNew extends React.Component {
 	}
 
 	componentDidMount() {
-		let client = drafterbit.createClient({});
+		let client = apiClient.createClient({});
 		client.getApiKey(this.props.match.params.api_key_id)
 			.then(r => {
 				this.setState({
@@ -46,7 +46,7 @@ class ApiKeyNew extends React.Component {
 		let restrictionValue = this.state.restrictedType === 0 ? null : form.restriction_value.value;
 		let apiKeyId = this.props.match.params.api_key_id
 
-		let client = drafterbit.createClient({});
+		let client = apiClient.createClient({});
 		client.updateApiKey(
 			this.props.match.params.api_key_id,
 			this.state.apiKeyName,

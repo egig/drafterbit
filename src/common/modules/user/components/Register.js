@@ -4,12 +4,12 @@ import { Helmet } from 'react-helmet';
 import Style from './Register.style';
 import AuthCard from './AuthCard';
 import withStyle from '../../../withStyle';
-import drafterbit from 'drafterbit';
+import apiClient from '../../../../apiClient';
 
 class Register extends React.Component {
 
 	onSubmit(form) {
-		return drafterbit.createClient({})
+		return apiClient.createClient({})
 			.createUser(
 				form.first_name.value,
 				form.last_name.value,
@@ -28,7 +28,7 @@ class Register extends React.Component {
 		return (
 			<AuthCard title="Register">
 				<Helmet>
-					<title>Register - draferbit</title>
+					<title>Register - drafterbit</title>
 				</Helmet>
 				<form onSubmit={(e) => {
 					e.preventDefault();

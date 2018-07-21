@@ -1,4 +1,4 @@
-import drafterbit from 'drafterbit';
+import apiClient from '../../../apiClient';
 
 const setAjaxLoading = (isLoading) => {
 	return {
@@ -22,7 +22,7 @@ const setContents = (contents) => {
 };
 
 const getContents = (contentTypeId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getContents(contentTypeId)
 		.then((contents) => {
 			return dispatch(setContents(contents))
@@ -31,7 +31,7 @@ const getContents = (contentTypeId) => (dispatch) => {
 
 
 const getContentTypeFields = (projectId, ctSlug) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.getContentTypeFields(projectId, ctSlug)
 		.then((contentType) => {
 			return dispatch(setContentTypeField(contentType))
@@ -43,7 +43,7 @@ const createContent = (contentTypeId, formData) => (dispatch) => {
 
 	dispatch(setAjaxLoading(true));
 
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.createContent(contentTypeId, formData)
 		.then((project) => {
 			return dispatch(setAjaxLoading(false));

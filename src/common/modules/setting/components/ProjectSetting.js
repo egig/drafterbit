@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import drafterbit from 'drafterbit';
+import apiClient from '../../../../apiClient';
 import Card from '../../../components/Card/Card';
 
 class ProjectSetting extends React.Component {
@@ -19,7 +19,7 @@ class ProjectSetting extends React.Component {
 	}
 
 	onSubmit(form) {
-		drafterbit.createClient({}).updateProject(
+		apiClient.createClient({}).updateProject(
 			this.props.project.id,
 			form.project_name.value,
 			form.project_description.value);
@@ -27,7 +27,7 @@ class ProjectSetting extends React.Component {
 
 	doShutdownProject(form) {
 		// TODO create alert before delete
-		drafterbit.createClient({}).deleteProject(form.id.value)
+		apiClient.createClient({}).deleteProject(form.id.value)
 			.then(r => {
 				this.props.history.push('/')
 				})

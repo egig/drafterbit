@@ -2,7 +2,7 @@ import React from 'react';
 import ProjectLayout from './ProjectLayout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import drafterbit from 'drafterbit';
+import apiClient from '../../../../apiClient';
 import Card from '../../../components/Card/Card';
 
 class ProjectDashboard extends React.Component {
@@ -16,7 +16,7 @@ class ProjectDashboard extends React.Component {
 	}
 
 	componentDidMount() {
-		let client  = drafterbit.createClient({});
+		let client  = apiClient.createClient({});
 		client.getProjectStat(this.props.match.params.project_id)
 			.then(r => {
 				this.setState({

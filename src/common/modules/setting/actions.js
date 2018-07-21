@@ -1,4 +1,4 @@
-import drafterbit from 'drafterbit';
+import apiClient from '../../../apiClient';
 
 const setAjaxLoading = (isLoading) => {
 	return {
@@ -16,7 +16,7 @@ const setApiKeys = (contentTypes) => {
 
 
 const getApiKeys = (projectId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getApiKeys(projectId)
 		.then((apiKeys) => {
 			return dispatch(setApiKeys(apiKeys))
@@ -27,7 +27,7 @@ const createApiKey = (projectId, name, key, restrictionType, restrictionValue) =
 	dispatch(setAjaxLoading(true));
 
 
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	return client.createApiKey(projectId, name, key, restrictionType, restrictionValue)
 		.then((project) => {
 			return 	dispatch(setAjaxLoading(false));

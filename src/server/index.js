@@ -7,7 +7,7 @@ import Main from './Main';
 import { SESSION_SECRET } from '../../config';
 import authMiddleware from './middlewares/auth';
 import i18next from 'i18next';
-import drafterbit from 'drafterbit';
+import apiClient from '../apiClient';;
 
 // TODO we can not use import for i18next-express-middleware
 const i18nextExpressMiddleware = require('i18next-express-middleware');
@@ -42,7 +42,7 @@ app.post('/login', function (req, res) {
 	(async function () {
 
 		try {
-			let client = drafterbit.createClient({});
+			let client = apiClient.createClient({});
 			let user = await client.createUserSession(req.body.email, req.body.password);
 			req.session.user = user;
 			res.send(user);

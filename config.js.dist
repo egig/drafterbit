@@ -1,6 +1,6 @@
 module.exports = {
-    DEBUG: false,
+  DEBUG: false,
 	PORT: 3000,
 	SESSION_SECRET: 'secr3t',
-	MONGODB_URL: 'mongodb://localhost:27017/drafterbit'
+	API_BASE_URL: 'http://localhost:3003'
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import drafterbit from 'drafterbit';
+import apiClient from '../../../apiClient';
 
 const setUser = (user) => {
     return {
@@ -20,7 +20,7 @@ const doLogin = (email, password) => (dispatch) => {
 
 const register = (first_name, last_name, email, password) => (dispatch) => {
 
-	return drafterbit.createClient({})
+	return apiClient.createClient({})
 		.createUser(first_name, last_name, email, password)
 		.then(response => {
 			return;

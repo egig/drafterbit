@@ -1,4 +1,4 @@
-import drafterbit from 'drafterbit';
+import apiClient from '../../../apiClient';;
 
 const setProjects = (projects) => {
 	return {
@@ -9,7 +9,7 @@ const setProjects = (projects) => {
 
 
 const getProjects = (userId) => (dispatch) => {
-	let client = drafterbit.createClient({});
+	let client = apiClient.createClient({});
 	client.getProjects(userId)
 		.then((projects) => {
 			return dispatch(setProjects(projects))
