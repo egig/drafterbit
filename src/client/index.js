@@ -5,11 +5,18 @@ import { BrowserRouter } from 'react-router-dom';
 import storeFromState from '../common/storeFromState';
 import moment from 'moment';
 import createJSSInstance from '../createJSSInstance';
-import { createI18nextInstanceForBrowser } from '../createI18nextInstance';
+import i18next from 'i18next';
 
 const jss = createJSSInstance();
 const drafterbit = {}; //TODO
-const i18n = createI18nextInstanceForBrowser();
+
+const i18n = i18next.createInstance();
+i18n.init({
+	lng: window.__PRELOADED_STATE__.common.language,
+	fallbackLng: 'en',
+	debug: true,
+	resources: window.__PRELOADED_LANGUAGE_RESOURCES__,
+});
 
 moment.locale('id', {
     months: 'januari_februari_maret_april_mei_juni_juli_agustus_september_oktober_november_desember'.split('_'),

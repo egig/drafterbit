@@ -33,12 +33,13 @@ module.exports = function translate(namespaces: Array<string>) {
 			static displayName = `Translate(${getDisplayName(WrappedComponent)})`;
 
 			componentWillMount() {
+				// Get namespace for server side rendering
 				this.context.languageContext.namespaces = this.context.languageContext.namespaces.concat(namespaces);
 			}
 
 			componentDidMount() {
 
-				let lng = this.context.languageContext.i18n.options.lng;
+				let lng = this.context.languageContext.i18n.language;
 				let nsPromise = namespaces.filter((ns) => {
 					return !this.context.languageContext.i18n.hasResourceBundle(lng, ns);
 				}).map((ns) => {
