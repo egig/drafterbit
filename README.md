@@ -1,3 +1,2 @@
 
-#Install
-`npm install`
+# README.md
