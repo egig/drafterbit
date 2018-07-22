@@ -1,21 +1,21 @@
-import apiClient from '../../../apiClient';;
+import apiClient from '../../../apiClient';
 
 const setProjects = (projects) => {
-	return {
-		type: '@project/SET_PROJECTS',
-		payload: projects
-	};
+    return {
+        type: '@project/SET_PROJECTS',
+        payload: projects
+    };
 };
 
 
 const getProjects = (userId) => (dispatch) => {
-	let client = apiClient.createClient({});
-	client.getProjects(userId)
-		.then((projects) => {
-			return dispatch(setProjects(projects))
-		});
+    let client = apiClient.createClient({});
+    client.getProjects(userId)
+        .then((projects) => {
+            return dispatch(setProjects(projects));
+        });
 };
 
 export default {
-	getProjects
+    getProjects
 };

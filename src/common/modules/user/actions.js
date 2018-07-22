@@ -20,12 +20,12 @@ const doLogin = (email, password) => (dispatch) => {
 
 const register = (first_name, last_name, email, password) => (dispatch) => {
 
-	return apiClient.createClient({})
-		.createUser(first_name, last_name, email, password)
-		.then(response => {
-			return;
-			// return dispatch(setUser(response.data));
-		});
+    return apiClient.createClient({})
+        .createUser(first_name, last_name, email, password)
+        .then(response => {
+            return;
+            // return dispatch(setUser(response.data));
+        });
 };
 
 export default {

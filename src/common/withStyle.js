@@ -3,29 +3,29 @@ import PropTypes from 'prop-types';
 
 const withStyle = function withStyle(style) {
 
-	return function (WrappedComponent) {
+    return function (WrappedComponent) {
 
-		class StyleHOC extends React.Component {
+        class StyleHOC extends React.Component {
 
-				render() {
-					const jss = this.context.jss;
-					let { classes } = jss.createStyleSheet(style);;
+            render() {
+                const jss = this.context.jss;
+                let { classes } = jss.createStyleSheet(style);
 
-					const newProps = {
-						classNames: classes
-					};
+                const newProps = {
+                    classNames: classes
+                };
 
-					return <WrappedComponent {...this.props} {...newProps} />;
-				}
-		}
+                return <WrappedComponent {...this.props} {...newProps} />;
+            }
+        }
 
-		StyleHOC.displayName =  `withStyle(${WrappedComponent.displayName || WrappedComponent.name})`;
-		StyleHOC.contextTypes = {
-			jss: PropTypes.object.isRequired
-		};
+        StyleHOC.displayName =  `withStyle(${WrappedComponent.displayName || WrappedComponent.name})`;
+        StyleHOC.contextTypes = {
+            jss: PropTypes.object.isRequired
+        };
 
-		return StyleHOC;
-	};
+        return StyleHOC;
+    };
 };
 
 module.exports = withStyle;

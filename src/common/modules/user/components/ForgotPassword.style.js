@@ -1,15 +1,15 @@
 module.exports = {
 
-	formControlBorder: {
-		borderWidth: "2.3px",
-	},
+    formControlBorder: {
+        borderWidth: '2.3px',
+    },
 
-	noMargin: {
-		margin: 0
-	},
+    noMargin: {
+        margin: 0
+    },
 
-	btnPadding: {
-		padding: "12px 10px"
-	}
+    btnPadding: {
+        padding: '12px 10px'
+    }
 
-}
+};
