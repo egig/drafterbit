@@ -8,39 +8,39 @@ import _ from 'lodash';
 
 class TableA extends React.Component {
 
-	render() {
+    render() {
 
-		const {data, columns} = this.props;
+        const {data, columns} = this.props;
 
-		return (
-			<Table className="table table-sm table-bordered">
-				<TableHeader>
-					<Row>
-						{columns.map((column,i) => (<Column key={i}>{column.label}</Column>))}
-					</Row>
-				</TableHeader>
-				<TableBody>
-					{data.map((item, i) => {
-						return (
-							<Row key={i}>
-								{columns.map((column, i) => {
+        return (
+            <Table className="table table-sm table-bordered">
+                <TableHeader>
+                    <Row>
+                        {columns.map((column,i) => (<Column key={i}>{column.label}</Column>))}
+                    </Row>
+                </TableHeader>
+                <TableBody>
+                    {data.map((item, i) => {
+                        return (
+                            <Row key={i}>
+                                {columns.map((column, i) => {
 
-									let c;
-									if(typeof column.render === "function") {
-										c = column.render(item);
-									} else {
-										c = _.get(item, column.accessor);
-									}
+                                    let c;
+                                    if(typeof column.render === 'function') {
+                                        c = column.render(item);
+                                    } else {
+                                        c = _.get(item, column.accessor);
+                                    }
 
-									return (<Column key={i}>{c}</Column>)
-								})}
-							</Row>
-						)
-					})}
-				</TableBody>
-			</Table>
-		)
-	}
+                                    return (<Column key={i}>{c}</Column>);
+                                })}
+                            </Row>
+                        );
+                    })}
+                </TableBody>
+            </Table>
+        );
+    }
 }
 
-export default  TableA
+export default  TableA;

@@ -2,23 +2,23 @@ import React from 'react';
 
 const withDrafterbit = function withDrafterbit(WrappedComponent) {
 
-	class DrafterbitHOC extends React.Component {
-		render() {
+    class DrafterbitHOC extends React.Component {
+        render() {
 
-			const newProps = {
-				drafterbit: this.context.drafterbit,
-			};
+            const newProps = {
+                drafterbit: this.context.drafterbit,
+            };
 
-			return <WrappedComponent {...this.props} {...newProps} />;
-		}
-	}
+            return <WrappedComponent {...this.props} {...newProps} />;
+        }
+    }
 
-	DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
-	DrafterbitHOC.contextTypes = {
-		drafterbit: React.PropTypes.object.isRequired,
-	};
+    DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
+    DrafterbitHOC.contextTypes = {
+        drafterbit: React.PropTypes.object.isRequired,
+    };
 
-	return DrafterbitHOC;
+    return DrafterbitHOC;
 };
 
 module.exports = withDrafterbit;

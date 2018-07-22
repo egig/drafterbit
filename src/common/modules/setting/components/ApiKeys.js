@@ -9,46 +9,46 @@ import Card from '../../../components/Card/Card';
 
 class ApiKeys extends React.Component {
 
-	componentDidMount() {
-		this.props.getApiKeys(this.props.project.id);
-	}
+    componentDidMount() {
+        this.props.getApiKeys(this.props.project.id);
+    }
 
-	render() {
+    render() {
 
-		let columns = [
-			{
-				label: "Name",
-				accessor: "name",
-				render: (a) => {
-					return <Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link>;
-				}
-			},
-			{
-				label: "Key",
-				accessor: "key"
-			}
-		];
+        let columns = [
+            {
+                label: 'Name',
+                accessor: 'name',
+                render: (a) => {
+                    return <Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link>;
+                }
+            },
+            {
+                label: 'Key',
+                accessor: 'key'
+            }
+        ];
 
-		return (
-			<ProjectLayout>
-				<Card headerText="Api Keys">
-					<Link className="btn btn-success mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
-					<TableA columns={columns} data={this.props.apiKeys} />
-				</Card>
-			</ProjectLayout>
-		);
-	}
+        return (
+            <ProjectLayout>
+                <Card headerText="Api Keys">
+                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
+                    <TableA columns={columns} data={this.props.apiKeys} />
+                </Card>
+            </ProjectLayout>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		project: state.project.project,
-		apiKeys: state.project.apiKeys,
-	}
-}
+    return {
+        project: state.project.project,
+        apiKeys: state.project.apiKeys,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators(actions, dispatch);
-}
+    return bindActionCreators(actions, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApiKeys);

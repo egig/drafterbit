@@ -10,17 +10,17 @@ import apiClient from '../apiClient';
 
 const jss = createJSSInstance();
 const drafterbit = {
-	apiClient: apiClient.createClient({
-		baseURL: window.__DRAFTERBIT_CONFIG__.apiBaseURL
-	})
+    apiClient: apiClient.createClient({
+        baseURL: window.__DRAFTERBIT_CONFIG__.apiBaseURL
+    })
 };
 
 const i18n = i18next.createInstance();
 i18n.init({
-	lng: window.__PRELOADED_STATE__.common.language,
-	fallbackLng: 'en',
-	debug: true,
-	resources: window.__PRELOADED_LANGUAGE_RESOURCES__,
+    lng: window.__PRELOADED_STATE__.common.language,
+    fallbackLng: 'en',
+    debug: true,
+    resources: window.__PRELOADED_LANGUAGE_RESOURCES__,
 });
 
 moment.locale('id', {
@@ -36,7 +36,7 @@ ReactDOM.hydrate(
         <Drafterbit
 	        store={store} jss={jss}
 	        drafterbit={drafterbit}
-          languageContext={languageContext} />
+            languageContext={languageContext} />
     </BrowserRouter>, document.getElementById('app'));
 
 

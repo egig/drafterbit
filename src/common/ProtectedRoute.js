@@ -7,12 +7,12 @@ const ProtectedRoute = (route) => (
 	    return (
 		    (!!route.currentUser && route.currentUser.token) ? <route.component {...props} routes={route.routes}/> :
 			    <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
-	    )
+	    );
     }}/>
 );
 
 export default connect(
 
-	state => ({
-		currentUser: state.user.currentUser
-	}))(ProtectedRoute);
+    state => ({
+        currentUser: state.user.currentUser
+    }))(ProtectedRoute);

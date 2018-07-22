@@ -3,30 +3,30 @@ import Layout from './Layout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import translate from '../../../../translate';
-import Card from '../../../components/Card/Card'
+import Card from '../../../components/Card/Card';
 
 class Dashboard extends React.Component {
 
-		renderProjects() {
-			const { projects } = this.props;
-			let t = this.props.t;
+    renderProjects() {
+        const { projects } = this.props;
+        let t = this.props.t;
 
-			if(!projects.length) {
-				return (
-					<div className="col-4">
-						{t('dashboard:no_project_text')} &nbsp;
-					</div>
-				)
-			}
+        if(!projects.length) {
+            return (
+                <div className="col-4">
+                    {t('dashboard:no_project_text')} &nbsp;
+                </div>
+            );
+        }
 
-			return (
-				<ul className="list-group">
-					{projects.map((item,i) => {
-						return <li key={i} className="list-group-item"><Link to={`/project/${item.id}`}>{item.name}</Link></li>
-					})}
-				</ul>
-			)
-		}
+        return (
+            <ul className="list-group">
+                {projects.map((item,i) => {
+                    return <li key={i} className="list-group-item"><Link to={`/project/${item.id}`}>{item.name}</Link></li>;
+                })}
+            </ul>
+        );
+    }
 
     render() {
 	    let t = this.props.t;
@@ -47,9 +47,9 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	return {
-		projects: state.project.projects
-	};
+    return {
+        projects: state.project.projects
+    };
 };
 
 export default translate(['dashboard'])(connect(mapStateToProps)(Dashboard));

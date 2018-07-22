@@ -6,49 +6,49 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 class ContentManagerNav extends React.Component {
-	render() {
+    render() {
 
-		let { classNames, match } = this.props;
+        let { classNames, match } = this.props;
 
-		return (
-			<nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
-				<div className={classNames.sidebarSticky}>
+        return (
+            <nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
+                <div className={classNames.sidebarSticky}>
 
-					<ul className="nav flex-column mb-2">
-						<li className="nav-item">
-							<Link className="nav-link" to={`/project/${this.props.project.id}/contents`}>
-								<i className="icon-dashboard"/> Dashboard
-							</Link>
-						</li>
+                    <ul className="nav flex-column mb-2">
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`/project/${this.props.project.id}/contents`}>
+                                <i className="icon-dashboard"/> Dashboard
+                            </Link>
+                        </li>
 
-						{!this.props.project.content_types.length &&
+                        {!this.props.project.content_types.length &&
 							<li className="nav-item">
-								<Link className="nav-link" to={`/project/${this.props.project.id}/content_types/new`}>
-									<i className="icon-plus"/> Add Content Type
-								</Link>
+							    <Link className="nav-link" to={`/project/${this.props.project.id}/content_types/new`}>
+							        <i className="icon-plus"/> Add Content Type
+							    </Link>
 							</li>
-						}
+                        }
 
-						{this.props.project.content_types.map((ct, i) => {
-							return (
-								<li className="nav-item" key={i}>
-									<Link className="nav-link" to={`/project/${this.props.project.id}/contents/${ct.slug}`}>
-										<i className="icon-doc"/> {ct.name}
-									</Link>
-								</li>
-							)
-						})}
-					</ul>
-				</div>
-			</nav>
-		);
-	}
+                        {this.props.project.content_types.map((ct, i) => {
+                            return (
+                                <li className="nav-item" key={i}>
+                                    <Link className="nav-link" to={`/project/${this.props.project.id}/contents/${ct.slug}`}>
+                                        <i className="icon-doc"/> {ct.name}
+                                    </Link>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            </nav>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		project: state.project.project
-	};
+    return {
+        project: state.project.project
+    };
 };
 
 export default withRouter(connect(mapStateToProps)(withStyle(Style)(ContentManagerNav)));

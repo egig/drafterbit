@@ -16,9 +16,9 @@ app.use(cors());
 
 app.use(bodyParser());
 app.use(expressValidator({
-	errorFormatter: (param, msg, value, location) => {
-		return msg;
-	}
+    errorFormatter: (param, msg, value, location) => {
+        return msg;
+    }
 }));
 
 
@@ -26,10 +26,10 @@ app.use(expressValidator({
 app.set('config', config);
 
 const redisDriver = new RedisDriver({
-	host: config.get("REDIS_HOST"),
-	port: config.get("REDIS_PORT"),
-	db: config.get("REDIS_DB"),
-	prefix: "dt"
+    host: config.get('REDIS_HOST'),
+    port: config.get('REDIS_PORT'),
+    db: config.get('REDIS_DB'),
+    prefix: 'dt'
 });
 const cache = new Cache(redisDriver);
 app.set('cache', cache);
@@ -46,38 +46,38 @@ const swaggerUrl = '';
 
 
 const swaggerSpec = swaggerJSDoc({
-	swaggerDefinition: {
-		info: {
-			title: "Drafterbit",
-			version: "v1.0",
-		},
-		basePath: "/v1"
-	},
-	apis: [
-		'./src/routes/*',
-	],
+    swaggerDefinition: {
+        info: {
+            title: 'Drafterbit',
+            version: 'v1.0',
+        },
+        basePath: '/v1'
+    },
+    apis: [
+        './src/routes/*',
+    ],
 });
 
 app.use(
-	'/v1/swagger-ui',
-	swaggerUi.serve,
-	swaggerUi.setup(
-		swaggerSpec,
-		showExplorer,
-		options,
-		customCss,
-		customFavicon,
-		swaggerUrl,
-		docTitle,
-		(req, res, next) => {
-			next();
-		}
-	)
+    '/v1/swagger-ui',
+    swaggerUi.serve,
+    swaggerUi.setup(
+        swaggerSpec,
+        showExplorer,
+        options,
+        customCss,
+        customFavicon,
+        swaggerUrl,
+        docTitle,
+        (req, res, next) => {
+            next();
+        }
+    )
 );
 
 app.get('/v1/api-docs.json', function(req, res) {
-	res.setHeader('Content-Type', 'application/json');
-	res.send(swaggerSpec);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
 });
 
 module.exports = app;

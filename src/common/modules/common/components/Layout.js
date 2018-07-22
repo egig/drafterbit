@@ -10,79 +10,79 @@ import LoaderTrap from '../../../components/LoaderTrap';
 
 class Layout extends React.Component {
 
-	componentDidMount() {
-		this.props.getProjects(this.props.user.id);
-	}
+    componentDidMount() {
+        this.props.getProjects(this.props.user.id);
+    }
 
-	onProjectChange(select) {
-		if(select.value != 0) {
-			this.props.history.push(`/project/${select.value}`);
-		}
-	}
+    onProjectChange(select) {
+        if(select.value != 0) {
+            this.props.history.push(`/project/${select.value}`);
+        }
+    }
 
-	render() {
+    render() {
 
-		let { classNames, projects, t } = this.props;
+        let { classNames, projects, t } = this.props;
 
-		return (
-			<span>
-				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
+        return (
+            <span>
+                <nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
 		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="/">
 			      <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
 		      </a>
-					<form className={classNames.navbarForm}>
-						<select onChange={(e) => {
-							this.onProjectChange(e.target);
-						}} className={classNames.navbarProjectSelector} value={this.props.project.id}>
-							<option value={0}>{t('layout.select_project')}</option>
-							{projects.map((p,i) => {
-								return (<option key={i} value={p.id}>{p.name}</option>)
-							})}
-						</select>
-					</form>
-					{this.props.project.id &&
+                    <form className={classNames.navbarForm}>
+                        <select onChange={(e) => {
+                            this.onProjectChange(e.target);
+                        }} className={classNames.navbarProjectSelector} value={this.props.project.id}>
+                            <option value={0}>{t('layout.select_project')}</option>
+                            {projects.map((p,i) => {
+                                return (<option key={i} value={p.id}>{p.name}</option>);
+                            })}
+                        </select>
+                    </form>
+                    {this.props.project.id &&
 					<ul className="navbar-nav px-3">
-						<li className="nav-item text-nowrap">
-								<a className="nav-link active" href={`/project/${this.props.project.id}/contents`}>
+					    <li className="nav-item text-nowrap">
+					        <a className="nav-link active" href={`/project/${this.props.project.id}/contents`}>
 									Content Manager <i className="icon-share-alt"/>
-								</a>
-							</li>
+					        </a>
+					    </li>
 					</ul>
-					}
+                    }
 		      <ul className="navbar-nav px-3">
 		        <li className="nav-item text-nowrap">
 		          <a className="nav-link" href="/logout">Logout</a>
 		        </li>
 		      </ul>
 		    </nav>
-				<div className="container-fluid">
-					{this.props.children}
+                <div className="container-fluid">
+                    {this.props.children}
 		    </div>
-				{this.props.isAjaxLoading &&
+                {this.props.isAjaxLoading &&
 					<LoaderTrap />
-				}
-			</span>
-		);
-	}
+                }
+            </span>
+        );
+    }
 }
 
 Layout.defaultProps = {
-	title: "Untitled Page"
+    title: 'Untitled Page'
 };
 
 const mapStateToProps = (state) => {
-	return {
-		user: state.user.currentUser,
-		project: state.project.project,
-		projects: state.project.projects,
-		isAjaxLoading: state.common.isAjaxLoading
-	};
+    return {
+        user: state.user.currentUser,
+        project: state.project.project,
+        projects: state.project.projects,
+        isAjaxLoading: state.common.isAjaxLoading
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators(actions, dispatch);
+    return bindActionCreators(actions, dispatch);
 };
 
 
 export default translate(['translation'])(withRouter(withStyle(Style)(
-	connect(mapStateToProps, mapDispatchToProps)(Layout))));
+    connect(mapStateToProps, mapDispatchToProps)(Layout))));

@@ -1,40 +1,40 @@
 module.exports = {
-	/*
+    /*
 	 * Navbar
 	 */
-	navbar: {
-		zIndex: 101
-	},
-	navbarBrand: {
-		paddingTop: ".75rem",
-		paddingBottom: ".75rem",
-		fontSize: "1rem",
-		backgroundColor: "rgba(0, 0, 0, .25)",
-		boxShadow: "inset -1px 0 0 rgba(0, 0, 0, .25)"
-	},
+    navbar: {
+        zIndex: 101
+    },
+    navbarBrand: {
+        paddingTop: '.75rem',
+        paddingBottom: '.75rem',
+        fontSize: '1rem',
+        backgroundColor: 'rgba(0, 0, 0, .25)',
+        boxShadow: 'inset -1px 0 0 rgba(0, 0, 0, .25)'
+    },
 
-	navbarBrandImg: {
-		maxWidth: '98px',
-	},
+    navbarBrandImg: {
+        maxWidth: '98px',
+    },
 
-	navbarForm: {
-		width: "100%",
-		'& $navbarProjectSelector': {
-			borderRadius: "0px",
-			maxWidth: "180px",
-			border: "0px",
-			background: "transparent",
-			outline: "none",
-			color: "#eaeaea",
+    navbarForm: {
+        width: '100%',
+        '& $navbarProjectSelector': {
+            borderRadius: '0px',
+            maxWidth: '180px',
+            border: '0px',
+            background: 'transparent',
+            outline: 'none',
+            color: '#eaeaea',
 
-			'&:focus': {
-				background: "transparent",
-				borderRadius: "0px",
-			}
-		},
-	},
+            '&:focus': {
+                background: 'transparent',
+                borderRadius: '0px',
+            }
+        },
+    },
 
-	navbarProjectSelector: {}
+    navbarProjectSelector: {}
 
 };
 

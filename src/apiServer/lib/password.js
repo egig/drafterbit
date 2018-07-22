@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 module.exports = {
-	/**
+    /**
 	 *  Hash raw password.
 	 *
 	 * @param raw
@@ -16,7 +16,7 @@ module.exports = {
 	    });
     },
 
-	/**
+    /**
 	 * Compare raw password and the hash.
 	 *
 	 * @param raw

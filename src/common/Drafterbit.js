@@ -29,14 +29,14 @@ class Drafterbit extends React.Component {
     render() {
         return (
             <Provider store={this.props.store}>
-            <Switch>
-              <Route path="/editorx" component={ContentEditor} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/register-success" component={RegisterSuccess} />
-              <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
-              <Route path="/reset-password" component={ResetPassword} />
+                <Switch>
+                    <Route path="/editorx" component={ContentEditor} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/register-success" component={RegisterSuccess} />
+                    <Route path="/forgot-password" component={ForgotPassword} />
+                    <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
+                    <Route path="/reset-password" component={ResetPassword} />
 	            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
 	            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
 	            <ProtectedRoute path="/project/:project_id/contents" component={ContentManagerDashboard} />
@@ -50,25 +50,25 @@ class Drafterbit extends React.Component {
 	            <ProtectedRoute path="/project/new" component={NewProject} />
 	            <ProtectedRoute path="/project/:project_id" component={ProjectDashboard} />
 	            <ProtectedRoute path="/" component={Dashboard} />
-            </Switch>
+                </Switch>
             </Provider>
         );
 
     }
 
-		getChildContext() {
-			return {
-				drafterbit: this.props.drafterbit,
-				jss: this.props.jss,
-				languageContext: this.props.languageContext
-			};
-		}
+    getChildContext() {
+        return {
+            drafterbit: this.props.drafterbit,
+            jss: this.props.jss,
+            languageContext: this.props.languageContext
+        };
+    }
 }
 
 Drafterbit.childContextTypes = {
-	drafterbit: PropTypes.object.isRequired,
-	jss: PropTypes.object.isRequired,
-	languageContext: PropTypes.object.isRequired
+    drafterbit: PropTypes.object.isRequired,
+    jss: PropTypes.object.isRequired,
+    languageContext: PropTypes.object.isRequired
 };
 
 module.exports = Drafterbit;
