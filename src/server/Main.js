@@ -7,6 +7,8 @@ import storeFromState from '../common/storeFromState';
 import createJSSInstance from '../createJSSInstance';
 import { Helmet } from 'react-helmet';
 import i18next from 'i18next';
+import config from '../config';
+import apiClient from '../apiClient';
 
 const Main = function Main(url = '/', sheets, state) {
 
@@ -19,7 +21,11 @@ const Main = function Main(url = '/', sheets, state) {
     };
 
     const jss = createJSSInstance();
-    const drafterbit = {}; // TODO;
+    const drafterbit = {
+    	apiClient: apiClient.createClient({
+    		baseURL: config.get("API_BASE_URL")
+	    })
+    }
 
 		let languageContext = {
 			namespaces: [],
@@ -52,6 +58,9 @@ const Main = function Main(url = '/', sheets, state) {
 
 		data.head = Helmet.renderStatic();
 		data.__PRELOADED_LANGUAGE_RESOURCES__ = languageResources;
+		data.__DRAFTERBIT_CONFIG__ = {
+			apiBaseURL: config.get("API_BASE_URL")
+		};
 
 		i18n.init({
 			debug: true,

@@ -6,9 +6,14 @@ import storeFromState from '../common/storeFromState';
 import moment from 'moment';
 import createJSSInstance from '../createJSSInstance';
 import i18next from 'i18next';
+import apiClient from '../apiClient';
 
 const jss = createJSSInstance();
-const drafterbit = {}; //TODO
+const drafterbit = {
+	apiClient: apiClient.createClient({
+		baseURL: window.__DRAFTERBIT_CONFIG__.apiBaseURL
+	})
+};
 
 const i18n = i18next.createInstance();
 i18n.init({
@@ -28,8 +33,10 @@ let languageContext = {namespaces: [], i18n};
 
 ReactDOM.hydrate(
     <BrowserRouter>
-        <Drafterbit store={store} jss={jss} drafterbit={drafterbit}
-                    languageContext={languageContext} />
+        <Drafterbit
+	        store={store} jss={jss}
+	        drafterbit={drafterbit}
+          languageContext={languageContext} />
     </BrowserRouter>, document.getElementById('app'));
 
 

@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import { SheetsRegistry } from 'jss';
 import Main from './Main';
-import { SESSION_SECRET } from '../../config';
 import authMiddleware from './middlewares/auth';
 import i18next from 'i18next';
 import apiClient from '../apiClient';
@@ -38,7 +37,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
 app.use(session({
-    secret: SESSION_SECRET,
+    secret: config.get("SESSION_SECRET"),
     cookie: { maxAge: 24 * 60 * 60 * 30 },
     resave: true,
     saveUninitialized: true,
@@ -68,7 +67,9 @@ app.post('/login', function (req, res) {
 	(async function () {
 
 		try {
-			let client = apiClient.createClient({});
+			let client = apiClient.createClient({
+				baseURL: config.get("API_BASE_URL")
+			});
 			let user = await client.createUserSession(req.body.email, req.body.password);
 			req.session.user = user;
 			res.send(user);

@@ -24,6 +24,7 @@ app.use(expressValidator({
 
 
 app.set('config', config);
+
 const redisDriver = new RedisDriver({
 	host: config.get("REDIS_HOST"),
 	port: config.get("REDIS_PORT"),

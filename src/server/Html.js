@@ -19,6 +19,7 @@ const Html = function (props) {
                 <script dangerouslySetInnerHTML={{
                     __html: 'window.__PRELOADED_STATE__='+JSON.stringify(props.__PRELOADED_STATE__)
                     +';window.__PRELOADED_LANGUAGE_RESOURCES__='+JSON.stringify(props.__PRELOADED_LANGUAGE_RESOURCES__)
+                    +';window.__DRAFTERBIT_CONFIG__='+JSON.stringify(props.__DRAFTERBIT_CONFIG__)
                 }}
                 ></script>
                 <script src="/bundle.js"></script>

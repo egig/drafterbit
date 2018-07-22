@@ -23,7 +23,7 @@ nconf
 	  'MAILJET_APIKEY_PRIVATE',
 	  'API_BASE_URL'
   ])
-  .file({ file: path.join(__dirname, '/../config.json') })
+  .file({ file: path.join(__dirname, '../config.json') })
   .defaults({
     PORT: 3000,
   });

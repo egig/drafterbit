@@ -43,9 +43,9 @@ class ProjectDashboard extends React.Component {
 								{this.state.contentTypeStat.map((item,i) => {
 
 									return (
-										<li key={i} class="list-group-item d-flex justify-content-between align-items-center">
+										<li key={i} className="list-group-item d-flex justify-content-between align-items-center">
 											{item.name }
-											<span class="badge badge-primary badge-pill">{item.content_count}</span>
+											<span className="badge badge-primary badge-pill">{item.content_count}</span>
 										</li>
 									)
 								})}

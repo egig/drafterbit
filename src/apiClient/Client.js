@@ -1,6 +1,4 @@
 const axios = require("axios");
-// TODO use config library nconf
-const config = require('./../../config.json');
 const handleAxiosError = require('./handleAxiosError');
 
 class Client {
@@ -8,7 +6,7 @@ class Client {
 	constructor(options) {
 
 		let axiosInstance = axios.create({
-			baseURL: config.API_BASE_URL,
+			baseURL: options.baseURL,
 			timeout: 10000,
 		});
 
