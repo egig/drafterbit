@@ -15,7 +15,7 @@ class AuthCard extends React.Component {
 					<div className="row justify-content-md-center h-100">
 						<div className={classes.cardWrapper}>
 							<div className={`brand ${classes.brandContainer}`}>
-								<img className={classes.brandImg} src="/img/drafterbit-logo.png" />
+								<img className={classes.brandImg} src="/img/dtlogo57-black.png" />
 							</div>
 							<div className={`card fat ${classes.cardFatPadding}`}>
 								<div className="card-body">

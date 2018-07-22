@@ -28,7 +28,7 @@ class Layout extends React.Component {
 			<span>
 				<nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
 		      <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="/">
-			      <img  className={classNames.navbarBrandImg} src="/img/drafterbit-logo-invert.png" alt="drafterbit"/>
+			      <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
 		      </a>
 					<form className={classNames.navbarForm}>
 						<select onChange={(e) => {
