@@ -1,5 +1,9 @@
 const mysql  = require('mysql');
 const BaseRespository = require('./BaseRepository');
+import mongoose from 'mongoose';
+import userSchema from '../../schema/userSchema'
+
+
 
 class UserRespository extends BaseRespository {
 
@@ -46,15 +50,19 @@ class UserRespository extends BaseRespository {
     createUser(firstName, lastName, email, password) {
         return new Promise((resolve, reject) => {
 
-            this.connection.connect();
+	        const User = mongoose.model('User', userSchema);
+	        let newUser = new User({
+		        first_name: firstName,
+		        last_name: lastName,
+		        email: email,
+		        password: password
+	        });
 
-            this.connection.query('INSERT users(first_name, last_name, email, password) VALUES(?,?,?,?)',
-                [firstName, lastName, email, password],
-                (error, results, fields) => {
-                    if (error) return reject(error);
-                    this.connection.end();
-                    return resolve(results);
-                });
+	        newUser.save(function (err, fluffy) {
+		        if (err) return reject(err);
+		        resolve(true)
+	        });
+
         });
     }
 

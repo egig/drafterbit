@@ -37,6 +37,7 @@
     "mime-types": "^2.1.16",
     "moment": "^2.18.1",
     "mongodb": "^2.2.33",
+    "mongoose": "^5.2.4",
     "mysql": "github:mysqljs/mysql",
     "nconf": "^0.10.0",
     "node-libs-browser": "^2.1.0",
