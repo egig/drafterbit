@@ -111,13 +111,14 @@ router.post('/users/session',
 			let rawPassword = req.body.password;
 
 			let r = new userRepository(req.app);
-			let results = await r.getUserByEmail(email);
+			let user = await r.getUserByEmail(email);
 
-			if(!results.length) {
+			console.log(user)
+
+			if(!user) {
 				throw new UserAuthError("Wrong email or password");
 			}
 
-			let user = results[0];
 			let isMatch  = await password.compare(rawPassword, user.password);
 
 			if(!isMatch) {
