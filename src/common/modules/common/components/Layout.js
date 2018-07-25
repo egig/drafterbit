@@ -33,17 +33,17 @@ class Layout extends React.Component {
                     <form className={classNames.navbarForm}>
                         <select onChange={(e) => {
                             this.onProjectChange(e.target);
-                        }} className={classNames.navbarProjectSelector} value={this.props.project.id}>
+                        }} className={classNames.navbarProjectSelector} value={this.props.project._id}>
                             <option value={0}>{t('layout.select_project')}</option>
                             {projects.map((p,i) => {
-                                return (<option key={i} value={p.id}>{p.name}</option>);
+                                return (<option key={i} value={p._id}>{p.name}</option>);
                             })}
                         </select>
                     </form>
-                    {this.props.project.id &&
+                    {this.props.project._id &&
 					<ul className="navbar-nav px-3">
 					    <li className="nav-item text-nowrap">
-					        <a className="nav-link active" href={`/project/${this.props.project.id}/contents`}>
+					        <a className="nav-link active" href={`/project/${this.props.project._id}/contents`}>
 									Content Manager <i className="icon-share-alt"/>
 					        </a>
 					    </li>

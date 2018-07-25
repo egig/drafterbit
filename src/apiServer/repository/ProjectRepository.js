@@ -1,5 +1,7 @@
 const mysql  = require('mysql');
 const BaseRespository = require('./BaseRepository');
+import projectSchema from '../../schema/projectSchema';
+import mongoose from 'mongoose';
 
 class ProjectRespository extends BaseRespository {
 
@@ -9,20 +11,11 @@ class ProjectRespository extends BaseRespository {
 	 */
     getProjects(userId) {
         return new Promise((resolve, reject) => {
-
-            this.connection.connect();
-
-            this.connection.query(`SELECT p.* FROM users_projects as up
-			JOIN projects as p on p.id = up.project_id
-			WHERE up.user_id=?`,
-            [userId],
-            function (error, results, fields) {
-                if (error) return reject(error);
-                return resolve(results);
-            });
-
-            this.connection.end();
-
+	        const Project = mongoose.model('Project', projectSchema);
+	        Project.find({owner: userId}, function(err, projects) {
+		        if (err) return reject(err);
+		        return resolve(projects);
+	        });
         });
     }
 
@@ -31,45 +24,13 @@ class ProjectRespository extends BaseRespository {
 	 * @return {Promise}
 	 */
     getProject(projectId) {
-        return new Promise((resolve, reject) => {
-
-            let query = `
-SELECT p.id, p.name, p.description, ct.id as ct_id, ct.name as ct_name,
-ct.description as ct_description, ct.slug as ct_slug
-FROM
-  projects as p
-  LEFT JOIN content_types as ct on ct.project_id = p.id
-WHERE p.id=?`;
-
-            this.connection.connect();
-
-            this.connection.query(query, [projectId], function (error, results, fields) {
-                if (error) return reject(error);
-
-                let project = {
-                    content_types: []
-                };
-                results.map(result => {
-                    project.id = result.id;
-                    project.name = result.name;
-                    project.description = result.description;
-
-                    if(result.ct_id !== null ) {
-                        project.content_types.push({
-                            id: result.ct_id,
-                            name: result.ct_name,
-                            description: result.ct_description,
-                            slug: result.ct_slug
-                        });
-                    }
-                });
-
-                return resolve(project);
-            });
-
-            this.connection.end();
-
-        });
+	    return new Promise((resolve, reject) => {
+		    const Project = mongoose.model('Project', projectSchema);
+		    Project.find({_id: projectId}, function(err, project) {
+			    if (err) return reject(err);
+			    return resolve(project);
+		    });
+	    });
     }
 
     /**
@@ -81,30 +42,23 @@ WHERE p.id=?`;
 	 * @return {Promise}
 	 */
     createProject(name, description, userId) {
-        return new Promise((resolve, reject) => {
 
-            this.connection.connect();
+	    return new Promise((resolve, reject) => {
+		    const Project = mongoose.model('Project', projectSchema);
 
-            this.connection.query('INSERT projects(name, description) VALUES(?,?)',
-                [name, description],
-                (error, result, fields) => {
-                    if (error) return reject(error);
+		    let newProject = new Project({
+		    	name,
+			    description,
+			    owner: userId
+		    });
 
-                    this.connection.query('INSERT users_projects(user_id, project_id, role) VALUES(?,?,?)',
-                        [userId, result.insertId, 1],
-                        (err, r) => {
+		    newProject.save((err, newProject) => {
+			    if (err) return reject(err);
+			    resolve(newProject)
+		    });
 
-                            if (err) return reject(err);
-
-                            this.connection.end();
-                            return resolve(r);
-                        }
-                    );
-                });
-
-        });
+	    });
     }
-
 
     /**
 	 *
