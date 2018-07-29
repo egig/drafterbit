@@ -113,8 +113,6 @@ router.post('/users/session',
 			let r = new userRepository(req.app);
 			let user = await r.getUserByEmail(email);
 
-			console.log(user)
-
 			if(!user) {
 				throw new UserAuthError("Wrong email or password");
 			}

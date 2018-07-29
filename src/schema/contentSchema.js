@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import contentTypeSchema from './contentTypeSchema';
-
-const Schema = mongoose.Schema;
 
 let contentSchema = mongoose.Schema({
 	content_value: [{

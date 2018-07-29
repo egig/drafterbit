@@ -63,7 +63,7 @@ const Main = function Main(url = '/', sheets, state) {
     };
 
     i18n.init({
-        debug: true,
+        debug: false, // TODO make this one file for all project
         lng: state.common.language,
         resources: languageResources
     });

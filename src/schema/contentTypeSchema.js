@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
-import projectSchema from './projectSchema';
+const { Project } = require('../model');
 
 const Schema = mongoose.Schema;
 
-let Project = mongoose.model('Project', projectSchema);
 let contentTypeSchema = mongoose.Schema({
 	name: String,
 	slug: String,
@@ -17,4 +16,4 @@ let contentTypeSchema = mongoose.Schema({
 	}]
 });
 
-export default contentTypeSchema
+module.exports = contentTypeSchema

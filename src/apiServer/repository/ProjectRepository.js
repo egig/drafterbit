@@ -1,7 +1,6 @@
 const mysql  = require('mysql');
 const BaseRespository = require('./BaseRepository');
-import projectSchema from '../../schema/projectSchema';
-import mongoose from 'mongoose';
+import model from '../../model';
 
 class ProjectRespository extends BaseRespository {
 
@@ -11,8 +10,7 @@ class ProjectRespository extends BaseRespository {
 	 */
     getProjects(userId) {
         return new Promise((resolve, reject) => {
-	        const Project = mongoose.model('Project', projectSchema);
-	        Project.find({owner: userId}, function(err, projects) {
+	        model.Project.find({owner: userId}, function(err, projects) {
 		        if (err) return reject(err);
 		        return resolve(projects);
 	        });
@@ -25,8 +23,7 @@ class ProjectRespository extends BaseRespository {
 	 */
     getProject(projectId) {
 	    return new Promise((resolve, reject) => {
-		    const Project = mongoose.model('Project', projectSchema);
-		    Project.find({_id: projectId}, function(err, project) {
+		    model.Project.findOne({_id: projectId}).populate('content_types', 'name').exec(function(err, project) {
 			    if (err) return reject(err);
 			    return resolve(project);
 		    });
@@ -44,7 +41,6 @@ class ProjectRespository extends BaseRespository {
     createProject(name, description, userId) {
 
 	    return new Promise((resolve, reject) => {
-		    const Project = mongoose.model('Project', projectSchema);
 
 		    let newProject = new Project({
 		    	name,
