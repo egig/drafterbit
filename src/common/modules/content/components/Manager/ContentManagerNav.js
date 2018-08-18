@@ -16,14 +16,14 @@ class ContentManagerNav extends React.Component {
 
                     <ul className="nav flex-column mb-2">
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/project/${this.props.project.id}/contents`}>
+                            <Link className="nav-link" to={`/project/${this.props.project._id}/contents`}>
                                 <i className="icon-dashboard"/> Dashboard
                             </Link>
                         </li>
 
                         {!this.props.project.content_types.length &&
 							<li className="nav-item">
-							    <Link className="nav-link" to={`/project/${this.props.project.id}/content_types/new`}>
+							    <Link className="nav-link" to={`/project/${this.props.project._id}/content_types/new`}>
 							        <i className="icon-plus"/> Add Content Type
 							    </Link>
 							</li>
@@ -32,7 +32,7 @@ class ContentManagerNav extends React.Component {
                         {this.props.project.content_types.map((ct, i) => {
                             return (
                                 <li className="nav-item" key={i}>
-                                    <Link className="nav-link" to={`/project/${this.props.project.id}/contents/${ct.slug}`}>
+                                    <Link className="nav-link" to={`/project/${this.props.project._id}/contents/${ct.slug}`}>
                                         <i className="icon-doc"/> {ct.name}
                                     </Link>
                                 </li>

@@ -33,7 +33,7 @@ class ProjectDashboard extends React.Component {
                     {!this.props.project.content_types.length &&
 					<div className="col-6">
 					    <p>There is no content type yet :(</p>
-					    <Link to={`/project/${this.props.project.id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
+					    <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
 					</div>
                     }
 

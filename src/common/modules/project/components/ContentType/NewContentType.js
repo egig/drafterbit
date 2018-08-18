@@ -28,7 +28,7 @@ class NewContentType extends React.Component {
             form.name.value,
             form.slug.value,
             form.description.value,
-            this.props.project.id,
+            this.props.project._id,
             this.state.fields
         );
     }

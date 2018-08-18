@@ -14,9 +14,6 @@ const expressValidator = require('express-validator');
 const cors = require('cors');
 
 const config = require('../config');
-const routes = require('../apiServer/routes');
-const Cache = require('../apiServer/lib/cache/Cache');
-const RedisDriver = require('../apiServer/lib/cache/RedisDriver');
 
 // TODO we can not use import for i18next-express-middleware
 const i18nextExpressMiddleware = require('i18next-express-middleware');
@@ -52,15 +49,6 @@ app.use(expressValidator({
 }));
 
 app.set('config', config);
-const redisDriver = new RedisDriver({
-	host: config.get("REDIS_HOST"),
-	port: config.get("REDIS_PORT"),
-	db: config.get("REDIS_DB"),
-	prefix: "dt"
-});
-const cache = new Cache(redisDriver);
-app.set('cache', cache);
-app.use('/v1', routes);
 
 app.post('/login', function (req, res) {
 

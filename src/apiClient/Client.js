@@ -6,7 +6,7 @@ class Client {
 	constructor(options) {
 
 		let axiosInstance = axios.create({
-			baseURL: options.baseURL,
+			baseURL: "http://localhost:3003",
 			timeout: 10000,
 		});
 
@@ -24,7 +24,7 @@ class Client {
 	}
 
 	async createProject(projectName, projectDescription, userId) {
-		let response = await this.axiosInstance.post(`/v1/users/${userId}/projects`, {
+		let response = await this.axiosInstance.post(`/users/${userId}/projects`, {
 			name: projectName,
 			description: projectDescription
 		});
@@ -32,7 +32,7 @@ class Client {
 	}
 
 	async updateProject(projectId, projectName, projectDescription) {
-		let response = await this.axiosInstance.patch(`/v1/projects/${projectId}`, {
+		let response = await this.axiosInstance.patch(`/projects/${projectId}`, {
 			name: projectName,
 			description: projectDescription
 		});
@@ -40,40 +40,40 @@ class Client {
 	}
 
 	async deleteProject(projectId) {
-		let response = await this.axiosInstance.delete(`/v1/projects/${projectId}`);
+		let response = await this.axiosInstance.delete(`/projects/${projectId}`);
 		return response.data;
 	}
 
 	async getProjects(userId) {
 		userId = userId || this.getCurrentUserId();
-		let response = await this.axiosInstance.get(`/v1/users/${userId}/projects`);
+		let response = await this.axiosInstance.get(`/users/${userId}/projects`);
 		return response.data;
 	}
 
 	async getProject(projectId) {
-		let response = await this.axiosInstance.get(`/v1/projects/${projectId}`);
+		let response = await this.axiosInstance.get(`/projects/${projectId}`);
 		return response.data;
 	}
 
 	async getProjectStat(projectId) {
-		let response = await this.axiosInstance.get(`/v1/projects/${projectId}/stat`);
+		let response = await this.axiosInstance.get(`/projects/${projectId}/stat`);
 		return response.data;
 	}
 
 	async getContentTypes(projectId) {
-		let response = await this.axiosInstance.get(`/v1/projects/${projectId}/content_types`);
+		let response = await this.axiosInstance.get(`/projects/${projectId}/content_types`);
 		return response.data;
 	}
 
 	async getContentType(contentTypeId) {
-		let response = await this.axiosInstance.get(`/v1/content_types/${contentTypeId}`);
+		let response = await this.axiosInstance.get(`/content_types/${contentTypeId}`);
 		return response.data;
 	}
 
 	async createUserSession(email, password) {
 		try {
 
-			let response = await this.axiosInstance.post(`/v1/users/session`, {
+			let response = await this.axiosInstance.post(`/users/session`, {
 				email, password
 			});
 			return response.data;
@@ -86,7 +86,7 @@ class Client {
 	async createUser(first_name, last_name, email, password) {
 		try {
 
-			let response = await this.axiosInstance.post(`/v1/users`, {
+			let response = await this.axiosInstance.post(`/users`, {
 				first_name, last_name, email, password
 			});
 			return response.data;
@@ -97,17 +97,17 @@ class Client {
 	}
 
 	async getApiKeys(projectId) {
-		let response = await this.axiosInstance.get(`/v1/projects/${projectId}/api_keys`);
+		let response = await this.axiosInstance.get(`/projects/${projectId}/api_keys`);
 		return response.data;
 	}
 
 	async getApiKey(apiKeyId) {
-		let response = await this.axiosInstance.get(`/v1/api_keys/${apiKeyId}`);
+		let response = await this.axiosInstance.get(`/api_keys/${apiKeyId}`);
 		return response.data;
 	}
 
 	async createContentType(name, slug, description, projectId, fields) {
-		let response = await this.axiosInstance.post(`/v1/projects/${projectId}/content_types`, {
+		let response = await this.axiosInstance.post(`/projects/${projectId}/content_types`, {
 			name,
 			slug,
 			description,
@@ -117,36 +117,36 @@ class Client {
 	}
 
 	async deleteContentType(contentTypeId) {
-		let response = await this.axiosInstance.delete(`/v1/content_types/${contentTypeId}`);
+		let response = await this.axiosInstance.delete(`/content_types/${contentTypeId}`);
 		return response.data;
 	}
 
 	async updateContentType(contentTypeId, name, slug, description) {
-		let response = await this.axiosInstance.patch(`/v1/content_types/${contentTypeId}`, {
+		let response = await this.axiosInstance.patch(`/content_types/${contentTypeId}`, {
 			name, slug, description
 		});
 		return response.data;
 	}
 
 	async getContentTypeFields(projectId, slug) {
-		let response = await this.axiosInstance.get(`/v1/projects/${projectId}/content_types/${slug}`);
+		let response = await this.axiosInstance.get(`/projects/${projectId}/content_types/${slug}`);
 		return response.data;
 	}
 
 	async createContent(contentTypeId, formData) {
-		let response = await this.axiosInstance.post(`/v1/content_types/${contentTypeId}/contents`, {
+		let response = await this.axiosInstance.post(`/content_types/${contentTypeId}/contents`, {
 			content: formData
 		});
 		return response.data;
 	}
 
 	async getContents(contentTypeId) {
-		let response = await this.axiosInstance.get(`/v1/content_types/${contentTypeId}/contents`);
+		let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`);
 		return response.data;
 	}
 
 	async createApiKey(projectId, name, key, restrictionType, restrictionValue) {
-		let response = await this.axiosInstance.post(`/v1/projects/${projectId}/api_keys`, {
+		let response = await this.axiosInstance.post(`/projects/${projectId}/api_keys`, {
 			name,
 			key,
 			restriction_type: restrictionType,
@@ -157,7 +157,7 @@ class Client {
 	}
 
 	async updateApiKey(apiKeyId, name, key, restrictionType, restrictionValue) {
-		let response = await this.axiosInstance.patch(`/v1/api_keys/${apiKeyId}`, {
+		let response = await this.axiosInstance.patch(`/api_keys/${apiKeyId}`, {
 			apiKeyId, name, key, restrictionType, restrictionValue
 		});
 		return response.data;
