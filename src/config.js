@@ -22,7 +22,8 @@ nconf
 	  'MAILJET_APIKEY_PUBLIC',
 	  'MAILJET_APIKEY_PRIVATE',
 	  'API_BASE_URL',
-    'MONGODB_URL'
+    'MONGODB_URL',
+    'ADMIN_API_KEY'
     ])
     .file({ file: path.join(__dirname, '../config.json') })
     .defaults({

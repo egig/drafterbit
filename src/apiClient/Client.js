@@ -8,6 +8,9 @@ class Client {
 		let axiosInstance = axios.create({
 			baseURL: "http://localhost:3003",
 			timeout: 10000,
+			params: {
+				api_key: "test"
+			}
 		});
 
 		this.options = Object.assign({}, {
