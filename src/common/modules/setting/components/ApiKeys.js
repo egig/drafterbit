@@ -10,7 +10,7 @@ import Card from '../../../components/Card/Card';
 class ApiKeys extends React.Component {
 
     componentDidMount() {
-        this.props.getApiKeys(this.props.project.id);
+        this.props.getApiKeys(this.props.project._id);
     }
 
     render() {
@@ -20,7 +20,7 @@ class ApiKeys extends React.Component {
                 label: 'Name',
                 accessor: 'name',
                 render: (a) => {
-                    return <Link to={`/project/${this.props.project.id}/api_keys/${a.id}/edit`}>{a.name}</Link>;
+                    return <Link to={`/project/${this.props.project.i_d}/api_keys/${a._id}/edit`}>{a.name}</Link>;
                 }
             },
             {
@@ -32,7 +32,7 @@ class ApiKeys extends React.Component {
         return (
             <ProjectLayout>
                 <Card headerText="Api Keys">
-                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project.id}/api_keys/new`}>Create Api Key</Link>
+                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
                     <TableA columns={columns} data={this.props.apiKeys} />
                 </Card>
             </ProjectLayout>

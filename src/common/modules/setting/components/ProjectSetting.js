@@ -20,7 +20,7 @@ class ProjectSetting extends React.Component {
 
     onSubmit(form) {
         apiClient.createClient({}).updateProject(
-            this.props.project.id,
+            this.props.project._id,
             form.project_name.value,
             form.project_description.value);
     }
@@ -73,7 +73,7 @@ class ProjectSetting extends React.Component {
                                     e.preventDefault();
                                     this.doShutdownProject(e.target);
                                 }}>
-                                    <input type="hidden" name="id" value={this.props.project.id}/>
+                                    <input type="hidden" name="id" value={this.props.project._id}/>
                                     <button href="#" className="btn btn-danger">Shutdown Project</button>
                                 </form>
                             </div>
