@@ -20,7 +20,7 @@ class ApiKeys extends React.Component {
                 label: 'Name',
                 accessor: 'name',
                 render: (a) => {
-                    return <Link to={`/project/${this.props.project.i_d}/api_keys/${a._id}/edit`}>{a.name}</Link>;
+                    return <Link to={`/project/${this.props.project._id}/api_keys/${a._id}/edit`}>{a.name}</Link>;
                 }
             },
             {

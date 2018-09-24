@@ -161,7 +161,7 @@ class Client {
 
 	async updateApiKey(apiKeyId, name, key, restrictionType, restrictionValue) {
 		let response = await this.axiosInstance.patch(`/api_keys/${apiKeyId}`, {
-			apiKeyId, name, key, restrictionType, restrictionValue
+			apiKeyId, name, key, restriction_type: restrictionType, restriction_value: restrictionValue
 		});
 		return response.data;
 	}

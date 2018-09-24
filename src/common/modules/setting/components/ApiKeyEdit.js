@@ -43,7 +43,7 @@ class ApiKeyNew extends React.Component {
 
 	onSubmit(form) {
 
-		let restrictionValue = this.state.restrictedType === 0 ? null : form.restriction_value.value;
+		let restrictionValue = this.state.restrictedType == 0 ? "" : form.restriction_value.value;
 		let apiKeyId = this.props.match.params.api_key_id
 
 		let client = apiClient.createClient({});

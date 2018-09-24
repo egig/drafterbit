@@ -26,10 +26,10 @@ class ApiKeyEdit extends React.Component {
 
     onSubmit(form) {
 
-        let restrictionValue = this.state.restrictedType === 0 ? null : form.restriction_value.value;
+        let restrictionValue = this.state.restrictedType === 0 ? "" : form.restriction_value.value;
 
         this.props.createApiKey(
-            this.props.project.id,
+            this.props.project._id,
             form.name.value,
             form.key.value,
             this.state.restrictedType,
