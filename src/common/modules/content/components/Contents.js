@@ -16,7 +16,7 @@ class Contents extends React.Component {
             let ctSlug= nextProps.match.params.content_type_slug;
             this.props.getContentTypeFields(projectId,ctSlug)
                 .then(r => {
-                    return this.props.getContents(this.props.ctFields.id);
+                    return this.props.getContents(this.props.ctFields._id);
                 });
         }
     }
@@ -26,7 +26,7 @@ class Contents extends React.Component {
         let ctSlug= this.props.match.params.content_type_slug;
         this.props.getContentTypeFields(projectId,ctSlug)
             .then(r => {
-                return this.props.getContents(this.props.ctFields.id);
+                return this.props.getContents(this.props.ctFields._id);
             });
     }
 

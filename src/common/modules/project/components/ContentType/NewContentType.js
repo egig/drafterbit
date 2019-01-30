@@ -90,7 +90,7 @@ class NewContentType extends React.Component {
 					            this.addField({
 					                name: form.name.value,
 					                label: form.label.value,
-					                type: form.type.value
+					                type_id: form.type.value
 					            });
 
 					            form.reset();
