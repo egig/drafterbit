@@ -24,7 +24,7 @@ class ContentType extends React.Component {
     componentWillReceiveProps(nextProps) {
 
         this.setState({
-            id: nextProps.contentType.id,
+            _id: nextProps.contentType._id,
             name: nextProps.contentType.name,
             slug: nextProps.contentType.slug,
             description: nextProps.contentType.description,
@@ -46,7 +46,7 @@ class ContentType extends React.Component {
 
     onSubmit(form) {
         this.props.updateContentType(
-            this.state.id,
+            this.state._id,
             form.name.value,
             form.slug.value,
             form.description.value
@@ -94,7 +94,7 @@ class ContentType extends React.Component {
 
                     <Card headerText={`Delete Content Type : ${this.props.contentType.name}`}>
                         <form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
-                            <input type="hidden" name="id" id="id" value={this.state.id} />
+                            <input type="hidden" name="id" id="id" value={this.state._id} />
                             <button type="submit" className="btn btn-danger">Delete Content Type</button>
                         </form>
                     </Card>

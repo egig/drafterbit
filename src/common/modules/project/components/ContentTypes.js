@@ -21,7 +21,7 @@ class ContentTypes extends React.Component {
                     <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
                     <TableA data={this.props.contentTypes} columns={[
                         {label: 'Name', render: (item) => {
-                            return <Link to={`/project/${this.props.project._id}/content_types/${item.id}`}>{item.name}</Link>;
+                            return <Link to={`/project/${this.props.project._id}/content_types/${item._id}`}>{item.name}</Link>;
                         }}
                     ]} />
                 </Card>
