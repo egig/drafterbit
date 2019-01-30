@@ -57,17 +57,17 @@ class ProjectNav extends React.Component {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/project/${this.props.project.id}/content_types`}>
+                            <Link className="nav-link" to={`/project/${this.props.project._id}/content_types`}>
                                 <i className="icon-puzzle"/> Content Types
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/project/${this.props.project.id}/settings`}>
+                            <Link className="nav-link" to={`/project/${this.props.project._id}/settings`}>
                                 <i className="icon-settings"/> Settings
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/project/${this.props.project.id}/api_keys`}>
+                            <Link className="nav-link" to={`/project/${this.props.project._id}/api_keys`}>
                                 <i className="icon-key"/> Api Keys
                             </Link>
                         </li>

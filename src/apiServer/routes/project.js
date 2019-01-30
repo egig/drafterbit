@@ -27,8 +27,8 @@ const validateRequest = require('../middlewares/validateRequest');
 router.get('/users/:user_id/projects',
 	validateRequest({
 		user_id: {
-			isInt: true,
-			errorMessage: "user_id must be integer"
+			notEmpty: true,
+			errorMessage: "user_id is required"
 		}
 	}),
 	function (req, res) {
@@ -56,9 +56,9 @@ router.get('/users/:user_id/projects',
  *     parameters:
  *       - in: path
  *         name: project_id
- *         type: integer
+ *         type: string
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *     responses:
  *       200:
@@ -69,8 +69,8 @@ router.get('/users/:user_id/projects',
 router.get('/projects/:project_id',
 	validateRequest({
 		project_id: {
-			isInt: true,
-			errorMessage: "project_id must be integer"
+			notEmpty: true,
+			errorMessage: "project_id required"
 		}
 	}),
 	function (req, res) {
@@ -99,9 +99,9 @@ router.get('/projects/:project_id',
  *     parameters:
  *       - in: path
  *         name: project_id
- *         type: integer
+ *         type: string
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *     responses:
  *       200:
@@ -112,8 +112,8 @@ router.get('/projects/:project_id',
 router.get('/projects/:project_id/stat',
 	validateRequest({
 		project_id: {
-			isInt: true,
-			errorMessage: "project_id must be integer"
+			notEmpty: true,
+			errorMessage: "project_id required"
 		}
 	}),
 	function (req, res) {
@@ -145,14 +145,14 @@ router.get('/projects/:project_id/stat',
  *     parameters:
  *       - in: path
  *         name: user_id
- *         type: integer
+ *         type: string
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *       - in: formData
  *         name: name
  *         type: string
- *         schema:
+ *         schema:2
  *           type: string
  *         required: true
  *       - in: formData
@@ -171,16 +171,15 @@ router.get('/projects/:project_id/stat',
 router.post('/users/:user_id/projects',
 	validateRequest({
 		user_id: {
-			isInt: true,
-			errorMessage: "user_id must be integer"
+			notEmpty: true,
+			errorMessage: "user_id required"
 		},
 		name: {
-			isString: true,
+			notEmpty: true,
 			errorMessage: "name is required"
 		},
 		description: {
-			isString: true,
-			errorMessage: "description is required"
+			optional: true
 		}
 	}),
 	function (req, res) {
@@ -228,8 +227,8 @@ router.post('/users/:user_id/projects',
 router.delete('/projects/:project_id',
 	validateRequest({
 		project_id: {
-			isInt: true,
-			errorMessage: "project_id must be integer"
+			notEmpty: true,
+			errorMessage: "project_id required"
 		}
 	}),
 	(req, res) => {
@@ -260,7 +259,7 @@ router.delete('/projects/:project_id',
  *     parameters:
  *       - in: path
  *         name: project_id
- *         type: integer
+ *         type: string
  *         schema:
  *           type: string
  *         required: integer
@@ -282,7 +281,7 @@ router.delete('/projects/:project_id',
  *     tags:
  *        - Project
  */
-router.patch('/projects/:project_id', (req, res) => {
+router.patch('/projects/:project_id',(req, res) => {
 
 	(async function () {
 

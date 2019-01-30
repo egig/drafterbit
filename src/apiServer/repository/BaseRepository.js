@@ -1,4 +1,5 @@
 const mysql  = require('mysql');
+import mongoose from 'mongoose';
 
 class BaseRespository {
 
@@ -9,6 +10,8 @@ class BaseRespository {
             password : app.get('config').get('MYSQL_PASSWORD'),
             database : app.get('config').get('MYSQL_DB')
         });
+
+	    mongoose.connect(app.get('config').get('MONGODB_URL'));
     }
 }
 

@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
         return (
             <ul className="list-group">
                 {projects.map((item,i) => {
-                    return <li key={i} className="list-group-item"><Link to={`/project/${item.id}`}>{item.name}</Link></li>;
+                    return <li key={i} className="list-group-item"><Link to={`/project/${item._id}`}>{item.name}</Link></li>;
                 })}
             </ul>
         );
