@@ -136,9 +136,9 @@ class Client {
 		return response.data;
 	}
 
-	async createContent(contentTypeId, formData) {
+	async createContent(contentTypeId, fields) {
 		let response = await this.axiosInstance.post(`/content_types/${contentTypeId}/contents`, {
-			content: formData
+			fields: fields
 		});
 		return response.data;
 	}

@@ -24,7 +24,7 @@ class Contents extends React.Component {
     componentDidMount() {
         let projectId = this.props.match.params.project_id;
         let ctSlug= this.props.match.params.content_type_slug;
-        this.props.getContentTypeFields(projectId,ctSlug)
+        this.props.getContentTypeFields(projectId, ctSlug)
             .then(r => {
                 return this.props.getContents(this.props.ctFields._id);
             });
@@ -32,23 +32,22 @@ class Contents extends React.Component {
 
     render() {
         const data = this.props.contents.map(c => {
-            let content = JSON.parse(c.content_values);
-            content.id = c.id;
-            return content;
+        	let item = {
+		        _id: c._id
+	        };
+
+        	c.fields.map(f => {
+        		item[f.name] = f.value;
+	        });
+
+        	return item;
         });
 
         const columns = [{
             label: '#ID',
-            accessor: 'id' // String-based value accessors!
+            accessor: '_id' // String-based value accessors!
         }
-        ];
-
-        // this.props.ctFields.fields.map(f => {
-        // 	columns.push({
-        // 		Header: f.label,
-        // 		accessor: f.name
-        // 	})
-        // });
+        ];;
 
         this.props.ctFields.fields.map(f => {
             columns.push({

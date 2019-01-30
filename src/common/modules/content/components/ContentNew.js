@@ -18,7 +18,7 @@ class ContentNew extends React.Component {
     }
 
     onSubmit(form) {
-        this.props.createContent(this.props.ctFields.id, this.formData)
+        this.props.createContent(this.props.ctFields._id, Object.values(this.formData))
             .then(r => {
                 this.setState({
                     successText: 'Content successfully saved'
@@ -43,7 +43,11 @@ class ContentNew extends React.Component {
                         }} >
                             {this.props.ctFields.fields.map((f,i) => {
                                 return <Field onChange={e => {
-                                    this.formData[f.name] = e.target.value;
+                                    this.formData[f.name] = {
+                                    	type_id: f.type_id,
+                                    	name: f.name,
+                                    	value: e.target.value,
+                                    };
                                 }} key={i} field={f} />;
                             })}
                             <div className="form-group">
