@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TableA from '../../../components/Table/TableA';
 import Card from '../../../components/Card/Card';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 class ContentTypes extends React.Component {
 
@@ -15,15 +15,25 @@ class ContentTypes extends React.Component {
 
     render() {
 
+	    const columns = [{
+		    dataField: 'name',
+		    text: 'Name',
+		    formatter: (cell, row) => {
+		    	return <Link to={`/project/${this.props.project._id}/content_types/${row._id}`}>{cell}</Link>
+		    }
+	    }];
+
         return (
             <ProjectLayout>
                 <Card headerText="Content Types">
                     <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
-                    <TableA data={this.props.contentTypes} columns={[
-                        {label: 'Name', render: (item) => {
-                            return <Link to={`/project/${this.props.project._id}/content_types/${item._id}`}>{item.name}</Link>;
-                        }}
-                    ]} />
+	                  <BootstrapTable bootstrap4
+	                                  keyField='_id'
+	                                  data={ this.props.contentTypes }
+	                                  columns={ columns }
+	                                  striped
+	                                  hover
+	                                  condensed />
                 </Card>
             </ProjectLayout>
         );
