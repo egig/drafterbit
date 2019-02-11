@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { Link } from 'react-router-dom';
 import Style from './ProjectNav.style';
 import withStyle from '../../../withStyle';

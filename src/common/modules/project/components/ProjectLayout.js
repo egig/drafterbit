@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import Layout from '../../common/components/Layout';
 import ProjectNav from './ProjectNav';
 import actions from '../actions';

@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import Drafterbit from '../common/Drafterbit';

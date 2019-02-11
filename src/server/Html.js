@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { Route, Link } from 'react-router-dom';
 
 const Html = function (props) {

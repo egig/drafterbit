@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import ContentManagerLayout from './Manager/ContentManagerLayout';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';

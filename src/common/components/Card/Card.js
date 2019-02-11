@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Card extends React.Component {
 
@@ -16,4 +16,4 @@ class Card extends React.Component {
     }
 }
 
-export default Card;
+module.exports = Card;

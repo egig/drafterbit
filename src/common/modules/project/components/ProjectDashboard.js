@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import ProjectLayout from './ProjectLayout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';

@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import Layout from '../../common/components/Layout';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';

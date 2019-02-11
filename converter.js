@@ -1,4 +1,4 @@
-const createJSSInstance = require('./build/createJSSInstance').default;
+const createJSSInstance = require('./src/createJSSInstance');
 const jss = createJSSInstance();
 const {SheetsRegistry} = require('jss');
 const path = require('path');

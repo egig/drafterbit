@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';

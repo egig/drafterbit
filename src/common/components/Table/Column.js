@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Column extends React.Component {
 
@@ -11,4 +11,4 @@ class Column extends React.Component {
     }
 }
 
-export default Column;
+module.exports = Column;

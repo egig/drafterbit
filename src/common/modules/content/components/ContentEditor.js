@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import  { Editor, findNode } from 'slate-react';
 import { Value } from 'slate';
 import Style from './ContentEditor.style'

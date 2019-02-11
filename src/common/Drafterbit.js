@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { Provider } from 'react-redux';
 import { Switch } from 'react-router';
 import PropTypes from 'prop-types';

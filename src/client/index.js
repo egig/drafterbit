@@ -1,26 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Drafterbit from '../common/Drafterbit';
-import { BrowserRouter } from 'react-router-dom';
-import storeFromState from '../common/storeFromState';
-import moment from 'moment';
-import createJSSInstance from '../createJSSInstance';
-import i18next from 'i18next';
-import apiClient from '../apiClient';
+const React = require('react');
+const ReactDOM = require('react-dom');
+const Drafterbit = require('../common/Drafterbit');
+const { HashRouter } = require('react-router-dom');
+const storeFromState = require('../common/storeFromState');
+const moment = require('moment');
+const createJSSInstance = require('../createJSSInstance');
+const i18next = require('i18next');
+const apiClient = require('../apiClient');
 
 const jss = createJSSInstance();
 const drafterbit = {
     apiClient: apiClient.createClient({
-        baseURL: window.__DRAFTERBIT_CONFIG__.apiBaseURL
+        baseURL: "htt://localhost:3003"
     })
 };
 
 const i18n = i18next.createInstance();
 i18n.init({
-    lng: window.__PRELOADED_STATE__.common.language,
+    lng: 'id',
     fallbackLng: 'en',
     debug: true,
-    resources: window.__PRELOADED_LANGUAGE_RESOURCES__,
+    resources: [],
 });
 
 moment.locale('id', {
@@ -32,11 +32,11 @@ const store = storeFromState(window.__PRELOADED_STATE__);
 let languageContext = {namespaces: [], i18n};
 
 ReactDOM.hydrate(
-    <BrowserRouter>
+    <HashRouter>
         <Drafterbit
 	        store={store} jss={jss}
 	        drafterbit={drafterbit}
             languageContext={languageContext} />
-    </BrowserRouter>, document.getElementById('app'));
+    </HashRouter>, document.getElementById('app'));
 
 

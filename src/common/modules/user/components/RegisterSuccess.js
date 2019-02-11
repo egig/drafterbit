@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import AuthCard from './AuthCard';

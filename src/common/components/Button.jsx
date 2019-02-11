@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import jss from '../jss-config';
 import {create as createInjectSheet} from 'react-jss';
 export const injectSheet = createInjectSheet(jss);

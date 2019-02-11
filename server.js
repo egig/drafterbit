@@ -1,6 +1,6 @@
 require("babel-polyfill");
 
-const app = require('./build/server').default;
+const app = require('./src/server');
 const config = require('./config');
 
 let port = config.PORT || 8080;

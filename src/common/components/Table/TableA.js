@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import Table from './Table';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';

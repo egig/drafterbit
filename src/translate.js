@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+const React = require('react');
 import PropTypes from 'prop-types';
 import axios from 'axios';
 

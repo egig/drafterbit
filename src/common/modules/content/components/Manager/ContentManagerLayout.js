@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import withStyle from '../../../../withStyle';
 import Style from './ContentManagerLayout.style';
 import actions from '../../../project/actions';

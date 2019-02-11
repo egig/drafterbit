@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 

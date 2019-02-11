@@ -1,16 +1,21 @@
 module.exports = {
-	devServer: {
-		contentBase: "./public",
-		hot: true
-	},
-	entry: ['babel-polyfill', './build/client/index'],
+	entry: ['babel-polyfill', './src/client/index'],
 	output: {
-		filename: 'public/bundle.js'
+		path: __dirname + '/public',
+		filename: 'bundle.js'
 	},
-	node: {
-		fs: 'empty',
-		XMLHttpRequest: 'empty',
-		child_process: 'empty',
-		existsSync: 'empty'
-	}
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader"
+				}
+			}
+		]
+	},
+	resolve: {
+		extensions: ['*', '.js', '.jsx']
+	},
 };
