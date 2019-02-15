@@ -1,20 +1,20 @@
+const path =  require('path');
 const express =  require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const authMiddleware = require('./middlewares/auth');
 const i18next = require('i18next');
-const apiClient = require('../apiClient');
-const path =  require('path');
-// const swaggerUi = require('swagger-ui-express');
-// const swaggerJSDoc = require('swagger-jsdoc');
 const expressValidator = require('express-validator');
-// const cors = require('cors');
-
-const config = require('../config');
-
-// TODO we can not use import for i18next-express-middleware
 const i18nextExpressMiddleware = require('i18next-express-middleware');
+const mongoose = require('mongoose');
+
+
+const routes = require('./routes');
+const config = require('../config');
+const configMiddleware = require('./middlewares/config');
+const cacheMiddleware = require('./middlewares/cache');
+const createSession = require('./createSession');
 
 i18next
 	.use(i18nextExpressMiddleware.LanguageDetector)
@@ -46,17 +46,16 @@ app.use(expressValidator({
 	}
 }));
 
-app.set('config', config);
+app.use(configMiddleware(config));
+app.use(cacheMiddleware(config));
 
 app.post('/login', function (req, res) {
 
 	(async function () {
 
 		try {
-			let client = apiClient.createClient({
-				baseURL: config.get("API_BASE_URL")
-			});
-			let user = await client.createUserSession(req.body.email, req.body.password);
+
+			let user = await createSession(req.app, req.body.email, req.body.password);
 			req.session.user = user;
 			res.send(user);
 
@@ -76,23 +75,27 @@ app.get('/logout', (req, res) => {
 	res.redirect('/login');
 });
 
+mongoose.connect(config.get('MONGODB_URL'));
+
+app.use(routes);
+
 app.get('*', function (req, res) {
 
-    delete require.cache[require.resolve('../common/defaultState')];
-    let defaultState = require('../common/defaultState');
+	delete require.cache[require.resolve('./defaultState')];
+	let defaultState = require('./defaultState');
 
-    defaultState.common.language = req.language;
-    defaultState.common.languages = req.languages;
+	defaultState.common.language = req.language;
+	defaultState.common.languages = req.languages;
 
-    if(req.user) {
-    	defaultState.user.currentUser = req.user;
-    }
+	if(req.user) {
+		defaultState.user.currentUser = req.user;
+	}
 
-    let drafterbitConfig = {
-	    apiBaseURL: config.get('API_BASE_URL')
-    };
+	let drafterbitConfig = {
+		apiBaseURL: config.get('API_BASE_URL')
+	};
 
-    return res.send(`<!DOCTYPE html>
+	return res.send(`<!DOCTYPE html>
           <html>
             <head>
 		            <meta charSet="utf-8" />
@@ -114,49 +117,5 @@ app.get('*', function (req, res) {
             </body>
         </html>`);
 });
-//
-//
-// const docTitle = config.get('DOCS_TITLE');
-// const showExplorer = false;
-// const options = {};
-// const customCss = '';
-// const customFavicon = '';
-// const swaggerUrl = '';
-//
-//
-// const swaggerSpec = swaggerJSDoc({
-// 	swaggerDefinition: {
-// 		info: {
-// 			title: "Drafterbit",
-// 			version: "v1.0",
-// 		},
-// 		basePath: "/v1"
-// 	},
-// 	apis: [
-// 		'./src/routes/*',
-// 	],
-// });
-//
-// app.use(
-// 	'/v1/swagger-ui',
-// 	swaggerUi.serve,
-// 	swaggerUi.setup(
-// 		swaggerSpec,
-// 		showExplorer,
-// 		options,
-// 		customCss,
-// 		customFavicon,
-// 		swaggerUrl,
-// 		docTitle,
-// 		(req, res, next) => {
-// 			next();
-// 		}
-// 	)
-// );
-//
-// app.get('/v1/api-docs.json', function(req, res) {
-// 	res.setHeader('Content-Type', 'application/json');
-// 	res.send(swaggerSpec);
-// });
 
 module.exports = app;

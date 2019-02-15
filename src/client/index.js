@@ -1,12 +1,12 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const Drafterbit = require('../common/Drafterbit');
+const Drafterbit = require('./Drafterbit');
 const { HashRouter } = require('react-router-dom');
-const storeFromState = require('../common/storeFromState');
+const storeFromState = require('./storeFromState');
 const moment = require('moment');
 const createJSSInstance = require('../createJSSInstance');
 const i18next = require('i18next');
-const apiClient = require('../apiClient');
+const apiClient = require('./apiClient');
 
 const jss = createJSSInstance();
 const drafterbit = {
