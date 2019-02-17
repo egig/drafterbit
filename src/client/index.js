@@ -31,7 +31,7 @@ moment.locale('id', {
 const store = storeFromState(window.__PRELOADED_STATE__);
 let languageContext = {namespaces: [], i18n};
 
-ReactDOM.hydrate(
+ReactDOM.render(
     <HashRouter>
         <Drafterbit
 	        store={store} jss={jss}

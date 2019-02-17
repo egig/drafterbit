@@ -12,7 +12,7 @@ class ContentType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            _id: '',
             name: '',
             slug: '',
             description: '',
