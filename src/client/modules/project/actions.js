@@ -30,11 +30,16 @@ const setAjaxLoading = (isLoading) => {
 
 
 const getContentTypes = (projectId) => (dispatch) => {
-    let client = apiClient.createClient({});
-    client.getContentTypes(projectId)
-        .then((contentTypes) => {
-            return dispatch(setContentTypes(contentTypes));
-        });
+
+	if(!projectId) {
+		return;
+	}
+
+  let client = apiClient.createClient({});
+  client.getContentTypes(projectId)
+      .then((contentTypes) => {
+          return dispatch(setContentTypes(contentTypes));
+      });
 };
 
 const getContentType = (contentTypeId) => (dispatch) => {

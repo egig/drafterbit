@@ -13,6 +13,10 @@ class ContentTypes extends React.Component {
         this.props.getContentTypes(this.props.project._id);
     }
 
+    componentDidUpdate() {
+	    this.props.getContentTypes(this.props.project._id);
+    }
+
     render() {
 
 	    const columns = [{
