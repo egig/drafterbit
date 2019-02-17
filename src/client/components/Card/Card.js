@@ -6,7 +6,7 @@ class Card extends React.Component {
         return (
             <div className="card">
                 {this.props.headerText &&
-					<h5 className="card-header">{this.props.headerText}</h5>
+                <h5 className="card-header">{this.props.headerText}</h5>
                 }
                 <div className="card-body">
                     {this.props.children}

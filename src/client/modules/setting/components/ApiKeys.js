@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TableA from '../../../components/Table/TableA';
 import Card from '../../../components/Card/Card';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 class ApiKeys extends React.Component {
 
@@ -16,24 +16,30 @@ class ApiKeys extends React.Component {
     render() {
 
         let columns = [
-            {
-                label: 'Name',
-                accessor: 'name',
-                render: (a) => {
-                    return <Link to={`/project/${this.props.project._id}/api_keys/${a._id}/edit`}>{a.name}</Link>;
-                }
-            },
-            {
-                label: 'Key',
-                accessor: 'key'
-            }
+	        {
+		        dataField: 'name',
+		        text: 'Name',
+		        formatter: (cell, row) => {
+			        return <Link to={`/project/${this.props.project._id}/api_keys/${row._id}/edit`}>{cell}</Link>;
+		        }
+	        },
+	        {
+		        dataField: 'key',
+		        text: 'Key'
+	        }
         ];
 
         return (
             <ProjectLayout>
                 <Card headerText="Api Keys">
-                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
-                    <TableA columns={columns} data={this.props.apiKeys} />
+	                <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
+	                <BootstrapTable bootstrap4
+	                                keyField='_id'
+	                                data={ this.props.apiKeys }
+	                                columns={ columns }
+	                                striped
+	                                hover
+	                                condensed />
                 </Card>
             </ProjectLayout>
         );

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import TableA from '../../../components/Table/TableA';
 import Card from '../../../components/Card/Card';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 class Contents extends React.Component {
 
@@ -31,6 +31,7 @@ class Contents extends React.Component {
     }
 
     render() {
+
         const data = this.props.contents.map(c => {
         	let item = {
 		        _id: c._id
@@ -43,16 +44,15 @@ class Contents extends React.Component {
         	return item;
         });
 
-        const columns = [{
-            label: '#ID',
-            accessor: '_id' // String-based value accessors!
-        }
-        ];;
+		    const columns = [{
+			    dataField: '_id',
+			    text: '#ID'
+		    }];
 
         this.props.ctFields.fields.map(f => {
             columns.push({
-                label: f.label,
-                accessor: f.name
+	            dataField: f.name,
+	            text: f.label
             });
         });
 
@@ -63,8 +63,14 @@ class Contents extends React.Component {
         return (
             <ProjectLayout>
                 <Card headerText="Contents">
-                    <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
-                    <TableA data={data} columns={columns} />
+	                <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
+	                <BootstrapTable bootstrap4
+	                                keyField='_id'
+	                                data={ data }
+	                                columns={ columns }
+	                                striped
+	                                hover
+	                                condensed />
                 </Card>
             </ProjectLayout>
         );
