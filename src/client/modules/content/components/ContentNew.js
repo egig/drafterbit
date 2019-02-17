@@ -50,15 +50,14 @@ class ContentNew extends React.Component {
                                     };
                                 }} key={i} field={f} />;
                             })}
+
                             <div className="form-group">
                                 <button type="submit" className="btn btn-success">Save</button>
                             </div>
                         </form>
                     </Card>
                 </div>
-                {this.state.successText &&
-					<Notify type="success" message={this.state.successText} />
-                }
+                {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </ProjectLayout>);
     }
 }

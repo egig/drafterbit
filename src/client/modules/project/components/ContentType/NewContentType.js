@@ -109,6 +109,7 @@ class NewContentType extends React.Component {
 					                <select className="form-control" id="type">
 					                    <option value="1">Short Text</option>
 					                    <option value="2">Long Text</option>
+					                    <option value="3">Rich Text</option>
 					                </select>
 					            </div>
 					            <button className="btn btn-success">Add Field</button>&nbsp;
