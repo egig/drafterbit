@@ -32,6 +32,11 @@ class Contents extends React.Component {
 
     render() {
 
+	    let projectId = this.props.match.params.project_id;
+	    let slug = this.props.match.params.content_type_slug;
+	    let addUrl = `/project/${projectId}/contents/${slug}/new`;
+
+
         const data = this.props.contents.map(c => {
         	let item = {
 		        _id: c._id
@@ -46,7 +51,10 @@ class Contents extends React.Component {
 
 		    const columns = [{
 			    dataField: '_id',
-			    text: '#ID'
+			    text: '#ID',
+			    formatter: (cell, row) => {
+				    return <Link to={`/project/${projectId}/contents/${slug}/${cell}`}>{cell}</Link>
+			    }
 		    }];
 
         this.props.ctFields.fields.map(f => {
@@ -55,10 +63,6 @@ class Contents extends React.Component {
 	            text: f.label
             });
         });
-
-        let projectId = this.props.match.params.project_id;
-        let slug = this.props.match.params.content_type_slug;
-        let addUrl = `/project/${projectId}/contents/${slug}/new`;
 
         return (
             <ProjectLayout>

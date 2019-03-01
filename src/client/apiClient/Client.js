@@ -143,8 +143,20 @@ class Client {
 		return response.data;
 	}
 
+	async updateContent(contentId, fields) {
+		let response = await this.axiosInstance.patch(`/contents/${contentId}`, {
+			fields: fields
+		});
+		return response.data;
+	}
+
 	async getContents(contentTypeId) {
 		let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`);
+		return response.data;
+	}
+
+	async getContent(contentId) {
+		let response = await this.axiosInstance.get(`/contents/${contentId}`);
 		return response.data;
 	}
 

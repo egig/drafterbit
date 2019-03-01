@@ -13,8 +13,10 @@ class ContentTypes extends React.Component {
         this.props.getContentTypes(this.props.project._id);
     }
 
-    componentDidUpdate() {
-	    this.props.getContentTypes(this.props.project._id);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    	if(prevProps.project['_id'] !=  this.props.project._id) {
+		    this.props.getContentTypes(this.props.project._id);
+	    }
     }
 
     render() {

@@ -7,7 +7,7 @@ import Field from './Field';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
 
-class ContentNew extends React.Component {
+class ContentEdit extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,19 +18,28 @@ class ContentNew extends React.Component {
     }
 
     onSubmit(form) {
-        this.props.createContent(this.props.ctFields._id, Object.values(this.formData))
+        this.props.updateContent(this.props.match.params.content_id, Object.values(this.formData))
             .then(r => {
                 this.setState({
-                    successText: 'Content successfully saved'
+                    successText: 'Content successfully updated'
                 });
             });
     }
 
     componentDidMount() {
-        let projectId  = this.props.match.params.project_id;
-        let slug  = this.props.match.params.content_type_slug;
-        this.props.getContentTypeFields(projectId, slug);
+    	  let contentId = this.props.match.params.content_id;
+        this.props.getContent(contentId);
     }
+
+    componentDidUpdate(prevProps) {
+    	if(this.props.content !== prevProps.content) {
+    		console.log("updating content");
+		    this.props.content.fields.map(f => {
+			    this.formData[f.name] = f;
+		    });
+	    }
+    }
+
 
     render() {
         return (
@@ -41,7 +50,7 @@ class ContentNew extends React.Component {
                             e.preventDefault();
                             this.onSubmit(e.target);
                         }} >
-                            {this.props.ctFields.fields.map((f,i) => {
+                            {this.props.content.fields.map((f,i) => {
 
                             	// CKEditor
                             	if(f.type_id =='3') {
@@ -78,7 +87,7 @@ class ContentNew extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        ctFields: state.content.ctFields
+	    content: state.content.content
     };
 };
 
@@ -86,4 +95,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContentNew);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentEdit);

@@ -14,6 +14,20 @@ class ContentRepository extends BaseRespository {
 
 	/**
 	 *
+	 * @param contentId
+	 * @return {Promise}
+	 */
+		getContent(contentId) {
+			return new Promise((resolve, reject) => {
+				model.Content.findOne({_id: contentId}, function (err, content) {
+					if (err) return reject(err);
+					return resolve(content);
+				})
+			});
+		}
+
+	/**
+	 *
 	 * @param contentTypeId
 	 * @param fields
 	 * @return {Promise}

@@ -7,6 +7,48 @@ let router = express.Router();
 
 /**
  * @swagger
+ * /contents/{content_id}:
+ *   get:
+ *     description: Get single content
+ *     parameters:
+ *       - in: path
+ *         name: content_id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *     tags:
+ *        - Content
+ */
+router.get('/contents/:content_id',
+	validateRequest({
+		content_id: {
+			notEmpty: true,
+			errorMessage: "content_id required"
+		}
+	}),
+	function (req, res) {
+
+		(async function () {
+
+			try {
+				let r = new ContentRepository(req.app);
+				let results = await r.getContent(req.params.content_id);
+				res.send(results);
+			} catch (e ) {
+				res.status(500);
+				res.send(e.message);
+			}
+
+		})()
+
+	});
+
+/**
+ * @swagger
  * /content_types/{content_type_id}/contents:
  *   get:
  *     description: Get contents

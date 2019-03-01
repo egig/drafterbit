@@ -10,21 +10,23 @@ class Field extends React.Component {
             '1': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <input onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <input defaultValue={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 
             '2': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <textarea onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <textarea defaultValue={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 		        '3': () => (
 		          <div className="form-group">
+			          <label htmlFor={field.name}>{field.label}</label>
 				        <CKEditor
 					        editor={ ClassicEditor }
 					        onChange={this.props.onChange}
+				          data={field.value}
 				        />
 			        </div>
 		        )

@@ -21,12 +21,27 @@ const setContents = (contents) => {
     };
 };
 
+const setContent = (content) => {
+	return {
+		type: '@content/SET_CONTENT',
+		payload: content
+	};
+};
+
 const getContents = (contentTypeId) => (dispatch) => {
     let client = apiClient.createClient({});
     client.getContents(contentTypeId)
         .then((contents) => {
             return dispatch(setContents(contents));
         });
+};
+
+const getContent = (contentId) => (dispatch) => {
+	let client = apiClient.createClient({});
+	client.getContent(contentId)
+		.then((content) => {
+			return dispatch(setContent(content));
+		});
 };
 
 
@@ -45,13 +60,26 @@ const createContent = (contentTypeId, formData) => (dispatch) => {
 
     let client = apiClient.createClient({});
     return client.createContent(contentTypeId, formData)
-        .then((project) => {
+        .then((r) => {
             return dispatch(setAjaxLoading(false));
         });
+};
+
+const updateContent = (contentId, formData) => (dispatch) => {
+
+	dispatch(setAjaxLoading(true));
+
+	let client = apiClient.createClient({});
+	return client.updateContent(contentId, formData)
+		.then((r) => {
+			return dispatch(setAjaxLoading(false));
+		});
 };
 
 export default {
     getContentTypeFields,
     createContent,
-    getContents
+		updateContent,
+    getContents,
+    getContent
 };

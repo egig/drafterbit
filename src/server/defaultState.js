@@ -21,6 +21,9 @@ module.exports = {
         apiKeys: []
     },
     content: {
+    	  content: {
+    	  	fields: []
+	      },
         contents: [],
         ctFields: {fields: []}
     }

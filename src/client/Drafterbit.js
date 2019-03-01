@@ -12,17 +12,16 @@ import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
 import Dashboard from './modules/common/components/Dashboard';
 import NewProject from './modules/project/components/NewProject';
-import ProjectDashboard from './modules/project/components/ProjectDashboard';
 import ContentTypes from './modules/project/components/ContentTypes';
 import ContentType from './modules/project/components/ContentType';
 import NewContentType from './modules/project/components/ContentType/NewContentType';
 import Contents from './modules/content/components/Contents';
 import ContentNew from './modules/content/components/ContentNew';
+import ContentEdit from './modules/content/components/ContentEdit';
 import ApiKeys from './modules/setting/components/ApiKeys';
 import ApiKeyNew from './modules/setting/components/ApiKeyNew';
 import ApiKeyEdit from './modules/setting/components/ApiKeyEdit';
 import ProjectSetting from './modules/setting/components/ProjectSetting';
-import ContentEditor from './modules/content/components/ContentEditor';
 
 class Drafterbit extends React.Component {
     render() {
@@ -30,14 +29,14 @@ class Drafterbit extends React.Component {
 	        <Route render={({ location }) => (
 	            <Provider store={this.props.store}>
                 <Switch location={location}>
-                  <Route path="/editorx" component={ContentEditor} />
                   <Route path="/login" component={Login} />
                   <Route path="/register" component={Register} />
                   <Route path="/register-success" component={RegisterSuccess} />
                   <Route path="/forgot-password" component={ForgotPassword} />
                   <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
                   <Route path="/reset-password" component={ResetPassword} />
-			            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
+                  <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
+			            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/:content_id" component={ContentEdit} />
 			            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
 			            <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
 			            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
