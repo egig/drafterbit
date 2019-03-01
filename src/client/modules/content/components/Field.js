@@ -26,7 +26,7 @@ class Field extends React.Component {
 				        <CKEditor
 					        editor={ ClassicEditor }
 					        onChange={this.props.onChange}
-				          data={field.value}
+				          data={!!field.value ? field.value : "" }
 				        />
 			        </div>
 		        )

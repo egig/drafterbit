@@ -49,7 +49,7 @@ class ContentEdit extends React.Component {
     render() {
         return (
             <ProjectLayout>
-                <div className="col-6">
+                <div className="col-8">
                     <Card headerText="Add Content" >
                         <form onSubmit={e => {
                             e.preventDefault();
