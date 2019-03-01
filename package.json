@@ -47,6 +47,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap-table-next": "^2.1.0",
     "react-dom": "^16.7.0",
+    "react-fast-compare": "^2.0.4",
     "react-helmet": "^5.2.0",
     "react-md": "^1.0.15",
     "react-redux": "^5.0.5",

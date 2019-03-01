@@ -10,14 +10,14 @@ class Field extends React.Component {
             '1': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <input defaultValue={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <input value={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 
             '2': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <textarea defaultValue={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <textarea value={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 		        '3': () => (
