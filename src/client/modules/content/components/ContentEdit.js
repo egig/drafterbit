@@ -28,8 +28,11 @@ class ContentEdit extends React.Component {
     }
 
     componentDidMount() {
-    	  let contentId = this.props.match.params.content_id;
-        this.props.getContent(contentId);
+	      let params = this.props.match.params;
+    	  let contentId = params.content_id;
+    	  let projectId = params.project_id;
+    	  let slug = params.content_type_slug;
+    	  this.props.getCTFieldsAndGetContent(projectId, slug, contentId)
     }
 
     componentDidUpdate(prevProps) {
@@ -45,7 +48,6 @@ class ContentEdit extends React.Component {
 	    }
     }
 
-
     render() {
         return (
             <ProjectLayout>
@@ -55,31 +57,42 @@ class ContentEdit extends React.Component {
                             e.preventDefault();
                             this.onSubmit(e.target);
                         }} >
-                            {Object.values(this.state.formData).map((f,i) => {
+                            {this.props.contentTypeFields.map((f,i) => {
+
+
+                            	let value = !!this.formData[f.name] ? this.formData[f.name].value : "";
 
                             	// CKEditor
                             	if(f.type_id =='3') {
-		                            return <Field onChange={(e, editor) => {
+		                            return <Field value={value} onChange={(e, editor) => {
 
-	                                this.setState(oldState => {
+		                            	 this.formData[f.name] = {
+                                    	label: f.label,
+                                    	type_id: f.type_id,
+                                    	name: f.name,
+                                    	value: editor.getData(),
+                                    };
 
-	                                  let formData = oldState.formData;
-	                                  formData[f.name] = {
-	                                    label: f.label,
-	                                    type_id: f.type_id,
-	                                    name: f.name,
-	                                    value:editor.getData()
-	                                  };
-	                                  return Object.assign({}, oldState, {
-	                                    formData
-	                                  })
+		                            	 // TODO why this make infinte looping ?
+	                                {/*this.setState(oldState => {*/}
 
-	                                });
+	                                  {/*let formData = oldState.formData;*/}
+	                                  {/*formData[f.name] = {*/}
+	                                    {/*label: f.label,*/}
+	                                    {/*type_id: f.type_id,*/}
+	                                    {/*name: f.name,*/}
+	                                    {/*value:editor.getData()*/}
+	                                  {/*};*/}
+	                                  {/*return Object.assign({}, oldState, {*/}
+	                                    {/*formData*/}
+	                                  {/*})*/}
+
+	                                {/*});*/}
 
                                 }} key={i} field={f} />;
 	                            }
 
-                              return <Field onChange={e => {
+                              return <Field value={value} onChange={e => {
 
                               	let value = e.target.value;
                               	this.setState(oldState => {
@@ -114,7 +127,8 @@ class ContentEdit extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-	    content: state.content.content
+	    content: state.content.content,
+	    contentTypeFields: state.content.ctFields.fields
     };
 };
 

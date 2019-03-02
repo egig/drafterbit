@@ -53,6 +53,20 @@ const getContentTypeFields = (projectId, ctSlug) => (dispatch) => {
         });
 };
 
+const getCTFieldsAndGetContent = (projectId, ctSlug, contentId) => (dispatch) => {
+	let client = apiClient.createClient({});
+	return Promise.all([
+		client.getContentTypeFields(projectId, ctSlug)
+			.then((contentType) => {
+				return dispatch(setContentTypeField(contentType));
+			}),
+		client.getContent(contentId)
+			.then((content) => {
+				return dispatch(setContent(content));
+			})
+	])
+}
+
 
 const createContent = (contentTypeId, formData) => (dispatch) => {
 
@@ -81,5 +95,6 @@ export default {
     createContent,
 		updateContent,
     getContents,
-    getContent
+    getContent,
+	getCTFieldsAndGetContent
 };

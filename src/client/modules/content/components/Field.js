@@ -6,18 +6,19 @@ class Field extends React.Component {
 
     render() {
         let field = this.props.field;
+        let value = this.props.value;
         let types = {
             '1': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <input value={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <input value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 
             '2': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <textarea value={field.value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
+                    <textarea value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
 		        '3': () => (
@@ -26,7 +27,7 @@ class Field extends React.Component {
 				        <CKEditor
 					        editor={ ClassicEditor }
 					        onChange={this.props.onChange}
-				          data={!!field.value ? field.value : "" }
+				          data={!!value ? value : "" }
 				        />
 			        </div>
 		        )
