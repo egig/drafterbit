@@ -62,11 +62,11 @@ class Register extends React.Component {
 
                     <div className={`form-group no-margin ${classes.noMargin}`}>
                         <button type="submit" className={`btn btn-success btn-block ${classes.btnPadding}`}>
-							Register
+                            Register
                         </button>
                     </div>
                     <div className={`${classes.marginTop20} text-center`}>
-						Already have an account? <Link to="/login">Login</Link>
+                        Already have an account? <Link to="/login">Login</Link>
                     </div>
                 </form>
             </AuthCard>

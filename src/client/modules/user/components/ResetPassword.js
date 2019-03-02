@@ -32,15 +32,15 @@ class ResetPassword extends React.Component {
                 </Helmet>
 
                 {this.state.errorText &&
-				<div className="alert alert-warning">
-				    {this.state.errorText}
-				</div>
+                <div className="alert alert-warning">
+                    {this.state.errorText}
+                </div>
                 }
 
                 <form onSubmit={(e) => {
-			        e.preventDefault();
-			        this.doLogin(e);
-		        }}>
+                    e.preventDefault();
+                    this.doLogin(e);
+                }}>
                     <div className="form-group">
                         <label htmlFor="new_password">New Password</label>
                         <input type="password" name="new_password" className={`form-control ${classes.formControlBorder}`} id="email" aria-describedby="emailHelp"/>
@@ -53,7 +53,7 @@ class ResetPassword extends React.Component {
 
                     <div className={`form-group no-margin ${classes.noMargin}`}>
                         <button type="submit" className={`btn btn-success btn-block ${classes.btnPadding}`}>
-							Save
+                            Save
                         </button>
                     </div>
                 </form>

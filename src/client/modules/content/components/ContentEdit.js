@@ -13,8 +13,8 @@ class ContentEdit extends React.Component {
         super(props);
         this.formData = {};
         this.state = {
-	        successText: '',
-	        formData: {}
+            successText: '',
+            formData: {}
         };
     }
 
@@ -28,24 +28,24 @@ class ContentEdit extends React.Component {
     }
 
     componentDidMount() {
-	      let params = this.props.match.params;
-    	  let contentId = params.content_id;
-    	  let projectId = params.project_id;
-    	  let slug = params.content_type_slug;
-    	  this.props.getCTFieldsAndGetContent(projectId, slug, contentId)
+        let params = this.props.match.params;
+        let contentId = params.content_id;
+        let projectId = params.project_id;
+        let slug = params.content_type_slug;
+        this.props.getCTFieldsAndGetContent(projectId, slug, contentId);
     }
 
     componentDidUpdate(prevProps) {
-    	if(this.props.content !== prevProps.content) {
-    		console.log("updating content");
-		    this.props.content.fields.map(f => {
-			    this.formData[f.name] = f;
-			    this.setState({
-			    	formData: this.formData
-			    })
+        if(this.props.content !== prevProps.content) {
+            console.log('updating content');
+            this.props.content.fields.map(f => {
+                this.formData[f.name] = f;
+                this.setState({
+                    formData: this.formData
+                });
 
-		    });
-	    }
+            });
+        }
     }
 
     render() {
@@ -60,58 +60,58 @@ class ContentEdit extends React.Component {
                             {this.props.contentTypeFields.map((f,i) => {
 
 
-                            	let value = !!this.formData[f.name] ? this.formData[f.name].value : "";
+                                let value = this.formData[f.name] ? this.formData[f.name].value : '';
 
-                            	// CKEditor
-                            	if(f.type_id =='3') {
-		                            return <Field value={value} onChange={(e, editor) => {
+                                // CKEditor
+                                if(f.type_id =='3') {
+                                    return <Field value={value} onChange={(e, editor) => {
 
-		                            	 this.formData[f.name] = {
-                                    	label: f.label,
-                                    	type_id: f.type_id,
-                                    	name: f.name,
-                                    	value: editor.getData(),
-                                    };
+                                        this.formData[f.name] = {
+                                            label: f.label,
+                                            type_id: f.type_id,
+                                            name: f.name,
+                                            value: editor.getData(),
+                                        };
 
-		                            	 // TODO why this make infinte looping ?
-	                                {/*this.setState(oldState => {*/}
+                                        // TODO why this make infinte looping ?
+                                        {/*this.setState(oldState => {*/}
 
-	                                  {/*let formData = oldState.formData;*/}
-	                                  {/*formData[f.name] = {*/}
-	                                    {/*label: f.label,*/}
-	                                    {/*type_id: f.type_id,*/}
-	                                    {/*name: f.name,*/}
-	                                    {/*value:editor.getData()*/}
-	                                  {/*};*/}
-	                                  {/*return Object.assign({}, oldState, {*/}
-	                                    {/*formData*/}
-	                                  {/*})*/}
+                                        {/*let formData = oldState.formData;*/}
+                                        {/*formData[f.name] = {*/}
+                                        {/*label: f.label,*/}
+                                        {/*type_id: f.type_id,*/}
+                                        {/*name: f.name,*/}
+                                        {/*value:editor.getData()*/}
+                                        {/*};*/}
+                                        {/*return Object.assign({}, oldState, {*/}
+                                        {/*formData*/}
+                                        {/*})*/}
 
-	                                {/*});*/}
+                                        {/*});*/}
+
+                                    }} key={i} field={f} />;
+                                }
+
+                                return <Field value={value} onChange={e => {
+
+                                    let value = e.target.value;
+                                    this.setState(oldState => {
+
+                                        let formData = oldState.formData;
+                                        formData[f.name] = {
+                                            label: f.label,
+                                            type_id: f.type_id,
+                                            name: f.name,
+                                            value
+                                        };
+                                        return Object.assign({}, oldState, {
+                                            formData
+                                        });
+
+                                    });
+
 
                                 }} key={i} field={f} />;
-	                            }
-
-                              return <Field value={value} onChange={e => {
-
-                              	let value = e.target.value;
-                              	this.setState(oldState => {
-
-                              		let formData = oldState.formData;
-                              		formData[f.name] = {
-                                    label: f.label,
-                                    type_id: f.type_id,
-                                    name: f.name,
-                                    value
-                                  };
-                              		return Object.assign({}, oldState, {
-                              			formData
-                              		})
-
-                              	});
-
-
-                              }} key={i} field={f} />;
                             })}
 
                             <div className="form-group">
@@ -127,8 +127,8 @@ class ContentEdit extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-	    content: state.content.content,
-	    contentTypeFields: state.content.ctFields.fields
+        content: state.content.content,
+        contentTypeFields: state.content.ctFields.fields
     };
 };
 

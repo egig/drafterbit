@@ -16,30 +16,30 @@ class ApiKeys extends React.Component {
     render() {
 
         let columns = [
-	        {
-		        dataField: 'name',
-		        text: 'Name',
-		        formatter: (cell, row) => {
-			        return <Link to={`/project/${this.props.project._id}/api_keys/${row._id}/edit`}>{cell}</Link>;
-		        }
-	        },
-	        {
-		        dataField: 'key',
-		        text: 'Key'
-	        }
+            {
+                dataField: 'name',
+                text: 'Name',
+                formatter: (cell, row) => {
+                    return <Link to={`/project/${this.props.project._id}/api_keys/${row._id}/edit`}>{cell}</Link>;
+                }
+            },
+            {
+                dataField: 'key',
+                text: 'Key'
+            }
         ];
 
         return (
             <ProjectLayout>
                 <Card headerText="Api Keys">
-	                <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
-	                <BootstrapTable bootstrap4
-	                                keyField='_id'
-	                                data={ this.props.apiKeys }
-	                                columns={ columns }
-	                                striped
-	                                hover
-	                                condensed />
+                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
+                    <BootstrapTable bootstrap4
+                        keyField='_id'
+                        data={ this.props.apiKeys }
+                        columns={ columns }
+                        striped
+                        hover
+                        condensed />
                 </Card>
             </ProjectLayout>
         );

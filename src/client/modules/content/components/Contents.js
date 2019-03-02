@@ -9,15 +9,15 @@ import BootstrapTable from 'react-bootstrap-table-next';
 
 class Contents extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = { selected: [] };
-		this.handleOnSelect = this.handleOnSelect.bind(this);
-		this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
-	}
+    constructor(props) {
+        super(props);
+        this.state = { selected: [] };
+        this.handleOnSelect = this.handleOnSelect.bind(this);
+        this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
 
-	componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if(nextProps.match.params.content_type_slug !== this.props.match.params.content_type_slug) {
             let projectId = nextProps.match.params.project_id;
             let ctSlug= nextProps.match.params.content_type_slug;
@@ -37,93 +37,93 @@ class Contents extends React.Component {
             });
     }
 
-	handleOnSelect(row, isSelect) {
-		if (isSelect) {
-			this.setState(() => ({
-				selected: [...this.state.selected, row._id]
-			}));
-		} else {
-			this.setState(() => ({
-				selected: this.state.selected.filter(x => x !== row._id)
-			}));
-		}
-	}
+    handleOnSelect(row, isSelect) {
+        if (isSelect) {
+            this.setState(() => ({
+                selected: [...this.state.selected, row._id]
+            }));
+        } else {
+            this.setState(() => ({
+                selected: this.state.selected.filter(x => x !== row._id)
+            }));
+        }
+    }
 
-	handleOnSelectAll = (isSelect, rows) => {
-		const ids = rows.map(r => r._id);
-		if (isSelect) {
-			this.setState(() => ({
-				selected: ids
-			}));
-		} else {
-			this.setState(() => ({
-				selected: []
-			}));
-		}
-	}
+    handleOnSelectAll = (isSelect, rows) => {
+        const ids = rows.map(r => r._id);
+        if (isSelect) {
+            this.setState(() => ({
+                selected: ids
+            }));
+        } else {
+            this.setState(() => ({
+                selected: []
+            }));
+        }
+    }
 
-	handleDelete(e) {
-		console.log("deleteing", this.state.selected);
-		this.props.deleteContents(this.state.selected)
-	}
+    handleDelete(e) {
+        console.log("deleteing", this.state.selected);
+        this.props.deleteContents(this.state.selected)
+    }
 
     render() {
 
-	    let projectId = this.props.match.params.project_id;
-	    let slug = this.props.match.params.content_type_slug;
-	    let addUrl = `/project/${projectId}/contents/${slug}/new`;
+        let projectId = this.props.match.params.project_id;
+        let slug = this.props.match.params.content_type_slug;
+        let addUrl = `/project/${projectId}/contents/${slug}/new`;
 
 
         const data = this.props.contents.map(c => {
-        	let item = {
-		        _id: c._id
-	        };
+            let item = {
+                _id: c._id
+            };
 
-        	c.fields.map(f => {
-        		item[f.name] = f.value;
-	        });
+            c.fields.map(f => {
+                item[f.name] = f.value;
+            });
 
-        	return item;
+            return item;
         });
 
-		    const columns = [{
-			    dataField: '_id',
-			    text: '#ID',
-			    formatter: (cell, row) => {
-				    return <Link to={`/project/${projectId}/contents/${slug}/${cell}`}>{cell}</Link>
-			    }
-		    }];
+            const columns = [{
+                dataField: '_id',
+                text: '#ID',
+                formatter: (cell, row) => {
+                    return <Link to={`/project/${projectId}/contents/${slug}/${cell}`}>{cell}</Link>
+                }
+            }];
 
         this.props.ctFields.fields.map(f => {
             columns.push({
-	            dataField: f.name,
-	            text: f.label
+                dataField: f.name,
+                text: f.label
             });
         });
 
-	    const selectRow = {
-		    mode: 'checkbox',
-		    clickToSelect: true,
-		    selected: this.state.selected,
-		    onSelect: this.handleOnSelect,
-		    onSelectAll: this.handleOnSelectAll
-	    };
+        const selectRow = {
+            mode: 'checkbox',
+            clickToSelect: true,
+            selected: this.state.selected,
+            onSelect: this.handleOnSelect,
+            onSelectAll: this.handleOnSelectAll
+        };
 
         return (
             <ProjectLayout>
                 <Card headerText="Contents">
-	                <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
-	                {!!this.state.selected.length &&
-	                  <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
-	                }
-	                <BootstrapTable bootstrap4
-	                                keyField='_id'
-	                                data={ data }
-	                                columns={ columns }
-	                                selectRow={selectRow}
-	                                striped
-	                                hover
-	                                condensed/>
+                    <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
+                    {!!this.state.selected.length &&
+                      <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
+                    }
+                    <BootstrapTable bootstrap4
+                                    keyField='_id'
+                                    data={ data }
+                                    columns={ columns }
+                                    selectRow={selectRow}
+                                    striped
+                                    hover
+                                    condensed/>
                 </Card>
             </ProjectLayout>
         );

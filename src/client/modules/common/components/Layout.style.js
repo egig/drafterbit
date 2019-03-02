@@ -1,7 +1,7 @@
 module.exports = {
     /*
-	 * Navbar
-	 */
+     * Navbar
+     */
     navbar: {
         zIndex: 101
     },
@@ -39,8 +39,8 @@ module.exports = {
 };
 
 // .form-control-dark:focus {
-// 	border-color: transparent;
-// 	box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+//     border-color: transparent;
+//     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 // }
 
 /*

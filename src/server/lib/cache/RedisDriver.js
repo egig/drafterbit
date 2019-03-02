@@ -6,22 +6,22 @@ const _ = require('lodash');
 class RedisDriver {
 
     /**
-	 * Create client constructor
-	 * Options if specified, must contains followeing keys
-	 *   host, port, prefix, db, ttl
-	 *
-	 * @param options
-	 */
+     * Create client constructor
+     * Options if specified, must contains followeing keys
+     *   host, port, prefix, db, ttl
+     *
+     * @param options
+     */
     constructor(options) {
 
-		    let config = {
-			    host: options.host || 'localhost',
-			    port: options.port || 6379
-		    };
+        let config = {
+            host: options.host || 'localhost',
+            port: options.port || 6379
+        };
 
-		    if(process.env.NODE_ENV !== 'test') {
-			    config.password = options.auth || ''
-		    }
+        if(process.env.NODE_ENV !== 'test') {
+            config.password = options.auth || '';
+        }
 
         this.client = redis.createClient(config);
 
@@ -31,10 +31,10 @@ class RedisDriver {
     }
 
     /**
-	 * Get value by key
-	 *
-	 * @param key
-	 */
+     * Get value by key
+     *
+     * @param key
+     */
     get(key) {
         let _this = this;
         return new Promise(function(fulfill, reject) {
@@ -61,13 +61,13 @@ class RedisDriver {
     }
 
     /**
-	 *
-	 * Set a cache value
-	 *
-	 * @param key
-	 * @param value
-	 * @param options
-	 */
+     *
+     * Set a cache value
+     *
+     * @param key
+     * @param value
+     * @param options
+     */
     set(key, value, options) {
 
         let _this = this;
@@ -98,9 +98,9 @@ class RedisDriver {
     }
 
     /**
-	 *
-	 * @param key
-	 */
+     *
+     * @param key
+     */
     del(key) {
         let _this = this;
         return new Promise(function(fulfill, reject) {
@@ -124,9 +124,9 @@ class RedisDriver {
     }
 
     /**
-	 *
-	 * @param pattern
-	 */
+     *
+     * @param pattern
+     */
     delWithPattern(pattern) {
 
         let _this = this;

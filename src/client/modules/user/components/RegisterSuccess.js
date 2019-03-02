@@ -13,7 +13,7 @@ class RegisterSuccess extends React.Component {
                     <title>Register Success - draferbit</title>
                 </Helmet>
                 <div>
-					Congratulation ! Your account has been created, you can now <Link to="/login">Login</Link>.
+                    Congratulation ! Your account has been created, you can now <Link to="/login">Login</Link>.
                 </div>
             </AuthCard>
         );

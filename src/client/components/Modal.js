@@ -9,13 +9,13 @@ class Modal extends React.Component {
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-		    enter: classNames.modalEnter,
-		    enterActive: classNames.modalEnterActive,
-		    leave: classNames.modalLeave,
-		    leaveActive: classNames.modalLeaveActive,
-		    appear: classNames.modalAppear,
-		    appearActive: classNames.modalAppearActive
-		  }}
+                    enter: classNames.modalEnter,
+                    enterActive: classNames.modalEnterActive,
+                    leave: classNames.modalLeave,
+                    leaveActive: classNames.modalLeaveActive,
+                    appear: classNames.modalAppear,
+                    appearActive: classNames.modalAppearActive
+                }}
                 transitionAppear={true}
                 transitionAppearTimeout={200}
                 transitionEnter={false}

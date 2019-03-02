@@ -26,31 +26,31 @@ import ProjectSetting from './modules/setting/components/ProjectSetting';
 class Drafterbit extends React.Component {
     render() {
         return (
-	        <Route render={({ location }) => (
-	            <Provider store={this.props.store}>
-                <Switch location={location}>
-                  <Route path="/login" component={Login} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/register-success" component={RegisterSuccess} />
-                  <Route path="/forgot-password" component={ForgotPassword} />
-                  <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
-                  <Route path="/reset-password" component={ResetPassword} />
-                  <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
-			            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/:content_id" component={ContentEdit} />
-			            <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
-			            <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
-			            <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
-			            <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
-			            <ProtectedRoute path="/project/:project_id/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
-			            <ProtectedRoute path="/project/:project_id/api_keys/new" component={ApiKeyNew} />
-			            <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />
-			            <ProtectedRoute path="/project/:project_id/settings" component={ProjectSetting} />
-			            <ProtectedRoute path="/project/new" component={NewProject} />
-			            <ProtectedRoute path="/project/:project_id" component={ContentTypes} />
-			            <ProtectedRoute path="/" component={Dashboard} />
-                </Switch>
-	            </Provider>
-	        )} />
+            <Route render={({ location }) => (
+                <Provider store={this.props.store}>
+                    <Switch location={location}>
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/register-success" component={RegisterSuccess} />
+                        <Route path="/forgot-password" component={ForgotPassword} />
+                        <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
+                        <Route path="/reset-password" component={ResetPassword} />
+                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
+                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/:content_id" component={ContentEdit} />
+                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
+                        <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
+                        <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
+                        <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
+                        <ProtectedRoute path="/project/:project_id/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
+                        <ProtectedRoute path="/project/:project_id/api_keys/new" component={ApiKeyNew} />
+                        <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />
+                        <ProtectedRoute path="/project/:project_id/settings" component={ProjectSetting} />
+                        <ProtectedRoute path="/project/new" component={NewProject} />
+                        <ProtectedRoute path="/project/:project_id" component={ContentTypes} />
+                        <ProtectedRoute path="/" component={Dashboard} />
+                    </Switch>
+                </Provider>
+            )} />
         );
 
     }

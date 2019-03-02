@@ -25,28 +25,28 @@ const validateRequest = require('../middlewares/validateRequest');
  *        - Project
  */
 router.get('/users/:user_id/projects',
-	validateRequest({
-		user_id: {
-			notEmpty: true,
-			errorMessage: "user_id is required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        user_id: {
+            notEmpty: true,
+            errorMessage: 'user_id is required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ProjectRepository(req.app);
-			let results = await r.getProjects(req.params.user_id);
-			res.send(results);
-		} catch (e ) {
-			res.status(500)
-			res.send(e.message);
-		}
+            try {
+                let r = new ProjectRepository(req.app);
+                let results = await r.getProjects(req.params.user_id);
+                res.send(results);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})()
+        })();
 
-});
+    });
 
 /**
  * @swagger
@@ -67,28 +67,28 @@ router.get('/users/:user_id/projects',
  *        - Project
  */
 router.get('/projects/:project_id',
-	validateRequest({
-		project_id: {
-			notEmpty: true,
-			errorMessage: "project_id required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        project_id: {
+            notEmpty: true,
+            errorMessage: 'project_id required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ProjectRepository(req.app);
-			let results = await r.getProject(req.params.project_id);
-			res.send(results);
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            try {
+                let r = new ProjectRepository(req.app);
+                let results = await r.getProject(req.params.project_id);
+                res.send(results);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})()
+        })();
 
-});
+    });
 
 
 /**
@@ -110,30 +110,30 @@ router.get('/projects/:project_id',
  *        - Project
  */
 router.get('/projects/:project_id/stat',
-	validateRequest({
-		project_id: {
-			notEmpty: true,
-			errorMessage: "project_id required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        project_id: {
+            notEmpty: true,
+            errorMessage: 'project_id required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ProjectRepository(req.app);
-			let contentTypeStat = await r.getContentTypeStat(req.params.project_id);
-			res.send({
-				content_type: contentTypeStat
-			});
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            try {
+                let r = new ProjectRepository(req.app);
+                let contentTypeStat = await r.getContentTypeStat(req.params.project_id);
+                res.send({
+                    content_type: contentTypeStat
+                });
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})()
+        })();
 
-});
+    });
 
 /**
  * @swagger
@@ -168,42 +168,42 @@ router.get('/projects/:project_id/stat',
  *        - Project
  */
 router.post('/users/:user_id/projects',
-	validateRequest({
-		user_id: {
-			notEmpty: true,
-			errorMessage: "user_id required"
-		},
-		name: {
-			notEmpty: true,
-			errorMessage: "name is required"
-		},
-		description: {
-			optional: true
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        user_id: {
+            notEmpty: true,
+            errorMessage: 'user_id required'
+        },
+        name: {
+            notEmpty: true,
+            errorMessage: 'name is required'
+        },
+        description: {
+            optional: true
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
+            try {
 
-			let r = new ProjectRepository(req.app);
-			// TODO validation
-			let results = await r.createProject(
-				req.body.name,
-				req.body.description,
-				req.params.user_id
-			);
-			res.send({message: "OK"});
+                let r = new ProjectRepository(req.app);
+                // TODO validation
+                let results = await r.createProject(
+                    req.body.name,
+                    req.body.description,
+                    req.params.user_id
+                );
+                res.send({message: 'OK'});
 
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
+        })();
 
-});
+    });
 
 /**
  * @swagger
@@ -224,29 +224,29 @@ router.post('/users/:user_id/projects',
  *        - Project
  */
 router.delete('/projects/:project_id',
-	validateRequest({
-		project_id: {
-			notEmpty: true,
-			errorMessage: "project_id required"
-		}
-	}),
-	(req, res) => {
+    validateRequest({
+        project_id: {
+            notEmpty: true,
+            errorMessage: 'project_id required'
+        }
+    }),
+    (req, res) => {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ProjectRepository(req.app);
-			let results = await r.deleteProject(req.params.project_id);
-			res.send({message: "OK"});
+            try {
+                let r = new ProjectRepository(req.app);
+                let results = await r.deleteProject(req.params.project_id);
+                res.send({message: 'OK'});
 
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
+        })();
 
-});
+    });
 
 /**
  * @swagger
@@ -278,37 +278,37 @@ router.delete('/projects/:project_id',
  *        - Project
  */
 router.patch('/projects/:project_id',
-	validateRequest({
-		project_id: {
-			notEmpty: true,
-			errorMessage: "project_id required"
-		},
-		name: {
-			optional: true
-		},
-		description: {
-			optional: true
-		},
-	}),
-	(req, res) => {
+    validateRequest({
+        project_id: {
+            notEmpty: true,
+            errorMessage: 'project_id required'
+        },
+        name: {
+            optional: true
+        },
+        description: {
+            optional: true
+        },
+    }),
+    (req, res) => {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ProjectRepository(req.app);
-			// TODO validation
-			let results = await r.updateProject(
-				req.params.project_id,
-				req.body
-			);
-			res.send({message: "OK"});
+            try {
+                let r = new ProjectRepository(req.app);
+                // TODO validation
+                let results = await r.updateProject(
+                    req.params.project_id,
+                    req.body
+                );
+                res.send({message: 'OK'});
 
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
-});
+        })();
+    });
 
 module.exports = router;

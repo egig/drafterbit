@@ -17,22 +17,22 @@ const cacheMiddleware = require('./middlewares/cache');
 const createSession = require('./createSession');
 
 i18next
-	.use(i18nextExpressMiddleware.LanguageDetector)
-	.init({
-		preload: ['en', 'id'],
-	});
+    .use(i18nextExpressMiddleware.LanguageDetector)
+    .init({
+        preload: ['en', 'id'],
+    });
 
 const app = express();
 // app.use(cors());
 
 app.use(i18nextExpressMiddleware.handle(i18next, {
-	removeLngFromUrl: false
+    removeLngFromUrl: false
 }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
 app.use(session({
-    secret: config.get("SESSION_SECRET"),
+    secret: config.get('SESSION_SECRET'),
     cookie: { maxAge: 24 * 60 * 60 * 30 },
     resave: true,
     saveUninitialized: true,
@@ -41,9 +41,9 @@ app.use(session({
 app.use(express.static(__dirname+'/../../public'));
 app.use(authMiddleware);
 app.use(expressValidator({
-	errorFormatter: (param, msg, value, location) => {
-		return msg;
-	}
+    errorFormatter: (param, msg, value, location) => {
+        return msg;
+    }
 }));
 
 app.use(configMiddleware(config));
@@ -51,28 +51,28 @@ app.use(cacheMiddleware(config));
 
 app.post('/login', function (req, res) {
 
-	(async function () {
+    (async function () {
 
-		try {
+        try {
 
-			let user = await createSession(req.app, req.body.email, req.body.password);
-			req.session.user = user;
-			res.send(user);
+            let user = await createSession(req.app, req.body.email, req.body.password);
+            req.session.user = user;
+            res.send(user);
 
-		} catch (e) {
-			res.status(e.status || 500);
-			res.send({
-				message: e.message
-			})
-		}
+        } catch (e) {
+            res.status(e.status || 500);
+            res.send({
+                message: e.message
+            });
+        }
 
-	})();
+    })();
 
 });
 
 app.get('/logout', (req, res) => {
-	req.session.destroy();
-	res.redirect('/login');
+    req.session.destroy();
+    res.redirect('/login');
 });
 
 mongoose.connect(config.get('MONGODB_URL'));
@@ -81,27 +81,27 @@ app.use(routes);
 
 app.get('*', function (req, res) {
 
-	delete require.cache[require.resolve('./defaultState')];
-	let defaultState = require('./defaultState');
+    delete require.cache[require.resolve('./defaultState')];
+    let defaultState = require('./defaultState');
 
-	defaultState.common.language = req.language;
-	defaultState.common.languages = req.languages;
+    defaultState.common.language = req.language;
+    defaultState.common.languages = req.languages;
 
-	if(req.user) {
-		defaultState.user.currentUser = req.user;
-	}
+    if(req.user) {
+        defaultState.user.currentUser = req.user;
+    }
 
-	let drafterbitConfig = {
-		apiBaseURL: config.get('API_BASE_URL')
-	};
+    let drafterbitConfig = {
+        apiBaseURL: config.get('API_BASE_URL')
+    };
 
-	return res.send(`<!DOCTYPE html>
+    return res.send(`<!DOCTYPE html>
           <html>
             <head>
-		            <meta charSet="utf-8" />
-		            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		            <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />
-	              <!--TODO include react-table only when we need it -->
+                    <meta charSet="utf-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />
+                  <!--TODO include react-table only when we need it -->
                 <link rel="stylesheet" type="text/css" href="/vendor/react-bootstrap-table-next/react-bootstrap-table2.css"  />
                 <link rel="stylesheet" type="text/css" href="/vendor/simple-line-icons/css/simple-line-icons.css" />
                 <link rel="stylesheet" type="text/css" href="/css/common.css" />

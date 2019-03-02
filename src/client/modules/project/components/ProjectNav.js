@@ -17,38 +17,38 @@ class ProjectNav extends React.Component {
                     {/*<span><i className="icon-grid"/> Dashboard</span>*/}
                     {/*</h6>*/}
                     {/*<ul className="nav flex-column">*/}
-	                    {/*<li className="nav-item">*/}
-		                    {/*<Link className="nav-link" to={`/project/${match.params.project_id}`}>*/}
-		                      {/*<i className="icon-home"/> Home*/}
-		                    {/*</Link>*/}
-	                    {/*</li>*/}
+                    {/*<li className="nav-item">*/}
+                    {/*<Link className="nav-link" to={`/project/${match.params.project_id}`}>*/}
+                    {/*<i className="icon-home"/> Home*/}
+                    {/*</Link>*/}
+                    {/*</li>*/}
                     {/*</ul>*/}
 
                     <h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-                    <span><i className="icon-docs"/> Content</span>
+                        <span><i className="icon-docs"/> Content</span>
                     </h6>
                     <ul className="nav flex-column mb-2">
-	                    {!this.props.project.content_types.length &&
-	                    <li className="nav-item">
-		                    <Link className="nav-link" to={`/project/${this.props.project._id}/content_types/new`}>
-		                      <i className="icon-plus"/> Add Content Type
-		                    </Link>
-	                    </li>
-	                    }
+                        {!this.props.project.content_types.length &&
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`/project/${this.props.project._id}/content_types/new`}>
+                                <i className="icon-plus"/> Add Content Type
+                            </Link>
+                        </li>
+                        }
 
-                    {this.props.project.content_types.map((ct, i) => {
-	                    return (
-	                    <li className="nav-item" key={i}>
-		                    <Link className="nav-link" to={`/project/${this.props.project._id}/contents/${ct.slug}`}>
-		                      <i className="icon-doc"/> {ct.name}
-		                    </Link>
-	                    </li>
-	                    )
-	                    })}
+                        {this.props.project.content_types.map((ct, i) => {
+                            return (
+                                <li className="nav-item" key={i}>
+                                    <Link className="nav-link" to={`/project/${this.props.project._id}/contents/${ct.slug}`}>
+                                        <i className="icon-doc"/> {ct.name}
+                                    </Link>
+                                </li>
+                            );
+                        })}
                     </ul>
 
                     <h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
-                    <span><i className="icon-equalizer"/> General</span>
+                        <span><i className="icon-equalizer"/> General</span>
                     </h6>
                     <ul className="nav flex-column mb-2">
                         <li className="nav-item">

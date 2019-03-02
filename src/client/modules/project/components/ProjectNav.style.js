@@ -1,7 +1,7 @@
 module.exports = {
     /**
-	 * Sidebar
-	 */
+     * Sidebar
+     */
     sidebar: {
         position: 'fixed',
         top: 0,

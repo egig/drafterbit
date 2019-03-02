@@ -7,5 +7,5 @@ module.exports = function createClient(options) {
         timeout: 1000,
         headers: {'X-Custom-Header': 'foobar'}
     });
-	
+    
 };

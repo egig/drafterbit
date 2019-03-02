@@ -21,16 +21,16 @@ class Field extends React.Component {
                     <textarea value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
                 </div>
             ),
-		        '3': () => (
-		          <div className="form-group">
-			          <label htmlFor={field.name}>{field.label}</label>
-				        <CKEditor
-					        editor={ ClassicEditor }
-					        onChange={this.props.onChange}
-				          data={!!value ? value : "" }
-				        />
-			        </div>
-		        )
+            '3': () => (
+                <div className="form-group">
+                    <label htmlFor={field.name}>{field.label}</label>
+                    <CKEditor
+                        editor={ ClassicEditor }
+                        onChange={this.props.onChange}
+                        data={value ? value : '' }
+                    />
+                </div>
+            )
         };
 
         return types[field.type_id]();

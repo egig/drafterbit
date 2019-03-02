@@ -24,28 +24,28 @@ let router = express.Router();
  *        - Content
  */
 router.get('/contents/:content_id',
-	validateRequest({
-		content_id: {
-			notEmpty: true,
-			errorMessage: "content_id required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        content_id: {
+            notEmpty: true,
+            errorMessage: 'content_id required'
+        }
+    }),
+    function (req, res) {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let r = new ContentRepository(req.app);
-				let results = await r.getContent(req.params.content_id);
-				res.send(results);
-			} catch (e ) {
-				res.status(500);
-				res.send(e.message);
-			}
+            try {
+                let r = new ContentRepository(req.app);
+                let results = await r.getContent(req.params.content_id);
+                res.send(results);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})()
+        })();
 
-	});
+    });
 
 /**
  * @swagger
@@ -67,28 +67,28 @@ router.get('/contents/:content_id',
  *        - Content
  */
 router.get('/content_types/:content_type_id/contents',
-	validateRequest({
-		content_type_id: {
-			notEmpty: true,
-			errorMessage: "content_type_id required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        content_type_id: {
+            notEmpty: true,
+            errorMessage: 'content_type_id required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ContentRepository(req.app);
-			// TODO validation to req.body
-			let results = await r.getContents(req.params.content_type_id);
-			res.send(results);
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            try {
+                let r = new ContentRepository(req.app);
+                // TODO validation to req.body
+                let results = await r.getContents(req.params.content_type_id);
+                res.send(results);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
-});
+        })();
+    });
 
 /**
  * @swagger
@@ -120,29 +120,29 @@ router.get('/content_types/:content_type_id/contents',
  *        - Content
  */
 router.post('/content_types/:content_type_id/contents',
-	validateRequest({
-		content_type_id: {
-			notEmpty: true,
-			errorMessage: "content_type_id required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        content_type_id: {
+            notEmpty: true,
+            errorMessage: 'content_type_id required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new ContentRepository(req.app);
+            try {
+                let r = new ContentRepository(req.app);
 
-			let results = await r.createContent(req.params.content_type_id, req.body.fields);
-			res.send(results);
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+                let results = await r.createContent(req.params.content_type_id, req.body.fields);
+                res.send(results);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
+        })();
 
-});
+    });
 
 
 /**
@@ -164,29 +164,29 @@ router.post('/content_types/:content_type_id/contents',
  *        - Content
  */
 router.delete('/contents/:content_id',
-	validateRequest({
-		content_id: {
-			notEmpty: true,
-			errorMessage: "content_id required"
-		}
-	}),
-	(req, res) => {
+    validateRequest({
+        content_id: {
+            notEmpty: true,
+            errorMessage: 'content_id required'
+        }
+    }),
+    (req, res) => {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let r = new ContentRepository(req.app);
-				let results = await r.deleteContent(req.params.content_id);
-				res.send({message: "OK"});
+            try {
+                let r = new ContentRepository(req.app);
+                let results = await r.deleteContent(req.params.content_id);
+                res.send({message: 'OK'});
 
-			} catch (e ) {
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
+        })();
 
-	});
+    });
 
 
 /**
@@ -216,28 +216,28 @@ router.delete('/contents/:content_id',
  *        - Content
  */
 router.patch('/contents/:content_id',
-	validateRequest({
-		content_id: {
-			notEmpty: true,
-			errorMessage: "content_id required"
-		}
-	}),
-	(req, res) => {
+    validateRequest({
+        content_id: {
+            notEmpty: true,
+            errorMessage: 'content_id required'
+        }
+    }),
+    (req, res) => {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let r = new ContentRepository(req.app);
-				let results = await r.updateContent(req.params.content_id, req.body);
-				res.send({message: "OK"});
+            try {
+                let r = new ContentRepository(req.app);
+                let results = await r.updateContent(req.params.content_id, req.body);
+                res.send({message: 'OK'});
 
-			} catch (e ) {
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
+        })();
 
-	});
+    });
 
 module.exports = router;

@@ -30,7 +30,7 @@ const createApiKey = (projectId, name, key, restrictionType, restrictionValue) =
     let client = apiClient.createClient({});
     return client.createApiKey(projectId, name, key, restrictionType, restrictionValue)
         .then((project) => {
-            return 	dispatch(setAjaxLoading(false));
+            return     dispatch(setAjaxLoading(false));
         });
 };
 

@@ -29,20 +29,20 @@ class Dashboard extends React.Component {
     }
 
     render() {
-	    let t = this.props.t;
+        let t = this.props.t;
 
-	    return (
-		    <Layout>
-			    <div className="row justify-content-md-center mt-4">
-				    <div className="col col-md-6">
-					    <Card headerText="Projects">
-						    {this.renderProjects()}
-						    <Link className="btn btn-primary mt-3" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
-					    </Card>
-				    </div>
-			    </div>
-		    </Layout>
-	    );
+        return (
+            <Layout>
+                <div className="row justify-content-md-center mt-4">
+                    <div className="col col-md-6">
+                        <Card headerText="Projects">
+                            {this.renderProjects()}
+                            <Link className="btn btn-primary mt-3" to="/project/new">{t('dashboard:add_project_btn_text')}</Link>
+                        </Card>
+                    </div>
+                </div>
+            </Layout>
+        );
     }
 }
 

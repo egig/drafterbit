@@ -13,9 +13,9 @@ let Content = mongoose.model('Content', contentSchema);
 let ApiKey = mongoose.model('ApiKey', apiKeySchema);
 
 module.exports = {
-	User,
-	Project,
-	ContentType,
-	Content,
-	ApiKey
-}
+    User,
+    Project,
+    ContentType,
+    Content,
+    ApiKey
+};

@@ -31,26 +31,26 @@ class ProjectDashboard extends React.Component {
             <ProjectLayout>
                 <Card headerText="Project Dashboard">
                     {!this.props.project.content_types.length &&
-						<div className="col-6">
-						    <p>There is no content type yet :(</p>
-						    <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
-						</div>
+                        <div className="col-6">
+                            <p>There is no content type yet :(</p>
+                            <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success">Create Content Type</Link>
+                        </div>
                     }
 
                     {!!this.state.contentTypeStat.length &&
-						<div className="col col-md-4">
-						    <ul className="list-group">
-						        {this.state.contentTypeStat.map((item,i) => {
+                        <div className="col col-md-4">
+                            <ul className="list-group">
+                                {this.state.contentTypeStat.map((item,i) => {
 
-						            return (
-						                <li key={i} className="list-group-item d-flex justify-content-between align-items-center">
-						                    {item.name }
-						                    <span className="badge badge-primary badge-pill">{item.content_count}</span>
-						                </li>
-						            );
-						        })}
-						    </ul>
-						</div>
+                                    return (
+                                        <li key={i} className="list-group-item d-flex justify-content-between align-items-center">
+                                            {item.name }
+                                            <span className="badge badge-primary badge-pill">{item.content_count}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
                     }
 
                 </Card>

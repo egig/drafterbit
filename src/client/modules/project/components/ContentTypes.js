@@ -14,32 +14,32 @@ class ContentTypes extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-    	if(prevProps.project['_id'] !=  this.props.project._id) {
-		    this.props.getContentTypes(this.props.project._id);
-	    }
+        if(prevProps.project['_id'] !=  this.props.project._id) {
+            this.props.getContentTypes(this.props.project._id);
+        }
     }
 
     render() {
 
-	    const columns = [{
-		    dataField: 'name',
-		    text: 'Name',
-		    formatter: (cell, row) => {
-		    	return <Link to={`/project/${this.props.project._id}/content_types/${row._id}`}>{cell}</Link>
-		    }
-	    }];
+        const columns = [{
+            dataField: 'name',
+            text: 'Name',
+            formatter: (cell, row) => {
+                return <Link to={`/project/${this.props.project._id}/content_types/${row._id}`}>{cell}</Link>;
+            }
+        }];
 
         return (
             <ProjectLayout>
                 <Card headerText="Content Types">
                     <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
-	                  <BootstrapTable bootstrap4
-	                                  keyField='_id'
-	                                  data={ this.props.contentTypes }
-	                                  columns={ columns }
-	                                  striped
-	                                  hover
-	                                  condensed />
+                    <BootstrapTable bootstrap4
+                        keyField='_id'
+                        data={ this.props.contentTypes }
+                        columns={ columns }
+                        striped
+                        hover
+                        condensed />
                 </Card>
             </ProjectLayout>
         );

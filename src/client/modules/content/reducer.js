@@ -11,9 +11,9 @@ export default function reducer(state = {}, action) {
         });
         break;
     case '@content/SET_CONTENT':
-	    return Object.assign({}, state, {
-		    content: action.payload
-	    });
+        return Object.assign({}, state, {
+            content: action.payload
+        });
     }
 
     return state;

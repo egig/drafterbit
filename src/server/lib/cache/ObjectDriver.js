@@ -1,18 +1,18 @@
 class ObjectDriver {
 
     /**
-	 *
-	 * Class constructor
-	 */
+     *
+     * Class constructor
+     */
     constructor() {
         this.data = {};
     }
 
     /**
-	 * Get cache value by key
-	 *
-	 * @param key
-	 */
+     * Get cache value by key
+     *
+     * @param key
+     */
     get(key) {
         let _this = this;
         return new Promise(function (resolve, reject) {
@@ -25,11 +25,11 @@ class ObjectDriver {
     }
 
     /**
-	 *
-	 * @param key
-	 * @param value
-	 * @param options
-	 */
+     *
+     * @param key
+     * @param value
+     * @param options
+     */
     set(key, value, options = {}) {
         let _this = this;
         return new Promise(function (resolve, reject) {
@@ -42,10 +42,10 @@ class ObjectDriver {
     }
 
     /**
-	 *
-	 * @param key
-	 * @returns {Promise}
-	 */
+     *
+     * @param key
+     * @returns {Promise}
+     */
     del(key) {
         return new Promise(function (resolve, reject) {
 
@@ -58,10 +58,10 @@ class ObjectDriver {
     }
 
     /**
-	 *
-	 * @param pattern
-	 * @returns {Promise}
-	 */
+     *
+     * @param pattern
+     * @returns {Promise}
+     */
     delWithPattern(pattern) {
         throw 'Delete with pattern is not supported';
     }

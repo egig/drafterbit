@@ -9,13 +9,13 @@ class LoaderTrap extends React.Component {
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-		    enter: classNames.loaderEnter,
-		    enterActive: classNames.loaderEnterActive,
-		    leave: classNames.loaderLeave,
-		    leaveActive: classNames.loaderLeaveActive,
-		    appear: classNames.loaderAppear,
-		    appearActive: classNames.loaderAppearActive
-		  }}
+                    enter: classNames.loaderEnter,
+                    enterActive: classNames.loaderEnterActive,
+                    leave: classNames.loaderLeave,
+                    leaveActive: classNames.loaderLeaveActive,
+                    appear: classNames.loaderAppear,
+                    appearActive: classNames.loaderAppearActive
+                }}
                 transitionAppear={true}
                 transitionAppearTimeout={200}
                 transitionEnter={false}

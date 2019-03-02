@@ -46,13 +46,13 @@ class Notify extends React.Component {
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-		    enter: classNames.notifyEnter,
-		    enterActive: classNames.notifyEnterActive,
-		    leave: classNames.notifyLeave,
-		    leaveActive: classNames.notifyLeaveActive,
-		    appear: classNames.notifyAppear,
-		    appearActive: classNames.notifyAppearActive
-		  }}
+                    enter: classNames.notifyEnter,
+                    enterActive: classNames.notifyEnterActive,
+                    leave: classNames.notifyLeave,
+                    leaveActive: classNames.notifyLeaveActive,
+                    appear: classNames.notifyAppear,
+                    appearActive: classNames.notifyAppearActive
+                }}
                 transitionAppear={true}
                 transitionAppearTimeout={400}
                 transitionEnterTimeout={400}

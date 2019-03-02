@@ -15,15 +15,15 @@ module.exports = {
             content_types: []
         },
         contentType: {
-    	fields: []
+            fields: []
         },
         contentTypes: [],
         apiKeys: []
     },
     content: {
-    	  content: {
-    	  	fields: []
-	      },
+        content: {
+            fields: []
+        },
         contents: [],
         ctFields: {fields: []}
     }

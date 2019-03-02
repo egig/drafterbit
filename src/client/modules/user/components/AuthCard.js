@@ -24,7 +24,7 @@ class AuthCard extends React.Component {
                                 </div>
                             </div>
                             <div className={classes.loginFooter}>
-								Copyright &copy; 2017 &mdash; drafterbit
+                                Copyright &copy; 2017 &mdash; drafterbit
                             </div>
                         </div>
                     </div>

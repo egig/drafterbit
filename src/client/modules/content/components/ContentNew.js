@@ -43,26 +43,26 @@ class ContentNew extends React.Component {
                         }} >
                             {this.props.ctFields.fields.map((f,i) => {
 
-                            	// CKEditor
-                            	if(f.type_id =='3') {
-		                            return <Field onChange={(e, editor) => {
+                                // CKEditor
+                                if(f.type_id =='3') {
+                                    return <Field onChange={(e, editor) => {
+                                        this.formData[f.name] = {
+                                            label: f.label,
+                                            type_id: f.type_id,
+                                            name: f.name,
+                                            value: editor.getData(),
+                                        };
+                                    }} key={i} field={f} />;
+                                }
+
+                                return <Field onChange={e => {
                                     this.formData[f.name] = {
-                                    	label: f.label,
-                                    	type_id: f.type_id,
-                                    	name: f.name,
-                                    	value: editor.getData(),
+                                        label: f.label,
+                                        type_id: f.type_id,
+                                        name: f.name,
+                                        value: e.target.value,
                                     };
                                 }} key={i} field={f} />;
-	                            }
-
-                              return <Field onChange={e => {
-                                  this.formData[f.name] = {
-                                    label: f.label,
-                                    type_id: f.type_id,
-                                    name: f.name,
-                                    value: e.target.value,
-                                  };
-                              }} key={i} field={f} />;
                             })}
 
                             <div className="form-group">

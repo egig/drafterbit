@@ -26,7 +26,7 @@ class ApiKeyEdit extends React.Component {
 
     onSubmit(form) {
 
-        let restrictionValue = this.state.restrictedType === 0 ? "" : form.restriction_value.value;
+        let restrictionValue = this.state.restrictedType === 0 ? '' : form.restriction_value.value;
 
         this.props.createApiKey(
             this.props.project._id,
@@ -64,61 +64,61 @@ class ApiKeyEdit extends React.Component {
                                     <legend>Restriction Type</legend>
                                     <div className="form-check">
                                         <input onChange={e => this.handleRestrictionTypeChange(e)}
-									       className="form-check-input" type="radio"
-									       name="restriction_type"
-									       id="restriction_type_none"
-									       value="0"
-									       checked={this.state.restrictedType == 0} />
+                                            className="form-check-input" type="radio"
+                                            name="restriction_type"
+                                            id="restriction_type_none"
+                                            value="0"
+                                            checked={this.state.restrictedType == 0} />
                                         <label className="form-check-label" htmlFor="restriction_type_none">
-										None
+                                        None
                                         </label>
                                     </div>
                                     <div className="form-check">
                                         <input onChange={e => this.handleRestrictionTypeChange(e)}
-									       className="form-check-input"
-									       type="radio"
-									       name="restriction_type"
-									       id="restriction_type_http"
-									       value="1"
-									       checked={this.state.restrictedType == 1}/>
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="restriction_type"
+                                            id="restriction_type_http"
+                                            value="1"
+                                            checked={this.state.restrictedType == 1}/>
                                         <label className="form-check-label" htmlFor="restriction_type_http">
-										HTTP Referrer
+                                        HTTP Referrer
                                         </label>
                                     </div>
                                     <div className="form-check">
                                         <input onChange={e => this.handleRestrictionTypeChange(e)}
-									       className="form-check-input"
-									       type="radio"
-									       name="restriction_type"
-									       id="restriction_type_ip"
-									       value="2"
-									       checked={this.state.restrictedType == 2}/>
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="restriction_type"
+                                            id="restriction_type_ip"
+                                            value="2"
+                                            checked={this.state.restrictedType == 2}/>
                                         <label className="form-check-label" htmlFor="restriction_type_ip">
-										IP Address
+                                        IP Address
                                         </label>
                                     </div>
                                 </fieldset>
 
                                 {this.state.restrictedType == 1 &&
-							<div className="form-group">
-							    <label htmlFor="restriction_value">HTTP Referer</label>
-							    <input type="text"
-								       name="restriction_value"
-								       placeholder="http://localhost"
-								       id="restriction_value"
-								       className="form-control"/>
-							</div>
+                            <div className="form-group">
+                                <label htmlFor="restriction_value">HTTP Referer</label>
+                                <input type="text"
+                                    name="restriction_value"
+                                    placeholder="http://localhost"
+                                    id="restriction_value"
+                                    className="form-control"/>
+                            </div>
                                 }
 
                                 {this.state.restrictedType == 2 &&
-								<div className="form-group">
-								    <label htmlFor="restriction_value">IP Address</label>
-								    <input type="text"
-									       name="restriction_value"
-									       placeholder="127.0.0.1"
-									       id="restriction_value"
-									       className="form-control"/>
-								</div>
+                                <div className="form-group">
+                                    <label htmlFor="restriction_value">IP Address</label>
+                                    <input type="text"
+                                        name="restriction_value"
+                                        placeholder="127.0.0.1"
+                                        id="restriction_value"
+                                        className="form-control"/>
+                                </div>
                                 }
 
                                 <div className="form-group">
@@ -129,7 +129,7 @@ class ApiKeyEdit extends React.Component {
                     </div>
                 </div>
                 {this.state.successText &&
-					<Notify type="success" message={this.state.successText} />
+                    <Notify type="success" message={this.state.successText} />
                 }
             </ProjectLayout>
         );

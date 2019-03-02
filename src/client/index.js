@@ -11,7 +11,7 @@ const apiClient = require('./apiClient');
 const jss = createJSSInstance();
 const drafterbit = {
     apiClient: apiClient.createClient({
-        baseURL: "htt://localhost:3003"
+        baseURL: 'htt://localhost:3003'
     })
 };
 
@@ -34,8 +34,8 @@ let languageContext = {namespaces: [], i18n};
 ReactDOM.render(
     <HashRouter>
         <Drafterbit
-	        store={store} jss={jss}
-	        drafterbit={drafterbit}
+            store={store} jss={jss}
+            drafterbit={drafterbit}
             languageContext={languageContext} />
     </HashRouter>, document.getElementById('app'));
 

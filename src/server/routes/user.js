@@ -9,7 +9,7 @@ const validateRequest = require('../middlewares/validateRequest');
 const { sendResetPasswordEmail } = require('../lib/mail');
 
 function createSessionKey(token, user_id) {
-	return `session-${user_id}-${token}`;
+    return `session-${user_id}-${token}`;
 }
 
 /**
@@ -39,29 +39,29 @@ function createSessionKey(token, user_id) {
  *        - User
  */
 router.get('/users/is_login',
-	validateRequest({
-		user_id: {
-			isInt: true,
-			errorMessage: "user_id must be integer"
-		},
-		token: {
-			isString: true,
-			errorMessage: "token is required"
-		},
-	}),
-	function (req, res) {
-	(async function () {
+    validateRequest({
+        user_id: {
+            isInt: true,
+            errorMessage: 'user_id must be integer'
+        },
+        token: {
+            isString: true,
+            errorMessage: 'token is required'
+        },
+    }),
+    function (req, res) {
+        (async function () {
 
-		try {
-			let result = await req.app.get('cache').get(createSessionKey(req.query.token, req.query.user_id));
-			res.send(result);
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            try {
+                let result = await req.app.get('cache').get(createSessionKey(req.query.token, req.query.user_id));
+                res.send(result);
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
-});
+        })();
+    });
 
 /**
  * @swagger
@@ -91,68 +91,68 @@ router.get('/users/is_login',
  *        - User
  */
 router.post('/users/session',
-	validateRequest({
-		email: {
-			isString: true,
-			errorMessage: "email is requiredr"
-		},
-		password: {
-			isString: true,
-			errorMessage: "passwprd is required"
-		}
-	}),
-	function (req, res) {
+    validateRequest({
+        email: {
+            isString: true,
+            errorMessage: 'email is requiredr'
+        },
+        password: {
+            isString: true,
+            errorMessage: 'passwprd is required'
+        }
+    }),
+    function (req, res) {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let email = req.body.email;
-			let rawPassword = req.body.password;
+            try {
+                let email = req.body.email;
+                let rawPassword = req.body.password;
 
-			let r = new userRepository(req.app);
-			let user = await r.getUserByEmail(email);
+                let r = new userRepository(req.app);
+                let user = await r.getUserByEmail(email);
 
-			if(!user) {
-				throw new UserAuthError("Wrong email or password");
-			}
+                if(!user) {
+                    throw new UserAuthError('Wrong email or password');
+                }
 
-			let isMatch  = await password.compare(rawPassword, user.password);
+                let isMatch  = await password.compare(rawPassword, user.password);
 
-			if(!isMatch) {
-				throw new UserAuthError("Wrong email or password");
-			}
+                if(!isMatch) {
+                    throw new UserAuthError('Wrong email or password');
+                }
 
-			let token = crypto.randomBytes(32).toString('hex');
+                let token = crypto.randomBytes(32).toString('hex');
 
-			let authUser = {
-				id: user.id,
-				email: user.email,
-				first_name: user.first_name,
-				last_name: user.last_name,
-				token: token
-			}
+                let authUser = {
+                    id: user.id,
+                    email: user.email,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    token: token
+                };
 
-			let cache = req.app.get('cache');
-			let key = createSessionKey(token, user.id);
-			await cache.delWithPattern(`*session-${user.id}-*`);
-			await cache.set(key, JSON.stringify(authUser), {
-				ttl: 28800
-			});
+                let cache = req.app.get('cache');
+                let key = createSessionKey(token, user.id);
+                await cache.delWithPattern(`*session-${user.id}-*`);
+                await cache.set(key, JSON.stringify(authUser), {
+                    ttl: 28800
+                });
 
-			res.send(authUser);
+                res.send(authUser);
 
-		} catch (e ) {
-			res.status(500);
+            } catch (e ) {
+                res.status(500);
 
-			if(e instanceof UserAuthError) {
-				res.status(401);
-			}
+                if(e instanceof UserAuthError) {
+                    res.status(401);
+                }
 
-			res.send(e.message);
-		}
+                res.send(e.message);
+            }
 
-	})();
-});
+        })();
+    });
 
 /**
  * @swagger
@@ -167,19 +167,19 @@ router.post('/users/session',
  *        - User
  */
 router.get('/users', function (req, res) {
-	
-	(async function () {
+    
+    (async function () {
 
-		try {
-			let r = new userRepository(req.app);
-			let results = await r.getUsers();
-			res.send(results);
-		} catch (e) {
-			res.status(500);
-			res.send(e.message);
-		}
+        try {
+            let r = new userRepository(req.app);
+            let results = await r.getUsers();
+            res.send(results);
+        } catch (e) {
+            res.status(500);
+            res.send(e.message);
+        }
 
-	})()
+    })();
 
 });
 
@@ -217,49 +217,49 @@ router.get('/users', function (req, res) {
  *        - User
  */
 router.post('/users',
-	validateRequest({
-		first_name: {
-			isString: true,
-			errorMessage: "first_name is required"
-		},
-		last_name: {
-			isString: true,
-			errorMessage: "last_name is required"
-		},
-		email: {
-			isString: true,
-			errorMessage: "email is required"
-		},
-		password: {
-			isString: true,
-			errorMessage: "password is required"
-		},
-	}),
-	function (req, res) {
-	(async function () {
+    validateRequest({
+        first_name: {
+            isString: true,
+            errorMessage: 'first_name is required'
+        },
+        last_name: {
+            isString: true,
+            errorMessage: 'last_name is required'
+        },
+        email: {
+            isString: true,
+            errorMessage: 'email is required'
+        },
+        password: {
+            isString: true,
+            errorMessage: 'password is required'
+        },
+    }),
+    function (req, res) {
+        (async function () {
 
-		try {
-			let hashedPassword = await password.hash(req.body.password);
+            try {
+                let hashedPassword = await password.hash(req.body.password);
 
-			let r = new userRepository(req.app);
-			// TODO validation
-			let results = await r.createUser(
-				req.body.first_name,
-				req.body.last_name,
-				req.body.email,
-				hashedPassword,
-			);
+                let r = new userRepository(req.app);
+                // TODO validation
+                let results = await r.createUser(
+                    req.body.first_name,
+                    req.body.last_name,
+                    req.body.email,
+                    hashedPassword,
+                );
 
-			res.send({message: "OK"});
+                res.send({message: 'OK'});
 
-		} catch (e) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
-	
-});
+        })();
+    
+    });
 
 /**
  * @swagger
@@ -281,29 +281,29 @@ router.post('/users',
  *        - User
  */
 router.delete('/users/:user_id',
-	validateRequest({
-		user_id: {
-			notEmpty: true,
-			errorMessage: "user_id must be integer"
-		},
-	}),
-	(req, res) => {
+    validateRequest({
+        user_id: {
+            notEmpty: true,
+            errorMessage: 'user_id must be integer'
+        },
+    }),
+    (req, res) => {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new userRepository(req.app);
-			let results = await r.deleteUser(req.params.user_id);
-			res.send({message: "OK"});
+            try {
+                let r = new userRepository(req.app);
+                let results = await r.deleteUser(req.params.user_id);
+                res.send({message: 'OK'});
 
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
+        })();
 
-});
+    });
 
 /**
  * @swagger
@@ -340,42 +340,42 @@ router.delete('/users/:user_id',
  *        - User
  */
 router.patch('/users/:user_id',
-	validateRequest({
-		user_id: {
-			notEmpty: true,
-			errorMessage: "user_id must be integer"
-		},
-		first_name: {
-			optional: true,
-			errorMessage: "first_name is required"
-		},
-		last_name: {
-			optional: true,
-			errorMessage: "last_name is required"
-		},
-		email: {
-			optional: true,
-			errorMessage: "email is required"
-		}
-	}),
-	(req, res) => {
+    validateRequest({
+        user_id: {
+            notEmpty: true,
+            errorMessage: 'user_id must be integer'
+        },
+        first_name: {
+            optional: true,
+            errorMessage: 'first_name is required'
+        },
+        last_name: {
+            optional: true,
+            errorMessage: 'last_name is required'
+        },
+        email: {
+            optional: true,
+            errorMessage: 'email is required'
+        }
+    }),
+    (req, res) => {
 
-	(async function () {
+        (async function () {
 
-		try {
-			let r = new userRepository(req.app);
+            try {
+                let r = new userRepository(req.app);
 
-			// TODO validation
-			let results = await r.updateUser(req.params.user_id, req.body);
-			res.send({message: "OK"});
+                // TODO validation
+                let results = await r.updateUser(req.params.user_id, req.body);
+                res.send({message: 'OK'});
 
-		} catch (e ) {
-			res.status(500);
-			res.send(e.message);
-		}
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
 
-	})();
-});
+        })();
+    });
 
 
 /**
@@ -401,28 +401,28 @@ router.patch('/users/:user_id',
  *        - User
  */
 router.post('/users/reset_password',
-	validateRequest({
-		email: {
-			isString: true,
-			errorMessage: "first_name is required"
-		}
-	}),
-	function (req, res) {
-		(async function () {
+    validateRequest({
+        email: {
+            isString: true,
+            errorMessage: 'first_name is required'
+        }
+    }),
+    function (req, res) {
+        (async function () {
 
-			try {
-				let response = await sendResetPasswordEmail(req.body.email);
-				console.log(response);
-				res.send(response);
+            try {
+                let response = await sendResetPasswordEmail(req.body.email);
+                console.log(response);
+                res.send(response);
 
-			} catch (e) {
-				console.error(e);
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e) {
+                console.error(e);
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
+        })();
 
-	});
+    });
 
 module.exports = router;
