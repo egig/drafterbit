@@ -90,11 +90,24 @@ const updateContent = (contentId, formData) => (dispatch) => {
 		});
 };
 
+const deleteContents = (contentIds, formData) => (dispatch) => {
+
+	let client = apiClient.createClient({});
+	let deleteActionPromise = contentIds.map(contentId => {
+		return client.deleteContent(contentId);
+	});
+
+	return Promise.all(deleteActionPromise)
+};
+
+
+
 export default {
     getContentTypeFields,
     createContent,
 		updateContent,
     getContents,
     getContent,
-	getCTFieldsAndGetContent
+	getCTFieldsAndGetContent,
+	deleteContents
 };

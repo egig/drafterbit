@@ -9,8 +9,15 @@ import BootstrapTable from 'react-bootstrap-table-next';
 
 class Contents extends React.Component {
 
+	constructor(props) {
+		super(props);
+		this.state = { selected: [] };
+		this.handleOnSelect = this.handleOnSelect.bind(this);
+		this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+	}
 
-    componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps(nextProps) {
         if(nextProps.match.params.content_type_slug !== this.props.match.params.content_type_slug) {
             let projectId = nextProps.match.params.project_id;
             let ctSlug= nextProps.match.params.content_type_slug;
@@ -29,6 +36,36 @@ class Contents extends React.Component {
                 return this.props.getContents(this.props.ctFields._id);
             });
     }
+
+	handleOnSelect(row, isSelect) {
+		if (isSelect) {
+			this.setState(() => ({
+				selected: [...this.state.selected, row._id]
+			}));
+		} else {
+			this.setState(() => ({
+				selected: this.state.selected.filter(x => x !== row._id)
+			}));
+		}
+	}
+
+	handleOnSelectAll = (isSelect, rows) => {
+		const ids = rows.map(r => r._id);
+		if (isSelect) {
+			this.setState(() => ({
+				selected: ids
+			}));
+		} else {
+			this.setState(() => ({
+				selected: []
+			}));
+		}
+	}
+
+	handleDelete(e) {
+		console.log("deleteing", this.state.selected);
+		this.props.deleteContents(this.state.selected)
+	}
 
     render() {
 
@@ -64,17 +101,29 @@ class Contents extends React.Component {
             });
         });
 
+	    const selectRow = {
+		    mode: 'checkbox',
+		    clickToSelect: true,
+		    selected: this.state.selected,
+		    onSelect: this.handleOnSelect,
+		    onSelectAll: this.handleOnSelectAll
+	    };
+
         return (
             <ProjectLayout>
                 <Card headerText="Contents">
 	                <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
+	                {!!this.state.selected.length &&
+	                  <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
+	                }
 	                <BootstrapTable bootstrap4
 	                                keyField='_id'
 	                                data={ data }
 	                                columns={ columns }
+	                                selectRow={selectRow}
 	                                striped
 	                                hover
-	                                condensed />
+	                                condensed/>
                 </Card>
             </ProjectLayout>
         );

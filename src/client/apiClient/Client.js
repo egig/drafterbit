@@ -150,6 +150,11 @@ class Client {
 		return response.data;
 	}
 
+	async deleteContent(contentId) {
+		let response = await this.axiosInstance.delete(`/contents/${contentId}`);
+		return response.data;
+	}
+
 	async getContents(contentTypeId) {
 		let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`);
 		return response.data;
