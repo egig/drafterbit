@@ -81,4 +81,4 @@ Notify.defaultProps = {
     isActive: false
 };
 
-export default withStyle(Style)(Notify);
+module.exports =  withStyle(Style)(Notify);

@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectLayout));
+module.exports = withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectLayout));

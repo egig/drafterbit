@@ -1,6 +1,5 @@
 const React = require('react');
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+const RichText = require('./RichText');
 
 class Field extends React.Component {
 
@@ -24,11 +23,7 @@ class Field extends React.Component {
             '3': () => (
                 <div className="form-group">
                     <label htmlFor={field.name}>{field.label}</label>
-                    <CKEditor
-                        editor={ ClassicEditor }
-                        onChange={this.props.onChange}
-                        data={value ? value : '' }
-                    />
+	                <RichText initialValue={value} onChange={this.props.onChange} />
                 </div>
             )
         };
@@ -37,4 +32,4 @@ class Field extends React.Component {
     }
 }
 
-export default Field;
+module.exports = Field;

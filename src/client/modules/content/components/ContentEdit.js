@@ -1,11 +1,11 @@
 const React = require('react');
-import {connect} from 'react-redux';
-import {bindActionCreators } from 'redux';
-import actions from '../actions';
-import ProjectLayout from '../../project/components/ProjectLayout';
-import Field from './Field';
-import Notify from '../../../components/Notify';
-import Card from '../../../components/Card/Card';
+const {connect} = require('react-redux');
+const {bindActionCreators } = require('redux');
+const actions = require ('../actions');
+const ProjectLayout =  require('../../project/components/ProjectLayout');
+const Field = require('./Field');
+const Notify = require('../../../components/Notify');
+const Card = require('../../../components/Card/Card');
 
 class ContentEdit extends React.Component {
 
@@ -64,30 +64,14 @@ class ContentEdit extends React.Component {
 
                                 // CKEditor
                                 if(f.type_id =='3') {
-                                    return <Field value={value} onChange={(e, editor) => {
+                                    return <Field value={value} onChange={(e) => {
 
                                         this.formData[f.name] = {
                                             label: f.label,
                                             type_id: f.type_id,
                                             name: f.name,
-                                            value: editor.getData(),
+                                            value: e.target.getContent()
                                         };
-
-                                        // TODO why this make infinte looping ?
-                                        {/*this.setState(oldState => {*/}
-
-                                        {/*let formData = oldState.formData;*/}
-                                        {/*formData[f.name] = {*/}
-                                        {/*label: f.label,*/}
-                                        {/*type_id: f.type_id,*/}
-                                        {/*name: f.name,*/}
-                                        {/*value:editor.getData()*/}
-                                        {/*};*/}
-                                        {/*return Object.assign({}, oldState, {*/}
-                                        {/*formData*/}
-                                        {/*})*/}
-
-                                        {/*});*/}
 
                                     }} key={i} field={f} />;
                                 }

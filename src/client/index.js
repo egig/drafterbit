@@ -7,6 +7,22 @@ const moment = require('moment');
 const createJSSInstance = require('../createJSSInstance');
 const i18next = require('i18next');
 const apiClient = require('./apiClient');
+// Import TinyMCE
+import tinymce from 'tinymce/tinymce';
+
+// A theme is also required
+import 'tinymce/themes/silver/theme';
+
+// Any plugins you want to use has to be imported
+import 'tinymce/plugins/paste';
+import 'tinymce/plugins/link';
+
+// Initialize the app
+tinymce.init({
+	selector: '#tiny',
+	plugins: ['paste', 'link']
+});
+
 
 const jss = createJSSInstance();
 const drafterbit = {
