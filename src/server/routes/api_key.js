@@ -1,10 +1,9 @@
 const express = require('express');
-let router = express.Router();
-const password = require('../lib/password');
-const config = require('../../config');
 const ApiKeyRespository = require('../repository/ApiKeyRespository');
 const crypto = require('crypto');
 const validateRequest = require('../middlewares/validateRequest');
+
+let router = express.Router();
 
 /**
  * @swagger
@@ -114,7 +113,7 @@ router.post('/projects/:project_id/api_keys',
 
                 let r = new ApiKeyRespository(req.app);
                 // TODO validation
-                let results = await r.createApiKey(
+                await r.createApiKey(
                     req.params.project_id,
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
@@ -211,7 +210,7 @@ router.delete('/api_keys/:api_key_id',
 
             try {
                 let r = new ApiKeyRespository(req.app);
-                let results = await r.deleteApiKey(req.params.api_key_id);
+                await r.deleteApiKey(req.params.api_key_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -287,7 +286,7 @@ router.patch('/api_keys/:api_key_id',
                 let r = new ApiKeyRespository(req.app);
 
                 // TODO validation
-                let results = await r.updateApiKey(
+                await r.updateApiKey(
                     req.params.api_key_id,
                     req.body
                 );

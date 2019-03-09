@@ -19,8 +19,8 @@ import 'tinymce/plugins/link';
 
 // Initialize the app
 tinymce.init({
-	selector: '#tiny',
-	plugins: ['paste', 'link']
+    selector: '#tiny',
+    plugins: ['paste', 'link']
 });
 
 

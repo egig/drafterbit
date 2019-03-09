@@ -1,7 +1,5 @@
 const express = require('express');
 let router = express.Router();
-const password = require('../lib/password');
-const config = require('../../config');
 const ProjectRepository = require('../repository/ProjectRepository');
 const validateRequest = require('../middlewares/validateRequest');
 
@@ -189,7 +187,7 @@ router.post('/users/:user_id/projects',
 
                 let r = new ProjectRepository(req.app);
                 // TODO validation
-                let results = await r.createProject(
+                await r.createProject(
                     req.body.name,
                     req.body.description,
                     req.params.user_id
@@ -236,7 +234,7 @@ router.delete('/projects/:project_id',
 
             try {
                 let r = new ProjectRepository(req.app);
-                let results = await r.deleteProject(req.params.project_id);
+                await r.deleteProject(req.params.project_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -297,7 +295,7 @@ router.patch('/projects/:project_id',
             try {
                 let r = new ProjectRepository(req.app);
                 // TODO validation
-                let results = await r.updateProject(
+                await r.updateProject(
                     req.params.project_id,
                     req.body
                 );

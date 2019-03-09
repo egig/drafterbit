@@ -47,7 +47,7 @@ class UserRespository extends BaseRespository {
                 password: password
             });
 
-            newUser.save(function (err, user) {
+            newUser.save(function (err) {
                 if (err) return reject(err);
                 resolve(true);
             });

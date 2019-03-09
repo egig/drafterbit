@@ -1,7 +1,6 @@
 const express = require('express');
 let router = express.Router();
 const password = require('../lib/password');
-const config = require('../../config');
 const userRepository = require('../repository/UserRespository');
 const crypto = require('crypto');
 const UserAuthError = require('../user/UserAuthError');
@@ -243,7 +242,7 @@ router.post('/users',
 
                 let r = new userRepository(req.app);
                 // TODO validation
-                let results = await r.createUser(
+                await r.createUser(
                     req.body.first_name,
                     req.body.last_name,
                     req.body.email,
@@ -293,7 +292,7 @@ router.delete('/users/:user_id',
 
             try {
                 let r = new userRepository(req.app);
-                let results = await r.deleteUser(req.params.user_id);
+                await r.deleteUser(req.params.user_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -366,7 +365,7 @@ router.patch('/users/:user_id',
                 let r = new userRepository(req.app);
 
                 // TODO validation
-                let results = await r.updateUser(req.params.user_id, req.body);
+                await r.updateUser(req.params.user_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {

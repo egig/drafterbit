@@ -9,6 +9,7 @@ class ProjectRespository extends BaseRespository {
      */
     getProjects(userId) {
         return new Promise((resolve, reject) => {
+        	// TODO register model to app instead
             model.Project.find({owner: userId}, function(err, projects) {
                 if (err) return reject(err);
                 return resolve(projects);
@@ -101,7 +102,7 @@ class ProjectRespository extends BaseRespository {
      *
      * @param projectId
      */
-    getContentTypeStat(projectId) {
+    getContentTypeStat() {
         return new Promise((resolve, reject) => {
             // TODO
             resolve([]);

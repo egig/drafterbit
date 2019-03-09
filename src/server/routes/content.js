@@ -1,5 +1,4 @@
 const express = require('express');
-const config = require('../../config');
 const ContentRepository = require('../repository/ContentRepository');
 const validateRequest = require('../middlewares/validateRequest');
 
@@ -176,7 +175,7 @@ router.delete('/contents/:content_id',
 
             try {
                 let r = new ContentRepository(req.app);
-                let results = await r.deleteContent(req.params.content_id);
+                await r.deleteContent(req.params.content_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -228,7 +227,7 @@ router.patch('/contents/:content_id',
 
             try {
                 let r = new ContentRepository(req.app);
-                let results = await r.updateContent(req.params.content_id, req.body);
+                await r.updateContent(req.params.content_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {
