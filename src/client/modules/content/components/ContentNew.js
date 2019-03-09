@@ -43,14 +43,14 @@ class ContentNew extends React.Component {
                         }} >
                             {this.props.ctFields.fields.map((f,i) => {
 
-                                // CKEditor
+                                // TinyMCE
                                 if(f.type_id =='3') {
-                                    return <Field onChange={(e, editor) => {
+                                    return <Field onChange={(e) => {
                                         this.formData[f.name] = {
                                             label: f.label,
                                             type_id: f.type_id,
                                             name: f.name,
-                                            value: editor.getData(),
+                                            value: e.target.getContent(),
                                         };
                                     }} key={i} field={f} />;
                                 }

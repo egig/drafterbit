@@ -6,15 +6,27 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from '../../../../components/Modal';
 import Card from '../../../../components/Card/Card';
+import _ from 'lodash';
 
 class NewContentType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fieldDialogActive: false,
-            fields: []
+          fieldDialogActive: false,
+          fields: [],
+	        fieldTypeSelected: null
         };
     }
+
+		componentDidMount() {
+			this.props.getContentTypes(this.props.project._id);
+		}
+
+		componentDidUpdate(prevProps, prevState, snapshot) {
+			if(prevProps.project['_id'] !=  this.props.project._id) {
+				this.props.getContentTypes(this.props.project._id);
+			}
+		}
 
     addField(f) {
         this.setState({
@@ -87,15 +99,45 @@ class NewContentType extends React.Component {
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 let form = e.target;
-                                this.addField({
+
+                                let field = {
                                     name: form.name.value,
                                     label: form.label.value,
                                     type_id: form.type.value
-                                });
+                                };
+
+                                if(!!_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+                                	field['related_content_type_id'] = form.related_content_type_id.value;
+                                }
+
+                                this.addField(field);
 
                                 form.reset();
                             }}>
                                 <h4>Add Field</h4>
+		                            <div className="form-group">
+			                            <label htmlFor="type">Type</label>
+			                            <select className="form-control" id="type" onChange={e => {
+			                            	this.setState({
+			                            		fieldTypeSelected: e.target.value
+			                            	})
+			                            }}>
+				                            <option value="1">Short Text</option>
+				                            <option value="2">Long Text</option>
+				                            <option value="3">Rich Text</option>
+				                            <option value="4">Relation to One</option>
+				                            <option value="5">Relation to Many</option>
+			                            </select>
+		                            </div>
+		                            {!!_.includes([4,5], parseInt(this.state.fieldTypeSelected)) &&
+			                            <div className="form-group">
+				                            <select className="form-control" name="related_content_type_id" id="related_content_type_id">
+					                            {this.props.contentTypes.map((ct,i) => {
+						                            return <option key={i} value={ct._id}>{ct.name}</option>
+					                            })}
+				                            </select>
+			                            </div>
+		                            }
                                 <div className="form-group">
                                     <label htmlFor="label">Label</label>
                                     <input type="text" className="form-control" name="label" id="label"/>
@@ -103,14 +145,6 @@ class NewContentType extends React.Component {
                                 <div className="form-group">
                                     <label htmlFor="name">Name</label>
                                     <input type="text" className="form-control" name="name" id="name"/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="type">Type</label>
-                                    <select className="form-control" id="type">
-                                        <option value="1">Short Text</option>
-                                        <option value="2">Long Text</option>
-                                        <option value="3">Rich Text</option>
-                                    </select>
                                 </div>
                                 <button className="btn btn-success">Add Field</button>&nbsp;
                                 <button onClick={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }} className="btn btn-light">Cancel</button>
@@ -125,8 +159,9 @@ class NewContentType extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project,
-        contentType: state.project.contentType
+	    project: state.project.project,
+	    contentType: state.project.contentType,
+	    contentTypes: state.project.contentTypes,
     };
 };
 

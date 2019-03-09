@@ -1,0 +1,36 @@
+import React from 'react';
+import apiClient from '../../../apiClient';
+
+class Relation extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			contents: []
+		}
+	}
+
+	componentDidMount() {
+		// TODO get apiClient service from drafterbit app singlton
+		let client = apiClient.createClient({});
+		client.getContents(this.props.relatedContentTypeId)
+			.then((contents) => {
+				this.setState({
+					contents: contents
+				})
+			});
+	}
+
+	render() {
+		return (
+			<select className="form-control" id="type" onChange={this.props.onChange} value={this.props.value} >
+				{this.state.contents.map((c,i) => {
+					return <option key={c._id} value={c._id}>{c._id}</option>
+				})}
+			</select>
+		);
+	}
+}
+
+
+module.exports = Relation;

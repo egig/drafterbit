@@ -9,6 +9,7 @@ let contentTypeSchema = mongoose.Schema({
     description: String,
     project: { type: Schema.Types.ObjectId, ref: 'Project' },
     fields: [{
+	      related_content_type_id: String,
         type_id: Number,
         name: String,
         label: String
