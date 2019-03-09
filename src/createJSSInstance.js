@@ -13,5 +13,5 @@ const createJSSInstance = function createJSSInstance() {
     });
 };
 
-export default createJSSInstance;
+module.exports = createJSSInstance;
 
