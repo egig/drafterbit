@@ -78,50 +78,6 @@ router.get('/content_types',
 
 /**
  * @swagger
- * /content_types/:slug:
- *   get:
- *     description: Get content type by slug
- *     parameters:
- *       - in: path
- *         name: slug
- *         type: string
- *         schema:
- *           type: string
- *         required: true
- *     responses:
- *       200:
- *         description: success
- *
- *     tags:
- *        - Content Type
- */
-router.get('/content_types/:slug',
-    validateRequest({
-        slug: {
-            isString: true,
-            errorMessage: 'slug is required'
-        }
-    }),
-    function (req, res) {
-        (async function () {
-
-            try {
-                let r = new ContentTypeRepository(req.app);
-                let result = await r.getContentTypeBySlug(req.params.slug);
-
-                res.send(result);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
-
-
-/**
- * @swagger
  * /content_types:
  *   post:
  *     consumes:

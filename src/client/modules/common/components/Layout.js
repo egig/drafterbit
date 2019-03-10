@@ -31,14 +31,14 @@ class Layout extends React.Component {
                         <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
                     </a>
                     {/*<form className={classNames.navbarForm}>*/}
-                        {/*<select onChange={(e) => {*/}
-                            {/*this.onProjectChange(e.target);*/}
-                        {/*}} className={classNames.navbarProjectSelector} value={this.props.project._id}>*/}
-                            {/*<option value={0}>{t('layout.select_project')}</option>*/}
-                            {/*{projects.map((p,i) => {*/}
-                                {/*return (<option key={i} value={p._id}>{p.name}</option>);*/}
-                            {/*})}*/}
-                        {/*</select>*/}
+                    {/*<select onChange={(e) => {*/}
+                    {/*this.onProjectChange(e.target);*/}
+                    {/*}} className={classNames.navbarProjectSelector} value={this.props.project._id}>*/}
+                    {/*<option value={0}>{t('layout.select_project')}</option>*/}
+                    {/*{projects.map((p,i) => {*/}
+                    {/*return (<option key={i} value={p._id}>{p.name}</option>);*/}
+                    {/*})}*/}
+                    {/*</select>*/}
                     {/*</form>*/}
                     <ul className="navbar-nav px-3">
                         <li className="nav-item text-nowrap">

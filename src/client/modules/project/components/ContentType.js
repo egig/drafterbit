@@ -40,7 +40,7 @@ class ContentType extends React.Component {
         // TODO create alert
         this.props.deleteContentType(deleteForm.id.value)
             .then(r => {
-                this.props.history.push(`/content_types`);
+                this.props.history.push('/content_types');
             });
     }
 

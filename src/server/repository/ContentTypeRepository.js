@@ -1,5 +1,6 @@
 const BaseRespository = require('./BaseRepository');
 const model = require('../model');
+const mongoose = require('mongoose');
 
 class ContentTypeRepository extends BaseRespository {
 
@@ -9,7 +10,16 @@ class ContentTypeRepository extends BaseRespository {
      */
     getContentType(contentTypeId) {
         return new Promise((resolve, reject) => {
-            model.ContentType.findOne({_id: contentTypeId}, function(err, contentType) {
+
+	        let ObjectId = mongoose.Types.ObjectId;
+	        let condition;
+	        if(ObjectId.isValid(contentTypeId)) {
+	        	condition = {_id: contentTypeId};
+	        } else {
+		        condition = {slug: contentTypeId};
+	        }
+
+            model.ContentType.findOne(condition, function(err, contentType) {
                 if (err) return reject(err);
                 return resolve(contentType);
             });

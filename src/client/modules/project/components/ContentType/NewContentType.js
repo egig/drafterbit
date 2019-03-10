@@ -12,21 +12,21 @@ class NewContentType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          fieldDialogActive: false,
-          fields: [],
+            fieldDialogActive: false,
+            fields: [],
 	        fieldTypeSelected: null
         };
     }
 
-		componentDidMount() {
-			this.props.getContentTypes();
-		}
+    componentDidMount() {
+        this.props.getContentTypes();
+    }
 
-		// componentDidUpdate(prevProps, prevState, snapshot) {
-		// 	if(prevProps.project['_id'] !=  this.props.project._id) {
-		// 		this.props.getContentTypes(this.props.project._id);
-		// 	}
-		// }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    // 	if(prevProps.project['_id'] !=  this.props.project._id) {
+    // 		this.props.getContentTypes(this.props.project._id);
+    // 	}
+    // }
 
     addField(f) {
         this.setState({
@@ -105,7 +105,7 @@ class NewContentType extends React.Component {
                                     type_id: form.type.value
                                 };
 
-                                if(!!_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+                                if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
                                 	field['related_content_type_id'] = form.related_content_type_id.value;
                                 }
 
@@ -119,7 +119,7 @@ class NewContentType extends React.Component {
 			                            <select className="form-control" id="type" onChange={e => {
 			                            	this.setState({
 			                            		fieldTypeSelected: e.target.value
-			                            	})
+			                            	});
 			                            }}>
 				                            <option value="1">Short Text</option>
 				                            <option value="2">Long Text</option>
@@ -132,7 +132,7 @@ class NewContentType extends React.Component {
 			                            <div className="form-group">
 				                            <select className="form-control" name="related_content_type_id" id="related_content_type_id">
 					                            {this.props.contentTypes.map((ct,i) => {
-						                            return <option key={i} value={ct._id}>{ct.name}</option>
+						                            return <option key={i} value={ct._id}>{ct.name}</option>;
 					                            })}
 				                            </select>
 			                            </div>

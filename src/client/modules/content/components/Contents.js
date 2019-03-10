@@ -19,9 +19,8 @@ class Contents extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.match.params.content_type_slug !== this.props.match.params.content_type_slug) {
-            let projectId = nextProps.match.params.project_id;
             let ctSlug= nextProps.match.params.content_type_slug;
-            this.props.getContentTypeFields(projectId,ctSlug)
+            this.props.getContentTypeFields(ctSlug)
                 .then(r => {
                     return this.props.getContents(this.props.ctFields._id);
                 });
@@ -29,9 +28,8 @@ class Contents extends React.Component {
     }
 
     componentDidMount() {
-        let projectId = this.props.match.params.project_id;
         let ctSlug= this.props.match.params.content_type_slug;
-        this.props.getContentTypeFields(projectId, ctSlug)
+        this.props.getContentTypeFields(ctSlug)
             .then(r => {
                 return this.props.getContents(this.props.ctFields._id);
             });
@@ -69,9 +67,8 @@ class Contents extends React.Component {
 
     render() {
 
-        let projectId = this.props.match.params.project_id;
         let slug = this.props.match.params.content_type_slug;
-        let addUrl = `/project/${projectId}/contents/${slug}/new`;
+        let addUrl = `/contents/${slug}/new`;
 
 
         const data = this.props.contents.map(c => {
@@ -90,7 +87,7 @@ class Contents extends React.Component {
                 dataField: '_id',
                 text: '#ID',
                 formatter: (cell, row) => {
-                    return <Link to={`/project/${projectId}/contents/${slug}/${cell}`}>{cell}</Link>
+                    return <Link to={`/contents/${slug}/${cell}`}>{cell}</Link>
                 }
             }];
 

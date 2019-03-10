@@ -30,9 +30,8 @@ class ContentEdit extends React.Component {
     componentDidMount() {
         let params = this.props.match.params;
         let contentId = params.content_id;
-        let projectId = params.project_id;
         let slug = params.content_type_slug;
-        this.props.getCTFieldsAndGetContent(projectId, slug, contentId);
+        this.props.getCTFieldsAndGetContent(slug, contentId);
     }
 
     componentDidUpdate(prevProps) {

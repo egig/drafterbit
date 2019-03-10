@@ -8,22 +8,22 @@ import apiClient from '../../../apiClient';
 
 class ProjectNav extends React.Component {
 
-	constructor(props) {
-		super(props)
-		this.state  = {
-			contentTypes: []
-		}
-	}
+    constructor(props) {
+        super(props);
+        this.state  = {
+            contentTypes: []
+        };
+    }
 
-	componentDidMount() {
-		let client = apiClient.createClient({});
-		client.getContentTypes()
-			.then((contentTypes) => {
-				this.setState({
-					contentTypes: contentTypes
-				});
-			});
-	}
+    componentDidMount() {
+        let client = apiClient.createClient({});
+        client.getContentTypes()
+            .then((contentTypes) => {
+                this.setState({
+                    contentTypes: contentTypes
+                });
+            });
+    }
 
     render() {
 
@@ -49,7 +49,7 @@ class ProjectNav extends React.Component {
                     <ul className="nav flex-column mb-2">
                         {!this.state.contentTypes.length &&
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/content_types/new`}>
+                            <Link className="nav-link" to={'/content_types/new'}>
                                 <i className="icon-plus"/> Add Content Type
                             </Link>
                         </li>
@@ -71,17 +71,17 @@ class ProjectNav extends React.Component {
                     </h6>
                     <ul className="nav flex-column mb-2">
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/content_types`}>
+                            <Link className="nav-link" to={'/content_types'}>
                                 <i className="icon-puzzle"/> Content Types
                             </Link>
                         </li>
                         {/*<li className="nav-item">*/}
-                            {/*<Link className="nav-link" to={`/settings`}>*/}
-                                {/*<i className="icon-settings"/> Settings*/}
-                            {/*</Link>*/}
+                        {/*<Link className="nav-link" to={`/settings`}>*/}
+                        {/*<i className="icon-settings"/> Settings*/}
+                        {/*</Link>*/}
                         {/*</li>*/}
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/api_keys`}>
+                            <Link className="nav-link" to={'/api_keys'}>
                                 <i className="icon-key"/> Api Keys
                             </Link>
                         </li>

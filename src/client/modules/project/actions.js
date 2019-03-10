@@ -25,7 +25,7 @@ const setAjaxLoading = (isLoading) => {
 
 const getContentTypes = () => (dispatch) => {
 
-	console.log("getContentTypes in ACTIONS")
+    console.log('getContentTypes in ACTIONS');
 
     let client = apiClient.createClient({});
     client.getContentTypes()

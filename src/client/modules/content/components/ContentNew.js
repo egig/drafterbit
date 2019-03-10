@@ -27,9 +27,8 @@ class ContentNew extends React.Component {
     }
 
     componentDidMount() {
-        let projectId  = this.props.match.params.project_id;
         let slug  = this.props.match.params.content_type_slug;
-        this.props.getContentTypeFields(projectId, slug);
+        this.props.getContentTypeFields(slug);
     }
 
     render() {

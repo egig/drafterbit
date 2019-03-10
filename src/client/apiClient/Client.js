@@ -64,7 +64,7 @@ class Client {
     // }
 
     async getContentTypes() {
-        let response = await this.axiosInstance.get(`/content_types`);
+        let response = await this.axiosInstance.get('/content_types');
         return response.data;
     }
 
@@ -100,7 +100,7 @@ class Client {
     }
 
     async getApiKeys() {
-        let response = await this.axiosInstance.get(`/api_keys`);
+        let response = await this.axiosInstance.get('/api_keys');
         return response.data;
     }
 
@@ -110,7 +110,7 @@ class Client {
     }
 
     async createContentType(name, slug, description, fields) {
-        let response = await this.axiosInstance.post(`/content_types`, {
+        let response = await this.axiosInstance.post('/content_types', {
             name,
             slug,
             description,
@@ -166,7 +166,7 @@ class Client {
     }
 
     async createApiKey(name, key, restrictionType, restrictionValue) {
-        let response = await this.axiosInstance.post(`/api_keys`, {
+        let response = await this.axiosInstance.post('/api_keys', {
             name,
             key,
             restriction_type: restrictionType,

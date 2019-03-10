@@ -32,7 +32,7 @@ class ApiKeys extends React.Component {
         return (
             <ProjectLayout>
                 <Card headerText="Api Keys">
-                    <Link className="btn btn-success mb-3" to={`/api_keys/new`}>Create Api Key</Link>
+                    <Link className="btn btn-success mb-3" to={'/api_keys/new'}>Create Api Key</Link>
                     <BootstrapTable bootstrap4
                         keyField='_id'
                         data={ this.props.apiKeys }

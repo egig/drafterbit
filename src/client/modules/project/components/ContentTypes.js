@@ -32,7 +32,7 @@ class ContentTypes extends React.Component {
         return (
             <ProjectLayout>
                 <Card headerText="Content Types">
-                    <Link to={`/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
+                    <Link to={'/content_types/new'} className="btn btn-success mb-3">Add Content Type</Link>
                     <BootstrapTable bootstrap4
                         keyField='_id'
                         data={ this.props.contentTypes }

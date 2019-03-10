@@ -30,7 +30,7 @@ class Field extends React.Component {
 		        <label htmlFor={field.name}>{field.label}</label>
 		        {types[field.type_id]()}
 	        </div>
-        )
+        );
     }
 }
 
