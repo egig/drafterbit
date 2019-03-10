@@ -9,33 +9,28 @@ class Field extends React.Component {
         let value = this.props.value;
         let types = {
             '1': () => (
-                <div className="form-group">
-                    <label htmlFor={field.name}>{field.label}</label>
-                    <input value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
-                </div>
+	            <input value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
             ),
-
             '2': () => (
-                <div className="form-group">
-                    <label htmlFor={field.name}>{field.label}</label>
-                    <textarea value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
-                </div>
+	            <textarea value={value} onChange={this.props.onChange} name={field.name} type="text" className="form-control" />
             ),
             '3': () => (
-                <div className="form-group">
-                    <label htmlFor={field.name}>{field.label}</label>
-	                <RichText initialValue={value} onChange={this.props.onChange} />
-                </div>
+	            <RichText initialValue={value} onChange={this.props.onChange} />
             ),
 		        '4': () => (
-			        <div className="form-group">
-				        <label htmlFor={field.name}>{field.label}</label>
-				        <Relation relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value} />
-			        </div>
+			        <Relation relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value} />
+		        ),
+		        '5': () => (
+			        <Relation multiple={true} relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value ? value : []} />
 		        ),
         };
 
-        return types[field.type_id]();
+        return (
+	        <div className="form-group">
+		        <label htmlFor={field.name}>{field.label}</label>
+		        {types[field.type_id]()}
+	        </div>
+        )
     }
 }
 

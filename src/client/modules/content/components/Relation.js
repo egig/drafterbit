@@ -23,9 +23,9 @@ class Relation extends React.Component {
 
 	render() {
 		return (
-			<select className="form-control" id="type" onChange={this.props.onChange} value={this.props.value} >
+			<select multiple={this.props.multiple} className="form-control" id="type" onChange={this.props.onChange} value={this.props.value} >
 				{this.state.contents.map((c,i) => {
-					return <option key={c._id} value={c._id}>{c._id}</option>
+					return <option key={i} value={c._id}>{c._id}</option>
 				})}
 			</select>
 		);
