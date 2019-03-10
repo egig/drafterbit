@@ -50,16 +50,9 @@ router.get('/content_types/:content_type_id',
 
 /**
  * @swagger
- * /projects/:project_id/content_types:
+ * /content_types:
  *   get:
  *     description: Get content types
- *     parameters:
- *       - in: path
- *         name: project_id
- *         type: integer
- *         schema:
- *           type: integer
- *         required: true
  *     responses:
  *       200:
  *         description: success
@@ -67,19 +60,13 @@ router.get('/content_types/:content_type_id',
  *     tags:
  *        - Content Type
  */
-router.get('/projects/:project_id/content_types',
-    validateRequest({
-        project_id: {
-            notEmpty: true,
-            errorMessage: 'project_id required'
-        }
-    }),
+router.get('/content_types',
     function (req, res) {
         (async function () {
 
             try {
                 let r = new ContentTypeRepository(req.app);
-                let results = await r.getContentTypes(req.params.project_id);
+                let results = await r.getContentTypes();
                 res.send(results);
             } catch (e ) {
                 res.status(500);
@@ -91,16 +78,10 @@ router.get('/projects/:project_id/content_types',
 
 /**
  * @swagger
- * /projects/:project_id/content_types/:slug:
+ * /content_types/:slug:
  *   get:
  *     description: Get content type by slug
  *     parameters:
- *       - in: path
- *         name: project_id
- *         type: integer
- *         schema:
- *           type: integer
- *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -114,12 +95,8 @@ router.get('/projects/:project_id/content_types',
  *     tags:
  *        - Content Type
  */
-router.get('/projects/:project_id/content_types/:slug',
+router.get('/content_types/:slug',
     validateRequest({
-        project_id: {
-            notEmpty: true,
-            errorMessage: 'project_id is required'
-        },
         slug: {
             isString: true,
             errorMessage: 'slug is required'
@@ -130,7 +107,7 @@ router.get('/projects/:project_id/content_types/:slug',
 
             try {
                 let r = new ContentTypeRepository(req.app);
-                let result = await r.getContentTypeBySlug(req.params.project_id, req.params.slug);
+                let result = await r.getContentTypeBySlug(req.params.slug);
 
                 res.send(result);
             } catch (e ) {
@@ -145,18 +122,12 @@ router.get('/projects/:project_id/content_types/:slug',
 
 /**
  * @swagger
- * /projects/{project_id}/content_types:
+ * /content_types:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
- *       - in: path
- *         name: project_id
- *         type: string
- *         schema:
- *           type: string
- *         required: true
  *       - in: body
  *         name: content_type
  *         schema:
@@ -184,12 +155,8 @@ router.get('/projects/:project_id/content_types/:slug',
  *     tags:
  *        - Content Type
  */
-router.post('/projects/:project_id/content_types',
+router.post('/content_types',
     validateRequest({
-        project_id: {
-            notEmpty: true,
-            errorMessage: 'project_id required'
-        },
         name: {
             notEmpty: true,
             errorMessage: 'name is required'
@@ -215,7 +182,7 @@ router.post('/projects/:project_id/content_types',
             try {
                 let r = new ContentTypeRepository(req.app);
                 let results = await r.createContentType(req.body.name, req.body.slug,
-                    req.body.description, req.params.project_id, req.body.fields);
+                    req.body.description, req.body.fields);
                 res.send(results);
             } catch (e ) {
                 console.log(e);

@@ -159,8 +159,7 @@ class ApiKeyNew extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project,
-        apiKeys: state.project.apiKeys,
+        apiKeys: state.common.apiKeys,
     };
 };
 

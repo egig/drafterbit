@@ -3,9 +3,9 @@ const model = require('../model');
 
 class ApiKeyRespository extends BaseRespository {
 
-    getApiKeys(projectId) {
+    getApiKeys() {
         return new Promise((resolve, reject) => {
-            model.ApiKey.find({project: projectId}, function(err, apiKeys) {
+            model.ApiKey.find(function(err, apiKeys) {
                 if (err) return reject(err);
                 return resolve(apiKeys);
             });
@@ -21,9 +21,9 @@ class ApiKeyRespository extends BaseRespository {
         });
     }
 
-    getApiKeyByKey(key, projectId) {
+    getApiKeyByKey(key) {
         return new Promise((resolve, reject) => {
-            model.ApiKey.findOne({key: key, project:projectId}, function(err, apiKey) {
+            model.ApiKey.findOne({key: key}, function(err, apiKey) {
                 if (err) return reject(err);
                 return resolve(apiKey);
             });
@@ -32,14 +32,13 @@ class ApiKeyRespository extends BaseRespository {
 
     /**
      *
-     * @param projectId
      * @param name
      * @param key
      * @param restrictionType
      * @param restrictionValue
      * @return {Promise}
      */
-    createApiKey(projectId, name, key, restrictionType, restrictionValue) {
+    createApiKey( name, key, restrictionType, restrictionValue) {
         return new Promise((resolve, reject) => {
 
             let newApiKey = new model.ApiKey({
@@ -47,7 +46,6 @@ class ApiKeyRespository extends BaseRespository {
                 key,
                 restriction_type: restrictionType,
                 restriction_value: restrictionValue,
-                project: projectId
             });
 
             newApiKey.save((err, newApiKey) => {

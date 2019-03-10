@@ -18,12 +18,11 @@ class ContentTypeRepository extends BaseRespository {
 
 
     /**
-     * @param projectId
      * @return {Promise}
      */
-    getContentTypes(projectId) {
+    getContentTypes() {
         return new Promise((resolve, reject) => {
-            model.ContentType.find({project: projectId}, function(err, contentTypes) {
+            model.ContentType.find(function(err, contentTypes) {
                 if (err) return reject(err);
                 return resolve(contentTypes);
             });
@@ -33,14 +32,13 @@ class ContentTypeRepository extends BaseRespository {
 
     /**
      *
-     * @param projectId
      * @param slug
      * @return {Promise}
      */
-    getContentTypeBySlug(projectId, slug) {
+    getContentTypeBySlug(slug) {
         return new Promise((resolve, reject) => {
 
-            model.ContentType.findOne({project: projectId, slug: slug}, function(err, contentType) {
+            model.ContentType.findOne({slug: slug}, function(err, contentType) {
                 if (err) return reject(err);
                 return resolve(contentType);
             });
@@ -55,10 +53,9 @@ class ContentTypeRepository extends BaseRespository {
      * @param slug
      * @param description
      * @param fields
-     * @param projectId
      * @return {Promise}
      */
-    createContentType(name, slug, description, projectId, fields) {
+    createContentType(name, slug, description, fields) {
 
         return new Promise((resolve, reject) => {
 
@@ -67,7 +64,6 @@ class ContentTypeRepository extends BaseRespository {
                 slug,
                 description,
                 fields: fields,
-                project: projectId
             });
 
             newContentType.save((err, newContentType) => {

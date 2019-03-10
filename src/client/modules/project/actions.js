@@ -1,11 +1,5 @@
 import apiClient from '../../apiClient';
 
-const setProject = (projects) => {
-    return {
-        type: '@project/SET_PROJECT',
-        payload: projects
-    };
-};
 
 const setContentTypes = (contentTypes) => {
     return {
@@ -29,15 +23,14 @@ const setAjaxLoading = (isLoading) => {
 };
 
 
-const getContentTypes = (projectId) => (dispatch) => {
+const getContentTypes = () => (dispatch) => {
 
-    if(!projectId) {
-        return;
-    }
+	console.log("getContentTypes in ACTIONS")
 
     let client = apiClient.createClient({});
-    client.getContentTypes(projectId)
+    client.getContentTypes()
         .then((contentTypes) => {
+    	console.log(contentTypes);
             return dispatch(setContentTypes(contentTypes));
         });
 };
@@ -47,22 +40,6 @@ const getContentType = (contentTypeId) => (dispatch) => {
     client.getContentType(contentTypeId)
         .then((contentType) => {
             return dispatch(setContentType(contentType));
-        });
-};
-
-const getProject = (projectId) => (dispatch) => {
-    let client = apiClient.createClient({});
-    client.getProject(projectId)
-        .then((project) => {
-            return dispatch(setProject(project));
-        });
-};
-
-const createProject = (projectName, projectDescription, userId) => (dispatch) => {
-    let client = apiClient.createClient({});
-    return client.createProject(projectName, projectDescription, userId)
-        .then((project) => {
-            return true;
         });
 };
 
@@ -103,10 +80,8 @@ const updateContentType = (contentTypeId, name, slug, description) => (dispatch)
 
 
 export default {
-    getProject,
     getContentTypes,
     getContentType,
-    createProject,
     createContentType,
     deleteContentType,
     updateContentType

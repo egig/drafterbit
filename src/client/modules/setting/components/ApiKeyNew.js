@@ -29,7 +29,6 @@ class ApiKeyEdit extends React.Component {
         let restrictionValue = this.state.restrictedType === 0 ? '' : form.restriction_value.value;
 
         this.props.createApiKey(
-            this.props.project._id,
             form.name.value,
             form.key.value,
             this.state.restrictedType,
@@ -138,8 +137,7 @@ class ApiKeyEdit extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project,
-        apiKeys: state.project.apiKeys,
+        apiKeys: state.common.apiKeys,
     };
 };
 

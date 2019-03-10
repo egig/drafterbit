@@ -10,15 +10,15 @@ import LoaderTrap from '../../../components/LoaderTrap';
 
 class Layout extends React.Component {
 
-    componentDidMount() {
-        this.props.getProjects(this.props.user.id);
-    }
-
-    onProjectChange(select) {
-        if(select.value != 0) {
-            this.props.history.push(`/project/${select.value}`);
-        }
-    }
+    // componentDidMount() {
+    //     this.props.getProjects(this.props.user.id);
+    // }
+    //
+    // onProjectChange(select) {
+    //     if(select.value != 0) {
+    //         this.props.history.push(`/project/${select.value}`);
+    //     }
+    // }
 
     render() {
 
@@ -30,16 +30,16 @@ class Layout extends React.Component {
                     <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="/">
                         <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
                     </a>
-                    <form className={classNames.navbarForm}>
-                        <select onChange={(e) => {
-                            this.onProjectChange(e.target);
-                        }} className={classNames.navbarProjectSelector} value={this.props.project._id}>
-                            <option value={0}>{t('layout.select_project')}</option>
-                            {projects.map((p,i) => {
-                                return (<option key={i} value={p._id}>{p.name}</option>);
-                            })}
-                        </select>
-                    </form>
+                    {/*<form className={classNames.navbarForm}>*/}
+                        {/*<select onChange={(e) => {*/}
+                            {/*this.onProjectChange(e.target);*/}
+                        {/*}} className={classNames.navbarProjectSelector} value={this.props.project._id}>*/}
+                            {/*<option value={0}>{t('layout.select_project')}</option>*/}
+                            {/*{projects.map((p,i) => {*/}
+                                {/*return (<option key={i} value={p._id}>{p.name}</option>);*/}
+                            {/*})}*/}
+                        {/*</select>*/}
+                    {/*</form>*/}
                     <ul className="navbar-nav px-3">
                         <li className="nav-item text-nowrap">
                             <a className="nav-link" href="/logout">Logout</a>
@@ -64,8 +64,6 @@ Layout.defaultProps = {
 const mapStateToProps = (state) => {
     return {
         user: state.user.currentUser,
-        project: state.project.project,
-        projects: state.project.projects,
         isAjaxLoading: state.common.isAjaxLoading
     };
 };

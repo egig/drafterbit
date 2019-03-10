@@ -8,21 +8,21 @@ import { withRouter } from 'react-router';
 
 class ProjectLayout extends React.Component {
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.match.params.project_id !== this.props.match.params.project_id) {
-            this.props.getProject(nextProps.match.params.project_id);
-        }
-    }
-
-    componentDidMount(){
-        //TODO check if this is server-preloaded
-        this.props.getProject(this.props.match.params.project_id);
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if(nextProps.match.params.project_id !== this.props.match.params.project_id) {
+    //         this.props.getProject(nextProps.match.params.project_id);
+    //     }
+    // }
+    //
+    // componentDidMount(){
+    //     //TODO check if this is server-preloaded
+    //     this.props.getProject(this.props.match.params.project_id);
+    // }
 
     render() {
 
         return (
-            <Layout title={this.props.titel}>
+            <Layout title={this.props.title}>
                 <ProjectNav />
                 <main role="main" className={'col-md-9 ml-sm-auto col-lg-10 pt-3'}>
                     {this.props.children}
@@ -38,7 +38,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project
+        common: state.common
     };
 };
 

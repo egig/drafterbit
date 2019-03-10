@@ -19,14 +19,14 @@ class NewContentType extends React.Component {
     }
 
 		componentDidMount() {
-			this.props.getContentTypes(this.props.project._id);
+			this.props.getContentTypes();
 		}
 
-		componentDidUpdate(prevProps, prevState, snapshot) {
-			if(prevProps.project['_id'] !=  this.props.project._id) {
-				this.props.getContentTypes(this.props.project._id);
-			}
-		}
+		// componentDidUpdate(prevProps, prevState, snapshot) {
+		// 	if(prevProps.project['_id'] !=  this.props.project._id) {
+		// 		this.props.getContentTypes(this.props.project._id);
+		// 	}
+		// }
 
     addField(f) {
         this.setState({
@@ -40,7 +40,6 @@ class NewContentType extends React.Component {
             form.name.value,
             form.slug.value,
             form.description.value,
-            this.props.project._id,
             this.state.fields
         );
     }
@@ -159,9 +158,8 @@ class NewContentType extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-	    project: state.project.project,
-	    contentType: state.project.contentType,
-	    contentTypes: state.project.contentTypes,
+	    contentType: state.common.contentType,
+	    contentTypes: state.common.contentTypes,
     };
 };
 

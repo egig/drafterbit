@@ -10,14 +10,14 @@ import BootstrapTable from 'react-bootstrap-table-next';
 class ContentTypes extends React.Component {
 
     componentDidMount() {
-        this.props.getContentTypes(this.props.project._id);
+        this.props.getContentTypes();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.project['_id'] !=  this.props.project._id) {
-            this.props.getContentTypes(this.props.project._id);
-        }
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if(prevProps.project['_id'] !=  this.props.project._id) {
+    //         this.props.getContentTypes(this.props.project._id);
+    //     }
+    // }
 
     render() {
 
@@ -25,14 +25,14 @@ class ContentTypes extends React.Component {
             dataField: 'name',
             text: 'Name',
             formatter: (cell, row) => {
-                return <Link to={`/project/${this.props.project._id}/content_types/${row._id}`}>{cell}</Link>;
+                return <Link to={`/content_types/${row._id}`}>{cell}</Link>;
             }
         }];
 
         return (
             <ProjectLayout>
                 <Card headerText="Content Types">
-                    <Link to={`/project/${this.props.project._id}/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
+                    <Link to={`/content_types/new`} className="btn btn-success mb-3">Add Content Type</Link>
                     <BootstrapTable bootstrap4
                         keyField='_id'
                         data={ this.props.contentTypes }
@@ -48,8 +48,7 @@ class ContentTypes extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project,
-        contentTypes: state.project.contentTypes,
+        contentTypes: state.common.contentTypes,
     };
 };
 

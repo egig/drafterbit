@@ -10,7 +10,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 class ApiKeys extends React.Component {
 
     componentDidMount() {
-        this.props.getApiKeys(this.props.project._id);
+        this.props.getApiKeys();
     }
 
     render() {
@@ -20,7 +20,7 @@ class ApiKeys extends React.Component {
                 dataField: 'name',
                 text: 'Name',
                 formatter: (cell, row) => {
-                    return <Link to={`/project/${this.props.project._id}/api_keys/${row._id}/edit`}>{cell}</Link>;
+                    return <Link to={`/api_keys/${row._id}/edit`}>{cell}</Link>;
                 }
             },
             {
@@ -32,7 +32,7 @@ class ApiKeys extends React.Component {
         return (
             <ProjectLayout>
                 <Card headerText="Api Keys">
-                    <Link className="btn btn-success mb-3" to={`/project/${this.props.project._id}/api_keys/new`}>Create Api Key</Link>
+                    <Link className="btn btn-success mb-3" to={`/api_keys/new`}>Create Api Key</Link>
                     <BootstrapTable bootstrap4
                         keyField='_id'
                         data={ this.props.apiKeys }
@@ -48,8 +48,7 @@ class ApiKeys extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        project: state.project.project,
-        apiKeys: state.project.apiKeys,
+        apiKeys: state.common.apiKeys,
     };
 };
 

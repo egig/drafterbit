@@ -7,10 +7,10 @@ const setAjaxLoading = (isLoading) => {
     };
 };
 
-const setContentTypeField = (projects) => {
+const setContentTypeField = (ctFields) => {
     return {
         type: '@content/SET_CT_FIELD',
-        payload: projects
+        payload: ctFields
     };
 };
 
@@ -45,18 +45,18 @@ const getContent = (contentId) => (dispatch) => {
 };
 
 
-const getContentTypeFields = (projectId, ctSlug) => (dispatch) => {
+const getContentTypeFields = (ctSlug) => (dispatch) => {
     let client = apiClient.createClient({});
-    return client.getContentTypeFields(projectId, ctSlug)
+    return client.getContentTypeFields(ctSlug)
         .then((contentType) => {
             return dispatch(setContentTypeField(contentType));
         });
 };
 
-const getCTFieldsAndGetContent = (projectId, ctSlug, contentId) => (dispatch) => {
+const getCTFieldsAndGetContent = (ctSlug, contentId) => (dispatch) => {
     let client = apiClient.createClient({});
     return Promise.all([
-        client.getContentTypeFields(projectId, ctSlug)
+        client.getContentTypeFields(ctSlug)
             .then((contentType) => {
                 return dispatch(setContentTypeField(contentType));
             }),

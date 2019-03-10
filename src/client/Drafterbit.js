@@ -35,19 +35,17 @@ class Drafterbit extends React.Component {
                         <Route path="/forgot-password" component={ForgotPassword} />
                         <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
                         <Route path="/reset-password" component={ResetPassword} />
-                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/new" component={ContentNew} />
-                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug/:content_id" component={ContentEdit} />
-                        <ProtectedRoute path="/project/:project_id/contents/:content_type_slug" component={Contents} />
-                        <ProtectedRoute path="/project/:project_id/content_types/new" component={NewContentType} />
-                        <ProtectedRoute path="/project/:project_id/content_types/:content_type_id" component={ContentType} />
-                        <ProtectedRoute path="/project/:project_id/content_types" component={ContentTypes} />
-                        <ProtectedRoute path="/project/:project_id/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
-                        <ProtectedRoute path="/project/:project_id/api_keys/new" component={ApiKeyNew} />
-                        <ProtectedRoute path="/project/:project_id/api_keys" component={ApiKeys} />
-                        <ProtectedRoute path="/project/:project_id/settings" component={ProjectSetting} />
-                        <ProtectedRoute path="/project/new" component={NewProject} />
-                        <ProtectedRoute path="/project/:project_id" component={ContentTypes} />
-                        <ProtectedRoute path="/" component={Dashboard} />
+                        <ProtectedRoute path="/contents/:content_type_slug/new" component={ContentNew} />
+                        <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
+                        <ProtectedRoute path="/contents/:content_type_slug" component={Contents} />
+                        <ProtectedRoute path="/content_types/new" component={NewContentType} />
+                        <ProtectedRoute path="/content_types/:content_type_id" component={ContentType} />
+                        <ProtectedRoute path="/content_types" component={ContentTypes} />
+                        <ProtectedRoute path="/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
+                        <ProtectedRoute path="/api_keys/new" component={ApiKeyNew} />
+                        <ProtectedRoute path="/api_keys" component={ApiKeys} />
+                        <ProtectedRoute path="/settings" component={ProjectSetting} />
+                        <ProtectedRoute path="/" component={ContentTypes} />
                     </Switch>
                 </Provider>
             )} />

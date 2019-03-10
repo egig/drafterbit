@@ -7,7 +7,6 @@ import contentReducer from './modules/content/reducer';
 const rootReducer = combineReducers({
     common: commonReducer,
     user: userReducer,
-    project: projectReducer,
     content: contentReducer
 });
 

@@ -7,17 +7,9 @@ let router = express.Router();
 
 /**
  * @swagger
- * /projects/:project_id/api_keys:
+ * /api_keys:
  *   get:
  *     description: Get api keys
- *     parameters:
- *       - in: path
- *         name: project_id
- *         type: integer
- *         schema:
- *           type: integer
- *         required: true
- *
  *     responses:
  *       200:
  *         description: success
@@ -25,20 +17,14 @@ let router = express.Router();
  *     tags:
  *        - API Key
  */
-router.get('/projects/:project_id/api_keys',
-    validateRequest({
-        project_id: {
-            notEmpty: true,
-            errorMessage: 'project_id is required'
-        }
-    }),
+router.get('/api_keys',
     function (req, res) {
 
         (async function () {
 
             try {
                 let r = new ApiKeyRespository(req.app);
-                let results = await r.getApiKeys(req.params.project_id);
+                let results = await r.getApiKeys();
                 res.send(results);
             } catch (e ) {
                 res.status(500);
@@ -51,18 +37,12 @@ router.get('/projects/:project_id/api_keys',
 
 /**
  * @swagger
- * /projects/:project_id/api_keys:
+ * /api_keys:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create api key
  *     parameters:
- *       - in: path
- *         name: project_id
- *         type: string
- *         schema:
- *           type: string
- *         required: true
  *       - in: body
  *         name: payload
  *         schema:
@@ -86,12 +66,8 @@ router.get('/projects/:project_id/api_keys',
  *     tags:
  *        - API Key
  */
-router.post('/projects/:project_id/api_keys',
+router.post('/api_keys',
     validateRequest({
-        project_id: {
-            notEmpty: true,
-            errorMessage: 'project_id is required'
-        },
         name: {
             isString: true,
             errorMessage: 'name is required'
@@ -114,7 +90,6 @@ router.post('/projects/:project_id/api_keys',
                 let r = new ApiKeyRespository(req.app);
                 // TODO validation
                 await r.createApiKey(
-                    req.params.project_id,
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
                     req.body.restriction_type,
