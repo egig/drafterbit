@@ -8,6 +8,7 @@ const i18next = require('i18next');
 const expressValidator = require('express-validator');
 const i18nextExpressMiddleware = require('i18next-express-middleware');
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
 
 
 const routes = require('./routes');
@@ -79,7 +80,7 @@ mongoose.connect(config.get('MONGODB_URL'));
 
 app.use(routes);
 
-app.get('*', function (req, res) {
+app.get('/_admin', function (req, res) {
 
     delete require.cache[require.resolve('./defaultState')];
     let defaultState = require('./defaultState');
@@ -117,5 +118,16 @@ app.get('*', function (req, res) {
             </body>
         </html>`);
 });
+
+let options = {
+	swaggerUrl: '/_swagger_spec.json'
+}
+
+app.use(
+	'/',
+	swaggerUi.serve,
+	swaggerUi.setup(null, options)
+);
+
 
 module.exports = app;

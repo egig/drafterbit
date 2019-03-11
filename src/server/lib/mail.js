@@ -1,4 +1,3 @@
-const Mailjet = require ('node-mailjet');
 const axios = require('axios');
 const config = require('../../config');
 
