@@ -18,7 +18,6 @@ router.get("/_swagger_spec.json",  function (req, res) {
 					"version": "1.0"
 				},
 				"produces": ["application/json"],
-				"host": "localhost:8000",
 				"basePath": "/",
 			}
 

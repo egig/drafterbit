@@ -78,8 +78,6 @@ app.get('/logout', (req, res) => {
 
 mongoose.connect(config.get('MONGODB_URL'));
 
-app.use(routes);
-
 app.get('/_admin', function (req, res) {
 
     delete require.cache[require.resolve('./defaultState')];
@@ -125,9 +123,17 @@ let options = {
 
 app.use(
 	'/',
-	swaggerUi.serve,
-	swaggerUi.setup(null, options)
+	swaggerUi.serve
 );
 
+app.get(
+	'/',
+	swaggerUi.setup(null, options),
+	(req,res, next) => {
+		next()
+	}
+);
+
+app.use(routes);
 
 module.exports = app;
