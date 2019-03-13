@@ -1,17 +1,18 @@
 const React = require('react');
+import { Card as BaseCard, CardHeader, CardBody} from 'reactstrap';
 
 class Card extends React.Component {
 
     render() {
         return (
-            <div className="card">
+            <BaseCard>
                 {this.props.headerText &&
-                <h5 className="card-header">{this.props.headerText}</h5>
+                <CardHeader>{this.props.headerText}</CardHeader>
                 }
-                <div className="card-body">
+                <CardBody>
                     {this.props.children}
-                </div>
-            </div>
+                </CardBody>
+            </BaseCard>
         );
     }
 }

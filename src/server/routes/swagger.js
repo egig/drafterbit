@@ -18,6 +18,7 @@ router.get("/_swagger_spec.json",  function (req, res) {
 					"version": "1.0"
 				},
 				"produces": ["application/json"],
+				"host": "",
 				"basePath": "/",
 			}
 
@@ -28,7 +29,7 @@ router.get("/_swagger_spec.json",  function (req, res) {
 					return {
 						in: "body",
 						name: f.name,
-						type: "string",
+						type: getSwaggerDataType(f.type_id),
 						description: f.label
 					}
 				});
@@ -74,6 +75,20 @@ router.get("/_swagger_spec.json",  function (req, res) {
 
 	})();
 });
+
+// TODO handle typeId relation
+const getSwaggerDataType = function getSwaggerDataType(typeId) {
+	switch (parseInt(typeId)) {
+		case 1:
+		case 2:
+		case 3:
+			return 'string';
+			break;
+		case 6:
+			return 'number';
+			break;
+	}
+}
 
 
 module.exports = router;

@@ -54,8 +54,15 @@ router.get('/:slug',
 			try {
 				let r = new ContentRepository(req.app);
 				let results = await r.getContents(req.contentType.id);
-				res.send(results);
-			} catch (e ) {
+				let contents = results.map((r) => {
+					let content = {};
+					r.fields.map(f => {
+						content[f.name] = f.value
+					});
+					return content;
+				});
+				res.send(contents);
+			} catch (e) {
 				res.status(500);
 				res.send(e.message);
 			}

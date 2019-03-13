@@ -23,6 +23,9 @@ class Field extends React.Component {
 		        '5': () => (
 			        <Relation multiple={true} relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value ? value : []} />
 		        ),
+		        '6': () => (
+			        <input value={value} onChange={this.props.onChange} name={field.name} type="number" className="form-control" />
+		        ),
         };
 
         return (

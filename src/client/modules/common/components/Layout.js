@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import translate from '../../../translate';
 import { withRouter } from 'react-router';
 import LoaderTrap from '../../../components/LoaderTrap';
+import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 
 class Layout extends React.Component {
 
@@ -26,29 +27,19 @@ class Layout extends React.Component {
 
         return (
             <span>
-                <nav className={`${classNames.navbar} navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0`}>
-                    <a className={`${classNames.navbarBrand} navbar-brand col-sm-3 col-md-2 mr-0`} href="/">
-                        <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
-                    </a>
-                    {/*<form className={classNames.navbarForm}>*/}
-                    {/*<select onChange={(e) => {*/}
-                    {/*this.onProjectChange(e.target);*/}
-                    {/*}} className={classNames.navbarProjectSelector} value={this.props.project._id}>*/}
-                    {/*<option value={0}>{t('layout.select_project')}</option>*/}
-                    {/*{projects.map((p,i) => {*/}
-                    {/*return (<option key={i} value={p._id}>{p.name}</option>);*/}
-                    {/*})}*/}
-                    {/*</select>*/}
-                    {/*</form>*/}
-                    <ul className="navbar-nav px-3">
-                        <li className="nav-item text-nowrap">
-                            <a className="nav-link" href="/logout">Logout</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div className="container-fluid">
+	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0">
+		            <NavbarBrand className={`${classNames.navbarBrand} col-sm-3 col-md-2 mr-0`}>
+                    <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
+		            </NavbarBrand>
+		            <Nav navbar className="px-3">
+		              <NavItem className="text-nowrap">
+		                <NavLink href="/logout">Logout</NavLink>
+		              </NavItem>
+		            </Nav>
+	            </Navbar>
+                <Container fluid="true">
                     {this.props.children}
-                </div>
+                </Container>
                 {this.props.isAjaxLoading &&
                     <LoaderTrap />
                 }

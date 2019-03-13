@@ -121,6 +121,7 @@ class NewContentType extends React.Component {
 			                            		fieldTypeSelected: e.target.value
 			                            	});
 			                            }}>
+				                            <option value="6">Number</option>
 				                            <option value="1">Short Text</option>
 				                            <option value="2">Long Text</option>
 				                            <option value="3">Rich Text</option>
