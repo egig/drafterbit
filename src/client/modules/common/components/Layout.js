@@ -37,7 +37,7 @@ class Layout extends React.Component {
 		              </NavItem>
 		            </Nav>
 	            </Navbar>
-                <Container fluid="true">
+                <Container fluid>
                     {this.props.children}
                 </Container>
                 {this.props.isAjaxLoading &&

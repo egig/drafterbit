@@ -5,7 +5,7 @@ class Card extends React.Component {
 
     render() {
         return (
-            <BaseCard>
+            <BaseCard className={this.props.className}>
                 {this.props.headerText &&
                 <CardHeader>{this.props.headerText}</CardHeader>
                 }
