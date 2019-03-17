@@ -20,6 +20,7 @@ class Field extends React.Component {
 		        '4': () => (
 			        <Relation relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value} />
 		        ),
+		        // TODO fix multiple relation
 		        '5': () => (
 			        <Relation multiple={true} relatedContentTypeId={field.related_content_type_id}  onChange={this.props.onChange} value={value ? value : []} />
 		        ),

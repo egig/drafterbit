@@ -78,7 +78,7 @@ app.get('/logout', (req, res) => {
 
 mongoose.connect(config.get('MONGODB_URL'));
 
-app.get('/_admin', function (req, res) {
+app.get('/', function (req, res) {
 
     delete require.cache[require.resolve('./defaultState')];
     let defaultState = require('./defaultState');
@@ -135,12 +135,12 @@ let options = {
 }
 
 app.use(
-	'/',
+	'/_swagger',
 	swaggerUi.serve
 );
 
 app.get(
-	'/',
+	'/_swagger',
 	swaggerUi.setup(null, options),
 	(req,res, next) => {
 		next()

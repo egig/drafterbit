@@ -52,15 +52,15 @@ router.get('/:slug',
 		(async function () {
 
 			try {
-				let r = new ContentRepository(req.app);
-				let results = await r.getContents(req.contentType.id);
-				let contents = results.map((r) => {
-					let content = {};
-					r.fields.map(f => {
-						content[f.name] = f.value
-					});
-					return content;
+				let repo = new ContentRepository(req.app);
+				let results = await repo.getContents(req.contentType.id);
+
+				let contents = results.map(async (r) => {
+					return await formatField(r.fields, repo);
 				});
+
+				contents = await Promise.all(contents);
+
 				res.send(contents);
 			} catch (e) {
 				res.status(500);
@@ -69,5 +69,22 @@ router.get('/:slug',
 
 		})();
 	});
+
+
+async function formatField(fields, repo) {
+	let content = {};
+	let rFields = fields.map( async f => {
+		content[f.name] = f.value;
+		// Get detail if its relation
+		// TODO prevent infinite loop here
+		if(f.type_id == 4) {
+			let a = await repo.getContent(f.value);
+			let b = await formatField(a.fields, repo);
+			content[f.name] = b;
+		}
+	});
+	await Promise.all(rFields);
+	return content;
+}
 
 module.exports = router;
