@@ -69,7 +69,7 @@ class ProjectNav extends React.Component {
                     <h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
                         <span><i className="icon-equalizer"/> General</span>
                     </h6>
-                    <ul className="nav flex-column mb-2">
+                    <ul className="nav flex-column mb-2 side-menu">
                         <li className="nav-item">
                             <Link className="nav-link" to={'/content_types'}>
                                 <i className="icon-puzzle"/> Content Types

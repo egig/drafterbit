@@ -18,7 +18,8 @@ module.exports = {
         height: 'calc(100vh - 48px)',
         paddingTop: '.5rem',
         overflowX: 'hidden',
-        overflowY: 'auto' /* Scrollable contents if viewport is shorter than content. */
+        overflowY: 'auto', /* Scrollable contents if viewport is shorter than content. */
+	      borderRight: '1px solid #bbb'
     },
 
 

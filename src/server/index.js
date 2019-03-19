@@ -73,7 +73,7 @@ app.post('/login', function (req, res) {
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 mongoose.connect(config.get('MONGODB_URL'));
@@ -113,7 +113,7 @@ app.get('/', function (req, res) {
 								}
 								.card-header { border-bottom: 1px solid #bbbbbb; }
 								.card-footer { border-top: 1px solid #bbbbbb; }
-								.nav-link:hover, .nav-link:focus {
+								.side-menu .nav-link:hover, .side-menu .nav-link:focus {
 								    background: #E4E5E6;
 								}
                 </style>
