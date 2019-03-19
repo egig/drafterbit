@@ -83,11 +83,11 @@ app.get('/', function (req, res) {
     delete require.cache[require.resolve('./defaultState')];
     let defaultState = require('./defaultState');
 
-    defaultState.common.language = req.language;
-    defaultState.common.languages = req.languages;
+    defaultState.COMMON.language = req.language;
+    defaultState.COMMON.languages = req.languages;
 
     if(req.user) {
-        defaultState.user.currentUser = req.user;
+        defaultState.USER.currentUser = req.user;
     }
 
     let drafterbitConfig = {
@@ -131,20 +131,20 @@ app.get('/', function (req, res) {
 });
 
 let options = {
-	swaggerUrl: '/_swagger_spec.json'
-}
+    swaggerUrl: '/_swagger_spec.json'
+};
 
 app.use(
-	'/_swagger',
-	swaggerUi.serve
+    '/_swagger',
+    swaggerUi.serve
 );
 
 app.get(
-	'/_swagger',
-	swaggerUi.setup(null, options),
-	(req,res, next) => {
-		next()
-	}
+    '/_swagger',
+    swaggerUi.setup(null, options),
+    (req,res, next) => {
+        next();
+    }
 );
 
 app.use(routes);

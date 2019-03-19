@@ -2,10 +2,11 @@ const React = require('react');
 const {connect} = require('react-redux');
 const {bindActionCreators } = require('redux');
 const actions = require ('../actions');
-const ProjectLayout =  require('../../project/components/ProjectLayout');
+const Layout =  require('../../common/components/Layout');
 const Field = require('./Field');
 const Notify = require('../../../components/Notify');
 const Card = require('../../../components/Card/Card');
+const { Row, Col } = require('reactstrap');
 
 class ContentEdit extends React.Component {
 
@@ -49,69 +50,71 @@ class ContentEdit extends React.Component {
 
     render() {
         return (
-            <ProjectLayout>
-                <div className="col-8">
-                    <Card headerText="Add Content" >
-                        <form onSubmit={e => {
-                            e.preventDefault();
-                            this.onSubmit(e.target);
-                        }} >
-                            {this.props.contentTypeFields.map((f,i) => {
+            <Layout>
+	            <Row>
+		            <Col md="8">
+			            <Card headerText="Add Content" >
+				            <form onSubmit={e => {
+                                e.preventDefault();
+                                this.onSubmit(e.target);
+                            }} >
+					            {this.props.contentTypeFields.map((f,i) => {
 
 
-                                let value = this.formData[f.name] ? this.formData[f.name].value : '';
+						            let value = this.formData[f.name] ? this.formData[f.name].value : '';
 
-                                // CKEditor
-                                if(f.type_id =='3') {
-                                    return <Field value={value} onChange={(e) => {
+						            // CKEditor
+						            if(f.type_id =='3') {
+							            return <Field value={value} onChange={(e) => {
 
-                                        this.formData[f.name] = {
-                                            label: f.label,
-                                            type_id: f.type_id,
-                                            name: f.name,
-                                            value: e.target.getContent()
-                                        };
+                                            this.formData[f.name] = {
+                                                label: f.label,
+                                                type_id: f.type_id,
+                                                name: f.name,
+                                                value: e.target.getContent()
+                                            };
 
-                                    }} key={i} field={f} />;
-                                }
+                                        }} key={i} field={f} />;
+						            }
 
-                                return <Field value={value} onChange={e => {
+						            return <Field value={value} onChange={e => {
 
-                                    let value = e.target.value;
-                                    this.setState(oldState => {
+                                        let value = e.target.value;
+                                        this.setState(oldState => {
 
-                                        let formData = oldState.formData;
-                                        formData[f.name] = {
-                                            label: f.label,
-                                            type_id: f.type_id,
-                                            name: f.name,
-                                            value
-                                        };
-                                        return Object.assign({}, oldState, {
-                                            formData
+                                            let formData = oldState.formData;
+                                            formData[f.name] = {
+                                                label: f.label,
+                                                type_id: f.type_id,
+                                                name: f.name,
+                                                value
+                                            };
+                                            return Object.assign({}, oldState, {
+                                                formData
+                                            });
+
                                         });
 
-                                    });
 
+                                    }} key={i} field={f} />;
+					            })}
 
-                                }} key={i} field={f} />;
-                            })}
-
-                            <div className="form-group">
-                                <button type="submit" className="btn btn-success">Save</button>
-                            </div>
-                        </form>
-                    </Card>
-                </div>
-                {this.state.successText && <Notify type="success" message={this.state.successText} />}
-            </ProjectLayout>);
+					            <div className="form-group">
+						            <button type="submit" className="btn btn-success">Save</button>
+					            </div>
+				            </form>
+			            </Card>
+		            </Col>
+	            </Row>
+	            {this.state.successText && <Notify type="success" message={this.state.successText} />}
+            </Layout>);
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        content: state.content.content,
-        contentTypeFields: state.content.ctFields.fields
+        content: state.CONTENT.content,
+        contentTypeFields: state.CONTENT.ctFields.fields
     };
 };
 

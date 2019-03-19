@@ -1,14 +1,15 @@
 const React = require('react');
-import ProjectLayout from '../ProjectLayout';
-import actions from '../../actions';
+import Layout from '../../common/components/Layout';
+import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Modal from '../../../../components/Modal';
-import Card from '../../../../components/Card/Card';
+import Modal from '../../../components/Modal';
+import Card from '../../../components/Card/Card';
 import _ from 'lodash';
-const { getFieldTypes } = require('../../../../../fieldTypes');
+const { getFieldTypes } = require('../../../../fieldTypes');
 
-class NewContentType extends React.Component {
+// TODO create blank content type instead and save as draft
+class ContentTypeNew extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,7 +48,7 @@ class NewContentType extends React.Component {
     render() {
 
         return (
-            <ProjectLayout>
+            <Layout>
                 <div className="row">
                     <div className="col-6">
                         <Card headerText="New Content Type" >
@@ -122,7 +123,7 @@ class NewContentType extends React.Component {
 			                            	});
 			                            }}>
 				                            {getFieldTypes().map((f,i) => {
-				                            	return <option key={i} value={f.id}>{f.name}</option>
+				                            	return <option key={i} value={f.id}>{f.name}</option>;
 				                            })}
 			                            </select>
 		                            </div>
@@ -149,15 +150,15 @@ class NewContentType extends React.Component {
                         </div>
                     </Modal>
                 }
-            </ProjectLayout>
+            </Layout>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-	    contentType: state.common.contentType,
-	    contentTypes: state.common.contentTypes,
+	    contentType: state.CONTENT_TYPE.contentType,
+	    contentTypes: state.CONTENT_TYPE.contentTypes,
     };
 };
 
@@ -165,4 +166,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewContentType);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentTypeNew);

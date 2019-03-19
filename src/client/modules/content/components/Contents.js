@@ -1,5 +1,5 @@
 const React = require('react');
-import ProjectLayout from '../../project/components/ProjectLayout';
+import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
@@ -107,7 +107,7 @@ class Contents extends React.Component {
         };
 
         return (
-            <ProjectLayout>
+            <Layout>
                 <Card headerText="Contents">
                     <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
                     {!!this.state.selected.length &&
@@ -122,15 +122,15 @@ class Contents extends React.Component {
                                     hover
                                     condensed/>
                 </Card>
-            </ProjectLayout>
+            </Layout>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        ctFields: state.content.ctFields,
-        contents: state.content.contents
+        ctFields: state.CONTENT.ctFields,
+        contents: state.CONTENT.contents
     };
 };
 

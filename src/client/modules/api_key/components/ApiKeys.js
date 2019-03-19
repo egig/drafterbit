@@ -1,5 +1,5 @@
 const React = require('react');
-import ProjectLayout from '../../project/components/ProjectLayout';
+import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
@@ -30,7 +30,7 @@ class ApiKeys extends React.Component {
         ];
 
         return (
-            <ProjectLayout>
+            <Layout>
                 <Card headerText="Api Keys">
                     <Link className="btn btn-success mb-3" to={'/api_keys/new'}>Create Api Key</Link>
                     <BootstrapTable bootstrap4
@@ -41,14 +41,14 @@ class ApiKeys extends React.Component {
                         hover
                         condensed />
                 </Card>
-            </ProjectLayout>
+            </Layout>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        apiKeys: state.common.apiKeys,
+        apiKeys: state.API_KEY.apiKeys,
     };
 };
 

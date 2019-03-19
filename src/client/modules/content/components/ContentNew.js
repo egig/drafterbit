@@ -2,12 +2,13 @@ const React = require('react');
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import ProjectLayout from '../../project/components/ProjectLayout';
+import Layout from '../../common/components/Layout';
 import Field from './Field';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
 const { Row, Col } = require('reactstrap');
 
+// TODO create blank content instead and save as draft
 class ContentNew extends React.Component {
 
     constructor(props) {
@@ -34,36 +35,36 @@ class ContentNew extends React.Component {
 
     render() {
         return (
-            <ProjectLayout>
+            <Layout>
 	            <Row>
 		            <Col md="8">
 			            <Card headerText="Add Content" >
 				            <form onSubmit={e => {
-                            e.preventDefault();
-                            this.onSubmit(e.target);
-                        }} >
+                                e.preventDefault();
+                                this.onSubmit(e.target);
+                            }} >
 					            {this.props.ctFields.fields.map((f,i) => {
 
 						            // TinyMCE
 						            if(f.type_id =='3') {
 							            return <Field onChange={(e) => {
+                                            this.formData[f.name] = {
+                                                label: f.label,
+                                                type_id: f.type_id,
+                                                name: f.name,
+                                                value: e.target.getContent(),
+                                            };
+                                        }} key={i} field={f} />;
+						            }
+
+						            return <Field onChange={e => {
                                         this.formData[f.name] = {
                                             label: f.label,
                                             type_id: f.type_id,
                                             name: f.name,
-                                            value: e.target.getContent(),
+                                            value: e.target.value,
                                         };
                                     }} key={i} field={f} />;
-						            }
-
-						            return <Field onChange={e => {
-                                    this.formData[f.name] = {
-                                        label: f.label,
-                                        type_id: f.type_id,
-                                        name: f.name,
-                                        value: e.target.value,
-                                    };
-                                }} key={i} field={f} />;
 					            })}
 
 					            <div className="form-group">
@@ -74,13 +75,13 @@ class ContentNew extends React.Component {
 		            </Col>
 	            </Row>
                 {this.state.successText && <Notify type="success" message={this.state.successText} />}
-            </ProjectLayout>);
+            </Layout>);
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        ctFields: state.content.ctFields
+        ctFields: state.CONTENT.ctFields
     };
 };
 

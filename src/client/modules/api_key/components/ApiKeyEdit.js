@@ -1,5 +1,5 @@
 const React = require('react');
-import ProjectLayout from '../../project/components/ProjectLayout';
+import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
@@ -63,7 +63,7 @@ class ApiKeyNew extends React.Component {
     render() {
 
         return (
-            <ProjectLayout>
+            <Layout>
                 <div className="row">
                     <div className="col-6">
                         <Card headerText="Edit Api Key" >
@@ -152,14 +152,14 @@ class ApiKeyNew extends React.Component {
                 {this.state.successText &&
                 <Notify type="success" message={this.state.successText} />
                 }
-            </ProjectLayout>
+            </Layout>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        apiKeys: state.common.apiKeys,
+        apiKeys: state.API_KEY.apiKeys,
     };
 };
 

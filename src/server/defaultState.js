@@ -1,25 +1,29 @@
 module.exports = {
-    common: {
+    COMMON: {
         language: 'en',
         languages: ['en', 'id'],
         isAjaxLoading: false,
-		    content_types: [],
-		    contentType: {
-			    fields: []
-		    },
-		    contentTypes: [],
-		    apiKeys: []
     },
-    user: {
+    USER: {
         loggedIn: 0,
         currentUser: {},
         users: []
     },
-    content: {
+    CONTENT_TYPE: {
+        content_types: [],
+        contentType: {
+            fields: []
+        },
+        contentTypes: []
+    },
+    CONTENT: {
         content: {
             fields: []
         },
         contents: [],
         ctFields: {fields: []}
+    },
+    API_KEY: {
+        apiKeys: []
     }
 };

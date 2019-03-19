@@ -9,7 +9,7 @@ const setAjaxLoading = (isLoading) => {
 
 const setApiKeys = (contentTypes) => {
     return {
-        type: '@project/SET_API_KEYS',
+        type: '@api_key/SET_API_KEYS',
         payload: contentTypes
     };
 };

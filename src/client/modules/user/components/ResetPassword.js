@@ -64,7 +64,7 @@ class ResetPassword extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentUser: state.user.currentUser
+        currentUser: state.USER.currentUser
     };
 };
 

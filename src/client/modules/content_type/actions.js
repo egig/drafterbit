@@ -1,16 +1,17 @@
 import apiClient from '../../apiClient';
+const {SET_CONTENT_TYPE, SET_CONTENT_TYPES}  = require('./action_types');
 
 
 const setContentTypes = (contentTypes) => {
     return {
-        type: '@project/SET_CONTENT_TYPES',
+        type: SET_CONTENT_TYPES,
         payload: contentTypes
     };
 };
 
 const setContentType = (contentType) => {
     return {
-        type: '@project/SET_CONTENT_TYPE',
+        type: SET_CONTENT_TYPE,
         payload: contentType
     };
 };

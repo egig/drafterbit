@@ -14,5 +14,5 @@ const ProtectedRoute = (route) => (
 export default connect(
 
     state => ({
-        currentUser: state.user.currentUser
+        currentUser: state.USER.currentUser
     }))(ProtectedRoute);

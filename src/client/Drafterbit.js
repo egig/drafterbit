@@ -11,17 +11,15 @@ import ForgotPassword from './modules/user/components/ForgotPassword';
 import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
 import Dashboard from './modules/common/components/Dashboard';
-import NewProject from './modules/project/components/NewProject';
-import ContentTypes from './modules/project/components/ContentTypes';
-import ContentType from './modules/project/components/ContentType';
-import NewContentType from './modules/project/components/ContentType/NewContentType';
+import ContentTypes from './modules/content_type/components/ContentTypes';
+import ContentType from './modules/content_type/components/ContentType';
+import ContentTypeNew from './modules/content_type/components/ContentTypeNew';
 import Contents from './modules/content/components/Contents';
 import ContentNew from './modules/content/components/ContentNew';
 import ContentEdit from './modules/content/components/ContentEdit';
-import ApiKeys from './modules/setting/components/ApiKeys';
-import ApiKeyNew from './modules/setting/components/ApiKeyNew';
-import ApiKeyEdit from './modules/setting/components/ApiKeyEdit';
-import ProjectSetting from './modules/setting/components/ProjectSetting';
+import ApiKeys from './modules/api_key/components/ApiKeys';
+import ApiKeyNew from './modules/api_key/components/ApiKeyNew';
+import ApiKeyEdit from './modules/api_key/components/ApiKeyEdit';
 
 class Drafterbit extends React.Component {
     render() {
@@ -38,13 +36,12 @@ class Drafterbit extends React.Component {
                         <ProtectedRoute path="/contents/:content_type_slug/new" component={ContentNew} />
                         <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
                         <ProtectedRoute path="/contents/:content_type_slug" component={Contents} />
-                        <ProtectedRoute path="/content_types/new" component={NewContentType} />
+                        <ProtectedRoute path="/content_types/new" component={ContentTypeNew} />
                         <ProtectedRoute path="/content_types/:content_type_id" component={ContentType} />
                         <ProtectedRoute path="/content_types" component={ContentTypes} />
                         <ProtectedRoute path="/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
                         <ProtectedRoute path="/api_keys/new" component={ApiKeyNew} />
                         <ProtectedRoute path="/api_keys" component={ApiKeys} />
-                        <ProtectedRoute path="/settings" component={ProjectSetting} />
                         <ProtectedRoute path="/" component={ContentTypes} />
                     </Switch>
                 </Provider>

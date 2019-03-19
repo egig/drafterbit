@@ -1,5 +1,5 @@
 const React = require('react');
-import ProjectLayout from './ProjectLayout';
+import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
@@ -30,7 +30,7 @@ class ContentTypes extends React.Component {
         }];
 
         return (
-            <ProjectLayout>
+            <Layout>
                 <Card headerText="Content Types">
                     <Link to={'/content_types/new'} className="btn btn-success mb-3">Add Content Type</Link>
                     <BootstrapTable bootstrap4
@@ -41,14 +41,14 @@ class ContentTypes extends React.Component {
                         hover
                         condensed />
                 </Card>
-            </ProjectLayout>
+            </Layout>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        contentTypes: state.common.contentTypes,
+        contentTypes: state.CONTENT_TYPE.contentTypes,
     };
 };
 

@@ -1,12 +1,12 @@
 const React = require('react');
 import { Link } from 'react-router-dom';
-import Style from './ProjectNav.style';
+import Style from './SideNav.style';
 import withStyle from '../../../withStyle';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import apiClient from '../../../apiClient';
 
-class ProjectNav extends React.Component {
+class SideNav extends React.Component {
 
     constructor(props) {
         super(props);
@@ -94,8 +94,8 @@ class ProjectNav extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        common: state.common
+        common: state.COMMON
     };
 };
 
-export default withRouter(connect(mapStateToProps)(withStyle(Style)(ProjectNav)));
+module.exports =  withRouter(connect(mapStateToProps)(withStyle(Style)(SideNav)));

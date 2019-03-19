@@ -8,6 +8,7 @@ import translate from '../../../translate';
 import { withRouter } from 'react-router';
 import LoaderTrap from '../../../components/LoaderTrap';
 import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
+const SideNav = require('./SideNav');
 
 class Layout extends React.Component {
 
@@ -29,7 +30,7 @@ class Layout extends React.Component {
             <span>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0">
 		            <NavbarBrand className={`${classNames.navbarBrand} col-sm-3 col-md-2 mr-0`}>
-                    <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
+                        <img  className={classNames.navbarBrandImg} src="/img/dtlogo57-light.png" alt="drafterbit"/>
 		            </NavbarBrand>
 		            <Nav navbar className="px-3">
 		              <NavItem className="text-nowrap">
@@ -38,7 +39,10 @@ class Layout extends React.Component {
 		            </Nav>
 	            </Navbar>
                 <Container fluid>
-                    {this.props.children}
+	                <SideNav />
+	                <main role="main" className={'col-md-9 ml-sm-auto col-lg-10 pt-3'}>
+                        {this.props.children}
+	                </main>
                 </Container>
                 {this.props.isAjaxLoading &&
                     <LoaderTrap />
@@ -54,8 +58,8 @@ Layout.defaultProps = {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user.currentUser,
-        isAjaxLoading: state.common.isAjaxLoading
+        user: state.USER.currentUser,
+        isAjaxLoading: state.COMMON.isAjaxLoading
     };
 };
 
@@ -64,5 +68,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default translate(['translation'])(withRouter(withStyle(Style)(
+module.exports =  translate(['translation'])(withRouter(withStyle(Style)(
     connect(mapStateToProps, mapDispatchToProps)(Layout))));
