@@ -1,12 +1,12 @@
 const React = require('react');
 import ProjectLayout from '../ProjectLayout';
-import { Link } from 'react-router-dom';
 import actions from '../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from '../../../../components/Modal';
 import Card from '../../../../components/Card/Card';
 import _ from 'lodash';
+const { getFieldTypes } = require('../../../../../fieldTypes');
 
 class NewContentType extends React.Component {
     constructor(props) {
@@ -121,12 +121,9 @@ class NewContentType extends React.Component {
 			                            		fieldTypeSelected: e.target.value
 			                            	});
 			                            }}>
-				                            <option value="6">Number</option>
-				                            <option value="1">Short Text</option>
-				                            <option value="2">Long Text</option>
-				                            <option value="3">Rich Text</option>
-				                            <option value="4">Relation to One</option>
-				                            <option value="5">Relation to Many</option>
+				                            {getFieldTypes().map((f,i) => {
+				                            	return <option key={i} value={f.id}>{f.name}</option>
+				                            })}
 			                            </select>
 		                            </div>
 		                            {!!_.includes([4,5], parseInt(this.state.fieldTypeSelected)) &&

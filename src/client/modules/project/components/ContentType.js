@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
+const { getFieldTypeName } = require('../../../../fieldTypes');
 
 class ContentType extends React.Component {
 
@@ -113,7 +114,7 @@ class ContentType extends React.Component {
                                     return (
                                         <tr key={i}>
                                             <td>{f.name}</td>
-                                            <td>{f.type}</td>
+                                            <td>{getFieldTypeName(f.type_id)}</td>
                                         </tr>
                                     );
                                 })}
