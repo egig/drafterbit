@@ -38,4 +38,4 @@ class Field extends React.Component {
     }
 }
 
-module.exports = Field;
+export default Field;

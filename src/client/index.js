@@ -17,6 +17,8 @@ import 'tinymce/themes/silver/theme';
 import 'tinymce/plugins/paste';
 import 'tinymce/plugins/link';
 
+import './index.css';
+
 // Initialize the app
 tinymce.init({
     selector: '#tiny',

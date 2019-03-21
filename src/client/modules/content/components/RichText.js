@@ -19,4 +19,4 @@ class RichText extends React.Component {
 }
 
 
-module.exports = RichText;
+export default RichText;

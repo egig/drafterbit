@@ -65,4 +65,4 @@ Drafterbit.childContextTypes = {
     languageContext: PropTypes.object.isRequired
 };
 
-module.exports = Drafterbit;
+export default Drafterbit;

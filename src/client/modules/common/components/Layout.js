@@ -68,5 +68,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-module.exports =  translate(['translation'])(withRouter(withStyle(Style)(
+export default translate(['translation'])(withRouter(withStyle(Style)(
     connect(mapStateToProps, mapDispatchToProps)(Layout))));

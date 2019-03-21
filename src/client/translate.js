@@ -4,7 +4,7 @@ const React = require('react');
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-module.exports = function translate(namespaces: Array<string>) {
+export default function translate(namespaces) {
 
     function getDisplayName(WrappedComponent) {
         return WrappedComponent.displayName || WrappedComponent.name || 'Component';

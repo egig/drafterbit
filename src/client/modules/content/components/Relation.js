@@ -33,4 +33,4 @@ class Relation extends React.Component {
 }
 
 
-module.exports = Relation;
+export default Relation;

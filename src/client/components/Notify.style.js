@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     notifyWrapper: {
         position: 'fixed',
         top: '15%',

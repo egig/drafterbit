@@ -1,4 +1,4 @@
-module.exports = {
+export default{
 
     formControlBorder: {
         borderWidth: '2.3px',

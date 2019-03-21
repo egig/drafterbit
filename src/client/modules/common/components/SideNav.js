@@ -98,4 +98,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-module.exports =  withRouter(connect(mapStateToProps)(withStyle(Style)(SideNav)));
+export default withRouter(connect(mapStateToProps)(withStyle(Style)(SideNav)));

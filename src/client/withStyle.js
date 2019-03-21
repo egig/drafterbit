@@ -28,4 +28,4 @@ const withStyle = function withStyle(style) {
     };
 };
 
-module.exports = withStyle;
+export default withStyle;

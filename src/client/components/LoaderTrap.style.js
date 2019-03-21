@@ -1,4 +1,4 @@
-module.exports = {
+export default{
     loaderTrap: {
         position: 'fixed',
         top: '0',

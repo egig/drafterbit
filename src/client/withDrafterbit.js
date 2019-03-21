@@ -21,4 +21,4 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
     return DrafterbitHOC;
 };
 
-module.exports = withDrafterbit;
+export default withDrafterbit;

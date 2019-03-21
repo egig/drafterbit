@@ -13,4 +13,4 @@ const rootReducer = combineReducers({
     API_KEY: apiKeyReducer,
 });
 
-module.exports = rootReducer;
+export default rootReducer;

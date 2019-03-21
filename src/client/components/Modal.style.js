@@ -1,4 +1,4 @@
-module.exports = {
+export default{
     modalTrap: {
         position: 'fixed',
         top: '0',

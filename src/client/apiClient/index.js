@@ -6,4 +6,4 @@ const apiClient = {
     },
 };
 
-module.exports = apiClient;
+export default apiClient;

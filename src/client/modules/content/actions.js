@@ -102,7 +102,7 @@ const deleteContents = (contentIds, formData) => (dispatch) => {
 
 
 
-module.exports = {
+export default{
     getContentTypeFields,
     createContent,
     updateContent,
