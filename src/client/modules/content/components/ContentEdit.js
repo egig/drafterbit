@@ -53,7 +53,7 @@ class ContentEdit extends React.Component {
             <Layout>
 	            <Row>
 		            <Col md="8">
-			            <Card headerText="Add Content" >
+			            <Card headerText="Edit Content" >
 				            <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);

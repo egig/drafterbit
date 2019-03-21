@@ -47,6 +47,7 @@
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap-table-next": "^2.2.0",
+    "react-bootstrap-table2-paginator": "^2.0.4",
     "react-dom": "^16.8.4",
     "react-fast-compare": "^2.0.4",
     "react-helmet": "^5.2.0",
@@ -95,7 +96,7 @@
     "styledump": "node converter.js > public/css/common.css",
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
     "flow": "flow",
-    "copy-css": "cp -r node_modules/tinymce/skins public; cp -R node_modules/bootstrap/dist public/vendor; cp -R node_modules/simple-line-icons public/vendor; cp -R node_modules/react-bootstrap-table-next/dist public/vendor/react-bootstrap-table-next",
+    "copy-css": "./scripts/copy_assets.sh",
     "copy-img": "cp -R img public",
     "wdio": "wdio"
   },
