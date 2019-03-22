@@ -1,5 +1,5 @@
-const axios = require('axios');
-const handleAxiosError = require('./handleAxiosError');
+import axios from 'axios';
+import handleAxiosError from './handleAxiosError';
 
 class Client {
 

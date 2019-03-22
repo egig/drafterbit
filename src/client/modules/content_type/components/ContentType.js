@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
-const { getFieldTypeName } = require('../../../../fieldTypes');
-const { Row, Col } = require('reactstrap');
+import { getFieldTypeName } from '../../../../fieldTypes';
+import { Row, Col } from 'reactstrap';
 
 
 class ContentType extends React.Component {

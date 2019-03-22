@@ -1,5 +1,5 @@
 import apiClient from '../../apiClient';
-const {SET_CONTENT_TYPE, SET_CONTENT_TYPES}  = require('./action_types');
+import {SET_CONTENT_TYPE, SET_CONTENT_TYPES} from './action_types';
 
 
 const setContentTypes = (contentTypes) => {

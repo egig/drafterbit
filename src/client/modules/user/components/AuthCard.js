@@ -1,7 +1,7 @@
-const React = require('react');
+import React from 'react';
 import Style from './AuthCard.style';
 import withStyle from '../../../withStyle';
-const { Container, Card, CardBody, CardHeader, CardTitle } = require('reactstrap');
+import { Container, Card, CardBody, CardHeader, CardTitle } from 'reactstrap';
 
 class AuthCard extends React.Component {
 

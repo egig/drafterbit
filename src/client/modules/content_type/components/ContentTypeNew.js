@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import Layout from '../../common/components/Layout';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Modal from '../../../components/Modal';
 import Card from '../../../components/Card/Card';
 import _ from 'lodash';
-const { getFieldTypes } = require('../../../../fieldTypes');
+import { getFieldTypes } from '../../../../fieldTypes';
 
 // TODO create blank content type instead and save as draft
 class ContentTypeNew extends React.Component {

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import withStyle from '../withStyle';
 import Style from './Modal.style';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';

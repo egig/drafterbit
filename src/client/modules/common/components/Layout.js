@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import withStyle from '../../../withStyle';
 import Style from './Layout.style';
 import actions from '../actions';
@@ -8,7 +8,7 @@ import translate from '../../../translate';
 import { withRouter } from 'react-router';
 import LoaderTrap from '../../../components/LoaderTrap';
 import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
-const SideNav = require('./SideNav');
+import SideNav from './SideNav';
 
 class Layout extends React.Component {
 

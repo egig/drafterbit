@@ -1,9 +1,7 @@
-const Client = require('./Client');
+import Client from './Client';
 
-const apiClient = {
-    createClient: (options) => {
-        return new Client(options);
-    },
+export default {
+	createClient: (options) => {
+		return new Client(options);
+	},
 };
-
-export default apiClient;

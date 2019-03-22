@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
@@ -6,7 +6,7 @@ import Layout from '../../common/components/Layout';
 import Field from './Field';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
-const { Row, Col } = require('reactstrap');
+import { Row, Col } from 'reactstrap';
 
 // TODO create blank content instead and save as draft
 class ContentNew extends React.Component {

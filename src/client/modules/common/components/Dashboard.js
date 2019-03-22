@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import Layout from './Layout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';

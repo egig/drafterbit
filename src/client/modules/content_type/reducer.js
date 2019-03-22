@@ -1,4 +1,4 @@
-const { SET_CONTENT_TYPES, SET_CONTENT_TYPE } = require('./action_types');
+import { SET_CONTENT_TYPES, SET_CONTENT_TYPE } from './action_types';
 
 export default function reducer(state = {}, action) {
     switch (action.type) {

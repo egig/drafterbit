@@ -1,6 +1,6 @@
-const React = require('react');
-const RichText = require('./RichText');
-const Relation = require('./Relation');
+import React from 'react';
+import RichText from './RichText';
+import Relation  from './Relation';
 
 class Field extends React.Component {
 

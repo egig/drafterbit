@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import Style from './ForgotPassword.style';
 import AuthCard from './AuthCard';

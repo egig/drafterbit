@@ -1,4 +1,2 @@
-module.exports  = {
-    SET_CONTENT_TYPES: '@content_type/SET_CONTENT_TYPES',
-    SET_CONTENT_TYPE: '@content_type/SET_CONTENT_TYPE'
-};
+export const SET_CONTENT_TYPES = '@content_type/SET_CONTENT_TYPES';
+export const SET_CONTENT_TYPE = '@content_type/SET_CONTENT_TYPE';

@@ -1,12 +1,12 @@
-const React = require('react');
-const {connect} = require('react-redux');
-const {bindActionCreators } = require('redux');
-const actions = require ('../actions');
-const Layout =  require('../../common/components/Layout');
-const Field = require('./Field');
-const Notify = require('../../../components/Notify');
-const Card = require('../../../components/Card/Card');
-const { Row, Col } = require('reactstrap');
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import actions from '../actions';
+import Layout from '../../common/components/Layout';
+import Field from './Field';
+import Notify from '../../../components/Notify';
+import Card from '../../../components/Card/Card';
+import { Row, Col } from 'reactstrap';
 
 class ContentEdit extends React.Component {
 

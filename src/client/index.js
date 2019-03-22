@@ -1,12 +1,12 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Drafterbit = require('./Drafterbit');
-const { HashRouter } = require('react-router-dom');
-const storeFromState = require('./storeFromState');
-const moment = require('moment');
-const createJSSInstance = require('../createJSSInstance');
-const i18next = require('i18next');
-const apiClient = require('./apiClient');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import  Drafterbit from './Drafterbit';
+import { HashRouter } from 'react-router-dom';
+import storeFromState  from './storeFromState';
+import moment from 'moment';
+import createJSSInstance from '../createJSSInstance';
+import i18next from 'i18next';
+import apiClient from './apiClient';
 // Import TinyMCE
 import tinymce from 'tinymce/tinymce';
 
