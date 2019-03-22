@@ -104,19 +104,7 @@ app.get('/', function (req, res) {
                 <link rel="stylesheet" type="text/css" href="/vendor/react-bootstrap-table-next/react-bootstrap-table2.css"  />
                 <link rel="stylesheet" type="text/css" href="/vendor/simple-line-icons/css/simple-line-icons.css" />
                 <link rel="stylesheet" type="text/css" href="/css/common.css" />
-                <style>
-                body {
-								    background-color: #E4E5E6;
-								}
-								.card {
-									border: 1px solid #bbbbbb;
-								}
-								.card-header { border-bottom: 1px solid #bbbbbb; }
-								.card-footer { border-top: 1px solid #bbbbbb; }
-								.side-menu .nav-link:hover, .side-menu .nav-link:focus {
-								    background: #E4E5E6;
-								}
-                </style>
+                <link rel="stylesheet" type="text/css" href="/main.css" />
             </head>
             <body>
                 <div id="app" ></div>
