@@ -1,8 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import Style from './ForgotPassword.style';
 import AuthCard from './AuthCard';
-import withStyle from '../../../withStyle';
 
 class ForgotPassword extends React.Component {
 
@@ -13,8 +11,6 @@ class ForgotPassword extends React.Component {
 
     render() {
 
-        let classes = this.props.classNames;
-
         return (
             <AuthCard title="Forgot Password">
                 <Helmet>
@@ -23,14 +19,14 @@ class ForgotPassword extends React.Component {
                 <form onSubmit={(e) => { e.preventDefault(); this.onSubmit(e.target); }}>
                     <div className="form-group">
                         <label htmlFor="email">E-Mail</label>
-                        <input type="email" name="email" className={`form-control ${classes.formControlBorder}`} id="email" aria-describedby="emailHelp"/>
+                        <input type="email" name="email" className={`form-control auth_card-formControlBorder`} id="email" aria-describedby="emailHelp"/>
                         <div className="form-text text-muted">
                             By clicking "Reset Password" we will send a password reset link
                         </div>
                     </div>
 
-                    <div className={`form-group no-margin ${classes.noMargin}`}>
-                        <button type="submit" className={`btn btn-success btn-block ${classes.btnPadding}`}>
+                    <div className={`form-group no-margin auth_card-noMargin`}>
+                        <button type="submit" className={`btn btn-success btn-block auth_card-btnPadding`}>
                             Submit
                         </button>
                     </div>
@@ -40,4 +36,4 @@ class ForgotPassword extends React.Component {
     }
 }
 
-export default withStyle(Style)(ForgotPassword);
+export default ForgotPassword;
