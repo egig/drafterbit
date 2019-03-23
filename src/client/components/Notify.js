@@ -1,7 +1,7 @@
 import React from 'react';
-import withStyle from '../withStyle';
-import Style from './Notify.style';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+import './Notify.css';
 
 class Notify extends React.Component {
 
@@ -42,16 +42,15 @@ class Notify extends React.Component {
 
     render() {
 
-        let { classNames } = this.props;
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-                    enter: classNames.notifyEnter,
-                    enterActive: classNames.notifyEnterActive,
-                    leave: classNames.notifyLeave,
-                    leaveActive: classNames.notifyLeaveActive,
-                    appear: classNames.notifyAppear,
-                    appearActive: classNames.notifyAppearActive
+                    enter: "notifyEnter",
+                    enterActive: "notifyEnterActive",
+                    leave: "notifyLeave",
+                    leaveActive: "notifyLeaveActive",
+                    appear: "notifyAppear",
+                    appearActive: 'notifyAppearActive'
                 }}
                 transitionAppear={true}
                 transitionAppearTimeout={400}
@@ -59,8 +58,8 @@ class Notify extends React.Component {
                 transitionLeaveTimeout={200}>
                 {this.state.messages.map((m,i) => {
                     return (
-                        <div key={i} className={classNames.notifyWrapper}>
-                            <div className={`alert alert-${this.props.type} ${classNames.alertComponent}`}>
+                        <div key={i} className="notifyWrapper">
+                            <div className={`alert alert-${this.props.type} alertComponent`}>
                                 <button onClick={e => {
                                     this.setState({
                                         messages: []
@@ -81,4 +80,4 @@ Notify.defaultProps = {
     isActive: false
 };
 
-export default withStyle(Style)(Notify);
+export default Notify;

@@ -4,7 +4,6 @@ import  Drafterbit from './Drafterbit';
 import { HashRouter } from 'react-router-dom';
 import storeFromState  from './storeFromState';
 import moment from 'moment';
-import createJSSInstance from '../createJSSInstance';
 import i18next from 'i18next';
 import apiClient from './apiClient';
 // Import TinyMCE
@@ -26,7 +25,6 @@ tinymce.init({
 });
 
 
-const jss = createJSSInstance();
 const drafterbit = {
     apiClient: apiClient.createClient({
         baseURL: 'htt://localhost:3003'
@@ -52,7 +50,7 @@ let languageContext = {namespaces: [], i18n};
 ReactDOM.render(
     <HashRouter>
         <Drafterbit
-            store={store} jss={jss}
+            store={store}
             drafterbit={drafterbit}
             languageContext={languageContext} />
     </HashRouter>, document.getElementById('app'));

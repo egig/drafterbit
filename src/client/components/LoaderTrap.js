@@ -1,27 +1,27 @@
 import React from 'react';
-import withStyle from '../withStyle';
-import Style from './LoaderTrap.style';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+import './LoaderTrap.css';
 
 class LoaderTrap extends React.Component {
     render() {
-        let { classNames } = this.props;
+
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-                    enter: classNames.loaderEnter,
-                    enterActive: classNames.loaderEnterActive,
-                    leave: classNames.loaderLeave,
-                    leaveActive: classNames.loaderLeaveActive,
-                    appear: classNames.loaderAppear,
-                    appearActive: classNames.loaderAppearActive
+                    enter: 'loaderEnter',
+                    enterActive: 'loaderEnterActive',
+                    leave: 'loaderLeave',
+                    leaveActive: 'loaderLeaveActive',
+                    appear: 'loaderAppear',
+                    appearActive: 'loaderAppearActive'
                 }}
                 transitionAppear={true}
                 transitionAppearTimeout={200}
                 transitionEnter={false}
                 transitionLeaveTimeout={200}>
-                <div className={classNames.loaderTrap}>
-                    <div className={classNames.loaderImgContainer}>
+                <div className="loaderTrap">
+                    <div className="loaderImgContainer">
                         <img src="/img/ajax-loader.svg" />
                     </div>
                 </div>
@@ -34,4 +34,4 @@ LoaderTrap.defaultProps = {
     isActive: false
 };
 
-export default withStyle(Style)(LoaderTrap);
+export default LoaderTrap;

@@ -53,7 +53,6 @@ class Drafterbit extends React.Component {
     getChildContext() {
         return {
             drafterbit: this.props.drafterbit,
-            jss: this.props.jss,
             languageContext: this.props.languageContext
         };
     }
@@ -61,7 +60,6 @@ class Drafterbit extends React.Component {
 
 Drafterbit.childContextTypes = {
     drafterbit: PropTypes.object.isRequired,
-    jss: PropTypes.object.isRequired,
     languageContext: PropTypes.object.isRequired
 };
 

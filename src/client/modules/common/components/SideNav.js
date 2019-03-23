@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Style from './SideNav.style';
-import withStyle from '../../../withStyle';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import apiClient from '../../../apiClient';
+
+import './SideNav.css';
 
 class SideNav extends React.Component {
 
@@ -27,23 +27,11 @@ class SideNav extends React.Component {
 
     render() {
 
-        let { classNames, match } = this.props;
-
         return (
-            <nav className={`col-md-2 d-none d-md-block bg-light ${classNames.sidebar}`}>
-                <div className={classNames.sidebarSticky}>
-                    {/*<h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>*/}
-                    {/*<span><i className="icon-grid"/> Dashboard</span>*/}
-                    {/*</h6>*/}
-                    {/*<ul className="nav flex-column">*/}
-                    {/*<li className="nav-item">*/}
-                    {/*<Link className="nav-link" to={`/project/${match.params.project_id}`}>*/}
-                    {/*<i className="icon-home"/> Home*/}
-                    {/*</Link>*/}
-                    {/*</li>*/}
-                    {/*</ul>*/}
+            <nav className={`col-md-2 d-none d-md-block bg-light sidebar`}>
+                <div className="sidebarSticky">
 
-                    <h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
+                    <h6 className={`sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
                         <span><i className="icon-docs"/> Content</span>
                     </h6>
                     <ul className="nav flex-column mb-2">
@@ -66,7 +54,7 @@ class SideNav extends React.Component {
                         })}
                     </ul>
 
-                    <h6 className={`${classNames.sidebarHeading} d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
+                    <h6 className={`sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted`}>
                         <span><i className="icon-equalizer"/> General</span>
                     </h6>
                     <ul className="nav flex-column mb-2 side-menu">
@@ -98,4 +86,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps)(withStyle(Style)(SideNav)));
+export default withRouter(connect(mapStateToProps)(SideNav));

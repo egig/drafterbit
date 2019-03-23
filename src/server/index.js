@@ -103,7 +103,6 @@ app.get('/', function (req, res) {
                   <!--TODO include react-table only when we need it -->
                 <link rel="stylesheet" type="text/css" href="/vendor/react-bootstrap-table-next/react-bootstrap-table2.css"  />
                 <link rel="stylesheet" type="text/css" href="/vendor/simple-line-icons/css/simple-line-icons.css" />
-                <link rel="stylesheet" type="text/css" href="/css/common.css" />
                 <link rel="stylesheet" type="text/css" href="/main.css" />
             </head>
             <body>
