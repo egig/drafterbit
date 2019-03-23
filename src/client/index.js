@@ -1,14 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import  Drafterbit from './Drafterbit';
 import { HashRouter } from 'react-router-dom';
-import storeFromState  from './storeFromState';
 import moment from 'moment';
 import i18next from 'i18next';
-import apiClient from './apiClient';
-// Import TinyMCE
 import tinymce from 'tinymce/tinymce';
-
 // A theme is also required
 import 'tinymce/themes/silver/theme';
 
@@ -16,7 +11,17 @@ import 'tinymce/themes/silver/theme';
 import 'tinymce/plugins/paste';
 import 'tinymce/plugins/link';
 
+
+// CSS dependency first
+import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.css';
 import './index.css';
+
+import  Drafterbit from './Drafterbit';
+import storeFromState  from './storeFromState';
+import apiClient from './apiClient';
+
 
 // Initialize the app
 tinymce.init({

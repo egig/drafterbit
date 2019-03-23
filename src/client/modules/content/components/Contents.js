@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import Card from '../../../components/Card/Card';
-import BootstrapTable from 'react-bootstrap-table-next';
+import Table from '../../../components/Table';
 
 class Contents extends React.Component {
 
@@ -113,14 +113,12 @@ class Contents extends React.Component {
                     {!!this.state.selected.length &&
                       <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
                     }
-                    <BootstrapTable bootstrap4
-                                    keyField='_id'
-                                    data={ data }
-                                    columns={ columns }
-                                    selectRow={selectRow}
-                                    striped
-                                    hover
-                                    condensed/>
+                    <Table
+                        keyField='_id'
+                        data={ data }
+                        columns={ columns }
+                        selectRow={selectRow}
+                    />
                 </Card>
             </Layout>
         );

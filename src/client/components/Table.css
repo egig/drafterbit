@@ -1,0 +1,4 @@
+.drafterbit-table th:first-child,
+.drafterbit-table td:first-child {
+    padding: 0 10px 0 10px;
+}

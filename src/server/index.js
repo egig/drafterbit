@@ -97,11 +97,9 @@ app.get('/', function (req, res) {
     return res.send(`<!DOCTYPE html>
           <html>
             <head>
-                    <meta charSet="utf-8" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-                    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.css" />
-                  <!--TODO include react-table only when we need it -->
-                <link rel="stylesheet" type="text/css" href="/vendor/react-bootstrap-table-next/react-bootstrap-table2.css"  />
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+              <!--TODO include react-table only when we need it -->
                 <link rel="stylesheet" type="text/css" href="/vendor/simple-line-icons/css/simple-line-icons.css" />
                 <link rel="stylesheet" type="text/css" href="/main.css" />
             </head>
