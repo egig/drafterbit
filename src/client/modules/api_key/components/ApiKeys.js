@@ -5,7 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card/Card';
-import BootstrapTable from 'react-bootstrap-table-next';
+import DataTable from '../../../components/DataTable';
 
 class ApiKeys extends React.Component {
 
@@ -33,8 +33,8 @@ class ApiKeys extends React.Component {
             <Layout>
                 <Card headerText="Api Keys">
                     <Link className="btn btn-success mb-3" to={'/api_keys/new'}>Create Api Key</Link>
-                    <BootstrapTable bootstrap4
-                        keyField='_id'
+                    <DataTable
+                        idField='_id'
                         data={ this.props.apiKeys }
                         columns={ columns }
                         striped

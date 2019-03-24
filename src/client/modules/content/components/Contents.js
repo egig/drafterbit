@@ -13,7 +13,14 @@ class Contents extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { selected: [], contents: [], contentCount:0 };
+        this.state = {
+        	selected: [],
+	        contents: [],
+	        contentCount:0,
+	        sortBy: "",
+	        sortDir: 'asc'
+        };
+
         this.handleOnSelect = this.handleOnSelect.bind(this);
         this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -135,6 +142,16 @@ class Contents extends React.Component {
                         selected={this.state.selected}
                         onSelect={this.handleOnSelect}
                         onSelectAll={this.handleOnSelectAll}
+                        sortBy={this.state.sortBy}
+	                      sortDir={this.state.sortDir}
+	                      onSort={(dataField, sortDir) => {
+	                      	this.setState((prevState) => {
+	                      		return {
+	                      			sortBy: dataField,
+	                      			sortDir: prevState.sortDir == 'desc' ? 'asc' : 'desc'
+	                      		}
+	                      	})
+	                      }}
                         currentPage={page}
                         totalPageCount={Math.ceil(this.state.contentCount/10)}
                         renderPaginationLink={(p) => (

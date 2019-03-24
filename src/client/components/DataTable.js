@@ -1,12 +1,25 @@
 import React from 'react';
 import { Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import createPagination from './createPagination';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 
 import './DataTable.css';
 
 class DataTable extends React.Component {
 
 	render() {
+
+		function renderCaret(dataField, sortBy, sortDir) {
+			if(sortBy == dataField) {
+				if(sortDir == 'asc') {
+					return <FontAwesomeIcon icon={faSortUp} className="float-right" />
+				}
+
+				return <FontAwesomeIcon icon={faSortDown} className="float-right" />
+			}
+			return <FontAwesomeIcon icon={faSort} className="float-right" color="#cccccc" />;
+		}
 
 		return (
 			<div>
@@ -28,7 +41,12 @@ class DataTable extends React.Component {
 								/>
 							</th>
 							{this.props.columns.map((c,i) => {
-								return <th key={i}>{c.text} <i className="fa fa-fw fa-sort"/> </th>
+								return <th onClick={e => {
+									this.props.onSort(c.dataField, this.props.sortDir);
+								}} style={{cursor: 'pointer'}} key={i}>
+									{c.text}
+									{renderCaret(c.dataField, this.props.sortBy, this.props.sortDir)}
+								</th>
 							})}
 						</tr>
 					</thead>
@@ -37,9 +55,9 @@ class DataTable extends React.Component {
 						this.props.data.map((d,i) => {
 							return (
 								<tr key={i}>
-									<th><input onChange={e => {
+									<td><input onChange={e => {
 										this.props.onSelect(e.target.checked, d)
-									}} checked={this.props.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" /></th>
+									}} checked={this.props.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" /></td>
 									{this.props.columns.map((c,i) => {
 										if(typeof c.formatter == 'function') {
 											return c.formatter(d[c.dataField], d);
@@ -74,6 +92,11 @@ DataTable.defaultProps = {
 	columns: [],
 	currentPage: 1,
 	totalPageCount: 1,
+	onSort: function (dataField, sortDir) {
+		
+	},
+	sortBy: null,
+	sortDir: null,
 	renderPaginationLink: function (p) {
 		return (
 			<PaginationLink className="page-link" href={p}>

@@ -5,7 +5,7 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Card from '../../../components/Card/Card';
-import BootstrapTable from 'react-bootstrap-table-next';
+import DataTable from '../../../components/DataTable';
 
 class ContentTypes extends React.Component {
 
@@ -33,8 +33,8 @@ class ContentTypes extends React.Component {
             <Layout>
                 <Card headerText="Content Types">
                     <Link to={'/content_types/new'} className="btn btn-success mb-3">Add Content Type</Link>
-                    <BootstrapTable bootstrap4
-                        keyField='_id'
+                    <DataTable
+                        idField='_id'
                         data={ this.props.contentTypes }
                         columns={ columns }
                         striped
