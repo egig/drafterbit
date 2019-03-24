@@ -1,7 +1,6 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { Pagination, PaginationItem } from 'reactstrap';
-import { withRouter, Link } from 'react-router-dom';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import createPagination from './createPagination';
 
 import './Table.css';
@@ -9,13 +8,22 @@ import './Table.css';
 class Table extends React.Component {
 
 	render() {
+
+		const selectRow = {
+			mode: 'checkbox',
+			clickToSelect: true,
+			selected: this.props.selected,
+			onSelect: this.props.onSelect,
+			onSelectAll: this.props.onSelectAll
+		};
+
 		return (
 			<div>
 				<BootstrapTable bootstrap4
 				                keyField={this.props.keyField}
 				                data={ this.props.data }
 				                columns={ this.props.columns }
-				                selectRow={this.props.selectRow}
+				                selectRow={selectRow}
 				                striped
 				                hover
 				                condensed
@@ -25,9 +33,7 @@ class Table extends React.Component {
 					{createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
 						return (
 							<PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
-								<Link className="page-link" to={this.props.match.url+"?page="+p}>
-									{p}
-								</Link>
+								{this.props.renderPaginationLink(p)}
 							</PaginationItem>
 						)
 					})}
@@ -42,7 +48,14 @@ Table.defaultProps = {
 	data: [],
 	columns: [],
 	currentPage: 1,
-	totalPageCount: 1
-}
+	totalPageCount: 1,
+	renderPaginationLink: function (p) {
+		return (
+			<PaginationLink className="page-link" href={p}>
+				{p}
+			</PaginationLink>
+		)
+	}
+};
 
-export default withRouter(Table);
+export default Table;

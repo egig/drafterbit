@@ -120,14 +120,6 @@ class Contents extends React.Component {
             });
         });
 
-        const selectRow = {
-            mode: 'checkbox',
-            clickToSelect: true,
-            selected: this.state.selected,
-            onSelect: this.handleOnSelect,
-            onSelectAll: this.handleOnSelectAll
-        };
-
         return (
             <Layout>
                 <Card headerText="Contents">
@@ -139,9 +131,14 @@ class Contents extends React.Component {
                         keyField='_id'
                         data={ data }
                         columns={ columns }
-                        selectRow={selectRow}
-                        currentPage='1'
+                        selected={this.state.selected}
+                        onSelect={this.handleOnSelect}
+                        onSelectAll={this.handleOnSelectAll}
+                        currentPage={page}
                         totalPageCount={Math.ceil(this.state.contentCount/10)}
+                        renderPaginationLink={(p) => (
+                        	<Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
+                        )}
                     />
                 </Card>
             </Layout>
