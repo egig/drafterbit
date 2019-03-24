@@ -59,11 +59,17 @@ class DataTable extends React.Component {
 										this.props.onSelect(e.target.checked, d)
 									}} checked={this.props.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" /></td>
 									{this.props.columns.map((c,i) => {
-										if(typeof c.formatter == 'function') {
-											return c.formatter(d[c.dataField], d);
-										} else {
-											return <td key={i}>{d[c.dataField]}</td>
-										}
+										return (
+											<td key={i}>
+												{(() => {
+													if(typeof c.formatter == 'function') {
+														return c.formatter(d[c.dataField], d);
+													} else {
+														return d[c.dataField]
+													}
+												})()}
+											</td>
+										)
 									})}
 								</tr>
 							);
