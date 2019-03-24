@@ -58,6 +58,12 @@ router.get('/contents/:content_id',
  *         schema:
  *           type: integer
  *         required: true
+ *       - in: query
+ *         name: page
+ *         type: integer
+ *         schema:
+ *           type: integer
+ *         required: true
  *     responses:
  *       200:
  *         description: success
@@ -76,10 +82,18 @@ router.get('/content_types/:content_type_id/contents',
 
         (async function () {
 
+	        let page = req.query.page || 1;
+	        const PER_PAGE = 10;
+	        let offset = (page*PER_PAGE) - PER_PAGE;
+	        let max = PER_PAGE;
+
             try {
                 let r = new ContentRepository(req.app);
                 // TODO validation to req.body
-                let results = await r.getContents(req.params.content_type_id);
+                let results = await r.getContents(req.params.content_type_id, offset, max);
+                let count = await r.getCount(req.params.content_type_id);
+                res.set("DT-Data-Count", count);
+                res.set("DT-Page-Number", page);
                 res.send(results);
             } catch (e ) {
                 res.status(500);

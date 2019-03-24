@@ -131,7 +131,7 @@ class Client {
         return response.data;
     }
 
-    async getContentTypeFields(slug) {
+    async getContentTypeFields(slug, page) {
         let response = await this.axiosInstance.get(`/content_types/${slug}`);
         return response.data;
     }
@@ -155,8 +155,12 @@ class Client {
         return response.data;
     }
 
-    async getContents(contentTypeId) {
-        let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`);
+    async getContents(contentTypeId, page) {
+        let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`, {
+	        params: {
+		        page
+	        }
+        });
         return response.data;
     }
 

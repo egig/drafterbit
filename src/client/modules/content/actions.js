@@ -28,9 +28,9 @@ const setContent = (content) => {
     };
 };
 
-const getContents = (contentTypeId) => (dispatch) => {
+const getContents = (contentTypeId, page) => (dispatch) => {
     let client = apiClient.createClient({});
-    client.getContents(contentTypeId)
+    client.getContents(contentTypeId, page)
         .then((contents) => {
             return dispatch(setContents(contents));
         });

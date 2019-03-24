@@ -3,12 +3,26 @@ const model = require('../model');
 
 class ContentRepository extends BaseRespository {
 
-    getContents(contentTypeId) {
+		getCount(contentTypeId) {
+			return new Promise((resolve, reject) => {
+				model.Content.count({content_type: contentTypeId}).
+				exec(function(err, count) {
+					if (err) return reject(err);
+					return resolve(count);
+				})
+			});
+		}
+
+    getContents(contentTypeId, offset, max) {
+
         return new Promise((resolve, reject) => {
-            model.Content.find({content_type: contentTypeId}, function(err, contents) {
-                if (err) return reject(err);
-                return resolve(contents);
-            });
+            model.Content.find({content_type: contentTypeId}).
+	            skip(offset).
+	            limit(max).
+	            exec(function(err, contents) {
+	            if (err) return reject(err);
+	            return resolve(contents);
+            })
         });
     }
 

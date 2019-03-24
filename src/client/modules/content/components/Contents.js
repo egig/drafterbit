@@ -1,3 +1,4 @@
+import querystring from 'querystring';
 import React from 'react';
 import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
@@ -18,21 +19,32 @@ class Contents extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.match.params.content_type_slug !== this.props.match.params.content_type_slug) {
-            let ctSlug= nextProps.match.params.content_type_slug;
-            this.props.getContentTypeFields(ctSlug)
-                .then(r => {
-                    return this.props.getContents(this.props.ctFields._id);
-                });
-        }
+
+		    let qs = querystring.parse(this.props.location.search.substr(1));
+		    let nextQs = querystring.parse(nextProps.location.search.substr(1));
+
+		    let isPageSame = (qs['page'] == nextQs['page']);
+		    let isPathSame = (nextProps.match.params.content_type_slug == this.props.match.params.content_type_slug);
+		    if (isPageSame && isPathSame) {
+		      return;
+		    }
+
+		    let ctSlug= nextProps.match.params.content_type_slug;
+		    this.loadContents(ctSlug, nextQs['page']);
+    }
+
+    loadContents(ctSlug, page) {
+	    this.props.getContentTypeFields(ctSlug)
+		    .then(r => {
+			    return this.props.getContents(this.props.ctFields._id, page);
+		    });
     }
 
     componentDidMount() {
         let ctSlug= this.props.match.params.content_type_slug;
-        this.props.getContentTypeFields(ctSlug)
-            .then(r => {
-                return this.props.getContents(this.props.ctFields._id);
-            });
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let page = !!qs['page'] ? qs['page'] : 1;
+        this.loadContents(ctSlug, page);
     }
 
     handleOnSelect(row, isSelect) {
@@ -61,7 +73,6 @@ class Contents extends React.Component {
     }
 
     handleDelete(e) {
-        console.log("deleteing", this.state.selected);
         this.props.deleteContents(this.state.selected)
     }
 
