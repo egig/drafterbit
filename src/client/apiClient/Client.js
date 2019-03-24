@@ -21,11 +21,6 @@ class Client {
         this.axiosInstance = axiosInstance;
     }
 
-    getCurrentUserId() {
-        // TODO get user id from current tokens
-        return 0;
-    }
-
     // async createProject(projectName, projectDescription, userId) {
     //     let response = await this.axiosInstance.post(`/users/${userId}/projects`, {
     //         name: projectName,
@@ -156,12 +151,11 @@ class Client {
     }
 
     async getContents(contentTypeId, page) {
-        let response = await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`, {
+    	return await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`, {
 	        params: {
 		        page
 	        }
         });
-        return response.data;
     }
 
     async getContent(contentId) {

@@ -7,12 +7,13 @@ import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import Card from '../../../components/Card/Card';
 import Table from '../../../components/Table';
+import apiClient from '../../../apiClient';
 
 class Contents extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { selected: [] };
+        this.state = { selected: [], contents: [], contentCount:0 };
         this.handleOnSelect = this.handleOnSelect.bind(this);
         this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -34,9 +35,18 @@ class Contents extends React.Component {
     }
 
     loadContents(ctSlug, page) {
+    	let client = apiClient.createClient({});
+
 	    this.props.getContentTypeFields(ctSlug)
 		    .then(r => {
-			    return this.props.getContents(this.props.ctFields._id, page);
+			    client.getContents(this.props.ctFields._id, page)
+			    .then(response => {
+
+			    	this.setState({
+					    contentCount: response.headers['dt-data-count'],
+					    contents: response.data
+				    })
+			    });
 		    });
     }
 
@@ -80,9 +90,10 @@ class Contents extends React.Component {
 
         let slug = this.props.match.params.content_type_slug;
         let addUrl = `/contents/${slug}/new`;
+		    let qs = querystring.parse(this.props.location.search.substr(1));
+		    let page = !!qs['page'] ? qs['page'] : 1;
 
-
-        const data = this.props.contents.map(c => {
+        const data = this.state.contents.map(c => {
             let item = {
                 _id: c._id
             };
@@ -129,6 +140,8 @@ class Contents extends React.Component {
                         data={ data }
                         columns={ columns }
                         selectRow={selectRow}
+                        currentPage='1'
+                        totalPageCount={Math.ceil(this.state.contentCount/10)}
                     />
                 </Card>
             </Layout>
@@ -139,7 +152,6 @@ class Contents extends React.Component {
 const mapStateToProps = (state) => {
     return {
         ctFields: state.CONTENT.ctFields,
-        contents: state.CONTENT.contents
     };
 };
 

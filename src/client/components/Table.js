@@ -1,6 +1,6 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination, PaginationItem } from 'reactstrap';
 import { withRouter, Link } from 'react-router-dom';
 import createPagination from './createPagination';
 
@@ -38,6 +38,9 @@ class Table extends React.Component {
 }
 
 Table.defaultProps = {
+	keyField: "_id",
+	data: [],
+	columns: [],
 	currentPage: 1,
 	totalPageCount: 1
 }
