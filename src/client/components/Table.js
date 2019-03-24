@@ -22,10 +22,10 @@ class Table extends React.Component {
 				                classes="drafterbit-table"
 				/>
 				<Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
-					{createPagination(1, 10).map((p,i) => {
+					{createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
 						return (
-							<PaginationItem key={i}>
-								<Link className={`page-link ${isNaN(p) ? 'disabled' : ''} ${(this.props.currentPage == p) ? 'active': ''}`} to={this.props.match.url+"?page="+p}>
+							<PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
+								<Link className="page-link" to={this.props.match.url+"?page="+p}>
 									{p}
 								</Link>
 							</PaginationItem>
@@ -38,7 +38,8 @@ class Table extends React.Component {
 }
 
 Table.defaultProps = {
-	currentPage: 1
+	currentPage: 1,
+	totalPageCount: 1
 }
 
 export default withRouter(Table);
