@@ -38,8 +38,6 @@
     "querystring": "^0.2.0",
     "react": "^16.8.4",
     "react-addons-css-transition-group": "^15.6.2",
-    "react-bootstrap-table-next": "^2.2.0",
-    "react-bootstrap-table2-paginator": "^2.0.4",
     "react-dom": "^16.8.4",
     "react-fast-compare": "^2.0.4",
     "react-helmet": "^5.2.0",

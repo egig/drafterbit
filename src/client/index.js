@@ -14,8 +14,6 @@ import 'tinymce/plugins/link';
 
 // CSS dependency first
 import 'bootstrap/dist/css/bootstrap.css';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.css';
 import './index.css';
 
 import  Drafterbit from './Drafterbit';

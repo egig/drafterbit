@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import Card from '../../../components/Card/Card';
-import Table from '../../../components/Table';
+import DataTable from '../../../components/DataTable';
 import apiClient from '../../../apiClient';
 
 class Contents extends React.Component {
@@ -57,7 +57,7 @@ class Contents extends React.Component {
         this.loadContents(ctSlug, page);
     }
 
-    handleOnSelect(row, isSelect) {
+    handleOnSelect(isSelect, row) {
         if (isSelect) {
             this.setState(() => ({
                 selected: [...this.state.selected, row._id]
@@ -105,18 +105,19 @@ class Contents extends React.Component {
             return item;
         });
 
-            const columns = [{
-                dataField: '_id',
-                text: '#ID',
-                formatter: (cell, row) => {
-                    return <Link to={`/contents/${slug}/${cell}`}>{cell}</Link>
-                }
-            }];
+        const columns = [{
+            dataField: '_id',
+            text: '#ID',
+            formatter: (cell, row) => {
+                return <Link to={`/contents/${slug}/${cell}`}>{cell}</Link>
+            },
+        }];
 
         this.props.ctFields.fields.map(f => {
             columns.push({
-                dataField: f.name,
-                text: f.label
+              dataField: f.name,
+              text: f.label,
+	            sort: true
             });
         });
 
@@ -127,8 +128,8 @@ class Contents extends React.Component {
                     {!!this.state.selected.length &&
                       <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
                     }
-                    <Table
-                        keyField='_id'
+                    <DataTable
+	                      idField="_id"
                         data={ data }
                         columns={ columns }
                         selected={this.state.selected}
