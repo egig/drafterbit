@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const BaseRespository = require('./BaseRepository');
 const model = require('../model');
 
@@ -13,13 +14,30 @@ class ContentRepository extends BaseRespository {
 			});
 		}
 
-    getContents(contentTypeId, offset, max) {
+    getContents(contentTypeId, offset, max, sortBy, sortDir) {
 
-        return new Promise((resolve, reject) => {
-            model.Content.find({content_type: contentTypeId}).
-	            skip(offset).
-	            limit(max).
-	            exec(function(err, contents) {
+				let sortD = sortDir == "asc" ? 1 : -1;
+
+				let agg = [
+					{$match: { content_type: mongoose.Types.ObjectId(contentTypeId)}},
+				];
+
+				if(!!sortBy && sortBy !== "_id") {
+					agg.push({$project: { "_field": "$fields", fields: 1, content_type: 1 }});
+					agg.push({$unwind: "$_field"});
+					agg.push({$match: { "_field.name": sortBy }});
+					agg.push({$sort: {"_field.value": sortD}});
+					agg.push({$project: { content_type: 1, fields:1 }});
+				} else {
+					agg.push({$sort: {"_id": sortD}});
+				}
+
+				agg.push({$limit: max});
+				agg.push({$skip: offset});
+
+	    return new Promise((resolve, reject) => {
+            model.Content.aggregate(agg)
+	            .exec(function(err, contents) {
 	            if (err) return reject(err);
 	            return resolve(contents);
             })

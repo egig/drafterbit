@@ -63,7 +63,16 @@ router.get('/contents/:content_id',
  *         type: integer
  *         schema:
  *           type: integer
- *         required: true
+ *       - in: query
+ *         name: sort_by
+ *         type: string
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: sort_dir
+ *         type: string
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: success
@@ -83,6 +92,8 @@ router.get('/content_types/:content_type_id/contents',
         (async function () {
 
 	        let page = req.query.page || 1;
+	        let sortBy = req.query.sort_by;
+	        let sortDir = req.query.sort_dir || 'asc';
 	        const PER_PAGE = 10;
 	        let offset = (page*PER_PAGE) - PER_PAGE;
 	        let max = PER_PAGE;
@@ -90,7 +101,7 @@ router.get('/content_types/:content_type_id/contents',
             try {
                 let r = new ContentRepository(req.app);
                 // TODO validation to req.body
-                let results = await r.getContents(req.params.content_type_id, offset, max);
+                let results = await r.getContents(req.params.content_type_id, offset, max, sortBy, sortDir);
                 let count = await r.getCount(req.params.content_type_id);
                 res.set("DT-Data-Count", count);
                 res.set("DT-Page-Number", page);

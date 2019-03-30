@@ -8,6 +8,7 @@ import actions from '../actions';
 import Card from '../../../components/Card/Card';
 import DataTable from '../../../components/DataTable';
 import apiClient from '../../../apiClient';
+import _ from 'lodash';
 
 class Contents extends React.Component {
 
@@ -31,22 +32,24 @@ class Contents extends React.Component {
 		    let qs = querystring.parse(this.props.location.search.substr(1));
 		    let nextQs = querystring.parse(nextProps.location.search.substr(1));
 
-		    let isPageSame = (qs['page'] == nextQs['page']);
 		    let isPathSame = (nextProps.match.params.content_type_slug == this.props.match.params.content_type_slug);
-		    if (isPageSame && isPathSame) {
-		      return;
+
+		    if(isPathSame && _.isEqual(qs, nextQs)) {
+			    return;
 		    }
 
 		    let ctSlug= nextProps.match.params.content_type_slug;
-		    this.loadContents(ctSlug, nextQs['page']);
+		    let sortBy = nextQs['sort_by'];
+		    let sortDir = nextQs['sort_dir'];
+		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir);
     }
 
-    loadContents(ctSlug, page) {
+    loadContents(ctSlug, page, sortBy, sortDir) {
     	let client = apiClient.createClient({});
 
 	    this.props.getContentTypeFields(ctSlug)
 		    .then(r => {
-			    client.getContents(this.props.ctFields._id, page)
+			    client.getContents(this.props.ctFields._id, page, sortBy, sortDir)
 			    .then(response => {
 
 			    	this.setState({
@@ -61,7 +64,9 @@ class Contents extends React.Component {
         let ctSlug= this.props.match.params.content_type_slug;
         let qs = querystring.parse(this.props.location.search.substr(1));
         let page = !!qs['page'] ? qs['page'] : 1;
-        this.loadContents(ctSlug, page);
+        let sortBy = qs['sort_by'];
+        let sortDir = qs['sort_dir'];
+        this.loadContents(ctSlug, page, sortBy, sortDir);
     }
 
     handleOnSelect(isSelect, row) {
@@ -98,6 +103,8 @@ class Contents extends React.Component {
         let slug = this.props.match.params.content_type_slug;
         let addUrl = `/contents/${slug}/new`;
 		    let qs = querystring.parse(this.props.location.search.substr(1));
+		    let sortBy = qs['sort_by'];
+		    let sortDir = qs['sort_dir'];
 		    let page = !!qs['page'] ? qs['page'] : 1;
 
         const data = this.state.contents.map(c => {
@@ -142,16 +149,17 @@ class Contents extends React.Component {
                         selected={this.state.selected}
                         onSelect={this.handleOnSelect}
                         onSelectAll={this.handleOnSelectAll}
-                        sortBy={this.state.sortBy}
-	                      sortDir={this.state.sortDir}
+                        sortBy={sortBy}
+	                      sortDir={sortDir}
 	                      onSort={(dataField, sortDir) => {
-	                      	this.setState((prevState) => {
-	                      		return {
-	                      			sortBy: dataField,
-	                      			sortDir: prevState.sortDir == 'desc' ? 'asc' : 'desc'
-	                      		}
-	                      	})
+	                        let qs = querystring.parse(this.props.location.search.substr(1));
+	                        let newSortDir = (sortDir == 'desc') ? 'asc' : 'desc';
+	                        qs['sort_by'] = dataField;
+	                        qs['sort_dir'] = newSortDir;
+	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+	                      	this.props.history.push(newLink);
 	                      }}
+
                         currentPage={page}
                         totalPageCount={Math.ceil(this.state.contentCount/10)}
                         renderPaginationLink={(p) => (
