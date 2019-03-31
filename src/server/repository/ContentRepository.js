@@ -26,8 +26,9 @@ class ContentRepository extends BaseRespository {
 
 					let matchRule = {};
 					Object.keys(searchObj).forEach((k) => {
-						matchRule[`_sfield.${k}`] = {
-							$regex: searchObj[k]
+						matchRule['_sfield.name'] = k;
+						matchRule['_sfield.value'] = {
+							$regex: `.*${searchObj[k]}.*`
 						};
 					});
 

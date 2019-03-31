@@ -54,30 +54,30 @@ class DataTable extends React.Component {
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td />
-						{this.props.columns.map((c,i) => {
-							return (
-								<td key={i}>
-									<Input bsSize="sm" defaultValue={c.filterValue} onChange={e => {
-										this.props.onFilterChange(c.dataField, e.target.value);
-									}}/>
-								</td>
-							)
-						})}
-						<td>
-							<Button size="sm" color="primary" className="mr-1" onClick={() => {
+						<tr>
+							<td />
+							{this.props.columns.map((c,i) => {
+								return (
+									<td key={i}>
+										<Input bsSize="sm" defaultValue={c.filterValue} onChange={e => {
+											this.props.onFilterChange(c.dataField, e.target.value);
+										}}/>
+									</td>
+								)
+							})}
+							<td width="150px">
+								<Button size="sm" color="primary" className="mr-1" onClick={() => {
 
-								let filterObj = {};
-								Object.keys(this.props.filterObject).forEach((name) => {
-									filterObj[name] = this.props.filterObject[name];
-								});
+									let filterObj = {};
+									Object.keys(this.props.filterObject).forEach((name) => {
+										filterObj[name] = this.props.filterObject[name];
+									});
 
-								this.props.onApplyFilter(filterObj);
-							}}>Apply</Button>
-							<Button size="sm">Reset</Button>
-						</td>
-					</tr>
+									this.props.onApplyFilter(filterObj);
+								}}>Apply</Button>
+								<Button size="sm">Reset</Button>
+							</td>
+						</tr>
 					{
 						this.props.data.map((d,i) => {
 							return (
