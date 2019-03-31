@@ -5,6 +5,29 @@ const validateRequest = require('../middlewares/validateRequest');
 let router = express.Router();
 
 /**
+ *  TODO move this to module
+ *
+ * @param fqStr
+ */
+function parseFilterQuery(fqStr) {
+
+	if(!fqStr) {
+		return;
+	}
+
+	return fqStr.split(";").map((s) => {
+		let t = s.split(":");
+		return {
+			k: t[0],
+			v: t[1]
+		}
+	}).reduce((acc, curr) => {
+		acc[curr.k] = curr.v;
+		return acc;
+	}, {})
+}
+
+/**
  * @swagger
  * /contents/{content_id}:
  *   get:
@@ -91,17 +114,19 @@ router.get('/content_types/:content_type_id/contents',
 
         (async function () {
 
-	        let page = req.query.page || 1;
-	        let sortBy = req.query.sort_by;
-	        let sortDir = req.query.sort_dir || 'asc';
-	        const PER_PAGE = 10;
-	        let offset = (page*PER_PAGE) - PER_PAGE;
-	        let max = PER_PAGE;
+		        let page = req.query.page || 1;
+		        let sortBy = req.query.sort_by;
+		        let sortDir = req.query.sort_dir || 'asc';
+		        const PER_PAGE = 10;
+		        let offset = (page*PER_PAGE) - PER_PAGE;
+		        let max = PER_PAGE;
+
+		        let filterObj = parseFilterQuery(req.query.fq);
 
             try {
                 let r = new ContentRepository(req.app);
                 // TODO validation to req.body
-                let results = await r.getContents(req.params.content_type_id, offset, max, sortBy, sortDir);
+                let results = await r.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
                 let count = await r.getCount(req.params.content_type_id);
                 res.set("DT-Data-Count", count);
                 res.set("DT-Page-Number", page);

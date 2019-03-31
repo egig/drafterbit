@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Button, Input, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import createPagination from './createPagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
@@ -48,9 +48,36 @@ class DataTable extends React.Component {
 									{renderCaret(c.dataField, this.props.sortBy, this.props.sortDir)}
 								</th>
 							})}
+							<th>
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody>
+					<tr>
+						<td />
+						{this.props.columns.map((c,i) => {
+							return (
+								<td key={i}>
+									<Input bsSize="sm" defaultValue={c.filterValue} onChange={e => {
+										this.props.onFilterChange(c.dataField, e.target.value);
+									}}/>
+								</td>
+							)
+						})}
+						<td>
+							<Button size="sm" color="primary" className="mr-1" onClick={() => {
+
+								let filterObj = {};
+								Object.keys(this.props.filterObject).forEach((name) => {
+									filterObj[name] = this.props.filterObject[name];
+								});
+
+								this.props.onApplyFilter(filterObj);
+							}}>Apply</Button>
+							<Button size="sm">Reset</Button>
+						</td>
+					</tr>
 					{
 						this.props.data.map((d,i) => {
 							return (
@@ -71,6 +98,9 @@ class DataTable extends React.Component {
 											</td>
 										)
 									})}
+									<td>
+										<Button size="sm" color="primary">Edit</Button>
+									</td>
 								</tr>
 							);
 						})
@@ -100,6 +130,12 @@ DataTable.defaultProps = {
 	totalPageCount: 1,
 	onSort: function (dataField, sortDir) {
 		
+	},
+	onApplyFilter: function (filterObject) {
+
+	},
+	onFilterChange: function (dataField, value) {
+
 	},
 	sortBy: null,
 	sortDir: null,

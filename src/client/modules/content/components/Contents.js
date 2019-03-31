@@ -10,6 +10,22 @@ import DataTable from '../../../components/DataTable';
 import apiClient from '../../../apiClient';
 import _ from 'lodash';
 
+
+/**
+ *  TODO move this to module
+ *
+ * @param fqObj
+ */
+function stringifyFilterQuery(fqObj) {
+
+	let fL = [];
+	Object.keys(fqObj).forEach((k) => {
+		fL.push(`${k}:${fqObj[k]}`)
+	});
+
+	return fL.join(";");
+}
+
 class Contents extends React.Component {
 
     constructor(props) {
@@ -19,7 +35,8 @@ class Contents extends React.Component {
 	        contents: [],
 	        contentCount:0,
 	        sortBy: "",
-	        sortDir: 'asc'
+	        sortDir: 'asc',
+	        filterObject: {}
         };
 
         this.handleOnSelect = this.handleOnSelect.bind(this);
@@ -41,15 +58,22 @@ class Contents extends React.Component {
 		    let ctSlug= nextProps.match.params.content_type_slug;
 		    let sortBy = nextQs['sort_by'];
 		    let sortDir = nextQs['sort_dir'];
-		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir);
+		    let fqStr = nextQs['fq'];
+		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir, fqStr);
+
+		    if(!isPathSame) {
+			    this.setState({
+				    filterObject: {}
+			    })
+		    }
     }
 
-    loadContents(ctSlug, page, sortBy, sortDir) {
+    loadContents(ctSlug, page, sortBy, sortDir, fqSr) {
     	let client = apiClient.createClient({});
 
 	    this.props.getContentTypeFields(ctSlug)
 		    .then(r => {
-			    client.getContents(this.props.ctFields._id, page, sortBy, sortDir)
+			    client.getContents(this.props.ctFields._id, page, sortBy, sortDir, fqSr)
 			    .then(response => {
 
 			    	this.setState({
@@ -132,7 +156,7 @@ class Contents extends React.Component {
               dataField: f.name,
               text: f.label,
 	            sort: true
-            });
+            })
         });
 
         return (
@@ -159,7 +183,25 @@ class Contents extends React.Component {
 	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
 	                      	this.props.history.push(newLink);
 	                      }}
+	                      onApplyFilter={(filterObj) => {
 
+	                      	let qs = querystring.parse(this.props.location.search.substr(1));
+	                        qs['fq'] = stringifyFilterQuery(filterObj);
+	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+	                      	this.props.history.push(newLink);
+
+	                      }}
+	                      onFilterChange={(dataField, value) => {
+	                      		let d = {};
+														d[dataField] = value;
+
+														this.setState((prevState) => {
+															return {
+																filterObject: Object.assign({}, prevState.filterObject, d)
+															}
+														})
+	                      }}
+	                      filterObject={this.state.filterObject}
                         currentPage={page}
                         totalPageCount={Math.ceil(this.state.contentCount/10)}
                         renderPaginationLink={(p) => (

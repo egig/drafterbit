@@ -150,12 +150,13 @@ class Client {
         return response.data;
     }
 
-    async getContents(contentTypeId, page, sortBy, sortDir) {
+    async getContents(contentTypeId, page, sortBy, sortDir, fqSr) {
     	return await this.axiosInstance.get(`/content_types/${contentTypeId}/contents`, {
 	        params: {
 		        page,
 		        sort_by: sortBy,
-		        sort_dir: sortDir
+		        sort_dir: sortDir,
+		        fq: fqSr
 	        }
         });
     }
