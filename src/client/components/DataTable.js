@@ -59,7 +59,7 @@ class DataTable extends React.Component {
 							{this.props.columns.map((c,i) => {
 								return (
 									<td key={i}>
-										<Input bsSize="sm" defaultValue={c.filterValue} onChange={e => {
+										<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ""} onChange={e => {
 											this.props.onFilterChange(c.dataField, e.target.value);
 										}}/>
 									</td>
@@ -128,6 +128,7 @@ DataTable.defaultProps = {
 	columns: [],
 	currentPage: 1,
 	totalPageCount: 1,
+	filterObject: {},
 	onSort: function (dataField, sortDir) {
 		
 	},
