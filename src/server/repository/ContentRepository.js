@@ -4,12 +4,39 @@ const model = require('../model');
 
 class ContentRepository extends BaseRespository {
 
-		getCount(contentTypeId) {
+		getCount(contentTypeId, filterObj) {
+
+			let agg = [
+				{$match: { content_type: mongoose.Types.ObjectId(contentTypeId)}},
+			];
+
+			if(!!filterObj) {
+
+				let matchRule = {};
+				Object.keys(filterObj).forEach((k) => {
+					matchRule['_sfield.name'] = k;
+					matchRule['_sfield.value'] = {
+						$regex: `.*${filterObj[k]}.*`
+					};
+				});
+
+				agg.push({$project: { "_sfield": "$fields", fields: 1, content_type: 1 }});
+				agg.push({$unwind: "$_sfield"});
+				agg.push({$match: matchRule});
+			}
+
+			agg.push({$count: 'content_count'});
+
 			return new Promise((resolve, reject) => {
-				model.Content.count({content_type: contentTypeId}).
-				exec(function(err, count) {
+				model.Content
+					.aggregate(agg)
+					.exec(function(err, r) {
 					if (err) return reject(err);
-					return resolve(count);
+					if(!r.length) {
+						return resolve(0);
+					}
+
+					return resolve(r[0].content_count);
 				})
 			});
 		}

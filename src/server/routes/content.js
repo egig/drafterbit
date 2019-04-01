@@ -105,12 +105,13 @@ router.get('/content_types/:content_type_id/contents',
                 let r = new ContentRepository(req.app);
                 // TODO validation to req.body
                 let results = await r.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
-                let count = await r.getCount(req.params.content_type_id);
+                let count = await r.getCount(req.params.content_type_id,  filterObj);
                 res.set("DT-Data-Count", count);
                 res.set("DT-Page-Number", page);
                 res.send(results);
             } catch (e ) {
                 res.status(500);
+                console.error(e);
                 res.send(e.message);
             }
 
