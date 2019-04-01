@@ -70,12 +70,17 @@ class DataTable extends React.Component {
 
 									let filterObj = {};
 									Object.keys(this.props.filterObject).forEach((name) => {
-										filterObj[name] = this.props.filterObject[name];
+										let v = this.props.filterObject[name];
+										if(!!v) {
+											filterObj[name] = this.props.filterObject[name];
+										}
 									});
 
 									this.props.onApplyFilter(filterObj);
 								}}>Apply</Button>
-								<Button size="sm">Reset</Button>
+								<Button size="sm" onClick={() => {
+									this.props.onReset();
+								}}>Reset</Button>
 							</td>
 						</tr>
 					{
@@ -136,6 +141,9 @@ DataTable.defaultProps = {
 
 	},
 	onFilterChange: function (dataField, value) {
+
+	},
+	onReset: function () {
 
 	},
 	sortBy: null,

@@ -1,31 +1,9 @@
 const express = require('express');
 const ContentRepository = require('../repository/ContentRepository');
 const validateRequest = require('../middlewares/validateRequest');
+const { parseFilterQuery } = require('../../common/parseFilterQuery');
 
 let router = express.Router();
-
-/**
- *  TODO move this to module
- *
- * @param fqStr
- */
-function parseFilterQuery(fqStr) {
-
-	if(!fqStr) {
-		return;
-	}
-
-	return fqStr.split(";").map((s) => {
-		let t = s.split(":");
-		return {
-			k: t[0],
-			v: t[1]
-		}
-	}).reduce((acc, curr) => {
-		acc[curr.k] = curr.v;
-		return acc;
-	}, {})
-}
 
 /**
  * @swagger

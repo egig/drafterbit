@@ -9,22 +9,7 @@ import Card from '../../../components/Card/Card';
 import DataTable from '../../../components/DataTable';
 import apiClient from '../../../apiClient';
 import _ from 'lodash';
-
-
-/**
- *  TODO move this to module
- *
- * @param fqObj
- */
-function stringifyFilterQuery(fqObj) {
-
-	let fL = [];
-	Object.keys(fqObj).forEach((k) => {
-		fL.push(`${k}:${fqObj[k]}`)
-	});
-
-	return fL.join(";");
-}
+import { parseFilterQuery, stringifyFilterQuery } from '../../../../common/parseFilterQuery'
 
 class Contents extends React.Component {
 
@@ -61,11 +46,13 @@ class Contents extends React.Component {
 		    let fqStr = nextQs['fq'];
 		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir, fqStr);
 
-		    if(!isPathSame) {
-			    this.setState({
-				    filterObject: {}
-			    })
-		    }
+		    let fqObj  = parseFilterQuery(fqStr);
+
+		    this.setState((prevState) => {
+			    return {
+				    filterObject: isPathSame ? fqObj : {}
+			    }
+		    });
     }
 
     loadContents(ctSlug, page, sortBy, sortDir, fqSr) {
@@ -91,6 +78,14 @@ class Contents extends React.Component {
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         this.loadContents(ctSlug, page, sortBy, sortDir);
+
+		    let fqObj  = parseFilterQuery(qs['fq']);
+
+		    this.setState((prevState) => {
+			    return {
+				    filterObject: Object.assign({}, prevState.filterObject, fqObj)
+			    }
+		    });
     }
 
     handleOnSelect(isSelect, row) {
@@ -200,6 +195,12 @@ class Contents extends React.Component {
 																filterObject: Object.assign({}, prevState.filterObject, d)
 															}
 														})
+	                      }}
+	                      onReset={() => {
+	                      	let qs = querystring.parse(this.props.location.search.substr(1));
+	                        delete qs['fq'];
+	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+	                      	this.props.history.push(newLink);
 	                      }}
 	                      filterObject={this.state.filterObject}
                         currentPage={page}
