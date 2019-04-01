@@ -41,7 +41,7 @@ class ContentRepository extends BaseRespository {
 			});
 		}
 
-    getContents(contentTypeId, offset, max, sortBy, sortDir, searchObj) {
+    getContents(contentTypeId, offset=0, max=10, sortBy, sortDir, searchObj) {
 
 				let sortD = sortDir == "asc" ? 1 : -1;
 
