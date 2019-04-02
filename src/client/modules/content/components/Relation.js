@@ -14,9 +14,9 @@ class Relation extends React.Component {
         // TODO get apiClient service from drafterbit app singlton
         let client = apiClient.createClient({});
         client.getContents(this.props.relatedContentTypeId)
-            .then((contents) => {
+            .then((res) => {
                 this.setState({
-                    contents: contents
+                    contents: res.data
                 });
             });
     }

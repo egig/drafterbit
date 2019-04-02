@@ -15,12 +15,13 @@ class ContentType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            _id: '',
-            name: '',
-            slug: '',
-            description: '',
-            fields: [],
-            notifyText: ''
+          _id: '',
+          name: '',
+          slug: '',
+          description: '',
+          fields: [],
+          notifyText: '',
+	        fieldDialogActive: false,
         };
     }
 
@@ -65,7 +66,7 @@ class ContentType extends React.Component {
         return (
             <Layout>
 	            <Row>
-		            <Col md="6" className="mb-3">
+		            <Col md="4" className="mb-3">
 			            <Card headerText={`Edit Content Type : ${this.props.contentType.name}`}>
 				            <form onSubmit={e => {
                                 e.preventDefault();
@@ -103,8 +104,15 @@ class ContentType extends React.Component {
 				            </form>
 			            </Card>
 			            <div className="mb-3" />
-
+		            </Col>
+		            <Col md="8">
 			            <Card headerText="Fields">
+					            <button onClick={e => {
+                                            e.preventDefault();
+                                            this.setState({
+                                                fieldDialogActive: true
+                                            });
+                                        }} className="btn btn-success btn-sm"><i className="icon-plus"/> Add Field</button>
 				            <table className="table table-sm table-bordered">
 					            <thead>
 					            <tr>

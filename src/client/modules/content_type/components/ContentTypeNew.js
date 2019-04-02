@@ -3,10 +3,10 @@ import Layout from '../../common/components/Layout';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Modal from '../../../components/Modal';
+import { Modal, ModalBody } from 'reactstrap';
 import Card from '../../../components/Card/Card';
 import _ from 'lodash';
-import { getFieldTypes } from '../../../../fieldTypes';
+import AddFieldForm from './AddFieldForm';
 
 // TODO create blank content type instead and save as draft
 class ContentTypeNew extends React.Component {
@@ -93,63 +93,38 @@ class ContentTypeNew extends React.Component {
                         </Card>
                     </div>
                 </div>
-                {this.state.fieldDialogActive &&
-                    <Modal>
-                        <div>
-                            <form onSubmit={e => {
-                                e.preventDefault();
-                                let form = e.target;
+                <Modal isOpen={this.state.fieldDialogActive}>
+	                <ModalBody>
+	                  <AddFieldForm
+	                    onSubmit={e => {
+	                            e.preventDefault();
+	                            let form = e.target;
 
-                                let field = {
-                                    name: form.name.value,
-                                    label: form.label.value,
-                                    type_id: form.type.value
-                                };
+	                            let field = {
+	                                name: form.name.value,
+	                                label: form.label.value,
+	                                type_id: form.type.value
+	                            };
 
-                                if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
-                                	field['related_content_type_id'] = form.related_content_type_id.value;
-                                }
+	                            if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+	                              field['related_content_type_id'] = form.related_content_type_id.value;
+	                            }
 
-                                this.addField(field);
+	                            this.addField(field);
 
-                                form.reset();
-                            }}>
-                                <h4>Add Field</h4>
-		                            <div className="form-group">
-			                            <label htmlFor="type">Type</label>
-			                            <select className="form-control" id="type" onChange={e => {
-			                            	this.setState({
-			                            		fieldTypeSelected: e.target.value
-			                            	});
-			                            }}>
-				                            {getFieldTypes().map((f,i) => {
-				                            	return <option key={i} value={f.id}>{f.name}</option>;
-				                            })}
-			                            </select>
-		                            </div>
-		                            {!!_.includes([4,5], parseInt(this.state.fieldTypeSelected)) &&
-			                            <div className="form-group">
-				                            <select className="form-control" name="related_content_type_id" id="related_content_type_id">
-					                            {this.props.contentTypes.map((ct,i) => {
-						                            return <option key={i} value={ct._id}>{ct.name}</option>;
-					                            })}
-				                            </select>
-			                            </div>
-		                            }
-                                <div className="form-group">
-                                    <label htmlFor="label">Label</label>
-                                    <input type="text" className="form-control" name="label" id="label"/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="name">Name</label>
-                                    <input type="text" className="form-control" name="name" id="name"/>
-                                </div>
-                                <button className="btn btn-success">Add Field</button>&nbsp;
-                                <button onClick={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }} className="btn btn-light">Cancel</button>
-                            </form>
-                        </div>
-                    </Modal>
-                }
+	                            form.reset();
+	                        }}
+	                    onTypeChange={e => {
+		                              this.setState({
+		                                fieldTypeSelected: e.target.value
+		                              });
+		                            }}
+	                    fieldTypeSelected={this.state.fieldTypeSelected}
+	                    onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
+
+	                  />
+	                </ModalBody>
+                </Modal>
             </Layout>
         );
     }
