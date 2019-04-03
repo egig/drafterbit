@@ -119,9 +119,9 @@ class Client {
         return response.data;
     }
 
-    async updateContentType(contentTypeId, name, slug, description) {
+    async updateContentType(contentTypeId, name, slug, description, fields) {
         let response = await this.axiosInstance.patch(`/content_types/${contentTypeId}`, {
-            name, slug, description
+            name, slug, description, fields
         });
         return response.data;
     }

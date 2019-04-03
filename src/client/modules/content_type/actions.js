@@ -69,11 +69,11 @@ const deleteContentType = (contentTypeId) => (dispatch) => {
 };
 
 
-const updateContentType = (contentTypeId, name, slug, description) => (dispatch) => {
+const updateContentType = (contentTypeId, name, slug, description, fields) => (dispatch) => {
     dispatch(setAjaxLoading(true));
 
     let client = apiClient.createClient({});
-    return client.updateContentType(contentTypeId, name, slug, description)
+    return client.updateContentType(contentTypeId, name, slug, description, fields)
         .then((project) => {
             return dispatch(setAjaxLoading(false));
         });

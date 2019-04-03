@@ -1,14 +1,13 @@
 import React from 'react';
 import Layout from '../../common/components/Layout';
-import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
 import { getFieldTypeName } from '../../../../fieldTypes';
-import { Row, Col } from 'reactstrap';
-
+import { Row, Col, Modal, ModalBody } from 'reactstrap';
+import AddFieldForm from './AddFieldForm';
 
 class ContentType extends React.Component {
 
@@ -22,6 +21,7 @@ class ContentType extends React.Component {
           fields: [],
           notifyText: '',
 	        fieldDialogActive: false,
+	        fieldTypeSelected: null
         };
     }
 
@@ -39,6 +39,26 @@ class ContentType extends React.Component {
     componentDidMount() {
         this.props.getContentType(this.props.match.params.content_type_id);
     }
+
+		addField(f) {
+			this.setState({
+				fields: this.state.fields.concat([f]),
+				fieldDialogActive: false
+			}, () => {
+
+				this.props.updateContentType(
+					this.state._id,
+					this.state.name,
+					this.state.slug,
+					this.state.description.value,
+					this.state.fields
+				).then(r => {
+					this.setState({
+						notifyText: 'Fields successfully saved.'
+					});
+				});
+			})
+		}
 
     deleteContentType(deleteForm) {
         // TODO create alert
@@ -112,7 +132,7 @@ class ContentType extends React.Component {
                                             this.setState({
                                                 fieldDialogActive: true
                                             });
-                                        }} className="btn btn-success btn-sm"><i className="icon-plus"/> Add Field</button>
+                                        }} className="btn btn-success btn-sm mb-2"><i className="icon-plus"/> Add Field</button>
 				            <table className="table table-sm table-bordered">
 					            <thead>
 					            <tr>
@@ -134,6 +154,38 @@ class ContentType extends React.Component {
 			            </Card>
 		            </Col>
 	            </Row>
+	            <Modal isOpen={this.state.fieldDialogActive}>
+		            <ModalBody>
+			            <AddFieldForm
+				            onSubmit={e => {
+	                            e.preventDefault();
+	                            let form = e.target;
+
+	                            let field = {
+	                                name: form.name.value,
+	                                label: form.label.value,
+	                                type_id: form.type.value
+	                            };
+
+	                            if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+	                              field['related_content_type_id'] = form.related_content_type_id.value;
+	                            }
+
+	                            this.addField(field);
+
+	                            form.reset();
+	                        }}
+				            onTypeChange={e => {
+		                              this.setState({
+		                                fieldTypeSelected: e.target.value
+		                              });
+		                            }}
+				            fieldTypeSelected={this.state.fieldTypeSelected}
+				            onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
+
+			            />
+		            </ModalBody>
+	            </Modal>
                 {this.state.notifyText &&
                   <Notify type="success" message={this.state.notifyText} />
                 }
