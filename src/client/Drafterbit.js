@@ -20,6 +20,7 @@ import ContentEdit from './modules/content/components/ContentEdit';
 import ApiKeys from './modules/api_key/components/ApiKeys';
 import ApiKeyNew from './modules/api_key/components/ApiKeyNew';
 import ApiKeyEdit from './modules/api_key/components/ApiKeyEdit';
+import Users from './modules/user/components/Users';
 
 class Drafterbit extends React.Component {
     render() {
@@ -33,6 +34,7 @@ class Drafterbit extends React.Component {
                         <Route path="/forgot-password" component={ForgotPassword} />
                         <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
                         <Route path="/reset-password" component={ResetPassword} />
+                        <ProtectedRoute path="/users" component={Users} />
                         <ProtectedRoute path="/contents/:content_type_slug/new" component={ContentNew} />
                         <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
                         <ProtectedRoute path="/contents/:content_type_slug" component={Contents} />

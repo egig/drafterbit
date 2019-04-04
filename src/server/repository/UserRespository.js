@@ -10,7 +10,7 @@ class UserRespository extends BaseRespository {
 
             // TODO dont create model each time
             const User = mongoose.model('User', userSchema);
-            User.find({}, function(err, users) {
+            User.find({}, ['_id', 'name', 'email'], function(err, users) {
                 if (err) return reject(err);
                 return resolve(users);
             });
