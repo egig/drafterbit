@@ -1,4 +1,3 @@
-import "@babel/polyfill";
 const path =  require('path');
 const express =  require('express');
 const cookieParser = require('cookie-parser');
@@ -147,4 +146,7 @@ app.get(
 
 app.use(routes);
 
-module.exports = app;
+const port = config.get('PORT');
+app.listen(port, function () {
+	console.log("Example app listening on port " + port + "!");
+});
