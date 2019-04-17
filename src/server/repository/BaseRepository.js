@@ -1,7 +1,5 @@
-class BaseRespository {
+export default class BaseRespository {
 
     constructor() {
     }
 }
-
-module.exports = BaseRespository;

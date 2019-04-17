@@ -1,4 +1,4 @@
-module.exports = {
+export default  {
     COMMON: {
         language: 'en',
         languages: ['en', 'id'],

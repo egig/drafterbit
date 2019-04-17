@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 let apiKeySchema = mongoose.Schema({
     name: String,
@@ -7,4 +7,4 @@ let apiKeySchema = mongoose.Schema({
     restriction_value: String
 });
 
-module.exports = apiKeySchema;
+export default apiKeySchema;

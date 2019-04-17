@@ -1,27 +1,24 @@
-const path =  require('path');
-const express =  require('express');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const authMiddleware = require('./middlewares/auth');
-const i18next = require('i18next');
-const expressValidator = require('express-validator');
-const i18nextExpressMiddleware = require('i18next-express-middleware');
-const mongoose = require('mongoose');
-const swaggerUi = require('swagger-ui-express');
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session  from 'express-session';
+import i18next from 'i18next';
+import expressValidator from 'express-validator';
+import i18nextExpressMiddleware from 'i18next-express-middleware';
+import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
 
-
-const routes = require('./routes');
+import authMiddleware from './middlewares/auth';
+import routes from './routes';
 import config from '../config';
-const configMiddleware = require('./middlewares/config');
-const cacheMiddleware = require('./middlewares/cache');
-const createSession = require('./createSession');
+import configMiddleware from './middlewares/config';
+import cacheMiddleware from './middlewares/cache';
+import createSession from './createSession';
+import defaultState from './defaultState';
 
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../../webpack.config');
-const compiler = webpack(webpackConfig);
-
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackConfig from '../../webpack.config';
 
 i18next
     .use(i18nextExpressMiddleware.LanguageDetector)
@@ -30,8 +27,8 @@ i18next
     });
 
 const app = express();
-// app.use(cors());
 
+const compiler = webpack(webpackConfig);
 app.use(
 	webpackDevMiddleware(compiler, {
 		publicPath: webpackConfig.output.publicPath
@@ -91,9 +88,6 @@ app.get('/logout', (req, res) => {
 mongoose.connect(config.get('MONGODB_URL'));
 
 app.get('/', function (req, res) {
-
-    delete require.cache[require.resolve('./defaultState')];
-    let defaultState = require('./defaultState');
 
     defaultState.COMMON.language = req.language;
     defaultState.COMMON.languages = req.languages;

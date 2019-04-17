@@ -1,6 +1,9 @@
 {
   "name": "drafterbit",
   "version": "3.0.0",
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
@@ -91,20 +94,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel ./src -d ./build --config-file ./server.babel.config.js",
-    "start": "nodemon --ignore 'src/client/' --exec babel-node --config-file ./server.babel.config.js  src/server",
-    "build": "babel ./src -d ./build --config-file ./server.babel.config.js && webpack -p --config ./webpack.config.js --display-error-details",
-    "watch": "webpack -d --watch --config ./webpack.config.js --display-error-details",
-    "dev": "wenpbpack && node server.js --env development",
+    "babel": "babel ./src -d ./build --config-file ./babel-node.config.js",
+    "start": "NODE_ENV=development && nodemon --ignore 'src/client/' --exec babel-node --config-file ./babel-node.config.js  src/server",
+    "build": "babel ./src -d ./build --config-file ./babel-node.config.js && webpack -p --config ./webpack.config.js --display-error-details",
     "linter": "./node_modules/.bin/eslint --fix ./src",
-    "styledump": "node converter.js > public/css/common.css",
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
     "flow": "flow",
     "copy-css": "./scripts/copy_assets.sh",
     "copy-img": "cp -R img public",
     "wdio": "wdio"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

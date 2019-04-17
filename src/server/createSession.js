@@ -1,4 +1,4 @@
-const userRepository = require('./repository/UserRespository');
+import userRepository from './repository/UserRespository';
 const UserAuthError = require('./user/UserAuthError');
 const password = require('./lib/password');
 const crypto = require('crypto');
@@ -7,7 +7,7 @@ function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;
 }
 
-const createSession = function createSession(app, email, rawPassword) {
+export default function createSession(app, email, rawPassword) {
 
     let r = new userRepository(app);
     return r.getUserByEmail(email)
@@ -55,5 +55,3 @@ const createSession = function createSession(app, email, rawPassword) {
             console.log(e);
         });
 };
-
-module.exports = createSession;

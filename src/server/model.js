@@ -1,18 +1,11 @@
-const mongoose = require('mongoose');
-const userSchema = require('./schema/userSchema');
-const contentTypeSchema = require('./schema/contentTypeSchema');
-const contentSchema = require('./schema/contentSchema');
-const apiKeySchema = require('./schema/apiKeySchema');
+import mongoose from 'mongoose';
+import userSchema from './schema/userSchema';
+import contentTypeSchema from './schema/contentTypeSchema';
+import contentSchema from './schema/contentSchema';
+import apiKeySchema from './schema/apiKeySchema';
 
 
-let User = mongoose.model('User', userSchema);
-let ContentType = mongoose.model('ContentType', contentTypeSchema);
-let Content = mongoose.model('Content', contentSchema);
-let ApiKey = mongoose.model('ApiKey', apiKeySchema);
-
-module.exports = {
-    User,
-    ContentType,
-    Content,
-    ApiKey
-};
+export const User = mongoose.model('User', userSchema);
+export const ContentType = mongoose.model('ContentType', contentTypeSchema);
+export const Content = mongoose.model('Content', contentSchema);
+export const ApiKey = mongoose.model('ApiKey', apiKeySchema);

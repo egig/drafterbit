@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import ContentTypeRepository from '../repository/ContentTypeRepository';
+
 let router = express.Router();
-const ContentTypeRepository = require('../repository/ContentTypeRepository');
 
 router.get('/_swagger_spec.json',  function (req, res) {
 

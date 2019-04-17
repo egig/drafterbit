@@ -1,15 +1,11 @@
-const BaseRespository = require('./BaseRepository');
-const mongoose = require('mongoose');
-const userSchema = require('../schema/userSchema');
+import BaseRepository from './BaseRepository';
+import { User } from '../model';
 
-
-class UserRespository extends BaseRespository {
+export default class UserRepository extends BaseRepository {
 
     getUsers() {
         return new Promise((resolve, reject) => {
 
-            // TODO dont create model each time
-            const User = mongoose.model('User', userSchema);
             User.find({}, ['_id', 'name', 'email'], function(err, users) {
                 if (err) return reject(err);
                 return resolve(users);
@@ -20,7 +16,6 @@ class UserRespository extends BaseRespository {
     getUserByEmail(email) {
         return new Promise((resolve, reject) => {
 
-            const User = mongoose.model('User', userSchema);
             User.findOne({email}, function(err, user) {
                 if (err) return reject(err);
                 return resolve(user);
@@ -39,7 +34,6 @@ class UserRespository extends BaseRespository {
     createUser(firstName, lastName, email, password) {
         return new Promise((resolve, reject) => {
 
-            const User = mongoose.model('User', userSchema);
             let newUser = new User({
                 first_name: firstName,
                 last_name: lastName,
@@ -63,7 +57,6 @@ class UserRespository extends BaseRespository {
     deleteUser(userId) {
         return new Promise((resolve, reject) => {
 
-            const User = mongoose.model('User', userSchema);
             User.find({ _id:userId }).remove((err, results) => {
                 if (err) return reject(err);
                 return resolve(results);
@@ -81,8 +74,6 @@ class UserRespository extends BaseRespository {
     updateUser(userId, payload) {
         return new Promise((resolve, reject) => {
 
-            const User = mongoose.model('User', userSchema);
-
             User.updateOne({ _id: userId }, payload, (err) => {
                 if (err) return reject(err);
                 return resolve(true);
@@ -91,5 +82,3 @@ class UserRespository extends BaseRespository {
         });
     }
 }
-
-module.exports = UserRespository;

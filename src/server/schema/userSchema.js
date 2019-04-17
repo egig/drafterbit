@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 let userSchema = mongoose.Schema({
     first_name: String,
@@ -7,4 +7,4 @@ let userSchema = mongoose.Schema({
     password: String,
 });
 
-module.exports = userSchema;
+export default  userSchema;

@@ -1,8 +1,8 @@
-const BaseRespository = require('./BaseRepository');
-const model = require('../model');
-const mongoose = require('mongoose');
+import BaseRepository from './BaseRepository';
+import { ContentType} from '../model';
+import mongoose from 'mongoose';
 
-class ContentTypeRepository extends BaseRespository {
+export default class ContentTypeRepository extends BaseRepository {
 
     /**
      * @param contentTypeId
@@ -19,7 +19,7 @@ class ContentTypeRepository extends BaseRespository {
 		        condition = {slug: contentTypeId};
 	        }
 
-            model.ContentType.findOne(condition, function(err, contentType) {
+            ContentType.findOne(condition, function(err, contentType) {
                 if (err) return reject(err);
                 return resolve(contentType);
             });
@@ -32,7 +32,7 @@ class ContentTypeRepository extends BaseRespository {
      */
     getContentTypes() {
         return new Promise((resolve, reject) => {
-            model.ContentType.find(function(err, contentTypes) {
+            ContentType.find(function(err, contentTypes) {
                 if (err) return reject(err);
                 return resolve(contentTypes);
             });
@@ -48,7 +48,7 @@ class ContentTypeRepository extends BaseRespository {
     getContentTypeBySlug(slug) {
         return new Promise((resolve, reject) => {
 
-            model.ContentType.findOne({slug: slug}, function(err, contentType) {
+            ContentType.findOne({slug: slug}, function(err, contentType) {
                 if (err) return reject(err);
                 return resolve(contentType);
             });
@@ -69,7 +69,7 @@ class ContentTypeRepository extends BaseRespository {
 
         return new Promise((resolve, reject) => {
 
-            let newContentType = new model.ContentType({
+            let newContentType = new ContentType({
                 name,
                 slug,
                 description,
@@ -92,7 +92,7 @@ class ContentTypeRepository extends BaseRespository {
      */
     deleteContentType(contentTypeId) {
         return new Promise((resolve, reject) => {
-            model.ContentType.deleteOne({_id: contentTypeId}, function(err) {
+            ContentType.deleteOne({_id: contentTypeId}, function(err) {
                 if (err) return reject(err);
                 return resolve(true);
             });
@@ -109,12 +109,10 @@ class ContentTypeRepository extends BaseRespository {
     updateContentType(contentTypeId, payload) {
         return new Promise((resolve, reject) => {
 
-            model.ContentType.update({ _id: contentTypeId }, payload, function(err, res) {
+            ContentType.update({ _id: contentTypeId }, payload, function(err, res) {
                 if (err) return reject(err);
                 return resolve(res);
             });
         });
     }
 }
-
-module.exports = ContentTypeRepository;

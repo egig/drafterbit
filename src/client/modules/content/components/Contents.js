@@ -159,7 +159,7 @@ class Contents extends React.Component {
                 <Card headerText="Contents">
                     <Link className="btn btn-success mb-3" to={addUrl} >Add</Link>
                     {!!this.state.selected.length &&
-                      <button className="btn btn-danger ml-3" onClick={this.handleDelete} >Delete</button>
+                      <button className="btn btn-danger ml-2 mb-3" onClick={this.handleDelete} >Delete</button>
                     }
                     <DataTable
 	                      idField="_id"

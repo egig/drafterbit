@@ -1,5 +1,5 @@
 const express = require('express');
-const ApiKeyRespository = require('../repository/ApiKeyRespository');
+import ApiKeyRespository from '../repository/ApiKeyRespository';
 const crypto = require('crypto');
 const validateRequest = require('../middlewares/validateRequest');
 

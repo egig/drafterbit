@@ -1,6 +1,6 @@
 const express = require('express');
 const config = require('../../config');
-const ContentTypeRepository = require('../repository/ContentTypeRepository');
+import ContentTypeRepository from '../repository/ContentTypeRepository';
 const validateRequest = require('../middlewares/validateRequest');
 
 let router = express.Router();

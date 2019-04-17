@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
 let contentTypeSchema = mongoose.Schema({
     name: String,
@@ -14,4 +12,4 @@ let contentTypeSchema = mongoose.Schema({
     }]
 });
 
-module.exports = contentTypeSchema;
+export default contentTypeSchema;

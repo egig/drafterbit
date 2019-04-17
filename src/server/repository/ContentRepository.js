@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const BaseRespository = require('./BaseRepository');
-const model = require('../model');
+import mongoose from 'mongoose';
+import BaseRepository from './BaseRepository';
+import { Content } from '../model';
 
-class ContentRepository extends BaseRespository {
+export default class ContentRepository extends BaseRepository {
 
 		getCount(contentTypeId, filterObj) {
 
@@ -28,7 +28,7 @@ class ContentRepository extends BaseRespository {
 			agg.push({$count: 'content_count'});
 
 			return new Promise((resolve, reject) => {
-				model.Content
+				Content
 					.aggregate(agg)
 					.exec(function(err, r) {
 					if (err) return reject(err);
@@ -78,7 +78,7 @@ class ContentRepository extends BaseRespository {
 				agg.push({$limit: max});
 
 	    return new Promise((resolve, reject) => {
-            model.Content.aggregate(agg)
+            Content.aggregate(agg)
 	            .exec(function(err, contents) {
 	            if (err) return reject(err);
 	            return resolve(contents);
@@ -93,7 +93,7 @@ class ContentRepository extends BaseRespository {
      */
     getContent(contentId) {
         return new Promise((resolve, reject) => {
-            model.Content.findOne({_id: contentId}, function (err, content) {
+            Content.findOne({_id: contentId}, function (err, content) {
                 if (err) return reject(err);
                 return resolve(content);
             });
@@ -110,7 +110,7 @@ class ContentRepository extends BaseRespository {
 
         return new Promise((resolve, reject) => {
 
-            let newContent = new model.Content({
+            let newContent = new Content({
                 content_type: contentTypeId,
                 fields
             });
@@ -131,7 +131,7 @@ class ContentRepository extends BaseRespository {
     deleteContent(contentId) {
 
         return new Promise((resolve, reject) => {
-            model.Content.deleteOne({_id: contentId}, function(err) {
+            Content.deleteOne({_id: contentId}, function(err) {
                 if (err) return reject(err);
                 return resolve(true);
             });
@@ -147,12 +147,10 @@ class ContentRepository extends BaseRespository {
     updateContent(contentId, payload) {
         return new Promise((resolve, reject) => {
 
-            model.Content.update({ _id: contentId },payload,function(err, res) {
+            Content.update({ _id: contentId },payload,function(err, res) {
                 if (err) return reject(err);
                 return resolve(res);
             });
         });
     }
 }
-
-module.exports = ContentRepository;

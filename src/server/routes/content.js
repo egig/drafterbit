@@ -1,5 +1,5 @@
 const express = require('express');
-const ContentRepository = require('../repository/ContentRepository');
+import ContentRepository from '../repository/ContentRepository';
 const validateRequest = require('../middlewares/validateRequest');
 const { parseFilterQuery } = require('../../common/parseFilterQuery');
 

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const contentTypeSchema = require('./contentTypeSchema');
+import mongoose from 'mongoose';
+import contentTypeSchema from './contentTypeSchema';
 const Schema = mongoose.Schema;
 
 let contentSchema = mongoose.Schema({
@@ -12,4 +12,4 @@ let contentSchema = mongoose.Schema({
     }]
 });
 
-module.exports = contentSchema;
+export default contentSchema;

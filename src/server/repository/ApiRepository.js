@@ -1,9 +1,8 @@
-const BaseRespository = require('./BaseRepository');
-const ContentTypeRepository = require('./ContentTypeRepository');
-const ContentRepository = require('./ContentRepository');
-const model = require('../model');
+import BaseRespository from './BaseRepository';
+import ContentTypeRepository from './ContentTypeRepository';
+import ContentRepository from './ContentRepository';
 
-class ApiKeyRespository extends BaseRespository {
+export default  class ApiKeyRespository extends BaseRespository {
 
     constructor() {
         super();
@@ -19,5 +18,3 @@ class ApiKeyRespository extends BaseRespository {
             });
     }
 }
-
-module.exports = ApiKeyRespository;
