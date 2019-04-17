@@ -7,3 +7,4 @@ public/*
 config.json
 npm-debug.log*
 errorShots/
+dist/

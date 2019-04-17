@@ -2,7 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: 'development',
-	entry: ['babel-polyfill', './src/client/index.js'],
+	entry: ['@babel/polyfill', './src/client/index.js'],
 	output: {
 		path: __dirname + '/public',
 		filename: 'bundle.js'
@@ -16,7 +16,7 @@ module.exports = {
 					{
 						loader: 'babel-loader',
 						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-flow'],
+							presets: ['@babel/preset-env', '@babel/preset-react'],
 							plugins: ['@babel/plugin-proposal-class-properties']
 						}
 					},

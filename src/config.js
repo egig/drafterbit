@@ -1,5 +1,5 @@
-const nconf = require('nconf');
-const path = require('path');
+import nconf from 'nconf';
+import path from 'path';
 
 nconf
     .env([
@@ -24,4 +24,4 @@ nconf
         PORT: 3000,
     });
 
-module.exports = nconf;
+export default nconf;

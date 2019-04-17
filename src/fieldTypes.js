@@ -25,24 +25,18 @@ const fieldTypes = [
     }
 ];
 
-const getFieldTypesObject = function getFieldTypesObject() {
+function getFieldTypesObject() {
     let fieldTypeObject = {};
     fieldTypes.map(f => {
         fieldTypeObject[f.id] = f.name;
     });
     return fieldTypeObject;
-};
+}
 
-const getFieldTypeName = function getFieldName(id) {
+export function getFieldTypeName(id) {
     return getFieldTypesObject()[id];
-};
+}
 
-const getFieldTypes = function getFields() {
+export function getFieldTypes() {
     return fieldTypes;
-};
-
-
-module.exports = {
-    getFieldTypes,
-    getFieldTypeName
-};
+}

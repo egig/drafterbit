@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -10,19 +8,14 @@ export default function translate(namespaces) {
         return WrappedComponent.displayName || WrappedComponent.name || 'Component';
     }
 
-    return function wrap(WrappedComponent: Object) {
+    return function wrap(WrappedComponent) {
         if (typeof WrappedComponent !== 'function') {
             throw new Error('Expected WrappedComponent to be a React component.');
         }
 
-        type Props = {};
-        type State = {
-            loadedAt:any
-        };
+        class Translate extends React.Component {
 
-        class Translate extends React.Component<Props, State> {
-
-            constructor(props: Object, context: Object) {
+            constructor(props, context) {
                 super(props, context);
                 this.state = {
                     loadedAt: new Date()

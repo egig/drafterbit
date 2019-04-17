@@ -1,4 +1,3 @@
-/* @flow */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,11 +10,7 @@ import Notify from '../../../components/Notify';
 
 import './Login.css'
 
-class Login extends React.Component<{
-    doLogin: Function,
-    t: Function,
-    classNames: Object,
-    history: Object}, {errorText: string}> {
+class Login extends React.Component {
 
     constructor(props) {
         super(props);

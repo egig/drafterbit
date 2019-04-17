@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 const path =  require('path');
 const express =  require('express');
 const cookieParser = require('cookie-parser');
@@ -12,7 +13,7 @@ const swaggerUi = require('swagger-ui-express');
 
 
 const routes = require('./routes');
-const config = require('../config');
+import config from '../config';
 const configMiddleware = require('./middlewares/config');
 const cacheMiddleware = require('./middlewares/cache');
 const createSession = require('./createSession');
