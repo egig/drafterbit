@@ -18,6 +18,12 @@ const configMiddleware = require('./middlewares/config');
 const cacheMiddleware = require('./middlewares/cache');
 const createSession = require('./createSession');
 
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackConfig = require('../../webpack.config');
+const compiler = webpack(webpackConfig);
+
+
 i18next
     .use(i18nextExpressMiddleware.LanguageDetector)
     .init({
@@ -26,6 +32,12 @@ i18next
 
 const app = express();
 // app.use(cors());
+
+app.use(
+	webpackDevMiddleware(compiler, {
+		publicPath: webpackConfig.output.publicPath
+	})
+);
 
 app.use(i18nextExpressMiddleware.handle(i18next, {
     removeLngFromUrl: false

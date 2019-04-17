@@ -67,7 +67,7 @@ class Login extends React.Component {
                     this.doLogin(e);
                 }}>
                     <div className="form-group">
-                        <label htmlFor="email">E-Mail Address</label>
+                        <label htmlFor="email">E-Mail Address  sdfjkds  </label>
                         <input type="email" name="email" className={`form-control login-formControlBorder`} id="email" aria-describedby="emailHelp"/>
                     </div>
 

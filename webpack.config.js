@@ -1,11 +1,16 @@
+const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: 'development',
-	entry: ['@babel/polyfill', './src/client/index.js'],
+	entry: [ '@babel/polyfill', './src/client/index.js'],
 	output: {
 		path: __dirname + '/public',
-		filename: 'bundle.js'
+		filename: 'bundle.js',
+		publicPath: '/'
+	},
+	devServer: {
+		contentBase: path.join(__dirname, 'public')
 	},
 	module: {
 		rules: [
