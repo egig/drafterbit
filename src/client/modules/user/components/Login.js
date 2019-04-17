@@ -82,7 +82,7 @@ class Login extends React.Component {
 
                     <div className="form-group">
                         <label>
-                            <input type="checkbox" name="remember" /> Remember Me
+                            <input type="checkbox" name="remember" /> Remember Meq
                         </label>
                     </div>
 

@@ -92,7 +92,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel ./src -d ./build --config-file ./server.babel.config.js",
-    "start": "nodemon --exec babel-node --config-file ./server.babel.config.js  src/server",
+    "start": "nodemon --ignore 'src/client/' --exec babel-node --config-file ./server.babel.config.js  src/server",
     "build": "babel ./src -d ./build --config-file ./server.babel.config.js && webpack -p --config ./webpack.config.js --display-error-details",
     "watch": "webpack -d --watch --config ./webpack.config.js --display-error-details",
     "dev": "wenpbpack && node server.js --env development",
