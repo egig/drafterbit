@@ -1,8 +1,7 @@
-const express = require('express');
-const ApiRepository = require('../repository/ApiRepository');
-const ContentTypeRepository = require('../repository/ContentTypeRepository');
-const ContentRepository = require('../repository/ContentRepository');
-const validateRequest = require('../middlewares/validateRequest');
+import express from 'express';
+import ContentTypeRepository from '../repository/ContentTypeRepository';
+import ContentRepository from '../repository/ContentRepository';
+import validateRequest from '../middlewares/validateRequest';
 
 let router = express.Router();
 
@@ -87,4 +86,4 @@ async function formatField(fields, repo) {
     return content;
 }
 
-module.exports = router;
+export default router;

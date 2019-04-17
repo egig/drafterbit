@@ -91,5 +91,4 @@ const getSwaggerDataType = function getSwaggerDataType(typeId) {
     }
 };
 
-
-module.exports = router;
+export default router;

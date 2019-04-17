@@ -1,6 +1,6 @@
-module.exports = function (config) {
+export default function config(cfg) {
     return function (req, res, next) {
-        req.app.set('config', config);
+        req.app.set('config', cfg);
         next();
     };
 };

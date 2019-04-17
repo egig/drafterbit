@@ -1,7 +1,7 @@
 import userRepository from './repository/UserRespository';
-const UserAuthError = require('./user/UserAuthError');
-const password = require('./lib/password');
-const crypto = require('crypto');
+import UserAuthError from './user/UserAuthError';
+import password from './lib/password';
+import crypto from 'crypto';
 
 function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;

@@ -1,7 +1,6 @@
-const express = require('express');
-const config = require('../../config');
+import express from 'express';
 import ContentTypeRepository from '../repository/ContentTypeRepository';
-const validateRequest = require('../middlewares/validateRequest');
+import validateRequest from '../middlewares/validateRequest';
 
 let router = express.Router();
 
@@ -264,4 +263,4 @@ router.patch('/content_types/:content_type_id',
 
     });
 
-module.exports = router;
+export default router;

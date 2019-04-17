@@ -2,4 +2,4 @@ class UserAuthError extends Error {
 
 }
 
-module.exports = UserAuthError;
+export default UserAuthError;

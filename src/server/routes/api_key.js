@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 import ApiKeyRespository from '../repository/ApiKeyRespository';
-const crypto = require('crypto');
-const validateRequest = require('../middlewares/validateRequest');
+import crypto from 'crypto';
+import validateRequest from '../middlewares/validateRequest';
 
 let router = express.Router();
 
@@ -275,4 +275,4 @@ router.patch('/api_keys/:api_key_id',
         })();
     });
 
-module.exports = router;
+export default router;

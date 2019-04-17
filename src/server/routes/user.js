@@ -1,11 +1,13 @@
-const express = require('express');
-let router = express.Router();
-const password = require('../lib/password');
+import express from 'express';
+import password from '../lib/password';
 import userRepository from '../repository/UserRespository';
-const crypto = require('crypto');
-const UserAuthError = require('../user/UserAuthError');
-const validateRequest = require('../middlewares/validateRequest');
-const { sendResetPasswordEmail } = require('../lib/mail');
+import crypto from 'crypto';
+import UserAuthError  from '../user/UserAuthError';
+import validateRequest from '../middlewares/validateRequest';
+import { sendResetPasswordEmail } from '../lib/mail';
+
+let router = express.Router();
+
 
 function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;
@@ -424,4 +426,4 @@ router.post('/users/reset_password',
 
     });
 
-module.exports = router;
+export default router;

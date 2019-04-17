@@ -1,9 +1,8 @@
-const Promise = require('bluebird');
-const redis = require('redis');
-const redisDeletePattern = require('redis-delete-pattern');
-const _ = require('lodash');
+import redis from 'redis';
+import redisDeletePattern from 'redis-delete-pattern';
+import _ from 'lodash';
 
-class RedisDriver {
+export default class RedisDriver {
 
     /**
      * Create client constructor
@@ -153,5 +152,3 @@ class RedisDriver {
     }
 
 }
-
-module.exports = RedisDriver;

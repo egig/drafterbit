@@ -1,4 +1,4 @@
-class Cache {
+export default class Cache {
 
     /**
      *
@@ -51,5 +51,3 @@ class Cache {
     }
 
 }
-
-module.exports = Cache;

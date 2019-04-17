@@ -1,10 +1,10 @@
-const express = require('express');
-const user = require('./user');
-const content_type = require('./content_type');
-const content = require('./content');
-const api_key = require('./api_key');
-const swagger = require('./swagger');
-const api = require('./api');
+import  express from 'express';
+import user from './user';
+import content_type from './content_type';
+import content from './content';
+import api_key from './api_key';
+import swagger from './swagger';
+import api from './api';
 
 let router = express.Router();
 router.use(user);
@@ -14,4 +14,4 @@ router.use(content);
 router.use(swagger);
 router.use(api);
 
-module.exports = router;
+export default router;
