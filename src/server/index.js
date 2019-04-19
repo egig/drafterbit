@@ -30,9 +30,9 @@ const app = express();
 
 const compiler = webpack(webpackConfig);
 app.use(
-	webpackDevMiddleware(compiler, {
-		publicPath: webpackConfig.output.publicPath
-	})
+    webpackDevMiddleware(compiler, {
+        publicPath: webpackConfig.output.publicPath
+    })
 );
 
 app.use(i18nextExpressMiddleware.handle(i18next, {
@@ -142,5 +142,5 @@ app.use(routes);
 
 const port = config.get('PORT');
 app.listen(port, function () {
-	console.log("Example app listening on port " + port + "!");
+    console.log('Example app listening on port ' + port + '!');
 });

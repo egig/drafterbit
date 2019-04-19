@@ -1,160 +1,188 @@
 import React from 'react';
 import { Button, Input, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import createPagination from './createPagination';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortUp, faSortDown, faFilter, faRedo } from '@fortawesome/free-solid-svg-icons';
+import Actions from './DataTable/Actions';
 
 import './DataTable.css';
 
-class DataTable extends React.Component {
-
-	render() {
-
-		function renderCaret(dataField, sortBy, sortDir) {
-			if(sortBy == dataField) {
-				if(sortDir == 'asc') {
-					return <FontAwesomeIcon icon={faSortUp} className="float-right" />
-				}
-
-				return <FontAwesomeIcon icon={faSortDown} className="float-right" />
-			}
-			return <FontAwesomeIcon icon={faSort} className="float-right" color="#cccccc" />;
+function renderCaret(dataField, sortBy, sortDir) {
+	if(sortBy == dataField) {
+		if(sortDir == 'asc') {
+			return <FontAwesomeIcon icon={faSortUp} className="float-right" />;
 		}
 
-		return (
-			<div>
-				<Table className="drafterbit-table" size="sm" bordered striped hover>
-					<thead>
-						<tr>
-							<th>
-								<input
-									onChange={e => {
-										this.props.onSelectAll(e.target.checked, this.props.data);
-									}}
-									type="checkbox"
-									ref={(input) => {
-					          if (input != null) {
-					          	input.indeterminate = (!!this.props.selected.length) && (this.props.selected.length < this.props.data.length);
-					          }}
-									}
-									checked={this.props.selected.length == this.props.data.length}
-								/>
-							</th>
-							{this.props.columns.map((c,i) => {
-								return <th onClick={e => {
-									this.props.onSort(c.dataField, this.props.sortDir);
-								}} style={{cursor: 'pointer'}} key={i}>
-									{c.text}
-									{renderCaret(c.dataField, this.props.sortBy, this.props.sortDir)}
-								</th>
-							})}
-							<th>
-								Actions
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td />
-							{this.props.columns.map((c,i) => {
-								return (
-									<td key={i}>
-										<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ""} onChange={e => {
-											this.props.onFilterChange(c.dataField, e.target.value);
-										}}/>
-									</td>
-								)
-							})}
-							<td width="150px">
-								<Button size="sm" color="primary" className="mr-1" onClick={() => {
-
-									let filterObj = {};
-									Object.keys(this.props.filterObject).forEach((name) => {
-										let v = this.props.filterObject[name];
-										if(!!v) {
-											filterObj[name] = this.props.filterObject[name];
-										}
-									});
-
-									this.props.onApplyFilter(filterObj);
-								}}>Apply</Button>
-								<Button size="sm" onClick={() => {
-									this.props.onReset();
-								}}>Reset</Button>
-							</td>
-						</tr>
-					{
-						this.props.data.map((d,i) => {
-							return (
-								<tr key={i}>
-									<td><input onChange={e => {
-										this.props.onSelect(e.target.checked, d)
-									}} checked={this.props.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" /></td>
-									{this.props.columns.map((c,i) => {
-										return (
-											<td key={i}>
-												{(() => {
-													if(typeof c.formatter == 'function') {
-														return c.formatter(d[c.dataField], d);
-													} else {
-														return d[c.dataField]
-													}
-												})()}
-											</td>
-										)
-									})}
-									<td>
-										<Button size="sm" color="primary">Edit</Button>
-									</td>
-								</tr>
-							);
-						})
-					}
-					</tbody>
-				</Table>
-				<Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
-					{createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
-						return (
-							<PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
-								{this.props.renderPaginationLink(p)}
-							</PaginationItem>
-						)
-					})}
-				</Pagination>
-			</div>
-		);
+		return <FontAwesomeIcon icon={faSortDown} className="float-right" />;
 	}
+	return <FontAwesomeIcon icon={faSort} className="float-right" color="#cccccc" />;
+}
+
+
+class DataTable extends React.Component {
+
+    render() {
+
+    	let {
+		    select,
+		    data,
+		    onSort,
+		    sortBy,
+		    sortDir,
+		    onRowClick
+	    } = this.props;
+
+        return (
+            <div>
+                <Table className="drafterbit-table" bordered striped hover responsive>
+                    <thead>
+                        <tr>
+	                        { select &&
+		                        <th>
+			                        <input
+				                        onChange={e => {
+	                                      select.onSelectAll(e.target.checked, this.props.data);
+	                                    }}
+				                        type="checkbox"
+				                        ref={(input) => {
+															          if (input != null) {
+															            input.indeterminate = (!!select.selected.length) && (select.selected.length < data.length);
+															          }}
+	                                    }
+				                        checked={select.selected.length == data.length}
+			                        />
+		                        </th>
+	                        }
+                            {this.props.columns.map((c,i) => {
+                                return <th onClick={e => {
+                                    onSort(c.dataField, sortDir);
+                                }} style={{cursor: 'pointer'}} key={i}>
+                                    {c.text}
+                                    {renderCaret(c.dataField, sortBy, sortDir)}
+                                </th>;
+                            })}
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+	                        { select && <td /> }
+                            {this.props.columns.map((c,i) => {
+                                return (
+                                    <td key={i}>
+                                        <Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {
+                                            this.props.onFilterChange(c.dataField, e.target.value);
+                                        }}/>
+                                    </td>
+                                );
+                            })}
+                            <td width="100px">
+                                <Button size="sm" color="primary" className="mr-1" onClick={() => {
+
+                                    let filterObj = {};
+                                    Object.keys(this.props.filterObject).forEach((name) => {
+                                        let v = this.props.filterObject[name];
+                                        if(v) {
+                                            filterObj[name] = this.props.filterObject[name];
+                                        }
+                                    });
+
+                                    this.props.onApplyFilter(filterObj);
+                                }}><FontAwesomeIcon icon={faFilter}/></Button>
+                                <Button size="sm" onClick={() => {
+                                    this.props.onReset();
+                                }}><FontAwesomeIcon icon={faRedo}/></Button>
+                            </td>
+                        </tr>
+                        {
+                            this.props.data.map((d,i) => {
+                                return (
+                                    <tr key={i} >
+	                                    {select &&
+		                                    <td><input onChange={e => {
+	                                          select.onSelect(e.target.checked, d);
+	                                        }} checked={select.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" />
+		                                    </td>
+	                                    }
+                                        {this.props.columns.map((c,i) => {
+                                            return (
+                                                <td key={i}>
+                                                    {(() => {
+                                                        if(typeof c.formatter == 'function') {
+                                                            return c.formatter(d[c.dataField], d);
+                                                        } else {
+                                                            return d[c.dataField];
+                                                        }
+                                                    })()}
+                                                </td>
+                                            );
+                                        })}
+                                        <td>
+	                                        <Actions onEdit={() => {
+	                                        	onRowClick(d)
+	                                        }} />
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        }
+                    </tbody>
+                </Table>
+                <Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
+                    {createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
+                        return (
+                            <PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
+                                {this.props.renderPaginationLink(p)}
+                            </PaginationItem>
+                        );
+                    })}
+                </Pagination>
+            </div>
+        );
+    }
 }
 
 DataTable.defaultProps = {
-	idField: "_id",
-	data: [],
-	selected: [],
-	columns: [],
-	currentPage: 1,
-	totalPageCount: 1,
-	filterObject: {},
-	onSort: function (dataField, sortDir) {
+    idField: '_id',
+    data: [],
+    columns: [],
+    currentPage: 1,
+    totalPageCount: 1,
+    filterObject: {},
+		// select: {
+		// 	selected: [],
+		// 	onSelect: function (d) {
+		//
+		// 	},
+		// 	onSelectAll: function (d) {
+		//
+		// 	},
+		// },
+		select: false,
+		onRowClick: function (d) {
+
+		},
+    onSort: function (dataField, sortDir) {
 		
-	},
-	onApplyFilter: function (filterObject) {
+    },
+    onApplyFilter: function (filterObject) {
 
-	},
-	onFilterChange: function (dataField, value) {
+    },
+    onFilterChange: function (dataField, value) {
 
-	},
-	onReset: function () {
+    },
+    onReset: function () {
 
-	},
-	sortBy: null,
-	sortDir: null,
-	renderPaginationLink: function (p) {
-		return (
-			<PaginationLink className="page-link" href={p}>
-				{p}
-			</PaginationLink>
-		)
-	}
+    },
+    sortBy: null,
+    sortDir: null,
+    renderPaginationLink: function (p) {
+        return (
+            <PaginationLink className="page-link" href={p}>
+                {p}
+            </PaginationLink>
+        );
+    }
 };
 
 export default DataTable;

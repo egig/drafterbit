@@ -14,12 +14,12 @@ class ContentType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          _id: '',
-          name: '',
-          slug: '',
-          description: '',
-          fields: [],
-          notifyText: '',
+            _id: '',
+            name: '',
+            slug: '',
+            description: '',
+            fields: [],
+            notifyText: '',
 	        fieldDialogActive: false,
 	        fieldTypeSelected: null
         };
@@ -40,25 +40,25 @@ class ContentType extends React.Component {
         this.props.getContentType(this.props.match.params.content_type_id);
     }
 
-		addField(f) {
-			this.setState({
-				fields: this.state.fields.concat([f]),
-				fieldDialogActive: false
-			}, () => {
+    addField(f) {
+        this.setState({
+            fields: this.state.fields.concat([f]),
+            fieldDialogActive: false
+        }, () => {
 
-				this.props.updateContentType(
-					this.state._id,
-					this.state.name,
-					this.state.slug,
-					this.state.description.value,
-					this.state.fields
-				).then(r => {
-					this.setState({
-						notifyText: 'Fields successfully saved.'
-					});
-				});
-			})
-		}
+            this.props.updateContentType(
+                this.state._id,
+                this.state.name,
+                this.state.slug,
+                this.state.description.value,
+                this.state.fields
+            ).then(r => {
+                this.setState({
+                    notifyText: 'Fields successfully saved.'
+                });
+            });
+        });
+    }
 
     deleteContentType(deleteForm) {
         // TODO create alert
@@ -128,11 +128,11 @@ class ContentType extends React.Component {
 		            <Col md="8">
 			            <Card headerText="Fields">
 					            <button onClick={e => {
-                                            e.preventDefault();
-                                            this.setState({
-                                                fieldDialogActive: true
-                                            });
-                                        }} className="btn btn-success btn-sm mb-2"><i className="icon-plus"/> Add Field</button>
+                                e.preventDefault();
+                                this.setState({
+                                    fieldDialogActive: true
+                                });
+                            }} className="btn btn-success btn-sm mb-2"><i className="icon-plus"/> Add Field</button>
 				            <table className="table table-sm table-bordered">
 					            <thead>
 					            <tr>

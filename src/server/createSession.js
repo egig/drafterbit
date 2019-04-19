@@ -54,4 +54,4 @@ export default function createSession(app, email, rawPassword) {
         .catch(e => {
             console.log(e);
         });
-};
+}

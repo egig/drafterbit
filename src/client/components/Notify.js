@@ -45,11 +45,11 @@ class Notify extends React.Component {
         return (
             <ReactCSSTransitionGroup
                 transitionName={{
-                    enter: "notifyEnter",
-                    enterActive: "notifyEnterActive",
-                    leave: "notifyLeave",
-                    leaveActive: "notifyLeaveActive",
-                    appear: "notifyAppear",
+                    enter: 'notifyEnter',
+                    enterActive: 'notifyEnterActive',
+                    leave: 'notifyLeave',
+                    leaveActive: 'notifyLeaveActive',
+                    appear: 'notifyAppear',
                     appearActive: 'notifyAppearActive'
                 }}
                 transitionAppear={true}

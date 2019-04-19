@@ -8,4 +8,4 @@ export default function createClient(options) {
         headers: {'X-Custom-Header': 'foobar'}
     });
     
-};
+}

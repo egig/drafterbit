@@ -58,10 +58,10 @@ class Client {
     //     return response.data;
     // }
 
-		async getUsers() {
-			let response = await this.axiosInstance.get('/users');
-			return response.data;
-		}
+    async getUsers() {
+        let response = await this.axiosInstance.get('/users');
+        return response.data;
+    }
 
     async getContentTypes() {
         let response = await this.axiosInstance.get('/content_types');

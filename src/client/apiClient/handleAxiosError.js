@@ -18,4 +18,4 @@ export default function handleAxiosError(error) {
     }
 
     throw error;
-};
+}

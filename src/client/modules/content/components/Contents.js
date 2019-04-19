@@ -142,16 +142,19 @@ class Contents extends React.Component {
             dataField: '_id',
             text: '#ID',
             formatter: (cell, row) => {
-                return <Link to={`/contents/${slug}/${cell}`}>{cell}</Link>
+	            return <span>{cell.substr(0,3)}&hellip;</span>;
             },
         }];
 
         this.props.ctFields.fields.map(f => {
-            columns.push({
-              dataField: f.name,
-              text: f.label,
-	            sort: true
-            })
+        	// Don't display Rich Text by default
+        	if(f.type_id !== 3) {
+		        columns.push({
+			        dataField: f.name,
+			        text: f.label,
+			        sort: true
+		        })
+	        }
         });
 
         return (
@@ -165,9 +168,11 @@ class Contents extends React.Component {
 	                      idField="_id"
                         data={ data }
                         columns={ columns }
-                        selected={this.state.selected}
-                        onSelect={this.handleOnSelect}
-                        onSelectAll={this.handleOnSelectAll}
+                        select={{
+                        	selected:this.state.selected,
+                        	onSelect:this.handleOnSelect,
+                        	onSelectAll:this.handleOnSelectAll
+                        }}
                         sortBy={sortBy}
 	                      sortDir={sortDir}
 	                      onSort={(dataField, sortDir) => {
@@ -208,6 +213,10 @@ class Contents extends React.Component {
                         renderPaginationLink={(p) => (
                         	<Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
                         )}
+	                      onRowClick={(col) => {
+	                      	let newLink = `/contents/${slug}/${col['_id']}`;
+	                      	this.props.history.push(newLink);
+	                      }}
                     />
                 </Card>
             </Layout>

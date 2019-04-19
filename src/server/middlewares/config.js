@@ -3,4 +3,4 @@ export default function config(cfg) {
         req.app.set('config', cfg);
         next();
     };
-};
+}

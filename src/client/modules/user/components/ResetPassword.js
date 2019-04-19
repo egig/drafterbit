@@ -40,16 +40,16 @@ class ResetPassword extends React.Component {
                 }}>
                     <div className="form-group">
                         <label htmlFor="new_password">New Password</label>
-                        <input type="password" name="new_password" className={`form-control login-formControlBorder`} id="email" aria-describedby="emailHelp"/>
+                        <input type="password" name="new_password" className={'form-control login-formControlBorder'} id="email" aria-describedby="emailHelp"/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password" className="login-labelWidth">Confirm New Password</label>
-                        <input id="password" type="password" className={`form-control login-formControlBorder`} name="password" required data-eye />
+                        <input id="password" type="password" className={'form-control login-formControlBorder'} name="password" required data-eye />
                     </div>
 
-                    <div className={`form-group login-noMargin`}>
-                        <button type="submit" className={`btn btn-success btn-block login-btnPadding`}>
+                    <div className={'form-group login-noMargin'}>
+                        <button type="submit" className={'btn btn-success btn-block login-btnPadding'}>
                             Save
                         </button>
                     </div>

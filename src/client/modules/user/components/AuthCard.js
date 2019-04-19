@@ -11,7 +11,7 @@ class AuthCard extends React.Component {
                 <Container className="h-100">
                     <div className="row justify-content-md-center h-100">
                         <div className="auth_card-cardWrapper">
-                            <div className={`brand auth_card-brandContainer`}>
+                            <div className={'brand auth_card-brandContainer'}>
                                 <img className="auth_card-brandImg" src="/img/dtlogo57-black.png" />
                             </div>
                             <Card className="fat">

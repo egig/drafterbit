@@ -6,4 +6,4 @@ const middlewares = [thunk];
 
 export default function storeFromState(defaultState) {
     return createStore(rootReducer, defaultState, applyMiddleware(...middlewares));
-};
+}

@@ -19,14 +19,14 @@ class ForgotPassword extends React.Component {
                 <form onSubmit={(e) => { e.preventDefault(); this.onSubmit(e.target); }}>
                     <div className="form-group">
                         <label htmlFor="email">E-Mail</label>
-                        <input type="email" name="email" className={`form-control auth_card-formControlBorder`} id="email" aria-describedby="emailHelp"/>
+                        <input type="email" name="email" className={'form-control auth_card-formControlBorder'} id="email" aria-describedby="emailHelp"/>
                         <div className="form-text text-muted">
                             By clicking "Reset Password" we will send a password reset link
                         </div>
                     </div>
 
-                    <div className={`form-group no-margin auth_card-noMargin`}>
-                        <button type="submit" className={`btn btn-success btn-block auth_card-btnPadding`}>
+                    <div className={'form-group no-margin auth_card-noMargin'}>
+                        <button type="submit" className={'btn btn-success btn-block auth_card-btnPadding'}>
                             Submit
                         </button>
                     </div>

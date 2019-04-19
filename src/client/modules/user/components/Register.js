@@ -33,22 +33,22 @@ class Register extends React.Component {
                 }}>
                     <div className="form-group">
                         <label htmlFor="first_name">First Name</label>
-                        <input type="text" name="first_name" className={`form-control register-formControlBorder`} id="first_name" required/>
+                        <input type="text" name="first_name" className={'form-control register-formControlBorder'} id="first_name" required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="last_name">Last Name</label>
-                        <input type="text" name="last_sname" className={`form-control register-formControlBorder`} id="last_name" required/>
+                        <input type="text" name="last_sname" className={'form-control register-formControlBorder'} id="last_name" required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="email">E-Mail</label>
-                        <input type="email" name="email" className={`form-control register-formControlBorder`} id="email" required/>
+                        <input type="email" name="email" className={'form-control register-formControlBorder'} id="email" required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input id="password" type="password" className={`form-control register-formControlBorder`} name="password" required />
+                        <input id="password" type="password" className={'form-control register-formControlBorder'} name="password" required />
                     </div>
 
                     <div className="form-group">
@@ -57,12 +57,12 @@ class Register extends React.Component {
                         </label>
                     </div>
 
-                    <div className={`form-group register-noMargin`}>
-                        <button type="submit" className={`btn btn-success btn-block register-btnPadding`}>
+                    <div className={'form-group register-noMargin'}>
+                        <button type="submit" className={'btn btn-success btn-block register-btnPadding'}>
                             Register
                         </button>
                     </div>
-                    <div className={`register-marginTop20 text-center`}>
+                    <div className={'register-marginTop20 text-center'}>
                         Already have an account? <Link to="/login">Login</Link>
                     </div>
                 </form>

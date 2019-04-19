@@ -10,64 +10,64 @@ import apiClient from '../../../apiClient';
 
 class Users extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			users: []
-		};
-	}
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: []
+        };
+    }
 
-	componentDidMount() {
-		let client =  apiClient.createClient({});
-		client.getUsers()
-			.then(users => {
-				this.setState({
-					users
-				})
-			})
-	}
+    componentDidMount() {
+        let client =  apiClient.createClient({});
+        client.getUsers()
+            .then(users => {
+                this.setState({
+                    users
+                });
+            });
+    }
 
-	render() {
+    render() {
 
-		const columns = [
-			{
-				dataField: '_id',
-				text: 'ID'
-			},
-			{
-				dataField: 'name',
-				text: 'Name'
-			},
-			{
-				dataField: 'email',
-				text: 'Email'
-			}
-		];
+        const columns = [
+            {
+                dataField: '_id',
+                text: 'ID'
+            },
+            {
+                dataField: 'name',
+                text: 'Name'
+            },
+            {
+                dataField: 'email',
+                text: 'Email'
+            }
+        ];
 
-		return (
-			<Layout>
-				<Card headerText="Content Types">
-					<DataTable
-						idField='_id'
-						data={ this.state.users }
-						columns={ columns }
-						striped
-						hover
-						condensed />
-				</Card>
-			</Layout>
-		);
-	}
+        return (
+            <Layout>
+                <Card headerText="Content Types">
+                    <DataTable
+                        idField='_id'
+                        data={ this.state.users }
+                        columns={ columns }
+                        striped
+                        hover
+                        condensed />
+                </Card>
+            </Layout>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		contentTypes: state.CONTENT_TYPE.contentTypes,
-	};
+    return {
+        contentTypes: state.CONTENT_TYPE.contentTypes,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators(actions, dispatch);
+    return bindActionCreators(actions, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
