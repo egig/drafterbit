@@ -144,6 +144,7 @@ class Contents extends React.Component {
             formatter: (cell, row) => {
 	            return <span>{cell.substr(0,3)}&hellip;</span>;
             },
+	        width: "80px"
         }];
 
         this.props.ctFields.fields.map(f => {

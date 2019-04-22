@@ -54,14 +54,14 @@ class DataTable extends React.Component {
 		                        </th>
 	                        }
                             {this.props.columns.map((c,i) => {
-                                return <th onClick={e => {
+                                return <th width={c.width ? c.width : ""} onClick={e => {
                                     onSort(c.dataField, sortDir);
                                 }} style={{cursor: 'pointer'}} key={i}>
                                     {c.text}
                                     {renderCaret(c.dataField, sortBy, sortDir)}
                                 </th>;
                             })}
-                            <th>Actions</th>
+                            <th width="100px">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +76,7 @@ class DataTable extends React.Component {
                                     </td>
                                 );
                             })}
-                            <td width="100px">
+                            <td>
                                 <Button size="sm" color="primary" className="mr-1" onClick={() => {
 
                                     let filterObj = {};

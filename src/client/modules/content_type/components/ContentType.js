@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
 import { getFieldTypeName } from '../../../../fieldTypes';
-import { Row, Col, Modal, ModalBody } from 'reactstrap';
+import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import AddFieldForm from './AddFieldForm';
 
 class ContentType extends React.Component {
@@ -23,6 +23,10 @@ class ContentType extends React.Component {
 	        fieldDialogActive: false,
 	        fieldTypeSelected: null
         };
+
+        this.addField = this.addField.bind(this);
+        this.deleteField = this.deleteField.bind(this);
+        this.doUpdateContentTypeByField = this.doUpdateContentTypeByField.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,20 +48,31 @@ class ContentType extends React.Component {
         this.setState({
             fields: this.state.fields.concat([f]),
             fieldDialogActive: false
-        }, () => {
+        }, this.doUpdateContentTypeByField);
+    }
 
-            this.props.updateContentType(
-                this.state._id,
-                this.state.name,
-                this.state.slug,
-                this.state.description.value,
-                this.state.fields
-            ).then(r => {
-                this.setState({
-                    notifyText: 'Fields successfully saved.'
-                });
-            });
-        });
+    deleteField(f) {
+    	let newFields = this.state.fields.filter((sf) => {
+		    return (sf._id !== f._id)
+	    });
+
+	    this.setState({
+		    fields: newFields,
+	    }, this.doUpdateContentTypeByField);
+    }
+
+    doUpdateContentTypeByField() {
+	    this.props.updateContentType(
+		    this.state._id,
+		    this.state.name,
+		    this.state.slug,
+		    this.state.description.value,
+		    this.state.fields
+	    ).then(r => {
+		    this.setState({
+			    notifyText: 'Fields successfully saved.'
+		    });
+	    });
     }
 
     deleteContentType(deleteForm) {
@@ -138,6 +153,7 @@ class ContentType extends React.Component {
 					            <tr>
 						            <th>Name</th>
 						            <th>Type</th>
+						            <th></th>
 					            </tr>
 					            </thead>
 					            <tbody>
@@ -146,6 +162,9 @@ class ContentType extends React.Component {
 							            <tr key={i}>
 								            <td>{f.name}</td>
 								            <td>{getFieldTypeName(f.type_id)}</td>
+								            <td><Button size="sm" onClick={e => {
+								            	this.deleteField(f);
+								            }}>&times;</Button></td>
 							            </tr>
 						            );
 					            })}
