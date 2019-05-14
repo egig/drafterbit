@@ -85,7 +85,8 @@ const updateContent = (contentId, formData) => (dispatch) => {
 
     let client = apiClient.createClient({});
     return client.updateContent(contentId, formData)
-        .then((r) => {
+
+	    .then((r) => {
             return dispatch(setAjaxLoading(false));
         });
 };

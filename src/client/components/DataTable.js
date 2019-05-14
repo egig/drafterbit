@@ -34,7 +34,10 @@ class DataTable extends React.Component {
 
         return (
             <div>
-                <Table className="drafterbit-table" bordered striped hover responsive>
+	            <div className="DataTable-search-widget">
+	              <Input type="text" placeholder="search" className=""/>
+	            </div>
+                <Table size="sm" className="drafterbit-table" bordered striped hover responsive>
                     <thead>
                         <tr>
 	                        { select &&
@@ -61,39 +64,39 @@ class DataTable extends React.Component {
                                     {renderCaret(c.dataField, sortBy, sortDir)}
                                 </th>;
                             })}
-                            <th width="100px">Actions</th>
+                            {/*<th width="100px">Actions</th>*/}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-	                        { select && <td /> }
-                            {this.props.columns.map((c,i) => {
-                                return (
-                                    <td key={i}>
-                                        <Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {
-                                            this.props.onFilterChange(c.dataField, e.target.value);
-                                        }}/>
-                                    </td>
-                                );
-                            })}
-                            <td>
-                                <Button size="sm" color="primary" className="mr-1" onClick={() => {
+                        {/*<tr>*/}
+	                        {/*{ select && <td /> }*/}
+                            {/*/!*{this.props.columns.map((c,i) => {*!/*/}
+                                {/*/!*return (*!/*/}
+                                    {/*/!*<td key={i}>*!/*/}
+                                        {/*/!*<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {*!/*/}
+                                            {/*/!*this.props.onFilterChange(c.dataField, e.target.value);*!/*/}
+                                        {/*/!*}}/>*!/*/}
+                                    {/*/!*</td>*!/*/}
+                                {/*/!*);*!/*/}
+                            {/*/!*})}*!/*/}
+                            {/*/!*<td>*!/*/}
+                                {/*/!*<Button size="sm" color="primary" className="mr-1" onClick={() => {*!/*/}
+                            {/**/}
+                                    {/*/!*let filterObj = {};*!/*/}
+                                    {/*/!*Object.keys(this.props.filterObject).forEach((name) => {*!/*/}
+                                        {/*/!*let v = this.props.filterObject[name];*!/*/}
+                                        {/*/!*if(v) {*!/*/}
+                                            {/*/!*filterObj[name] = this.props.filterObject[name];*!/*/}
+                                        {/*/!*}*!/*/}
+                                    {/*/!*});*!/*/}
 
-                                    let filterObj = {};
-                                    Object.keys(this.props.filterObject).forEach((name) => {
-                                        let v = this.props.filterObject[name];
-                                        if(v) {
-                                            filterObj[name] = this.props.filterObject[name];
-                                        }
-                                    });
-
-                                    this.props.onApplyFilter(filterObj);
-                                }}><FontAwesomeIcon icon={faFilter}/></Button>
-                                <Button size="sm" onClick={() => {
-                                    this.props.onReset();
-                                }}><FontAwesomeIcon icon={faRedo}/></Button>
-                            </td>
-                        </tr>
+                                    {/*/!*this.props.onApplyFilter(filterObj);*!/*/}
+                                {/*/!*}}><FontAwesomeIcon icon={faFilter}/></Button>*!/*/}
+                                {/*/!*<Button size="sm" onClick={() => {*!/*/}
+                                    {/*/!*this.props.onReset();*!/*/}
+                                {/*/!*}}><FontAwesomeIcon icon={faRedo}/></Button>*!/*/}
+                            {/*/!*</td>*!/*/}
+                        {/*</tr>*/}
                         {
                             this.props.data.map((d,i) => {
                                 return (
@@ -117,11 +120,11 @@ class DataTable extends React.Component {
                                                 </td>
                                             );
                                         })}
-                                        <td>
-	                                        <Actions onEdit={() => {
-	                                        	onRowClick(d)
-	                                        }} />
-                                        </td>
+                                        {/*<td>*/}
+	                                        {/*<Actions onEdit={() => {*/}
+	                                        	{/*onRowClick(d)*/}
+	                                        {/*}} />*/}
+                                        {/*</td>*/}
                                     </tr>
                                 );
                             })
