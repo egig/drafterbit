@@ -95,7 +95,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel ./src -d ./build --config-file ./babel-node.config.js",
-    "start": "NODE_ENV=development && nodemon --ignore 'src/client/' --exec babel-node --config-file ./babel-node.config.js  src/server",
+    "start": "NODE_ENV=development && nodemon --ignore 'public/' --exec babel-node --config-file ./babel-node.config.js  src",
     "build": "babel ./src -d ./build --config-file ./babel-node.config.js && webpack -p --config ./webpack.config.js --display-error-details",
     "linter": "./node_modules/.bin/eslint --fix ./src",
     "lng": "rm -R ./public/locales && cp -R ./locales ./public",
