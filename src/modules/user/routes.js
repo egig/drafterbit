@@ -1,11 +1,11 @@
 import express from 'express';
-import password from '../lib/password';
-import userRepository from './repository/UserRespository';
 import crypto from 'crypto';
+import userRepository from './repository/UserRespository';
+import password from '../../lib/password';
 import UserAuthError  from './UserAuthError';
-import validateRequest from '../middlewares/validateRequest';
-import { sendResetPasswordEmail } from '../lib/mail';
-import createSession from '../createSession';
+import validateRequest from '../../middlewares/validateRequest';
+import { sendResetPasswordEmail } from '../../lib/mail';
+import createSession from '../../createSession';
 
 let router = express.Router();
 

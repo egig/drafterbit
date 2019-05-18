@@ -11,7 +11,12 @@ import mongoose from 'mongoose';
 import routes from './routes';
 import config from './config'
 
+import bootSwagger from  './modules/swagger/boot'
+
 export default function (app) {
+
+	bootSwagger(app);
+
 	app.set('config', config);
 	app.emit("boot");
 

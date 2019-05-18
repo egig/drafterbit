@@ -1,5 +1,5 @@
-import userRepository from './user/repository/UserRespository';
-import UserAuthError from './user/UserAuthError';
+import userRepository from './modules/user/repository/UserRespository';
+import UserAuthError from './modules/user/UserAuthError';
 import password from './lib/password';
 import crypto from 'crypto';
 

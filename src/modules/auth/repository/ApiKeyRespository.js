@@ -1,11 +1,17 @@
-import BaseRespository from '../../repository/BaseRepository';
-import { ApiKey } from '../../model';
+import BaseRespository from '../../../repository/BaseRepository';
+import apiKeySchema from '../schema/apiKeySchema';
 
-export default class ApiKeyRespository extends BaseRespository {
+export default class ApiKeyRepository extends BaseRespository {
+
+	constructor(conn, app) {
+		super(conn, app)
+
+		this.ApiKey = this.conn.model('ApiKey', apiKeySchema);
+	}
 
     getApiKeys() {
         return new Promise((resolve, reject) => {
-        	ApiKey.find(function(err, apiKeys) {
+        	this.ApiKey.find(function(err, apiKeys) {
                 if (err) return reject(err);
                 return resolve(apiKeys);
             });
@@ -14,7 +20,7 @@ export default class ApiKeyRespository extends BaseRespository {
 
     getApiKey(apiKeyId) {
         return new Promise((resolve, reject) => {
-            ApiKey.findOne({_id: apiKeyId}, function(err, apiKey) {
+            this.ApiKey.findOne({_id: apiKeyId}, function(err, apiKey) {
                 if (err) return reject(err);
                 return resolve(apiKey);
             });
@@ -23,7 +29,7 @@ export default class ApiKeyRespository extends BaseRespository {
 
     getApiKeyByKey(key) {
         return new Promise((resolve, reject) => {
-            ApiKey.findOne({key: key}, function(err, apiKey) {
+            this.ApiKey.findOne({key: key}, function(err, apiKey) {
                 if (err) return reject(err);
                 return resolve(apiKey);
             });
@@ -41,7 +47,7 @@ export default class ApiKeyRespository extends BaseRespository {
     createApiKey( name, key, restrictionType, restrictionValue) {
         return new Promise((resolve, reject) => {
 
-            let newApiKey = new ApiKey({
+            let newApiKey = new this.ApiKey({
                 name,
                 key,
                 restriction_type: restrictionType,
@@ -63,7 +69,7 @@ export default class ApiKeyRespository extends BaseRespository {
      */
     deleteApiKey(apiKeyId) {
         return new Promise((resolve, reject) => {
-            model.ApiKey.deleteOne({_id: apiKeyId}, function(err) {
+            this.ApiKey.deleteOne({_id: apiKeyId}, function(err) {
                 if (err) return reject(err);
                 return resolve(true);
             });
@@ -79,7 +85,7 @@ export default class ApiKeyRespository extends BaseRespository {
     updateApiKey(apiKeyId, payload) {
         return new Promise((resolve, reject) => {
 
-            model.ApiKey.update({ _id: apiKeyId }, payload, function(err, res) {
+            this.ApiKey.update({ _id: apiKeyId }, payload, function(err, res) {
                 if (err) return reject(err);
                 return resolve(res);
             });

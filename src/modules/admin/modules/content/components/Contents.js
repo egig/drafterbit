@@ -9,7 +9,7 @@ import Card from '../../../components/Card/Card';
 import DataTable from '../../../components/DataTable';
 import apiClient from '../../../apiClient';
 import _ from 'lodash';
-import { parseFilterQuery, stringifyFilterQuery } from '../../../../common/parseFilterQuery'
+import { parseFilterQuery, stringifyFilterQuery } from '../../../../../common/parseFilterQuery'
 
 class Contents extends React.Component {
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import ContentTypeRepository from '../repository/ContentTypeRepository';
-import validateRequest from '../../middlewares/validateRequest';
+import validateRequest from '../../../middlewares/validateRequest';
 
 let router = express.Router();
 

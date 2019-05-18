@@ -1,5 +1,7 @@
 export default class BaseRespository {
 
-    constructor() {
+    constructor(conn, app) {
+    	this.conn = conn;
+    	this.app = app;
     }
 }

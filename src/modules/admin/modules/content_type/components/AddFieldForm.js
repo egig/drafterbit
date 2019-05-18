@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getFieldTypes } from '../../../../fieldTypes';
+import { getFieldTypes } from '../../../../../fieldTypes';
 import _ from 'lodash';
 
 // TODO create blank content type instead and save as draft

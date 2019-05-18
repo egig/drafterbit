@@ -1,7 +1,7 @@
 import express from 'express';
 import ApiKeyRespository from '../repository/ApiKeyRespository';
 import crypto from 'crypto';
-import validateRequest from '../../middlewares/validateRequest';
+import validateRequest from '../../../middlewares/validateRequest';
 
 let router = express.Router();
 

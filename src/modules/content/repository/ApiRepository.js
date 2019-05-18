@@ -1,20 +1,20 @@
-import BaseRespository from '../../repository/BaseRepository';
-import ContentTypeRepository from './ContentTypeRepository';
-import ContentRepository from './ContentRepository';
+import BaseRespository from '../../../repository/BaseRepository';
+import Content from '../model/Content';
+import ContentType from '../model/ContentType';
 
 export default  class ApiKeyRespository extends BaseRespository {
 
-    constructor() {
-        super();
+    constructor(conn, app) {
+        super(conn, app);
 
-        this.contentTypeRespository = new ContentTypeRepository();
-        this.contentRespository = new ContentRepository();
+        this.content = Content(conn);
+        this.contentType = new ContentType(conn);
     }
 
     getContents(slug) {
-        return this.contentTypeRespository.getContentType(slug)
+        return this.contentType.getContentType(slug)
             .then(contentType => {
-                return this.contentRespository.getContents(contentType.id);
+                return this.content.getContents(contentType.id);
             });
     }
 }

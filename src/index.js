@@ -4,10 +4,6 @@ import boot from './boot';
 
 const app = express();
 
-import listen from  './swagger/listener'
-
-listen(app);
-
 const port = config.get('PORT');
 
 boot(app);

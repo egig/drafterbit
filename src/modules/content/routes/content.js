@@ -1,7 +1,7 @@
 import express from 'express';
 import ContentRepository from '../repository/ContentRepository';
-import validateRequest from '../../middlewares/validateRequest';
-import { parseFilterQuery } from '../../common/parseFilterQuery';
+import validateRequest from '../../../middlewares/validateRequest';
+import { parseFilterQuery } from '../../../common/parseFilterQuery';
 
 let router = express.Router();
 

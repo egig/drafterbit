@@ -1,12 +1,17 @@
-import BaseRepository from '../../repository/BaseRepository';
-import { User } from '../../model';
+import BaseRepository from '../../../repository/BaseRepository';
+import userSchema from '../schema/userSchema';
 
 export default class UserRepository extends BaseRepository {
+
+	constructor(conn, app) {
+		super(app);
+		this.User = this.conn.model('User', userSchema);
+	}
 
     getUsers() {
         return new Promise((resolve, reject) => {
 
-            User.find({}, ['_id', 'name', 'email'], function(err, users) {
+            this.User.find({}, ['_id', 'name', 'email'], function(err, users) {
                 if (err) return reject(err);
                 return resolve(users);
             });
@@ -16,7 +21,7 @@ export default class UserRepository extends BaseRepository {
     getUserByEmail(email) {
         return new Promise((resolve, reject) => {
 
-            User.findOne({email}, function(err, user) {
+            this.User.findOne({email}, function(err, user) {
                 if (err) return reject(err);
                 return resolve(user);
             });
@@ -34,7 +39,7 @@ export default class UserRepository extends BaseRepository {
     createUser(firstName, lastName, email, password) {
         return new Promise((resolve, reject) => {
 
-            let newUser = new User({
+            let newUser = new this.User({
                 first_name: firstName,
                 last_name: lastName,
                 email: email,
@@ -74,7 +79,7 @@ export default class UserRepository extends BaseRepository {
     updateUser(userId, payload) {
         return new Promise((resolve, reject) => {
 
-            User.updateOne({ _id: userId }, payload, (err) => {
+            this.User.updateOne({ _id: userId }, payload, (err) => {
                 if (err) return reject(err);
                 return resolve(true);
             });

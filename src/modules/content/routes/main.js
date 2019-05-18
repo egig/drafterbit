@@ -1,7 +1,7 @@
 import express from 'express';
-import ContentTypeRepository from '../repository/ContentTypeRepository';
-import ContentRepository from '../repository/ContentRepository';
-import validateRequest from '../../middlewares/validateRequest';
+import Content from '../model/Content';
+import ContentType from '../model/ContentType';
+import validateRequest from '../../../middlewares/validateRequest';
 
 let router = express.Router();
 
@@ -34,8 +34,8 @@ router.get('/:slug',
     }),
     function (req, res, next) {
 
-        let r = new ContentTypeRepository();
-        r.getContentType(req.params.slug)
+        let m = ContentType(req.app.get('db'));
+        m.getContentType(req.params.slug)
             .then(contentType => {
                 if(!contentType) {
                     return res.status('404').send('Not Found');
@@ -48,10 +48,12 @@ router.get('/:slug',
     },
     function (req, res) {
 
+	console.log("req.contentType.id", req.contentType.id);
+
         (async function () {
 
             try {
-                let repo = new ContentRepository(req.app);
+                let repo = Content(req.app.get('db'));
                 let results = await repo.getContents(req.contentType.id);
 
                 let contents = results.map(async (r) => {
@@ -62,6 +64,7 @@ router.get('/:slug',
 
                 res.send(contents);
             } catch (e) {
+            	  console.log(e)
                 res.status(500);
                 res.send(e.message);
             }
