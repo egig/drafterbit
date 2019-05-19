@@ -1,11 +1,15 @@
 import mongoose from 'mongoose';
 
-let UserSchema = mongoose.Schema({
+let UserSchema = new mongoose.Schema({
 	first_name: String,
 	last_name: String,
 	email: String,
 	password: String,
 });
+
+UserSchema.getModelName = function () {
+	return "User";
+}
 
 
 UserSchema.statics.getUsers = function() {
@@ -85,6 +89,8 @@ UserSchema.statics.updateUser = function(userId, payload) {
 	});
 }
 
-module.exports = function (connection) {
-	return connection.model('User', UserSchema);
-};
+module.exports = UserSchema;
+
+// module.exports = function (connection) {
+// 	return connection.model('User', UserSchema);
+// };

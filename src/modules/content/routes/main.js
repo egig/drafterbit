@@ -1,6 +1,4 @@
 import express from 'express';
-import Content from '../model/Content';
-import ContentType from '../model/ContentType';
 import validateRequest from '../../../middlewares/validateRequest';
 
 let router = express.Router();
@@ -34,7 +32,7 @@ router.get('/:slug',
     }),
     function (req, res, next) {
 
-        let m = ContentType(req.app.get('db'));
+        let m = req.app.model('@content/ContentType');
         m.getContentType(req.params.slug)
             .then(contentType => {
                 if(!contentType) {
@@ -51,11 +49,11 @@ router.get('/:slug',
         (async function () {
 
             try {
-                let repo = Content(req.app.get('db'));
-                let results = await repo.getContents(req.contentType.id);
+	              let m = req.app.model('@content/Content');
+                let results = await m.getContents(req.contentType._id);
 
                 let contents = results.map(async (r) => {
-                    return await formatField(r.fields, repo);
+                    return await formatField(r.fields, m);
                 });
 
                 contents = await Promise.all(contents);

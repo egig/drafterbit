@@ -1,8 +1,6 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import ContentType from '../content/model/ContentType';
-
 let router = express.Router();
 
 let options = {
@@ -22,8 +20,8 @@ router.get('/_swagger_spec.json',  function (req, res) {
     (async function () {
 
         try {
-            let r = ContentType(req.app.get('db'));
-            let results = await r.getContentTypes();
+	          let m = req.app.model('@content/ContentType');
+            let results = await m.getContentTypes();
 
             let swaggerSpec = {
                 'swagger': '2.0',

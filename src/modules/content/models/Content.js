@@ -164,8 +164,4 @@ ContentSchema.statics.updateContent = function(contentId, payload) {
 	});
 }
 
-
-
-export default function (connection) {
-	return connection.model('Content,', ContentSchema)
-}
+module.exports = ContentSchema;

@@ -1,6 +1,6 @@
 import express from 'express';
 import crypto from 'crypto';
-import User from './model/User';
+import User from './models/User';
 import password from '../../lib/password';
 import UserAuthError  from './UserAuthError';
 import validateRequest from '../../middlewares/validateRequest';
@@ -173,7 +173,7 @@ router.get('/users', function (req, res) {
     (async function () {
 
         try {
-            let m = User(req.app.get('db'));
+            let m = req.app.model('@user/User');
             let results = await m.getUsers();
             res.send(results);
         } catch (e) {
@@ -243,7 +243,7 @@ router.post('/users',
             try {
                 let hashedPassword = await password.hash(req.body.password);
 
-	            let m = User(req.app.get('db'));
+	            let m = req.app.model('@user/User');
                 // TODO validation
                 await m.createUser(
                     req.body.first_name,
@@ -295,7 +295,7 @@ router.delete('/users/:user_id',
 
             try {
 
-	            let m = User(req.app.get('db'));
+	            let m = req.app.model('@user/User');
                 await m.deleteUser(req.params.user_id);
                 res.send({message: 'OK'});
 
@@ -366,8 +366,7 @@ router.patch('/users/:user_id',
         (async function () {
 
             try {
-	            let m = User(req.app.get('db'));
-
+	            let m = req.app.model('@user/User');
                 // TODO validation
                 await m.updateUser(req.params.user_id, req.body);
                 res.send({message: 'OK'});

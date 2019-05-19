@@ -15,6 +15,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "bootstrap": "^4.3.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "crypto": "^1.0.1",
     "exenv": "^1.2.2",
@@ -59,7 +60,8 @@
     "simple-line-icons": "^2.4.1",
     "swagger-ui-express": "^4.0.2",
     "tinymce": "^5.0.2",
-    "validate.js": "^0.11.1"
+    "validate.js": "^0.11.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

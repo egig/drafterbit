@@ -1,5 +1,4 @@
 import express from 'express';
-import ContentType from '../model/ContentType';
 import validateRequest from '../../../middlewares/validateRequest';
 
 let router = express.Router();
@@ -35,7 +34,8 @@ router.get('/content_types/:content_type_id',
         (async function () {
 
             try {
-	              let m = new ContentType(req.app.get('db'));
+
+	              let m = req.app.model('@content/ContentType');
                 let results = await m.getContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -64,7 +64,7 @@ router.get('/content_types',
         (async function () {
 
             try {
-                let m = new ContentType(req.app.get('db'));
+	              let m = req.app.model('@content/ContentType');
                 let results = await m.getContentTypes();
                 res.send(results);
             } catch (e ) {
@@ -135,7 +135,7 @@ router.post('/content_types',
         (async function () {
 
             try {
-	              let m = new ContentType(req.app.get('db'));
+	              let m = req.app.model('@content/ContentType');
                 let results = await m.createContentType(req.body.name, req.body.slug,
                     req.body.description, req.body.fields);
                 res.send(results);
@@ -181,7 +181,7 @@ router.delete('/content_types/:content_type_id',
         (async function () {
 
             try {
-	              let m = new ContentType(req.app.get('db'));
+	              let m = req.app.model('@content/ContentType');
                 let results = await m.deleteContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -251,7 +251,7 @@ router.patch('/content_types/:content_type_id',
         (async function () {
 
             try {
-	              let m = new ContentType(req.app.get('db'));
+	              let m = req.app.model('@content/ContentType');
                 let results = await m.updateContentType(req.params.content_type_id, req.body);
                 res.send(results);
             } catch (e ) {

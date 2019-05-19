@@ -1,5 +1,4 @@
 import express from 'express';
-import Content from '../model/Content';
 import validateRequest from '../../../middlewares/validateRequest';
 import { parseFilterQuery } from '../../../common/parseFilterQuery';
 
@@ -35,7 +34,7 @@ router.get('/contents/:content_id',
         (async function () {
 
             try {
-                let m = new Content(req.app.get('db'));
+	              let m = req.app.model('@content/Content');
                 let results = await m.getContent(req.params.content_id);
                 res.send(results);
             } catch (e ) {
@@ -102,7 +101,7 @@ router.get('/content_types/:content_type_id/contents',
 		        let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-	              let m = new Content(req.app.get('db'));
+	              let m = req.app.model('@content/Content');
                 // TODO validation to req.body
                 let results = await m.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
                 let count = await m.getCount(req.params.content_type_id,  filterObj);
@@ -159,7 +158,7 @@ router.post('/content_types/:content_type_id/contents',
         (async function () {
 
             try {
-                let m = new Content(req.app.get('db'));
+	              let m = req.app.model('@content/Content');
                 let results = await m.createContent(req.params.content_type_id, req.body.fields);
                 res.send(results);
             } catch (e ) {

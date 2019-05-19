@@ -1,4 +1,4 @@
-import User from './modules/user/model/User';
+import User from './modules/user/models/User';
 import UserAuthError from './modules/user/UserAuthError';
 import password from './lib/password';
 import crypto from 'crypto';

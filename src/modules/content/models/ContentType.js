@@ -125,9 +125,6 @@ ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
 			return resolve(res);
 		});
 	});
-}
-
-
-export default function (connection) {
-	return connection.model('ContentType', ContentTypeSchema)
 };
+
+module.exports = ContentTypeSchema;

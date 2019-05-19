@@ -15,6 +15,8 @@ import bootSwagger from  './modules/swagger/boot'
 
 export default function (app) {
 
+	app.get('module').init();
+
 	bootSwagger(app);
 
 	app.set('config', config);
