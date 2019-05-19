@@ -1,6 +1,7 @@
 import express from 'express';
-import ContentTypeRepository from '../content/repository/ContentTypeRepository';
 import swaggerUi from 'swagger-ui-express';
+
+import ContentType from '../content/model/ContentType';
 
 let router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/_swagger_spec.json',  function (req, res) {
     (async function () {
 
         try {
-            let r = new ContentTypeRepository(req.app);
+            let r = ContentType(req.app.get('db'));
             let results = await r.getContentTypes();
 
             let swaggerSpec = {

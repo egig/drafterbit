@@ -128,6 +128,6 @@ ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
 }
 
 
-module.exports = function (connection) {
+export default function (connection) {
 	return connection.model('ContentType', ContentTypeSchema)
 };

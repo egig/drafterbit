@@ -1,4 +1,4 @@
-import userRepository from './modules/user/repository/UserRespository';
+import User from './modules/user/model/User';
 import UserAuthError from './modules/user/UserAuthError';
 import password from './lib/password';
 import crypto from 'crypto';
@@ -9,8 +9,8 @@ function createSessionKey(token, user_id) {
 
 export default function createSession(app, email, rawPassword) {
 
-    let r = new userRepository(app);
-    return r.getUserByEmail(email)
+	let m = User(app.get('db'));
+    return User.getUserByEmail(email)
         .then(user => {
 
             if(!user) {

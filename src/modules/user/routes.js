@@ -1,6 +1,6 @@
 import express from 'express';
 import crypto from 'crypto';
-import userRepository from './repository/UserRespository';
+import User from './model/User';
 import password from '../../lib/password';
 import UserAuthError  from './UserAuthError';
 import validateRequest from '../../middlewares/validateRequest';
@@ -111,8 +111,8 @@ router.post('/users/session',
                 let email = req.body.email;
                 let rawPassword = req.body.password;
 
-                let r = new userRepository(req.app);
-                let user = await r.getUserByEmail(email);
+	              let m = User(req.app.get('db'));
+                let user = await m.getUserByEmail(email);
 
                 if(!user) {
                     throw new UserAuthError('Wrong email or password');
@@ -173,8 +173,8 @@ router.get('/users', function (req, res) {
     (async function () {
 
         try {
-            let r = new userRepository(req.app);
-            let results = await r.getUsers();
+            let m = User(req.app.get('db'));
+            let results = await m.getUsers();
             res.send(results);
         } catch (e) {
             res.status(500);
@@ -243,9 +243,9 @@ router.post('/users',
             try {
                 let hashedPassword = await password.hash(req.body.password);
 
-                let r = new userRepository(req.app);
+	            let m = User(req.app.get('db'));
                 // TODO validation
-                await r.createUser(
+                await m.createUser(
                     req.body.first_name,
                     req.body.last_name,
                     req.body.email,
@@ -294,8 +294,9 @@ router.delete('/users/:user_id',
         (async function () {
 
             try {
-                let r = new userRepository(req.app);
-                await r.deleteUser(req.params.user_id);
+
+	            let m = User(req.app.get('db'));
+                await m.deleteUser(req.params.user_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -365,10 +366,10 @@ router.patch('/users/:user_id',
         (async function () {
 
             try {
-                let r = new userRepository(req.app);
+	            let m = User(req.app.get('db'));
 
                 // TODO validation
-                await r.updateUser(req.params.user_id, req.body);
+                await m.updateUser(req.params.user_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {
