@@ -48,8 +48,6 @@ router.get('/:slug',
     },
     function (req, res) {
 
-	console.log("req.contentType.id", req.contentType.id);
-
         (async function () {
 
             try {
@@ -64,7 +62,7 @@ router.get('/:slug',
 
                 res.send(contents);
             } catch (e) {
-            	  console.log(e)
+            	  console.error(e);
                 res.status(500);
                 res.send(e.message);
             }

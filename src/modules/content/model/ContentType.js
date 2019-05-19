@@ -32,9 +32,6 @@ ContentTypeSchema.statics.getContentType = function(contentTypeId) {
 
 		this.findOne(condition, function(err, contentType) {
 			if (err) return reject(err);
-
-			console.log(contentType)
-
 			return resolve(contentType);
 		});
 	});

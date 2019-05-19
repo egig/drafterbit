@@ -57,33 +57,33 @@ ContentSchema.statics.getContents = function(contentTypeId, offset=0, max=10, so
 		{$match: { content_type: mongoose.Types.ObjectId(contentTypeId)}},
 	];
 
-	// if(searchObj) {
-	//
-	// 	let matchRule = {};
-	// 	Object.keys(searchObj).forEach((k) => {
-	// 		matchRule['_sfield.name'] = k;
-	// 		matchRule['_sfield.value'] = {
-	// 			$regex: `.*${searchObj[k]}.*`
-	// 		};
-	// 	});
-	//
-	// 	agg.push({$project: { '_sfield': '$fields', fields: 1, content_type: 1 }});
-	// 	agg.push({$unwind: '$_sfield'});
-	// 	agg.push({$match: matchRule});
-	// }
-	//
-	// if(!!sortBy && sortBy !== '_id') {
-	// 	agg.push({$project: { '_field': '$fields', fields: 1, content_type: 1 }});
-	// 	agg.push({$unwind: '$_field'});
-	// 	agg.push({$match: {'_field.name': sortBy }});
-	// 	agg.push({$sort: {'_field.value': sortD}});
-	// 	agg.push({$project: { content_type: 1, fields:1 }});
-	// } else {
-	// 	agg.push({$sort: {'_id': sortD}});
-	// }
-	//
-	// agg.push({$skip: offset});
-	// agg.push({$limit: max});
+	if(searchObj) {
+
+		let matchRule = {};
+		Object.keys(searchObj).forEach((k) => {
+			matchRule['_sfield.name'] = k;
+			matchRule['_sfield.value'] = {
+				$regex: `.*${searchObj[k]}.*`
+			};
+		});
+
+		agg.push({$project: { '_sfield': '$fields', fields: 1, content_type: 1 }});
+		agg.push({$unwind: '$_sfield'});
+		agg.push({$match: matchRule});
+	}
+
+	if(!!sortBy && sortBy !== '_id') {
+		agg.push({$project: { '_field': '$fields', fields: 1, content_type: 1 }});
+		agg.push({$unwind: '$_field'});
+		agg.push({$match: {'_field.name': sortBy }});
+		agg.push({$sort: {'_field.value': sortD}});
+		agg.push({$project: { content_type: 1, fields:1 }});
+	} else {
+		agg.push({$sort: {'_id': sortD}});
+	}
+
+	agg.push({$skip: offset});
+	agg.push({$limit: max});
 
 
 	return new Promise((resolve, reject) => {

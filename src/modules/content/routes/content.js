@@ -1,5 +1,5 @@
 import express from 'express';
-import ContentRepository from '../repository/ContentRepository';
+import Content from '../model/Content';
 import validateRequest from '../../../middlewares/validateRequest';
 import { parseFilterQuery } from '../../../common/parseFilterQuery';
 
@@ -35,8 +35,8 @@ router.get('/contents/:content_id',
         (async function () {
 
             try {
-                let r = new ContentRepository(req.app);
-                let results = await r.getContent(req.params.content_id);
+                let m = new Content(req.app.get('db'));
+                let results = await m.getContent(req.params.content_id);
                 res.send(results);
             } catch (e ) {
                 res.status(500);
@@ -102,10 +102,10 @@ router.get('/content_types/:content_type_id/contents',
 		        let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-                let r = new ContentRepository(req.app);
+	              let m = new Content(req.app.get('db'));
                 // TODO validation to req.body
-                let results = await r.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
-                let count = await r.getCount(req.params.content_type_id,  filterObj);
+                let results = await m.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
+                let count = await m.getCount(req.params.content_type_id,  filterObj);
                 res.set('DT-Data-Count', count);
                 res.set('DT-Page-Number', page);
                 res.send(results);
@@ -159,9 +159,8 @@ router.post('/content_types/:content_type_id/contents',
         (async function () {
 
             try {
-                let r = new ContentRepository(req.app);
-
-                let results = await r.createContent(req.params.content_type_id, req.body.fields);
+                let m = new Content(req.app.get('db'));
+                let results = await m.createContent(req.params.content_type_id, req.body.fields);
                 res.send(results);
             } catch (e ) {
                 res.status(500);
@@ -203,8 +202,8 @@ router.delete('/contents/:content_id',
         (async function () {
 
             try {
-                let r = new ContentRepository(req.app);
-                await r.deleteContent(req.params.content_id);
+            	  let m = new Content(req.app.get('db'));
+                await m.deleteContent(req.params.content_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -255,8 +254,8 @@ router.patch('/contents/:content_id',
         (async function () {
 
             try {
-                let r = new ContentRepository(req.app);
-                await r.updateContent(req.params.content_id, req.body);
+	              let m = new Content(req.app.get('db'));
+                await m.updateContent(req.params.content_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {
