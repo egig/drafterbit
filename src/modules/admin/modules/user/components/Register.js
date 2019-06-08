@@ -15,7 +15,7 @@ class Register extends React.Component {
                 form.email.value,
                 form.password.value
             )
-            .then(response => {
+            .then(() => {
                 this.props.history.push('/register-success');
             });
     }

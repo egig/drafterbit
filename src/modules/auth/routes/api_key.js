@@ -86,7 +86,7 @@ router.post('/api_keys',
 
             try {
 
-              let m = req.app.model('@auth/ApiKey');
+                let m = req.app.model('@auth/ApiKey');
                 await m.createApiKey(
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),

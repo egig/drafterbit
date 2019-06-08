@@ -29,9 +29,8 @@ function matchType(type) {
         return Number;
 
     case FIELD_RELATION_TO_MANY:
-        return [{ type: Schema.Types.ObjectId, ref: 'TODO_GET_MODEL_NAME' }];
     case FIELD_RELATION_TO_ONE:
-        return { type: Schema.Types.ObjectId, ref: 'TODO_GET_MODEL_NAME' };
+        return Schema.Types.ObjectId;
     default:
         throw new Error('unknown type '+type);
     }

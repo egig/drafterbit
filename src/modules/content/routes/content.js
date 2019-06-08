@@ -201,7 +201,7 @@ router.delete('/contents/:content_id',
         (async function () {
 
             try {
-                let m = new Content(req.app.get('db'));
+  	            let m = req.app.model('@content/Content');
                 await m.deleteContent(req.params.content_id);
                 res.send({message: 'OK'});
 
@@ -253,8 +253,8 @@ router.patch('/contents/:content_id',
         (async function () {
 
             try {
-                let m = new Content(req.app.get('db'));
-                await m.updateContent(req.params.content_id, req.body);
+	              let m = req.app.model('@content/Content');
+	              await m.updateContent(req.params.content_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {

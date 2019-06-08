@@ -20,7 +20,7 @@ function doCompileWebPack() {
                     hash: stats.hash
                 };
                 return writeStat(webpackConfig.output.path + '/assets.stat.json', JSON.stringify(statObj))
-                    .then(r => {
+                    .then(() => {
                         return stats;
                     });
             });
@@ -50,6 +50,9 @@ function compileWebpack() {
 
         // TODO optimize this for production
         webpack(webpackConfig, (err, stats) => { // Stats Object
+
+	          const info = stats.toJson();
+
             if (err || stats.hasErrors()) {
 
                 if (err) {
@@ -59,8 +62,6 @@ function compileWebpack() {
                     }
                     return reject(err);
                 }
-
-                const info = stats.toJson();
 
                 if (stats.hasErrors()) {
                     console.error(info.errors);
@@ -88,7 +89,7 @@ router.get('/admin', function (req, res) {
     if(req.user) {
         defaultState.USER.currentUser = req.user;
     } else {
-	    defaultState.USER.currentUser = undefined;
+        defaultState.USER.currentUser = undefined;
     }
 
     let drafterbitConfig = {

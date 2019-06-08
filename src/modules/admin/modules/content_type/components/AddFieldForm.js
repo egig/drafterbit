@@ -23,7 +23,7 @@ class AddFieldForm extends React.Component {
           <div className="form-group">
               <select className="form-control" name="related_content_type_id" id="related_content_type_id">
                   {this.props.contentTypes.map((ct,i) => {
-                      return <option key={i} value={ct._id}>{ct.name}</option>;
+                      return <option key={i} value={ct.slug}>{ct.name}</option>;
                   })}
               </select>
           </div>

@@ -1,6 +1,7 @@
 import express from 'express';
 import validateRequest from '../../../middlewares/validateRequest';
 import fieldsToSchema from '../../../fieldsToSchema';
+import {FIELD_RELATION_TO_MANY} from '../../../fieldTypes';
 
 let router = express.Router();
 
@@ -54,7 +55,14 @@ router.post('/:slug',
 
                 // TODO change type id integer to type code
                 req.contentType.fields.forEach(f => {
-                    //TODO add feature such as validation
+
+                    if (f.type_id === FIELD_RELATION_TO_MANY) {
+                        fieldsObj[f.name] = [{
+                            type: f.type_id,
+                            ref: f.related_content_type_id
+                        }];
+                    }
+
                     fieldsObj[f.name] = {
                         type: f.type_id
                     };
@@ -71,7 +79,7 @@ router.post('/:slug',
                 }
 
                 Model.create(req.body, function (err, item) {
-                    if (err) return handleError(err);
+                    if (err) return res.status(500).send(err.message);
                     res.send({
                         message: 'created',
                         item
@@ -133,7 +141,7 @@ router.get('/:slug',
         (async function () {
 
             try {
-	              let m = req.app.model('@content/Content');
+                let m = req.app.model('@content/Content');
                 let results = await m.getContents(req.contentType._id);
 
                 let contents = results.map(async (r) => {
@@ -144,7 +152,7 @@ router.get('/:slug',
 
                 res.send(contents);
             } catch (e) {
-            	  console.error(e);
+                console.error(e);
                 res.status(500);
                 res.send(e.message);
             }

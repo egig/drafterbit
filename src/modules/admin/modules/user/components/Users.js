@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '../../common/components/Layout';
-import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

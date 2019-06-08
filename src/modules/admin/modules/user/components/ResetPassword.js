@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import actions from '../actions';
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 import translate from '../../../translate';
-import Notify from '../../../components/Notify';
 
 class ResetPassword extends React.Component {
 

@@ -15,9 +15,9 @@ class AuthCard extends React.Component {
                                 <img className="auth_card-brandImg" src="/img/dtlogo57-black.png" />
                             </div>
                             <Card className="fat">
-		                            <CardHeader>
-			                            {this.props.title}
-		                            </CardHeader>
+                                <CardHeader>
+                                  {this.props.title}
+                                </CardHeader>
                                 <CardBody>
                                     {this.props.children}
                                 </CardBody>
