@@ -1,7 +1,9 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import validateRequest from '../../../middlewares/validateRequest';
 import fieldsToSchema from '../../../fieldsToSchema';
 import {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} from '../../../fieldTypes';
+import { parseFilterQuery } from '../../../common/parseFilterQuery'
 
 let router = express.Router();
 
@@ -170,9 +172,53 @@ router.get('/:slug',
 
         (async function () {
 
+	        let page = req.query.page || 1;
+	        let sortBy = req.query.sort_by;
+	        let sortDir = req.query.sort_dir || 'asc';
+	        const PER_PAGE = 10;
+	        let offset = (page*PER_PAGE) - PER_PAGE;
+	        let max = PER_PAGE;
+
+	        let filterObj = parseFilterQuery(req.query.fq);
+
             try {
-                let m = req.app.get('db').model(req.contentType.slug);
-                let results = await m.find();
+	            let m = req.app.get('db').model(req.contentType.slug);
+
+	            let sortD = sortDir == 'asc' ? 1 : -1;
+
+	            let agg = [];
+
+	            if(filterObj) {
+
+		            let matchRule = {};
+		            Object.keys(filterObj).forEach((k) => {
+			            matchRule[k] = {
+				            $regex: `.*${filterObj[k]}.*`
+			            };
+		            });
+		            agg.push({$match: matchRule});
+	            }
+
+	            let countAgg = [...agg]
+	            countAgg.push({$count: 'content_count'});
+
+	            if(!!sortBy && sortBy !== '_id') {
+		            agg.push({
+		            	$sort: {
+		            		[sortBy]: sortD
+		            	}
+		            });
+	            } else {
+		            agg.push({$sort: {'_id': sortD}});
+	            }
+
+	            agg.push({$skip: offset});
+	            agg.push({$limit: max});
+
+                let results = await m.aggregate(agg).exec();
+                let countResults = await m.aggregate(countAgg).exec();
+		            res.set('DT-Data-Count', countResults[0].content_count);
+		            res.set('DT-Page-Number', page);
                 res.send(results);
             } catch (e) {
                 console.error(e);

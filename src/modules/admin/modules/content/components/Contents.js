@@ -58,17 +58,17 @@ class Contents extends React.Component {
     loadContents(ctSlug, page, sortBy, sortDir, fqSr) {
       let client = apiClient.createClient({});
 
-      this.props.getContentTypeFields(ctSlug)
-        .then(r => {
-          client.getContents(this.props.ctFields._id, page, sortBy, sortDir, fqSr)
-          .then(response => {
+	    this.props.getContentTypeFields(ctSlug)
+		    .then(r => {
+			    client.getContents(ctSlug, page, sortBy, sortDir, fqSr)
+				    .then(response => {
 
-            this.setState({
-              contentCount: response.headers['dt-data-count'],
-              contents: response.data
-            })
-          });
-        });
+					    this.setState({
+						    contentCount: response.headers['dt-data-count'],
+						    contents: response.data
+					    })
+				    });
+		    });
     }
 
     componentDidMount() {
@@ -126,17 +126,7 @@ class Contents extends React.Component {
         let sortDir = qs['sort_dir'];
         let page = !!qs['page'] ? qs['page'] : 1;
 
-        const data = this.state.contents.map(c => {
-            let item = {
-                _id: c._id
-            };
-
-            c.fields.map(f => {
-                item[f.name] = f.value;
-            });
-
-            return item;
-        });
+        const data = this.state.contents;
 
         const columns = [{
             dataField: '_id',
@@ -227,7 +217,7 @@ class Contents extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        ctFields: state.CONTENT.ctFields,
+    	ctFields: state.CONTENT.ctFields
     };
 };
 
