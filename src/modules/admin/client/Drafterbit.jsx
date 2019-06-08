@@ -10,7 +10,6 @@ import RegisterSuccess from './modules/user/components/RegisterSuccess';
 import ForgotPassword from './modules/user/components/ForgotPassword';
 import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
-import Dashboard from './modules/common/components/Dashboard';
 import ContentTypes from './modules/content_type/components/ContentTypes';
 import ContentType from './modules/content_type/components/ContentType';
 import ContentTypeNew from './modules/content_type/components/ContentTypeNew';

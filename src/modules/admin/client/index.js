@@ -14,11 +14,11 @@ import 'tinymce/plugins/link';
 
 // CSS dependency first
 import 'bootstrap/dist/css/bootstrap.css';
-import '../index.css';
+import './index.css';
 
-import  Drafterbit from '../Drafterbit';
-import storeFromState  from '../storeFromState';
-import apiClient from '../apiClient';
+import  Drafterbit from './Drafterbit';
+import storeFromState  from './storeFromState';
+import apiClient from './apiClient';
 
 
 // Initialize the app
