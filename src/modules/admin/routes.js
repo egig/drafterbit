@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import express from 'express';
 import webpack from 'webpack';
 
@@ -6,6 +8,42 @@ import webpackConfig from './webpack.config';
 
 let router = express.Router();
 
+const ASSETS_STAT_PATH = webpackConfig.output.path+'/assets.stat.json';
+
+function doCompileWebPack() {
+	if(fs.existsSync(ASSETS_STAT_PATH)) {
+		return getStat(ASSETS_STAT_PATH)
+	} else {
+		return compileWebpack()
+			.then(stats => {
+				let statObj = {
+					hash: stats.hash
+				};
+				return writeStat(webpackConfig.output.path + '/assets.stat.json', JSON.stringify(statObj))
+					.then(r => {
+						return stats;
+					})
+			})
+	}
+}
+
+function getStat(filePath) {
+	return new Promise((resolve, reject) => {
+		fs.readFile(filePath, function (err, cnt) {
+			if (err) return reject(err);
+			return resolve(JSON.parse(cnt))
+		});
+	})
+}
+
+function writeStat(filePath, content) {
+	return new Promise((resolve, reject) => {
+		fs.writeFile(filePath, content, (err) => {
+			if(err) return reject(err);
+			return resolve(true)
+		})
+	});
+}
 
 function compileWebpack() {
 	return new Promise((resolve, reject) => {
@@ -34,8 +72,7 @@ function compileWebpack() {
 				if (stats.hasWarnings()) {
 					console.warn(info.warnings);
 				}
-
-				return resolve(stats)
+					return resolve(stats);
 			}
 
 		});
@@ -56,7 +93,7 @@ router.get('/admin', function (req, res) {
 		apiBaseURL: req.app.get('config').get('API_BASE_URL')
 	};
 
-	compileWebpack()
+	doCompileWebPack()
 		.then(stats => {
 
 			return res.send(`<!DOCTYPE html>

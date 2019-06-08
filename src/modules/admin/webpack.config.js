@@ -6,7 +6,7 @@ module.exports = {
 	context: __dirname,
 	entry: [ '@babel/polyfill', './client/index.js'],
 	output: {
-		path: __dirname + '../../../../public',
+		path: __dirname + '/../../../public',
 		filename: '[name].[hash].js',
 		publicPath: '/'
 	},
