@@ -61,11 +61,11 @@ router.post('/:slug',
                             type: f.type_id,
                             ref: f.related_content_type_id
                         }];
+                    } else {
+	                    fieldsObj[f.name] = {
+		                    type: f.type_id
+	                    };
                     }
-
-                    fieldsObj[f.name] = {
-                        type: f.type_id
-                    };
                 });
 
                 let schemaObj = fieldsToSchema.convert(fieldsObj);
