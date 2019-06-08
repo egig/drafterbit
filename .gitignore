@@ -4,6 +4,8 @@ build/
 node_modules/
 public/*
 !public/.gitkeep
+tmp/*
+!tmp/.gitkeep
 config.json
 npm-debug.log*
 errorShots/

@@ -6,6 +6,7 @@ import session  from 'express-session';
 import i18next from 'i18next';
 import expressValidator from 'express-validator';
 import i18nextExpressMiddleware from 'i18next-express-middleware';
+const FileStore = require('session-file-store')(session);;
 
 import cacheMiddleware from './middlewares/cache';
 import config from './config';
@@ -28,7 +29,8 @@ export default function (app) {
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(cookieParser());
     app.use(session({
-        secret: config.get('SESSION_SECRET'),
+	      store: new FileStore({path: "./tmp"}),
+	      secret: config.get('SESSION_SECRET'),
         cookie: { maxAge: 24 * 60 * 60 * 30 },
         resave: true,
         saveUninitialized: true,

@@ -1,26 +1,33 @@
+export const FIELD_SHORT_TEXT = 1;
+export const FIELD_LONG_TEXT = 2;
+export const FIELD_RICH_TEXT = 3;
+export const FIELD_RELATION_TO_ONE = 4;
+export const FIELD_RELATION_TO_MANY = 5;
+export const FIELD_NUMBER = 6;
+
 const fieldTypes = [
     {
-        id: 1,
+        id: FIELD_SHORT_TEXT,
         name: 'Short Text',
     },
     {
-        id: 2,
+        id: FIELD_LONG_TEXT,
         name: 'Long Text',
     },
     {
-        id: 3,
+        id: FIELD_RICH_TEXT,
         name: 'Rich Text'
     },
     {
-        id: 4,
+        id: FIELD_RELATION_TO_ONE,
         name: 'Relation to One'
     },
     {
-        id: 5,
+        id: FIELD_RELATION_TO_MANY,
         name: 'Relation to Many'
     },
     {
-        id: 6,
+        id: FIELD_NUMBER,
         name: 'Number'
     }
 ];

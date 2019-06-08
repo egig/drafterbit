@@ -254,6 +254,22 @@ router.patch('/content_types/:content_type_id',
 	              let m = req.app.model('@content/ContentType');
                 let results = await m.updateContentType(req.params.content_type_id, req.body);
                 res.send(results);
+
+		            setTimeout(function () {
+			            process.on("exit", function () {
+			            	// TODO make this production ready
+				            let cmd = "babel-node";
+				            let args = "--config-file ./babel-node.config.js src".split(" ");
+				            console.log(args);
+				            require("child_process").spawn(cmd, args, {
+					            cwd: process.cwd(),
+					            detached : true,
+					            stdio: "inherit"
+				            });
+			            });
+			            process.exit();
+		            }, 3000);
+
             } catch (e ) {
                 res.status(500);
                 res.send(e.message);
