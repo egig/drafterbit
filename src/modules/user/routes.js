@@ -414,11 +414,10 @@ router.post('/users/reset_password',
 
             try {
                 let response = await sendResetPasswordEmail(req.body.email);
-                console.log(response);
                 res.send(response);
 
             } catch (e) {
-                console.error(e);
+	              req.app.get('log').error(e);
                 res.status(500);
                 res.send(e.message);
             }

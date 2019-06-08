@@ -56,15 +56,10 @@ function compileWebpack() {
             if (err || stats.hasErrors()) {
 
                 if (err) {
-                    console.error(err.stack || err);
-                    if (err.details) {
-                        console.error(err.details);
-                    }
                     return reject(err);
                 }
 
                 if (stats.hasErrors()) {
-                    console.error(info.errors);
                     return reject(info.errors);
                 }
 
@@ -121,8 +116,7 @@ router.get('/admin', function (req, res) {
 
         })
         .catch(e => {
-            console.error(e);
-
+	          req.app.get('log').error(e);
             res.status(500).send(e.message);
 
         });

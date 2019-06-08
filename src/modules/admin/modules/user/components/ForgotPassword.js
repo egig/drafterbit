@@ -21,7 +21,7 @@ class ForgotPassword extends React.Component {
                         <label htmlFor="email">E-Mail</label>
                         <input type="email" name="email" className={'form-control auth_card-formControlBorder'} id="email" aria-describedby="emailHelp"/>
                         <div className="form-text text-muted">
-                          {'By clicking "Reset Password" we will send a password reset link'}
+                            {'By clicking "Reset Password" we will send a password reset link'}
                         </div>
                     </div>
 

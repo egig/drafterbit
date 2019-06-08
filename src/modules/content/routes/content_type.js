@@ -140,7 +140,7 @@ router.post('/content_types',
                     req.body.description, req.body.fields);
                 res.send(results);
             } catch (e ) {
-                console.log(e);
+                req.app.get('log').error(e);
                 res.status(500);
                 res.send(e.message);
             }

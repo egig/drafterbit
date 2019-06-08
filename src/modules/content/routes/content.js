@@ -110,7 +110,7 @@ router.get('/content_types/:content_type_id/contents',
                 res.send(results);
             } catch (e ) {
                 res.status(500);
-                console.error(e);
+                req.app.get('log').error(e);
                 res.send(e.message);
             }
 
@@ -201,7 +201,7 @@ router.delete('/contents/:content_id',
         (async function () {
 
             try {
-  	            let m = req.app.model('@content/Content');
+                let m = req.app.model('@content/Content');
                 await m.deleteContent(req.params.content_id);
                 res.send({message: 'OK'});
 
@@ -253,8 +253,8 @@ router.patch('/contents/:content_id',
         (async function () {
 
             try {
-	              let m = req.app.model('@content/Content');
-	              await m.updateContent(req.params.content_id, req.body);
+                let m = req.app.model('@content/Content');
+                await m.updateContent(req.params.content_id, req.body);
                 res.send({message: 'OK'});
 
             } catch (e ) {

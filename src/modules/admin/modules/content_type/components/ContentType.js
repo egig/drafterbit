@@ -29,7 +29,7 @@ class ContentType extends React.Component {
         this.doUpdateContentTypeByField = this.doUpdateContentTypeByField.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
 
         this.setState({
             _id: nextProps.contentType._id,

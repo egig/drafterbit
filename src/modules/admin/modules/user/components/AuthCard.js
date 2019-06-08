@@ -16,7 +16,7 @@ class AuthCard extends React.Component {
                             </div>
                             <Card className="fat">
                                 <CardHeader>
-                                  {this.props.title}
+                                    {this.props.title}
                                 </CardHeader>
                                 <CardBody>
                                     {this.props.children}

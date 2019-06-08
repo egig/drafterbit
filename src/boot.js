@@ -1,4 +1,6 @@
 import express from 'express';
+import morgan from 'morgan';
+import winston from 'winston';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -11,7 +13,25 @@ const FileStore = require('session-file-store')(session);
 import cacheMiddleware from './middlewares/cache';
 import config from './config';
 
+// TODO add rotate file logger
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: []
+});
+
+if (process.env.NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+        format: winston.format.simple()
+    }));
+}
+
 export default function (app) {
+    // TODO set morgan format in production
+	  app.use(morgan('dev'));
+
+    app.set('log', logger);
     app.set('config', config);
 
     app.set('db', mongoose.createConnection(config.get('MONGODB_URL')));
