@@ -1,5 +1,4 @@
 import express from 'express';
-import ApiKeyRespository from '../repository/ApiKeyRespository';
 import crypto from 'crypto';
 import validateRequest from '../../../middlewares/validateRequest';
 
@@ -23,8 +22,8 @@ router.get('/api_keys',
         (async function () {
 
             try {
-                let r = new ApiKeyRespository(req.app);
-                let results = await r.getApiKeys();
+                let m = req.app.model('@auth/ApiKey');
+                let results = await m.getApiKeys();
                 res.send(results);
             } catch (e ) {
                 res.status(500);
@@ -87,9 +86,8 @@ router.post('/api_keys',
 
             try {
 
-                let r = new ApiKeyRespository(req.app);
-                // TODO validation
-                await r.createApiKey(
+	            let m = req.app.model('@auth/ApiKey');
+                await m.createApiKey(
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
                     req.body.restriction_type,
@@ -139,8 +137,8 @@ router.get('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let r = new ApiKeyRespository(req.app);
-                let results = await r.getApiKey(req.params.api_key_id);
+            	  let m = req.app.model('@auth/ApiKey');
+                let results = await m.getApiKey(req.params.api_key_id);
                 res.send(results);
 
             } catch (e ) {
@@ -184,8 +182,8 @@ router.delete('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let r = new ApiKeyRespository(req.app);
-                await r.deleteApiKey(req.params.api_key_id);
+            	  let m = req.app.model('@auth/ApiKey');
+                await m.deleteApiKey(req.params.api_key_id);
                 res.send({message: 'OK'});
 
             } catch (e ) {
@@ -258,10 +256,8 @@ router.patch('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let r = new ApiKeyRespository(req.app);
-
-                // TODO validation
-                await r.updateApiKey(
+            	  let m = req.app.model('@auth/ApiKey');
+                await m.updateApiKey(
                     req.params.api_key_id,
                     req.body
                 );
@@ -275,4 +271,4 @@ router.patch('/api_keys/:api_key_id',
         })();
     });
 
-export default router;
+module.exports = router;

@@ -11,6 +11,7 @@ const port = config.get('PORT');
 let mm = new ModuleManager(__dirname, app);
 mm.setModulePaths([
 	'./modules/admin',
+	'./modules/auth',
 	'./modules/user',
 	'./modules/content',
 ]);

@@ -1,8 +1,12 @@
 const path = require('path');
 
 export default class Module {
-	constructor(app) {
-		this.app = app;
+	constructor(manager) {
+		this.manager = manager;
+	}
+
+	boot() {
+		//..
 	}
 
 	_getDir(){

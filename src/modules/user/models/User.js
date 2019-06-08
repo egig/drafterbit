@@ -9,7 +9,7 @@ let UserSchema = new mongoose.Schema({
 
 UserSchema.getModelName = function () {
 	return "User";
-}
+};
 
 
 UserSchema.statics.getUsers = function() {
@@ -90,7 +90,3 @@ UserSchema.statics.updateUser = function(userId, payload) {
 }
 
 module.exports = UserSchema;
-
-// module.exports = function (connection) {
-// 	return connection.model('User', UserSchema);
-// };

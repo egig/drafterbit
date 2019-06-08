@@ -1,26 +1,17 @@
 import express from 'express';
-import cacheMiddleware from './middlewares/cache';
+import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import session  from 'express-session';
 import i18next from 'i18next';
 import expressValidator from 'express-validator';
 import i18nextExpressMiddleware from 'i18next-express-middleware';
-import mongoose from 'mongoose';
 
-import routes from './routes';
+import cacheMiddleware from './middlewares/cache';
 import config from './config'
 
-import bootSwagger from  './modules/swagger/boot'
-
 export default function (app) {
-
-	app.get('module').init();
-
-	bootSwagger(app);
-
 	app.set('config', config);
-	app.emit("boot");
 
 	app.set('db', mongoose.createConnection(config.get('MONGODB_URL')));
 
@@ -44,6 +35,10 @@ export default function (app) {
 	}));
 
 	app.use(express.static(__dirname+'/../public'));
+
+	app.get('module').init();
+	app.emit("boot");
+
 	app.use(expressValidator({
 		errorFormatter: (param, msg, value, location) => {
 			return msg;

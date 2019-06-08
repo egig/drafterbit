@@ -39,6 +39,7 @@ export default class ModuleManager {
 			}
 
 			// @todo validate name
+			m.boot(this.app);
 			this._modules[m.getName()] = m;
 		}
 	}
