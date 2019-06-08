@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import ContentType from './ContentType';
 const Schema = mongoose.Schema;
 
 let ContentSchema =  new mongoose.Schema({

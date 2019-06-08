@@ -85,10 +85,10 @@ router.get('/admin', function (req, res) {
     defaultState.COMMON.language = req.language;
     defaultState.COMMON.languages = req.languages;
 
-    if(!!req.user) {
+    if(req.user) {
         defaultState.USER.currentUser = req.user;
     } else {
-	    defaultState.USER.currentUser = undefined
+	    defaultState.USER.currentUser = undefined;
     }
 
     let drafterbitConfig = {

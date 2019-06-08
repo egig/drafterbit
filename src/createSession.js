@@ -1,4 +1,3 @@
-import User from './modules/user/models/User';
 import UserAuthError from './modules/user/UserAuthError';
 import password from './lib/password';
 import crypto from 'crypto';
@@ -43,13 +42,10 @@ export default function createSession(app, email, rawPassword) {
                             ttl: 28800
                         })
                     ])
-                        .then(r => {
+                        .then(() => {
                             return authUser;
                         });
                 });
 
-        })
-        .catch(e => {
-            console.log(e);
         });
 }

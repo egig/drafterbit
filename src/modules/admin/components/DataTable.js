@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Input, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Input, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import createPagination from './createPagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown, faFilter, faRedo } from '@fortawesome/free-solid-svg-icons';
-import Actions from './DataTable/Actions';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 import './DataTable.css';
 
@@ -23,39 +22,39 @@ class DataTable extends React.Component {
 
     render() {
 
-    	let {
-		    select,
-		    data,
-		    onSort,
-		    sortBy,
-		    sortDir,
-		    onRowClick
-	    } = this.props;
+        let {
+            select,
+            data,
+            onSort,
+            sortBy,
+            sortDir,
+            onRowClick
+        } = this.props;
 
         return (
             <div>
-	            <div className="DataTable-search-widget">
-	              <Input type="text" placeholder="search" className=""/>
-	            </div>
+                <div className="DataTable-search-widget">
+                    <Input type="text" placeholder="search" className=""/>
+                </div>
                 <Table size="sm" className="drafterbit-table" bordered striped hover responsive>
                     <thead>
                         <tr>
-	                        { select &&
-		                        <th>
-			                        <input
-				                        onChange={e => {
-	                                      select.onSelectAll(e.target.checked, this.props.data);
-	                                    }}
-				                        type="checkbox"
-				                        ref={(input) => {
-															          if (input != null) {
-															            input.indeterminate = (!!select.selected.length) && (select.selected.length < data.length);
-															          }}
-	                                    }
-				                        checked={select.selected.length == data.length}
-			                        />
-		                        </th>
-	                        }
+                            { select &&
+                            <th>
+                                <input
+                                    onChange={e => {
+                                        select.onSelectAll(e.target.checked, this.props.data);
+                                    }}
+                                    type="checkbox"
+                                    ref={(input) => {
+                                        if (input != null) {
+                                            input.indeterminate = (!!select.selected.length) && (select.selected.length < data.length);
+                                        }}
+                                    }
+                                    checked={select.selected.length == data.length}
+                                />
+                            </th>
+                            }
                             {this.props.columns.map((c,i) => {
                                 return <th width={c.width ? c.width : ''} onClick={e => {
                                     onSort(c.dataField, sortDir);
@@ -69,7 +68,7 @@ class DataTable extends React.Component {
                     </thead>
                     <tbody>
                         {/*<tr>*/}
-	                        {/*{ select && <td /> }*/}
+                        {/*{ select && <td /> }*/}
                         {/*/!*{this.props.columns.map((c,i) => {*!/*/}
                         {/*/!*return (*!/*/}
                         {/*/!*<td key={i}>*!/*/}
@@ -101,12 +100,12 @@ class DataTable extends React.Component {
                             this.props.data.map((d,i) => {
                                 return (
                                     <tr key={i} >
-	                                    {select &&
-		                                    <td><input onChange={e => {
-	                                          select.onSelect(e.target.checked, d);
-	                                        }} checked={select.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" />
-		                                    </td>
-	                                    }
+                                        {select &&
+                                        <td><input onChange={e => {
+                                            select.onSelect(e.target.checked, d);
+                                        }} checked={select.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" />
+                                        </td>
+                                        }
                                         {this.props.columns.map((c,i) => {
                                             return (
                                                 <td key={i}>
@@ -121,9 +120,9 @@ class DataTable extends React.Component {
                                             );
                                         })}
                                         {/*<td>*/}
-	                                        {/*<Actions onEdit={() => {*/}
-	                                        	{/*onRowClick(d)*/}
-	                                        {/*}} />*/}
+                                        {/*<Actions onEdit={() => {*/}
+                                        {/*onRowClick(d)*/}
+                                        {/*}} />*/}
                                         {/*</td>*/}
                                     </tr>
                                 );
@@ -166,7 +165,7 @@ DataTable.defaultProps = {
 
     },
     onSort: function (dataField, sortDir) {
-		
+
     },
     onApplyFilter: function (filterObject) {
 
