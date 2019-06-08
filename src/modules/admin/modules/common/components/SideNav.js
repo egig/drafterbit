@@ -58,11 +58,11 @@ class SideNav extends React.Component {
                         <span><i className="icon-equalizer"/> General</span>
                     </h6>
                     <ul className="nav flex-column mb-2 side-menu">
-	                    <li className="nav-item">
-		                    <Link className="nav-link" to={'/users'}>
-			                    <i className="icon-user"/> Users
-		                    </Link>
-	                    </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to={'/users'}>
+                                <i className="icon-user"/> Users
+                            </Link>
+                        </li>
                         <li className="nav-item">
                             <Link className="nav-link" to={'/content_types'}>
                                 <i className="icon-puzzle"/> Content Types

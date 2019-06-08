@@ -9,7 +9,7 @@ function createSessionKey(token, user_id) {
 
 export default function createSession(app, email, rawPassword) {
 
-	let m = app.model('@user/User');
+    let m = app.model('@user/User');
     return m.getUserByEmail(email)
         .then(user => {
 

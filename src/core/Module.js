@@ -1,40 +1,40 @@
 const path = require('path');
 
 export default class Module {
-	constructor(manager) {
-		this.manager = manager;
-	}
+    constructor(manager) {
+        this.manager = manager;
+    }
 
-	boot() {
-		//..
-	}
+    boot() {
+        //..
+    }
 
-	_getDir(){
-		if(typeof this.dirname === 'undefined') {
-			throw "Module is not yet initialized"
-		}
+    _getDir(){
+        if(typeof this.dirname === 'undefined') {
+            throw 'Module is not yet initialized';
+        }
 
-		return this.dirname;
-	}
+        return this.dirname;
+    }
 
-	getName() {
-		return path.basename(this._getDir())
-	}
+    getName() {
+        return path.basename(this._getDir());
+    }
 
-	getModelPath() {
-		return path.join(this._getDir(), 'models');
-	}
+    getModelPath() {
+        return path.join(this._getDir(), 'models');
+    }
 
-	getRoutesPath() {
-		return path.join(this._getDir(), 'routes');
-	}
+    getRoutesPath() {
+        return path.join(this._getDir(), 'routes');
+    }
 
-	getRoutes() {
+    getRoutes() {
 
-		try {
-			return require(this.getRoutesPath());
-		} catch (e) {
-			return false;
-		}
-	}
+        try {
+            return require(this.getRoutesPath());
+        } catch (e) {
+            return false;
+        }
+    }
 }

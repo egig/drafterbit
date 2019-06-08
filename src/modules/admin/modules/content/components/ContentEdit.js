@@ -51,21 +51,21 @@ class ContentEdit extends React.Component {
     render() {
         return (
             <Layout>
-	            <Row>
-		            <Col md="8">
-			            <Card headerText="Edit Content" >
-				            <form onSubmit={e => {
+                <Row>
+                    <Col md="8">
+                        <Card headerText="Edit Content" >
+                            <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);
                             }} >
-					            {this.props.contentTypeFields.map((f,i) => {
+                                {this.props.contentTypeFields.map((f,i) => {
 
 
-						            let value = this.formData[f.name] ? this.formData[f.name].value : '';
+                                    let value = this.formData[f.name] ? this.formData[f.name].value : '';
 
-						            // CKEditor
-						            if(f.type_id =='3') {
-							            return <Field value={value} onChange={(e) => {
+                                    // CKEditor
+                                    if(f.type_id =='3') {
+                                        return <Field value={value} onChange={(e) => {
 
                                             this.formData[f.name] = {
                                                 label: f.label,
@@ -75,9 +75,9 @@ class ContentEdit extends React.Component {
                                             };
 
                                         }} key={i} field={f} />;
-						            }
+                                    }
 
-						            return <Field value={value} onChange={e => {
+                                    return <Field value={value} onChange={e => {
 
                                         let value = e.target.value;
                                         this.setState(oldState => {
@@ -97,16 +97,16 @@ class ContentEdit extends React.Component {
 
 
                                     }} key={i} field={f} />;
-					            })}
+                                })}
 
-					            <div className="form-group">
-						            <button type="submit" className="btn btn-success">Save</button>
-					            </div>
-				            </form>
-			            </Card>
-		            </Col>
-	            </Row>
-	            {this.state.successText && <Notify type="success" message={this.state.successText} />}
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-success">Save</button>
+                                </div>
+                            </form>
+                        </Card>
+                    </Col>
+                </Row>
+                {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </Layout>);
     }
 }

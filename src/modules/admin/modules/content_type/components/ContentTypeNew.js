@@ -15,7 +15,7 @@ class ContentTypeNew extends React.Component {
         this.state = {
             fieldDialogActive: false,
             fields: [],
-	        fieldTypeSelected: null
+            fieldTypeSelected: null
         };
     }
 
@@ -94,36 +94,36 @@ class ContentTypeNew extends React.Component {
                     </div>
                 </div>
                 <Modal isOpen={this.state.fieldDialogActive}>
-	                <ModalBody>
-	                  <AddFieldForm
-	                    onSubmit={e => {
-	                            e.preventDefault();
-	                            let form = e.target;
+                    <ModalBody>
+                        <AddFieldForm
+                            onSubmit={e => {
+                                e.preventDefault();
+                                let form = e.target;
 
-	                            let field = {
-	                                name: form.name.value,
-	                                label: form.label.value,
-	                                type_id: form.type.value
-	                            };
+                                let field = {
+                                    name: form.name.value,
+                                    label: form.label.value,
+                                    type_id: form.type.value
+                                };
 
-	                            if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
-	                              field['related_content_type_id'] = form.related_content_type_id.value;
-	                            }
+                                if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+                                    field['related_content_type_id'] = form.related_content_type_id.value;
+                                }
 
-	                            this.addField(field);
+                                this.addField(field);
 
-	                            form.reset();
-	                        }}
-	                    onTypeChange={e => {
-		                              this.setState({
-		                                fieldTypeSelected: e.target.value
-		                              });
-		                            }}
-	                    fieldTypeSelected={this.state.fieldTypeSelected}
-	                    onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
+                                form.reset();
+                            }}
+                            onTypeChange={e => {
+                                this.setState({
+                                    fieldTypeSelected: e.target.value
+                                });
+                            }}
+                            fieldTypeSelected={this.state.fieldTypeSelected}
+                            onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
 
-	                  />
-	                </ModalBody>
+                        />
+                    </ModalBody>
                 </Modal>
             </Layout>
         );
@@ -132,8 +132,8 @@ class ContentTypeNew extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-	    contentType: state.CONTENT_TYPE.contentType,
-	    contentTypes: state.CONTENT_TYPE.contentTypes,
+        contentType: state.CONTENT_TYPE.contentType,
+        contentTypes: state.CONTENT_TYPE.contentTypes,
     };
 };
 

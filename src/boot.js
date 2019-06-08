@@ -8,46 +8,46 @@ import expressValidator from 'express-validator';
 import i18nextExpressMiddleware from 'i18next-express-middleware';
 
 import cacheMiddleware from './middlewares/cache';
-import config from './config'
+import config from './config';
 
 export default function (app) {
-	app.set('config', config);
+    app.set('config', config);
 
-	app.set('db', mongoose.createConnection(config.get('MONGODB_URL')));
+    app.set('db', mongoose.createConnection(config.get('MONGODB_URL')));
 
-	i18next
-		.use(i18nextExpressMiddleware.LanguageDetector)
-		.init({
-			preload: ['en', 'id'],
-		});
+    i18next
+        .use(i18nextExpressMiddleware.LanguageDetector)
+        .init({
+            preload: ['en', 'id'],
+        });
 
-	app.use(i18nextExpressMiddleware.handle(i18next, {
-		removeLngFromUrl: false
-	}));
-	app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-	app.use(bodyParser.json({limit: '50mb'}));
-	app.use(cookieParser());
-	app.use(session({
-		secret: config.get('SESSION_SECRET'),
-		cookie: { maxAge: 24 * 60 * 60 * 30 },
-		resave: true,
-		saveUninitialized: true,
-	}));
+    app.use(i18nextExpressMiddleware.handle(i18next, {
+        removeLngFromUrl: false
+    }));
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+    app.use(bodyParser.json({limit: '50mb'}));
+    app.use(cookieParser());
+    app.use(session({
+        secret: config.get('SESSION_SECRET'),
+        cookie: { maxAge: 24 * 60 * 60 * 30 },
+        resave: true,
+        saveUninitialized: true,
+    }));
 
-	app.use(express.static(__dirname+'/../public'));
+    app.use(express.static(__dirname+'/../public'));
 
-	app.get('module').init();
-	app.emit("boot");
+    app.get('module').init();
+    app.emit('boot');
 
-	app.use(expressValidator({
-		errorFormatter: (param, msg, value, location) => {
-			return msg;
-		}
-	}));
+    app.use(expressValidator({
+        errorFormatter: (param, msg, value, location) => {
+            return msg;
+        }
+    }));
 
-	app.use(cacheMiddleware(config));
+    app.use(cacheMiddleware(config));
 
 
-	app.get('module').initRoutes();
-	return app;
+    app.get('module').initRoutes();
+    return app;
 }

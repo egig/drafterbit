@@ -1,35 +1,35 @@
 import mongoose from 'mongoose';
 
 let UserSchema = new mongoose.Schema({
-	first_name: String,
-	last_name: String,
-	email: String,
-	password: String,
+    first_name: String,
+    last_name: String,
+    email: String,
+    password: String,
 });
 
 UserSchema.getModelName = function () {
-	return "User";
+    return 'User';
 };
 
 
 UserSchema.statics.getUsers = function() {
-	return new Promise((resolve, reject) => {
-		this.find({}, ['_id', 'name', 'email'], function(err, users) {
-			if (err) return reject(err);
-			return resolve(users);
-		});
-	});
-}
+    return new Promise((resolve, reject) => {
+        this.find({}, ['_id', 'name', 'email'], function(err, users) {
+            if (err) return reject(err);
+            return resolve(users);
+        });
+    });
+};
 
 UserSchema.statics.getUserByEmail = function(email) {
-	return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-		this.findOne({email}, function(err, user) {
-			if (err) return reject(err);
-			return resolve(user);
-		});
-	});
-}
+        this.findOne({email}, function(err, user) {
+            if (err) return reject(err);
+            return resolve(user);
+        });
+    });
+};
 
 /**
  *
@@ -40,22 +40,22 @@ UserSchema.statics.getUserByEmail = function(email) {
  * @return {Promise}
  */
 UserSchema.statics.createUser = function(firstName, lastName, email, password) {
-	return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-		let newUser = new this.User({
-			first_name: firstName,
-			last_name: lastName,
-			email: email,
-			password: password
-		});
+        let newUser = new this.User({
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password: password
+        });
 
-		newUser.save(function (err) {
-			if (err) return reject(err);
-			resolve(true);
-		});
+        newUser.save(function (err) {
+            if (err) return reject(err);
+            resolve(true);
+        });
 
-	});
-}
+    });
+};
 
 /**
  *
@@ -63,13 +63,13 @@ UserSchema.statics.createUser = function(firstName, lastName, email, password) {
  * @return {Promise}
  */
 UserSchema.statics.deleteUser = function(userId) {
-	return new Promise((resolve, reject) => {
-		this.find({ _id:userId }).remove((err, results) => {
-			if (err) return reject(err);
-			return resolve(results);
-		});
-	});
-}
+    return new Promise((resolve, reject) => {
+        this.find({ _id:userId }).remove((err, results) => {
+            if (err) return reject(err);
+            return resolve(results);
+        });
+    });
+};
 
 
 /**
@@ -79,14 +79,14 @@ UserSchema.statics.deleteUser = function(userId) {
  * @return {Promise}
  */
 UserSchema.statics.updateUser = function(userId, payload) {
-	return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-		this.updateOne({ _id: userId }, payload, (err) => {
-			if (err) return reject(err);
-			return resolve(true);
-		});
+        this.updateOne({ _id: userId }, payload, (err) => {
+            if (err) return reject(err);
+            return resolve(true);
+        });
 
-	});
-}
+    });
+};
 
 module.exports = UserSchema;

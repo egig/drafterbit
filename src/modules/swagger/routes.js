@@ -4,15 +4,15 @@ import swaggerUi from 'swagger-ui-express';
 let router = express.Router();
 
 let options = {
-	swaggerUrl: '/_swagger_spec.json'
+    swaggerUrl: '/_swagger_spec.json'
 };
 
 router.get(
-	'/_swagger',
-	swaggerUi.setup(null, options),
-	(req,res, next) => {
-		next();
-	}
+    '/_swagger',
+    swaggerUi.setup(null, options),
+    (req,res, next) => {
+        next();
+    }
 );
 
 router.get('/_swagger_spec.json',  function (req, res) {
@@ -20,7 +20,7 @@ router.get('/_swagger_spec.json',  function (req, res) {
     (async function () {
 
         try {
-	          let m = req.app.model('@content/ContentType');
+            let m = req.app.model('@content/ContentType');
             let results = await m.getContentTypes();
 
             let swaggerSpec = {
@@ -96,10 +96,8 @@ const getSwaggerDataType = function getSwaggerDataType(typeId) {
     case 2:
     case 3:
         return 'string';
-        break;
     case 6:
         return 'number';
-        break;
     }
 };
 

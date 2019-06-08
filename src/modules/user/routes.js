@@ -111,7 +111,7 @@ router.post('/users/session',
                 let email = req.body.email;
                 let rawPassword = req.body.password;
 
-	              let m = User(req.app.get('db'));
+                let m = User(req.app.get('db'));
                 let user = await m.getUserByEmail(email);
 
                 if(!user) {
@@ -243,7 +243,7 @@ router.post('/users',
             try {
                 let hashedPassword = await password.hash(req.body.password);
 
-	            let m = req.app.model('@user/User');
+                let m = req.app.model('@user/User');
                 // TODO validation
                 await m.createUser(
                     req.body.first_name,
@@ -295,7 +295,7 @@ router.delete('/users/:user_id',
 
             try {
 
-	            let m = req.app.model('@user/User');
+                let m = req.app.model('@user/User');
                 await m.deleteUser(req.params.user_id);
                 res.send({message: 'OK'});
 
@@ -366,7 +366,7 @@ router.patch('/users/:user_id',
         (async function () {
 
             try {
-	            let m = req.app.model('@user/User');
+                let m = req.app.model('@user/User');
                 // TODO validation
                 await m.updateUser(req.params.user_id, req.body);
                 res.send({message: 'OK'});
@@ -429,29 +429,29 @@ router.post('/users/reset_password',
 
 router.post('/login', function (req, res) {
 
-	(async function () {
+    (async function () {
 
-		try {
+        try {
 
-			let user = await createSession(req.app, req.body.email, req.body.password);
-			req.session.user = user;
-			res.send(user);
+            let user = await createSession(req.app, req.body.email, req.body.password);
+            req.session.user = user;
+            res.send(user);
 
-		} catch (e) {
-			res.status(e.status || 500);
-			res.send({
-				message: e.message
-			});
-		}
+        } catch (e) {
+            res.status(e.status || 500);
+            res.send({
+                message: e.message
+            });
+        }
 
-	})();
+    })();
 
 });
 
 
 router.get('/logout', (req, res) => {
-	req.session.destroy();
-	res.redirect('/');
+    req.session.destroy();
+    res.redirect('/');
 });
 
 module.exports =  router;

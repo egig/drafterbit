@@ -34,7 +34,7 @@ router.get('/contents/:content_id',
         (async function () {
 
             try {
-	              let m = req.app.model('@content/Content');
+                let m = req.app.model('@content/Content');
                 let results = await m.getContent(req.params.content_id);
                 res.send(results);
             } catch (e ) {
@@ -91,17 +91,17 @@ router.get('/content_types/:content_type_id/contents',
 
         (async function () {
 
-		        let page = req.query.page || 1;
-		        let sortBy = req.query.sort_by;
-		        let sortDir = req.query.sort_dir || 'asc';
-		        const PER_PAGE = 10;
-		        let offset = (page*PER_PAGE) - PER_PAGE;
-		        let max = PER_PAGE;
+            let page = req.query.page || 1;
+            let sortBy = req.query.sort_by;
+            let sortDir = req.query.sort_dir || 'asc';
+            const PER_PAGE = 10;
+            let offset = (page*PER_PAGE) - PER_PAGE;
+            let max = PER_PAGE;
 
-		        let filterObj = parseFilterQuery(req.query.fq);
+            let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-	              let m = req.app.model('@content/Content');
+                let m = req.app.model('@content/Content');
                 // TODO validation to req.body
                 let results = await m.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
                 let count = await m.getCount(req.params.content_type_id,  filterObj);
@@ -158,7 +158,7 @@ router.post('/content_types/:content_type_id/contents',
         (async function () {
 
             try {
-	              let m = req.app.model('@content/Content');
+                let m = req.app.model('@content/Content');
                 let results = await m.createContent(req.params.content_type_id, req.body.fields);
                 res.send(results);
             } catch (e ) {
@@ -201,7 +201,7 @@ router.delete('/contents/:content_id',
         (async function () {
 
             try {
-            	  let m = new Content(req.app.get('db'));
+                let m = new Content(req.app.get('db'));
                 await m.deleteContent(req.params.content_id);
                 res.send({message: 'OK'});
 
@@ -253,7 +253,7 @@ router.patch('/contents/:content_id',
         (async function () {
 
             try {
-	              let m = new Content(req.app.get('db'));
+                let m = new Content(req.app.get('db'));
                 await m.updateContent(req.params.content_id, req.body);
                 res.send({message: 'OK'});
 

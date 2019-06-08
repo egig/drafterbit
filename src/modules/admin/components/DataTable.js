@@ -8,14 +8,14 @@ import Actions from './DataTable/Actions';
 import './DataTable.css';
 
 function renderCaret(dataField, sortBy, sortDir) {
-	if(sortBy == dataField) {
-		if(sortDir == 'asc') {
-			return <FontAwesomeIcon icon={faSortUp} className="float-right" />;
-		}
+    if(sortBy == dataField) {
+        if(sortDir == 'asc') {
+            return <FontAwesomeIcon icon={faSortUp} className="float-right" />;
+        }
 
-		return <FontAwesomeIcon icon={faSortDown} className="float-right" />;
-	}
-	return <FontAwesomeIcon icon={faSort} className="float-right" color="#cccccc" />;
+        return <FontAwesomeIcon icon={faSortDown} className="float-right" />;
+    }
+    return <FontAwesomeIcon icon={faSort} className="float-right" color="#cccccc" />;
 }
 
 
@@ -57,7 +57,7 @@ class DataTable extends React.Component {
 		                        </th>
 	                        }
                             {this.props.columns.map((c,i) => {
-                                return <th width={c.width ? c.width : ""} onClick={e => {
+                                return <th width={c.width ? c.width : ''} onClick={e => {
                                     onSort(c.dataField, sortDir);
                                 }} style={{cursor: 'pointer'}} key={i}>
                                     {c.text}
@@ -70,32 +70,32 @@ class DataTable extends React.Component {
                     <tbody>
                         {/*<tr>*/}
 	                        {/*{ select && <td /> }*/}
-                            {/*/!*{this.props.columns.map((c,i) => {*!/*/}
-                                {/*/!*return (*!/*/}
-                                    {/*/!*<td key={i}>*!/*/}
-                                        {/*/!*<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {*!/*/}
-                                            {/*/!*this.props.onFilterChange(c.dataField, e.target.value);*!/*/}
-                                        {/*/!*}}/>*!/*/}
-                                    {/*/!*</td>*!/*/}
-                                {/*/!*);*!/*/}
-                            {/*/!*})}*!/*/}
-                            {/*/!*<td>*!/*/}
-                                {/*/!*<Button size="sm" color="primary" className="mr-1" onClick={() => {*!/*/}
-                            {/**/}
-                                    {/*/!*let filterObj = {};*!/*/}
-                                    {/*/!*Object.keys(this.props.filterObject).forEach((name) => {*!/*/}
-                                        {/*/!*let v = this.props.filterObject[name];*!/*/}
-                                        {/*/!*if(v) {*!/*/}
-                                            {/*/!*filterObj[name] = this.props.filterObject[name];*!/*/}
-                                        {/*/!*}*!/*/}
-                                    {/*/!*});*!/*/}
+                        {/*/!*{this.props.columns.map((c,i) => {*!/*/}
+                        {/*/!*return (*!/*/}
+                        {/*/!*<td key={i}>*!/*/}
+                        {/*/!*<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {*!/*/}
+                        {/*/!*this.props.onFilterChange(c.dataField, e.target.value);*!/*/}
+                        {/*/!*}}/>*!/*/}
+                        {/*/!*</td>*!/*/}
+                        {/*/!*);*!/*/}
+                        {/*/!*})}*!/*/}
+                        {/*/!*<td>*!/*/}
+                        {/*/!*<Button size="sm" color="primary" className="mr-1" onClick={() => {*!/*/}
+                        {/**/}
+                        {/*/!*let filterObj = {};*!/*/}
+                        {/*/!*Object.keys(this.props.filterObject).forEach((name) => {*!/*/}
+                        {/*/!*let v = this.props.filterObject[name];*!/*/}
+                        {/*/!*if(v) {*!/*/}
+                        {/*/!*filterObj[name] = this.props.filterObject[name];*!/*/}
+                        {/*/!*}*!/*/}
+                        {/*/!*});*!/*/}
 
-                                    {/*/!*this.props.onApplyFilter(filterObj);*!/*/}
-                                {/*/!*}}><FontAwesomeIcon icon={faFilter}/></Button>*!/*/}
-                                {/*/!*<Button size="sm" onClick={() => {*!/*/}
-                                    {/*/!*this.props.onReset();*!/*/}
-                                {/*/!*}}><FontAwesomeIcon icon={faRedo}/></Button>*!/*/}
-                            {/*/!*</td>*!/*/}
+                        {/*/!*this.props.onApplyFilter(filterObj);*!/*/}
+                        {/*/!*}}><FontAwesomeIcon icon={faFilter}/></Button>*!/*/}
+                        {/*/!*<Button size="sm" onClick={() => {*!/*/}
+                        {/*/!*this.props.onReset();*!/*/}
+                        {/*/!*}}><FontAwesomeIcon icon={faRedo}/></Button>*!/*/}
+                        {/*/!*</td>*!/*/}
                         {/*</tr>*/}
                         {
                             this.props.data.map((d,i) => {
@@ -152,19 +152,19 @@ DataTable.defaultProps = {
     currentPage: 1,
     totalPageCount: 1,
     filterObject: {},
-		// select: {
-		// 	selected: [],
-		// 	onSelect: function (d) {
-		//
-		// 	},
-		// 	onSelectAll: function (d) {
-		//
-		// 	},
-		// },
-		select: false,
-		onRowClick: function (d) {
+    // select: {
+    // 	selected: [],
+    // 	onSelect: function (d) {
+    //
+    // 	},
+    // 	onSelectAll: function (d) {
+    //
+    // 	},
+    // },
+    select: false,
+    onRowClick: function (d) {
 
-		},
+    },
     onSort: function (dataField, sortDir) {
 		
     },

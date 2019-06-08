@@ -20,8 +20,8 @@ class ContentType extends React.Component {
             description: '',
             fields: [],
             notifyText: '',
-	        fieldDialogActive: false,
-	        fieldTypeSelected: null
+            fieldDialogActive: false,
+            fieldTypeSelected: null
         };
 
         this.addField = this.addField.bind(this);
@@ -52,27 +52,27 @@ class ContentType extends React.Component {
     }
 
     deleteField(f) {
-    	let newFields = this.state.fields.filter((sf) => {
-		    return (sf._id !== f._id)
-	    });
+        let newFields = this.state.fields.filter((sf) => {
+            return (sf._id !== f._id);
+        });
 
-	    this.setState({
-		    fields: newFields,
-	    }, this.doUpdateContentTypeByField);
+        this.setState({
+            fields: newFields,
+        }, this.doUpdateContentTypeByField);
     }
 
     doUpdateContentTypeByField() {
-	    this.props.updateContentType(
-		    this.state._id,
-		    this.state.name,
-		    this.state.slug,
-		    this.state.description.value,
-		    this.state.fields
-	    ).then(r => {
-		    this.setState({
-			    notifyText: 'Fields successfully saved.'
-		    });
-	    });
+        this.props.updateContentType(
+            this.state._id,
+            this.state.name,
+            this.state.slug,
+            this.state.description.value,
+            this.state.fields
+        ).then(r => {
+            this.setState({
+                notifyText: 'Fields successfully saved.'
+            });
+        });
     }
 
     deleteContentType(deleteForm) {
@@ -100,111 +100,111 @@ class ContentType extends React.Component {
 
         return (
             <Layout>
-	            <Row>
-		            <Col md="4" className="mb-3">
-			            <Card headerText={`Edit Content Type : ${this.props.contentType.name}`}>
-				            <form onSubmit={e => {
+                <Row>
+                    <Col md="4" className="mb-3">
+                        <Card headerText={`Edit Content Type : ${this.props.contentType.name}`}>
+                            <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);
                             }}>
-					            <div className="form-group">
-						            <label>Name</label>
-						            <input onChange={e => {
+                                <div className="form-group">
+                                    <label>Name</label>
+                                    <input onChange={e => {
                                         this.setState({name: e.target.value});
                                     }} className="form-control" type="text" name="name" id="name" value={this.state.name} />
-					            </div>
-					            <div className="form-group">
-						            <label>Slug</label>
-						            <input onChange={e => {
+                                </div>
+                                <div className="form-group">
+                                    <label>Slug</label>
+                                    <input onChange={e => {
                                         this.setState({slug: e.target.value});
                                     }} className="form-control" type="text" name="slug" id="slug"  value={this.state.slug} />
-					            </div>
-					            <div className="form-group">
-						            <label>Description</label>
-						            <input onChange={e => {
+                                </div>
+                                <div className="form-group">
+                                    <label>Description</label>
+                                    <input onChange={e => {
                                         this.setState({description: e.target.value});
                                     }} className="form-control" type="text" name="description" id="description"  value={this.state.description} />
-					            </div>
-					            <div className="form-group">
-						            <button type="submit" className="btn btn-success">Save</button>
-					            </div>
-				            </form>
-			            </Card>
-			            <div className="mb-3" />
+                                </div>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-success">Save</button>
+                                </div>
+                            </form>
+                        </Card>
+                        <div className="mb-3" />
 
-			            <Card headerText={`Delete Content Type : ${this.props.contentType.name}`}>
-				            <form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
-					            <input type="hidden" name="id" id="id" value={this.state._id} />
-					            <button type="submit" className="btn btn-danger">Delete Content Type</button>
-				            </form>
-			            </Card>
-			            <div className="mb-3" />
-		            </Col>
-		            <Col md="8">
-			            <Card headerText="Fields">
-					            <button onClick={e => {
+                        <Card headerText={`Delete Content Type : ${this.props.contentType.name}`}>
+                            <form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
+                                <input type="hidden" name="id" id="id" value={this.state._id} />
+                                <button type="submit" className="btn btn-danger">Delete Content Type</button>
+                            </form>
+                        </Card>
+                        <div className="mb-3" />
+                    </Col>
+                    <Col md="8">
+                        <Card headerText="Fields">
+                            <button onClick={e => {
                                 e.preventDefault();
                                 this.setState({
                                     fieldDialogActive: true
                                 });
                             }} className="btn btn-success btn-sm mb-2"><i className="icon-plus"/> Add Field</button>
-				            <table className="table table-sm table-bordered">
-					            <thead>
-					            <tr>
-						            <th>Name</th>
-						            <th>Type</th>
-						            <th></th>
-					            </tr>
-					            </thead>
-					            <tbody>
-					            {this.state.fields.map((f,i) => {
-						            return (
-							            <tr key={i}>
-								            <td>{f.name}</td>
-								            <td>{getFieldTypeName(f.type_id)}</td>
-								            <td><Button size="sm" onClick={e => {
-								            	this.deleteField(f);
-								            }}>&times;</Button></td>
-							            </tr>
-						            );
-					            })}
-					            </tbody>
-				            </table>
-			            </Card>
-		            </Col>
-	            </Row>
-	            <Modal isOpen={this.state.fieldDialogActive}>
-		            <ModalBody>
-			            <AddFieldForm
-				            onSubmit={e => {
-	                            e.preventDefault();
-	                            let form = e.target;
+                            <table className="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.fields.map((f,i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>{f.name}</td>
+                                                <td>{getFieldTypeName(f.type_id)}</td>
+                                                <td><Button size="sm" onClick={e => {
+                                                    this.deleteField(f);
+                                                }}>&times;</Button></td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </Card>
+                    </Col>
+                </Row>
+                <Modal isOpen={this.state.fieldDialogActive}>
+                    <ModalBody>
+                        <AddFieldForm
+                            onSubmit={e => {
+                                e.preventDefault();
+                                let form = e.target;
 
-	                            let field = {
-	                                name: form.name.value,
-	                                label: form.label.value,
-	                                type_id: form.type.value
-	                            };
+                                let field = {
+                                    name: form.name.value,
+                                    label: form.label.value,
+                                    type_id: form.type.value
+                                };
 
-	                            if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
-	                              field['related_content_type_id'] = form.related_content_type_id.value;
-	                            }
+                                if(_.includes([4,5], parseInt(this.state.fieldTypeSelected))) {
+                                    field['related_content_type_id'] = form.related_content_type_id.value;
+                                }
 
-	                            this.addField(field);
+                                this.addField(field);
 
-	                            form.reset();
-	                        }}
-				            onTypeChange={e => {
-		                              this.setState({
-		                                fieldTypeSelected: e.target.value
-		                              });
-		                            }}
-				            fieldTypeSelected={this.state.fieldTypeSelected}
-				            onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
+                                form.reset();
+                            }}
+                            onTypeChange={e => {
+                                this.setState({
+                                    fieldTypeSelected: e.target.value
+                                });
+                            }}
+                            fieldTypeSelected={this.state.fieldTypeSelected}
+                            onCancel={e => {e.preventDefault(); this.setState({fieldDialogActive: false}); }}
 
-			            />
-		            </ModalBody>
-	            </Modal>
+                        />
+                    </ModalBody>
+                </Modal>
                 {this.state.notifyText &&
                   <Notify type="success" message={this.state.notifyText} />
                 }

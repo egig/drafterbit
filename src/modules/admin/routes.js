@@ -11,92 +11,92 @@ let router = express.Router();
 const ASSETS_STAT_PATH = webpackConfig.output.path+'/assets.stat.json';
 
 function doCompileWebPack() {
-	if(fs.existsSync(ASSETS_STAT_PATH)) {
-		return getStat(ASSETS_STAT_PATH)
-	} else {
-		return compileWebpack()
-			.then(stats => {
-				let statObj = {
-					hash: stats.hash
-				};
-				return writeStat(webpackConfig.output.path + '/assets.stat.json', JSON.stringify(statObj))
-					.then(r => {
-						return stats;
-					})
-			})
-	}
+    if(fs.existsSync(ASSETS_STAT_PATH)) {
+        return getStat(ASSETS_STAT_PATH);
+    } else {
+        return compileWebpack()
+            .then(stats => {
+                let statObj = {
+                    hash: stats.hash
+                };
+                return writeStat(webpackConfig.output.path + '/assets.stat.json', JSON.stringify(statObj))
+                    .then(r => {
+                        return stats;
+                    });
+            });
+    }
 }
 
 function getStat(filePath) {
-	return new Promise((resolve, reject) => {
-		fs.readFile(filePath, function (err, cnt) {
-			if (err) return reject(err);
-			return resolve(JSON.parse(cnt))
-		});
-	})
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, function (err, cnt) {
+            if (err) return reject(err);
+            return resolve(JSON.parse(cnt));
+        });
+    });
 }
 
 function writeStat(filePath, content) {
-	return new Promise((resolve, reject) => {
-		fs.writeFile(filePath, content, (err) => {
-			if(err) return reject(err);
-			return resolve(true)
-		})
-	});
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filePath, content, (err) => {
+            if(err) return reject(err);
+            return resolve(true);
+        });
+    });
 }
 
 function compileWebpack() {
-	return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-		// TODO optimize this for production
-		webpack(webpackConfig, (err, stats) => { // Stats Object
-			if (err || stats.hasErrors()) {
+        // TODO optimize this for production
+        webpack(webpackConfig, (err, stats) => { // Stats Object
+            if (err || stats.hasErrors()) {
 
-				if (err) {
-					console.error(err.stack || err);
-					if (err.details) {
-						console.error(err.details);
-					}
-					return reject(err);
-				}
+                if (err) {
+                    console.error(err.stack || err);
+                    if (err.details) {
+                        console.error(err.details);
+                    }
+                    return reject(err);
+                }
 
-				const info = stats.toJson();
+                const info = stats.toJson();
 
-				if (stats.hasErrors()) {
-					console.error(info.errors);
-					return reject(info.errors);
-				}
+                if (stats.hasErrors()) {
+                    console.error(info.errors);
+                    return reject(info.errors);
+                }
 
-			} else {
+            } else {
 
-				if (stats.hasWarnings()) {
-					console.warn(info.warnings);
-				}
-					return resolve(stats);
-			}
+                if (stats.hasWarnings()) {
+                    console.warn(info.warnings);
+                }
+                return resolve(stats);
+            }
 
-		});
+        });
 
-	});
-};
+    });
+}
 
 router.get('/admin', function (req, res) {
 
-	defaultState.COMMON.language = req.language;
-	defaultState.COMMON.languages = req.languages;
+    defaultState.COMMON.language = req.language;
+    defaultState.COMMON.languages = req.languages;
 
-	if(req.user) {
-		defaultState.USER.currentUser = req.user;
-	}
+    if(req.user) {
+        defaultState.USER.currentUser = req.user;
+    }
 
-	let drafterbitConfig = {
-		apiBaseURL: req.app.get('config').get('API_BASE_URL')
-	};
+    let drafterbitConfig = {
+        apiBaseURL: req.app.get('config').get('API_BASE_URL')
+    };
 
-	doCompileWebPack()
-		.then(stats => {
+    doCompileWebPack()
+        .then(stats => {
 
-			return res.send(`<!DOCTYPE html>
+            return res.send(`<!DOCTYPE html>
           <html>
             <head>
                 <meta charSet="utf-8" />
@@ -116,13 +116,13 @@ router.get('/admin', function (req, res) {
             </body>
         </html>`);
 
-		})
-		.catch(e => {
-			console.error(e);
+        })
+        .catch(e => {
+            console.error(e);
 
-			res.status(500).send(e.message);
+            res.status(500).send(e.message);
 
-		});
+        });
 });
 
 

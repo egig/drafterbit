@@ -36,18 +36,18 @@ class ContentNew extends React.Component {
     render() {
         return (
             <Layout>
-	            <Row>
-		            <Col md="8">
-			            <Card headerText="Add Content" >
-				            <form onSubmit={e => {
+                <Row>
+                    <Col md="8">
+                        <Card headerText="Add Content" >
+                            <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);
                             }} >
-					            {this.props.ctFields.fields.map((f,i) => {
+                                {this.props.ctFields.fields.map((f,i) => {
 
-						            // TinyMCE
-						            if(f.type_id =='3') {
-							            return <Field onChange={(e) => {
+                                    // TinyMCE
+                                    if(f.type_id =='3') {
+                                        return <Field onChange={(e) => {
                                             this.formData[f.name] = {
                                                 label: f.label,
                                                 type_id: f.type_id,
@@ -55,9 +55,9 @@ class ContentNew extends React.Component {
                                                 value: e.target.getContent(),
                                             };
                                         }} key={i} field={f} />;
-						            }
+                                    }
 
-						            return <Field onChange={e => {
+                                    return <Field onChange={e => {
                                         this.formData[f.name] = {
                                             label: f.label,
                                             type_id: f.type_id,
@@ -65,15 +65,15 @@ class ContentNew extends React.Component {
                                             value: e.target.value,
                                         };
                                     }} key={i} field={f} />;
-					            })}
+                                })}
 
-					            <div className="form-group">
-						            <button type="submit" className="btn btn-success">Save</button>
-					            </div>
-				            </form>
-			            </Card>
-		            </Col>
-	            </Row>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-success">Save</button>
+                                </div>
+                            </form>
+                        </Card>
+                    </Col>
+                </Row>
                 {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </Layout>);
     }

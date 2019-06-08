@@ -16,12 +16,12 @@ class Contents extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        	selected: [],
-	        contents: [],
-	        contentCount:0,
-	        sortBy: "",
-	        sortDir: 'asc',
-	        filterObject: {}
+          selected: [],
+          contents: [],
+          contentCount:0,
+          sortBy: "",
+          sortDir: 'asc',
+          filterObject: {}
         };
 
         this.handleOnSelect = this.handleOnSelect.bind(this);
@@ -31,44 +31,44 @@ class Contents extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-		    let qs = querystring.parse(this.props.location.search.substr(1));
-		    let nextQs = querystring.parse(nextProps.location.search.substr(1));
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let nextQs = querystring.parse(nextProps.location.search.substr(1));
 
-		    let isPathSame = (nextProps.match.params.content_type_slug == this.props.match.params.content_type_slug);
+        let isPathSame = (nextProps.match.params.content_type_slug == this.props.match.params.content_type_slug);
 
-		    if(isPathSame && _.isEqual(qs, nextQs)) {
-			    return;
-		    }
+        if(isPathSame && _.isEqual(qs, nextQs)) {
+          return;
+        }
 
-		    let ctSlug= nextProps.match.params.content_type_slug;
-		    let sortBy = nextQs['sort_by'];
-		    let sortDir = nextQs['sort_dir'];
-		    let fqStr = nextQs['fq'];
-		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir, fqStr);
+        let ctSlug= nextProps.match.params.content_type_slug;
+        let sortBy = nextQs['sort_by'];
+        let sortDir = nextQs['sort_dir'];
+        let fqStr = nextQs['fq'];
+        this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir, fqStr);
 
-		    let fqObj  = parseFilterQuery(fqStr);
+        let fqObj  = parseFilterQuery(fqStr);
 
-		    this.setState((prevState) => {
-			    return {
-				    filterObject: isPathSame ? fqObj : {}
-			    }
-		    });
+        this.setState((prevState) => {
+          return {
+            filterObject: isPathSame ? fqObj : {}
+          }
+        });
     }
 
     loadContents(ctSlug, page, sortBy, sortDir, fqSr) {
-    	let client = apiClient.createClient({});
+      let client = apiClient.createClient({});
 
-	    this.props.getContentTypeFields(ctSlug)
-		    .then(r => {
-			    client.getContents(this.props.ctFields._id, page, sortBy, sortDir, fqSr)
-			    .then(response => {
+      this.props.getContentTypeFields(ctSlug)
+        .then(r => {
+          client.getContents(this.props.ctFields._id, page, sortBy, sortDir, fqSr)
+          .then(response => {
 
-			    	this.setState({
-					    contentCount: response.headers['dt-data-count'],
-					    contents: response.data
-				    })
-			    });
-		    });
+            this.setState({
+              contentCount: response.headers['dt-data-count'],
+              contents: response.data
+            })
+          });
+        });
     }
 
     componentDidMount() {
@@ -79,13 +79,13 @@ class Contents extends React.Component {
         let sortDir = qs['sort_dir'];
         this.loadContents(ctSlug, page, sortBy, sortDir);
 
-		    let fqObj  = parseFilterQuery(qs['fq']);
+        let fqObj  = parseFilterQuery(qs['fq']);
 
-		    this.setState((prevState) => {
-			    return {
-				    filterObject: Object.assign({}, prevState.filterObject, fqObj)
-			    }
-		    });
+        this.setState((prevState) => {
+          return {
+            filterObject: Object.assign({}, prevState.filterObject, fqObj)
+          }
+        });
     }
 
     handleOnSelect(isSelect, row) {
@@ -121,10 +121,10 @@ class Contents extends React.Component {
 
         let slug = this.props.match.params.content_type_slug;
         let addUrl = `/contents/${slug}/new`;
-		    let qs = querystring.parse(this.props.location.search.substr(1));
-		    let sortBy = qs['sort_by'];
-		    let sortDir = qs['sort_dir'];
-		    let page = !!qs['page'] ? qs['page'] : 1;
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let sortBy = qs['sort_by'];
+        let sortDir = qs['sort_dir'];
+        let page = !!qs['page'] ? qs['page'] : 1;
 
         const data = this.state.contents.map(c => {
             let item = {
@@ -142,20 +142,20 @@ class Contents extends React.Component {
             dataField: '_id',
             text: '#ID',
             formatter: (cell, row) => {
-	            return <span>{cell.substr(0,3)}&hellip;</span>;
+              return <span>{cell.substr(0,3)}&hellip;</span>;
             },
-	        width: "80px"
+          width: "80px"
         }];
 
         this.props.ctFields.fields.map(f => {
-        	// Don't display Rich Text by default
-        	if(f.type_id !== 3) {
-		        columns.push({
-			        dataField: f.name,
-			        text: f.label,
-			        sort: true
-		        })
-	        }
+          // Don't display Rich Text by default
+          if(f.type_id !== 3) {
+            columns.push({
+              dataField: f.name,
+              text: f.label,
+              sort: true
+            })
+          }
         });
 
         return (
@@ -166,58 +166,58 @@ class Contents extends React.Component {
                       <button className="btn btn-danger ml-2 mb-3" onClick={this.handleDelete} >Delete</button>
                     }
                     <DataTable
-	                      idField="_id"
+                        idField="_id"
                         data={ data }
                         columns={ columns }
                         select={{
-                        	selected:this.state.selected,
-                        	onSelect:this.handleOnSelect,
-                        	onSelectAll:this.handleOnSelectAll
+                          selected:this.state.selected,
+                          onSelect:this.handleOnSelect,
+                          onSelectAll:this.handleOnSelectAll
                         }}
                         sortBy={sortBy}
-	                      sortDir={sortDir}
-	                      onSort={(dataField, sortDir) => {
-	                        let qs = querystring.parse(this.props.location.search.substr(1));
-	                        let newSortDir = (sortDir == 'desc') ? 'asc' : 'desc';
-	                        qs['sort_by'] = dataField;
-	                        qs['sort_dir'] = newSortDir;
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
-	                      }}
-	                      onApplyFilter={(filterObj) => {
+                        sortDir={sortDir}
+                        onSort={(dataField, sortDir) => {
+                          let qs = querystring.parse(this.props.location.search.substr(1));
+                          let newSortDir = (sortDir == 'desc') ? 'asc' : 'desc';
+                          qs['sort_by'] = dataField;
+                          qs['sort_dir'] = newSortDir;
+                          let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+                          this.props.history.push(newLink);
+                        }}
+                        onApplyFilter={(filterObj) => {
 
-	                      	let qs = querystring.parse(this.props.location.search.substr(1));
-	                        qs['fq'] = stringifyFilterQuery(filterObj);
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
+                          let qs = querystring.parse(this.props.location.search.substr(1));
+                          qs['fq'] = stringifyFilterQuery(filterObj);
+                          let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+                          this.props.history.push(newLink);
 
-	                      }}
-	                      onFilterChange={(dataField, value) => {
-	                      		let d = {};
-														d[dataField] = value;
+                        }}
+                        onFilterChange={(dataField, value) => {
+                            let d = {};
+                            d[dataField] = value;
 
-														this.setState((prevState) => {
-															return {
-																filterObject: Object.assign({}, prevState.filterObject, d)
-															}
-														})
-	                      }}
-	                      onReset={() => {
-	                      	let qs = querystring.parse(this.props.location.search.substr(1));
-	                        delete qs['fq'];
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
-	                      }}
-	                      filterObject={this.state.filterObject}
+                            this.setState((prevState) => {
+                              return {
+                                filterObject: Object.assign({}, prevState.filterObject, d)
+                              }
+                            })
+                        }}
+                        onReset={() => {
+                          let qs = querystring.parse(this.props.location.search.substr(1));
+                          delete qs['fq'];
+                          let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+                          this.props.history.push(newLink);
+                        }}
+                        filterObject={this.state.filterObject}
                         currentPage={page}
                         totalPageCount={Math.ceil(this.state.contentCount/10)}
                         renderPaginationLink={(p) => (
-                        	<Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
+                          <Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
                         )}
-	                      onRowClick={(col) => {
-	                      	let newLink = `/contents/${slug}/${col['_id']}`;
-	                      	this.props.history.push(newLink);
-	                      }}
+                        onRowClick={(col) => {
+                          let newLink = `/contents/${slug}/${col['_id']}`;
+                          this.props.history.push(newLink);
+                        }}
                     />
                 </Card>
             </Layout>
