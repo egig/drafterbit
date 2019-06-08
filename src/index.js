@@ -10,8 +10,9 @@ const port = config.get('PORT');
 
 let mm = new ModuleManager(__dirname, app);
 mm.setModulePaths([
+	'./modules/admin',
 	'./modules/user',
-	'./modules/content'
+	'./modules/content',
 ]);
 
 app.set('module', mm);

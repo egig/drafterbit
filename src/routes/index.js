@@ -7,7 +7,7 @@ import admin from '../modules/admin/routes';
 
 let router = express.Router();
 router.use(swagger);
-// router.use(admin);
+router.use(admin);
 router.use(user);
 // router.use(auth);
 router.use(content);

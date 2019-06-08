@@ -53,7 +53,6 @@ export default function (app) {
 	app.use(cacheMiddleware(config));
 
 
-	app.use(routes);
-
+	app.get('module').initRoutes();
 	return app;
 }

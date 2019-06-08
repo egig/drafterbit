@@ -8,4 +8,4 @@ router.use(content_type);
 router.use(content);
 router.use(main);
 
-export default router;
+module.exports =  router;

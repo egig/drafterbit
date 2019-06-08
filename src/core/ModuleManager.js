@@ -28,7 +28,7 @@ export default class ModuleManager {
 		for(let i=0;i<this._modulePaths.length;i++){
 
 			let rP = this._modulePathResolver.resolve(this._modulePaths[i]);
-			let moduleF = require(rP);;
+			let moduleF = require(rP);
 			let m = new moduleF(this);
 			m.resolvedPath = rP;
 
@@ -75,5 +75,18 @@ export default class ModuleManager {
 		this._models[name] = connection.model(modelName, ModelSchema);
 
 		return this._models[name];
+	}
+
+	/**
+	 * Register routes from modules.
+	 *
+	 * @private
+	 */
+	initRoutes() {
+		Object.keys(this._modules).forEach(name => {
+			let routes = this._modules[name].getRoutes();
+			this.app.use(routes);
+
+		});
 	}
 }

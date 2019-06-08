@@ -9,8 +9,8 @@ function createSessionKey(token, user_id) {
 
 export default function createSession(app, email, rawPassword) {
 
-	let m = User(app.get('db'));
-    return User.getUserByEmail(email)
+	let m = app.model('@user/User');
+    return m.getUserByEmail(email)
         .then(user => {
 
             if(!user) {
@@ -36,8 +36,6 @@ export default function createSession(app, email, rawPassword) {
 
                     let cache = app.get('cache');
                     let key = createSessionKey(token, user.id);
-
-                    console.log(key);
 
                     return Promise.all([
                         cache.delWithPattern(`*session-${user.id}-*`),
