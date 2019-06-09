@@ -91,8 +91,65 @@ function contentTypeMiddleware() {
 /**
  * @swagger
  * /{slug}/{id}:
+ *   delete:
+ *     description: Delete contents
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - Content
+ */
+router.delete('/:slug/:id',
+	validateRequest({
+		slug: {
+			notEmpty: true,
+			errorMessage: 'slug required'
+		},
+		id: {
+			notEmpty: true,
+			errorMessage: 'id required'
+		},
+	}),
+	contentTypeMiddleware(),
+	function (req, res) {
+
+		(async function () {
+
+			try {
+				let  Model = req.app.get('db').model(req.contentType.slug);
+
+				let item = await Model.findOneAndDelete({_id: req.params.id });
+				res.send(item);
+
+			} catch (e) {
+				req.app.get('log').error(e);
+				res.status(500);
+				res.send(e.message);
+			}
+
+		})();
+	});
+
+
+/**
+ * @swagger
+ * /{slug}/{id}:
  *   get:
- *     description: Create contents
+ *     description: Get content
  *     parameters:
  *       - in: path
  *         name: slug
@@ -147,8 +204,8 @@ router.get('/:slug/:id',
 /**
  * @swagger
  * /{slug}/{id}:
- *   post:
- *     description: Create contents
+ *   patch:
+ *     description: Update contents
  *     parameters:
  *       - in: path
  *         name: slug
@@ -326,7 +383,8 @@ router.get('/:slug',
 
                 let results = await m.aggregate(agg).exec();
                 let countResults = await m.aggregate(countAgg).exec();
-                res.set('DT-Data-Count', countResults[0].content_count);
+                let dataCount = countResults[0] ? countResults[0].content_count : 0;
+                res.set('DT-Data-Count',dataCount);
                 res.set('DT-Page-Number', page);
                 res.send(results);
             } catch (e) {

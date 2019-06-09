@@ -91,14 +91,19 @@ const updateContent = (slug, id, formData) => (dispatch) => {
         });
 };
 
-const deleteContents = (contentIds, formData) => (dispatch) => {
+const deleteContents = (ctSlug, contentIds) => (dispatch) => {
 
-    let client = apiClient.createClient({});
+	  dispatch(setAjaxLoading(true));
+
+	  let client = apiClient.createClient({});
     let deleteActionPromise = contentIds.map(contentId => {
-        return client.deleteContent(contentId);
+        return client.deleteContent(ctSlug, contentId);
     });
 
-    return Promise.all(deleteActionPromise);
+    return Promise.all(deleteActionPromise)
+	    .then((r) => {
+		    return dispatch(setAjaxLoading(false));
+	    });
 };
 
 

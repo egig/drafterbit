@@ -114,7 +114,8 @@ class Contents extends React.Component {
     }
 
     handleDelete(e) {
-        this.props.deleteContents(this.state.selected)
+	      let ctSlug = this.props.match.params.content_type_slug;
+        this.props.deleteContents(ctSlug, this.state.selected)
     }
 
     render() {

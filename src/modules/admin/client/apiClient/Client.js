@@ -146,8 +146,8 @@ class Client {
         return response.data;
     }
 
-    async deleteContent(contentId) {
-        let response = await this.axiosInstance.delete(`/contents/${contentId}`);
+    async deleteContent(ctSlug, contentId) {
+        let response = await this.axiosInstance.delete(`/${ctSlug}/${contentId}`);
         return response.data;
     }
 
