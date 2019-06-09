@@ -140,7 +140,7 @@ class Contents extends React.Component {
 
         this.props.ctFields.fields.map(f => {
           // Don't display Rich Text by default
-          if(f.type_id !== 3) {
+          if([3,4,5].indexOf(parseInt(f.type_id)) == -1) {
             columns.push({
               dataField: f.name,
               text: f.label,

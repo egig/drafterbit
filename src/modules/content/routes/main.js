@@ -46,8 +46,12 @@ function contentTypeMiddleware() {
 
                 // extract other contentTypes
                 let relatedContentTypes = [];
+                let relatedContentFields = [];
+                let lookupFields = [];
                 contentType.fields.forEach(f => {
                     if ((f.type_id === FIELD_RELATION_TO_MANY) || (f.type_id === FIELD_RELATION_TO_ONE)) {
+                        lookupFields.push(f);
+                        relatedContentFields.push(f.name);
                         relatedContentTypes.push(f.related_content_type_id);
                     }
                 });
@@ -82,6 +86,8 @@ function contentTypeMiddleware() {
                 }
 
                 req.contentType = contentType;
+                req.relatedContentFields = relatedContentFields;
+                req.lookupFields = lookupFields;
 
                 next();
             });
@@ -348,42 +354,47 @@ router.get('/:slug',
             let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-                let m = req.app.get('db').model(req.contentType.slug);
+                let conn = req.app.get('db');
+                let m = conn.model(req.contentType.slug);
 
                 let sortD = sortDir == 'asc' ? 1 : -1;
 
-                let agg = [];
-
+                let matchRule = {};
                 if(filterObj) {
-
-                    let matchRule = {};
                     Object.keys(filterObj).forEach((k) => {
                         matchRule[k] = {
                             $regex: `.*${filterObj[k]}.*`
                         };
                     });
-                    agg.push({$match: matchRule});
                 }
 
-                let countAgg = [...agg];
-                countAgg.push({$count: 'content_count'});
 
+                let sortObj;
                 if(!!sortBy && sortBy !== '_id') {
-                    agg.push({
-                        $sort: {
-                            [sortBy]: sortD
-                        }
-                    });
+                    sortObj = {
+                        [sortBy]: sortD
+                    };
                 } else {
-                    agg.push({$sort: {'_id': sortD}});
+                    sortObj = {'_id': sortD};
                 }
 
-                agg.push({$skip: offset});
-                agg.push({$limit: max});
+                let query = m.find(matchRule, null, {
+                    sort: sortObj,
+                    skip: offset,
+                    limit: max
+                });
 
-                let results = await m.aggregate(agg).exec();
-                let countResults = await m.aggregate(countAgg).exec();
-                let dataCount = countResults[0] ? countResults[0].content_count : 0;
+                req.lookupFields.forEach(f => {
+                    query.populate(f.name);
+                });
+
+
+                // let countAgg = Object.assign({}, agg);
+                // countAgg.count('content_count');
+
+                let results = await query.exec();
+                // let countResults = countAgg.exec();
+                let dataCount = 10;//countResults[0] ? countResults[0].content_count : 0;
                 res.set('DT-Data-Count',dataCount);
                 res.set('DT-Page-Number', page);
                 res.send(results);
