@@ -132,7 +132,7 @@ class Contents extends React.Component {
             dataField: '_id',
             text: '#ID',
             formatter: (cell, row) => {
-              return <span>{cell.substr(0,3)}&hellip;</span>;
+	            return <Link to={`/contents/${slug}/${cell}`}>{cell.substr(0,3)}&hellip;</Link>;
             },
           width: "80px"
         }];

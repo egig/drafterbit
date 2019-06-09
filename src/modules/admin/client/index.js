@@ -16,7 +16,7 @@ import 'tinymce/plugins/link';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import  Drafterbit from './Drafterbit';
+import Drafterbit from './Drafterbit';
 import storeFromState  from './storeFromState';
 import apiClient from './apiClient';
 

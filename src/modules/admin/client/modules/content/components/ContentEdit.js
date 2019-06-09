@@ -20,7 +20,12 @@ class ContentEdit extends React.Component {
     }
 
     onSubmit(form) {
-        this.props.updateContent(this.props.match.params.content_id, Object.values(this.formData))
+
+	    let params = this.props.match.params;
+	    let contentId = params.content_id;
+	    let slug = params.content_type_slug;
+
+        this.props.updateContent(slug, contentId, this.formData)
             .then(r => {
                 this.setState({
                     successText: 'Content successfully updated'
@@ -37,14 +42,11 @@ class ContentEdit extends React.Component {
 
     componentDidUpdate(prevProps) {
         if(this.props.content !== prevProps.content) {
-            console.log('updating content');
-            this.props.content.fields.map(f => {
-                this.formData[f.name] = f;
-                this.setState({
-                    formData: this.formData
-                });
+        	this.formData =  this.props.content;
 
-            });
+	        this.setState({
+		        formData: this.formData
+	        });
         }
     }
 
@@ -61,19 +63,12 @@ class ContentEdit extends React.Component {
                                 {this.props.contentTypeFields.map((f,i) => {
 
 
-                                    let value = this.formData[f.name] ? this.formData[f.name].value : '';
+                                    let value = this.formData[f.name] ? this.formData[f.name] : '';
 
                                     // CKEditor
                                     if(f.type_id =='3') {
                                         return <Field value={value} onChange={(e) => {
-
-                                            this.formData[f.name] = {
-                                                label: f.label,
-                                                type_id: f.type_id,
-                                                name: f.name,
-                                                value: e.target.getContent()
-                                            };
-
+                                            this.formData[f.name] = e.target.getContent();
                                         }} key={i} field={f} />;
                                     }
 
@@ -83,12 +78,7 @@ class ContentEdit extends React.Component {
                                         this.setState(oldState => {
 
                                             let formData = oldState.formData;
-                                            formData[f.name] = {
-                                                label: f.label,
-                                                type_id: f.type_id,
-                                                name: f.name,
-                                                value
-                                            };
+                                            formData[f.name] = value;
                                             return Object.assign({}, oldState, {
                                                 formData
                                             });

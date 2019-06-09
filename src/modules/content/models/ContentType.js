@@ -14,7 +14,6 @@ let ContentTypeSchema = new mongoose.Schema({
 });
 
 
-
 /**
  * @param contentTypeId
  * @return {Promise}

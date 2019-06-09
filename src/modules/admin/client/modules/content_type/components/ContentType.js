@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '../../../components/Notify';
 import Card from '../../../components/Card/Card';
-import { getFieldTypeName } from '../../../../../fieldTypes';
+import { getFieldTypeName } from '../../../../../../fieldTypes';
 import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import AddFieldForm from './AddFieldForm';
 

@@ -7,11 +7,6 @@ let UserSchema = new mongoose.Schema({
     password: String,
 });
 
-UserSchema.getModelName = function () {
-    return 'User';
-};
-
-
 UserSchema.statics.getUsers = function() {
     return new Promise((resolve, reject) => {
         this.find({}, ['_id', 'name', 'email'], function(err, users) {

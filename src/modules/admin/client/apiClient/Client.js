@@ -136,17 +136,13 @@ class Client {
         return response.data;
     }
 
-    async createContent(contentTypeId, fields) {
-        let response = await this.axiosInstance.post(`/content_types/${contentTypeId}/contents`, {
-            fields: fields
-        });
+    async createContent(slug, fields) {
+        let response = await this.axiosInstance.post(`/${slug}`, fields);
         return response.data;
     }
 
-    async updateContent(contentId, fields) {
-        let response = await this.axiosInstance.patch(`/contents/${contentId}`, {
-            fields: fields
-        });
+    async updateContent(slug, contentId, fields) {
+        let response = await this.axiosInstance.patch(`/${slug}/${contentId}`, fields);
         return response.data;
     }
 
@@ -166,8 +162,8 @@ class Client {
         });
     }
 
-    async getContent(contentId) {
-        let response = await this.axiosInstance.get(`/contents/${contentId}`);
+    async getContent(ctSlug, contentId) {
+        let response = await this.axiosInstance.get(`/${ctSlug}/${contentId}`);
         return response.data;
     }
 

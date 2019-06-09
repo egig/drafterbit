@@ -60,7 +60,7 @@ const getCTFieldsAndGetContent = (ctSlug, contentId) => (dispatch) => {
             .then((contentType) => {
                 return dispatch(setContentTypeField(contentType));
             }),
-        client.getContent(contentId)
+        client.getContent(ctSlug, contentId)
             .then((content) => {
                 return dispatch(setContent(content));
             })
@@ -68,23 +68,23 @@ const getCTFieldsAndGetContent = (ctSlug, contentId) => (dispatch) => {
 };
 
 
-const createContent = (contentTypeId, formData) => (dispatch) => {
+const createContent = (contentTypeSlug, formData) => (dispatch) => {
 
     dispatch(setAjaxLoading(true));
 
     let client = apiClient.createClient({});
-    return client.createContent(contentTypeId, formData)
+    return client.createContent(contentTypeSlug, formData)
         .then((r) => {
             return dispatch(setAjaxLoading(false));
         });
 };
 
-const updateContent = (contentId, formData) => (dispatch) => {
+const updateContent = (slug, id, formData) => (dispatch) => {
 
     dispatch(setAjaxLoading(true));
 
     let client = apiClient.createClient({});
-    return client.updateContent(contentId, formData)
+    return client.updateContent(slug, id, formData)
 
 	    .then((r) => {
             return dispatch(setAjaxLoading(false));

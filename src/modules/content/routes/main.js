@@ -90,6 +90,117 @@ function contentTypeMiddleware() {
 
 /**
  * @swagger
+ * /{slug}/{id}:
+ *   get:
+ *     description: Create contents
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - Content
+ */
+router.get('/:slug/:id',
+	validateRequest({
+		slug: {
+			notEmpty: true,
+			errorMessage: 'slug required'
+		},
+		id: {
+			notEmpty: true,
+			errorMessage: 'id required'
+		},
+	}),
+	contentTypeMiddleware(),
+	function (req, res) {
+
+		(async function () {
+
+			try {
+				let  Model = req.app.get('db').model(req.contentType.slug);
+
+				let item = await Model.findOne({_id: req.params.id });
+				res.send(item);
+
+			} catch (e) {
+				req.app.get('log').error(e);
+				res.status(500);
+				res.send(e.message);
+			}
+
+		})();
+	});
+
+/**
+ * @swagger
+ * /{slug}/{id}:
+ *   post:
+ *     description: Create contents
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - Content
+ */
+router.patch('/:slug/:id',
+	validateRequest({
+		slug: {
+			notEmpty: true,
+			errorMessage: 'slug required'
+		},
+		id: {
+			notEmpty: true,
+			errorMessage: 'id required'
+		},
+	}),
+	contentTypeMiddleware(),
+	function (req, res) {
+
+		(async function () {
+
+			try {
+				let  Model = req.app.get('db').model(req.contentType.slug);
+				let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
+				res.send(item);
+
+			} catch (e) {
+				req.app.get('log').error(e);
+				res.status(500);
+				res.send(e.message);
+			}
+
+		})();
+	});
+
+/**
+ * @swagger
  * /{slug}:
  *   post:
  *     description: Create contents
@@ -168,8 +279,6 @@ router.get('/:slug',
     }),
     contentTypeMiddleware(),
     function (req, res) {
-        req.app.get('log').info('tESTLOG');
-
         (async function () {
 
             let page = req.query.page || 1;

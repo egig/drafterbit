@@ -7,9 +7,6 @@ let ApiKeySchema = mongoose.Schema({
     restriction_value: String
 });
 
-ApiKeySchema.getModelName = function () {
-    return 'ApiKey';
-};
 
 ApiKeySchema.statics.getApiKeys = function () {
     return new Promise((resolve, reject) => {

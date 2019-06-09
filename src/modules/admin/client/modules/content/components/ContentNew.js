@@ -20,7 +20,7 @@ class ContentNew extends React.Component {
     }
 
     onSubmit(form) {
-        this.props.createContent(this.props.ctFields._id, Object.values(this.formData))
+        this.props.createContent(this.props.match.params.content_type_slug, this.formData)
             .then(r => {
                 this.setState({
                     successText: 'Content successfully saved'
@@ -48,22 +48,12 @@ class ContentNew extends React.Component {
                                     // TinyMCE
                                     if(f.type_id =='3') {
                                         return <Field onChange={(e) => {
-                                            this.formData[f.name] = {
-                                                label: f.label,
-                                                type_id: f.type_id,
-                                                name: f.name,
-                                                value: e.target.getContent(),
-                                            };
+                                            this.formData[f.name] = e.target.getContent()
                                         }} key={i} field={f} />;
                                     }
 
                                     return <Field onChange={e => {
-                                        this.formData[f.name] = {
-                                            label: f.label,
-                                            type_id: f.type_id,
-                                            name: f.name,
-                                            value: e.target.value,
-                                        };
+                                        this.formData[f.name] = e.target.value;
                                     }} key={i} field={f} />;
                                 })}
 
