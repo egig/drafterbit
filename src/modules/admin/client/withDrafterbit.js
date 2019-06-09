@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const withDrafterbit = function withDrafterbit(WrappedComponent) {
 
@@ -15,7 +16,7 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
 
     DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
     DrafterbitHOC.contextTypes = {
-        drafterbit: React.PropTypes.object.isRequired,
+        drafterbit: PropTypes.object.isRequired,
     };
 
     return DrafterbitHOC;

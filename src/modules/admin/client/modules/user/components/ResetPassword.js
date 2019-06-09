@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import actions from '../actions';
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 import translate from '../../../translate';
+
 
 class ResetPassword extends React.Component {
 
@@ -56,6 +58,10 @@ class ResetPassword extends React.Component {
         );
     }
 }
+
+ResetPassword.propType = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => {
     return {

@@ -417,7 +417,7 @@ router.post('/users/reset_password',
                 res.send(response);
 
             } catch (e) {
-	              req.app.get('log').error(e);
+                req.app.get('log').error(e);
                 res.status(500);
                 res.send(e.message);
             }

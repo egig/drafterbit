@@ -19,13 +19,10 @@ export default function translate(namespaces) {
                 super(props, context);
                 this.state = {
                     loadedAt: new Date()
-                }
+                };
             }
 
-            // Try to use displayName of wrapped component
-            static displayName = `Translate(${getDisplayName(WrappedComponent)})`;
-
-            componentWillMount() {
+            UNSAFE_componentWillMount() {
                 // Get namespace for server side rendering
                 this.context.languageContext.namespaces = this.context.languageContext.namespaces.concat(namespaces);
             }
@@ -37,7 +34,7 @@ export default function translate(namespaces) {
                     return !this.context.languageContext.i18n.hasResourceBundle(lng, ns);
                 }).map((ns) => {
                     return axios.get(`/locales/${lng}/${ns}.json`)
-                        .then(response => ({ns, resource: response.data}))
+                        .then(response => ({ns, resource: response.data}));
                 });
 
                 Promise.all(nsPromise).then(rList => {
@@ -48,8 +45,8 @@ export default function translate(namespaces) {
 
                     this.setState({
                         loadedAt: new Date()
-                    })
-                })
+                    });
+                });
             }
 
             render() {
@@ -61,10 +58,12 @@ export default function translate(namespaces) {
             }
         }
 
+        Translate.displayName = `Translate(${getDisplayName(WrappedComponent)})`;
+
         Translate.contextTypes = {
             languageContext: PropTypes.object.isRequired
         };
 
         return Translate;
-    }
-};
+    };
+}

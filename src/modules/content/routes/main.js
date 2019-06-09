@@ -114,35 +114,35 @@ function contentTypeMiddleware() {
  *        - Content
  */
 router.delete('/:slug/:id',
-	validateRequest({
-		slug: {
-			notEmpty: true,
-			errorMessage: 'slug required'
-		},
-		id: {
-			notEmpty: true,
-			errorMessage: 'id required'
-		},
-	}),
-	contentTypeMiddleware(),
-	function (req, res) {
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
+    }),
+    contentTypeMiddleware(),
+    function (req, res) {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let  Model = req.app.get('db').model(req.contentType.slug);
+            try {
+                let  Model = req.app.get('db').model(req.contentType.slug);
 
-				let item = await Model.findOneAndDelete({_id: req.params.id });
-				res.send(item);
+                let item = await Model.findOneAndDelete({_id: req.params.id });
+                res.send(item);
 
-			} catch (e) {
-				req.app.get('log').error(e);
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e) {
+                req.app.get('log').error(e);
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
-	});
+        })();
+    });
 
 
 /**
@@ -171,35 +171,35 @@ router.delete('/:slug/:id',
  *        - Content
  */
 router.get('/:slug/:id',
-	validateRequest({
-		slug: {
-			notEmpty: true,
-			errorMessage: 'slug required'
-		},
-		id: {
-			notEmpty: true,
-			errorMessage: 'id required'
-		},
-	}),
-	contentTypeMiddleware(),
-	function (req, res) {
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
+    }),
+    contentTypeMiddleware(),
+    function (req, res) {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let  Model = req.app.get('db').model(req.contentType.slug);
+            try {
+                let  Model = req.app.get('db').model(req.contentType.slug);
 
-				let item = await Model.findOne({_id: req.params.id });
-				res.send(item);
+                let item = await Model.findOne({_id: req.params.id });
+                res.send(item);
 
-			} catch (e) {
-				req.app.get('log').error(e);
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e) {
+                req.app.get('log').error(e);
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
-	});
+        })();
+    });
 
 /**
  * @swagger
@@ -227,34 +227,34 @@ router.get('/:slug/:id',
  *        - Content
  */
 router.patch('/:slug/:id',
-	validateRequest({
-		slug: {
-			notEmpty: true,
-			errorMessage: 'slug required'
-		},
-		id: {
-			notEmpty: true,
-			errorMessage: 'id required'
-		},
-	}),
-	contentTypeMiddleware(),
-	function (req, res) {
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
+    }),
+    contentTypeMiddleware(),
+    function (req, res) {
 
-		(async function () {
+        (async function () {
 
-			try {
-				let  Model = req.app.get('db').model(req.contentType.slug);
-				let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
-				res.send(item);
+            try {
+                let  Model = req.app.get('db').model(req.contentType.slug);
+                let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
+                res.send(item);
 
-			} catch (e) {
-				req.app.get('log').error(e);
-				res.status(500);
-				res.send(e.message);
-			}
+            } catch (e) {
+                req.app.get('log').error(e);
+                res.status(500);
+                res.send(e.message);
+            }
 
-		})();
-	});
+        })();
+    });
 
 /**
  * @swagger
@@ -395,22 +395,5 @@ router.get('/:slug',
 
         })();
     });
-
-
-async function formatField(fields, repo) {
-    let content = {};
-    let rFields = fields.map( async f => {
-        content[f.name] = f.value;
-        // Get detail if its relation
-        // TODO prevent infinite loop here
-        if(f.type_id == 4) {
-            let a = await repo.getContent(f.value);
-            let b = await formatField(a.fields, repo);
-            content[f.name] = b;
-        }
-    });
-    await Promise.all(rFields);
-    return content;
-}
 
 export default router;

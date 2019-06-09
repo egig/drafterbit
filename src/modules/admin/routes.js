@@ -51,7 +51,7 @@ function compileWebpack() {
         // TODO optimize this for production
         webpack(webpackConfig, (err, stats) => { // Stats Object
 
-	          const info = stats.toJson();
+            const info = stats.toJson();
 
             if (err || stats.hasErrors()) {
 
@@ -65,9 +65,10 @@ function compileWebpack() {
 
             } else {
 
-                if (stats.hasWarnings()) {
-                    console.warn(info.warnings);
-                }
+            	  // TODO use chalk
+                // if (stats.hasWarnings()) {
+                //     console.warn(info.warnings);
+                // }
                 return resolve(stats);
             }
 
@@ -116,7 +117,7 @@ router.get('/admin', function (req, res) {
 
         })
         .catch(e => {
-	          req.app.get('log').error(e);
+            req.app.get('log').error(e);
             res.status(500).send(e.message);
 
         });

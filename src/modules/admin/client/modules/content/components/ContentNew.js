@@ -48,7 +48,7 @@ class ContentNew extends React.Component {
                                     // TinyMCE
                                     if(f.type_id =='3') {
                                         return <Field onChange={(e) => {
-                                            this.formData[f.name] = e.target.getContent()
+                                            this.formData[f.name] = e.target.getContent();
                                         }} key={i} field={f} />;
                                     }
 
