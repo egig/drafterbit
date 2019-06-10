@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const RedisDriver = require('../../src/lib/cache/RedisDriver');
-const config = require('../../config');
+const config = require('../../src/config');
 
 let createRedisDriver = function () {
 	return new RedisDriver({

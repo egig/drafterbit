@@ -18,8 +18,8 @@ class RedisDriver {
             port: options.port || 6379
         };
 
-        if(process.env.NODE_ENV !== 'test') {
-            config.password = options.auth || '';
+        if(!!options.auth) {
+            config.password = options.auth;
         }
 
         this.client = redis.createClient(config);

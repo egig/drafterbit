@@ -37,11 +37,15 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^4.10.0",
-    "nodemon": "^1.18.9"
+    "mocha": "^6.1.4",
+    "nodemon": "^1.18.9",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nyc --reporter=html mocha --timeout=3000  --exit --recursive",
     "start": "nodemon --ignore 'tmp/' bin/www",
     "linter": "./node_modules/.bin/eslint --fix ./src"
   }
