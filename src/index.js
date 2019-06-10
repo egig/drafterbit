@@ -5,9 +5,6 @@ const boot = require('./boot');
 
 const app = express();
 
-const port = config.get('PORT');
-
-
 let mm = new ModuleManager(__dirname, app);
 mm.setModulePaths([
     './modules/swagger',
@@ -24,4 +21,4 @@ app.model = function (name) {
 
 boot(app);
 
-app.listen(port);
+module.exports = app;
