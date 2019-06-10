@@ -49,12 +49,12 @@ function getFieldTypes() {
 }
 
 module.exports = {
-	FIELD_NUMBER,
-	FIELD_RELATION_TO_ONE,
-	FIELD_RELATION_TO_MANY,
-	FIELD_RICH_TEXT,
-	FIELD_LONG_TEXT,
-	FIELD_SHORT_TEXT,
-	getFieldTypeName,
-	getFieldTypes
-}
+    FIELD_NUMBER,
+    FIELD_RELATION_TO_ONE,
+    FIELD_RELATION_TO_MANY,
+    FIELD_RICH_TEXT,
+    FIELD_LONG_TEXT,
+    FIELD_SHORT_TEXT,
+    getFieldTypeName,
+    getFieldTypes
+};

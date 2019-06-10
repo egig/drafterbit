@@ -48,4 +48,4 @@ module.exports = function createSession(app, email, rawPassword) {
                 });
 
         });
-}
+};
