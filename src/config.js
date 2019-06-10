@@ -1,5 +1,5 @@
-const nconf = require('nconf');
 const path = require('path');
+const nconf = require('nconf');
 
 nconf
     .env([
