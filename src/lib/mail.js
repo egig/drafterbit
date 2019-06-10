@@ -1,8 +1,8 @@
-import axios from 'axios';
-import config from '../../config';
+const axios =  require('axios');
+const config = require('../../config');
 
 
-export function sendResetPasswordEmail(to) {
+module.exports =  function sendResetPasswordEmail(to) {
 
     let data = {
         'Messages':[

@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 class ModulePathResolver {
     constructor(root) {
@@ -24,4 +24,4 @@ class ModulePathResolver {
     }
 }
 
-export default ModulePathResolver;
+module.exports = ModulePathResolver;

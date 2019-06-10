@@ -1,4 +1,4 @@
-export default function validateRequest(schema) {
+module.exports = function validateRequest(schema) {
     return (req, res, next) => {
 
         req.check(schema);

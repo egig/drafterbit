@@ -1,5 +1,5 @@
-import BaseModule from '../../core/Module';
-import authMiddleware from './authMiddleware';
+const BaseModule  = require('../../core/Module');
+const authMiddleware = require('./authMiddleware');
 
 class AuthModule extends BaseModule {
     boot() {

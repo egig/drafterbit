@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 let ApiKeySchema = mongoose.Schema({
     name: String,

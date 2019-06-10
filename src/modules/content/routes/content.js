@@ -1,6 +1,6 @@
-import express from 'express';
-import validateRequest from '../../../middlewares/validateRequest';
-import { parseFilterQuery } from '../../../common/parseFilterQuery';
+const express = require('express');
+const validateRequest  = require('../../../middlewares/validateRequest');
+const { parseFilterQuery }  = require('../../../common/parseFilterQuery');
 
 let router = express.Router();
 
@@ -266,4 +266,4 @@ router.patch('/contents/:content_id',
 
     });
 
-export default router;
+module.exports =  router;

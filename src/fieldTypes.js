@@ -1,9 +1,9 @@
-export const FIELD_SHORT_TEXT = 1;
-export const FIELD_LONG_TEXT = 2;
-export const FIELD_RICH_TEXT = 3;
-export const FIELD_RELATION_TO_ONE = 4;
-export const FIELD_RELATION_TO_MANY = 5;
-export const FIELD_NUMBER = 6;
+const FIELD_SHORT_TEXT = 1;
+const FIELD_LONG_TEXT = 2;
+const FIELD_RICH_TEXT = 3;
+const FIELD_RELATION_TO_ONE = 4;
+const FIELD_RELATION_TO_MANY = 5;
+const FIELD_NUMBER = 6;
 
 const fieldTypes = [
     {
@@ -40,10 +40,21 @@ function getFieldTypesObject() {
     return fieldTypeObject;
 }
 
-export function getFieldTypeName(id) {
+function getFieldTypeName(id) {
     return getFieldTypesObject()[id];
 }
 
-export function getFieldTypes() {
+function getFieldTypes() {
     return fieldTypes;
+}
+
+module.exports = {
+	FIELD_NUMBER,
+	FIELD_RELATION_TO_ONE,
+	FIELD_RELATION_TO_MANY,
+	FIELD_RICH_TEXT,
+	FIELD_LONG_TEXT,
+	FIELD_SHORT_TEXT,
+	getFieldTypeName,
+	getFieldTypes
 }

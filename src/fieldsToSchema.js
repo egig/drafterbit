@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-import {
+const {
     FIELD_SHORT_TEXT,
     FIELD_LONG_TEXT,
     FIELD_RICH_TEXT,
     FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY,
     FIELD_NUMBER,
-} from './fieldTypes';
+} = require('./fieldTypes');
 
 /**
  * Converts type names into actual types supported by mongoose.

@@ -3,7 +3,7 @@
  *
  * @param fqStr
  */
-export function parseFilterQuery(fqStr) {
+function parseFilterQuery(fqStr) {
 
     if(!fqStr) {
         return;
@@ -27,7 +27,7 @@ export function parseFilterQuery(fqStr) {
  *
  * @param fqObj
  */
-export function stringifyFilterQuery(fqObj) {
+function stringifyFilterQuery(fqObj) {
 
     let fL = [];
     Object.keys(fqObj).forEach((k) => {
@@ -35,4 +35,9 @@ export function stringifyFilterQuery(fqObj) {
     });
 
     return fL.join(';');
+}
+
+module.exports = {
+	stringifyFilterQuery,
+	parseFilterQuery
 }

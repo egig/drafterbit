@@ -1,5 +1,5 @@
-import express from 'express';
-import validateRequest from '../../../middlewares/validateRequest';
+const express = require('express');
+const validateRequest  = require('../../../middlewares/validateRequest');
 
 let router = express.Router();
 
@@ -267,4 +267,4 @@ router.patch('/content_types/:content_type_id',
 
     });
 
-export default router;
+module.exports =  router;

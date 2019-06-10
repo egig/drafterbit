@@ -1,7 +1,7 @@
-import Cache from '../lib/cache/Cache';
-import RedisDriver from '../lib/cache/RedisDriver';
+const Cache = require('../lib/cache/Cache');
+const RedisDriver = require('../lib/cache/RedisDriver');
 
-export default function cache(config) {
+function cache(config) {
     return function (req, res, next) {
 
         const redisDriver = new RedisDriver({
@@ -17,3 +17,5 @@ export default function cache(config) {
         next();
     };
 }
+
+module.exports = cache;

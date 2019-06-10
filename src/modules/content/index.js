@@ -1,4 +1,4 @@
-import BaseModule from '../../core/Module';
+const BaseModule = require('../../core/Module');
 
 class ContentModule extends BaseModule { }
 

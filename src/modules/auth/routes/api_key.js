@@ -1,6 +1,6 @@
-import express from 'express';
-import crypto from 'crypto';
-import validateRequest from '../../../middlewares/validateRequest';
+const express = require('express');
+const crypto = require('crypto');
+const validateRequest = require('../../../middlewares/validateRequest');
 
 let router = express.Router();
 

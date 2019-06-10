@@ -1,4 +1,4 @@
-export default class Cache {
+class Cache {
 
     /**
      *
@@ -49,5 +49,6 @@ export default class Cache {
     delWithPattern(pattern) {
         return this.driver.delWithPattern(pattern);
     }
-
 }
+
+module.exports = Cache

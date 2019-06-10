@@ -1,12 +1,12 @@
-import UserAuthError from './modules/user/UserAuthError';
-import password from './lib/password';
-import crypto from 'crypto';
+const UserAuthError =  require('./modules/user/UserAuthError');
+const password = require('./lib/password');
+const crypto = require('crypto');
 
 function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;
 }
 
-export default function createSession(app, email, rawPassword) {
+module.exports = function createSession(app, email, rawPassword) {
 
     let m = app.model('@user/User');
     return m.getUserByEmail(email)

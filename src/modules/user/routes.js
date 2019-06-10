@@ -1,11 +1,11 @@
-import express from 'express';
-import crypto from 'crypto';
-import User from './models/User';
-import password from '../../lib/password';
-import UserAuthError  from './UserAuthError';
-import validateRequest from '../../middlewares/validateRequest';
-import { sendResetPasswordEmail } from '../../lib/mail';
-import createSession from '../../createSession';
+const express = require('express');
+const crypto = require( 'crypto');
+const User = require('./models/User');
+const password = require('../../lib/password');
+const UserAuthError  = require('./UserAuthError');
+const validateRequest = require('../../middlewares/validateRequest');
+const { sendResetPasswordEmail } = require('../../lib/mail');
+const createSession = require('../../createSession');
 
 let router = express.Router();
 

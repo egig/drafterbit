@@ -1,8 +1,8 @@
-import redis from 'redis';
-import redisDeletePattern from 'redis-delete-pattern';
-import _ from 'lodash';
+const redis = require('redis');
+const redisDeletePattern =  require('redis-delete-pattern');
+const _ = require('lodash');
 
-export default class RedisDriver {
+class RedisDriver {
 
     /**
      * Create client constructor
@@ -150,5 +150,6 @@ export default class RedisDriver {
 
         });
     }
-
 }
+
+module.exports = RedisDriver;

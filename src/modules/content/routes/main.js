@@ -1,8 +1,8 @@
-import express from 'express';
-import validateRequest from '../../../middlewares/validateRequest';
-import fieldsToSchema from '../../../fieldsToSchema';
-import {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} from '../../../fieldTypes';
-import { parseFilterQuery } from '../../../common/parseFilterQuery';
+const express = require('express');
+const validateRequest = require('../../../middlewares/validateRequest');
+const fieldsToSchema = require( '../../../fieldsToSchema');
+const {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} = require( '../../../fieldTypes');
+const { parseFilterQuery } = require( '../../../common/parseFilterQuery');
 
 let router = express.Router();
 
@@ -382,7 +382,7 @@ router.get('/:slug',
                     sort: sortObj,
                     skip: offset,
                     limit: max
-                });
+                }).select(['-__v']);
 
                 req.lookupFields.forEach(f => {
                     query.populate(f.name);
@@ -407,4 +407,4 @@ router.get('/:slug',
         })();
     });
 
-export default router;
+module.exports = router;

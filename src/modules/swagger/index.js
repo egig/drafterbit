@@ -1,5 +1,5 @@
-import BaseModule from '../../core/Module';
-import swaggerUi from 'swagger-ui-express';
+const BaseModule = require('../../core/Module');
+const swaggerUi  = require('swagger-ui-express');
 
 class SwaggerModule extends BaseModule {
 

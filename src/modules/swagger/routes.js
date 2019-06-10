@@ -1,5 +1,5 @@
-import express from 'express';
-import swaggerUi from 'swagger-ui-express';
+const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 
 let router = express.Router();
 

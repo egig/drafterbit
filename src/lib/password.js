@@ -1,6 +1,6 @@
-import bcrypt from 'bcryptjs';
+const bcrypt =  require('bcryptjs');
 
-export default {
+module.exports = {
     /**
      *  Hash raw password.
      *

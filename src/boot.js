@@ -1,17 +1,16 @@
-import express from 'express';
-import morgan from 'morgan';
-import winston from 'winston';
-import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import session  from 'express-session';
-import i18next from 'i18next';
-import expressValidator from 'express-validator';
-import i18nextExpressMiddleware from 'i18next-express-middleware';
+const express = require('express');
+const morgan = require('morgan');
+const winston = require('winston');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session  = require('express-session');
+const i18next = require('i18next');
+const expressValidator = require('express-validator');
+const i18nextExpressMiddleware = require('i18next-express-middleware');
 const FileStore = require('session-file-store')(session);
-
-import cacheMiddleware from './middlewares/cache';
-import config from './config';
+const cacheMiddleware = require('./middlewares/cache');
+const config = require('./config');
 
 // TODO add rotate file logger
 const logger = winston.createLogger({
@@ -27,7 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
     }));
 }
 
-export default function (app) {
+module.exports = function boot(app) {
     // TODO set morgan format in production
 	  app.use(morgan('dev'));
 

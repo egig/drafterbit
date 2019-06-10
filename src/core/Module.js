@@ -1,6 +1,6 @@
 const path = require('path');
 
-export default class Module {
+class Module {
     constructor(manager) {
         this.manager = manager;
     }
@@ -38,3 +38,5 @@ export default class Module {
         }
     }
 }
+
+module.exports = Module;

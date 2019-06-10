@@ -68,4 +68,4 @@ class ObjectDriver {
 
 }
 
-export default ObjectDriver;
+module.exports = ObjectDriver;

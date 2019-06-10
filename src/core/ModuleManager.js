@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import ModulePathResolver from './ModulePathResolver';
+const fs = require('fs');
+const path = require('path');
+const ModulePathResolver = require('./ModulePathResolver');
 
-export default class ModuleManager {
+class ModuleManager {
 
     constructor(root, app) {
         this._ROOT = root;
@@ -91,3 +91,5 @@ export default class ModuleManager {
         });
     }
 }
+
+module.exports = ModuleManager;
