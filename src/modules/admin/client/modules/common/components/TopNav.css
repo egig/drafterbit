@@ -1,0 +1,52 @@
+.layout-navbar {
+    z-index: 101;
+}
+
+.layout-navbarBrand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.layout-navbarBrandImg {
+    max-width: 98px;
+}
+
+.layout-navbarForm {
+    width: 100%;
+}
+
+.navbar .form-control {
+    padding: 1.5rem 1rem;
+    border-width: 0;
+    border-radius: 0;
+}
+
+.navbar .form-control:focus {
+    outline:0px !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.layout-form-control-dark,
+.layout-form-control-dark:focus {
+    color: #fff;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, .1);
+}
+
+.layout-search-widget {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.layout-search-suggestion-box {
+    background-color: white;
+    position: absolute;
+    top: 51px;
+    box-shadow: 1px 1px 5px #e1e1e1;
+}
