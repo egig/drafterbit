@@ -12,4 +12,4 @@ module.exports = function validateRequest(schema) {
                 next();
             });
     };
-}
+};

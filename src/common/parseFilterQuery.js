@@ -38,6 +38,6 @@ function stringifyFilterQuery(fqObj) {
 }
 
 module.exports = {
-	stringifyFilterQuery,
-	parseFilterQuery
-}
+    stringifyFilterQuery,
+    parseFilterQuery
+};

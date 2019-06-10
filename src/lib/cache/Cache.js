@@ -51,4 +51,4 @@ class Cache {
     }
 }
 
-module.exports = Cache
+module.exports = Cache;

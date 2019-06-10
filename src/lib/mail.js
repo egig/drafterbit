@@ -31,4 +31,4 @@ module.exports =  function sendResetPasswordEmail(to) {
         .then(r => {
             return r.data;
         });
-}
+};
