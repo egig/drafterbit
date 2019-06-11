@@ -32,7 +32,7 @@ let options = {
 };
 
 router.get(
-    '/_swagger',
+    '/',
     swaggerUi.setup(null, options),
     (req,res, next) => {
         next();

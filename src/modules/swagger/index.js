@@ -5,7 +5,7 @@ class SwaggerModule extends BaseModule {
 
     boot() {
         this.manager.app.use(
-            '/_swagger',
+            '/',
             swaggerUi.serve
         );
     }
