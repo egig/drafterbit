@@ -8,6 +8,7 @@ const session  = require('express-session');
 const expressValidator = require('express-validator');
 const FileStore = require('session-file-store')(session);
 const cacheMiddleware = require('./middlewares/cache');
+const authMiddleware = require('./middlewares/auth');
 const config = require('./config');
 
 // TODO add rotate file logger
@@ -55,6 +56,7 @@ module.exports = function boot(app) {
         }
     }));
 
+    app.use(authMiddleware(config));
     app.use(cacheMiddleware(config));
 
 

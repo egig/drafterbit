@@ -14,6 +14,16 @@ const swaggerSpec = swaggerJSDoc({
 		produces: ['application/json'],
 		host: '',
 		basePath: '/',
+		securityDefinitions: {
+			"api_key": {
+				"type": "apiKey",
+				"name": "api_key",
+				"in": "query"
+			}
+	  },
+		security: [
+			{api_key: []}
+		]
 	},
 	apis: [
 		path.resolve(__dirname + '/../**/*.js')
