@@ -38,7 +38,7 @@ function createSessionKey(token, user_id) {
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.get('/users/is_login',
     validateRequest({
@@ -90,7 +90,7 @@ router.get('/users/is_login',
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.post('/users/session',
     validateRequest({
@@ -166,7 +166,7 @@ router.post('/users/session',
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.get('/users', function (req, res) {
 
@@ -216,7 +216,7 @@ router.get('/users', function (req, res) {
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.post('/users',
     validateRequest({
@@ -280,7 +280,7 @@ router.post('/users',
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.delete('/users/:user_id',
     validateRequest({
@@ -340,7 +340,7 @@ router.delete('/users/:user_id',
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.patch('/users/:user_id',
     validateRequest({
@@ -400,7 +400,7 @@ router.patch('/users/:user_id',
  *         description: success
  *
  *     tags:
- *        - User
+ *        - /users/
  */
 router.post('/users/reset_password',
     validateRequest({

@@ -32,6 +32,7 @@
     "redis-delete-pattern": "^0.1.0",
     "session-file-store": "^1.2.0",
     "shallowequal": "^1.0.2",
+    "swagger-jsdoc": "^3.2.9",
     "swagger-ui-express": "^4.0.2",
     "validate.js": "^0.11.1",
     "winston": "^3.2.1"

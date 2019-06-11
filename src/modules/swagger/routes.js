@@ -1,10 +1,34 @@
+const path = require('path');
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 
 let router = express.Router();
 
+const swaggerSpec = swaggerJSDoc({
+	swaggerDefinition: {
+		info: {
+			title: 'Drafterbit',
+			version: 'v3.0'
+		},
+		produces: ['application/json'],
+		host: '',
+		basePath: '/',
+	},
+	apis: [
+		path.resolve(__dirname + '/../**/*.js')
+	]
+});
+
+// TODO use custom css
+// const showExplorer = false;
+// const options = {};
+// const customCss = '';
+const customfavIcon = "https://pbs.twimg.com/profile_images/770620527341744128/lHd4FaXz.jpg";
+
 let options = {
-    swaggerUrl: '/_swagger_spec.json'
+	  customfavIcon,
+    swaggerUrl: '/_swagger_spec.json',
 };
 
 router.get(
@@ -22,18 +46,6 @@ router.get('/_swagger_spec.json',  function (req, res) {
         try {
             let m = req.app.model('@content/ContentType');
             let results = await m.getContentTypes();
-
-            let swaggerSpec = {
-                'swagger': '2.0',
-                'info': {
-                    'title': '',
-                    'description': '',
-                    'version': '1.0'
-                },
-                'produces': ['application/json'],
-                'host': '',
-                'basePath': '/',
-            };
 
             let paths = {};
             results.map((r) => {
@@ -78,7 +90,7 @@ router.get('/_swagger_spec.json',  function (req, res) {
                 };
             });
 
-            swaggerSpec.paths = paths;
+            swaggerSpec.paths = Object.assign({}, paths, swaggerSpec.paths);
 
             res.send(swaggerSpec);
         } catch (e ) {

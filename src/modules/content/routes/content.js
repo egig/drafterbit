@@ -20,7 +20,7 @@ let router = express.Router();
  *       200:
  *         description: success
  *     tags:
- *        - Content
+ *        - /contents
  */
 router.get('/contents/:content_id',
     validateRequest({
@@ -78,7 +78,7 @@ router.get('/contents/:content_id',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /contents
  */
 router.get('/content_types/:content_type_id/contents',
     validateRequest({
@@ -144,7 +144,7 @@ router.get('/content_types/:content_type_id/contents',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /contents
  */
 router.post('/content_types/:content_type_id/contents',
     validateRequest({
@@ -187,7 +187,7 @@ router.post('/content_types/:content_type_id/contents',
  *       200:
  *         description: success
  *     tags:
- *        - Content
+ *        - /contents
  */
 router.delete('/contents/:content_id',
     validateRequest({
@@ -239,7 +239,7 @@ router.delete('/contents/:content_id',
  *       200:
  *         description: success
  *     tags:
- *        - Content
+ *        - /contents
  */
 router.patch('/contents/:content_id',
     validateRequest({

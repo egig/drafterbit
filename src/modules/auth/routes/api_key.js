@@ -14,7 +14,7 @@ let router = express.Router();
  *         description: success
  *
  *     tags:
- *        - API Key
+ *        - /api_keys
  */
 router.get('/api_keys',
     function (req, res) {
@@ -63,7 +63,7 @@ router.get('/api_keys',
  *         description: success
  *
  *     tags:
- *        - API Key
+ *        - /api_keys
  */
 router.post('/api_keys',
     validateRequest({
@@ -123,7 +123,7 @@ router.post('/api_keys',
  *         description: success
  *
  *     tags:
- *        - API Key
+ *        - /api_keys
  */
 router.get('/api_keys/:api_key_id',
     validateRequest({
@@ -168,7 +168,7 @@ router.get('/api_keys/:api_key_id',
  *         description: success
  *
  *     tags:
- *        - API Key
+ *        - /api_keys
  */
 router.delete('/api_keys/:api_key_id',
     validateRequest({
@@ -230,7 +230,7 @@ router.delete('/api_keys/:api_key_id',
  *         description: success
  *
  *     tags:
- *        - API Key
+ *        - /api_keys
  */
 router.patch('/api_keys/:api_key_id',
     validateRequest({

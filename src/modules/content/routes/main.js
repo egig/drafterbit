@@ -117,7 +117,7 @@ function contentTypeMiddleware() {
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /{slug}
  */
 router.delete('/:slug/:id',
     validateRequest({
@@ -174,7 +174,7 @@ router.delete('/:slug/:id',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /{slug}
  */
 router.get('/:slug/:id',
     validateRequest({
@@ -230,7 +230,7 @@ router.get('/:slug/:id',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /{slug}
  */
 router.patch('/:slug/:id',
     validateRequest({
@@ -279,7 +279,7 @@ router.patch('/:slug/:id',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /{slug}
  */
 router.post('/:slug',
     validateRequest({
@@ -331,7 +331,7 @@ router.post('/:slug',
  *         description: success
  *
  *     tags:
- *        - Content
+ *        - /{slug}
  */
 router.get('/:slug',
     validateRequest({
