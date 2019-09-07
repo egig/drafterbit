@@ -9,10 +9,6 @@ const { FIELD_NUMBER,
     FIELD_SHORT_TEXT,
     FIELD_UNSTRUCTURED,
     getFieldTypes } = require( '../../../fieldTypes');
-const {
-    projectMiddleware
-    // contentTypeMiddleware
-} = require('../../../middlewares/content');
 const contentTypeMiddleware = require('../middlewares/contentType');
 
 let router = express.Router();
@@ -56,7 +52,6 @@ router.delete('/projects/:project_slug/entries/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
@@ -119,7 +114,6 @@ router.get('/projects/:project_slug/entries/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
@@ -180,7 +174,6 @@ router.patch('/projects/:project_slug/entries/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
@@ -235,7 +228,6 @@ router.post('/projects/:project_slug/content_types/:slug',
             errorMessage: 'slug required'
         }
     }),
-    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 

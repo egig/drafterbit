@@ -87,7 +87,9 @@ module.exports = env => {
             // }),
             new CopyPlugin([
                 // {from: "public"},
-                // {from: "./node_modules/tinymce", to: "tinymce"}
+                 {from: __dirname+"/img", to: "img"},
+                 {from: __dirname+"/locales", to: "locales"},
+                 {from: __dirname+"/node_modules/tinymce", to: "tinymce"}
             ]),
             new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
         ],

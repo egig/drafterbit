@@ -17,10 +17,12 @@ program
     });
 
 program
-    .command('root')
-    .description('find current project root')
+    .command('build')
+    .description('build project')
     .action(() => {
-        console.log(process.cwd())
+        let configFile = `${process.cwd()}/config.js`;
+        drafterbit.boot(configFile);
+        drafterbit.build();
     });
 
 program.parse(process.argv);

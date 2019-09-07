@@ -36,6 +36,11 @@ app.start = function () {
 };
 
 
+app.build = function build() {
+    // init modules
+    this.emit('build')
+};
+
 /**
  *
  * @param configFile
@@ -55,7 +60,6 @@ app.boot = function boot(configFile) {
         m(app);
     });
 
-    this.emit('config', config);
     this.set('config', config);
 
     this.set('log', logger);

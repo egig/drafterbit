@@ -1,8 +1,5 @@
 const express = require('express');
 const validateRequest  = require('../../../middlewares/validateRequest');
-const {
-    projectMiddleware
-} = require('../../../middlewares/content');
 
 
 let router = express.Router();
@@ -135,7 +132,6 @@ router.post('/content_types',
             errorMessage: 'fields must be array'
         }
     }),
-    projectMiddleware(),
     function (req, res) {
 
         (async function () {
