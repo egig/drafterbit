@@ -82,13 +82,6 @@ app.boot = function boot(configFile) {
         saveUninitialized: true,
     }));
 
-    this.use(express.static(this._root+'public'));
-
-    // save current request
-    // this.use(function(req, res, next) {
-    //     next()
-    // });
-
     this.use(expressValidator({
         errorFormatter: (param, msg) => {
             return msg;
