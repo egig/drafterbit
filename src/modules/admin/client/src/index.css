@@ -1,0 +1,24 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+label {
+    font-weight: bold;
+}
+
+blockquote {
+    font-size: 1.5em;
+    border-left: 2px solid #eee;
+    font-style: italic;
+    padding: 1em;
+}
+
+.card {
+    border: 1px solid #bbbbbb;
+}
+.card-header { border-bottom: 1px solid #bbbbbb; }
+.card-footer { border-top: 1px solid #bbbbbb; }
+.side-menu .nav-link:hover, .side-menu .nav-link:focus {
+    background: #E4E5E6;
+}

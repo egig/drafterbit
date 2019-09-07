@@ -8,6 +8,7 @@ const {
     FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY,
     FIELD_NUMBER,
+    FIELD_UNSTRUCTURED
 } = require('./fieldTypes');
 
 /**
@@ -24,6 +25,9 @@ function matchType(type) {
     case FIELD_LONG_TEXT:
     case FIELD_RICH_TEXT:
         return String;
+
+    case FIELD_UNSTRUCTURED:
+        return Schema.Types.Mixed;
 
     case FIELD_NUMBER:
         return Number;

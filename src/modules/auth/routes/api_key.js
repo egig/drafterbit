@@ -1,13 +1,20 @@
 const express = require('express');
 const crypto = require('crypto');
 const validateRequest = require('../../../middlewares/validateRequest');
+const {
+    projectMiddleware
+} = require('../../../middlewares/content');
 
 let router = express.Router();
 
 /**
  * @swagger
- * /api_keys:
+ * /projects/{project_slug}/api_keys:
  *   get:
+ *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *     description: Get api keys
  *     responses:
  *       200:
@@ -16,16 +23,18 @@ let router = express.Router();
  *     tags:
  *        - /api_keys
  */
-router.get('/api_keys',
+router.get('/projects/:project_slug/api_keys',
+    projectMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let m = req.app.model('@auth/ApiKey');
+                let projectSlug =  req.params['project_slug'];
+                let m = req.app.getDB(projectSlug).model('ApiKey');
                 let results = await m.getApiKeys();
                 res.send(results);
-            } catch (e ) {
+            } catch (e) {
                 res.status(500);
                 res.send(e.message);
             }
@@ -36,12 +45,15 @@ router.get('/api_keys',
 
 /**
  * @swagger
- * /api_keys:
+ * /projects/{project_slug}/api_keys:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create api key
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: body
  *         name: payload
  *         schema:
@@ -65,7 +77,7 @@ router.get('/api_keys',
  *     tags:
  *        - /api_keys
  */
-router.post('/api_keys',
+router.post('/projects/:project_slug/api_keys',
     validateRequest({
         name: {
             isString: true,
@@ -86,7 +98,8 @@ router.post('/api_keys',
 
             try {
 
-                let m = req.app.model('@auth/ApiKey');
+                let projectSlug =  req.params['project_slug'];
+                let m = req.app.getDB(projectSlug).model('ApiKey');
                 await m.createApiKey(
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
@@ -96,6 +109,7 @@ router.post('/api_keys',
                 res.send({message: 'OK'});
 
             } catch (e ) {
+                req.app.get('log').error(e)
                 res.status(500);
                 res.send(e.message);
             }
@@ -107,10 +121,13 @@ router.post('/api_keys',
 
 /**
  * @swagger
- * /api_keys/:api_key_id:
+ * /projects/{project_slug}/api_keys/{api_key_id}:
  *   get:
  *     description: Get api key
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: api_key_id
  *         type: string
@@ -125,20 +142,22 @@ router.post('/api_keys',
  *     tags:
  *        - /api_keys
  */
-router.get('/api_keys/:api_key_id',
+router.get('/projects/:project_slug/api_keys/:api_key_id',
     validateRequest({
         api_key_id: {
             notEmpty: true,
             errorMessage: 'api_key_id is required'
         }
     }),
+    projectMiddleware(),
     (req, res) => {
 
         (async function () {
 
             try {
-                let m = req.app.model('@auth/ApiKey');
-                let results = await m.getApiKey(req.params.api_key_id);
+                let projectSlug = req.params["project_slug"];
+                let m = req.app.getDB(projectSlug).model('ApiKey');
+                let results = await m.getApiKey(req.params["api_key_id"]);
                 res.send(results);
 
             } catch (e ) {
@@ -156,6 +175,9 @@ router.get('/api_keys/:api_key_id',
  *   delete:
  *     description: Delete api key
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: api_key_id
  *         type: string
@@ -197,12 +219,15 @@ router.delete('/api_keys/:api_key_id',
 
 /**
  * @swagger
- * /api_keys/:api_key_id:
+ * /projects/{project_slug}/api_keys/{api_key_id}:
  *   patch:
  *     description: Update api key
  *     consumes:
  *       - application/json
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: api_key_id
  *         type: string
@@ -232,7 +257,7 @@ router.delete('/api_keys/:api_key_id',
  *     tags:
  *        - /api_keys
  */
-router.patch('/api_keys/:api_key_id',
+router.patch('/projects/:project_slug/api_keys/:api_key_id',
     validateRequest({
         api_key_id: {
             notEmpty: true,
@@ -251,19 +276,22 @@ router.patch('/api_keys/:api_key_id',
             errorMessage: 'restriction_value is required'
         }
     }),
+    projectMiddleware(),
     (req, res) => {
 
         (async function () {
 
             try {
-                let m = req.app.model('@auth/ApiKey');
+                let projectSlug = req.params['project_slug'];
+                let m = req.app.getDB(projectSlug).model('ApiKey');
                 await m.updateApiKey(
-                    req.params.api_key_id,
+                    req.params['api_key_id'],
                     req.body
                 );
                 res.send({message: 'OK'});
 
             } catch (e) {
+                req.app.get('log').error(e);
                 res.status(500);
                 res.send(e.message);
             }

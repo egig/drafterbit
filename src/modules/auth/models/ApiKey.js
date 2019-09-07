@@ -40,7 +40,7 @@ ApiKeySchema.statics.getApiKeyByKey = function(key) {
 ApiKeySchema.statics.createApiKey = function(name, key, restrictionType, restrictionValue) {
     return new Promise((resolve, reject) => {
 
-        let newApiKey = new this.ApiKey({
+        let newApiKey = new this({
             name,
             key,
             restriction_type: restrictionType,

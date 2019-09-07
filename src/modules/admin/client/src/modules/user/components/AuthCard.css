@@ -1,0 +1,60 @@
+.auth_card-versionBadge {
+    color: orangered;
+}
+.auth_card-brandContainer {
+    text-align: center;
+}
+
+.auth_card-brandImg {
+    height: 28px;
+    margin: 64px auto;
+}
+
+.auth_card-cardWrapper {
+    font-size: 14px;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.auth_card-cardFatPadding {
+    padding: 10px
+}
+
+.auth_card-cardTitleMargin {
+    margin-bottom: 30px;
+}
+
+.auth_card-loginFooter {
+    margin: 40px 0;
+    color: #888;
+    text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+    .auth_card-cardWrapper {
+        width: 90%;
+        margin: 0 auto
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .auth_card-cardFatPadding {
+        padding: 0
+    }
+}
+
+.auth_card-cardBodyPadding {
+    padding: 15px;
+}
+
+.auth_card-formControlBorder {
+    border-width: 2px;
+}
+
+.auth_card-noMargin {
+    margin: 0
+}
+
+.auth_card-btnPadding {
+    padding: 12px 10px;
+}

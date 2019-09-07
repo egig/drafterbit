@@ -18,7 +18,7 @@ class RedisDriver {
             port: options.port || 6379
         };
 
-        if(!!options.auth) {
+        if(options.auth) {
             config.password = options.auth;
         }
 

@@ -30,12 +30,7 @@ class Module {
     }
 
     getRoutes() {
-
-        try {
-            return require(this.getRoutesPath());
-        } catch (e) {
-            return false;
-        }
+	    return require(this.getRoutesPath());
     }
 }
 

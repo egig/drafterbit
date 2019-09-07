@@ -1,105 +1,54 @@
 const express = require('express');
 const validateRequest = require('../../../middlewares/validateRequest');
-const fieldsToSchema = require( '../../../fieldsToSchema');
-const {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} = require( '../../../fieldTypes');
 const { parseFilterQuery } = require( '../../../common/parseFilterQuery');
+const { FIELD_NUMBER,
+    FIELD_RELATION_TO_ONE,
+    FIELD_RELATION_TO_MANY,
+    FIELD_RICH_TEXT,
+    FIELD_LONG_TEXT,
+    FIELD_SHORT_TEXT,
+    FIELD_UNSTRUCTURED,
+    getFieldTypes } = require( '../../../fieldTypes');
+const {
+    projectMiddleware,
+    contentTypeMiddleware
+} = require('../../../middlewares/content');
 
 let router = express.Router();
 
-function getSchema(fields) {
-    let fieldsObj = {};
-    fields.forEach(f => {
-
-        if (f.type_id === FIELD_RELATION_TO_MANY) {
-            fieldsObj[f.name] = [{
-                type: f.type_id,
-                ref: f.related_content_type_id
-            }];
-
-        } else if (f.type_id === FIELD_RELATION_TO_ONE) {
-
-            fieldsObj[f.name] = {
-                type: f.type_id,
-                ref: f.related_content_type_id
-            };
-
-        } else {
-            fieldsObj[f.name] = {
-                type: f.type_id
-            };
-        }
+/**
+ * @swagger
+ * /field_types:
+ *   get:
+ *     description: Get Supported Field Types
+ *     responses:
+ *       200:
+ *         description: success
+ */
+router.get("/field_types", function (req, res) {
+    res.send({
+        field_types: getFieldTypes(),
+        __constants: `window.__DT_CONST = {
+        FIELD_NUMBER: ${FIELD_NUMBER},
+        FIELD_RELATION_TO_ONE: ${FIELD_RELATION_TO_ONE},
+        FIELD_RELATION_TO_MANY: ${FIELD_RELATION_TO_MANY},
+        FIELD_RICH_TEXT: ${FIELD_RICH_TEXT},
+        FIELD_LONG_TEXT: ${FIELD_LONG_TEXT},
+        FIELD_SHORT_TEXT: ${ FIELD_SHORT_TEXT },
+        FIELD_UNSTRUCTURED: ${ FIELD_UNSTRUCTURED },
+        }`
     });
-
-    return fieldsToSchema.convert(fieldsObj);
-}
-
-
-function contentTypeMiddleware() {
-    return function (req, res, next) {
-
-        let m = req.app.model('@content/ContentType');
-        m.getContentType(req.params.slug)
-            .then(contentType => {
-                if(!contentType) {
-                    return res.status('404').send('Not Found');
-                }
-
-                // extract other contentTypes
-                let relatedContentTypes = [];
-                let relatedContentFields = [];
-                let lookupFields = [];
-                contentType.fields.forEach(f => {
-                    if ((f.type_id === FIELD_RELATION_TO_MANY) || (f.type_id === FIELD_RELATION_TO_ONE)) {
-                        lookupFields.push(f);
-                        relatedContentFields.push(f.name);
-                        relatedContentTypes.push(f.related_content_type_id);
-                    }
-                });
-
-                let ctPromises = relatedContentTypes.map(ctSlug => {
-                    return m.getContentType(ctSlug)
-                        .then(ct => {
-                            return {
-                                name: ctSlug,
-                                schemaObj: getSchema(ct.fields)
-                            };
-                        });
-                });
-
-                Promise.all(ctPromises)
-                    .then(rList => {
-
-                        rList.map(function (ct) {
-                            try {
-                                req.app.get('db').model(ct.name);
-                            } catch (error) {
-                                req.app.get('db').model(ct.name, ct.schemaObj);
-                            }
-                        });
-                    });
-
-                let schemaObj = getSchema(contentType.fields);
-                try {
-                    req.app.get('db').model(contentType.slug);
-                } catch (error) {
-                    req.app.get('db').model(contentType.slug, schemaObj);
-                }
-
-                req.contentType = contentType;
-                req.relatedContentFields = relatedContentFields;
-                req.lookupFields = lookupFields;
-
-                next();
-            });
-    };
-}
+});
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /projects/{project_slug}/content_types/{slug}/{id}:
  *   delete:
  *     description: Delete contents
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -119,7 +68,7 @@ function contentTypeMiddleware() {
  *     tags:
  *        - /{slug}
  */
-router.delete('/:slug/:id',
+router.delete('/projects/:project_slug/entries/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -130,13 +79,16 @@ router.delete('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
+    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let  Model = req.app.get('db').model(req.contentType.slug);
+
+                let projectSlug =  req.params['project_slug'];
+                let  Model = req.app.getDB(projectSlug).model(req.params['slug']);
 
                 let item = await Model.findOneAndDelete({_id: req.params.id });
                 res.send(item);
@@ -153,10 +105,13 @@ router.delete('/:slug/:id',
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /projects/{project_slug}/entries/{slug}/{id}:
  *   get:
  *     description: Get content
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -176,7 +131,7 @@ router.delete('/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.get('/:slug/:id',
+router.get('/projects/:project_slug/entries/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -187,13 +142,15 @@ router.get('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
+    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let  Model = req.app.get('db').model(req.contentType.slug);
+                let projectSlug =  req.params['project_slug'];
+                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
 
                 let item = await Model.findOne({_id: req.params.id });
                 res.send(item);
@@ -209,10 +166,13 @@ router.get('/:slug/:id',
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /projects/{project_slug}/entries/{slug}/{id}:
  *   patch:
  *     description: Update contents
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -232,7 +192,7 @@ router.get('/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.patch('/:slug/:id',
+router.patch('/projects/:project_slug/entries/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -243,13 +203,15 @@ router.patch('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
+    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let  Model = req.app.get('db').model(req.contentType.slug);
+                let projectSlug =  req.params['project_slug'];
+                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
                 let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
                 res.send(item);
 
@@ -264,16 +226,24 @@ router.patch('/:slug/:id',
 
 /**
  * @swagger
- * /{slug}:
+ * /projects/{project_slug}/content_types/{slug}:
  *   post:
  *     description: Create contents
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
  *       - in: path
  *         name: slug
  *         type: string
  *         schema:
  *           type: string
- *         required: true
+ *       - in: body
+ *         name: payload
+ *         type: object
  *     responses:
  *       200:
  *         description: success
@@ -281,28 +251,29 @@ router.patch('/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.post('/:slug',
+router.post('/projects/:project_slug/content_types/:slug',
     validateRequest({
         slug: {
             notEmpty: true,
             errorMessage: 'slug required'
         }
     }),
+    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
 
         (async function () {
 
-            try {
-                let  Model = req.app.get('db').model(req.contentType.slug);
+        	let projectSlug = req.param('project_slug');
 
-                Model.create(req.body, function (err, item) {
-                    if (err) return res.status(500).send(err.message);
-                    res.send({
-                        message: 'created',
-                        item
-                    });
-                });
+            try {
+                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
+
+                let item = await Model.create(req.body);
+		            res.send({
+			            message: 'created',
+			            item
+		            });
 
             } catch (e) {
                 req.app.get('log').error(e);
@@ -316,10 +287,16 @@ router.post('/:slug',
 
 /**
  * @swagger
- * /{slug}:
+ * /projects/{project_slug}/entries/{slug}:
  *   get:
  *     description: Get contents
  *     parameters:
+ *       - in: path
+ *         name: project_slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -333,13 +310,14 @@ router.post('/:slug',
  *     tags:
  *        - /{slug}
  */
-router.get('/:slug',
+router.get('/projects/:project_slug/entries/:slug',
     validateRequest({
         slug: {
             notEmpty: true,
             errorMessage: 'slug required'
         }
     }),
+    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
         (async function () {
@@ -354,8 +332,10 @@ router.get('/:slug',
             let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-                let conn = req.app.get('db');
-                let m = conn.model(req.contentType.slug);
+                let projectSlug = req.params['project_slug'];
+                let conn = req.app.getDB(projectSlug);
+
+                let m = conn.model(req.params['slug']);
 
                 let sortD = sortDir == 'asc' ? 1 : -1;
 
@@ -379,24 +359,20 @@ router.get('/:slug',
                 }
 
                 let query = m.find(matchRule, null, {
-                    sort: sortObj,
-                    skip: offset,
-                    limit: max
-                }).select(['-__v']);
+                    sort: sortObj
+                }).select(['-__v']).skip(offset).limit(max);
 
                 req.lookupFields.forEach(f => {
-                    query.populate(f.name);
+                    query.populate({
+                        path: f.name,
+                        select: '-__v',
+                        options: { limit: 5 }
+                    });
                 });
 
-
-                // let countAgg = Object.assign({}, agg);
-                // countAgg.count('content_count');
-
                 let results = await query.exec();
-                // let countResults = countAgg.exec();
-                let dataCount = 10;//countResults[0] ? countResults[0].content_count : 0;
-                res.set('DT-Data-Count',dataCount);
-                res.set('DT-Page-Number', page);
+                let dataCount = await m.find(matchRule).estimatedDocumentCount();
+                res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
                 res.send(results);
             } catch (e) {
                 req.app.get('log').error(e);

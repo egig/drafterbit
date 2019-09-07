@@ -5,13 +5,31 @@ let ContentTypeSchema = new mongoose.Schema({
     name: String,
     slug: String,
     description: String,
+    is_structured: false,
     fields: [{
-        related_content_type_id: String,
+        related_content_type_slug: String,
         type_id: Number,
         name: String,
-        label: String
+        label: String,
+        validation_rules: String
     }]
 });
+
+/**
+ *
+ * @param contentTypeId
+ * @param field
+ * @return {Promise}
+ */
+ContentTypeSchema.statics.addField = function(contentTypeId, field) {
+    return new Promise((resolve, reject) => {
+
+        this.update({ _id: contentTypeId }, { $push: { fields: field } }, function(err, res) {
+            if (err) return reject(err);
+            return resolve(res);
+        });
+    });
+};
 
 
 /**
@@ -41,12 +59,7 @@ ContentTypeSchema.statics.getContentType = function(contentTypeId) {
  * @return {Promise}
  */
 ContentTypeSchema.statics.getContentTypes = function() {
-    return new Promise((resolve, reject) => {
-        this.find(function(err, contentTypes) {
-            if (err) return reject(err);
-            return resolve(contentTypes);
-        });
-    });
+    return this.find().select(['-__v']).exec();
 };
 
 
@@ -120,6 +133,31 @@ ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
     return new Promise((resolve, reject) => {
 
         this.update({ _id: contentTypeId }, payload, function(err, res) {
+            if (err) return reject(err);
+            return resolve(res);
+        });
+    });
+};
+
+
+/**
+ *
+ * @param contentTypeId
+ * @param fieldId
+ * @param payload
+ * @return {Promise}
+ */
+ContentTypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
+    return new Promise((resolve, reject) => {
+
+        let setter = {};
+        for (let k of Object.keys(payload)) {
+            setter[`fields.$.${k}`] = payload[k];
+        }
+
+        this.updateOne({ _id: contentTypeId, "fields._id": fieldId }, {
+            $set: setter
+        }, function(err, res) {
             if (err) return reject(err);
             return resolve(res);
         });
