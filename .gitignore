@@ -6,7 +6,7 @@ public/*
 !public/.gitkeep
 tmp/*
 !tmp/.gitkeep
-config.json
+config.js
 npm-debug.log*
 errorShots/
 dist/
