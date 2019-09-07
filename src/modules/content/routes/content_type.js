@@ -9,7 +9,7 @@ let router = express.Router();
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{content_type_id}:
+ * /content_types/{content_type_id}:
  *   get:
  *     description: Get content type
  *     parameters:
@@ -30,22 +30,18 @@ let router = express.Router();
  *     tags:
  *        - /content_types
  */
-router.get('/projects/:project_slug/content_types/:content_type_id',
+router.get('/content_types/:content_type_id',
     validateRequest({
         content_type_id: {
             notEmpty: true,
             errorMessage: 'content_type_id is required'
         }
     }),
-    projectMiddleware(),
     function (req, res) {
         (async function () {
 
             try {
-
-	              let projectSlug = req.param('project_slug');
-
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.getContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -59,14 +55,9 @@ router.get('/projects/:project_slug/content_types/:content_type_id',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types:
+ * /content_types:
  *   get:
  *     description: Get content types
- *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
- *         required: true
  *     responses:
  *       200:
  *         description: success
@@ -74,15 +65,11 @@ router.get('/projects/:project_slug/content_types/:content_type_id',
  *     tags:
  *        - /content_types
  */
-router.get('/projects/:project_slug/content_types',
-    projectMiddleware(),
+router.get('/content_types',
     function (req, res) {
         (async function () {
-
             try {
-                let projectSlug = req.param('project_slug');
-
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.getContentTypes();
                 res.send(results);
             } catch (e ) {
@@ -95,16 +82,12 @@ router.get('/projects/:project_slug/content_types',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types:
+ * /content_types:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
- *         required: true
  *       - in: body
  *         name: content_type
  *         schema:
@@ -132,7 +115,7 @@ router.get('/projects/:project_slug/content_types',
  *     tags:
  *        - /content_types
  */
-router.post('/projects/:project_slug/content_types',
+router.post('/content_types',
     validateRequest({
         name: {
             notEmpty: true,
@@ -157,10 +140,8 @@ router.post('/projects/:project_slug/content_types',
 
         (async function () {
 
-        	let projectSlug = req.param('project_slug');
-
             try {
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.createContentType(req.body.name, req.body.slug,
                     req.body.description, req.body.fields);
                 res.send(results);
@@ -176,16 +157,12 @@ router.post('/projects/:project_slug/content_types',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{content_type_id}/fields:
+ * /content_types/{content_type_id}/fields:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
- *         required: true
  *       - in: path
  *         name: content_type_id
  *         type: string
@@ -220,16 +197,14 @@ router.post('/projects/:project_slug/content_types',
 router.post('/projects/:project_slug/content_types/:content_type_id/fields',
     validateRequest({
     }),
-    projectMiddleware(),
     function (req, res) {
 
         (async function () {
-
-            let projectSlug = req.params['project_slug'];
+            ;
             let contentTypeId = req.params['content_type_id'];
 
             try {
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.addField(contentTypeId, req.body);
                 res.send(results);
             } catch (e ) {
@@ -244,13 +219,10 @@ router.post('/projects/:project_slug/content_types/:content_type_id/fields',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/:content_type_id:
+ * /content_types/:content_type_id:
  *   delete:
  *     description: Delete content type
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         required: true
  *       - in: query
  *         name: content_type_id
  *         type: integer
@@ -265,21 +237,19 @@ router.post('/projects/:project_slug/content_types/:content_type_id/fields',
  *     tags:
  *        - /content_types
  */
-router.delete('/projects/:project_slug/content_types/:content_type_id',
+router.delete('/content_types/:content_type_id',
     validateRequest({
         content_type_id: {
             notEmpty: true,
             errorMessage: 'content_type_id required'
         }
     }),
-    projectMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let projectSlug = req.param('project_slug');
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.deleteContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -299,9 +269,6 @@ router.delete('/projects/:project_slug/content_types/:content_type_id',
  *       - application/json
  *     description: Update content type
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         required: true
  *       - in: path
  *         name: content_type_id
  *         type: string
@@ -328,7 +295,7 @@ router.delete('/projects/:project_slug/content_types/:content_type_id',
  *     tags:
  *        - /content_types
  */
-router.patch('/projects/:project_slug/content_types/:content_type_id',
+router.patch('/content_types/:content_type_id',
     validateRequest({
         content_type_id: {
             notEmpty: true,
@@ -347,19 +314,17 @@ router.patch('/projects/:project_slug/content_types/:content_type_id',
             errorMessage: 'description must be string'
         },
     }),
-    projectMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let projectSlug = req.param('project_slug');
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.updateContentType(req.params.content_type_id, req.body);
 
                 // update compiled models
                 // TODO ensure this relieable methods
-                req.app.getDB(projectSlug).models = {};
+                req.app.getDB(req._projectId).models = {};
 
                 res.send(results);
             } catch (e ) {
@@ -374,15 +339,12 @@ router.patch('/projects/:project_slug/content_types/:content_type_id',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{content_type_id}/fields/{field_id}:
+ * /content_types/{content_type_id}/fields/{field_id}:
  *   patch:
  *     consumes:
  *       - application/json
  *     description: Update content type
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
  *         schema:
  *           type: string
  *         required: true
@@ -408,7 +370,7 @@ router.patch('/projects/:project_slug/content_types/:content_type_id',
  *     tags:
  *        - /content_types
  */
-router.patch('/projects/:project_slug/content_types/:content_type_id/fields/:field_id',
+router.patch('/content_types/:content_type_id/fields/:field_id',
     validateRequest({
         content_type_id: {
             notEmpty: true,
@@ -427,21 +389,19 @@ router.patch('/projects/:project_slug/content_types/:content_type_id/fields/:fie
             errorMessage: 'description must be string'
         },
     }),
-    projectMiddleware(),
     function (req, res) {
 
         (async function () {
 
             try {
-                let projectSlug = req.params['project_slug'];
                 let contentTypeId = req.params['content_type_id'];
                 let fieldId = req.params['field_id'];
-                let m = req.app.getDB(projectSlug).model('ContentType');
+                let m = req.model('ContentType');
                 let results = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
 
                 // update compiled models
                 // TODO ensure this relieable methods
-                req.app.getDB(projectSlug).models = {};
+                req.app.getDB(req._projectId).models = {};
 
                 res.send(results);
             } catch (e ) {

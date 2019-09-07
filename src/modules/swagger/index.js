@@ -1,14 +1,12 @@
-const BaseModule = require('../../core/Module');
 const swaggerUi  = require('swagger-ui-express');
+const routes  = require('./routes');
 
-class SwaggerModule extends BaseModule {
+module.exports = function (app) {
+    app.on("boot", () => {
+        app.use('/_swagger', swaggerUi.serve);
+    });
 
-    boot() {
-        this.manager.app.use(
-            '/',
-            swaggerUi.serve
-        );
-    }
+    app.on("routing", () => {
+        app.use(routes);
+    });
 }
-
-module.exports = SwaggerModule;

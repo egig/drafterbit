@@ -10,35 +10,12 @@ const { FIELD_NUMBER,
     FIELD_UNSTRUCTURED,
     getFieldTypes } = require( '../../../fieldTypes');
 const {
-    projectMiddleware,
-    contentTypeMiddleware
+    projectMiddleware
+    // contentTypeMiddleware
 } = require('../../../middlewares/content');
+const contentTypeMiddleware = require('../middlewares/contentType');
 
 let router = express.Router();
-
-/**
- * @swagger
- * /field_types:
- *   get:
- *     description: Get Supported Field Types
- *     responses:
- *       200:
- *         description: success
- */
-router.get("/field_types", function (req, res) {
-    res.send({
-        field_types: getFieldTypes(),
-        __constants: `window.__DT_CONST = {
-        FIELD_NUMBER: ${FIELD_NUMBER},
-        FIELD_RELATION_TO_ONE: ${FIELD_RELATION_TO_ONE},
-        FIELD_RELATION_TO_MANY: ${FIELD_RELATION_TO_MANY},
-        FIELD_RICH_TEXT: ${FIELD_RICH_TEXT},
-        FIELD_LONG_TEXT: ${FIELD_LONG_TEXT},
-        FIELD_SHORT_TEXT: ${ FIELD_SHORT_TEXT },
-        FIELD_UNSTRUCTURED: ${ FIELD_UNSTRUCTURED },
-        }`
-    });
-});
 
 /**
  * @swagger
@@ -287,16 +264,10 @@ router.post('/projects/:project_slug/content_types/:slug',
 
 /**
  * @swagger
- * /projects/{project_slug}/entries/{slug}:
+ * /{slug}:
  *   get:
  *     description: Get contents
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
- *         schema:
- *           type: string
- *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -310,14 +281,13 @@ router.post('/projects/:project_slug/content_types/:slug',
  *     tags:
  *        - /{slug}
  */
-router.get('/projects/:project_slug/entries/:slug',
+router.get('/:slug',
     validateRequest({
         slug: {
             notEmpty: true,
             errorMessage: 'slug required'
         }
     }),
-    projectMiddleware(),
     contentTypeMiddleware(),
     function (req, res) {
         (async function () {
@@ -332,10 +302,8 @@ router.get('/projects/:project_slug/entries/:slug',
             let filterObj = parseFilterQuery(req.query.fq);
 
             try {
-                let projectSlug = req.params['project_slug'];
-                let conn = req.app.getDB(projectSlug);
 
-                let m = conn.model(req.params['slug']);
+                let m = req.model(req.params['slug']);
 
                 let sortD = sortDir == 'asc' ? 1 : -1;
 
@@ -371,6 +339,7 @@ router.get('/projects/:project_slug/entries/:slug',
                 });
 
                 let results = await query.exec();
+
                 let dataCount = await m.find(matchRule).estimatedDocumentCount();
                 res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
                 res.send(results);

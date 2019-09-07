@@ -1,5 +1,13 @@
-const BaseModule = require('../../core/Module');
+const routes  = require('./routes');
+const projectMiddleware  = require('./middlewares/project');
 
-class ContentModule extends BaseModule { }
+module.exports = function (app) {
 
-module.exports = ContentModule;
+    app.on("boot", () => {
+        app.use(projectMiddleware())
+    });
+
+    app.on("routing", () => {
+        app.use(routes);
+    });
+}

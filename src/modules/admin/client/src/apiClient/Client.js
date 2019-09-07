@@ -22,12 +22,12 @@ class Client {
     }
 
     async _doGetRequest(path) {
-        let response = await this.axiosInstance.get(`/projects/${this.options.project}${path}`);
+        let response = await this.axiosInstance.get(`${path}`);
         return response.data;
     }
 
     async _doPostRequest(path, data) {
-        let response = await this.axiosInstance.post(`/projects/${this.options.project}${path}`, data);
+        let response = await this.axiosInstance.post(`${path}`, data);
         return response.data;
     }
 
@@ -99,19 +99,19 @@ class Client {
     }
 
     async deleteContentType(contentTypeId) {
-        let response = await this.axiosInstance.delete(`/projects/${this.options.project}/content_types/${contentTypeId}`);
+        let response = await this.axiosInstance.delete(`/content_types/${contentTypeId}`);
         return response.data;
     }
 
     async updateContentType(contentTypeId, name, slug, description, fields) {
-        let response = await this.axiosInstance.patch(`/projects/${this.options.project}/content_types/${contentTypeId}`, {
+        let response = await this.axiosInstance.patch(`/content_types/${contentTypeId}`, {
             name, slug, description, fields
         });
         return response.data;
     }
 
     async updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules)  {
-        let url = `/projects/${this.options.project}/content_types/${contentTypeId}/fields/${fieldId}`;
+        let url = `/content_types/${contentTypeId}/fields/${fieldId}`;
         let response = await this.axiosInstance.patch(url, {
             label, name,
             related_content_type_slug: relatedContentTypeSlug,
@@ -129,7 +129,7 @@ class Client {
      * @param {*} validationRules 
      */
     async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules)  {
-        let url = `/projects/${this.options.project}/content_types/${contentTypeId}/fields`;
+        let url = `/content_types/${contentTypeId}/fields`;
         let response = await this.axiosInstance.post(url, {
             label,
             name,
@@ -146,12 +146,12 @@ class Client {
     }
 
     async createDraft(slug) {
-        let response = await this.axiosInstance.post(`/projects/${this.options.project}/content_types/${slug}`, {});
+        let response = await this.axiosInstance.post(`/content_types/${slug}`, {});
         return response.data;
     }
 
     async getEntries(slug, page, sortBy, sortDir, fqSr) {
-        return await this.axiosInstance.get(`/projects/${this.options.project}/entries/${slug}`, {
+        return await this.axiosInstance.get(`/entries/${slug}`, {
             params: {
                 page,
                 sort_by: sortBy,
@@ -162,17 +162,17 @@ class Client {
     }
 
     async getEntry(slug, entryId) {
-         let response = await this.axiosInstance.get(`/projects/${this.options.project}/entries/${slug}/${entryId}`);
+         let response = await this.axiosInstance.get(`/${slug}/${entryId}`);
          return response.data;
     }
 
     async updateEntry(slug, entryId, data) {
-        let response = await this.axiosInstance.patch(`/projects/${this.options.project}/entries/${slug}/${entryId}`, data);
+        let response = await this.axiosInstance.patch(`/${slug}/${entryId}`, data);
         return response.data;
     }
 
     async deleteEntry(slug, entryId) {
-        let response = await this.axiosInstance.delete(`/projects/${this.options.project}/entries/${slug}/${entryId}`);
+        let response = await this.axiosInstance.delete(`${slug}/${entryId}`);
         return response.data;
     }
 
@@ -212,7 +212,7 @@ class Client {
     }
 
     async createApiKey(name, key, restrictionType, restrictionValue) {
-        let response = await this.axiosInstance.post(`/projects/${this.options.project}/api_keys`, {
+        let response = await this.axiosInstance.post(`/api_keys`, {
             name,
             key,
             restriction_type: restrictionType,
@@ -223,7 +223,7 @@ class Client {
     }
 
     async updateApiKey(apiKeyId, name, key, restrictionType, restrictionValue) {
-        let response = await this.axiosInstance.patch(`/projects/${this.options.project}/api_keys/${apiKeyId}`, {
+        let response = await this.axiosInstance.patch(`/api_keys/${apiKeyId}`, {
             apiKeyId, name, key, restriction_type: restrictionType, restriction_value: restrictionValue
         });
         return response.data;

@@ -77,24 +77,22 @@ function getCurrentUserProject() {
 }
 
 Promise.all([
-    getCurrentUserProject(),
-    drafterbit.getApiClient().getFieldTypes(),
+    // getCurrentUserProject(),
+    // drafterbit.getApiClient().getFieldTypes(),
 ])
     .then(reslist => {
-        defaultState.USER.currentUser = reslist[0];
+        defaultState.USER.currentUser = {}; //reslist[0];
 
-        let ftContainer = reslist[1];
-        window.__DT_FIELD_TYPES = ftContainer["field_types"];
-        eval(ftContainer["__constants"]);
+        // let ftContainer = reslist[1];
+        // window.__DT_FIELD_TYPES = ftContainer["field_types"];
+        // eval(ftContainer["__constants"]);
 
         renderApp(defaultState);
     })
     .catch(e => {
-        
-        console.error(e);
 
         let message = "Oops, Please try again in few minutes.";
-        console.log(e.status)
+
         if (e.status == 404) {
             message = "You don't have access to this project. Please contact your administrator.";
         }

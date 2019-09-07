@@ -1,6 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const AssetsPlugin = require('assets-webpack-plugin')
 
@@ -85,10 +85,10 @@ module.exports = env => {
             // new HtmlWebpackPlugin({
             //     template: 'src/index.html'
             // }),
-            // new CopyPlugin([
-            //     // {from: "public"},
-            //     {from: "node_modules/tinymce", to: "tinymce"}
-            // ]),
+            new CopyPlugin([
+                // {from: "public"},
+                // {from: "./node_modules/tinymce", to: "tinymce"}
+            ]),
             new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
         ],
         resolve: {

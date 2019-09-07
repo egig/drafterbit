@@ -3,6 +3,22 @@ const minify = require('html-minifier').minify;
 
 let router = express.Router();
 
+function getProjectSlug(req) {
+    let projectSlug = req.subdomains.pop();
+    return projectSlug || "_default";
+}
+
+/**
+ *
+ * @param {*} req
+ * @param {*} asset
+ */
+function assetPath(req, asset) {
+    // TODO support cdn
+    return asset
+}
+
+
 router.get('/', function (req, res) {
 
     const webpackAssets = require(req.app._root+"/build/assets.json");
@@ -11,14 +27,22 @@ router.get('/', function (req, res) {
     defaultState.COMMON.language = req.language;
     defaultState.COMMON.languages = req.languages;
 
+    let config = req.app.get("config");
+
     let drafterbitConfig = {
         projectSlug: getProjectSlug(req),
-        debug: +DEBUG,
-        apiBaseURL: nconf.get('API_BASE_URL'),
-        apiKey: nconf.get('API_KEY'),
-        userApiBaseURL: nconf.get('USER_API_BASE_URL'),
-        userApiKey: nconf.get('USER_API_KEY')
+        debug: +config.get('DEBUG'),
+        apiBaseURL: config.get('admin.api_base_url'),
+        apiKey: config.get('admin.api_key'),
+        userApiBaseURL: config.get('admin.user_api_base_url'),
+        userApiKey: config.get('admin.user_api_key')
     };
+
+    let ft = req.app._getFieldTypes();
+    let constants = {};
+    ft.map(f => {
+        constants[f.code] = f.id;
+    });
 
     return res.send(minify(`<!DOCTYPE html>
           <html>
@@ -34,6 +58,8 @@ router.get('/', function (req, res) {
                     window.__PRELOADED_STATE__=${JSON.stringify(defaultState)};
                     window.__PRELOADED_LANGUAGE_RESOURCES__=${JSON.stringify([])};
                     window.__DRAFTERBIT_CONFIG__=${JSON.stringify(drafterbitConfig)};
+                    window.__DT_FIELD_TYPES=${JSON.stringify(req.app._getFieldTypes())};
+                    window.__DT_CONST=${JSON.stringify(constants)};
                 </script>
                 <script src="${assetPath(req, webpackAssets.main.js)}"></script>
             </body>

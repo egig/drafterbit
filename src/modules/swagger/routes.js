@@ -26,7 +26,7 @@ const swaggerSpec = swaggerJSDoc({
         ]
     },
     apis: [
-        // path.resolve(__dirname + '/../**/*.js')
+        path.resolve(__dirname + '/../content/*.js')
     ]
 });
 

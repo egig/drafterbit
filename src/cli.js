@@ -11,8 +11,8 @@ program
     .description('start server')
     .action(() => {
 
-        let configFile = `${process.cwd()}/config.json`;
-
+        let configFile = `${process.cwd()}/config.js`;
+        drafterbit.boot(configFile);
         drafterbit.start(configFile)
     });
 
