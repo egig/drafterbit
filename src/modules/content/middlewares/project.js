@@ -24,8 +24,8 @@ module.exports = function projectMiddleware() {
         };
 
         if(['/',
-                '/_swagger_spec.json'
-            ].indexOf(req.path) !== -1) {
+            '/_swagger_spec.json'
+        ].indexOf(req.path) !== -1) {
             return next();
         }
 
@@ -50,4 +50,4 @@ module.exports = function projectMiddleware() {
             })
             .catch(next);
     };
-}
+};

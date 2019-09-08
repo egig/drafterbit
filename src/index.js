@@ -31,17 +31,17 @@ app.modules = [];
 app.start = function () {
 
     if(!this._booted) {
-        throw new Error("Please run app.boot before app.start");
+        throw new Error('Please run app.boot before app.start');
     }
 
-    let port = this.get('config').get("PORT");
-    this.listen(port, () => console.log(`Listening on port ${port}!`))
+    let port = this.get('config').get('PORT');
+    this.listen(port, () => console.log(`Listening on port ${port}!`));
 };
 
 
 app.build = function build() {
     // init modules
-    this.emit('build')
+    this.emit('build');
 };
 
 /**
@@ -52,24 +52,24 @@ app.build = function build() {
 app.boot = function boot(options) {
 
     // this is config file
-    if (typeof options == "string") {
+    if (typeof options == 'string') {
         this._root = path.dirname(options);
     } else {
 
-        if(!options["ROOT_DIR"]) {
-            throw new Error("ROOT_DIR option is required if options object passed as boot arguments")
+        if(!options['ROOT_DIR']) {
+            throw new Error('ROOT_DIR option is required if options object passed as boot arguments');
         }
 
-        this._root = options["ROOT_DIR"];
+        this._root = options['ROOT_DIR'];
     }
 
     // build skeletons
     let config = createConfig(options);
-    let logger = createLogger(config.get("debug"));
+    let logger = createLogger(config.get('debug'));
 
 
     // init modules
-    let modules = config.get("modules");
+    let modules = config.get('modules');
     modules.map(m => {
         require(resolveModule(m, this._root))(app);
     });
@@ -117,8 +117,8 @@ app.boot = function boot(options) {
  * @param name
  */
 app.model = function model(name) {
-    return this.getDB(this._project).model(name)
-}
+    return this.getDB(this._project).model(name);
+};
 
 
 /**
@@ -137,17 +137,17 @@ app.getDB = function getDB(dbName) {
         let pass = config.get('MONGODB_PASS');
 
         if(user || pass) {
-            host = `@${host}`
+            host = `@${host}`;
         }
 
         let uri = `${p}://${user}${pass ? `:${pass}` : ''}${host}${port ? `:${port}` : ''}/${dbName}?retryWrites=true&w=majority`;
 
-        this.get('log').info("DB URI = " + uri);
+        this.get('log').info('DB URI = ' + uri);
         let conn = mongoose.createConnection(uri, {
             connectTimeoutMS: 9000,
         }, err => {
             if(err) {
-                app.get('log').error("Error create connection for", dbName);
+                app.get('log').error('Error create connection for', dbName);
                 app.get('log').error(err);
             }
         });
@@ -172,7 +172,7 @@ app._initRoutes = function _initRoutes() {
         let routes = this._modules[name].getRoutes();
         this.use(routes);
     });
-}
+};
 
 /**
  *

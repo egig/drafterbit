@@ -196,7 +196,7 @@ router.post('/projects/:project_slug/content_types/:content_type_id/fields',
     function (req, res) {
 
         (async function () {
-            ;
+            
             let contentTypeId = req.params['content_type_id'];
 
             try {

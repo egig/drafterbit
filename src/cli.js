@@ -13,7 +13,7 @@ program
 
         let configFile = `${process.cwd()}/config.js`;
         drafterbit.boot(configFile);
-        drafterbit.start(configFile)
+        drafterbit.start(configFile);
     });
 
 program
@@ -27,4 +27,4 @@ program
 
 program.parse(process.argv);
 
-if (program.debug) console.log(program.opts());;
+if (program.debug) console.log(program.opts());

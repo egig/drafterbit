@@ -16,4 +16,4 @@ module.exports = function createLogger(debug) {
     }
 
     return logger;
-}
+};

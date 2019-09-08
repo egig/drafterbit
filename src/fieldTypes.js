@@ -20,10 +20,10 @@ const fieldTypes = [
         code: 'FIELD_SHORT_TEXT',
         name: 'Short Text',
         validationOptions: [
-            "is_required",
-            "unique",
-            "min_length",
-            "max_length",
+            'is_required',
+            'unique',
+            'min_length',
+            'max_length',
         ]
     },
     {
@@ -31,10 +31,10 @@ const fieldTypes = [
         code: 'FIELD_LONG_TEXT',
         name: 'Long Text',
         validationOptions: [
-            "is_required",
-            "unique",
-            "min_length",
-            "max_length",
+            'is_required',
+            'unique',
+            'min_length',
+            'max_length',
         ]
     },
     {
@@ -42,9 +42,9 @@ const fieldTypes = [
         code: 'FIELD_RICH_TEXT',
         name: 'Rich Text',
         validationOptions: [
-            "is_required",
-            "min_length",
-            "max_length",
+            'is_required',
+            'min_length',
+            'max_length',
         ]
     },
     {
@@ -52,8 +52,8 @@ const fieldTypes = [
         code: 'FIELD_RELATION_TO_ONE',
         name: 'Relation to One',
         validationOptions: [
-            "is_required",
-            "unique",
+            'is_required',
+            'unique',
         ]
     },
     {
@@ -61,7 +61,7 @@ const fieldTypes = [
         code: 'FIELD_RELATION_TO_MANY',
         name: 'Relation to Many',
         validationOptions: [
-            "is_required",
+            'is_required',
         ]
     },
     {
@@ -69,10 +69,10 @@ const fieldTypes = [
         code: 'FIELD_NUMBER',
         name: 'Number',
         validationOptions: [
-            "is_required",
-            "unique",
-            "min",
-            "max",
+            'is_required',
+            'unique',
+            'min',
+            'max',
         ]
     },
     {

@@ -68,7 +68,7 @@ module.exports = function contentTypeMiddleware() {
                     if ((f.type_id === FIELD_RELATION_TO_MANY) || (f.type_id === FIELD_RELATION_TO_ONE)) {
                         relatedContentTypes.push(f.related_content_type_slug);
                         relatedContentFields.push(f.name);
-                        lookupFields.push(f)
+                        lookupFields.push(f);
                     }
                 });
 
@@ -104,4 +104,4 @@ module.exports = function contentTypeMiddleware() {
 
             }).catch(next);
     };
-}
+};

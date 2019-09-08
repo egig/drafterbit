@@ -5,7 +5,7 @@ let router = express.Router();
 
 function getProjectSlug(req) {
     let projectSlug = req.subdomains.pop();
-    return projectSlug || "_default";
+    return projectSlug || '_default';
 }
 
 /**
@@ -15,19 +15,19 @@ function getProjectSlug(req) {
  */
 function assetPath(req, asset) {
     // TODO support cdn
-    return asset
+    return asset;
 }
 
 
 router.get('/', function (req, res) {
 
-    const webpackAssets = require(req.app._root+"/build/assets.json");
+    const webpackAssets = require(req.app._root+'/build/assets.json');
 
     let defaultState = {COMMON: {}};
     defaultState.COMMON.language = req.language;
     defaultState.COMMON.languages = req.languages;
 
-    let config = req.app.get("config");
+    let config = req.app.get('config');
 
     let drafterbitConfig = {
         projectSlug: getProjectSlug(req),

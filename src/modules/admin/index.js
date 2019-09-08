@@ -9,7 +9,7 @@ const DEBUG = true;
 
 module.exports = function (app) {
 
-    let webpackOutputPath = app._root+"/build";
+    let webpackOutputPath = app._root+'/build';
 
     let webpackConfig = createWebpackConfig({
         outputPath: webpackOutputPath
@@ -18,7 +18,7 @@ module.exports = function (app) {
     webpackConfig.output.path = webpackOutputPath;
     const compiler = webpack(webpackConfig);
 
-    app.on("boot", () => {
+    app.on('boot', () => {
 
         app.use('/assets', express.static(webpackOutputPath));
 
@@ -32,14 +32,14 @@ module.exports = function (app) {
         }
     });
 
-    app.on("routing", function () {
-        app.use(routes)
+    app.on('routing', function () {
+        app.use(routes);
     });
 
-    app.on("build", function () {
+    app.on('build', function () {
 
         compiler.run((err, stats) => {
-            console.log("webpack compiling...");
+            console.log('webpack compiling...');
         });
-    })
+    });
 };

@@ -109,7 +109,7 @@ router.post('/projects/:project_slug/api_keys',
                 res.send({message: 'OK'});
 
             } catch (e ) {
-                req.app.get('log').error(e)
+                req.app.get('log').error(e);
                 res.status(500);
                 res.send(e.message);
             }
@@ -155,9 +155,9 @@ router.get('/projects/:project_slug/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let projectSlug = req.params["project_slug"];
+                let projectSlug = req.params['project_slug'];
                 let m = req.app.getDB(projectSlug).model('ApiKey');
-                let results = await m.getApiKey(req.params["api_key_id"]);
+                let results = await m.getApiKey(req.params['api_key_id']);
                 res.send(results);
 
             } catch (e ) {

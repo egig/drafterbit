@@ -13,26 +13,26 @@ const content = require('./modules/content');
 function createConfig(options) {
 
     const defaultConfig = {
-        "debug": true,
-        "PORT": 3000,
-        "SESSION_SECRET": "secr3t",
-        "REDIS_HOST": "localhost",
-        "REDIS_PORT": 6379,
-        "REDIS_DB": 0,
-        "MONGODB_PROTOCOL": "mongodb+srv",
-        "MONGODB_URL": "",
-        "MONGODB_HOST": "",
-        "MONGODB_PORT": "",
-        "MONGODB_USER": "",
-        "MONGODB_PASS": "",
-        "ADMIN_API_KEY": "test",
-        "project_id": "localhost",
-        "modules": [
+        'debug': true,
+        'PORT': 3000,
+        'SESSION_SECRET': 'secr3t',
+        'REDIS_HOST': 'localhost',
+        'REDIS_PORT': 6379,
+        'REDIS_DB': 0,
+        'MONGODB_PROTOCOL': 'mongodb+srv',
+        'MONGODB_URL': '',
+        'MONGODB_HOST': '',
+        'MONGODB_PORT': '',
+        'MONGODB_USER': '',
+        'MONGODB_PASS': '',
+        'ADMIN_API_KEY': 'test',
+        'project_id': 'localhost',
+        'modules': [
             './src/modules/content'
         ]
     };
 
-    if (typeof options == "string") {
+    if (typeof options == 'string') {
         options = require(options);
     }
 
@@ -60,7 +60,7 @@ function createConfig(options) {
             'ADMIN_API_KEY',
             'BASIC_AUTH_USER',
             'BASIC_AUTH_PASS',
-            "project_id",
+            'project_id',
             'modules'
         ])
         .defaults(config);

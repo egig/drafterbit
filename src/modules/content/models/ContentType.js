@@ -155,7 +155,7 @@ ContentTypeSchema.statics.updateContentTypeField = function(contentTypeId, field
             setter[`fields.$.${k}`] = payload[k];
         }
 
-        this.updateOne({ _id: contentTypeId, "fields._id": fieldId }, {
+        this.updateOne({ _id: contentTypeId, 'fields._id': fieldId }, {
             $set: setter
         }, function(err, res) {
             if (err) return reject(err);
