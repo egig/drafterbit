@@ -87,7 +87,9 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "test": "nyc --reporter=html mocha --timeout=3000  --exit --recursive",
+    "test": "nyc --reporter=none mocha --timeout=3000  --exit --recursive",
+    "coverage": "nyc report --reporter=text-summary",
+    "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "dev": "nodemon --ignore 'tmp/' bin/www",
     "linter": "./node_modules/.bin/eslint --fix ./src",
     "postinstall": "npm install src/modules/admin"
