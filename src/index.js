@@ -6,9 +6,12 @@ const cookieParser = require('cookie-parser');
 const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
 const cors = require('cors');
-const session  = require('express-session');
 const expressValidator = require('express-validator');
-const FileStore = require('session-file-store')(session);
+
+// TODO
+// const session  = require('express-session');
+// const FileStore = require('session-file-store')(session);
+
 const { getFieldTypes } = require('./fieldTypes');
 const resolveModule = require('./resolveModule');
 
@@ -49,15 +52,20 @@ app.build = function build() {
 app.boot = function boot(options) {
 
     // this is config file
-    if (typeof  options == "string") {
+    if (typeof options == "string") {
         this._root = path.dirname(options);
     } else {
-        this._root = options.rootDir;
+
+        if(!options["ROOT_DIR"]) {
+            throw new Error("ROOT_DIR option is required if options object passed as boot arguments")
+        }
+
+        this._root = options["ROOT_DIR"];
     }
 
     // build skeletons
     let config = createConfig(options);
-    let logger = createLogger(config.get("DEBUG"));
+    let logger = createLogger(config.get("debug"));
 
 
     // init modules
@@ -80,13 +88,15 @@ app.boot = function boot(options) {
     this.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     this.use(bodyParser.json({limit: '50mb'}));
     this.use(cookieParser());
-    this.use(session({
-        store: new FileStore({path: this._root+'/tmp'}),
-        secret: this.get('config').get('SESSION_SECRET'),
-        cookie: { maxAge: 24 * 60 * 60 * 30 },
-        resave: true,
-        saveUninitialized: true,
-    }));
+
+    // TODO
+    // this.use(session({
+    //     store: new FileStore({path: this._root+'/tmp'}),
+    //     secret: this.get('config').get('SESSION_SECRET'),
+    //     cookie: { maxAge: 24 * 60 * 60 * 30 },
+    //     resave: true,
+    //     saveUninitialized: true,
+    // }));
 
     this.use(expressValidator({
         errorFormatter: (param, msg) => {

@@ -12,3 +12,4 @@ errorShots/
 dist/
 coverage/
 .nyc_output
+test/tmp

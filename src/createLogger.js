@@ -1,10 +1,10 @@
 const winston = require('winston');
 
-module.exports = function createLogger(DEBUG) {
+module.exports = function createLogger(debug) {
 
     // TODO add rotate file logger
     const logger = winston.createLogger({
-        level: 'info',
+        level: debug ? 'debug' : 'warn',
         format: winston.format.json(),
         transports: []
     });

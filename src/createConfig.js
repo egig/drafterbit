@@ -13,16 +13,12 @@ const content = require('./modules/content');
 function createConfig(options) {
 
     const defaultConfig = {
-        "DEBUG": true,
+        "debug": true,
         "PORT": 3000,
         "SESSION_SECRET": "secr3t",
-        "DOCS_VERSION": "1.0",
-        "DOCS_TITLE": "Drafterbit",
         "REDIS_HOST": "localhost",
         "REDIS_PORT": 6379,
         "REDIS_DB": 0,
-        "MAILJET_APIKEY_PUBLIC": "",
-        "MAILJET_APIKEY_PRIVATE": "",
         "MONGODB_PROTOCOL": "mongodb+srv",
         "MONGODB_URL": "",
         "MONGODB_HOST": "",
@@ -30,6 +26,7 @@ function createConfig(options) {
         "MONGODB_USER": "",
         "MONGODB_PASS": "",
         "ADMIN_API_KEY": "test",
+        "project_id": "localhost",
         "modules": [
             './src/modules/content'
         ]
@@ -43,7 +40,6 @@ function createConfig(options) {
 
     nconf
         .env([
-            'DEBUG',
             'PORT',
             'SESSION_SECRET',
             'NODE_ENV',
@@ -64,6 +60,7 @@ function createConfig(options) {
             'ADMIN_API_KEY',
             'BASIC_AUTH_USER',
             'BASIC_AUTH_PASS',
+            "project_id",
             'modules'
         ])
         .defaults(config);

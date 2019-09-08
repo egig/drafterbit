@@ -132,7 +132,7 @@ ContentTypeSchema.statics.deleteContentType = function(contentTypeId) {
 ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
     return new Promise((resolve, reject) => {
 
-        this.update({ _id: contentTypeId }, payload, function(err, res) {
+        this.updateOne({ _id: contentTypeId }, payload, function(err, res) {
             if (err) return reject(err);
             return resolve(res);
         });
