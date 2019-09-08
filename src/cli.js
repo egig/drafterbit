@@ -4,7 +4,7 @@ const program = require('commander');
 const drafterbit = require('./index');
 
 program
-    .option('-d, --debug', 'output extra debugging')
+    .option('-d, --debug', 'output extra debugging');
 
 program
     .command('start')

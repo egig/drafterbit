@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest  = require('../../../middlewares/validateRequest');
-const { parseFilterQuery }  = require('../../../common/parseFilterQuery');
+const { parseFilterQuery }  = require('../../../parseFilterQuery');
 
 let router = express.Router();
 

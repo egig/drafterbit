@@ -151,7 +151,7 @@ class Client {
     }
 
     async getEntries(slug, page, sortBy, sortDir, fqSr) {
-        return await this.axiosInstance.get(`/entries/${slug}`, {
+        return await this.axiosInstance.get(`/${slug}`, {
             params: {
                 page,
                 sort_by: sortBy,

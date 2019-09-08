@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest = require('../../../middlewares/validateRequest');
-const { parseFilterQuery } = require( '../../../common/parseFilterQuery');
+const { parseFilterQuery } = require( '../../../parseFilterQuery');
 const { FIELD_NUMBER,
     FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY,
@@ -15,7 +15,7 @@ let router = express.Router();
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{slug}/{id}:
+ * /{slug}/{id}:
  *   delete:
  *     description: Delete contents
  *     parameters:
@@ -41,7 +41,7 @@ let router = express.Router();
  *     tags:
  *        - /{slug}
  */
-router.delete('/projects/:project_slug/entries/:slug/:id',
+router.delete('/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -77,13 +77,10 @@ router.delete('/projects/:project_slug/entries/:slug/:id',
 
 /**
  * @swagger
- * /projects/{project_slug}/entries/{slug}/{id}:
+ * /{slug}/{id}:
  *   get:
  *     description: Get content
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -103,7 +100,7 @@ router.delete('/projects/:project_slug/entries/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.get('/projects/:project_slug/entries/:slug/:id',
+router.get('/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -120,8 +117,7 @@ router.get('/projects/:project_slug/entries/:slug/:id',
         (async function () {
 
             try {
-                let projectSlug =  req.params['project_slug'];
-                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
+                let  Model = req.model(req.contentType.slug);
 
                 let item = await Model.findOne({_id: req.params.id });
                 res.send(item);
@@ -137,13 +133,10 @@ router.get('/projects/:project_slug/entries/:slug/:id',
 
 /**
  * @swagger
- * /projects/{project_slug}/entries/{slug}/{id}:
+ * /{slug}/{id}:
  *   patch:
  *     description: Update contents
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -163,7 +156,7 @@ router.get('/projects/:project_slug/entries/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.patch('/projects/:project_slug/entries/:slug/:id',
+router.patch('/:slug/:id',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -180,8 +173,7 @@ router.patch('/projects/:project_slug/entries/:slug/:id',
         (async function () {
 
             try {
-                let projectSlug =  req.params['project_slug'];
-                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
+                let  Model = req.model(req.contentType.slug);
                 let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
                 res.send(item);
 
@@ -196,16 +188,10 @@ router.patch('/projects/:project_slug/entries/:slug/:id',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{slug}:
+ * /{slug}:
  *   post:
  *     description: Create contents
  *     parameters:
- *       - in: path
- *         name: project_slug
- *         type: string
- *         schema:
- *           type: string
- *         required: true
  *       - in: path
  *         name: slug
  *         type: string
@@ -221,7 +207,7 @@ router.patch('/projects/:project_slug/entries/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.post('/projects/:project_slug/content_types/:slug',
+router.post('/:slug',
     validateRequest({
         slug: {
             notEmpty: true,
@@ -233,10 +219,8 @@ router.post('/projects/:project_slug/content_types/:slug',
 
         (async function () {
 
-        	let projectSlug = req.param('project_slug');
-
             try {
-                let  Model = req.app.getDB(projectSlug).model(req.contentType.slug);
+                let  Model = req.model(req.contentType.slug);
 
                 let item = await Model.create(req.body);
 		            res.send({

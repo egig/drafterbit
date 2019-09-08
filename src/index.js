@@ -9,8 +9,8 @@ const cors = require('cors');
 const session  = require('express-session');
 const expressValidator = require('express-validator');
 const FileStore = require('session-file-store')(session);
-const cacheMiddleware = require('./middlewares/cache');
 const { getFieldTypes } = require('./fieldTypes');
+const resolveModule = require('./resolveModule');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
@@ -43,21 +43,27 @@ app.build = function build() {
 
 /**
  *
- * @param configFile
+ * @param options
  * @return {*}
  */
-app.boot = function boot(configFile) {
+app.boot = function boot(options) {
+
+    // this is config file
+    if (typeof  options == "string") {
+        this._root = path.dirname(options);
+    } else {
+        this._root = options.rootDir;
+    }
 
     // build skeletons
-    this._root = path.dirname(configFile);
-    let config = createConfig(configFile);
+    let config = createConfig(options);
     let logger = createLogger(config.get("DEBUG"));
 
 
     // init modules
     let modules = config.get("modules");
     modules.map(m => {
-        m(app);
+        require(resolveModule(m, this._root))(app);
     });
 
     this.set('config', config);
@@ -87,8 +93,6 @@ app.boot = function boot(configFile) {
             return msg;
         }
     }));
-
-    this.use(cacheMiddleware(config));
 
     this.emit('boot');
 

@@ -7,10 +7,10 @@ const content = require('./modules/content');
 
 /**
  *
- * @param configFile
+ * @param options
  * @return {Provider}
  */
-function createConfig(configFile) {
+function createConfig(options) {
 
     const defaultConfig = {
         "DEBUG": true,
@@ -31,12 +31,15 @@ function createConfig(configFile) {
         "MONGODB_PASS": "",
         "ADMIN_API_KEY": "test",
         "modules": [
-            admin,
-            content,
+            './src/modules/content'
         ]
     };
 
-    let config = _.merge(defaultConfig, require(configFile));
+    if (typeof options == "string") {
+        options = require(options);
+    }
+
+    let config = _.merge(defaultConfig, options);
 
     nconf
         .env([
