@@ -3,6 +3,8 @@
 
 status: in developement
 
+[![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg?branch=develop)](https://travis-ci.org/drafterbit/drafterbit)
+
 ## Install
 
 ```
