@@ -88,7 +88,7 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "test": "nyc --reporter=none mocha --timeout=3000  --exit --recursive",
+    "test": "nyc --reporter=none mocha --timeout=3000 --reporter=dot  --exit --recursive",
     "coverage": "nyc report --reporter=text-summary",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "dev": "nodemon --ignore 'tmp/' bin/www",

@@ -1,8 +1,6 @@
 const path = require('path');
 const nconf = require('nconf');
-const _ = require('lodash');
 const admin = require('./modules/admin');
-const swagger = require('./modules/swagger');
 const content = require('./modules/content');
 
 /**
@@ -28,7 +26,8 @@ function createConfig(options) {
         'ADMIN_API_KEY': 'test',
         'project_id': 'localhost',
         'modules': [
-            './src/modules/content'
+            './src/modules/admin',
+            './src/modules/content',
         ]
     };
 
@@ -36,7 +35,7 @@ function createConfig(options) {
         options = require(options);
     }
 
-    let config = _.merge(defaultConfig, options);
+    let config = Object.assign({}, defaultConfig, options);
 
     nconf
         .env([
