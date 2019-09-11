@@ -52,6 +52,7 @@ function createConfig(options) {
             'MAILJET_APIKEY_PRIVATE',
             'API_BASE_URL',
             'MONGODB_URL',
+            'MONGODB_PATH',
             'MONGODB_HOST',
             'MONGODB_PORT',
             'MONGODB_USER',

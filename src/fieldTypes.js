@@ -14,6 +14,7 @@ const FIELD_DATE = 10;
 const FIELD_LOCATION = 11;
 const FIELD_TOGGLE = 12;
 
+// TODO any change to translate the name
 const fieldTypes = [
     {
         id: FIELD_SHORT_TEXT,
