@@ -14,5 +14,5 @@ module.exports = function resolveModule(m, root) {
     }
 
     // @todo ensure this return path across OS
-    return require.resolve(m);
+    return m;
 };

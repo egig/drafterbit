@@ -21,7 +21,7 @@ module.exports = {
     "ADMIN_API_KEY": "test",
     "project_id": "localpro",
     "modules": [
-        './src/modules/content',
+        '../src/modules/content',
     ],
     "admin.user_api_base_url": "http://localhost:8000",
     "admin.user_api_key": "testapikey",
