@@ -22,7 +22,7 @@ class LoaderTrap extends React.Component {
                 transitionLeaveTimeout={200}>
                 <div className="loaderTrap">
                     <div className="loaderImgContainer">
-                        <img src="/img/ajax-loader.svg" />
+                        <img src="/assets/img/ajax-loader.svg" />
                     </div>
                 </div>
             </ReactCSSTransitionGroup>

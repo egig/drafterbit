@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -10,7 +10,7 @@ import 'simple-line-icons/css/simple-line-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import  Drafterbit from './Drafterbit';
+import Drafterbit from './Drafterbit';
 import storeFromState  from './storeFromState';
 import defaultState  from './defaultState';
 import apiClient from './apiClient';
@@ -19,6 +19,9 @@ import {
 } from './cookie';
 import getProject from './getProject';
 import getConfig from './getConfig';
+import contentModule from './modules/content'
+import contentTypeModule from './modules/content_type'
+
 
 const drafterbit = {
     getApiClient () {
@@ -34,8 +37,13 @@ const drafterbit = {
     userApiClient: apiClient.createUserApiClient({
         baseURL: getConfig('userApiBaseURL'),
         apiKey: getConfig('userApiKey')
-    })
+    }) 
 };
+
+drafterbit.modules = [
+    contentTypeModule(drafterbit),
+    contentModule(drafterbit)
+]
 
 const i18n = i18next.createInstance();
 i18n.init({
@@ -103,6 +111,7 @@ Promise.all([
 function renderApp(dState) {
 
     const store = storeFromState(dState);
+    drafterbit.store = store;
 
     ReactDOM.render(
         <HashRouter>

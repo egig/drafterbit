@@ -105,7 +105,7 @@ class Layout extends React.Component {
 
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
-                              <img className="layout-avatar-img" src="/img/default-avatar.png" />
+                              <img className="layout-avatar-img" src="/assets/img/default-avatar.png" />
                             </DropdownToggle>
                             <DropdownMenu right>
                               <DropdownItem>

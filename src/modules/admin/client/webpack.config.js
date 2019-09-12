@@ -87,8 +87,8 @@ module.exports = env => {
             // }),
             new CopyPlugin([
                 // {from: "public"},
-                 {from: __dirname+"/img", to: "img"},
-                 {from: __dirname+"/locales", to: "locales"},
+                 {from: __dirname+"/public/img", to: "img"},
+                 {from: __dirname+"/public/locales", to: "locales"},
                  {from: __dirname+"/node_modules/tinymce", to: "tinymce"}
             ]),
             new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
@@ -110,7 +110,7 @@ module.exports = env => {
         mode: "development",
         devtool: "inline-source-map",
         devServer: {
-            contentBase: path.join(env.outputPath, '/../public'),
+            // contentBase: path.join(env.outputPath, '/../public'),
             disableHostCheck: true,
         }
     })

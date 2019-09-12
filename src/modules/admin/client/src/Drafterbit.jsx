@@ -19,7 +19,6 @@ import ApiKeyNew from './modules/api_key/components/ApiKeyNew';
 import ApiKeyEdit from './modules/api_key/components/ApiKeyEdit';
 import Users from './modules/user/components/Users';
 import Layout from './modules/common/components/Layout';
-import Editor from './modules/content/components/Unstructured/Editor';
 import Request from './modules/common/components/Request'
 
 const ContentEdit = lazy(() => import('./modules/content/components/ContentEdit'));
@@ -38,38 +37,26 @@ class Drafterbit extends React.Component {
                         <Route path="/forgot-password-requested" component={ForgotPasswordRequested} />
                         <Route path="/reset-password" component={ResetPassword} />
                         <ProtectedRoute path="/users" component={Users} />
-                        <Route path="/content_types">
-                            <Layout>
-                                <Switch>
-                                    <ProtectedRoute path="/content_types/:content_type_id" component={ContentType} />
-                                    <ProtectedRoute path="/content_types" component={ContentTypes} />
-                                </Switch>
-                            </Layout>
-                        </Route>
-                        <Route path="/contents">
-                            <Layout>
-                                <Suspense fallback={<div>Loading...</div>}>
-                                <Switch>
-                                    <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
-                                    <ProtectedRoute path="/contents/:content_type_slug" component={Contents} />
-                                </Switch>
-                                </Suspense>
-                            </Layout>
-                        </Route>
-                        <Route path="/api_keys">
-                            <Layout>
-                                <Switch>
-                                    <ProtectedRoute path="/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
-                                    <ProtectedRoute path="/api_keys/new" component={ApiKeyNew} />
-                                    <ProtectedRoute path="/api_keys" component={ApiKeys} />
-                                </Switch>
-                            </Layout>
-                        </Route>
                         <Route path="/">
                             <Layout>
-                                <ProtectedRoute path="/" component={ContentTypes} />
-                                <ProtectedRoute path="/editor" component={Editor} />
-                                <ProtectedRoute path="/requests" component={Request} />                                
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <Switch>
+                                        {this.props.drafterbit.modules.map(m => {
+                                            return m.routes.map(r => {
+                                                return <ProtectedRoute path={r.path} component={r.component} />
+                                            })
+                                        })};
+                                        {/* <ProtectedRoute path="/content_types/:content_type_id" component={ContentType} />
+                                        <ProtectedRoute path="/content_types" component={ContentTypes} />
+                                        <ProtectedRoute path="/" component={ContentTypes} />
+                                        <ProtectedRoute path="/requests" component={Request} />                                
+                                        <ProtectedRoute path="/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
+                                        <ProtectedRoute path="/api_keys/new" component={ApiKeyNew} />
+                                        <ProtectedRoute path="/api_keys" component={ApiKeys} />
+                                        <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
+                                        <ProtectedRoute path="/contents/:content_type_slug" component={Contents} /> */}
+                                    </Switch>
+                                </Suspense>
                             </Layout>
                         </Route>
                     </Switch>
