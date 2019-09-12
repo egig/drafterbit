@@ -4,7 +4,6 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import withDrafterbit from '../../../withDrafterbit';
-import { getContentTypes } from '../../content_type/actions';
 
 
 import './SideNav.css';
@@ -21,7 +20,7 @@ class SideNav extends React.Component {
     componentDidMount() {
 
         let client = this.props.drafterbit.getApiClient();
-        this.props.actions.getContentTypes(client);
+        // this.props.actions.getContentTypes(client);
             // .then((contentTypes) => {
             //     this.setState({
             //         contentTypes: contentTypes
@@ -92,9 +91,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({
-            getContentTypes: getContentTypes
-        }, dispatch)
+        // actions: bindActionCreators({
+        //     getContentTypes: getContentTypes
+        // }, dispatch)
     }
 };
 

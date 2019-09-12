@@ -11,17 +11,12 @@ import ForgotPassword from './modules/user/components/ForgotPassword';
 import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
 import Dashboard from './modules/common/components/Dashboard';
-import ContentTypes from './modules/content_type/components/ContentTypes';
-import ContentType from './modules/content_type/components/ContentType';
-import Contents from './modules/content/components/Contents';
 import ApiKeys from './modules/api_key/components/ApiKeys';
 import ApiKeyNew from './modules/api_key/components/ApiKeyNew';
 import ApiKeyEdit from './modules/api_key/components/ApiKeyEdit';
 import Users from './modules/user/components/Users';
 import Layout from './modules/common/components/Layout';
 import Request from './modules/common/components/Request'
-
-const ContentEdit = lazy(() => import('./modules/content/components/ContentEdit'));
 
 class Drafterbit extends React.Component {
 
@@ -46,15 +41,6 @@ class Drafterbit extends React.Component {
                                                 return <ProtectedRoute path={r.path} component={r.component} />
                                             })
                                         })};
-                                        {/* <ProtectedRoute path="/content_types/:content_type_id" component={ContentType} />
-                                        <ProtectedRoute path="/content_types" component={ContentTypes} />
-                                        <ProtectedRoute path="/" component={ContentTypes} />
-                                        <ProtectedRoute path="/requests" component={Request} />                                
-                                        <ProtectedRoute path="/api_keys/:api_key_id/edit" component={ApiKeyEdit} />
-                                        <ProtectedRoute path="/api_keys/new" component={ApiKeyNew} />
-                                        <ProtectedRoute path="/api_keys" component={ApiKeys} />
-                                        <ProtectedRoute path="/contents/:content_type_slug/:content_id" component={ContentEdit} />
-                                        <ProtectedRoute path="/contents/:content_type_slug" component={Contents} /> */}
                                     </Switch>
                                 </Suspense>
                             </Layout>

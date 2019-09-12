@@ -20,7 +20,6 @@ import {
 import getProject from './getProject';
 import getConfig from './getConfig';
 import contentModule from './modules/content'
-import contentTypeModule from './modules/content_type'
 
 
 const drafterbit = {
@@ -41,7 +40,6 @@ const drafterbit = {
 };
 
 drafterbit.modules = [
-    contentTypeModule(drafterbit),
     contentModule(drafterbit)
 ]
 

@@ -1,6 +1,8 @@
 import React, { lazy } from 'react';
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
+const ContentTypes = lazy(() => import('./components/ContentTypes'));
+const ContentType = lazy(() => import('./components/ContentType'));
 
 export default function(drafterbit) {
 
@@ -9,9 +11,11 @@ export default function(drafterbit) {
         routes: [
             {path: "/contents/:content_type_slug/:content_id", component: ContentEdit},
             {path: "/contents/:content_type_slug", component: Contents},
+            {path: "/content_types/:content_type_id", component: ContentType},                
+            {path: "/content_types", component: ContentTypes},
         ],
         generalMenus: [
-            // {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
+            {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
         ],
         getMenuSection() {
             let contentTypes =  drafterbit.store.getState().CONTENT_TYPE.contentTypes;            
