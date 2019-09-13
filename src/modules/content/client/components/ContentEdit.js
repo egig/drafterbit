@@ -5,10 +5,10 @@ import { Value } from "slate";
 import actions from '../actions';
 import Field from './Field';
 import Editor from "./Unstructured/Editor"
-import Notify from '../../../components/Notify';
-import Card from '../../../components/Card/Card';
+import Notify from 'drafterbit-module-admin/client/src/components/Notify';
+import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import { Row, Col } from 'reactstrap';
-import  withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 const { FIELD_RICH_TEXT, FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY, FIELD_UNSTRUCTURED } = window.__DT_CONST;
 

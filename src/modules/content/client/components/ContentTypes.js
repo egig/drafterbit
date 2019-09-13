@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../../../components/Card/Card';
-import DataTable from '../../../components/DataTable';
-import withDrafterbit from '../../../withDrafterbit';
+import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
+import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm';
 import { setNotifyText }  from '../actions'
 import { connect } from 'react-redux'

@@ -1,4 +1,6 @@
 import React, { lazy } from 'react';
+import reducer from './reducer';
+
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
 const ContentTypes = lazy(() => import('./components/ContentTypes'));
@@ -6,8 +8,21 @@ const ContentType = lazy(() => import('./components/ContentType'));
 
 export default function(drafterbit) {
 
+    drafterbit.on('sidenavdidmount', () => {
+        
+    })
+
     return {
         name: "content",
+        stateName: "CONTENT",
+        defaultState: {
+            content: {
+                fields: []
+            },
+            contents: [],
+            ctFields: {fields: []}
+        },
+        reducer: reducer,
         routes: [
             {path: "/contents/:content_type_slug/:content_id", component: ContentEdit},
             {path: "/contents/:content_type_slug", component: Contents},

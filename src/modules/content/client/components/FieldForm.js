@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getFieldTypes, getFieldType } from '../../../fieldTypes';
+import { getFieldTypes, getFieldType } from 'drafterbit-module-admin/client/src/fieldTypes';
 import _ from 'lodash';
-import withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';

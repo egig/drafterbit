@@ -4,6 +4,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "main": "src/index.js",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",

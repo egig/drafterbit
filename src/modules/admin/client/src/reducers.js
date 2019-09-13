@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import userReducer from './modules/user/reducer';
-import commonReducer from './modules/common/reducer';
-import contentReducer from './modules/content/reducer';
-import apiKeyReducer from './modules/api_key/reducer';
+import commonReducer from './modules/common/reducer'
 
-const rootReducer = combineReducers({
-    COMMON: commonReducer,
-    USER: userReducer,
-    CONTENT: contentReducer,
-    API_KEY: apiKeyReducer,
-});
+export default function createRootReducer(drafterbit) {
 
-export default rootReducer;
+    let reducerMap = {
+        COMMON: commonReducer
+    }
+    drafterbit.modules.map(mo => {
+        reducerMap[mo.stateName] = mo.reducer;
+    })
+
+    let rootReducer = combineReducers(reducerMap);
+
+    return rootReducer
+}

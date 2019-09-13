@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import Card from '../../../components/Card/Card';
-import DataTable from '../../../components/DataTable';
-import withDrafterbit from '../../../withDrafterbit';
+import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
+import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
 import _ from 'lodash';
-import { parseFilterQuery, stringifyFilterQuery } from '../../../common/parseFilterQuery'
+import { parseFilterQuery, stringifyFilterQuery } from 'drafterbit-module-admin/client/src/common/filterQuery'
 
 class Contents extends React.Component {
 

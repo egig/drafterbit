@@ -9,7 +9,7 @@ module.exports = env => {
     console.log("creating webpack config with output: ", env.outputPath);
 
     let commonConfig = {
-        entry: [ '@babel/polyfill', __dirname+'/src/index.js'],
+        entry: [ '@babel/polyfill', __dirname+'/src/app.js'],
         output: {
             path: env.outputPath,
             filename: 'js/[name].[hash].js',

@@ -154,7 +154,7 @@ Layout.defaultProps = {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.USER.currentUser,
+        user: {},//state.USER.currentUser,
 		isAjaxLoading: state.COMMON.isAjaxLoading,
 		notifyText: state.COMMON.notifyText
     };

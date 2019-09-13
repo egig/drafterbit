@@ -1,4 +1,4 @@
-import apiClient from '../../apiClient';
+import apiClient from 'drafterbit-module-admin/client/src/apiClient';
 import {SET_CONTENT_TYPES} from './action_types';
 
 

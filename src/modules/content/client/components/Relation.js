@@ -1,5 +1,5 @@
 import React from 'react';
-import withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import Select from 'react-select'
 
 class Relation extends React.Component {

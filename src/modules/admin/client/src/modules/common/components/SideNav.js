@@ -17,9 +17,10 @@ class SideNav extends React.Component {
         // };
     }
 
-    componentDidMount() {
+    componentDidMount() {        
+        this.props.drafterbit.emit("sidenavdidmount")
 
-        let client = this.props.drafterbit.getApiClient();
+        // let client = this.props.drafterbit.getApiClient();
         // this.props.actions.getContentTypes(client);
             // .then((contentTypes) => {
             //     this.setState({

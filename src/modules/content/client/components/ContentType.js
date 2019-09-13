@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
-import Layout from '../../common/components/Layout';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Notify from '../../../components/Notify';
-import Card from '../../../components/Card/Card';
-import { getFieldTypeName } from '../../../fieldTypes';
+import Notify from 'drafterbit-module-admin/client/src/components/Notify';
+import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
+import { getFieldTypeName } from 'drafterbit-module-admin/client/src/fieldTypes';
 import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import FieldForm from './FieldForm';
-import withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
 
 class ContentType extends React.Component {

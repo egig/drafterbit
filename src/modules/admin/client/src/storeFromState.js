@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from  'redux';
 import thunk from 'redux-thunk';
-import  rootReducer from './reducers';
+import createRootReducer from './reducers';
 
 const middlewares = [thunk];
 
-export default function storeFromState(defaultState) {
-    return createStore(rootReducer, defaultState, applyMiddleware(...middlewares));
+export default function storeFromState(defaultState, drafterbit) {
+    return createStore(createRootReducer(drafterbit), defaultState, applyMiddleware(...middlewares));
 }
