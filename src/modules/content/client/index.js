@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 import reducer from './reducer';
+import MenuSection from './components/MenuSection';
 
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
@@ -7,10 +8,6 @@ const ContentTypes = lazy(() => import('./components/ContentTypes'));
 const ContentType = lazy(() => import('./components/ContentType'));
 
 export default function(drafterbit) {
-
-    drafterbit.on('sidenavdidmount', () => {
-        
-    })
 
     return {
         name: "content",
@@ -32,19 +29,8 @@ export default function(drafterbit) {
         generalMenus: [
             {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
         ],
-        getMenuSection() {
-            let contentTypes =  drafterbit.store.getState().CONTENT_TYPE.contentTypes;            
-            return {
-                label: "Content",
-                iconClass: "icon-docs",
-                menuItems: contentTypes.map(ct => {
-                    return {
-                        link: `/contents/${ct.slug}`,
-                        label: ct.name,
-                        iconClass: "icon-doc"
-                    }
-                })
-            }
+        renderMenuSection() {
+            return <MenuSection />
         }
     }
 }

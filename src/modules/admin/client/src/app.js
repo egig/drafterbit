@@ -23,7 +23,7 @@ import contentModule from 'drafterbit-module-content/client'
 import drafterbit from './index'
 
 drafterbit.modules = [
-    contentModule(drafterbit)
+    contentModule()
 ]
 
 const i18n = i18next.createInstance();

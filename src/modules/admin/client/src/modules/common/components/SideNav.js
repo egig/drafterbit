@@ -10,25 +10,6 @@ import './SideNav.css';
 
 class SideNav extends React.Component {
 
-    constructor(props) {
-        super(props);
-        // this.state  = {
-        //     contentTypes: []
-        // };
-    }
-
-    componentDidMount() {        
-        this.props.drafterbit.emit("sidenavdidmount")
-
-        // let client = this.props.drafterbit.getApiClient();
-        // this.props.actions.getContentTypes(client);
-            // .then((contentTypes) => {
-            //     this.setState({
-            //         contentTypes: contentTypes
-            //     });
-            // });
-    }
-
     renderMenuItems(menuItems) {
         return menuItems.map(mn => {
             return (
@@ -47,18 +28,8 @@ class SideNav extends React.Component {
             <nav className={'col-md-2 d-none d-md-block bg-light sidebar'}>
                 <div className="sidebarSticky">
                     {this.props.drafterbit.modules.map(mo => {
-                        if(typeof mo.getMenuSection == "function") {
-                            let ms = mo.getMenuSection()
-                            return (
-                                <Fragment>
-                                    <h6 className={'sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'}>
-                                        <span><i className={ms.iconClass}/> {ms.label}</span>
-                                    </h6>
-                                    <ul className="nav flex-column mb-2 side-menu">
-                                        {this.renderMenuItems(ms.menuItems)}
-                                    </ul>
-                                </Fragment>
-                            )
+                        if(typeof mo.renderMenuSection == "function") {
+                            return mo.renderMenuSection();
                         }
                     })}
 

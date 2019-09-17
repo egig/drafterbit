@@ -6,6 +6,7 @@ import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import _ from 'lodash';
 import { parseFilterQuery, stringifyFilterQuery } from 'drafterbit-module-admin/client/src/common/filterQuery'
 
