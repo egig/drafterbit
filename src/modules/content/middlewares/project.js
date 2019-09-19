@@ -24,6 +24,7 @@ module.exports = function projectMiddleware() {
         };
 
         if(['/',
+            '/assets/',
             '/swagger.json'
         ].indexOf(req.path) !== -1) {
             return next();

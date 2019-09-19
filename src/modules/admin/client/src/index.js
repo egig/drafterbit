@@ -1,7 +1,7 @@
+import EventEmitter from 'eventemitter3';
 import apiClient from './apiClient';
 import getConfig from './getConfig';
 import getProject from './getProject';
-import EventEmitter from 'eventemitter3';
 
 class Drafterbit extends EventEmitter {
     getApiClient () {

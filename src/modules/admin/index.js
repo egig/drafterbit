@@ -20,7 +20,7 @@ module.exports = function (app) {
 
     app.on('boot', () => {
 
-        app.use('/assets', express.static(webpackOutputPath));
+        app.use('/', express.static(webpackOutputPath));
 
         if(DEBUG) {
             app.use(

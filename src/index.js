@@ -1,1 +1,1 @@
-module.exports = require("./drafterbit");
+module.exports = require('./drafterbit');

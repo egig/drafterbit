@@ -11,9 +11,9 @@ import './SideNav.css';
 class SideNav extends React.Component {
 
     renderMenuItems(menuItems) {
-        return menuItems.map(mn => {
+        return menuItems.map((mn,i) => {
             return (
-                <li className="nav-item">
+                <li className="nav-item" key={i}>
                     <Link className="nav-link" to={mn.link}>
                         <i className={mn.iconClass}/> {mn.label}
                     </Link>
@@ -38,9 +38,9 @@ class SideNav extends React.Component {
                     </h6>
                     <ul className="nav flex-column mb-2 side-menu">
                     {this.props.drafterbit.modules.map(mo => {
-                        return mo.generalMenus.map(mn => {
+                        return mo.generalMenus.map((mn,i) => {
                             return (
-                                <li className="nav-item">
+                                <li className="nav-item" key={i}>
                                     <Link className="nav-link" to={mn.link}>
                                         <i className={mn.iconClass}/> {mn.label}
                                     </Link>

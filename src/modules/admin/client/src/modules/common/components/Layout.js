@@ -44,7 +44,7 @@ class Layout extends React.Component {
 	            </Helmet>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0" expand="md">
 		            <NavbarBrand className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
-			            <img  className="layout-navbarBrandImg" src="/assets/img/dtlogo3-light.png" alt="drafterbit"/>
+			            <img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>
 						<small className="layout-versionBadge">alpha</small>
 		            </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
@@ -105,7 +105,7 @@ class Layout extends React.Component {
 
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
-                              <img className="layout-avatar-img" src="/assets/img/default-avatar.png" />
+                              <img className="layout-avatar-img" src="/img/default-avatar.png" />
                             </DropdownToggle>
                             <DropdownMenu right>
                               <DropdownItem>

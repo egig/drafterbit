@@ -23,9 +23,9 @@ class MenuSection extends React.Component {
     }
 
     renderMenuItems(menuItems) {
-        return menuItems.map(mn => {
+        return menuItems.map((mn, i) => {
             return (
-                <li className="nav-item">
+                <li className="nav-item" key={i}>
                     <Link className="nav-link" to={mn.link}>
                         <i className={mn.iconClass}/> {mn.label}
                     </Link>

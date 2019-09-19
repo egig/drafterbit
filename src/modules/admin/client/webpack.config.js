@@ -13,7 +13,7 @@ module.exports = env => {
         output: {
             path: env.outputPath,
             filename: 'js/[name].[hash].js',
-            publicPath: '/assets/',
+            publicPath: '/',
             chunkFilename: 'js/[chunkhash].[hash].js'
         },
         module: {
@@ -82,13 +82,11 @@ module.exports = env => {
                 filename: "css/[name].[hash].css",
                 chunkFilename: "css/[chunkhash].[hash].css"
             }),
-            // new HtmlWebpackPlugin({
-            //     template: 'src/index.html'
-            // }),
             new CopyPlugin([
                 // {from: "public"},
                  {from: __dirname+"/public/img", to: "img"},
                  {from: __dirname+"/public/locales", to: "locales"},
+                 {from: __dirname+"/public/favicon.ico", to: "favicon.ico"},
                  {from: __dirname+"/node_modules/tinymce", to: "tinymce"}
             ]),
             new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
@@ -108,9 +106,8 @@ module.exports = env => {
 
     return merge(commonConfig, {
         mode: "development",
-        devtool: "inline-source-map",
+        // devtool: "inline-source-map", this is slow !!
         devServer: {
-            // contentBase: path.join(env.outputPath, '/../public'),
             disableHostCheck: true,
         }
     })
