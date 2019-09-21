@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import reducer from './reducer';
 import MenuSection from './components/MenuSection';
+import { Redirect } from 'react-router-dom';
 
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
@@ -31,6 +32,9 @@ export default function(drafterbit) {
         ],
         renderMenuSection() {
             return <MenuSection />
+        },
+        processRoute(route) {
+            //..
         }
     }
 }
