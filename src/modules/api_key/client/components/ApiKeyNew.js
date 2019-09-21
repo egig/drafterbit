@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Notify from 'drafterbit-module-admin/client/src/components/Notify';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
