@@ -4,6 +4,9 @@ import getConfig from './getConfig';
 import getProject from './getProject';
 
 class Drafterbit extends EventEmitter {
+
+    modules = [];
+
     getApiClient () {
         if(!this.apiClient) {
             this.apiClient =  apiClient.createClient({
@@ -19,9 +22,14 @@ class Drafterbit extends EventEmitter {
         baseURL: getConfig('userApiBaseURL'),
         apiKey: getConfig('userApiKey')
     })
+
+    addModule(moduleObject) {
+        this.modules.push(moduleObject)
+    }
 }
 
 const drafterbit = new Drafterbit()
+window.__DRAFTERBIT__ = drafterbit;
 
 export default drafterbit
 

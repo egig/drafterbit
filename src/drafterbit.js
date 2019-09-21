@@ -71,8 +71,12 @@ app.boot = function boot(options) {
 
     // init modules
     let modules = config.get('modules');
-    modules.map(m => {
-        require(resolveModule(m, this._root))(app);
+    this._modules = modules.map(m => {
+        let modulePath = resolveModule(m, this._root);
+        let ModulesClass = require(modulePath.resolvedPath);
+        let moduleInstance = new ModulesClass(this);
+        moduleInstance._modulePath = modulePath.resolvedPath;
+        return moduleInstance;
     });
 
     this.set('config', config);
@@ -165,19 +169,6 @@ app.getDB = function getDB(dbName) {
     return this._mongo_connections[dbName];
 };
 
-/**
- *
- */
-app._initRoutes = function _initRoutes() {
-    Object.keys(this.modules).forEach(name => {
-        let routes = this._modules[name].getRoutes();
-        this.use(routes);
-    });
-};
-
-/**
- *
- */
 app._getFieldTypes = getFieldTypes;
 
 module.exports = app;

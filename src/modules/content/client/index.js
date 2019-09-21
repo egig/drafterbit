@@ -8,7 +8,7 @@ const Contents = lazy(() => import('./components/Contents'));
 const ContentTypes = lazy(() => import('./components/ContentTypes'));
 const ContentType = lazy(() => import('./components/ContentType'));
 
-export default function(drafterbit) {
+function createContentClientModule(drafterbit) {
 
     return {
         name: "content",
@@ -38,3 +38,5 @@ export default function(drafterbit) {
         }
     }
 }
+
+window.__DRAFTERBIT__.addModule(createContentClientModule(window.__DRAFTERBIT__))

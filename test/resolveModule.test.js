@@ -9,19 +9,21 @@ describe("resolveModule", () => {
     it("should return relative to root", () => {
         let root = __dirname;
         let r = resolveModule('./testpath.js', root);
-        expect(r).to.equal(__dirname+'/testpath.js');
+        expect(r.isRelative).to.equal(true);
+        expect(r.resolvedPath).to.equal(__dirname+'/testpath.js');
     });
 
     it("should return absolute", () => {
         let root = __dirname;
         let r = resolveModule('/testpath.js', root);
-        expect(r).to.equal('/testpath.js');
+        expect(r.isAbsolute).to.equal(true);
+        expect(r.resolvedPath).to.equal('/testpath.js');
     });
 
     it("should return module", () => {
         let root = __dirname;
         let r = resolveModule('testpath', root);
-        expect(r).to.equal('testpath');
+        expect(r.resolvedPath).to.equal('testpath');
     });
 
 });

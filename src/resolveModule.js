@@ -6,13 +6,31 @@ function isRelative(filename) {
 
 module.exports = function resolveModule(m, root) {
     if(path.isAbsolute(m)) {
-        return m;
+        return {
+            isAbsolute: true,
+            resolvedPath: m
+        };
     }
 
     if(isRelative(m)) {
-        return path.resolve(root, m);
+        return {
+            isRelative: true,
+            resolvedPath: path.resolve(root, m)
+        };
     }
 
     // @todo ensure this return path across OS
-    return m;
+    try {
+        let resolvedPath = require.resolve(m);
+        return {
+            resolvedPath: resolvedPath
+        };
+    } catch (e) {
+        if (e instanceof Error && e.code === 'MODULE_NOT_FOUND')
+            return {
+                resolvedPath: m
+            };
+        else
+            throw e;
+    }
 };

@@ -19,12 +19,9 @@ import {
 } from './cookie';
 import getProject from './getProject';
 import getConfig from './getConfig';
-import contentModule from 'drafterbit-module-content/client'
-import drafterbit from './index'
 
-drafterbit.modules = [
-    contentModule(drafterbit)
-]
+// TODO
+const drafterbit = window.__DRAFTERBIT__;
 
 const i18n = i18next.createInstance();
 i18n.init({

@@ -18,7 +18,6 @@ function assetPath(req, asset) {
     return asset;
 }
 
-
 router.get('/', function (req, res) {
 
     const webpackAssets = require(req.app._root+'/build/assets.json');

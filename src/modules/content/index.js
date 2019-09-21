@@ -1,13 +1,20 @@
 const routes  = require('./routes');
 const projectMiddleware  = require('./middlewares/project');
 
-module.exports = function (app) {
+class ContentModule {
+    constructor(app) {
+        app.on('boot', () => {
+            app.use(projectMiddleware());
+        });
+    
+        app.on('routing', () => {
+            app.use(routes);
+        });
+    }
 
-    app.on('boot', () => {
-        app.use(projectMiddleware());
-    });
+    getAdminClientEntry() {
+        return this._modulePath+'/client/index.js';
+    }
+}
 
-    app.on('routing', () => {
-        app.use(routes);
-    });
-};
+module.exports = ContentModule;
