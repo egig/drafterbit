@@ -16,10 +16,6 @@ module.exports = function projectMiddleware() {
             db.model(`${projectId}_ContentType`, ContentTypeSchema, '_content_types');
         }
 
-        req.model = function (name) {
-            return db.model(`${projectId}_${name}`);
-        };
-
         next();
     };
 };
