@@ -1,38 +1,21 @@
 import React, { Fragment } from 'react';
-import Layout from '../../common/components/Layout';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Notify from '../../../components/Notify';
-import apiClient from './../../../apiClient';
-import Card from '../../../components/Card/Card';
-import withDrafterbit from '../../../withDrafterbit';
+import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
+import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
-class ApiKeyNew extends React.Component {
+class ApiKeyEdit extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             restrictedType: 0,
-            successText: '',
-            apiKeyName: '',
-            apiKeyValue: '',
-            restrictionValue: ''
+            successText: ''
         };
-    }
-
-    componentDidMount() {
-        this.props.drafterbit.getApiClient().getApiKey(this.props.match.params.api_key_id)
-            .then(r => {
-                this.setState({
-                    restrictedType: r.restriction_type,
-                    apiKeyName: r.name,
-                    apiKeyValue: r.key,
-                    restrictionValue: r.restriction_value
-                });
-            });
     }
 
     handleRestrictionTypeChange(e) {
@@ -43,19 +26,16 @@ class ApiKeyNew extends React.Component {
 
     onSubmit(form) {
 
-        let restrictionValue = this.state.restrictedType == 0 ? '' : form.restriction_value.value;
-        let apiKeyId = this.props.match.params.api_key_id;
+        let restrictionValue = this.state.restrictedType === 0 ? '' : form.restriction_value.value;
 
-
-        this.props.drafterbit.getApiClient().updateApiKey(
-            this.props.match.params.api_key_id,
-            this.state.apiKeyName,
-            this.state.apiKeyValue,
+        this.props.drafterbit.getApiClient().createApiKey(
+            form.name.value,
+            form.key.value,
             this.state.restrictedType,
-            this.state.restrictionValue,
+            restrictionValue
         ).then(r => {
             this.setState({
-                successText: 'Api key successfully updated'
+                successText: 'Api key successfully created'
             });
         });
     }
@@ -66,22 +46,18 @@ class ApiKeyNew extends React.Component {
             <Fragment>
                 <div className="row">
                     <div className="col-6">
-                        <Card headerText="Edit Api Key" >
+                        <Card headerText="Create Api Key" >
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);
                             }}>
                                 <div className="form-group">
                                     <label htmlFor="name">Name</label>
-                                    <input type="text" name="name" id="name" className="form-control" value={this.state.apiKeyName} onChange={ e => {
-                                        this.setState({ apiKeyName: e.target.value })
-                                    }}/>
+                                    <input type="text" name="name" id="name" className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="key">Key</label>
-                                    <input type="text" name="key" id="key" className="form-control" readOnly="readOnly" value={this.state.apiKeyValue} onChange={ e => {
-                                        this.setState({ apiKeyValue: e.target.apiKeyValue })
-                                    }}/>
+                                    <input type="text" name="key" id="key" className="form-control" readOnly="readOnly" value="GENERATED"/>
                                 </div>
                                 <fieldset className="form-group">
                                     <legend>Restriction Type</legend>
@@ -93,7 +69,7 @@ class ApiKeyNew extends React.Component {
                                             value="0"
                                             checked={this.state.restrictedType == 0} />
                                         <label className="form-check-label" htmlFor="restriction_type_none">
-                                            None
+                                        None
                                         </label>
                                     </div>
                                     <div className="form-check">
@@ -105,7 +81,7 @@ class ApiKeyNew extends React.Component {
                                             value="1"
                                             checked={this.state.restrictedType == 1}/>
                                         <label className="form-check-label" htmlFor="restriction_type_http">
-                                            HTTP Referrer
+                                        HTTP Referrer
                                         </label>
                                     </div>
                                     <div className="form-check">
@@ -117,28 +93,26 @@ class ApiKeyNew extends React.Component {
                                             value="2"
                                             checked={this.state.restrictedType == 2}/>
                                         <label className="form-check-label" htmlFor="restriction_type_ip">
-                                            IP Address
+                                        IP Address
                                         </label>
                                     </div>
                                 </fieldset>
 
                                 {this.state.restrictedType == 1 &&
-                                <div className="form-group">
-                                    <label htmlFor="restriction_value">HTTP Referer</label>
-                                    <input type="text"
-                                        value={this.state.restrictionValue}
-                                        name="restriction_value"
-                                        placeholder="http://localhost"
-                                        id="restriction_value"
-                                        className="form-control"/>
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="restriction_value">HTTP Referer</label>
+                                <input type="text"
+                                    name="restriction_value"
+                                    placeholder="http://localhost"
+                                    id="restriction_value"
+                                    className="form-control"/>
+                            </div>
                                 }
 
                                 {this.state.restrictedType == 2 &&
                                 <div className="form-group">
                                     <label htmlFor="restriction_value">IP Address</label>
                                     <input type="text"
-                                        value={this.state.restrictionValue}
                                         name="restriction_value"
                                         placeholder="127.0.0.1"
                                         id="restriction_value"
@@ -154,7 +128,7 @@ class ApiKeyNew extends React.Component {
                     </div>
                 </div>
                 {this.state.successText &&
-                <Notify type="success" message={this.state.successText} />
+                    <Notify type="success" message={this.state.successText} />
                 }
             </Fragment>
         );
@@ -171,4 +145,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(ApiKeyNew));
+export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(ApiKeyEdit));

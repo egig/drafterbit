@@ -1,5 +1,5 @@
 const {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} = require( '../../../fieldTypes');
-const getProjectId  = require('./getProjectId');
+const getProjectId  = require('../../../getProjectId');
 const fieldsToSchema = require( '../../../fieldsToSchema');
 
 function getSchema(fields, projectId) {

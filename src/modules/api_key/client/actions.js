@@ -1,4 +1,4 @@
-import apiClient from '../../apiClient';
+import ApiClient from './ApiClient';
 
 const setAjaxLoading = (isLoading) => {
     return {
@@ -16,7 +16,7 @@ const setApiKeys = (contentTypes) => {
 
 
 const getApiKeys = (projectId) => (dispatch) => {
-    let client = apiClient.createClient({});
+    let client = new ApiClient();
     client.getApiKeys(projectId)
         .then((apiKeys) => {
             return dispatch(setApiKeys(apiKeys));
@@ -27,7 +27,7 @@ const createApiKey = (projectId, name, key, restrictionType, restrictionValue) =
     dispatch(setAjaxLoading(true));
 
 
-    let client = apiClient.createClient({});
+    let client = new ApiClient();    
     return client.createApiKey(projectId, name, key, restrictionType, restrictionValue)
         .then((project) => {
             return     dispatch(setAjaxLoading(false));

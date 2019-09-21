@@ -11,9 +11,6 @@ import ForgotPassword from './modules/user/components/ForgotPassword';
 import ResetPassword from './modules/user/components/ResetPassword';
 import ForgotPasswordRequested from './modules/user/components/ForgotPasswordRequested';
 import Dashboard from './modules/common/components/Dashboard';
-import ApiKeys from './modules/api_key/components/ApiKeys';
-import ApiKeyNew from './modules/api_key/components/ApiKeyNew';
-import ApiKeyEdit from './modules/api_key/components/ApiKeyEdit';
 import Users from './modules/user/components/Users';
 import Layout from './modules/common/components/Layout';
 import Request from './modules/common/components/Request'

@@ -8,6 +8,7 @@ const createLogger = require('./createLogger');
 const cors = require('cors');
 const expressValidator = require('express-validator');
 const { ERRNOROOTDIR } = require('./constants');
+const modelMiddleware = require('./middlewares/model');
 
 // TODO
 // const session  = require('express-session');
@@ -68,7 +69,6 @@ app.boot = function boot(options) {
     let config = createConfig(options);
     let logger = createLogger(config.get('debug'));
 
-
     // init modules
     let modules = config.get('modules');
     this._modules = modules.map(m => {
@@ -109,6 +109,7 @@ app.boot = function boot(options) {
         }
     }));
 
+    this.use(modelMiddleware());
     this.emit('boot');
 
     this.emit('routing');
