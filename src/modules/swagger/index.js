@@ -1,12 +1,16 @@
-const swaggerUi  = require('swagger-ui-express');
 const routes  = require('./routes');
 
-module.exports = function (app) {
-    app.on('boot', () => {
-        app.use('/_swagger', swaggerUi.serve);
-    });
+class SwaggerModule {
+    constructor(app) {
+    
+        app.on('routing', () => {
+            app.use(routes);
+        });
+    }
 
-    app.on('routing', () => {
-        app.use(routes);
-    });
-};
+    getAdminClientEntry() {
+        return this._modulePath+'/client/index.js';
+    }
+}
+
+module.exports = SwaggerModule;

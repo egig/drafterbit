@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from './Layout';
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
 
