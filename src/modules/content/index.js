@@ -13,7 +13,7 @@ class ContentModule {
     }
 
     getAdminClientEntry() {
-        return this._modulePath+'/client/index.js';
+        return this._modulePath+'/admin/client/src/index.js';
     }
 }
 

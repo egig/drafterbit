@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'test';
 const { MongoMemoryServer } = require('mongodb-memory-server');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let drafterbit = require('../../src');
+let drafterbit = require('../../../../src'); // TODO make this global ?
 let should = chai.should();
 
 chai.use(chaiHttp);
@@ -30,7 +30,7 @@ describe('Content Types', () => {
             "ADMIN_API_KEY": "test",
             "project_id": dbName,
             "modules": [
-                '../../src/modules/content'
+                '../index'
             ]
         };
 
