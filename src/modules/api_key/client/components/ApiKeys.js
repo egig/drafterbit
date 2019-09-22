@@ -36,7 +36,7 @@ class ApiKeys extends React.Component {
                 dataField: 'name',
                 text: 'Name',
                 formatter: (cell, row) => {
-                    return <Link to={`/api_keys/${row._id}/edit`}>{cell}</Link>;
+                    return <Link to={`/api_keys/${row._id}`}>{cell}</Link>;
                 }
             },
             {
