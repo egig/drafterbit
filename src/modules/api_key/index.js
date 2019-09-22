@@ -1,4 +1,4 @@
-const apiKeyMiddleware = require("./middlewares/apiKey");
+const apiKeyMiddleware = require('./middlewares/apiKey');
 const routes = require('./routes');
 
 class AuthModule {
@@ -9,7 +9,7 @@ class AuthModule {
 
         app.on('routing', () => {
             app.use(routes);
-        })
+        });
     }
 
     getAdminClientEntry() {

@@ -320,7 +320,7 @@ router.patch('/content_types/:content_type_id',
 
                 // update compiled models
                 // TODO ensure this relieable methods
-                req.app.getDB(req._projectId).models = {};
+                req.app.getDB(req._dbName).models = {};
 
                 res.send(results);
             } catch (e ) {
@@ -397,7 +397,7 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
 
                 // update compiled models
                 // TODO ensure this relieable methods
-                req.app.getDB(req._projectId).models = {};
+                req.app.getDB(req._dbName).models = {};
 
                 res.send(results);
             } catch (e ) {

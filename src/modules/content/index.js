@@ -1,10 +1,10 @@
 const routes  = require('./routes');
-const projectMiddleware  = require('./middlewares/project');
+const contentTypeMiddleware  = require('./middlewares/contentType');
 
 class ContentModule {
     constructor(app) {
         app.on('boot', () => {
-            app.use(projectMiddleware());
+            app.use(contentTypeMiddleware());
         });
     
         app.on('routing', () => {

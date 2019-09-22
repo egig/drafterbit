@@ -1,16 +1,15 @@
-
-const getProjectId  = require('../getProjectId');
+const getDbName  = require('../getDbName');
 
 module.exports = function modelMiddleware() {
     return function (req, res, next) {
 
-        let projectId = getProjectId(req);
-        req._projectId = projectId;
+        let dbName = getDbName(req);
+        req._dbName = dbName;
         
-        let db = req.app.getDB(projectId);
+        let db = req.app.getDB(dbName);
 
         req.model = function (name) {
-            return db.model(`${projectId}_${name}`);
+            return db.model(`${dbName}_${name}`);
         };
 
         next();

@@ -3,7 +3,7 @@
  *
  * @param req
  */
-module.exports = function getProjectId(req) {
+module.exports = function getDbName(req) {
 
     // First, lets check the subdomain
     let projectId = req.subdomains.pop();
@@ -18,5 +18,5 @@ module.exports = function getProjectId(req) {
     }
 
     // we should set in the config then;
-    return req.app.get('config').get('project_id');
+    return req.app.get('config').get('MONGODB_NAME');
 };

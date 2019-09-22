@@ -31,7 +31,7 @@ class ApiClient {
     }
 
     async getFieldTypes() {
-        let response = await this.axiosInstance.get(`/field_types`);
+        let response = await this.axiosInstance.get('/field_types');
         return response.data;
     }
 
@@ -45,7 +45,7 @@ class ApiClient {
     }
 
     async createApiKey(name, key, restrictionType, restrictionValue) {
-        let response = await this.axiosInstance.post(`/api_keys`, {
+        let response = await this.axiosInstance.post('/api_keys', {
             name,
             key,
             restriction_type: restrictionType,

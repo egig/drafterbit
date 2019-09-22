@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest = require('../../../middlewares/validateRequest');
-const { parseFilterQuery } = require( '../../../parseFilterQuery');
+const { parseFilterQuery } = require( '../../../filterQuery');
 const { FIELD_NUMBER,
     FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY,
@@ -9,7 +9,7 @@ const { FIELD_NUMBER,
     FIELD_SHORT_TEXT,
     FIELD_UNSTRUCTURED,
     getFieldTypes } = require( '../../../fieldTypes');
-const contentTypeMiddleware = require('../middlewares/contentType');
+const contentMiddleware = require('../middlewares/content');
 
 let router = express.Router();
 
@@ -52,7 +52,7 @@ router.delete('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    contentTypeMiddleware(),
+    contentMiddleware(),
     function (req, res) {
 
         (async function () {
@@ -111,7 +111,7 @@ router.get('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    contentTypeMiddleware(),
+    contentMiddleware(),
     function (req, res) {
 
         (async function () {
@@ -167,7 +167,7 @@ router.patch('/:slug/:id',
             errorMessage: 'id required'
         },
     }),
-    contentTypeMiddleware(),
+    contentMiddleware(),
     function (req, res) {
 
         (async function () {
@@ -214,7 +214,7 @@ router.post('/:slug',
             errorMessage: 'slug required'
         }
     }),
-    contentTypeMiddleware(),
+    contentMiddleware(),
     function (req, res) {
 
         (async function () {
@@ -264,7 +264,7 @@ router.get('/:slug',
             errorMessage: 'slug required'
         }
     }),
-    contentTypeMiddleware(),
+    contentMiddleware(),
     function (req, res) {
         (async function () {
 

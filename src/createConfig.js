@@ -19,12 +19,12 @@ function createConfig(options) {
         'REDIS_DB': 0,
         'MONGODB_PROTOCOL': 'mongodb+srv',
         'MONGODB_URL': '',
+        'MONGODB_NAME': '',
         'MONGODB_HOST': '',
         'MONGODB_PORT': '',
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
         'ADMIN_API_KEY': 'test',
-        'project_id': 'localhost',
         'modules': [
             './src/modules/admin',
             './src/modules/content',

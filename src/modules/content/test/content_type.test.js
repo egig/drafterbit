@@ -12,45 +12,45 @@ const mongod = new MongoMemoryServer();
 
 describe('Content Types', () => {
 
-	// TODO this always timeout exceed
-	before(async () => {
+    // TODO this always timeout exceed
+    before(async () => {
 
         const port = await mongod.getPort();
         const dbName = await mongod.getDbName();
         let options = {
-            "ROOT_DIR": __dirname,
-            "debug": false,
-            "PORT": 3000,
-            "SESSION_SECRET": "secr3t",
-            "MONGODB_PROTOCOL": "mongodb",
-            "MONGODB_HOST": "localhost",
-            "MONGODB_PORT": port,
-            "MONGODB_USER": "",
-            "MONGODB_PASS": "",
-            "ADMIN_API_KEY": "test",
-            "project_id": dbName,
-            "modules": [
+            'ROOT_DIR': __dirname,
+            'debug': false,
+            'PORT': 3000,
+            'SESSION_SECRET': 'secr3t',
+            'MONGODB_PROTOCOL': 'mongodb',
+            'MONGODB_HOST': 'localhost',
+            'MONGODB_PORT': port,
+            'MONGODB_USER': '',
+            'MONGODB_PASS': '',
+            'MONGODB_NAME': dbName,
+            'ADMIN_API_KEY': 'test',
+            'modules': [
                 '../index'
             ]
         };
 
         drafterbit.boot(options);
-	});
+    });
 
-	after(async () => {
+    after(async () => {
 	    mongod.stop();
     });
 
-	describe('/DELETE content types', () => {
+    describe('/DELETE content types', () => {
 
         let testId;
         before((done) => {
             chai.request(drafterbit)
-                .post(`/content_types?api_key=test`)
+                .post('/content_types?api_key=test')
                 .send({
-                    name: "test ct4",
-                    slug: "test-ct4",
-                    description: "desc",
+                    name: 'test ct4',
+                    slug: 'test-ct4',
+                    description: 'desc',
                     fields: []
                 })
                 .end((err, res) => {
@@ -60,65 +60,65 @@ describe('Content Types', () => {
                 });
         });
 
-		it('it should delete a content types', (done) => {
+        it('it should delete a content types', (done) => {
             chai.request(drafterbit)
                 .delete(`/content_types/${testId}?api_key=test`)
                 .end((err, res) => {
                     res.should.have.status(200);
 
                     chai.request(drafterbit)
-                        .get(`/content_types?api_key=test`)
+                        .get('/content_types?api_key=test')
                         .end((err, res) => {
                             res.body.should.be.a('array');
                             res.body.length.should.be.eql(0);
                             done();
                         });
                 });
-		});
-	});
+        });
+    });
 
-	describe('/GET content types', () => {
-		it('it should get all the content types', (done) => {
-			chai.request(drafterbit)
-				.get(`/content_types?api_key=test`)
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.should.be.a('array');
-					res.body.length.should.be.eql(0);
-					done();
-				});
-		});
-	});
+    describe('/GET content types', () => {
+        it('it should get all the content types', (done) => {
+            chai.request(drafterbit)
+                .get('/content_types?api_key=test')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.eql(0);
+                    done();
+                });
+        });
+    });
 
 
-	describe('/POST content types', () => {
+    describe('/POST content types', () => {
 
-		it('it should create a content type', (done) => {
-			chai.request(drafterbit)
-				.post(`/content_types?api_key=test`)
-				.send({
-					name: "test ct",
-					slug: "test-ct",
-					description: "desc",
-					fields: []
-				})
-				.end((err, res) => {
-					res.should.have.status(200);
-					done();
-				});
-		});
+        it('it should create a content type', (done) => {
+            chai.request(drafterbit)
+                .post('/content_types?api_key=test')
+                .send({
+                    name: 'test ct',
+                    slug: 'test-ct',
+                    description: 'desc',
+                    fields: []
+                })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+        });
 
-		it('it should get one after add', (done) => {
-			chai.request(drafterbit)
-				.get(`/content_types?api_key=test`)
-				.end((err, res) => {
-					res.should.have.status(200);
-					res.body.should.be.a('array');
-					res.body.length.should.be.eql(1);
-					done();
-				});
-		});
-	});
+        it('it should get one after add', (done) => {
+            chai.request(drafterbit)
+                .get('/content_types?api_key=test')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.eql(1);
+                    done();
+                });
+        });
+    });
 
     describe('/GET content types/:id ', () => {
 
@@ -126,11 +126,11 @@ describe('Content Types', () => {
         before((done) => {
 
             chai.request(drafterbit)
-                .post(`/content_types?api_key=test`)
+                .post('/content_types?api_key=test')
                 .send({
-                    name: "test ct2",
-                    slug: "test-ct2",
-                    description: "desc",
+                    name: 'test ct2',
+                    slug: 'test-ct2',
+                    description: 'desc',
                     fields: []
                 })
                 .end((err, res) => {
@@ -153,17 +153,17 @@ describe('Content Types', () => {
 
     });
 
-	describe('/PATCH content types/:id', () => {
+    describe('/PATCH content types/:id', () => {
 
         let testId;
         before((done) => {
 
             chai.request(drafterbit)
-                .post(`/content_types?api_key=test`)
+                .post('/content_types?api_key=test')
                 .send({
-                    name: "test ct3",
-                    slug: "test-ct3",
-                    description: "desc",
+                    name: 'test ct3',
+                    slug: 'test-ct3',
+                    description: 'desc',
                     fields: []
                 })
                 .end((err, res) => {
@@ -173,12 +173,12 @@ describe('Content Types', () => {
                 });
         });
 
-		it('it should update a content type', (done) => {
+        it('it should update a content type', (done) => {
 
             chai.request(drafterbit)
                 .patch(`/content_types/${testId}?api_key=test`)
                 .send({
-                    name: "test ct3 edited",
+                    name: 'test ct3 edited',
                 })
                 .end((err, res) => {
                     // res.should.have.status(200);
@@ -186,15 +186,15 @@ describe('Content Types', () => {
                     chai.request(drafterbit)
                         .get(`/content_types/${testId}?api_key=test`)
                         .end((err, res) => {
-                            res.body.name.should.be.eql("test ct3 edited");
-                            res.body.slug.should.be.eql("test-ct3");
+                            res.body.name.should.be.eql('test ct3 edited');
+                            res.body.slug.should.be.eql('test-ct3');
                             done();
                         });
 
                     // done();
                 });
-		});
+        });
 
-	});
+    });
 
 });
