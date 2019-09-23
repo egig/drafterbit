@@ -58,10 +58,7 @@ router.delete('/:slug/:id',
         (async function () {
 
             try {
-
-                let projectSlug =  req.params['project_slug'];
-                let  Model = req.app.getDB(projectSlug).model(req.params['slug']);
-
+                let  Model = req.model(req.params['slug']);
                 let item = await Model.findOneAndDelete({_id: req.params.id });
                 res.send(item);
 
@@ -118,7 +115,6 @@ router.get('/:slug/:id',
 
             try {
                 let  Model = req.model(req.contentType.slug);
-
                 let item = await Model.findOne({_id: req.params.id });
                 res.send(item);
 
