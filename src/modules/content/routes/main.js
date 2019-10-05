@@ -175,7 +175,7 @@ router.post('/:slug',
         return {
             message: 'created',
             item
-        }
+        };
     })
 );
 

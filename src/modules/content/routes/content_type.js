@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest  = require('../../../middlewares/validateRequest');
-const handleFunc = require('../../../handleFunc')
+const handleFunc = require('../../../handleFunc');
 
 let router = express.Router();
 

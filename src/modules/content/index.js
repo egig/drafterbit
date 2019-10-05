@@ -9,7 +9,7 @@ class ContentModule {
     }
 
     registerSchema(db) {
-        db.model(`ContentType`, ContentTypeSchema, '_content_types');
+        db.model('ContentType', ContentTypeSchema, '_content_types');
     }
 
     getAdminClientEntry() {

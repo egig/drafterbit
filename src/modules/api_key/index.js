@@ -14,7 +14,7 @@ class AuthModule {
     }
 
     registerSchema(db) {
-        db.model(`ApiKey`, ApiKeySchema, '_api_keys');        
+        db.model('ApiKey', ApiKeySchema, '_api_keys');        
     }
 
     getAdminClientEntry() {

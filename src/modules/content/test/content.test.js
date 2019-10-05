@@ -40,21 +40,21 @@ describe('Content', () => {
             ]
         };
 
-          // const opts = { useMongoClient: true }; 
-          conn = mongoose.createConnection(mongoURI); 
-          ContentType = conn.model(`${dbName}_ContentType`, ContentTypeSchema, '_content_types');
+        // const opts = { useMongoClient: true }; 
+        conn = mongoose.createConnection(mongoURI); 
+        ContentType = conn.model(`${dbName}_ContentType`, ContentTypeSchema, '_content_types');
   
-          let testCT = new ContentType({
-              name: 'Articles',
-              slug: 'articles',
-              fields: [{
+        let testCT = new ContentType({
+            name: 'Articles',
+            slug: 'articles',
+            fields: [{
                 type_id: 1,
-                name: "title",
-                label: "Title",
-              }]
-          })
+                name: 'title',
+                label: 'Title',
+            }]
+        });
   
-          await testCT.save();
+        await testCT.save();
 
         drafterbit.boot(options);
     });
@@ -91,7 +91,7 @@ describe('Content', () => {
             chai.request(drafterbit)
                 .post('/articles?api_key=test')
                 .send({
-                    title: "Test article 1",
+                    title: 'Test article 1',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -109,7 +109,7 @@ describe('Content', () => {
                     done();
                 });
         });
-    })
+    });
 
     describe('GET content item', () => {
         let testId;
@@ -117,21 +117,21 @@ describe('Content', () => {
             chai.request(drafterbit)
                 .post('/articles?api_key=test')
                 .send({
-                    title: "Test article 2",
+                    title: 'Test article 2',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
                     testId = res.body.item._id;
                     done();
                 });
-        })
+        });
 
         it('should return get single record just fine', done => {
             chai.request(drafterbit)
                 .get(`/articles/${testId}?api_key=test`)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    expect(res.body.title).to.be.eql("Test article 2");
+                    expect(res.body.title).to.be.eql('Test article 2');
                     done();
                 });
         });
@@ -153,7 +153,7 @@ describe('Content', () => {
             chai.request(drafterbit)
                 .post('/articles?api_key=test')
                 .send({
-                    title: "Test article 1",
+                    title: 'Test article 1',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -161,13 +161,13 @@ describe('Content', () => {
                     testId = res.body.item._id;
                     done();
                 });
-        })
+        });
 
         it('it should update content', done => {
             chai.request(drafterbit)
                 .patch(`/articles/${testId}?api_key=test`)
                 .send({
-                    title: "Test article 1 Edited",
+                    title: 'Test article 1 Edited',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -175,7 +175,7 @@ describe('Content', () => {
                     chai.request(drafterbit)
                         .get(`/articles/${testId}?api_key=test`)
                         .end((err, res) => {
-                            expect(res.body.title).to.be.eql("Test article 1 Edited");
+                            expect(res.body.title).to.be.eql('Test article 1 Edited');
                             done();                             
                         });
                 });

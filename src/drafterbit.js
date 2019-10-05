@@ -25,7 +25,7 @@ app._models = [];
 app._booted = false;
 app._mongo_connections = {};
 app._mongoDefaultConn = null;
-app._mongoConfig = {}
+app._mongoConfig = {};
 app.modules = [];
 
 /**
@@ -53,7 +53,7 @@ app.build = function build() {
  */
 app.setDefaultConn = function setDefaultConn(str) {
     this._mongoDefaultConn = str;
-}
+};
 
 /**
  *
@@ -83,10 +83,10 @@ app.boot = function boot(options) {
     this._mongoConfig[this._mongoDefaultConn] = {
         protocol: config.get('MONGODB_PROTOCOL'),
         host: config.get('MONGODB_HOST'),
-        port: config.get("MONGODB_PORT"),
+        port: config.get('MONGODB_PORT'),
         user: config.get('MONGODB_USER'),
         pass: config.get('MONGODB_PASS')
-    }
+    };
 
     // init modules
     let modules = config.get('modules');
@@ -98,7 +98,7 @@ app.boot = function boot(options) {
 
         // register db schema
         let db = this.getDB();
-        if(typeof moduleInstance.registerSchema == "function") {
+        if(typeof moduleInstance.registerSchema == 'function') {
             moduleInstance.registerSchema(db);            
         }
 
