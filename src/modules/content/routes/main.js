@@ -1,15 +1,8 @@
 const express = require('express');
 const validateRequest = require('../../../middlewares/validateRequest');
 const { parseFilterQuery } = require( '../../../filterQuery');
-const { FIELD_NUMBER,
-    FIELD_RELATION_TO_ONE,
-    FIELD_RELATION_TO_MANY,
-    FIELD_RICH_TEXT,
-    FIELD_LONG_TEXT,
-    FIELD_SHORT_TEXT,
-    FIELD_UNSTRUCTURED,
-    getFieldTypes } = require( '../../../fieldTypes');
 const contentMiddleware = require('../middlewares/content');
+const handleFunc = require('../../../handleFunc');
 
 let router = express.Router();
 
@@ -53,23 +46,11 @@ router.delete('/:slug/:id',
         },
     }),
     contentMiddleware(),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let  Model = req.app.model(req.params['slug']);
-                let item = await Model.findOneAndDelete({_id: req.params.id });
-                res.send(item);
-
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.params['slug']);
+        return await Model.findOneAndDelete({_id: req.params.id });
+    })
+);
 
 
 /**
@@ -109,23 +90,11 @@ router.get('/:slug/:id',
         },
     }),
     contentMiddleware(),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let  Model = req.app.model(req.contentType.slug);
-                let item = await Model.findOne({_id: req.params.id });
-                res.send(item);
-
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
+        return await Model.findOne({_id: req.params.id });
+    })
+);
 
 /**
  * @swagger
@@ -164,23 +133,11 @@ router.patch('/:slug/:id',
         },
     }),
     contentMiddleware(),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let  Model = req.app.model(req.contentType.slug);
-                let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
-                res.send(item);
-
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
+        return await Model.findOneAndUpdate({_id: req.params.id }, req.body);
+    })    
+);
 
 /**
  * @swagger
@@ -211,27 +168,16 @@ router.post('/:slug',
         }
     }),
     contentMiddleware(),
-    function (req, res) {
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
 
-        (async function () {
-
-            try {
-                let  Model = req.app.model(req.contentType.slug);
-
-                let item = await Model.create(req.body);
-		            res.send({
-			            message: 'created',
-			            item
-		            });
-
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+        let item = await Model.create(req.body);
+        return {
+            message: 'created',
+            item
+        }
+    })
+);
 
 
 /**
@@ -261,67 +207,57 @@ router.get('/:slug',
         }
     }),
     contentMiddleware(),
-    function (req, res) {
-        (async function () {
+    handleFunc(async function(req, res) {
 
-            let page = req.query.page || 1;
-            let sortBy = req.query.sort_by;
-            let sortDir = req.query.sort_dir || 'asc';
-            const PER_PAGE = 10;
-            let offset = (page*PER_PAGE) - PER_PAGE;
-            let max = PER_PAGE;
+        let page = req.query.page || 1;
+        let sortBy = req.query.sort_by;
+        let sortDir = req.query.sort_dir || 'asc';
+        const PER_PAGE = 10;
+        let offset = (page*PER_PAGE) - PER_PAGE;
+        let max = PER_PAGE;
 
-            let filterObj = parseFilterQuery(req.query.fq);
+        let filterObj = parseFilterQuery(req.query.fq);
+        let m = req.app.model(req.params['slug']);
 
-            try {
+        let sortD = sortDir == 'asc' ? 1 : -1;
 
-                let m = req.app.model(req.params['slug']);
-
-                let sortD = sortDir == 'asc' ? 1 : -1;
-
-                let matchRule = {};
-                if(filterObj) {
-                    Object.keys(filterObj).forEach((k) => {
-                        matchRule[k] = {
-                            $regex: `.*${filterObj[k]}.*`
-                        };
-                    });
-                }
+        let matchRule = {};
+        if(filterObj) {
+            Object.keys(filterObj).forEach((k) => {
+                matchRule[k] = {
+                    $regex: `.*${filterObj[k]}.*`
+                };
+            });
+        }
 
 
-                let sortObj;
-                if(!!sortBy && sortBy !== '_id') {
-                    sortObj = {
-                        [sortBy]: sortD
-                    };
-                } else {
-                    sortObj = {'_id': sortD};
-                }
+        let sortObj;
+        if(!!sortBy && sortBy !== '_id') {
+            sortObj = {
+                [sortBy]: sortD
+            };
+        } else {
+            sortObj = {'_id': sortD};
+        }
 
-                let query = m.find(matchRule, null, {
-                    sort: sortObj
-                }).select(['-__v']).skip(offset).limit(max);
+        let query = m.find(matchRule, null, {
+            sort: sortObj
+        }).select(['-__v']).skip(offset).limit(max);
 
-                req.lookupFields.forEach(f => {
-                    query.populate({
-                        path: f.name,
-                        select: '-__v',
-                        options: { limit: 5 }
-                    });
-                });
+        req.lookupFields.forEach(f => {
+            query.populate({
+                path: f.name,
+                select: '-__v',
+                options: { limit: 5 }
+            });
+        });
 
-                let results = await query.exec();
+        let results = await query.exec();
 
-                let dataCount = await m.find(matchRule).estimatedDocumentCount();
-                res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
-                res.send(results);
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+        let dataCount = await m.find(matchRule).estimatedDocumentCount();
+        res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
+        res.send(results);
+    })
+);
 
 module.exports = router;

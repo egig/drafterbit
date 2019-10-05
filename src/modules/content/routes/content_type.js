@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest  = require('../../../middlewares/validateRequest');
-
+const handleFunc = require('../../../handleFunc')
 
 let router = express.Router();
 
@@ -34,20 +34,11 @@ router.get('/content_types/:content_type_id',
             errorMessage: 'content_type_id is required'
         }
     }),
-    function (req, res) {
-        (async function () {
-
-            try {
-                let m = req.app.model('ContentType');
-                let results = await m.getContentType(req.params.content_type_id);
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+    handleFunc(async (req) => {
+        let m = req.app.model('ContentType');
+        return await m.getContentType(req.params.content_type_id);
+    })
+);
 
 
 /**
@@ -62,20 +53,10 @@ router.get('/content_types/:content_type_id',
  *     tags:
  *        - /content_types
  */
-router.get('/content_types',
-    function (req, res) {
-        (async function () {
-            try {
-                let m = req.app.model('ContentType');
-                let results = await m.getContentTypes();
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+router.get('/content_types', handleFunc(async (req) => {
+    let m = req.app.model('ContentType');
+    return await m.getContentTypes();
+}));
 
 /**
  * @swagger
@@ -132,24 +113,12 @@ router.post('/content_types',
             errorMessage: 'fields must be array'
         }
     }),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('ContentType');
-                let results = await m.createContentType(req.body.name, req.body.slug,
-                    req.body.description, req.body.fields);
-                res.send(results);
-            } catch (e ) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+    handleFunc(async function(req) {
+        let m = req.app.model('ContentType');
+        return await m.createContentType(req.body.name, req.body.slug,
+            req.body.description, req.body.fields);
+    })
+);
 
 /**
  * @swagger
@@ -193,25 +162,11 @@ router.post('/content_types',
 router.post('/projects/:project_slug/content_types/:content_type_id/fields',
     validateRequest({
     }),
-    function (req, res) {
-
-        (async function () {
-            
-            let contentTypeId = req.params['content_type_id'];
-
-            try {
-                let m = req.app.model('ContentType');                
-                let results = await m.addField(contentTypeId, req.body);
-                res.send(results);
-            } catch (e ) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+    handleFunc(async function(req) {
+        let contentTypeId = req.params['content_type_id'];
+        return await m.addField(contentTypeId, req.body);        
+    })
+);
 
 /**
  * @swagger
@@ -240,22 +195,11 @@ router.delete('/content_types/:content_type_id',
             errorMessage: 'content_type_id required'
         }
     }),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('ContentType');                
-                let results = await m.deleteContentType(req.params.content_type_id);
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+    handleFunc(async function(req) {
+        let m = req.app.model('ContentType');
+        return await m.deleteContentType(req.params.content_type_id);
+    })
+);
 
 /**
  * @swagger
@@ -310,27 +254,14 @@ router.patch('/content_types/:content_type_id',
             errorMessage: 'description must be string'
         },
     }),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('ContentType');
-                let results = await m.updateContentType(req.params.content_type_id, req.body);
-
-                // update compiled models
-                // TODO ensure this relieable methods
-                // req.app.getDB(req._dbName).models = {};
-
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+    handleFunc(async function(req) {
+        let m = req.app.model('ContentType');
+        return await m.updateContentType(req.params.content_type_id, req.body);
+        // update compiled models
+        // TODO ensure this relieable methods
+        // req.app.getDB(req._dbName).models = {};
+    })
+);
 
 
 /**
@@ -385,28 +316,16 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
             errorMessage: 'description must be string'
         },
     }),
-    function (req, res) {
+    handleFunc(async function(req) {
+        let contentTypeId = req.params['content_type_id'];
+        let fieldId = req.params['field_id'];
+        let m = req.app.model('ContentType');
+        return await m.updateContentTypeField(contentTypeId, fieldId, req.body);
 
-        (async function () {
-
-            try {
-                let contentTypeId = req.params['content_type_id'];
-                let fieldId = req.params['field_id'];
-                let m = req.app.model('ContentType');
-                let results = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
-
-                // update compiled models
-                // TODO ensure this relieable methods
-                req.app.getDB(req._dbName).models = {};
-
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+        // update compiled models
+        // TODO ensure this relieable methods
+        // req.app.getDB(req._dbName).models = {};
+    })
+);
 
 module.exports =  router;
