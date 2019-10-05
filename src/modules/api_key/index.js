@@ -1,5 +1,6 @@
 const apiKeyMiddleware = require('./middlewares/apiKey');
 const routes = require('./routes');
+const ApiKeySchema  = require('./models/apiKey');
 
 class AuthModule {
     constructor(app) {
@@ -10,6 +11,10 @@ class AuthModule {
         app.on('routing', () => {
             app.use(routes);
         });
+    }
+
+    registerSchema(db) {
+        db.model(`ApiKey`, ApiKeySchema, '_api_keys');        
     }
 
     getAdminClientEntry() {

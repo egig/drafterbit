@@ -1,18 +1,5 @@
-const ApiKeySchema  = require('../models/ApiKey');
-const getDbName  = require('../../../getDbName');
-
 module.exports = function apiKeyMiddleware() {
     return function (req, res, next) {
-
-        let dbName = getDbName(req);
-        let db = req.app.getDB(dbName);
-
-        // Kick out model
-        try {
-            db.model(`${dbName}_ApiKey`);
-        } catch (error) {
-            db.model(`${dbName}_ApiKey`, ApiKeySchema, '_api_keys');
-        }
 
         // TODO get this from config
         let excludePattern = [
@@ -38,7 +25,7 @@ module.exports = function apiKeyMiddleware() {
 
         let apiKey = req.query['api_key'];
 
-        let Model = req.model('ApiKey');
+        let Model = req.app.model('ApiKey');
 
         Model.getApiKeyByKey(apiKey)
             .then(apiK => {

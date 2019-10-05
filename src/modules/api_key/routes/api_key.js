@@ -21,7 +21,7 @@ router.get('/api_keys',
         (async function () {
 
             try {
-                let m = req.model('ApiKey');
+                let m = req.app.model('ApiKey');
                 let results = await m.getApiKeys();
                 res.send(results);
             } catch (e) {
@@ -85,7 +85,7 @@ router.post('/api_keys',
 
             try {
 
-                let m = req.model('ApiKey');
+                let m = req.app.model('ApiKey');
                 await m.createApiKey(
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
@@ -137,7 +137,7 @@ router.get('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let m = req.model('ApiKey');
+                let m = req.app.model('ApiKey');
                 let results = await m.getApiKey(req.params['api_key_id']);
                 res.send(results);
 
@@ -185,7 +185,7 @@ router.delete('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let m = req.model('ApiKey');
+                let m = req.app.model('ApiKey');
                 await m.deleteApiKey(req.params.api_key_id);
                 res.send({message: 'OK'});
 
@@ -259,7 +259,7 @@ router.patch('/api_keys/:api_key_id',
         (async function () {
 
             try {
-                let m = req.model('ApiKey');
+                let m = req.app.model('ApiKey');
                 await m.updateApiKey(
                     req.params['api_key_id'],
                     req.body

@@ -8,7 +8,6 @@ const createLogger = require('./createLogger');
 const cors = require('cors');
 const expressValidator = require('express-validator');
 const { ERRNOROOTDIR } = require('./constants');
-const modelMiddleware = require('./middlewares/model');
 
 // TODO
 // const session  = require('express-session');
@@ -99,7 +98,9 @@ app.boot = function boot(options) {
 
         // register db schema
         let db = this.getDB();
-        moduleInstance.registerSchema(db);
+        if(typeof moduleInstance.registerSchema == "function") {
+            moduleInstance.registerSchema(db);            
+        }
 
         return moduleInstance;
     });
@@ -132,7 +133,7 @@ app.boot = function boot(options) {
         }
     }));
 
-    this.use(modelMiddleware());
+    // this.use(modelMiddleware());
     this.emit('boot');
 
     this.emit('routing');

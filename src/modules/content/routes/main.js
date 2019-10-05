@@ -58,7 +58,7 @@ router.delete('/:slug/:id',
         (async function () {
 
             try {
-                let  Model = req.model(req.params['slug']);
+                let  Model = req.app.model(req.params['slug']);
                 let item = await Model.findOneAndDelete({_id: req.params.id });
                 res.send(item);
 
@@ -114,7 +114,7 @@ router.get('/:slug/:id',
         (async function () {
 
             try {
-                let  Model = req.model(req.contentType.slug);
+                let  Model = req.app.model(req.contentType.slug);
                 let item = await Model.findOne({_id: req.params.id });
                 res.send(item);
 
@@ -169,7 +169,7 @@ router.patch('/:slug/:id',
         (async function () {
 
             try {
-                let  Model = req.model(req.contentType.slug);
+                let  Model = req.app.model(req.contentType.slug);
                 let item = await Model.findOneAndUpdate({_id: req.params.id }, req.body);
                 res.send(item);
 
@@ -216,7 +216,7 @@ router.post('/:slug',
         (async function () {
 
             try {
-                let  Model = req.model(req.contentType.slug);
+                let  Model = req.app.model(req.contentType.slug);
 
                 let item = await Model.create(req.body);
 		            res.send({
@@ -275,7 +275,7 @@ router.get('/:slug',
 
             try {
 
-                let m = req.model(req.params['slug']);
+                let m = req.app.model(req.params['slug']);
 
                 let sortD = sortDir == 'asc' ? 1 : -1;
 
