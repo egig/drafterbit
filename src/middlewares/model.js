@@ -6,7 +6,7 @@ module.exports = function modelMiddleware() {
         let dbName = getDbName(req);
         req._dbName = dbName;
         
-        let db = req.app.getDB(dbName);
+        let db = req.app.getDB();
 
         req.model = function (name) {
             return db.model(`${dbName}_${name}`);

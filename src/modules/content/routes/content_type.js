@@ -38,7 +38,7 @@ router.get('/content_types/:content_type_id',
         (async function () {
 
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');
                 let results = await m.getContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -66,7 +66,7 @@ router.get('/content_types',
     function (req, res) {
         (async function () {
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');
                 let results = await m.getContentTypes();
                 res.send(results);
             } catch (e ) {
@@ -137,7 +137,7 @@ router.post('/content_types',
         (async function () {
 
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');
                 let results = await m.createContentType(req.body.name, req.body.slug,
                     req.body.description, req.body.fields);
                 res.send(results);
@@ -200,7 +200,7 @@ router.post('/projects/:project_slug/content_types/:content_type_id/fields',
             let contentTypeId = req.params['content_type_id'];
 
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');                
                 let results = await m.addField(contentTypeId, req.body);
                 res.send(results);
             } catch (e ) {
@@ -245,7 +245,7 @@ router.delete('/content_types/:content_type_id',
         (async function () {
 
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');                
                 let results = await m.deleteContentType(req.params.content_type_id);
                 res.send(results);
             } catch (e ) {
@@ -315,12 +315,12 @@ router.patch('/content_types/:content_type_id',
         (async function () {
 
             try {
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');
                 let results = await m.updateContentType(req.params.content_type_id, req.body);
 
                 // update compiled models
                 // TODO ensure this relieable methods
-                req.app.getDB(req._dbName).models = {};
+                // req.app.getDB(req._dbName).models = {};
 
                 res.send(results);
             } catch (e ) {
@@ -392,7 +392,7 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
             try {
                 let contentTypeId = req.params['content_type_id'];
                 let fieldId = req.params['field_id'];
-                let m = req.model('ContentType');
+                let m = req.app.model('ContentType');
                 let results = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
 
                 // update compiled models

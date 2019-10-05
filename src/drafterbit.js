@@ -25,6 +25,8 @@ let app = express();
 app._models = [];
 app._booted = false;
 app._mongo_connections = {};
+app._mongoDefaultConn = null;
+app._mongoConfig = {}
 app.modules = [];
 
 /**
@@ -45,6 +47,14 @@ app.build = function build() {
     // init modules
     this.emit('build');
 };
+
+/**
+ * 
+ * @param {*} str 
+ */
+app.setDefaultConn = function setDefaultConn(str) {
+    this._mongoDefaultConn = str;
+}
 
 /**
  *
@@ -68,6 +78,16 @@ app.boot = function boot(options) {
     // build skeletons
     let config = createConfig(options);
     let logger = createLogger(config.get('debug'));
+    this.set('log', logger);    
+
+    this. _mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
+    this._mongoConfig[this._mongoDefaultConn] = {
+        protocol: config.get('MONGODB_PROTOCOL'),
+        host: config.get('MONGODB_HOST'),
+        port: config.get("MONGODB_PORT"),
+        user: config.get('MONGODB_USER'),
+        pass: config.get('MONGODB_PASS')
+    }
 
     // init modules
     let modules = config.get('modules');
@@ -76,12 +96,15 @@ app.boot = function boot(options) {
         let ModulesClass = require(modulePath.resolvedPath);
         let moduleInstance = new ModulesClass(this);
         moduleInstance._modulePath = modulePath.resolvedPath;
+
+        // register db schema
+        let db = this.getDB();
+        moduleInstance.registerSchema(db);
+
         return moduleInstance;
     });
 
     this.set('config', config);
-
-    this.set('log', logger);
 
     // build http schema
     this.use(cors({
@@ -123,7 +146,7 @@ app.boot = function boot(options) {
  * @param name
  */
 app.model = function model(name) {
-    return this.getDB(this._project).model(name);
+    return this.getDB().model(name);
 };
 
 
@@ -134,19 +157,23 @@ app.model = function model(name) {
  */
 app.getDB = function getDB(dbName) {
 
+    dbName = dbName || this._mongoDefaultConn;
+
     if(!this._mongo_connections[dbName]) {
-        let config = app.get('config');
-        let p = config.get('MONGODB_PROTOCOL');
-        let host = config.get('MONGODB_HOST');
-        let port = config.get('MONGODB_PORT');
-        let user = config.get('MONGODB_USER');
-        let pass = config.get('MONGODB_PASS');
+
+        const {
+            protocol,
+            host,
+            port,
+            user,
+            pass
+        } = this._mongoConfig[dbName];
 
         if(user || pass) {
             host = `@${host}`;
         }
 
-        let uri = `${p}://${user}${pass ? `:${pass}` : ''}${host}${port ? `:${port}` : ''}/${dbName}?retryWrites=true&w=majority`;
+        let uri = `${protocol}://${user}${pass ? `:${pass}` : ''}${host}${port ? `:${port}` : ''}/${dbName}?retryWrites=true&w=majority`;
 
         this.get('log').info('DB URI = ' + uri);
         let conn = mongoose.createConnection(uri, {
