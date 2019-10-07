@@ -13,11 +13,11 @@ class AdminModule {
 
         app.on('boot', () => {
             
-            let webpackOutputPath = app._root+'/build';            
-            app.use('/', express.static(webpackOutputPath));
+            this.webpackOutputPath = app._root+'/build';            
+            app.use('/', express.static(this.webpackOutputPath));
 
             if(DEBUG) {
-                let webpackConfig = this.prepareWebpackConfig(app, webpackOutputPath);
+                let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
                 const compiler = webpack(webpackConfig);
                 app.use(
                     webpackDevMiddleware(compiler, {
@@ -32,7 +32,9 @@ class AdminModule {
             app.use(routes);
         });
 
-        app.on('build', function () {
+        app.on('build', () => {
+            let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
+            const compiler = webpack(webpackConfig);
 
             compiler.run((err, stats) => {
                 console.log('webpack compiling...');

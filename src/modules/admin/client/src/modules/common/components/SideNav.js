@@ -29,7 +29,7 @@ class SideNav extends React.Component {
                 <div className="sidebarSticky">
                     {this.props.drafterbit.modules.map(mo => {
                         if(typeof mo.renderMenuSection == "function") {
-                            return mo.renderMenuSection();
+                            return mo.renderMenuSection('/admin');
                         }
                     })}
 

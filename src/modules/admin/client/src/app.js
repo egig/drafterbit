@@ -1,6 +1,5 @@
 import React, { lazy } from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
 import moment from 'moment';
 import i18next from 'i18next';
 import safeEval from 'safe-eval';
@@ -89,10 +88,8 @@ function renderApp(dState) {
     drafterbit.store = store;
 
     ReactDOM.render(
-        <HashRouter>
-            <Drafterbit
+        <Drafterbit
                 store={store}
                 drafterbit={drafterbit}
-                languageContext={languageContext} />
-        </HashRouter>, document.getElementById('app'));
+                languageContext={languageContext} />, document.getElementById('app'));
 }
