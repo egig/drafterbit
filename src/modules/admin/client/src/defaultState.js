@@ -7,6 +7,7 @@ export default  {
     },
     USER: {
         loggedIn: 0,
+        token: null,
         currentUser: null,
         users: []
     },

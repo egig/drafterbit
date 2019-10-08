@@ -29,8 +29,22 @@ function createUserClientModule(drafterbit) {
         generalMenus: [
             {link: "/users", label: "Users", iconClass: "icon-user"}
         ],
-        processRoute(route) {
-            //..
+        processRoute(route, location, state) {
+
+            if(location.pathname == "/login") {
+                return route;
+            }
+
+            if(!state.USER.token) {
+                route.redirect = {
+                    pathname: '/login',
+                    state: {
+                        referrer: route.location
+                    }
+                }
+            }
+
+            return route;
         }
     }
 }

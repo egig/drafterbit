@@ -6,7 +6,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { Route } from 'react-router-dom';
 import Dashboard from './modules/common/components/Dashboard';
 import Layout from './modules/common/components/Layout';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Redirect } from 'react-router-dom';
 
 class Drafterbit extends React.Component {
 
@@ -32,8 +32,26 @@ class Drafterbit extends React.Component {
                                         <Suspense fallback={<div>Loading...</div>}>
                                             <Switch>
                                                 {this.props.drafterbit.modules.map(m => {
-                                                    return m.routes.map(r => {
-                                                        return <ProtectedRoute key={r.path} path={r.path} component={r.component} />
+                                                    return m.routes.map(routeConfigItem => {
+
+                                                        for (let i=0; i<this.props.drafterbit.modules.length;i++) {
+                                                            let mo = this.props.drafterbit.modules[i];
+                                                            if(typeof mo.processRoute !== "function") {
+                                                                continue;
+                                                            }
+                                                            
+                                                            let old = routeConfigItem;
+                                                            routeConfigItem = mo.processRoute(routeConfigItem, location, this.props.store.getState());
+                                                            if(!routeConfigItem) {
+                                                                routeConfigItem = old;
+                                                            }
+                                                        }
+                                                    
+                                                        if(!!routeConfigItem.redirect) {
+                                                            return <Redirect to={routeConfigItem.redirect}/>
+                                                        }
+
+                                                        return <Route key={r.path} path={r.path} component={r.component} />
                                                     })
                                                 })}
                                             </Switch>

@@ -3,26 +3,27 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import withDrafterbit from './withDrafterbit';
 
-const ProtectedRoute = (route) => (
-    <Route path={route.path} exact={true} render={props => {
+const ProtectedRoute = (route) => {
+    return <Route path={route.path} exact={true} render={props => {
 
-        let returnComponent;
-
-        // TODO break the loop once compoenent returned
-        route.drafterbit.modules.map((mo) => {
-            if(typeof mo.processRoute == "function") {
-                returnComponent = mo.processRoute(route);
+        for (let i=0; i<route.drafterbit.modules.length;i++) {
+            let mo = route.drafterbit.modules[i];
+            if(typeof mo.processRoute !== "function") {
+                continue;
             }
-        });
+    
+            route = mo.processRoute(route);
+        }
+    
+        if(!!route.redirect) {
+            return <Redirect to={redirect}/>
+        }
 
-        if(!!returnComponent) return returnComponent;
-
-        return  <route.component {...props} routes={route.routes}/>
     }}/>
-);
+};
 
 export default connect(
 
     state => ({
-        currentUser: state.USER.currentUser
+        token: state.USER.token
     }))(withDrafterbit(ProtectedRoute));
