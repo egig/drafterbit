@@ -8,22 +8,11 @@ let UserSchema = new mongoose.Schema({
 });
 
 UserSchema.statics.getUsers = function() {
-    return new Promise((resolve, reject) => {
-        this.find({}, ['_id', 'name', 'email'], function(err, users) {
-            if (err) return reject(err);
-            return resolve(users);
-        });
-    });
+    return this.find({}, ['_id', 'name', 'email']);
 };
 
 UserSchema.statics.getUserByEmail = function(email) {
-    return new Promise((resolve, reject) => {
-
-        this.findOne({email}, function(err, user) {
-            if (err) return reject(err);
-            return resolve(user);
-        });
-    });
+    return this.findOne({email});
 };
 
 /**
@@ -35,21 +24,14 @@ UserSchema.statics.getUserByEmail = function(email) {
  * @return {Promise}
  */
 UserSchema.statics.createUser = function(firstName, lastName, email, password) {
-    return new Promise((resolve, reject) => {
-
-        let newUser = new this.User({
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            password: password
-        });
-
-        newUser.save(function (err) {
-            if (err) return reject(err);
-            resolve(true);
-        });
-
+    let newUser = new this.User({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password
     });
+
+    return newUser.save();
 };
 
 /**
@@ -58,12 +40,7 @@ UserSchema.statics.createUser = function(firstName, lastName, email, password) {
  * @return {Promise}
  */
 UserSchema.statics.deleteUser = function(userId) {
-    return new Promise((resolve, reject) => {
-        this.find({ _id:userId }).remove((err, results) => {
-            if (err) return reject(err);
-            return resolve(results);
-        });
-    });
+    return this.find({ _id:userId }).remove();
 };
 
 
@@ -74,14 +51,7 @@ UserSchema.statics.deleteUser = function(userId) {
  * @return {Promise}
  */
 UserSchema.statics.updateUser = function(userId, payload) {
-    return new Promise((resolve, reject) => {
-
-        this.updateOne({ _id: userId }, payload, (err) => {
-            if (err) return reject(err);
-            return resolve(true);
-        });
-
-    });
+    return this.updateOne({ _id: userId }, payload);
 };
 
 module.exports = UserSchema;

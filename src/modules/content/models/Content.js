@@ -34,17 +34,14 @@ ContentSchema.statics.getCount  = function(contentTypeId, filterObj) {
 
     agg.push({$count: 'content_count'});
 
-    return new Promise((resolve, reject) => {
-        this.aggregate(agg)
-            .exec(function(err, r) {
-                if (err) return reject(err);
-                if(!r.length) {
-                    return resolve(0);
-                }
-
-                return resolve(r[0].content_count);
-            });
-    });
+    return  this.aggregate(agg)
+        .exec()
+        .then(r => {
+            if(!r.length) {
+                return 0;
+            }
+            return r[0].content_counts;
+        })
 };
 
 
@@ -84,14 +81,7 @@ ContentSchema.statics.getContents = function(contentTypeId, offset=0, max=10, so
     agg.push({$skip: offset});
     agg.push({$limit: max});
 
-
-    return new Promise((resolve, reject) => {
-        this.aggregate(agg)
-            .exec(function(err, contents) {
-                if (err) return reject(err);
-                return resolve(contents);
-            });
-    });
+    return  this.aggregate(agg).exec();
 };
 
 /**
@@ -100,12 +90,7 @@ ContentSchema.statics.getContents = function(contentTypeId, offset=0, max=10, so
  * @return {Promise}
  */
 ContentSchema.statics.getContent = function(contentId) {
-    return new Promise((resolve, reject) => {
-        this.findOne({_id: contentId}, function (err, content) {
-            if (err) return reject(err);
-            return resolve(content);
-        });
-    });
+    return this.findOne({_id: contentId});
 };
 
 
@@ -116,20 +101,12 @@ ContentSchema.statics.getContent = function(contentId) {
  * @return {Promise}
  */
 ContentSchema.statics.createContent = function(contentTypeId, fields) {
-
-    return new Promise((resolve, reject) => {
-
-        let newContent = new this({
-            content_type: contentTypeId,
-            fields
-        });
-
-        newContent.save((err, newContent) => {
-            if (err) return reject(err);
-            resolve(newContent);
-        });
-
+    let newContent = new this({
+        content_type: contentTypeId,
+        fields
     });
+
+    return newContent.save();
 };
 
 /**
@@ -138,13 +115,7 @@ ContentSchema.statics.createContent = function(contentTypeId, fields) {
  * @return {Promise}
  */
 ContentSchema.statics.deleteContent = function(contentId) {
-
-    return new Promise((resolve, reject) => {
-        this.deleteOne({_id: contentId}, function(err) {
-            if (err) return reject(err);
-            return resolve(true);
-        });
-    });
+    return this.deleteOne({_id: contentId});
 };
 
 /**
@@ -154,13 +125,7 @@ ContentSchema.statics.deleteContent = function(contentId) {
  * @return {Promise}
  */
 ContentSchema.statics.updateContent = function(contentId, payload) {
-    return new Promise((resolve, reject) => {
-
-        this.update({ _id: contentId },payload,function(err, res) {
-            if (err) return reject(err);
-            return resolve(res);
-        });
-    });
+    return this.update({ _id: contentId },payload);
 };
 
 module.exports = ContentSchema;
