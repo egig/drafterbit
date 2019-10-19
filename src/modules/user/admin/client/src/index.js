@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import reducer from './reducer';
 import { getCookie } from 'drafterbit-module-admin/client/src/cookie';
+import NavBarMenu from './components/NavBarMenu';
 
 const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
@@ -53,6 +54,9 @@ function createUserClientModule() {
             if (!!t) {
                 state.USER.token = t;
             }
+        },
+        renderNavBarMenu(i) {
+            return <NavBarMenu key={i} />
         }
     }
 }

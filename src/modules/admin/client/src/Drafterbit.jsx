@@ -27,7 +27,7 @@ class Drafterbit extends React.Component {
                             let r = new RegExp(`^\/(?!(?:${pagePattern})\/?$).*$`);
                             if(r.test(location.pathname)) {
                                 return (
-                                    <Layout>
+                                    <Layout drafterbit={this.props.drafterbit}>
                                         <Suspense fallback={<div>Loading...</div>}>
                                             <Switch location={location}>
                                                 {this.props.drafterbit.modules.map(m => {

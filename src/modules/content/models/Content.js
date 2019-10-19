@@ -41,7 +41,7 @@ ContentSchema.statics.getCount  = function(contentTypeId, filterObj) {
                 return 0;
             }
             return r[0].content_counts;
-        })
+        });
 };
 
 

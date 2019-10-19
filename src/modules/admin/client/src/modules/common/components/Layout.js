@@ -103,26 +103,12 @@ class Layout extends React.Component {
 		                {/*}} href="/logout">Logout</NavLink>*/}
 		              {/*</NavItem>*/}
 
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                              <img className="layout-avatar-img" src="/img/default-avatar.png" />
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem>
-                                  <Link to={'/my-profile'}>
-                                      My Profile
-                                  </Link>
-                              </DropdownItem>
-                              <DropdownItem divider />
-                              <DropdownItem>
-                                <a onClick={e => {
-                                    e.preventDefault();
-                                    setCookie('dt_auth_token', '');
-                                    window.location.replace('/');
-                                }} href="/logout">Logout</a>
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
+                        {this.props.drafterbit.modules.map((mo,i) => {
+                            if(typeof mo.renderNavBarMenu == "function") {
+                                return mo.renderNavBarMenu(i);
+                            }
+                        })}
+
 		            </Nav>
                      </Collapse>
 	            </Navbar>
