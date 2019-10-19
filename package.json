@@ -44,7 +44,7 @@
     "i18next-xhr-backend": "^1.5.1",
     "immutable": "^3.8.2",
     "js-video-url-parser": "^0.4.0",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "mime-types": "^2.1.22",
     "moment": "^2.19.3",

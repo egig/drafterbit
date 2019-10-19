@@ -1,8 +1,7 @@
-import React, { Suspense, lazy, Fragment } from 'react';
+import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { Switch } from 'react-router';
 import PropTypes from 'prop-types';
-import ProtectedRoute from './ProtectedRoute';
 import { Route } from 'react-router-dom';
 import Dashboard from './modules/common/components/Dashboard';
 import Layout from './modules/common/components/Layout';
@@ -30,28 +29,28 @@ class Drafterbit extends React.Component {
                                 return (
                                     <Layout>
                                         <Suspense fallback={<div>Loading...</div>}>
-                                            <Switch>
+                                            <Switch location={location}>
                                                 {this.props.drafterbit.modules.map(m => {
-                                                    return m.routes.map(routeConfigItem => {
+                                                    return m.routes.map(route => {
 
                                                         for (let i=0; i<this.props.drafterbit.modules.length;i++) {
                                                             let mo = this.props.drafterbit.modules[i];
                                                             if(typeof mo.processRoute !== "function") {
                                                                 continue;
                                                             }
-                                                            
-                                                            let old = routeConfigItem;
-                                                            routeConfigItem = mo.processRoute(routeConfigItem, location, this.props.store.getState());
-                                                            if(!routeConfigItem) {
-                                                                routeConfigItem = old;
+
+                                                            let old = route;
+                                                            route = mo.processRoute(route, location, this.props.store.getState());
+                                                            if(!route) {
+                                                                route = old;
                                                             }
                                                         }
-                                                    
-                                                        if(!!routeConfigItem.redirect) {
-                                                            return <Redirect to={routeConfigItem.redirect}/>
+
+                                                        if(!!route.redirect) {
+                                                            return <Redirect to={route.redirect}/>
                                                         }
 
-                                                        return <Route key={r.path} path={r.path} component={r.component} />
+                                                        return <Route key={route.path} exact={true} path={route.path} component={route.component} />
                                                     })
                                                 })}
                                             </Switch>
@@ -67,7 +66,7 @@ class Drafterbit extends React.Component {
                                 }
                             });
 
-                        }} />                          
+                        }} />
                     </Suspense>
                 </HashRouter>                    
             </Provider>

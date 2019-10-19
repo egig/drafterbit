@@ -165,6 +165,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default translate(['translation'])(withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Layout))
-);
+export default translate(['translation'])(
+    connect(mapStateToProps, mapDispatchToProps)(Layout));

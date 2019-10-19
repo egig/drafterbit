@@ -162,7 +162,7 @@ app.getDB = function getDB(dbName) {
 
     if(!this._mongo_connections[dbName]) {
 
-        const {
+        let {
             protocol,
             host,
             port,

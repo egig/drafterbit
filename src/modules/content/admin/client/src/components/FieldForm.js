@@ -295,7 +295,7 @@ class FieldForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        contentTypes: state.CONTENT_TYPE.contentTypes
+        contentTypes: state.CONTENT.contentTypes
     };
 };
 export default connect(mapStateToProps)(withDrafterbit(FieldForm));

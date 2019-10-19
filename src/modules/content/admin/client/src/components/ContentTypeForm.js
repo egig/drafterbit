@@ -120,8 +120,8 @@ ContentTypeForm.defaultProps = {
 
 const mapStateToProps = (state) => {
     return {
-	    contentType: state.CONTENT_TYPE.contentType,
-	    contentTypes: state.CONTENT_TYPE.contentTypes,
+	    contentType: state.CONTENT.contentType,
+	    contentTypes: state.CONTENT.contentTypes,
     };
 };
 

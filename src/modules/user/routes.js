@@ -1,6 +1,5 @@
 const express = require('express');
-const crypto = require( 'crypto');
-const User = require('./models/User');
+const jwt = require('jsonwebtoken');
 const password = require('./lib/password');
 const UserAuthError  = require('./UserAuthError');
 const validateRequest = require('../../middlewares/validateRequest');
@@ -92,7 +91,7 @@ router.get('/users/is_login',
  *     tags:
  *        - /users/
  */
-router.post('/users/session',
+router.post('/token',
     validateRequest({
         email: {
             isString: true,
@@ -100,7 +99,7 @@ router.post('/users/session',
         },
         password: {
             isString: true,
-            errorMessage: 'passwprd is required'
+            errorMessage: 'password is required'
         }
     }),
     function (req, res) {
@@ -111,7 +110,7 @@ router.post('/users/session',
                 let email = req.body.email;
                 let rawPassword = req.body.password;
 
-                let m = User(req.app.get('db'));
+                let m = req.app.model('User');
                 let user = await m.getUserByEmail(email);
 
                 if(!user) {
@@ -124,7 +123,12 @@ router.post('/users/session',
                     throw new UserAuthError('Wrong email or password');
                 }
 
-                let token = crypto.randomBytes(32).toString('hex');
+                let token = jwt.sign({
+                    id: user.id,
+                    email: user.email,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                }, 'secretkey');
 
                 let authUser = {
                     id: user.id,
@@ -134,12 +138,12 @@ router.post('/users/session',
                     token: token
                 };
 
-                let cache = req.app.get('cache');
-                let key = createSessionKey(token, user.id);
-                await cache.delWithPattern(`*session-${user.id}-*`);
-                await cache.set(key, JSON.stringify(authUser), {
-                    ttl: 28800
-                });
+                // let cache = req.app.get('cache');
+                // let key = createSessionKey(token, user.id);
+                // await cache.delWithPattern(`*session-${user.id}-*`);
+                // await cache.set(key, JSON.stringify(authUser), {
+                //     ttl: 28800
+                // });
 
                 res.send(authUser);
 
@@ -173,7 +177,7 @@ router.get('/users', function (req, res) {
     (async function () {
 
         try {
-            let m = req.app.model('@user/User');
+            let m = req.app.model('User');
             let results = await m.getUsers();
             res.send(results);
         } catch (e) {
@@ -243,7 +247,7 @@ router.post('/users',
             try {
                 let hashedPassword = await password.hash(req.body.password);
 
-                let m = req.app.model('@user/User');
+                let m = req.app.model('User');
                 // TODO validation
                 await m.createUser(
                     req.body.first_name,

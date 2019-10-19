@@ -8,7 +8,7 @@ let UserSchema = new mongoose.Schema({
 });
 
 UserSchema.statics.getUsers = function() {
-    return this.find({}, ['_id', 'name', 'email']);
+    return this.find({}, ['_id', 'first_name', 'last_name', 'email']);
 };
 
 UserSchema.statics.getUserByEmail = function(email) {
@@ -24,7 +24,7 @@ UserSchema.statics.getUserByEmail = function(email) {
  * @return {Promise}
  */
 UserSchema.statics.createUser = function(firstName, lastName, email, password) {
-    let newUser = new this.User({
+    let newUser = new this({
         first_name: firstName,
         last_name: lastName,
         email: email,

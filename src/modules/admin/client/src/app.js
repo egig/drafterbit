@@ -11,7 +11,8 @@ import './index.css';
 
 import Drafterbit from './Drafterbit';
 import storeFromState  from './storeFromState';
-import defaultState  from './defaultState';
+// import defaultState  from './defaultState';
+import createDefaultState from './createDefaultState';
 import apiClient from './apiClient';
 import {
     getCookie
@@ -61,10 +62,15 @@ function getCurrentUserProject() {
     return Promise.resolve(null);
 }
 
-Promise.all([
-    // getCurrentUserProject(),
-    // drafterbit.getApiClient().getFieldTypes(),
-])
+let defaultState = createDefaultState(drafterbit);
+
+let preRenderActions =  drafterbit.modules.map(mo => {
+    if(typeof mo.preRenderAction === "function") {
+        return mo.preRenderAction(defaultState);
+    }
+}).filter(i => !!i);
+
+Promise.all(preRenderActions)
     .then(reslist => {
         // defaultState.USER.currentUser = {};
         renderApp(defaultState);

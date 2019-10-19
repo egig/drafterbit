@@ -7,7 +7,9 @@ export default function createRootReducer(drafterbit) {
         COMMON: commonReducer
     }
     drafterbit.modules.map(mo => {
-        reducerMap[mo.stateName] = mo.reducer;
+        if(!!mo.stateName) {
+            reducerMap[mo.stateName] = mo.reducer;
+        }
     })
 
     let rootReducer = combineReducers(reducerMap);

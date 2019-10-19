@@ -18,7 +18,11 @@ function createContentClientModule(drafterbit) {
                 fields: []
             },
             contents: [],
-            ctFields: {fields: []}
+            ctFields: {fields: []},
+            contentType: {
+                fields: []
+            },
+            contentTypes: []
         },
         reducer: reducer,
         routes: [
@@ -30,8 +34,8 @@ function createContentClientModule(drafterbit) {
         generalMenus: [
             {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
         ],
-        renderMenuSection() {
-            return <MenuSection />
+        renderMenuSection(i) {
+            return <MenuSection key={i} />
         },
         processRoute(route) {
             //..

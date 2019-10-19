@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import reducer from './reducer';
-import { Redirect } from 'react-router-dom';
+import { getCookie } from 'drafterbit-module-admin/client/src/cookie';
 
 const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
@@ -8,13 +8,15 @@ const ResetPassword = lazy(() => import('./components/ResetPassword'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
 const Users = lazy(() => import('./components/Users'));
 
-function createUserClientModule(drafterbit) {
+function createUserClientModule() {
 
     return {
         name: "user",
         stateName: "USER",
         defaultState: {
             currentUser: null,
+            token: null,
+            users: []
         },
         reducer: reducer,
         pageRoutes: [
@@ -31,7 +33,7 @@ function createUserClientModule(drafterbit) {
         ],
         processRoute(route, location, state) {
 
-            if(location.pathname == "/login") {
+            if(location.pathname === "/login") {
                 return route;
             }
 
@@ -45,8 +47,14 @@ function createUserClientModule(drafterbit) {
             }
 
             return route;
+        },
+        preRenderAction(state) {
+            let t = getCookie('dt_auth_token')
+            if (!!t) {
+                state.USER.token = t;
+            }
         }
     }
 }
 
-window.__DRAFTERBIT__.addModule(createUserClientModule(window.__DRAFTERBIT__))
+window.__DRAFTERBIT__.addModule(createUserClientModule(window.__DRAFTERBIT__));

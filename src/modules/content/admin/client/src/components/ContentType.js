@@ -197,7 +197,7 @@ class ContentType extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        contentTypes: state.CONTENT_TYPE.contentTypes
+        contentTypes: state.CONTENT.contentTypes
     };
 };
 

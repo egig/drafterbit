@@ -127,7 +127,7 @@ ContentType.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-      contentTypes: state.CONTENT_TYPE.contentTypes
+      contentTypes: state.CONTENT.contentTypes
   };
 }
 

@@ -27,9 +27,9 @@ class SideNav extends React.Component {
         return (
             <nav className={'col-md-2 d-none d-md-block bg-light sidebar'}>
                 <div className="sidebarSticky">
-                    {this.props.drafterbit.modules.map(mo => {
+                    {this.props.drafterbit.modules.map((mo,i) => {
                         if(typeof mo.renderMenuSection == "function") {
-                            return mo.renderMenuSection('/admin');
+                            return mo.renderMenuSection(i);
                         }
                     })}
 
@@ -57,7 +57,7 @@ class SideNav extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        contentTypes: state.CONTENT_TYPE.contentTypes
+        contentTypes: state.CONTENT.contentTypes
     };
 };
 
