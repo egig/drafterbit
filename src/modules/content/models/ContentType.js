@@ -22,13 +22,7 @@ let ContentTypeSchema = new mongoose.Schema({
  * @return {Promise}
  */
 ContentTypeSchema.statics.addField = function(contentTypeId, field) {
-    return new Promise((resolve, reject) => {
-
-        this.update({ _id: contentTypeId }, { $push: { fields: field } }, function(err, res) {
-            if (err) return reject(err);
-            return resolve(res);
-        });
-    });
+    return this.updateOne({ _id: contentTypeId }, { $push: { fields: field } });
 };
 
 

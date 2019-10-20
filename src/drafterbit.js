@@ -24,7 +24,7 @@ let app = express();
 app._models = [];
 app._booted = false;
 app._mongo_connections = {};
-app._mongoDefaultConn = null;
+app._mongoDefaultConn = null; // TODO move this to req.locals
 app._mongoConfig = {};
 app.modules = [];
 

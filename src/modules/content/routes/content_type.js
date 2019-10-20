@@ -159,12 +159,19 @@ router.post('/content_types',
  *     tags:
  *        - /content_types
  */
-router.post('/projects/:project_slug/content_types/:content_type_id/fields',
+router.post('/content_types/:content_type_id/fields',
     validateRequest({
     }),
     handleFunc(async function(req) {
+        let m = req.app.model('ContentType');
         let contentTypeId = req.params['content_type_id'];
-        return await m.addField(contentTypeId, req.body);        
+        let s = await m.addField(contentTypeId, req.body);
+
+        // update compiled models
+        let contentType = await  m.getContentType(contentTypeId);
+        delete req.app.getDB().models[contentType.slug];
+
+        return s;
     })
 );
 
@@ -256,10 +263,15 @@ router.patch('/content_types/:content_type_id',
     }),
     handleFunc(async function(req) {
         let m = req.app.model('ContentType');
-        return await m.updateContentType(req.params.content_type_id, req.body);
+        let contentTypeId = req.params.content_type_id;
+
+        let s =  await m.updateContentType(contentTypeId, req.body);
+
         // update compiled models
-        // TODO ensure this relieable methods
-        // req.app.getDB(req._dbName).models = {};
+        let contentType = await  m.getContentType(contentTypeId);
+        delete req.app.getDB().models[contentType.slug];
+
+        return s;
     })
 );
 
@@ -320,11 +332,11 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
         let contentTypeId = req.params['content_type_id'];
         let fieldId = req.params['field_id'];
         let m = req.app.model('ContentType');
-        return await m.updateContentTypeField(contentTypeId, fieldId, req.body);
+        let s = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
 
-        // update compiled models
-        // TODO ensure this relieable methods
-        // req.app.getDB(req._dbName).models = {};
+        delete req.app.getDB().models[contentTypeId];
+
+        return s;
     })
 );
 

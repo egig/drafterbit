@@ -36,43 +36,6 @@ class Client {
         return response.data;
     }
 
-    // async createProject(projectName, projectDescription, userId) {
-    //     let response = await this.axiosInstance.post(`/users/${userId}/projects`, {
-    //         name: projectName,
-    //         description: projectDescription
-    //     });
-    //     return response.data;
-    // }
-
-    // async updateProject(projectId, projectName, projectDescription) {
-    //     let response = await this.axiosInstance.patch(`/projects/${projectId}`, {
-    //         name: projectName,
-    //         description: projectDescription
-    //     });
-    //     return response.data;
-    // }
-    //
-    // async deleteProject(projectId) {
-    //     let response = await this.axiosInstance.delete(`/projects/${projectId}`);
-    //     return response.data;
-    // }
-    //
-    // async getProjects(userId) {
-    //     userId = userId || this.getCurrentUserId();
-    //     let response = await this.axiosInstance.get(`/users/${userId}/projects`);
-    //     return response.data;
-    // }
-    //
-    // async getProject(projectId) {
-    //     let response = await this.axiosInstance.get(`/projects/${projectId}`);
-    //     return response.data;
-    // }
-
-    // async getProjectStat(projectId) {
-    //     let response = await this.axiosInstance.get(`/projects/${projectId}/stat`);
-    //     return response.data;
-    // }
-
     async getContentTypes() {
         return this._doGetRequest('/content_types');
     }
@@ -121,12 +84,14 @@ class Client {
     }
 
     /**
-     * 
-     * @param {*} contentTypeId 
-     * @param {*} label 
-     * @param {*} name 
-     * @param {*} relatedContentTypeSlug 
-     * @param {*} validationRules 
+     *
+     * @param contentTypeId
+     * @param label
+     * @param name
+     * @param typeId
+     * @param relatedContentTypeSlug
+     * @param validationRules
+     * @returns {Promise<*>}
      */
     async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules)  {
         let url = `/content_types/${contentTypeId}/fields`;
@@ -146,12 +111,12 @@ class Client {
     }
 
     async createDraft(slug) {
-        let response = await this.axiosInstance.post(`/content_types/${slug}`, {});
+        let response = await this.axiosInstance.post(`/${slug}`, {});
         return response.data;
     }
 
     async getEntries(slug, page, sortBy, sortDir, fqSr) {
-        return await this.axiosInstance.get(`/${slug}`, {
+        return this.axiosInstance.get(`/${slug}`, {
             params: {
                 page,
                 sort_by: sortBy,

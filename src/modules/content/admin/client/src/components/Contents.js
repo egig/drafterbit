@@ -34,7 +34,7 @@ class Contents extends React.Component {
 		    let qs = querystring.parse(this.props.location.search.substr(1));
 		    let nextQs = querystring.parse(nextProps.location.search.substr(1));
 
-		    let isPathSame = (nextProps.match.params.content_type_slug == this.props.match.params.content_type_slug);
+		    let isPathSame = (nextProps.match.params.content_type_slug === this.props.match.params.content_type_slug);
 
 		    if(isPathSame && _.isEqual(qs, nextQs)) {
 			    return;

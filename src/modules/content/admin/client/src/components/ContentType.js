@@ -100,7 +100,7 @@ class ContentType extends React.Component {
 		            </Col>
 		            <Col md="12">
 			            <Card headerText="Fields">
-					            <button onClick={e => {
+                            <button onClick={e => {
                                 e.preventDefault();
                                 this.setState({
                                     fieldDialogActive: true,

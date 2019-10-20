@@ -219,7 +219,7 @@ router.get('/:slug',
         let filterObj = parseFilterQuery(req.query.fq);
         let m = req.app.model(req.params['slug']);
 
-        let sortD = sortDir == 'asc' ? 1 : -1;
+        let sortD = sortDir === 'asc' ? 1 : -1;
 
         let matchRule = {};
         if(filterObj) {
