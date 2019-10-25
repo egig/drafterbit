@@ -11,6 +11,7 @@ class ContentType extends React.Component {
     super(props);
     this.state = {
       contentType: props.data.get('content_type'),
+      contentTypes: [],
       contentEntryOptions: [],
       contentEntryValue: props.data.get('entry'),
     };
@@ -23,10 +24,22 @@ class ContentType extends React.Component {
   };
 
   componentDidMount() {
-    let contentType = this.props.data.get('content_type');
-    if(!!contentType) {
-      this.loadContent(contentType);      
-    }
+
+    let client = this.props.drafterbit.getApiClient();
+    client.getContentTypes()
+        .then((contentTypes) => {
+          this.setState({
+            contentTypes: contentTypes
+          });
+        })
+        .then(() => {
+
+          let contentType = this.props.data.get('content_type');
+          if(!!contentType) {
+            this.loadContent(contentType);
+          }
+
+        });
   }
 
   loadContent = (contentType) => {
@@ -75,7 +88,7 @@ class ContentType extends React.Component {
     const { value } = this.state;
     const { data } = this.props;
 
-    let options = this.props.contentTypes.map(c => {
+    let options = this.state.contentTypes.map(c => {
       return {
         value: c.slug,
         label: c.name
@@ -102,7 +115,8 @@ class ContentType extends React.Component {
         <label>Select Content Type </label>
         <Select
           defaultValue={defaultValue}
-          autoFocus={true}
+          value={defaultValue}
+          autoFocus={!defaultValue}
           onChange={this.handleChange}
           onBlur={this.handleBlur} options={options} />
           <div className="mb-2" />
@@ -120,14 +134,14 @@ class ContentType extends React.Component {
   }
 }
 
-ContentType.defaultProps = {
-  contentTypes: []
-}
+// ContentType.defaultProps = {
+//   contentTypes: []
+// }
 
 
 const mapStateToProps = (state) => {
   return {
-      contentTypes: state.CONTENT.contentTypes
+      // contentTypes: state.CONTENT.contentTypes
   };
 }
 
