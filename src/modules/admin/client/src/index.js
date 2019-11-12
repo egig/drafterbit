@@ -6,7 +6,7 @@ import getProject from './getProject';
 class Drafterbit extends EventEmitter {
 
     modules = [];
-
+    getConfig = getConfig;
     getApiClient () {
         if(!this.apiClient) {
             this.apiClient =  apiClient.createClient({

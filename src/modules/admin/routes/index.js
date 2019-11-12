@@ -29,6 +29,7 @@ router.get('/', function (req, res) {
     let config = req.app.get('config');
 
     let drafterbitConfig = {
+        appName: config.get('appName'),
         projectSlug: getProjectSlug(req),
         debug: +config.get('DEBUG'),
         apiBaseURL: config.get('admin.api_base_url'),

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Card, CardBody, CardHeader } from 'reactstrap';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
 import './AuthCard.css';
 
@@ -12,7 +13,8 @@ class AuthCard extends React.Component {
                     <div className="row justify-content-md-center h-100">
                         <div className="auth_card-cardWrapper">
                             <div className={'brand auth_card-brandContainer'}>
-                                <img className="auth_card-brandImg" src="/img/dtlogo3-black.png" />
+                                {/*<img className="auth_card-brandImg" src="/img/dtlogo3-black.png" />*/}
+                                <h1 className="auth_card-brandImg">{this.props.drafterbit.getConfig("appName")}</h1>
                                 <small className="auth_card-versionBadge">alpha</small>
                             </div>
                             <Card className="fat">
@@ -34,4 +36,4 @@ class AuthCard extends React.Component {
     }
 }
 
-export default AuthCard;
+export default withDrafterbit(AuthCard);

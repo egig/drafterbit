@@ -11,6 +11,7 @@ const content = require('./modules/content');
 function createConfig(options) {
 
     const defaultConfig = {
+        'appName': "Unnamed App",
         'debug': true,
         'PORT': 3000,
         'SESSION_SECRET': 'secr3t',

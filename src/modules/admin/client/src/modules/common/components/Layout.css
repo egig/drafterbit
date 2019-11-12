@@ -1,5 +1,7 @@
 .layout-versionBadge {
     color: orange;
+    position: relative;
+    left: -10px;
 }
 
 .layout-navbar {
@@ -15,7 +17,11 @@
 }
 
 .layout-navbarBrandImg {
-    max-width: 98px;
+    max-width: 230px;
+    color: #f1f1f1;
+    font-size: 30px;
+    display: inline-block;
+    font-weight: bold;
 }
 
 .layout-navbarForm {

@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { setCookie } from '../../../cookie';
 import Notify from '../../../components/Notify';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
 import './Layout.css';
 
@@ -44,7 +45,8 @@ class Layout extends React.Component {
 	            </Helmet>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0" expand="md">
 		            <NavbarBrand className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
-			            <img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>
+			            {/*<img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>*/}
+						<h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1>
 						<small className="layout-versionBadge">alpha</small>
 		            </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
@@ -152,4 +154,4 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default translate(['translation'])(
-    connect(mapStateToProps, mapDispatchToProps)(Layout));
+    connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(Layout)));
