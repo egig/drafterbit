@@ -17,7 +17,7 @@ class Register extends React.Component {
     }
 
     onSubmit(form) {
-        let clieni = new ApiClient({});
+        let client = new ApiClient({});
         return client
             .createUser(
                 form.full_name.value,

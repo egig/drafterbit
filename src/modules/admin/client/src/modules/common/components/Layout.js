@@ -47,7 +47,6 @@ class Layout extends React.Component {
 		            <NavbarBrand className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
 			            {/*<img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>*/}
 						<h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1>
-						<small className="layout-versionBadge">alpha</small>
 		            </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                      <Collapse isOpen={false} navbar>

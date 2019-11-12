@@ -1,7 +1,4 @@
-const path = require('path');
 const nconf = require('nconf');
-const admin = require('./modules/admin');
-const content = require('./modules/content');
 
 /**
  *

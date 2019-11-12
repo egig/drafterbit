@@ -15,7 +15,6 @@ class AuthCard extends React.Component {
                             <div className={'brand auth_card-brandContainer'}>
                                 {/*<img className="auth_card-brandImg" src="/img/dtlogo3-black.png" />*/}
                                 <h1 className="auth_card-brandImg">{this.props.drafterbit.getConfig("appName")}</h1>
-                                <small className="auth_card-versionBadge">alpha</small>
                             </div>
                             <Card className="fat">
 		                            <CardHeader>

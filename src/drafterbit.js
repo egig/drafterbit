@@ -7,7 +7,7 @@ const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
 const cors = require('cors');
 const expressValidator = require('express-validator');
-const { ERRNOROOTDIR } = require('./constants');
+const { ERR_NO_ROOT_DIR } = require('./constants');
 
 // TODO
 // const session  = require('express-session');
@@ -69,7 +69,7 @@ app.boot = function boot(options) {
     } else {
 
         if(!options['ROOT_DIR']) {
-            throw new Error(ERRNOROOTDIR);
+            throw new Error(ERR_NO_ROOT_DIR);
         }
 
         this._root = options['ROOT_DIR'];
