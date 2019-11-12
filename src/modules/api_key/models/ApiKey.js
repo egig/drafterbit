@@ -51,7 +51,7 @@ ApiKeySchema.statics.deleteApiKey = function (apiKeyId) {
  * @return {Promise}
  */
 ApiKeySchema.statics.updateApiKey = function(apiKeyId, payload) {
-    return this.update({ _id: apiKeyId }, payload);
+    return this.updateOne({ _id: apiKeyId }, payload);
 };
 
 module.exports = ApiKeySchema;

@@ -92,7 +92,7 @@ router.post('/api_keys',
                     req.body.restriction_type,
                     req.body.restriction_value
                 );
-                res.send({message: 'OK'});
+                res.status(201).send({message: 'OK'});
 
             } catch (e ) {
                 req.app.get('log').error(e);
