@@ -19,14 +19,7 @@ const resolveModule = require('./resolveModule');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
 
-let app = express();
-
-app._models = [];
-app._booted = false;
-app._mongo_connections = {};
-app._mongoDefaultConn = null; // TODO move this to req.locals
-app._mongoConfig = {};
-app.modules = [];
+let app = {};
 
 /**
  *
@@ -61,6 +54,13 @@ app.setDefaultConn = function setDefaultConn(str) {
  * @return {*}
  */
 app.boot = function boot(options) {
+
+    this._models = [];
+    this._booted = false;
+    this._mongo_connections = {};
+    this._mongoDefaultConn = null; // TODO move this to req.locals
+    this._mongoConfig = {};
+    this.modules = [];
 
     // this is config file
     if (typeof options == 'string') {

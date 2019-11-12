@@ -7,7 +7,7 @@ chai.should();
 chai.use(sinonChai);
 
 
-const drafterbit = require('../src/index');
+const drafterbit = require('../src/index')();
 const { ERRNOROOTDIR } = require('../src/constants');
 
 describe("drafterbit", () => {

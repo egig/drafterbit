@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const drafterbit = require('./index');
+const drafterbit = require('./index')();
 
 program
     .option('-d, --debug', 'output extra debugging');
@@ -13,7 +13,7 @@ program
 
         let configFile = `${process.cwd()}/config.js`;
         drafterbit.boot(configFile);
-        drafterbit.start(configFile);
+        drafterbit.start();
     });
 
 program
