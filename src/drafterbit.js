@@ -18,6 +18,7 @@ const resolveModule = require('./resolveModule');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
+mongoose.set('useUnifiedTopology', true);
 
 let app = {};
 
