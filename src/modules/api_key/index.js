@@ -1,6 +1,6 @@
 const apiKeyMiddleware = require('./middlewares/apiKey');
 const routes = require('./routes');
-const ApiKeySchema  = require('./models/apiKey');
+const ApiKeySchema  = require('./models/ApiKey');
 
 class AuthModule {
     constructor(app) {
