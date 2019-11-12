@@ -189,6 +189,52 @@ router.get('/users', function (req, res) {
 
 });
 
+
+/**
+ * @swagger
+ * /users/:user_id:
+ *   get:
+ *     description: Get a user
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /users/
+ */
+router.get('/users/:user_id',
+    validateRequest({
+        user_id: {
+            notEmpty: true,
+            errorMessage: 'user_id must be integer'
+        },
+    }),
+    (req, res) => {
+
+        (async function () {
+
+            try {
+
+                let m = req.app.model('User');
+                let user = await m.findOne({_id: req.params.user_id});
+                res.send(user);
+
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
+
+        })();
+
+    });
+
 /**
  * @swagger
  * /users:
@@ -249,14 +295,14 @@ router.post('/users',
 
                 let m = req.app.model('User');
                 // TODO validation
-                await m.createUser(
+                let newUser = await m.createUser(
                     req.body.first_name,
                     req.body.last_name,
                     req.body.email,
                     hashedPassword,
                 );
 
-                res.send({message: 'OK'});
+                res.status(201).send(newUser);
 
             } catch (e) {
                 res.status(500);
@@ -299,7 +345,7 @@ router.delete('/users/:user_id',
 
             try {
 
-                let m = req.app.model('@user/User');
+                let m = req.app.model('User');
                 await m.deleteUser(req.params.user_id);
                 res.send({message: 'OK'});
 
@@ -370,7 +416,7 @@ router.patch('/users/:user_id',
         (async function () {
 
             try {
-                let m = req.app.model('@user/User');
+                let m = req.app.model('User');
                 // TODO validation
                 await m.updateUser(req.params.user_id, req.body);
                 res.send({message: 'OK'});

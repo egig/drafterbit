@@ -45,6 +45,8 @@ describe('Content Types', () => {
 
         let testId;
         before((done) => {
+
+            // TODO using mongoose to create fixtures instead
             chai.request(drafterbit)
                 .post('/content_types?api_key=test')
                 .send({

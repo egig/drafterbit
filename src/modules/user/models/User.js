@@ -40,7 +40,7 @@ UserSchema.statics.createUser = function(firstName, lastName, email, password) {
  * @return {Promise}
  */
 UserSchema.statics.deleteUser = function(userId) {
-    return this.find({ _id:userId }).remove();
+    return this.find({ _id:userId }).deleteOne();
 };
 
 
