@@ -31,12 +31,14 @@ router.get('/', function (req, res) {
     let drafterbitConfig = {
         appName: config.get('appName'),
         projectSlug: getProjectSlug(req),
-        debug: +config.get('DEBUG'),
-        apiBaseURL: config.get('admin.api_base_url'),
-        apiKey: config.get('admin.api_key'),
-        userApiBaseURL: config.get('admin.user_api_base_url'),
-        userApiKey: config.get('admin.user_api_key')
+        debug: +config.get('DEBUG')
     };
+
+     req.app._modules.map(mo => {
+        if (typeof mo.registerClientConfig == 'function') {
+            drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config))
+        }
+    });
 
     let ft = req.app._getFieldTypes();
     let constants = {};

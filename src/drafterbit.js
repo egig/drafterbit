@@ -56,12 +56,11 @@ app.setDefaultConn = function setDefaultConn(str) {
  */
 app.boot = function boot(options) {
 
-    this._models = [];
     this._booted = false;
     this._mongo_connections = {};
     this._mongoDefaultConn = null; // TODO move this to req.locals
     this._mongoConfig = {};
-    this.modules = [];
+    this._modules = [];
 
     // this is config file
     if (typeof options == 'string') {

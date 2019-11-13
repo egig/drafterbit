@@ -71,6 +71,13 @@ class AdminModule {
             }
         });
     }
+
+    registerClientConfig(serverConfig) {
+        return {
+            apiBaseURL: serverConfig.get('admin.api_base_url'),
+            apiKey: serverConfig.get('admin.api_key'),
+        };
+    }
 }
 
 module.exports = AdminModule;

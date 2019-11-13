@@ -26,6 +26,13 @@ class UserModule {
             }
         });
     }
+
+    registerClientConfig(serverConfig) {
+        return {
+            userApiBaseURL: serverConfig.get('admin.user_api_base_url'),
+            userApiKey: serverConfig.get('admin.user_api_key')
+        };
+    }
 }
 
 module.exports = UserModule;
