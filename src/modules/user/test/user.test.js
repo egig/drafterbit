@@ -45,8 +45,7 @@ describe('Users', () => {
         userModel = conn.model('User', UserSchema, '_users');
 
         let newUser = new userModel({
-            first_name: 'foo',
-            last_name: 'bar',
+            name: 'foo',
             email: 'foo@bar.com',
             password: '$2a$05$DiMFhbLVo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG' //123
         });
@@ -91,13 +90,13 @@ describe('Users', () => {
             chai.request(drafterbit)
                 .patch(`/users/${userId}`)
                 .send({
-                    first_name: 'foo2',
+                    name: 'foo2',
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
 
                     userModel.findOne({_id: userId}, function (err, result) {
-                        expect(result.first_name).to.eq('foo2');
+                        expect(result.name).to.eq('foo2');
                         done();
                     });
                 });
@@ -125,8 +124,7 @@ describe('Users', () => {
             chai.request(drafterbit)
                 .post('/users?api_key=test')
                 .send({
-                    first_name: 'foo',
-                    last_name: 'bar',
+                    name: 'foo',
                     email: 'foo@bar.com',
                     password: 'admin123'
                 })

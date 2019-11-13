@@ -2,6 +2,7 @@ import EventEmitter from 'eventemitter3';
 import apiClient from './apiClient';
 import getConfig from './getConfig';
 import getProject from './getProject';
+import axios from 'axios';
 
 class Drafterbit extends EventEmitter {
 
@@ -18,10 +19,22 @@ class Drafterbit extends EventEmitter {
         return this.apiClient;
     }
 
+    getAxiosInstance() {
+        let apiClientOptions = {
+            baseURL: getConfig('apiBaseURL'),
+            timeout: 10000,
+            params: {
+                api_key: getConfig('apiKey')
+            }
+        };
+
+        return axios.create(apiClientOptions);
+    }
+
     userApiClient = apiClient.createUserApiClient({
         baseURL: getConfig('userApiBaseURL'),
         apiKey: getConfig('userApiKey')
-    })
+    });
 
     addModule(moduleObject) {
         this.modules.push(moduleObject)

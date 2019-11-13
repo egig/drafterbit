@@ -3,21 +3,7 @@ import handleAxiosError from './handleAxiosError';
 
 class ApiClient {
 
-    constructor(options) {
-
-        let axiosInstance = axios.create({
-            baseURL: options.baseURL,
-            timeout: 10000,
-            params: {
-                api_key: options.apiKey
-            }
-        });
-
-        this.options = Object.assign({}, {
-            project_id: null,
-            access_token: null
-        }, options);
-
+    constructor(axiosInstance) {
         this.axiosInstance = axiosInstance;
     }
 

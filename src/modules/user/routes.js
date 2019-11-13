@@ -270,13 +270,9 @@ router.get('/users/:user_id',
  */
 router.post('/users',
     validateRequest({
-        first_name: {
+        name: {
             isString: true,
             errorMessage: 'first_name is required'
-        },
-        last_name: {
-            isString: true,
-            errorMessage: 'last_name is required'
         },
         email: {
             isString: true,
@@ -296,8 +292,7 @@ router.post('/users',
                 let m = req.app.model('User');
                 // TODO validation
                 let newUser = await m.createUser(
-                    req.body.first_name,
-                    req.body.last_name,
+                    req.body.name,
                     req.body.email,
                     hashedPassword,
                 );

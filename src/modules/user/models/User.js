@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 let UserSchema = new mongoose.Schema({
-    first_name: String,
-    last_name: String,
+    name: String,
     email: String,
     password: String,
 });
@@ -17,16 +16,14 @@ UserSchema.statics.getUserByEmail = function(email) {
 
 /**
  *
- * @param firstName
- * @param lastName
+ * @param name
  * @param email
  * @param password
- * @return {Promise}
+ * @returns {*}
  */
-UserSchema.statics.createUser = function(firstName, lastName, email, password) {
+UserSchema.statics.createUser = function(name, email, password) {
     let newUser = new this({
-        first_name: firstName,
-        last_name: lastName,
+        name: name,
         email: email,
         password: password
     });

@@ -17,7 +17,7 @@ class Register extends React.Component {
     }
 
     onSubmit(form) {
-        let client = new ApiClient({});
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         return client
             .createUser(
                 form.full_name.value,

@@ -8,6 +8,7 @@ const Register = lazy(() => import('./components/Register'));
 const ResetPassword = lazy(() => import('./components/ResetPassword'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
 const Users = lazy(() => import('./components/Users'));
+const RegisterSuccess = lazy(() => import('./components/RegisterSuccess'));
 
 function createUserClientModule() {
 
@@ -22,9 +23,10 @@ function createUserClientModule() {
         reducer: reducer,
         pageRoutes: [
             {path: "/login", component: Login},               
-            {path: "/register", component: Register},               
+            {path: "/register", component: Register},
             {path: "/reset-password", component: ResetPassword},               
-            {path: "/forgot-password", component: ForgotPassword}
+            {path: "/forgot-password", component: ForgotPassword},
+            {path: "/register-success", component: RegisterSuccess}
         ],
         routes: [
             {path: "/users", component: Users},
