@@ -2,12 +2,8 @@ module.exports = function apiKeyMiddleware() {
     return function (req, res, next) {
 
         // TODO get this from config
-        let excludePattern = [
-            '^\/$',
-            '^\/(css|js|img|fonts|locales)\/(.+)',
-            '^/favicon.ico',
-            '/swagger.json'
-        ];
+        let config = req.app.get('config');
+        let excludePattern = config.get("api_key_exclude_pattern");
 
         let match = false;
         for (let i=0;i<excludePattern.length;i++) {
@@ -31,7 +27,6 @@ module.exports = function apiKeyMiddleware() {
             .then(apiK => {
 
                 if(!apiK) {
-                    let config = req.app.get('config');
                     // Last chance, check if its the admin api key
                     if(apiKey !== config.get('ADMIN_API_KEY')) {
                         return res.status(403).send('Access Denied');

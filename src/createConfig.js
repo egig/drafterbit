@@ -19,7 +19,6 @@ function createConfig(options) {
         'MONGODB_PORT': '',
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
-        'ADMIN_API_KEY': 'test',
         'modules': [
             './src/modules/admin',
             './src/modules/content',
@@ -44,7 +43,6 @@ function createConfig(options) {
             'MONGODB_PORT',
             'MONGODB_USER',
             'MONGODB_PASS',
-            'ADMIN_API_KEY',
         ])
         .defaults(config);
 

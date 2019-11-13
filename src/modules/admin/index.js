@@ -67,9 +67,7 @@ class AdminModule {
             type: 'literal',
             store: {
                 'admin.api_base_url': '/',
-                'admin.user_api_base_url': '/',
-                'admin.api_key': '',
-                'admin.user_api_key': '',
+                'admin.api_key': ''
             }
         });
     }

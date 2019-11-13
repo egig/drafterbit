@@ -20,6 +20,22 @@ class AuthModule {
     getAdminClientEntry() {
         return this._modulePath+'/admin/client/src/index.js';
     }
+
+    registerConfig(config) {
+
+        config.use('api_key', {
+            type: 'literal',
+            store: {
+                'ADMIN_API_KEY': 'test',
+                "api_key_exclude_pattern": [
+                    '^\/$',
+                    '^\/(css|js|img|fonts|locales)\/(.+)',
+                    '^/favicon.ico',
+                    '/swagger.json'
+                ]
+            }
+        });
+    }
 }
 
 module.exports = AuthModule;

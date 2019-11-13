@@ -15,6 +15,17 @@ class UserModule {
     getAdminClientEntry() {
         return this._modulePath+'/admin/client/src/index.js';
     }
+
+    registerConfig(config) {
+
+        config.use('user', {
+            type: 'literal',
+            store: {
+                'admin.user_api_base_url': '/',
+                'admin.user_api_key': '',
+            }
+        });
+    }
 }
 
 module.exports = UserModule;
