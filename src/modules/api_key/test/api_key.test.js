@@ -8,7 +8,7 @@ let mongoose = require('mongoose');
 let drafterbit = require('../../../../src')(); // TODO make this global ?
 let should = chai.should();
 let expect = chai.expect;
-let ApiKeySchema = require("../models/ApiKey");
+let ApiKeySchema = require('../models/ApiKey');
 
 chai.use(chaiHttp);
 const mongod = new MongoMemoryServer();
@@ -42,13 +42,13 @@ describe('ApiKeys', () => {
 
         let uri = `mongodb://localhost:${port}/${dbName}?retryWrites=true&w=majority`;
         let conn = mongoose.createConnection(uri, {});
-        apikeyModel = conn.model("ApiKey", ApiKeySchema, "_api_keys");
+        apikeyModel = conn.model('ApiKey', ApiKeySchema, '_api_keys');
 
         let newApiKey = new apikeyModel({
-            name: "Api Key 1",
-            key: "Vo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG",
-            restriction_type: "foo@bar.com",
-            restriction_value: "" //123
+            name: 'Api Key 1',
+            key: 'Vo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG',
+            restriction_type: 'foo@bar.com',
+            restriction_value: '' //123
         });
         newApiKey = await newApiKey.save();
         apiKeyId = newApiKey._id;
@@ -80,7 +80,7 @@ describe('ApiKeys', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.name.should.be.eq("Api Key 1");
+                    res.body.name.should.be.eq('Api Key 1');
                     done();
                 });
         });
@@ -97,7 +97,7 @@ describe('ApiKeys', () => {
                     res.should.have.status(200);
 
                     apikeyModel.findOne({_id: apiKeyId}, function (err, result) {
-                        expect(result.name).to.eq("test edit");
+                        expect(result.name).to.eq('test edit');
                         done();
                     });
                 });
@@ -123,12 +123,12 @@ describe('ApiKeys', () => {
     describe('/POST api key', () => {
         it('it should create a user', (done) => {
             chai.request(drafterbit)
-                .post(`/api_keys?api_key=test`)
+                .post('/api_keys?api_key=test')
                 .send({
                     name: 'test',
                     key: 'testkey',
                     restriction_type: 0,
-                    restriction_value: ""
+                    restriction_value: ''
                 })
                 .end((err, res) => {
                     res.should.have.status(201);

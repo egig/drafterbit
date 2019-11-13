@@ -8,7 +8,7 @@ let mongoose = require('mongoose');
 let drafterbit = require('../../../../src')(); // TODO make this global ?
 let should = chai.should();
 let expect = chai.expect;
-let UserSchema = require("../models/User");
+let UserSchema = require('../models/User');
 
 chai.use(chaiHttp);
 const mongod = new MongoMemoryServer();
@@ -42,13 +42,13 @@ describe('Users', () => {
 
         let uri = `mongodb://localhost:${port}/${dbName}?retryWrites=true&w=majority`;
         let conn = mongoose.createConnection(uri, {});
-        userModel = conn.model("User", UserSchema, "_users");
+        userModel = conn.model('User', UserSchema, '_users');
 
         let newUser = new userModel({
-            first_name: "foo",
-            last_name: "bar",
-            email: "foo@bar.com",
-            password: "$2a$05$DiMFhbLVo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG" //123
+            first_name: 'foo',
+            last_name: 'bar',
+            email: 'foo@bar.com',
+            password: '$2a$05$DiMFhbLVo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG' //123
         });
         newUser = await newUser.save();
         userId = newUser._id;
@@ -80,7 +80,7 @@ describe('Users', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.email.should.be.eq("foo@bar.com");
+                    res.body.email.should.be.eq('foo@bar.com');
                     done();
                 });
         });
@@ -97,7 +97,7 @@ describe('Users', () => {
                     res.should.have.status(200);
 
                     userModel.findOne({_id: userId}, function (err, result) {
-                        expect(result.first_name).to.eq("foo2");
+                        expect(result.first_name).to.eq('foo2');
                         done();
                     });
                 });
@@ -123,12 +123,12 @@ describe('Users', () => {
     describe('/POST user', () => {
         it('it should delete a user based on given id', (done) => {
             chai.request(drafterbit)
-                .post(`/users?api_key=test`)
+                .post('/users?api_key=test')
                 .send({
                     first_name: 'foo',
                     last_name: 'bar',
                     email: 'foo@bar.com',
-                    password: "admin123"
+                    password: 'admin123'
                 })
                 .end((err, res) => {
                     res.should.have.status(201);
