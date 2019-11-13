@@ -60,6 +60,19 @@ class AdminModule {
         webpackConfig.entry.push(clientEntryPoint);
         return webpackConfig;
     }
+
+    registerConfig(config) {
+
+        config.use('admin', {
+            type: 'literal',
+            store: {
+                "admin.api_base_url": "/",
+                'admin.user_api_base_url': "/",
+                "admin.api_key": "",
+                "admin.user_api_key": "",
+            }
+        });
+    }
 }
 
 module.exports = AdminModule;

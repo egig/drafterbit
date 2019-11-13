@@ -103,6 +103,11 @@ app.boot = function boot(options) {
             moduleInstance.registerSchema(db);            
         }
 
+        // register config
+        if(typeof moduleInstance.registerConfig == 'function') {
+            moduleInstance.registerConfig(config);
+        }
+
         return moduleInstance;
     });
 
