@@ -86,8 +86,7 @@ module.exports = env => {
                 // {from: "public"},
                  {from: __dirname+"/public/img", to: "img"},
                  {from: __dirname+"/public/locales", to: "locales"},
-                 {from: __dirname+"/public/favicon.ico", to: "favicon.ico"},
-                 {from: __dirname+"/node_modules/tinymce", to: "tinymce"}
+                 {from: __dirname+"/public/favicon.ico", to: "favicon.ico"}
             ]),
             new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
         ],

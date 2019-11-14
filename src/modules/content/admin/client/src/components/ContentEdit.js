@@ -12,21 +12,6 @@ import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 const { FIELD_RICH_TEXT, FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY, FIELD_UNSTRUCTURED } = window.__DT_CONST;
 
-import tinymce from 'tinymce/tinymce';
-// A theme is also required
-import 'tinymce/themes/silver/theme';
-
-// Any plugins you want to use has to be imported
-import 'tinymce/plugins/paste';
-import 'tinymce/plugins/link';
-
-// Initialize the app
-tinymce.baseURL = "/tinymce/";
-tinymce.init({
-    selector: '#tiny',
-    plugins: ['paste', 'link'],
-});
-
 // TODO move this to editor module
 let initialValue = {
     "object": "value",
