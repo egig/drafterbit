@@ -199,7 +199,7 @@ class Contents extends React.Component {
 	                      sortDir={sortDir}
 	                      onSort={(dataField, sortDir) => {
 	                        let qs = querystring.parse(this.props.location.search.substr(1));
-	                        let newSortDir = (sortDir == 'desc') ? 'asc' : 'desc';
+	                        let newSortDir = (sortDir === 'desc') ? 'asc' : 'desc';
 	                        qs['sort_by'] = dataField;
 	                        qs['sort_dir'] = newSortDir;
 	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);

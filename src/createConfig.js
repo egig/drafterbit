@@ -25,6 +25,7 @@ function createConfig(options) {
         ]
     };
 
+    // Config file
     if (typeof options == 'string') {
         options = require(options);
     }

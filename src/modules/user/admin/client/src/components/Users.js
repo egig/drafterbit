@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ApiClient from '../ApiClient';
 
 class Users extends React.Component {
@@ -14,10 +16,11 @@ class Users extends React.Component {
         this.state = {
             users: []
         };
+
     }
 
-    componentDidMount() {
-        let client =  new ApiClient({});
+    loadContents = (match, page, sortBy, sortDir, fqStr) => {
+        let client =  new ApiClient(this.props.drafterbit.getAxiosInstance());
 
         client.getUsers()
             .then(users => {
@@ -26,6 +29,17 @@ class Users extends React.Component {
                 });
             });
     }
+
+    // componentDidMount() {
+    //     let client =  new ApiClient({});
+    //
+    //     client.getUsers()
+    //         .then(users => {
+    //             this.setState({
+    //                 users
+    //             });
+    //         });
+    // }
 
     render() {
 
@@ -45,15 +59,14 @@ class Users extends React.Component {
         ];
 
         return (
-            <Card headerText="Users">
-                <DataTable
-                    idField='_id'
-                    data={ this.state.users }
-                    columns={ columns }
-                    striped
-                    hover
-                    condensed />
-            </Card>
+            <TablePage
+                idField='_id'
+                select={true}
+                data={ this.state.users }
+                contentCount={10} // TODO
+                columns={ columns }
+                loadContents={this.loadContents}
+            />
         );
     }
 }
@@ -68,4 +81,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default withDrafterbit(connect(mapStateToProps, mapDispatchToProps)(Users));

@@ -8,8 +8,8 @@ import Actions from './DataTable/Actions';
 import './DataTable.css';
 
 function renderCaret(dataField, sortBy, sortDir) {
-    if(sortBy == dataField) {
-        if(sortDir == 'asc') {
+    if(sortBy === dataField) {
+        if(sortDir === 'asc') {
             return <FontAwesomeIcon icon={faSortUp} className="float-right" />;
         }
 
@@ -44,15 +44,15 @@ class DataTable extends React.Component {
 		                        <th>
 			                        <input
 				                        onChange={e => {
-	                                      select.onSelectAll(e.target.checked, this.props.data);
+	                                      this.props.onSelectAll(e.target.checked, this.props.data);
 	                                    }}
 				                        type="checkbox"
 				                        ref={(input) => {
 															          if (input != null) {
-															            input.indeterminate = (!!select.selected.length) && (select.selected.length < data.length);
+															            input.indeterminate = (!!this.props.selected.length) && (this.props.selected.length < data.length);
 															          }}
 	                                    }
-				                        checked={select.selected.length == data.length}
+				                        checked={this.props.selected.length == data.length}
 			                        />
 		                        </th>
 	                        }
@@ -103,8 +103,8 @@ class DataTable extends React.Component {
                                     <tr key={i} >
 	                                    {select &&
 		                                    <td><input onChange={e => {
-	                                          select.onSelect(e.target.checked, d);
-	                                        }} checked={select.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" />
+	                                          this.props.onSelect(e.target.checked, d);
+	                                        }} checked={this.props.selected.indexOf(d[this.props.idField]) !== -1} type="checkbox" />
 		                                    </td>
 	                                    }
                                         {this.props.columns.map((c,i) => {
@@ -152,16 +152,14 @@ DataTable.defaultProps = {
     currentPage: 1,
     totalPageCount: 1,
     filterObject: {},
-    // select: {
-    // 	selected: [],
-    // 	onSelect: function (d) {
-    //
-    // 	},
-    // 	onSelectAll: function (d) {
-    //
-    // 	},
-    // },
     select: false,
+    selected: [],
+    onSelect: function (d) {
+
+    },
+    onSelectAll: function (d) {
+
+    },
     onRowClick: function (d) {
 
     },
