@@ -1,21 +1,17 @@
 import querystring from 'querystring';
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
-import _ from 'lodash';
-import { parseFilterQuery, stringifyFilterQuery } from 'drafterbit-module-admin/client/src/common/filterQuery'
 
 class Contents extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-        	selected: [],
 	        contents: [],
 	        contentCount:0,
 	        sortBy: "",
@@ -23,40 +19,11 @@ class Contents extends React.Component {
 	        filterObject: {},
             ctFields: []
         };
-
-        this.handleOnSelect = this.handleOnSelect.bind(this);
-        this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
-		    let qs = querystring.parse(this.props.location.search.substr(1));
-		    let nextQs = querystring.parse(nextProps.location.search.substr(1));
-
-		    let isPathSame = (nextProps.match.params.content_type_slug === this.props.match.params.content_type_slug);
-
-		    if(isPathSame && _.isEqual(qs, nextQs)) {
-			    return;
-		    }
-
-		    let ctSlug= nextProps.match.params.content_type_slug;
-		    let sortBy = nextQs['sort_by'];
-		    let sortDir = nextQs['sort_dir'];
-		    let fqStr = nextQs['fq'];
-		    this.loadContents(ctSlug, nextQs['page'], sortBy, sortDir, fqStr);
-
-		    let fqObj  = parseFilterQuery(fqStr);
-
-		    this.setState((prevState) => {
-			    return {
-				    filterObject: isPathSame ? fqObj : {}
-			    }
-		    });
-    }
-
-    loadContents(ctSlug, page, sortBy, sortDir, fqSr) {
-
+        let ctSlug = match.params.content_type_slug;
 	    this.props.drafterbit.getApiClient().getContentType(ctSlug)
 		    .then(contentType => {
 
@@ -64,7 +31,7 @@ class Contents extends React.Component {
                     ctFields: contentType.fields
                 });
 
-                this.props.drafterbit.getApiClient().getEntries(contentType.slug, page, sortBy, sortDir, fqSr)
+                this.props.drafterbit.getApiClient().getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
 			    .then(response => {
 
 			        let contentCount = response.headers['content-range'].split("/")[1];
@@ -74,70 +41,36 @@ class Contents extends React.Component {
 				    })
 			    });
 		    });
-    }
+    };
 
-    componentDidMount() {
-        let ctSlug= this.props.match.params.content_type_slug;
-        let qs = querystring.parse(this.props.location.search.substr(1));
-        let page = !!qs['page'] ? qs['page'] : 1;
-        let sortBy = qs['sort_by'];
-        let sortDir = qs['sort_dir'];
-        this.loadContents(ctSlug, page, sortBy, sortDir);
-
-		    let fqObj  = parseFilterQuery(qs['fq']);
-
-		    this.setState((prevState) => {
-			    return {
-				    filterObject: Object.assign({}, prevState.filterObject, fqObj)
-			    }
-		    });
-    }
-
-    handleOnSelect(isSelect, row) {
-        if (isSelect) {
-            this.setState(() => ({
-                selected: [...this.state.selected, row._id]
-            }));
-        } else {
-            this.setState(() => ({
-                selected: this.state.selected.filter(x => x !== row._id)
-            }));
-        }
-    }
-
-    handleOnSelectAll = (isSelect, rows) => {
-        const ids = rows.map(r => r._id);
-        if (isSelect) {
-            this.setState(() => ({
-                selected: ids
-            }));
-        } else {
-            this.setState(() => ({
-                selected: []
-            }));
-        }
-    }
-
-    handleDelete(e) {
+    handleDelete = (selected) => {
         let slug = this.props.match.params["content_type_slug"];
         let client = this.props.drafterbit.getApiClient();
-        let deleteActionPromise = this.state.selected.map(entryId => {
+        let deleteActionPromise = selected.map(entryId => {
             return client.deleteEntry(slug, entryId);
         });
 
         return Promise.all(deleteActionPromise)
             .then(() => {
-                window.location.reload();
+               window.location.reload();
             })
-    }
+    };
+
+    onClickAdd = (e) => {
+        // create draft
+        let slug = this.props.match.params["content_type_slug"]
+        this.props.drafterbit.getApiClient().createDraft(slug)
+            .then(d => {
+                this.props.history.push(`/contents/${slug}/${d.item._id}`);
+            })
+            .catch(e => {
+                console.error(e)
+            })
+    };
 
     render() {
 
         let slug = this.props.match.params.content_type_slug;
-		    let qs = querystring.parse(this.props.location.search.substr(1));
-		    let sortBy = qs['sort_by'];
-		    let sortDir = qs['sort_dir'];
-		    let page = !!qs['page'] ? qs['page'] : 1;
 
         const columns = [{
             dataField: '_id',
@@ -171,77 +104,15 @@ class Contents extends React.Component {
         });
 
         return (
-            <Fragment>
-                <Card headerText="Contents">
-                    <button className="btn btn-success mb-3" onClick={(e) => {
-                        // create draft
-                        this.props.drafterbit.getApiClient().createDraft(slug)
-                            .then(d => {
-                                this.props.history.push(`/contents/${slug}/${d.item._id}`);
-                            })
-                            .catch(e => {
-                                console.error(e)
-                            })
-                    }} >Add</button>
-                    {!!this.state.selected.length &&
-                      <button className="btn btn-danger ml-2 mb-3" onClick={this.handleDelete} >Delete</button>
-                    }
-                    <DataTable
-	                      idField="_id"
-                        data={ this.state.contents }
-                        columns={ columns }
-                        select={{
-                        	selected:this.state.selected,
-                        	onSelect:this.handleOnSelect,
-                        	onSelectAll:this.handleOnSelectAll
-                        }}
-                        sortBy={sortBy}
-	                      sortDir={sortDir}
-	                      onSort={(dataField, sortDir) => {
-	                        let qs = querystring.parse(this.props.location.search.substr(1));
-	                        let newSortDir = (sortDir === 'desc') ? 'asc' : 'desc';
-	                        qs['sort_by'] = dataField;
-	                        qs['sort_dir'] = newSortDir;
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
-	                      }}
-	                      onApplyFilter={(filterObj) => {
-
-	                      	let qs = querystring.parse(this.props.location.search.substr(1));
-	                        qs['fq'] = stringifyFilterQuery(filterObj);
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
-
-	                      }}
-	                      onFilterChange={(dataField, value) => {
-	                      		let d = {};
-                                d[dataField] = value;
-
-                                this.setState((prevState) => {
-                                    return {
-                                        filterObject: Object.assign({}, prevState.filterObject, d)
-                                    }
-                                })
-	                      }}
-	                      onReset={() => {
-	                      	let qs = querystring.parse(this.props.location.search.substr(1));
-	                        delete qs['fq'];
-	                      	let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-	                      	this.props.history.push(newLink);
-	                      }}
-	                      filterObject={this.state.filterObject}
-                        currentPage={page}
-                        totalPageCount={Math.ceil(this.state.contentCount/10)}
-                        renderPaginationLink={(p) => (
-                        	<Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
-                        )}
-	                      onRowClick={(col) => {
-	                      	let newLink = `/contents/${slug}/${col['_id']}`;
-	                      	this.props.history.push(newLink);
-	                      }}
-                    />
-                </Card>
-            </Fragment>
+            <TablePage
+                data={ this.state.contents }
+                contentCount={this.state.contentCount}
+                columns={ columns }
+                select={true}
+                loadContents={this.loadContents}
+                handleDelete={this.handleDelete}
+                onClickAdd={this.onClickAdd}
+            />
         );
     }
 }

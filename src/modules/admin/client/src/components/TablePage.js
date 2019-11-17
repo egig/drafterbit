@@ -26,7 +26,7 @@ class TablePage extends React.Component {
         let qs = querystring.parse(location.search.substr(1));
         let nextQs = querystring.parse(nextLocation.search.substr(1));
 
-        let isPathSame = (nextLocation.path === location.path);
+        let isPathSame = (nextLocation.pathname === location.pathname);
 
         if(isPathSame && _.isEqual(qs, nextQs)) {
             return;
@@ -45,14 +45,6 @@ class TablePage extends React.Component {
         let fqStr = nextQs['fq'];
         let page = nextQs['page'];
         this.props.loadContents(props.match, page, sortBy, sortDir, fqStr);
-
-        // let fqObj  = parseFilterQuery(fqStr);
-        //
-        // this.setState((prevState) => {
-        //     return {
-        //         filterObject: isPathSame ? fqObj : {}
-        //     }
-        // });
     }
 
     componentDidMount() {
@@ -126,6 +118,10 @@ class TablePage extends React.Component {
         this.props.history.push(newLink);
     };
 
+    handleDelete = () => {
+        this.props.handleDelete(this.state.selected);
+    };
+
     render() {
 
         let {
@@ -151,7 +147,7 @@ class TablePage extends React.Component {
                 <Card headerText="Contents">
                     <button className="btn btn-success mb-3" onClick={onClickAdd} >Add</button>
                     {!!selected.length &&
-                        <button className="btn btn-danger ml-2 mb-3" onClick={handleDelete} >Delete</button>
+                        <button className="btn btn-danger ml-2 mb-3" onClick={this.handleDelete} >Delete</button>
                     }
                     <DataTable
                         idField="_id"

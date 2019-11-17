@@ -131,15 +131,17 @@ class DataTable extends React.Component {
                         }
                     </tbody>
                 </Table>
-                <Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
-                    {createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
-                        return (
-                            <PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
-                                {this.props.renderPaginationLink(p)}
-                            </PaginationItem>
-                        );
-                    })}
-                </Pagination>
+                {!!this.props.totalPageCount &&
+                    <Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
+                        {createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
+                            return (
+                                <PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
+                                    {this.props.renderPaginationLink(p)}
+                                </PaginationItem>
+                            );
+                        })}
+                    </Pagination>
+                }
             </div>
         );
     }
