@@ -27,7 +27,7 @@ class AuthModule {
             type: 'literal',
             store: {
                 'ADMIN_API_KEY': 'test',
-                "api_key_exclude_pattern": [
+                'api_key_exclude_pattern': [
                     '^\/$',
                     '^\/(css|js|img|fonts|locales)\/(.+)',
                     '^/favicon.ico',

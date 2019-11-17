@@ -34,9 +34,9 @@ router.get('/', function (req, res) {
         debug: +config.get('DEBUG')
     };
 
-     req.app._modules.map(mo => {
+    req.app._modules.map(mo => {
         if (typeof mo.registerClientConfig == 'function') {
-            drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config))
+            drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config));
         }
     });
 

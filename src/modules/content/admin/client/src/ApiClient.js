@@ -15,7 +15,7 @@ class ApiClient {
     }
 
     async getFieldTypes() {
-        let response = await this.axiosInstance.get(`/field_types`);
+        let response = await this.axiosInstance.get('/field_types');
         return response.data;
     }
 
@@ -102,8 +102,8 @@ class ApiClient {
     }
 
     async getEntry(slug, entryId) {
-         let response = await this.axiosInstance.get(`/${slug}/${entryId}`);
-         return response.data;
+        let response = await this.axiosInstance.get(`/${slug}/${entryId}`);
+        return response.data;
     }
 
     async updateEntry(slug, entryId, data) {

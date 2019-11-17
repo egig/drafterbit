@@ -3,7 +3,7 @@ module.exports = function apiKeyMiddleware() {
 
         // TODO get this from config
         let config = req.app.get('config');
-        let excludePattern = config.get("api_key_exclude_pattern");
+        let excludePattern = config.get('api_key_exclude_pattern');
 
         let match = false;
         for (let i=0;i<excludePattern.length;i++) {
