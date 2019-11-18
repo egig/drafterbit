@@ -21,6 +21,24 @@ function renderCaret(dataField, sortBy, sortDir) {
 
 class DataTable extends React.Component {
 
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            typedQ: ""
+        }
+    }
+
+    onFilterKeyUp = (e) => {
+        if (e.keyCode === 13) {
+            return this.props.onApplyFilter(`${q}:${this.state.typedQ}`);
+        }
+
+        this.setState({
+            typedQ: e.target.value
+        })
+    };
+
     render() {
 
     	let {
@@ -29,13 +47,28 @@ class DataTable extends React.Component {
 		    onSort,
 		    sortBy,
 		    sortDir,
-		    onRowClick
+		    onRowClick,
+            filterObject
 	    } = this.props;
 
         return (
             <div>
 	            <div className="DataTable-search-widget">
-	              <Input type="text" placeholder="search" className=""/>
+                    <div>{Object.keys(filterObject).map(k => {
+                        return <div>{k}={filterObject[k]}</div>
+                    })}</div>
+                    <input type="text" placeholder="Filter" className="" onKeyUp={this.onFilterKeyUp}/>
+                    {this.state.typedQ &&
+                        <div>
+                            Suggestion:
+                            {this.props.columns.map((c,i) => {
+                                let fStr = `${c.text}:${this.state.typedQ}`;
+                                return <div onClick={e => {
+                                    this.props.onApplyFilter(fStr);
+                                }}>{fStr}</div>
+                            })}
+                        </div>
+                    }
 	            </div>
                 <Table size="sm" className="drafterbit-table" bordered striped hover responsive>
                     <thead>
@@ -168,7 +201,7 @@ DataTable.defaultProps = {
     onSort: function (dataField, sortDir) {
 		
     },
-    onApplyFilter: function (filterObject) {
+    onApplyFilter: function (fStr) {
 
     },
     onFilterChange: function (dataField, value) {

@@ -92,9 +92,10 @@ class TablePage extends React.Component {
         history.push(newLink);
     };
 
-    applyFilter = (filterObj) => {
+    applyFilter = (filterStr) => {
         let qs = querystring.parse(this.props.location.search.substr(1));
-        qs['fq'] = stringifyFilterQuery(filterObj);
+        let filterObj = parseFilterQuery(qs['fq']);
+        qs['fq'] = filterStr;
         let newLink = this.props.match.url + "?" + querystring.stringify(qs);
         this.props.history.push(newLink);
     };
@@ -141,6 +142,7 @@ class TablePage extends React.Component {
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         let page = !!qs['page'] ? qs['page'] : 1;
+        let filterObject = parseFilterQuery(qs['fq']);
 
         return (
             <Fragment>
@@ -163,7 +165,7 @@ class TablePage extends React.Component {
                         onApplyFilter={this.applyFilter}
                         onFilterChange={this.onFilterChange}
                         onReset={this.onReset}
-                        filterObject={this.state.filterObject}
+                        filterObject={filterObject}
                         currentPage={page}
                         totalPageCount={Math.ceil(this.props.contentCount/10)}
                         renderPaginationLink={(p) => (
