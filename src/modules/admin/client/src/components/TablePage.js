@@ -5,7 +5,7 @@ import Card from './Card/Card';
 import DataTable from './DataTable';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
-import { parseFilterQuery, stringifyFilterQuery } from '../common/filterQuery'
+import { parseFilterQuery, stringifyFilterQuery, mergeFilterObj} from '../common/filterQuery'
 
 class TablePage extends React.Component {
 
@@ -92,10 +92,11 @@ class TablePage extends React.Component {
         history.push(newLink);
     };
 
-    applyFilter = (filterStr) => {
+    applyFilter = (fObj) => {
         let qs = querystring.parse(this.props.location.search.substr(1));
         let filterObj = parseFilterQuery(qs['fq']);
-        qs['fq'] = filterStr;
+        let newFq = mergeFilterObj(filterObj, fObj);
+        qs['fq'] = stringifyFilterQuery(newFq);
         let newLink = this.props.match.url + "?" + querystring.stringify(qs);
         this.props.history.push(newLink);
     };

@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const {parseFilterQuery, stringifyFilterQuery} = require('../src/filterQuery');
+const {parseFilterQuery, stringifyFilterQuery, mergeFilterObj} = require('../src/filterQuery');
 
 describe("parseFilterQuery", () => {
 
@@ -16,7 +16,7 @@ describe("parseFilterQuery", () => {
 
         it("should return null if no param passed", () => {
             let r = parseFilterQuery();
-            expect(r).to.equal(undefined);
+            expect(r).to.be.an('object');
         });
     });
 
@@ -32,4 +32,22 @@ describe("parseFilterQuery", () => {
             expect(r).to.have.string('summary:test');
         });
     });
+
+    describe("parseFilterQuery.mergeFilterObject", () => {
+
+        it("should return correct merged object", () => {
+            let r = mergeFilterObj({
+                "title": "foo",
+                "summary": "test",
+            }, {
+                "summary": "test2",
+                "bar": "baz"
+            });
+
+            expect(r.summary).to.be.a("array");
+            expect(r.title).to.be.a("string");
+            expect(r.bar).to.eq("baz");
+        });
+    });
+
 });

@@ -31,11 +31,20 @@ class DataTable extends React.Component {
 
     onFilterKeyUp = (e) => {
         if (e.keyCode === 13) {
-            return this.props.onApplyFilter(`${q}:${this.state.typedQ}`);
+            return this.onApplyFilter({q: this.state.typedQ});
         }
+    };
 
+    onFilterChange = (e) => {
         this.setState({
             typedQ: e.target.value
+        })
+    };
+
+    onApplyFilter = (fObj) => {
+        this.props.onApplyFilter(fObj);
+        this.setState({
+            typedQ: ""
         })
     };
 
@@ -54,17 +63,18 @@ class DataTable extends React.Component {
         return (
             <div>
 	            <div className="DataTable-search-widget">
-                    <div>{Object.keys(filterObject).map(k => {
-                        return <div>{k}={filterObject[k]}</div>
+                    <div>{Object.keys(filterObject).map((k,i) => {
+                        return <div key={i}>{k}={filterObject[k]}</div>
                     })}</div>
-                    <input type="text" placeholder="Filter" className="" onKeyUp={this.onFilterKeyUp}/>
+                    <input value={this.state.typedQ} type="text" placeholder="Filter" className="" onChange={this.onFilterChange} onKeyUp={this.onFilterKeyUp}/>
                     {this.state.typedQ &&
                         <div>
-                            Suggestion:
                             {this.props.columns.map((c,i) => {
                                 let fStr = `${c.text}:${this.state.typedQ}`;
-                                return <div onClick={e => {
-                                    this.props.onApplyFilter(fStr);
+                                return <div key={i} onClick={e => {
+                                    this.onApplyFilter({
+                                        [c.text]: this.state.typedQ
+                                    });
                                 }}>{fStr}</div>
                             })}
                         </div>
@@ -201,7 +211,7 @@ DataTable.defaultProps = {
     onSort: function (dataField, sortDir) {
 		
     },
-    onApplyFilter: function (fStr) {
+    onApplyFilter: function (fObj) {
 
     },
     onFilterChange: function (dataField, value) {

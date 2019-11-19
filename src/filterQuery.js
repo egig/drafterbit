@@ -6,7 +6,7 @@
 function parseFilterQuery(fqStr) {
 
     if(!fqStr) {
-        return;
+        return {};
     }
 
     return fqStr.split(';').map((s) => {
@@ -37,7 +37,26 @@ function stringifyFilterQuery(fqObj) {
     return fL.join(';');
 }
 
+/**
+ *
+ * @param oldObj
+ * @param newObj
+ */
+function mergeFilterObj(oldObj, newObj) {
+    Object.keys(newObj).forEach((k) => {
+        if ( typeof oldObj[k] !== 'undefined') {
+            oldObj[k] = [oldObj[k]];
+            oldObj[k].push(newObj[k])
+        } else {
+            oldObj[k] = newObj[k]
+        }
+    });
+
+    return oldObj
+}
+
 module.exports = {
     stringifyFilterQuery,
-    parseFilterQuery
+    parseFilterQuery,
+    mergeFilterObj
 };
