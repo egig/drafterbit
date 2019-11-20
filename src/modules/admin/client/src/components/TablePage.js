@@ -5,7 +5,7 @@ import Card from './Card/Card';
 import DataTable from './DataTable';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
-import { parseFilterQuery, stringifyFilterQuery, mergeFilterObj} from '../common/filterQuery'
+const FilterQuery = require('../../../../../FilterQuery');
 
 class TablePage extends React.Component {
 
@@ -92,11 +92,11 @@ class TablePage extends React.Component {
         history.push(newLink);
     };
 
-    applyFilter = (fObj) => {
+    applyFilter = (k, v) => {
         let qs = querystring.parse(this.props.location.search.substr(1));
-        let filterObj = parseFilterQuery(qs['fq']);
-        let newFq = mergeFilterObj(filterObj, fObj);
-        qs['fq'] = stringifyFilterQuery(newFq);
+        let fqObj = FilterQuery.fromString(qs['fq']);
+        fqObj.addFilter(k, v);
+        qs['fq'] = fqObj.toString();
         let newLink = this.props.match.url + "?" + querystring.stringify(qs);
         this.props.history.push(newLink);
     };
@@ -143,7 +143,7 @@ class TablePage extends React.Component {
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         let page = !!qs['page'] ? qs['page'] : 1;
-        let filterObject = parseFilterQuery(qs['fq']);
+        let filterObject = FilterQuery.fromString(qs['fq']).toMap();
 
         return (
             <Fragment>

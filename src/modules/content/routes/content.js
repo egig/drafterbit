@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest  = require('../../../middlewares/validateRequest');
-const { parseFilterQuery }  = require('../../../filterQuery');
+const FilterQuery  = require('../../../FilterQuery');
 
 let router = express.Router();
 
@@ -98,7 +98,7 @@ router.get('/content_types/:content_type_id/contents',
             let offset = (page*PER_PAGE) - PER_PAGE;
             let max = PER_PAGE;
 
-            let filterObj = parseFilterQuery(req.query.fq);
+            let filterObj = FilterQuery.fromString(req.query.fq).toMap();
 
             try {
                 let m = req.app.model('@content/Content');

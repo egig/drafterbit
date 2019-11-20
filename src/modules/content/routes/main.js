@@ -1,6 +1,6 @@
 const express = require('express');
 const validateRequest = require('../../../middlewares/validateRequest');
-const { parseFilterQuery } = require( '../../../filterQuery');
+const FilterQuery = require( '../../../FilterQuery');
 const contentMiddleware = require('../middlewares/content');
 const handleFunc = require('../../../handleFunc');
 
@@ -216,7 +216,7 @@ router.get('/:slug',
         let offset = (page*PER_PAGE) - PER_PAGE;
         let max = PER_PAGE;
 
-        let filterObj = parseFilterQuery(req.query.fq);
+        let filterObj = FilterQuery.fromString(req.query.fq).toMap();
         let m = req.app.model(req.params['slug']);
 
         let sortD = sortDir === 'asc' ? 1 : -1;
