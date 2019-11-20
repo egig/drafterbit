@@ -48,11 +48,8 @@ class DataTable extends React.Component {
         })
     };
 
-    renderFilterValue = (v) => {
-        if (Array.isArray(v)) {
-            return v.join(",")
-        }
-        return  v
+    deleteFilter = (k, v) => {
+        this.props.onDeleteFilter(k, v);
     };
 
     render() {
@@ -64,15 +61,16 @@ class DataTable extends React.Component {
 		    sortBy,
 		    sortDir,
 		    onRowClick,
-            filterObject
+            filterObjects
 	    } = this.props;
 
         return (
             <div>
 	            <div className="DataTable-search-widget">
-                    <div>{Object.keys(filterObject).map((k,i) => {
-                        let v = filterObject[k];
-                        return <div key={i}>{k}={this.renderFilterValue(v)}</div>
+                    <div>{filterObjects.map((o,i) => {
+                        return <div key={i}>{o.k}={o.v} <span onClick={e => {
+                            this.deleteFilter(o.k, o.v);
+                        }}>&times;</span></div>
                     })}</div>
                     <input value={this.state.typedQ} type="text" placeholder="Filter" className="" onChange={this.onFilterChange} onKeyUp={this.onFilterKeyUp}/>
                     {this.state.typedQ &&
@@ -202,7 +200,7 @@ DataTable.defaultProps = {
     columns: [],
     currentPage: 1,
     totalPageCount: 1,
-    filterObject: {},
+    filterObjects: {},
     select: false,
     selected: [],
     onSelect: function (d) {
@@ -224,6 +222,9 @@ DataTable.defaultProps = {
 
     },
     onReset: function () {
+
+    },
+    onDeleteFilter: function(k, v) {
 
     },
     sortBy: null,

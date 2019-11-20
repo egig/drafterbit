@@ -124,6 +124,20 @@ class TablePage extends React.Component {
         this.props.handleDelete(this.state.selected);
     };
 
+    onDeleteFilter = (k, v) => {
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let fqObj = FilterQuery.fromString(qs['fq']);
+        fqObj.removeFilter(k, v);
+        let fqStr = fqObj.toString();
+        if (fqStr === "") {
+            delete qs['fq'];
+        } else {
+            qs['fq'] = fqStr;
+        }
+        let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+        this.props.history.push(newLink);
+    };
+
     render() {
 
         let {
@@ -143,7 +157,7 @@ class TablePage extends React.Component {
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         let page = !!qs['page'] ? qs['page'] : 1;
-        let filterObject = FilterQuery.fromString(qs['fq']).toMap();
+        let filterObjects = FilterQuery.fromString(qs['fq']).getFilters();
 
         return (
             <Fragment>
@@ -166,13 +180,14 @@ class TablePage extends React.Component {
                         onApplyFilter={this.applyFilter}
                         onFilterChange={this.onFilterChange}
                         onReset={this.onReset}
-                        filterObject={filterObject}
+                        filterObjects={filterObjects}
                         currentPage={page}
                         totalPageCount={Math.ceil(this.props.contentCount/10)}
                         renderPaginationLink={(p) => (
                             <Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
                         )}
                         onRowClick={this.props.onRowClick}
+                        onDeleteFilter={this.onDeleteFilter}
                     />
                 </Card>
             </Fragment>
