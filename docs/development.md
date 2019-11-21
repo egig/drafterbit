@@ -1,4 +1,4 @@
-## Development
+# Development
 
 To start development, please follow the instructions below:
 
