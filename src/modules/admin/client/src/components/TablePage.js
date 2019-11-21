@@ -110,7 +110,6 @@ class TablePage extends React.Component {
                 filterObject: Object.assign({}, prevState.filterObject, d)
             }
         })
-        // TODO update query str instead
     };
 
     onReset = () => {
@@ -137,6 +136,21 @@ class TablePage extends React.Component {
         let newLink = this.props.match.url + "?" + querystring.stringify(qs);
         this.props.history.push(newLink);
     };
+
+    popFilter = () => {
+        // TODO refactor this redundancy
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let fqObj = FilterQuery.fromString(qs['fq']);
+        fqObj.pop();
+        let fqStr = fqObj.toString();
+        if (fqStr === "") {
+            delete qs['fq'];
+        } else {
+            qs['fq'] = fqStr;
+        }
+        let newLink = this.props.match.url + "?" + querystring.stringify(qs);
+        this.props.history.push(newLink);
+    }
 
     render() {
 
@@ -188,6 +202,7 @@ class TablePage extends React.Component {
                         )}
                         onRowClick={this.props.onRowClick}
                         onDeleteFilter={this.onDeleteFilter}
+                        popFilter={this.popFilter}
                     />
                 </Card>
             </Fragment>

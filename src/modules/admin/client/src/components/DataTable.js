@@ -4,6 +4,7 @@ import createPagination from './createPagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown, faFilter, faRedo } from '@fortawesome/free-solid-svg-icons';
 import Actions from './DataTable/Actions';
+import TableFilter from './TableFilter';
 
 import './DataTable.css';
 
@@ -30,8 +31,18 @@ class DataTable extends React.Component {
     }
 
     onFilterKeyUp = (e) => {
+        // Enter
         if (e.keyCode === 13) {
-            return this.onApplyFilter("q", this.state.typedQ);
+            if (this.state.typedQ !== "") {
+                return this.onApplyFilter("q", this.state.typedQ);
+            }
+        }
+
+        // Backspace
+        if (e.keyCode === 8) {
+            if (this.state.typedQ === "") {
+                return this.props.popFilter();
+            }
         }
     };
 
@@ -66,24 +77,32 @@ class DataTable extends React.Component {
 
         return (
             <div>
-	            <div className="DataTable-search-widget">
-                    <div>{filterObjects.map((o,i) => {
-                        return <div key={i}>{o.k}={o.v} <span onClick={e => {
-                            this.deleteFilter(o.k, o.v);
-                        }}>&times;</span></div>
-                    })}</div>
-                    <input value={this.state.typedQ} type="text" placeholder="Filter" className="" onChange={this.onFilterChange} onKeyUp={this.onFilterKeyUp}/>
-                    {this.state.typedQ &&
-                        <div>
-                            {this.props.columns.map((c,i) => {
-                                let fStr = `${c.text}:${this.state.typedQ}`;
-                                return <div key={i} onClick={e => {
-                                    this.onApplyFilter(c.text, this.state.typedQ);
-                                }}>{fStr}</div>
-                            })}
-                        </div>
-                    }
-	            </div>
+	            {/*<div className="DataTable-search-widget">*/}
+                {/*    <div>{filterObjects.map((o,i) => {*/}
+                {/*        return <div key={i}>{o.k}={o.v} <span onClick={e => {*/}
+                {/*            this.deleteFilter(o.k, o.v);*/}
+                {/*        }}>&times;</span></div>*/}
+                {/*    })}</div>*/}
+                {/*    <input value={this.state.typedQ} type="text" placeholder="Filter" className="" onChange={this.onFilterChange} onKeyUp={this.onFilterKeyUp}/>*/}
+                {/*    {this.state.typedQ &&*/}
+                {/*        <div>*/}
+                {/*            {this.props.columns.map((c,i) => {*/}
+                {/*                let fStr = `${c.text}:${this.state.typedQ}`;*/}
+                {/*                return <div key={i} onClick={e => {*/}
+                {/*                    this.onApplyFilter(c.text, this.state.typedQ);*/}
+                {/*                }}>{fStr}</div>*/}
+                {/*            })}*/}
+                {/*        </div>*/}
+                {/*    }*/}
+	            {/*</div>*/}
+	            <TableFilter
+                    onFilterKeyUp={this.onFilterKeyUp}
+                    onFilterChange={this.onFilterChange}
+                    deleteFilter={this.deleteFilter}
+                    onApplyFilter={this.onApplyFilter}
+                    columns={this.props.columns}
+                    filterObjects={filterObjects}
+                    typedQ={this.state.typedQ} />
                 <Table size="sm" className="drafterbit-table" bordered striped hover responsive>
                     <thead>
                         <tr>
@@ -227,6 +246,7 @@ DataTable.defaultProps = {
     onDeleteFilter: function(k, v) {
 
     },
+    popFilter: () => {},
     sortBy: null,
     sortDir: null,
     renderPaginationLink: function (p) {

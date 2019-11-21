@@ -58,6 +58,10 @@ class FilterQuery {
         });
         return new FilterQuery(fqObjs);
     }
+
+    pop() {
+        this.filters.pop()
+    }
 }
 
 module.exports = FilterQuery;
