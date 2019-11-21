@@ -36,10 +36,7 @@ class TablePage extends React.Component {
     }
 
     loadContents(props) {
-
         let nextQs = querystring.parse(props.location.search.substr(1));
-
-        // let ctSlug = props.match.params.content_type_slug;
         let sortBy = nextQs['sort_by'];
         let sortDir = nextQs['sort_dir'];
         let fqStr = nextQs['fq'];
@@ -77,7 +74,15 @@ class TablePage extends React.Component {
     };
 
     handleSort = (dataField, sortDir) => {
+        this.modifyQS((qs) => {
+            let newSortDir = (sortDir === 'desc') ? 'asc' : 'desc';
+            qs['sort_by'] = dataField;
+            qs['sort_dir'] = newSortDir;
+            return qs;
+        });
+    };
 
+    modifyQS = (fn) => {
         let {
             location,
             match,
@@ -85,20 +90,15 @@ class TablePage extends React.Component {
         } = this.props;
 
         let qs = querystring.parse(location.search.substr(1));
-        let newSortDir = (sortDir === 'desc') ? 'asc' : 'desc';
-        qs['sort_by'] = dataField;
-        qs['sort_dir'] = newSortDir;
+        qs = fn(qs);
         let newLink = match.url + "?" + querystring.stringify(qs);
         history.push(newLink);
     };
 
     applyFilter = (k, v) => {
-        let qs = querystring.parse(this.props.location.search.substr(1));
-        let fqObj = FilterQuery.fromString(qs['fq']);
-        fqObj.addFilter(k, v);
-        qs['fq'] = fqObj.toString();
-        let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-        this.props.history.push(newLink);
+        this.modifyFQ((fqObj) => {
+            fqObj.addFilter(k, v);
+        });
     };
 
     onFilterChange = (dataField, value) => {
@@ -124,32 +124,30 @@ class TablePage extends React.Component {
     };
 
     onDeleteFilter = (k, v) => {
-        let qs = querystring.parse(this.props.location.search.substr(1));
-        let fqObj = FilterQuery.fromString(qs['fq']);
-        fqObj.removeFilter(k, v);
-        let fqStr = fqObj.toString();
-        if (fqStr === "") {
-            delete qs['fq'];
-        } else {
-            qs['fq'] = fqStr;
-        }
-        let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-        this.props.history.push(newLink);
+        this.modifyFQ((fqObj) => {
+            fqObj.removeFilter(k, v);
+        });
     };
 
     popFilter = () => {
-        // TODO refactor this redundancy
-        let qs = querystring.parse(this.props.location.search.substr(1));
-        let fqObj = FilterQuery.fromString(qs['fq']);
-        fqObj.pop();
-        let fqStr = fqObj.toString();
-        if (fqStr === "") {
-            delete qs['fq'];
-        } else {
+        this.modifyFQ((fqObj) => {
+            fqObj.pop();
+        });
+    };
+
+    modifyFQ(fn) {
+        this.modifyQS((qs) => {
+            let fqObj = FilterQuery.fromString(qs['fq']);
+            fn(fqObj);
+            let fqStr = fqObj.toString();
+            if (fqStr === "") {
+                delete qs['fq'];
+                return qs;
+            }
+
             qs['fq'] = fqStr;
-        }
-        let newLink = this.props.match.url + "?" + querystring.stringify(qs);
-        this.props.history.push(newLink);
+            return qs;
+        });
     }
 
     render() {
