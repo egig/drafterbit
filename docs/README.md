@@ -1,3 +1,4 @@
-# Drafterbit
+# Introduction
 
-Welcome to Drafterbit Documentation. 
+Welcome to Drafterbit Documentation.
+
