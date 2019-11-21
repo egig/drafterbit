@@ -42,6 +42,10 @@ const FilterRemover = styled.span`
     cursor: pointer;
 `;
 
+const FilterQInputContainer = styled.div`
+    display: inline-block;
+`;
+
 const FilterQInput = styled.input`
     border: none;
     outline: none;
@@ -63,17 +67,19 @@ class TableFilter extends React.Component {
                     }}>&times;</FilterRemover></FilterItem>
                 })}
                 </FilterItemContainer>
-                <FilterQInput value={this.props.typedQ} type="text" placeholder="Filter" className="" onChange={this.props.onFilterChange} onKeyUp={this.props.onFilterKeyUp}/>
-                {this.props.typedQ &&
-                <ListContainer>
-                    {this.props.columns.map((c,i) => {
-                        let fStr = `${c.text}:${this.props.typedQ}`;
-                        return <ListItem key={i} onClick={e => {
-                            this.props.onApplyFilter(c.text, this.props.typedQ);
-                        }}>{fStr}</ListItem>
-                    })}
-                </ListContainer>
-                }
+                <FilterQInputContainer>
+                    <FilterQInput value={this.props.typedQ} type="text" placeholder="Filter" className="" onChange={this.props.onFilterChange} onKeyUp={this.props.onFilterKeyUp}/>
+                    {this.props.typedQ &&
+                    <ListContainer>
+                        {this.props.columns.map((c,i) => {
+                            let fStr = `${c.text}:${this.props.typedQ}`;
+                            return <ListItem key={i} onClick={e => {
+                                this.props.onApplyFilter(c.text, this.props.typedQ);
+                            }}>{fStr}</ListItem>
+                        })}
+                    </ListContainer>
+                    }
+                </FilterQInputContainer>
             </Container>
         )
     }
