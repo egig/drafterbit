@@ -23,7 +23,7 @@ class ApiKeyNew extends React.Component {
     }
 
     componentDidMount() {
-        let client = new ApiClient();
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         client.getApiKey(this.props.match.params.api_key_id)
             .then(r => {
                 this.setState({

@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm';
 import { setNotifyText }  from '../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import TablePage from '../../../../../admin/client/src/components/TablePage';
+import ApiClient from '../ApiClient';
 
 class ContentTypes extends React.Component {
 
@@ -14,18 +14,25 @@ class ContentTypes extends React.Component {
         super(props);
         this.state = {
             newFormOpen: false,
-            contentType: []
+            contentTypes: []
         };
     }
 
-    componentDidMount() {
-        this.props.drafterbit.getApiClient().getContentTypes()
+    loadContents = () => {
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.getContentTypes()
             .then((contentTypes) => {
                 this.setState({
                     contentTypes: contentTypes
                 });
             })
-    }
+    };
+
+    onClickAdd = () => {
+        this.setState({
+            newFormOpen: true
+        })
+    };
 
     render() {
 
@@ -39,22 +46,31 @@ class ContentTypes extends React.Component {
 
         return (
             <Fragment>
-                <Card headerText="Content Types">
-                    <button onClick={e => {
-                        console.log(this.state.newFormOpen);
-                        this.setState({
-                            newFormOpen: true
-                        })
-                    }}
-                    className="btn btn-success mb-3">Add Content Type</button>
-                    <DataTable
-                        idField='_id'
-                        data={ this.state.contentTypes }
-                        columns={ columns }
-                        striped
-                        hover
-                        condensed />
-                </Card>
+                {/*<Card headerText="Content Types">*/}
+                {/*    <button onClick={e => {*/}
+                {/*        console.log(this.state.newFormOpen);*/}
+                {/*        this.setState({*/}
+                {/*            newFormOpen: true*/}
+                {/*        })*/}
+                {/*    }}*/}
+                {/*    className="btn btn-success mb-3">Add Content Type</button>*/}
+                {/*    <DataTable*/}
+                {/*        idField='_id'*/}
+                {/*        data={ this.state.contentTypes }*/}
+                {/*        columns={ columns }*/}
+                {/*        striped*/}
+                {/*        hover*/}
+                {/*        condensed />*/}
+                {/*</Card>*/}
+                <TablePage
+                    data={ this.state.contentTypes }
+                    contentCount={this.state.contentCount}
+                    columns={ columns }
+                    select={true}
+                    loadContents={this.loadContents}
+                    handleDelete={this.handleDelete}
+                    onClickAdd={this.onClickAdd}
+                />
                 <ContentTypeForm isOpen={this.state.newFormOpen}
                     onCancel={e => {
                         this.setState({

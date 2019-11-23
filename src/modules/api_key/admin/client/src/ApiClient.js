@@ -2,21 +2,7 @@ import axios from 'axios';
 
 class ApiClient {
 
-    constructor(options) {
-
-        let axiosInstance = axios.create({
-            baseURL: options.baseURL,
-            timeout: 10000,
-            params: {
-                api_key: options.apiKey
-            }
-        });
-
-        this.options = Object.assign({}, {
-            project: null,
-            access_token: null
-        }, options);
-
+    constructor(axiosInstance) {
         this.axiosInstance = axiosInstance;
     }
 
@@ -29,12 +15,6 @@ class ApiClient {
         let response = await this.axiosInstance.post(`${path}`, data);
         return response.data;
     }
-
-    async getFieldTypes() {
-        let response = await this.axiosInstance.get('/field_types');
-        return response.data;
-    }
-
 
     async getApiKeys() {
         return this._doGetRequest('/api_keys');

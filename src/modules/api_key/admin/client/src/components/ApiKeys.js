@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
+import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
+import ApiClient from '../ApiClient';
 
 class ApiKeys extends React.Component {
 
@@ -15,6 +14,20 @@ class ApiKeys extends React.Component {
             apiKeys: []
         }
     }
+
+    loadContents = (match, page, sortBy, sortDir, fqStr) => {
+        let client =  new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.getApiKeys()
+            .then(apiKeys => {
+                this.setState({
+                    apiKeys
+                })
+            })
+            .catch(e => {
+                console.error(e);
+                // TODO
+            })
+    };
 
     componentDidMount() {
         this.props.drafterbit.getApiClient().getApiKeys()
@@ -46,30 +59,16 @@ class ApiKeys extends React.Component {
         ];
 
         return (
-            <Fragment>
-                <Card headerText="Api Keys">
-                    <Link className="btn btn-success mb-3" to={'/api_keys/new'}>Create Api Key</Link>
-                    <DataTable
-                        idField='_id'
-                        data={ this.state.apiKeys }
-                        columns={ columns }
-                        striped
-                        hover
-                        condensed />
-                </Card>
-            </Fragment>
+            <TablePage
+                idField='_id'
+                select={true}
+                data={ this.state.apiKeys }
+                contentCount={10} // TODO
+                columns={ columns }
+                loadContents={this.loadContents}
+            />
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        apiKeys: state.API_KEY.apiKeys,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(ApiKeys));
+export default withDrafterbit(ApiKeys);

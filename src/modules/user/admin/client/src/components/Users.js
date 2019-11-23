@@ -1,10 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import actions from '../actions';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import DataTable from 'drafterbit-module-admin/client/src/components/DataTable';
 import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ApiClient from '../ApiClient';
@@ -28,18 +22,7 @@ class Users extends React.Component {
                     users
                 });
             });
-    }
-
-    // componentDidMount() {
-    //     let client =  new ApiClient({});
-    //
-    //     client.getUsers()
-    //         .then(users => {
-    //             this.setState({
-    //                 users
-    //             });
-    //         });
-    // }
+    };
 
     render() {
 
@@ -71,14 +54,4 @@ class Users extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        contentTypes: state.CONTENT.contentTypes,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch);
-};
-
-export default withDrafterbit(connect(mapStateToProps, mapDispatchToProps)(Users));
+export default withDrafterbit(Users);
