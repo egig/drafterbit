@@ -46,22 +46,6 @@ class ContentTypes extends React.Component {
 
         return (
             <Fragment>
-                {/*<Card headerText="Content Types">*/}
-                {/*    <button onClick={e => {*/}
-                {/*        console.log(this.state.newFormOpen);*/}
-                {/*        this.setState({*/}
-                {/*            newFormOpen: true*/}
-                {/*        })*/}
-                {/*    }}*/}
-                {/*    className="btn btn-success mb-3">Add Content Type</button>*/}
-                {/*    <DataTable*/}
-                {/*        idField='_id'*/}
-                {/*        data={ this.state.contentTypes }*/}
-                {/*        columns={ columns }*/}
-                {/*        striped*/}
-                {/*        hover*/}
-                {/*        condensed />*/}
-                {/*</Card>*/}
                 <TablePage
                     data={ this.state.contentTypes }
                     contentCount={this.state.contentCount}

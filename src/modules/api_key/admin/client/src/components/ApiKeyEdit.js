@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
