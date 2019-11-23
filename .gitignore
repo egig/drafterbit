@@ -6,6 +6,8 @@ public/*
 !public/.gitkeep
 tmp/*
 !tmp/.gitkeep
+files/*
+!files/.gitkeep
 config.js
 npm-debug.log*
 errorShots/
