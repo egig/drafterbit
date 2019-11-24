@@ -36,12 +36,12 @@ class TablePage extends React.Component {
     }
 
     loadContents(props) {
-        let nextQs = querystring.parse(props.location.search.substr(1));
-        let sortBy = nextQs['sort_by'];
-        let sortDir = nextQs['sort_dir'];
-        let fqStr = nextQs['fq'];
-        let page = nextQs['page'];
-        this.props.loadContents(props.match, page, sortBy, sortDir, fqStr);
+        let qs = querystring.parse(props.location.search.substr(1));
+        let sortBy = qs['sort_by'];
+        let sortDir = qs['sort_dir'];
+        let fqStr = qs['fq'];
+        let page = qs['page'];
+        this.props.loadContents(props.match, page, sortBy, sortDir, fqStr, qs);
     }
 
     componentDidMount() {

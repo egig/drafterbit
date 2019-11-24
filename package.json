@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "assets-webpack-plugin": "^3.9.10",
@@ -51,6 +52,7 @@
     "moment": "^2.19.3",
     "mongoose": "^5.4.18",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "nconf": "^0.10.0",
     "node-libs-browser": "^2.2.1",
     "node-mailjet": "^3.3.1",
@@ -58,6 +60,7 @@
     "querystring": "^0.2.0",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-checkbox-tree": "^1.5.1",
     "react-dom": "^16.8.6",
     "react-fast-compare": "^2.0.4",
     "react-helmet": "^5.2.1",

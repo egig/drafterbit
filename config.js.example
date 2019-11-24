@@ -11,6 +11,7 @@ module.exports = {
     'admin.user_api_base_url': "/",
     "admin.api_key": "test",
     "admin.user_api_key": "test",
+    "filesBasePath": "./files",
     modules: [
         './src/modules/admin',
         './src/modules/user',

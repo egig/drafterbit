@@ -1,8 +1,9 @@
+const path = require('path');
 const express = require('express');
 const validateRequest = require('../../middlewares/validateRequest');
 const FileServer = require('./FileServer');
 const multer = require('multer')
-const upload = multer({ dest: 'files/' })
+const upload = multer({ dest: 'files/' });
 
 
 let router = express.Router();
@@ -33,14 +34,14 @@ let router = express.Router();
  *     tags:
  *        - /users/
  */
-router.any('/files',
+router.get('/files',
     function (req, res) {
         (async function () {
 
             try {
 
-                // TODO move basePath to config
-                let fServer = new FileServer(__dirname+"/../../../files");
+                let basePath = path.join(req.app._root,req.app.get('config').get("filesBasePath"));
+                let fServer = new FileServer(basePath);
                 fServer.handle(req, res);
 
             } catch (e ) {
