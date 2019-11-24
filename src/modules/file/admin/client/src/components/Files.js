@@ -1,3 +1,4 @@
+import path from 'path';
 import React, {Fragment} from 'react';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
@@ -48,16 +49,28 @@ class Files extends React.Component {
         }];
 
         let qs = querystring.parse(this.props.location.search.substr(1));
-        let paths = ["Files"];
+        let paths = [{
+            label: "Files",
+            path: "/files?path=/"
+        }];
         if (qs['path']) {
-            paths = paths.concat(decodeURIComponent(qs['path']).split("/").filter( p => !!p))
+            let restPath = decodeURIComponent(qs['path']).split("/").filter( p => !!p);
+            let cp = "";
+            let ps = [];
+            restPath.forEach(p => {
+                cp = path.join(cp, p);
+                ps.push({
+                    label: p,
+                    path: `/files?path=${cp}`
+                })
+            });
+            paths = paths.concat(ps);
         }
 
         return (
             <Fragment>
                 {paths.map((p,i) => {
-                    // TODO make this links
-                    return <span key={i}> {p.trim()} / </span>
+                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
                 })}
                 <TablePage
                     data={ this.state.files }
