@@ -60,7 +60,6 @@
     "querystring": "^0.2.0",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
-    "react-checkbox-tree": "^1.5.1",
     "react-dom": "^16.8.6",
     "react-fast-compare": "^2.0.4",
     "react-helmet": "^5.2.1",

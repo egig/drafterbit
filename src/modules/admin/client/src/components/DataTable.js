@@ -67,6 +67,7 @@ class DataTable extends React.Component {
 
     	let {
 		    select,
+            selected,
 		    data,
 		    onSort,
 		    sortBy,
@@ -77,24 +78,6 @@ class DataTable extends React.Component {
 
         return (
             <div>
-	            {/*<div className="DataTable-search-widget">*/}
-                {/*    <div>{filterObjects.map((o,i) => {*/}
-                {/*        return <div key={i}>{o.k}={o.v} <span onClick={e => {*/}
-                {/*            this.deleteFilter(o.k, o.v);*/}
-                {/*        }}>&times;</span></div>*/}
-                {/*    })}</div>*/}
-                {/*    <input value={this.state.typedQ} type="text" placeholder="Filter" className="" onChange={this.onFilterChange} onKeyUp={this.onFilterKeyUp}/>*/}
-                {/*    {this.state.typedQ &&*/}
-                {/*        <div>*/}
-                {/*            {this.props.columns.map((c,i) => {*/}
-                {/*                let fStr = `${c.text}:${this.state.typedQ}`;*/}
-                {/*                return <div key={i} onClick={e => {*/}
-                {/*                    this.onApplyFilter(c.text, this.state.typedQ);*/}
-                {/*                }}>{fStr}</div>*/}
-                {/*            })}*/}
-                {/*        </div>*/}
-                {/*    }*/}
-	            {/*</div>*/}
 	            <TableFilter
                     onFilterKeyUp={this.onFilterKeyUp}
                     onFilterChange={this.onFilterChange}
@@ -114,11 +97,11 @@ class DataTable extends React.Component {
 	                                    }}
 				                        type="checkbox"
 				                        ref={(input) => {
-															          if (input != null) {
-															            input.indeterminate = (!!this.props.selected.length) && (this.props.selected.length < data.length);
-															          }}
+				                            if (input != null) {
+                                                input.indeterminate = (!!selected.length) && (selected.length < data.length);
+				                            }}
 	                                    }
-				                        checked={this.props.selected.length == data.length}
+				                        checked={selected.length === data.length}
 			                        />
 		                        </th>
 	                        }
@@ -134,35 +117,6 @@ class DataTable extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/*<tr>*/}
-	                        {/*{ select && <td /> }*/}
-                        {/*/!*{this.props.columns.map((c,i) => {*!/*/}
-                        {/*/!*return (*!/*/}
-                        {/*/!*<td key={i}>*!/*/}
-                        {/*/!*<Input bsSize="sm" value={this.props.filterObject[c.dataField] ? this.props.filterObject[c.dataField] : ''} onChange={e => {*!/*/}
-                        {/*/!*this.props.onFilterChange(c.dataField, e.target.value);*!/*/}
-                        {/*/!*}}/>*!/*/}
-                        {/*/!*</td>*!/*/}
-                        {/*/!*);*!/*/}
-                        {/*/!*})}*!/*/}
-                        {/*/!*<td>*!/*/}
-                        {/*/!*<Button size="sm" color="primary" className="mr-1" onClick={() => {*!/*/}
-                        {/**/}
-                        {/*/!*let filterObj = {};*!/*/}
-                        {/*/!*Object.keys(this.props.filterObject).forEach((name) => {*!/*/}
-                        {/*/!*let v = this.props.filterObject[name];*!/*/}
-                        {/*/!*if(v) {*!/*/}
-                        {/*/!*filterObj[name] = this.props.filterObject[name];*!/*/}
-                        {/*/!*}*!/*/}
-                        {/*/!*});*!/*/}
-
-                        {/*/!*this.props.onApplyFilter(filterObj);*!/*/}
-                        {/*/!*}}><FontAwesomeIcon icon={faFilter}/></Button>*!/*/}
-                        {/*/!*<Button size="sm" onClick={() => {*!/*/}
-                        {/*/!*this.props.onReset();*!/*/}
-                        {/*/!*}}><FontAwesomeIcon icon={faRedo}/></Button>*!/*/}
-                        {/*/!*</td>*!/*/}
-                        {/*</tr>*/}
                         {
                             this.props.data.map((d,i) => {
                                 return (
@@ -201,7 +155,7 @@ class DataTable extends React.Component {
                     <Pagination className="float-right d-inline-block" size="sm" aria-label="Page navigation example">
                         {createPagination(this.props.currentPage, this.props.totalPageCount).map((p,i) => {
                             return (
-                                <PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage == p}>
+                                <PaginationItem key={i} disabled={isNaN(p)} active={this.props.currentPage === p}>
                                     {this.props.renderPaginationLink(p)}
                                 </PaginationItem>
                             );

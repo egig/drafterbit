@@ -106,7 +106,7 @@ class ContentType extends React.Component {
                                     fieldDialogActive: true,
                                     editedFieldId: ""
                                 });
-                            }} className="btn btn-success btn-sm mb-2"><i className="icon-plus"/> Add Field</button>
+                            }} className="btn btn-success btn-sm mb-2">Add Field</button>
 				            <table className="table table-sm table-bordered">
 					            <thead>
 					            <tr>

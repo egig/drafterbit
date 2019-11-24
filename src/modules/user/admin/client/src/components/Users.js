@@ -43,6 +43,7 @@ class Users extends React.Component {
 
         return (
             <TablePage
+                headerText="Users"
                 idField='_id'
                 select={true}
                 data={ this.state.users }

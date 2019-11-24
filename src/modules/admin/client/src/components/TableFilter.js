@@ -68,7 +68,13 @@ class TableFilter extends React.Component {
                 })}
                 </FilterItemContainer>
                 <FilterQInputContainer>
-                    <FilterQInput value={this.props.typedQ} type="text" placeholder="Filter" className="" onChange={this.props.onFilterChange} onKeyUp={this.props.onFilterKeyUp}/>
+                    <FilterQInput
+                        value={this.props.typedQ}
+                        type="text"
+                        placeholder="Filter"
+                        className=""
+                        onChange={this.props.onFilterChange}
+                        onKeyUp={this.props.onFilterKeyUp}/>
                     {this.props.typedQ &&
                     <ListContainer>
                         {this.props.columns.map((c,i) => {

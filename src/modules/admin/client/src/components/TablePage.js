@@ -14,12 +14,9 @@ class TablePage extends React.Component {
         this.state = {
             selected: [],
         };
-
-        this.handleOnSelect = this.handleOnSelect.bind(this);
-        this.handleOnSelectAll = this.handleOnSelectAll.bind(this);
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
         let { location } = this.props;
         let nextLocation = nextProps.location;
 
@@ -35,42 +32,31 @@ class TablePage extends React.Component {
         this.loadContents(nextProps);
     }
 
-    loadContents(props) {
+    loadContents = (props) => {
         let qs = querystring.parse(props.location.search.substr(1));
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         let fqStr = qs['fq'];
         let page = qs['page'];
         this.props.loadContents(props.match, page, sortBy, sortDir, fqStr, qs);
-    }
+    };
 
     componentDidMount() {
         this.loadContents(this.props)
     }
 
-    handleOnSelect(isSelect, row) {
-        if (isSelect) {
-            this.setState(() => ({
-                selected: [...this.state.selected, row._id]
-            }));
-        } else {
-            this.setState(() => ({
-                selected: this.state.selected.filter(x => x !== row._id)
-            }));
-        }
-    }
+    handleOnSelect = (isSelect, row) => {
+        this.setState(() => ({
+            selected: isSelect ? [...this.state.selected, row._id] :
+                this.state.selected.filter(x => x !== row._id)
+        }));
+    };
 
     handleOnSelectAll = (isSelect, rows) => {
         const ids = rows.map(r => r._id);
-        if (isSelect) {
-            this.setState(() => ({
-                selected: ids
-            }));
-        } else {
-            this.setState(() => ({
-                selected: []
-            }));
-        }
+        this.setState(() => ({
+            selected: isSelect ? ids : []
+        }));
     };
 
     handleSort = (dataField, sortDir) => {
@@ -173,10 +159,10 @@ class TablePage extends React.Component {
 
         return (
             <Fragment>
-                <Card headerText="Contents">
-                    <button className="btn btn-success mb-3" onClick={onClickAdd} >Add</button>
+                <Card headerText={this.props.headerText}>
+                    <button className="btn btn-success mb-2 btn-sm" onClick={onClickAdd} >{this.props.addText}</button>
                     {!!selected.length &&
-                        <button className="btn btn-danger ml-2 mb-3" onClick={this.handleDelete} >Delete</button>
+                        <button className="btn btn-danger ml-2 mb-2 btn-sm"  onClick={this.handleDelete} >{this.props.deleteText}</button>
                     }
                     <DataTable
                         idField="_id"
@@ -208,5 +194,10 @@ class TablePage extends React.Component {
     }
 }
 
+TablePage.defaultProps = {
+    headerText: "Contents",
+    addText: "Add",
+    deleteText: "Delete"
+};
 
 export default withDrafterbit(withRouter(TablePage));
