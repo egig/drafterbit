@@ -4,9 +4,7 @@ import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import ApiClient from '../ApiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckSquare, faSquare, faPlusSquare,
-faMinusSquare, faFolder, faFolderOpen, faFile} from '@fortawesome/free-regular-svg-icons';
-import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faFolder, faFile} from '@fortawesome/free-regular-svg-icons';
 
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import {Link} from 'react-router-dom';

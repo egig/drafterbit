@@ -4,7 +4,17 @@ import { Value } from 'slate'
 import React from 'react'
 import initialValue from './value.json'
 import { isKeyHotkey } from 'is-hotkey'
-import { Button, Icon, Toolbar } from './RichTextComponents'
+import { Button, Toolbar } from './RichTextComponents'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    faBold,
+    faCode,
+    faHeading,
+    faItalic,
+    faListOl, faListUl,
+    faQuoteRight,
+    faUnderline
+} from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Define the default node type.
@@ -86,15 +96,15 @@ class RichText extends React.Component {
         return (
             <div>
                 <Toolbar>
-                    {this.renderMarkButton('bold', 'format_bold')}
-                    {this.renderMarkButton('italic', 'format_italic')}
-                    {this.renderMarkButton('underlined', 'format_underlined')}
-                    {this.renderMarkButton('code', 'code')}
-                    {this.renderBlockButton('heading-one', 'looks_one')}
-                    {this.renderBlockButton('heading-two', 'looks_two')}
-                    {this.renderBlockButton('block-quote', 'format_quote')}
-                    {this.renderBlockButton('numbered-list', 'format_list_numbered')}
-                    {this.renderBlockButton('bulleted-list', 'format_list_bulleted')}
+                    {this.renderMarkButton('bold', <FontAwesomeIcon icon={faBold}/>)}
+                    {this.renderMarkButton('italic', <FontAwesomeIcon icon={faItalic}/>)}
+                    {this.renderMarkButton('underlined', <FontAwesomeIcon icon={faUnderline}/>)}
+                    {this.renderMarkButton('code', <FontAwesomeIcon icon={faCode}/>)}
+                    {this.renderBlockButton('heading-one', <span><FontAwesomeIcon icon={faHeading}/>1</span>)}
+                    {this.renderBlockButton('heading-two', <span><FontAwesomeIcon icon={faHeading}/>2</span>)}
+                    {this.renderBlockButton('block-quote', <FontAwesomeIcon icon={faQuoteRight}/>)}
+                    {this.renderBlockButton('numbered-list', <FontAwesomeIcon icon={faListOl}/>)}
+                    {this.renderBlockButton('bulleted-list', <FontAwesomeIcon icon={faListUl}/>)}
                 </Toolbar>
                 <Editor
                     spellCheck
@@ -126,8 +136,7 @@ class RichText extends React.Component {
             <Button
                 active={isActive}
                 onMouseDown={event => this.onClickMark(event, type)}
-            >
-                <Icon>{icon}</Icon>
+            >{icon}
             </Button>
         )
     }
@@ -156,8 +165,7 @@ class RichText extends React.Component {
             <Button
                 active={isActive}
                 onMouseDown={event => this.onClickBlock(event, type)}
-            >
-                <Icon>{icon}</Icon>
+            >{icon}
             </Button>
         )
     }
