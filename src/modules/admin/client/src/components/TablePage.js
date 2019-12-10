@@ -1,9 +1,8 @@
 import querystring from 'querystring';
 import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Card from './Card/Card';
-import DataTable from './DataTable';
 import withDrafterbit from '../withDrafterbit';
+import DataTable from './DataTable';
 import _ from 'lodash';
 const FilterQuery = require('../../../../../FilterQuery');
 
@@ -159,11 +158,19 @@ class TablePage extends React.Component {
 
         return (
             <Fragment>
-                <Card headerText={this.props.headerText}>
-                    <button className="btn btn-success mb-2 btn-sm" onClick={onClickAdd} >{this.props.addText}</button>
-                    {!!selected.length &&
-                        <button className="btn btn-danger ml-2 mb-2 btn-sm"  onClick={this.handleDelete} >{this.props.deleteText}</button>
-                    }
+                <div className="row">
+                    <div className="col-md-6">
+                        <h2>{this.props.headerText}</h2>
+                    </div>
+                    <div className="col-md-6">
+                        <button className="btn btn btn-outline-success mb-2 btn-sm float-right" onClick={onClickAdd} >{this.props.addText}</button>
+                        {!!selected.length &&
+                            <button className="btn btn-outline-danger mr-2 mb-2 btn-sm float-right"  onClick={this.handleDelete} >
+                                {this.props.deleteText} {selected.length} items
+                            </button>
+                        }
+                    </div>
+                </div>
                     <DataTable
                         idField="_id"
                         data={ data }
@@ -187,16 +194,16 @@ class TablePage extends React.Component {
                         onRowClick={this.props.onRowClick}
                         onDeleteFilter={this.onDeleteFilter}
                         popFilter={this.popFilter}
+                        render={this.props.render}
                     />
-                </Card>
             </Fragment>
         );
     }
 }
 
 TablePage.defaultProps = {
-    headerText: "Contents",
-    addText: "Add",
+    headerText: "Untitled Page",
+    addText: "Add New",
     deleteText: "Delete"
 };
 

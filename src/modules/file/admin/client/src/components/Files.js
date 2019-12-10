@@ -5,8 +5,6 @@ import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import ApiClient from '../ApiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFile} from '@fortawesome/free-regular-svg-icons';
-
-import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import {Link} from 'react-router-dom';
 import querystring from "querystring";
 
@@ -66,21 +64,28 @@ class Files extends React.Component {
         }
 
         return (
-            <Fragment>
-                {paths.map((p,i) => {
-                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
-                })}
-                <TablePage
-                    data={ this.state.files }
-                    contentCount={0}
-                    columns={ columns }
-                    // select={true}
-                    loadContents={this.loadContents}
-                    addText="Upload"
-                    // handleDelete={this.handleDelete}
-                    // onClickAdd={this.onClickAdd}
-                />
-            </Fragment>
+            <TablePage
+                data={ this.state.files }
+                contentCount={0}
+                columns={ columns }
+                // select={true}
+                loadContents={this.loadContents}
+                addText="Upload"
+                // handleDelete={this.handleDelete}
+                // onClickAdd={this.onClickAdd}
+                render={(filter, table, pagination) => {
+                    return(
+                        <div>
+                            {filter}
+                            {paths.map((p,i) => {
+                                return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
+                            })}
+                            {table}
+                            {pagination}
+                        </div>
+                    )
+                }}
+            />
         );
     }
 }

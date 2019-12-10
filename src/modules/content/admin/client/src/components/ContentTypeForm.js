@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, FormGroup, Label, Input } from 'reactstrap';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import _ from 'lodash';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
 class ContentTypeForm extends React.Component {
