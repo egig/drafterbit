@@ -1,15 +1,13 @@
 import React  from 'react';
 import Dashboard from './components/Dashboard';
 import MenuSection from './components/MenuSection';
+import stateReducer from './stateReducer';
 
 function createCommonModule(drafterbit) {
 
     return {
-        name: "main",
-        stateName: "COMMON",
-        defaultState: {
-        },
-        // reducer: reducer,
+        name: "common",
+        stateReducer: stateReducer,
         routes: [
             {path: "/", component: Dashboard},
         ],

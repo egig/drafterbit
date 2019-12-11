@@ -81,7 +81,7 @@ Promise.all(preRenderActions)
 
         let message = "Oops, Please try again in few minutes";
 
-        if (e.status == 404) {
+        if (e.status === 404) {
             message = "You don't have access to this project. Please contact your administrator.";
         }
 

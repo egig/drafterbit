@@ -1,4 +1,4 @@
-export default function reducer(state = {}, action) {
+function reducer(state = {}, action) {
     switch (action.type) {
         case '@common/SET_AJAX_LOADING':
             return Object.assign({}, state, {
@@ -12,4 +12,15 @@ export default function reducer(state = {}, action) {
     }
 
     return state;
+}
+
+export default {
+    defaultState: {
+        language: 'en',
+        languages: ['en', 'id'],
+        isAjaxLoading: false,
+        notifyText: ""
+    },
+    stateName: "COMMON",
+    reducer
 }

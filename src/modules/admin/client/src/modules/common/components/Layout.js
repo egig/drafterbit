@@ -44,7 +44,7 @@ class Layout extends React.Component {
 		            <title>{this.props.title} - Drafterbit</title>
 	            </Helmet>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0" expand="md">
-		            <NavbarBrand className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
+		            <NavbarBrand tag="span" className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
 			            {/*TODO support brand image*/}
 			            {/*<img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>*/}
 						<Link to={"/"}><h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1></Link>

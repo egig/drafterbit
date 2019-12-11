@@ -1,17 +1,10 @@
 export default function createDefaultState(drafterbit) {
 
-    let defaultState = {
-        COMMON: {
-            language: 'en',
-            languages: ['en', 'id'],
-            isAjaxLoading: false,
-            notifyText: ""
-        },
-    };
+    let defaultState = {};
 
     drafterbit.modules.map(mo => {
-        if(!!mo.stateName) {
-            defaultState[mo.stateName] = mo.defaultState;
+        if(!!mo.stateReducer) {
+            defaultState[mo.stateReducer.stateName] = mo.stateReducer.defaultState;
         }
     });
 

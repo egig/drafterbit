@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import reducer from './reducer';
+import stateReducer from './stateReducer';
 import { getCookie } from 'drafterbit-module-admin/client/src/cookie';
 import NavBarMenu from './components/NavBarMenu';
 
@@ -14,13 +14,7 @@ function createUserClientModule() {
 
     return {
         name: "user",
-        stateName: "USER",
-        defaultState: {
-            currentUser: null,
-            token: null,
-            users: []
-        },
-        reducer: reducer,
+        stateReducer: stateReducer,
         pageRoutes: [
             {path: "/login", component: Login},               
             {path: "/register", component: Register},

@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import reducer from './reducer';
+import stateReducer from './stateReducer';
 import { Redirect } from 'react-router-dom';
 
 const ApiKeyNew = lazy(() => import('./components/ApiKeyNew'));
@@ -10,10 +10,7 @@ function createApiKeyClientModule(drafterbit) {
 
     return {
         name: "api_key",
-        stateName: "API_KEY",
-        defaultState: {
-        },
-        reducer: reducer,
+        stateReducer: stateReducer,
         routes: [
             {path: "/api_keys/new", component: ApiKeyNew},                
             {path: "/api_keys/:api_key_id", component: ApiKeyEdit},                

@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import reducer from './reducer';
+import stateReducer from './stateReducer';
 import MenuSection from './components/MenuSection';
 import { Redirect } from 'react-router-dom';
 
@@ -12,19 +12,7 @@ function createContentClientModule(drafterbit) {
 
     return {
         name: "content",
-        stateName: "CONTENT",
-        defaultState: {
-            content: {
-                fields: []
-            },
-            contents: [],
-            ctFields: {fields: []},
-            contentType: {
-                fields: []
-            },
-            contentTypes: []
-        },
-        reducer: reducer,
+        stateReducer: stateReducer,
         routes: [
             {path: "/contents/:content_type_slug/:content_id", component: ContentEdit},
             {path: "/contents/:content_type_slug", component: Contents},

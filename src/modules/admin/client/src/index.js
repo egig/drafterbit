@@ -3,9 +3,7 @@ import apiClient from './apiClient';
 import getConfig from './getConfig';
 import getProject from './getProject';
 import axios from 'axios';
-import reducer from 'drafterbit-module-content/admin/client/src/reducer';
 import React from 'react';
-import Dashboard  from './modules/common/components/Dashboard';
 
 class Drafterbit extends EventEmitter {
 
