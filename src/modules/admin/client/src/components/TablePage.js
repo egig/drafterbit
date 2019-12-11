@@ -5,6 +5,8 @@ import withDrafterbit from '../withDrafterbit';
 import DataTable from './DataTable';
 import _ from 'lodash';
 
+// TODO this is not supported by travis
+// remove "drafterbit": "file:.", in packages.json
 const FilterQuery = require('drafterbit/src/FilterQuery');
 
 class TablePage extends React.Component {
