@@ -100,6 +100,19 @@ function getFieldTypes() {
     return fieldTypes;
 }
 
+function getFieldTypesByKeys() {
+    let fieldTypeObject = {};
+    fieldTypes.map(f => {
+        fieldTypeObject[f.id] = f;
+    });
+    return fieldTypeObject;
+}
+
+
+function getFieldType(id) {
+    return getFieldTypesByKeys()[id];
+}
+
 module.exports = {
     FIELD_NUMBER,
     FIELD_RELATION_TO_ONE,
@@ -109,5 +122,6 @@ module.exports = {
     FIELD_SHORT_TEXT,
     FIELD_UNSTRUCTURED,
     getFieldTypeName,
-    getFieldTypes
+    getFieldTypes,
+    getFieldType
 };

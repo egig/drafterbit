@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { getFieldTypes, getFieldType } from 'drafterbit-module-admin/client/src/fieldTypes';
 import _ from 'lodash';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';
+
+// TODO improve the ugly ../../../../../../
+const { getFieldTypes, getFieldType } = require('../../../../../../fieldTypes');
 
 class FieldForm extends React.Component {
 

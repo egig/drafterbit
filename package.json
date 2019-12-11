@@ -74,7 +74,6 @@
     "redis-delete-pattern": "^0.1.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "safe-eval": "^0.4.1",
     "session-file-store": "^1.2.0",
     "shallowequal": "^1.0.2",
     "simple-line-icons": "^2.4.1",

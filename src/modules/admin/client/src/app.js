@@ -2,7 +2,6 @@ import React, { lazy } from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import i18next from 'i18next';
-import safeEval from 'safe-eval';
 
 // CSS dependency first
 import 'simple-line-icons/css/simple-line-icons.css';

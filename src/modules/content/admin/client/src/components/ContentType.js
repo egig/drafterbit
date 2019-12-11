@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from 'drafterbit-module-admin/client/src/components/Notify';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
-import { getFieldTypeName } from 'drafterbit-module-admin/client/src/fieldTypes';
 import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import FieldForm from './FieldForm';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
+
+// TODO make global package
+const { getFieldTypeName }  = require('../../../../../../fieldTypes');
 
 class ContentType extends React.Component {
 
