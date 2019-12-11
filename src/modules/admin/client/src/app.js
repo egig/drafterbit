@@ -10,13 +10,7 @@ import './index.css';
 
 import Drafterbit from './Drafterbit';
 import storeFromState  from './storeFromState';
-// import defaultState  from './defaultState';
 import createDefaultState from './createDefaultState';
-import apiClient from './apiClient';
-import {
-    getCookie
-} from './cookie';
-import getProject from './getProject';
 import getConfig from './getConfig';
 
 // TODO
@@ -37,30 +31,6 @@ moment.locale('id', {
 
 let languageContext = {namespaces: [], i18n};
 
-function getCurrentUserProject() {
-    let token = getCookie('dt_auth_token');
-    if(token) {
-        return drafterbit.userApiClient.validateToken(token)
-            .then(d => {
-
-                if(d['is_valid']) {
-                    let user = d['claims'];
-                    user.token = token;
-
-                    return drafterbit.userApiClient.getUserProject(user.id, getProject())
-                        .then(project => {
-                            user.project = project;
-                            return user;
-                        })
-                }
-
-                return null;
-            })
-    }
-
-    return Promise.resolve(null);
-}
-
 let defaultState = createDefaultState(drafterbit);
 
 let preRenderActions =  drafterbit.modules.map(mo => {
@@ -75,15 +45,8 @@ Promise.all(preRenderActions)
         renderApp(defaultState);
     })
     .catch(e => {
-
-        console.log(e);
-
+        console.error(e);
         let message = "Oops, Please try again in few minutes";
-
-        if (e.status === 404) {
-            message = "You don't have access to this project. Please contact your administrator.";
-        }
-
         ReactDOM.render(<div style={{margin: "25px"}}>{ message }</div>, document.getElementById('app'));
     });
 

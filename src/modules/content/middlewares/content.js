@@ -1,8 +1,7 @@
 const {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} = require( '../../../fieldTypes');
-const getDbName  = require('../../../getDbName');
 const fieldsToSchema = require( '../../../fieldsToSchema');
 
-function getSchema(fields, dbName) {
+function getSchema(fields) {
     let fieldsObj = {};
     fields.forEach(f => {
 
@@ -32,22 +31,20 @@ function getSchema(fields, dbName) {
 /**
  *
  * @param app
- * @param dbName
  * @param modelName
  * @param schemaObj
  */
-function createModel(app, dbName, modelName, schemaObj) {
+function createModel(app, modelName, schemaObj) {
     try {
-        app.getDB(dbName).model(modelName);
+        app.getDB().model(modelName);
     } catch (error) {
-        app.getDB(dbName).model(modelName, schemaObj, modelName);
+        app.getDB().model(modelName, schemaObj, modelName);
     }
 }
 
 module.exports = function contentMiddleware() {
     return function (req, res, next) {
 
-        let dbName = getDbName(req);
         let contentTypeSlug = req.params['slug'];
 
         let m = req.app.model('ContentType');
@@ -74,7 +71,7 @@ module.exports = function contentMiddleware() {
                         .then(ct => {
                             return {
                                 slug: ct.slug,
-                                schemaObj: getSchema(ct.fields, dbName)
+                                schemaObj: getSchema(ct.fields)
                             };
                         });
                 });
@@ -82,14 +79,14 @@ module.exports = function contentMiddleware() {
                 return Promise.all(ctPromises)
                     .then(rList => {
                         rList.map(function (ct) {
-                            createModel(req.app, dbName, ct.slug, ct.schemaObj);
+                            createModel(req.app, ct.slug, ct.schemaObj);
                         });
                     })
                     .then(() => {
-                        let schemaObj = getSchema(contentType.fields, dbName);
+                        let schemaObj = getSchema(contentType.fields);
                         // We need to do try catch this
-                        // so if now model, we create one
-                        createModel(req.app, dbName, contentType.slug, schemaObj);
+                        // so if new model, we create one
+                        createModel(req.app, contentType.slug, schemaObj);
 
                         req.contentType = contentType;
                         req.lookupFields = lookupFields;

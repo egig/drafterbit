@@ -3,11 +3,6 @@ const minify = require('html-minifier').minify;
 
 let router = express.Router();
 
-function getProjectSlug(req) {
-    let projectSlug = req.subdomains.pop();
-    return projectSlug || '_default';
-}
-
 /**
  *
  * @param {*} req
@@ -30,7 +25,6 @@ router.get('/', function (req, res) {
 
     let drafterbitConfig = {
         appName: config.get('appName'),
-        projectSlug: getProjectSlug(req),
         debug: +config.get('DEBUG')
     };
 

@@ -14,7 +14,6 @@ class Client {
         });
 
         this.options = Object.assign({}, {
-            project: null,
             access_token: null
         }, options);
 

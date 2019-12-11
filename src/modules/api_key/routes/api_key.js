@@ -157,9 +157,6 @@ router.get('/api_keys/:api_key_id',
  *     description: Delete api key
  *     parameters:
  *       - in: path
- *         name: project_slug
- *         required: true
- *       - in: path
  *         name: api_key_id
  *         type: string
  *         schema:

@@ -142,7 +142,7 @@ describe('Content Types', () => {
                 });
         });
 
-        it('it should get a project by id', (done) => {
+        it('it should get a content type by id', (done) => {
 
             chai.request(drafterbit)
                 .get(`/content_types/${testId}?api_key=test`)

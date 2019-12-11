@@ -14,7 +14,6 @@ class Client {
         });
 
         this.options = Object.assign({}, {
-            project_id: null,
             access_token: null
         }, options);
 
@@ -24,17 +23,6 @@ class Client {
     async getUsers() {
         let response = await this.axiosInstance.get('/users');
         return response.data;
-    }
-
-    async getUserProject(userId, projectSlug) {
-        try {
-
-            let response = await this.axiosInstance.get(`users/${userId}/projects/${projectSlug}`);
-            return response.data;
-
-        } catch (error) {
-            handleAxiosError(error);
-        }
     }
 
     async createUserSession(email, password) {

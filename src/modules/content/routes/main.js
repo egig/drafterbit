@@ -13,9 +13,6 @@ let router = express.Router();
  *     description: Delete contents
  *     parameters:
  *       - in: path
- *         name: project_slug
- *         required: true
- *       - in: path
  *         name: slug
  *         type: string
  *         schema:

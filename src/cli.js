@@ -18,7 +18,7 @@ program
 
 program
     .command('build')
-    .description('build project')
+    .description('build the app')
     .action(() => {
         let configFile = `${process.cwd()}/config.js`;
         drafterbit.boot(configFile);

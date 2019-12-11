@@ -11,9 +11,6 @@ let router = express.Router();
  *     description: Get content type
  *     parameters:
  *       - in: path
- *         name: project_slug
- *         required: true
- *       - in: path
  *         name: content_type_id
  *         type: integer
  *         schema:
@@ -210,7 +207,7 @@ router.delete('/content_types/:content_type_id',
 
 /**
  * @swagger
- * /projects/{project_slug}/content_types/{content_type_id}:
+ * /content_types/{content_type_id}:
  *   patch:
  *     consumes:
  *       - application/json

@@ -15,21 +15,21 @@ const setApiKeys = (contentTypes) => {
 };
 
 
-const getApiKeys = (projectId) => (dispatch) => {
+const getApiKeys = () => (dispatch) => {
     let client = new ApiClient();
-    client.getApiKeys(projectId)
+    client.getApiKeys()
         .then((apiKeys) => {
             return dispatch(setApiKeys(apiKeys));
         });
 };
 
-const createApiKey = (projectId, name, key, restrictionType, restrictionValue) => (dispatch) => {
+const createApiKey = ( name, key, restrictionType, restrictionValue) => (dispatch) => {
     dispatch(setAjaxLoading(true));
 
 
     let client = new ApiClient();    
-    return client.createApiKey(projectId, name, key, restrictionType, restrictionValue)
-        .then((project) => {
+    return client.createApiKey( name, key, restrictionType, restrictionValue)
+        .then(() => {
             return     dispatch(setAjaxLoading(false));
         });
 };

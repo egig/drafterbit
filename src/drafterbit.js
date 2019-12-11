@@ -1,6 +1,4 @@
 const path = require('path');
-const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const createConfig = require('./createConfig');
@@ -9,16 +7,9 @@ const cors = require('cors');
 const expressValidator = require('express-validator');
 const { ERR_NO_ROOT_DIR } = require('./constants');
 
-// TODO
-// const session  = require('express-session');
-// const FileStore = require('session-file-store')(session);
-
 const { getFieldTypes } = require('./fieldTypes');
 const resolveModule = require('./resolveModule');
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', true);
-mongoose.set('useUnifiedTopology', true);
+const createMongooseConn = require('./createMongooseConn');
 
 let app = {};
 
@@ -37,7 +28,6 @@ app.start = function () {
 
 
 app.build = function build() {
-    // init modules
     this.emit('build');
 };
 
@@ -123,15 +113,6 @@ app.boot = function boot(options) {
     this.use(bodyParser.json({limit: '50mb'}));
     this.use(cookieParser());
 
-    // TODO
-    // this.use(session({
-    //     store: new FileStore({path: this._root+'/tmp'}),
-    //     secret: this.get('config').get('SESSION_SECRET'),
-    //     cookie: { maxAge: 24 * 60 * 60 * 30 },
-    //     resave: true,
-    //     saveUninitialized: true,
-    // }));
-
     this.use(expressValidator({
         errorFormatter: (param, msg) => {
             return msg;
@@ -164,40 +145,16 @@ app.model = function model(name) {
 app.getDB = function getDB(dbName) {
 
     dbName = dbName || this._mongoDefaultConn;
+    let {
+        protocol,
+        host,
+        port,
+        user,
+        pass
+    } = this._mongoConfig[dbName];
 
     if(!this._mongo_connections[dbName]) {
-
-        let {
-            protocol,
-            host,
-            port,
-            user,
-            pass
-        } = this._mongoConfig[dbName];
-
-        if(user || pass) {
-            host = `@${host}`;
-        }
-
-        let uri = `${protocol}://${user}${pass ? `:${pass}` : ''}${host}${port ? `:${port}` : ''}/${dbName}?retryWrites=true&w=majority`;
-
-        this.get('log').info('DB URI = ' + uri);
-        let conn = mongoose.createConnection(uri, {
-            connectTimeoutMS: 9000,
-        }, err => {
-            if(err) {
-                app.get('log').error('Error create connection for', dbName);
-                app.get('log').error(err);
-            }
-        });
-
-        conn.on('error', err => {
-            if(err) {
-                app.get('log').error(err);
-            }
-        });
-
-        this._mongo_connections[dbName] = conn;
+        this._mongo_connections[dbName] = createMongooseConn(this, protocol, dbName, host, user, pass, port);
     }
 
     return this._mongo_connections[dbName];

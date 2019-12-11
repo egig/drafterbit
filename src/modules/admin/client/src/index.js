@@ -1,7 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import apiClient from './apiClient';
 import getConfig from './getConfig';
-import getProject from './getProject';
 import axios from 'axios';
 import React from 'react';
 
@@ -13,8 +12,7 @@ class Drafterbit extends EventEmitter {
         if(!this.apiClient) {
             this.apiClient =  apiClient.createClient({
                 baseURL: getConfig('apiBaseURL'),
-                apiKey: getConfig('apiKey'),
-                project: getProject()
+                apiKey: getConfig('apiKey')
             });
         }
         return this.apiClient;
