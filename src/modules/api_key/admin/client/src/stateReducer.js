@@ -10,8 +10,8 @@ function reducer(state = {}, action) {
 }
 
 export default {
-	stateName: "API_KEY",
-	defaultState: {
-	},
-	reducer
-}
+    stateName: 'API_KEY',
+    defaultState: {
+    },
+    reducer
+};

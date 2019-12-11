@@ -10,11 +10,11 @@ function reducer(state = {}, action) {
 }
 
 export default {
-    stateName: "USER",
+    stateName: 'USER',
     defaultState: {
         currentUser: null,
         token: null,
         users: []
     },
     reducer
-}
+};
