@@ -13,7 +13,7 @@ class FileServer {
     }
 
     static  makeRelativePath(path, base) {
-        return path.replace(base, "").trimLeft('/');
+        return path.replace(base, '').trimLeft('/');
     }
 
     handleUpload (request, response) {
@@ -93,7 +93,7 @@ class FileServer {
 
             break;
         default:
-            jsonResponse = {error: "Unknown op"};
+            jsonResponse = {error: 'Unknown op'};
             break;
         }
 
@@ -106,7 +106,7 @@ class FileServer {
 
         let p_stat = fs.lstatSync(req_dest);
         if(p_stat.isFile()) {
-            console.log("Cannot override file");
+            console.log('Cannot override file');
             return false;
         }
 
@@ -128,7 +128,7 @@ class FileServer {
 
         let p_stat = fs.lstatSync(req_dest);
         if(p_stat.isFile()) {
-            console.log("Cannot override file");
+            console.log('Cannot override file');
             return false;
         }
 
@@ -172,9 +172,9 @@ class FileServer {
         fs.mkdir(full_path);
 
         return {
-            type: "dir",
+            type: 'dir',
             path: path.join(q_path, folder_name),
-        }
+        };
     }
 
     properties(q_path) {
@@ -184,7 +184,7 @@ class FileServer {
         return {
             name: q_path,
             size: p_stat.size,
-            type: q_path.isFile ? "File" : "Directory",
+            type: q_path.isFile ? 'File' : 'Directory',
             location: path.dirname(reqx_path)
         };
     }
@@ -203,7 +203,7 @@ class FileServer {
             let p_stat = fs.lstatSync(full_path);
 
             let file = {
-                type: p_stat.isFile() ? "file" : "dir",
+                type: p_stat.isFile() ? 'file' : 'dir',
                 path: path.join(q_path, p),
                 text: data[i],
             };

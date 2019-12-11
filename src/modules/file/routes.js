@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const validateRequest = require('../../middlewares/validateRequest');
 const FileServer = require('./FileServer');
-const multer = require('multer')
+const multer = require('multer');
 const upload = multer({ dest: 'files/' });
 
 
@@ -40,7 +40,7 @@ router.get('/files',
 
             try {
 
-                let basePath = path.join(req.app._root,req.app.get('config').get("filesBasePath"));
+                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
                 let fServer = new FileServer(basePath);
                 fServer.handle(req, res);
 

@@ -60,7 +60,7 @@ class FilterQuery {
     }
 
     pop() {
-        this.filters.pop()
+        this.filters.pop();
     }
 }
 
