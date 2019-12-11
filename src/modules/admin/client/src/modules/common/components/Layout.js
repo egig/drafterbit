@@ -45,64 +45,13 @@ class Layout extends React.Component {
 	            </Helmet>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0" expand="md">
 		            <NavbarBrand className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>
+			            {/*TODO support brand image*/}
 			            {/*<img  className="layout-navbarBrandImg" src="/img/dtlogo3-light.png" alt="drafterbit"/>*/}
-						<h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1>
+						<Link to={"/"}><h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1></Link>
 		            </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                      <Collapse isOpen={false} navbar>
-		            {/*<div className="layout-search-widget">*/}
-			            {/*/!*<Badge className="m-2 h-100">Content Type: Book</Badge>*!/*/}
-			            {/*{this.state.q &&*/}
-			              {/*<Badge className="m-2 h-100">q: {this.state.q}</Badge>*/}
-			            {/*}*/}
-			            {/*{this.state.fq.map(r => {*/}
-			            	{/*return <Badge className="m-2 h-100">{r}</Badge>*/}
-			            {/*})*/}
-			            {/*}*/}
-		              {/*<input onKeyUp={e => {*/}
-
-		              	 {/*if(e.keyCode == 8 && e.target.value == "") {*/}
-				                  {/*this.setState({*/}
-				                    {/*q: ""*/}
-				                  {/*});*/}
-			                {/*}*/}
-
-			                {/*// ENTER*/}
-			                {/*if(e.keyCode == 13) {*/}
-
-			                	{/*if (e.target.value.indexOf(":") > 0 ) {*/}
-				                  {/*this.setState({*/}
-				                    {/*fq: this.state.fq.concat([e.target.value])*/}
-				                  {/*})*/}
-				                {/*} else {*/}
-			                		{/*this.setState({*/}
-					                  {/*q: e.target.value*/}
-					                {/*});*/}
-				                {/*}*/}
-		                    {/*e.target.value = '';*/}
-			                {/*}*/}
-
-		              {/*}} className="form-control layout-form-control-dark" type="text" placeholder="Search" aria-label="Search" />*/}
-			            {/*/!*{this.state.q &&*!/*/}
-			            {/*/!*<div className="layout-search-suggestion-box">*!/*/}
-				            {/*/!*{this.state.q}*!/*/}
-			            {/*/!*</div>*!/*/}
-			            {/*/!*}*!/*/}
-		            {/*</div>*/}
 		            <Nav navbar className="px-3 ml-auto">
-		              {/*<NavItem className="text-nowrap">*/}
-                           {/*<NavLink onClick={e => {*/}
-		                    {/*e.preventDefault();*/}
-		                {/*}}>{this.props.user.name}</NavLink>*/}
-                      {/*</NavItem>*/}
-		              {/*<NavItem className="text-nowrap">*/}
-
-		                {/*<NavLink onClick={e => {*/}
-		                    {/*e.preventDefault();*/}
-		                    {/*setCookie('dt_auth_token', '');*/}
-		                    {/*window.location.replace('/');*/}
-		                {/*}} href="/logout">Logout</NavLink>*/}
-		              {/*</NavItem>*/}
 
                         {this.props.drafterbit.modules.map((mo,i) => {
                             if(typeof mo.renderNavBarMenu == "function") {
@@ -122,14 +71,6 @@ class Layout extends React.Component {
                 {this.props.isAjaxLoading &&
                     <LoaderTrap />
 				}
-				{/* {this.state.notifyText &&
-                    <Notify type="success" message={this.state.notifyText} onTimeout={() => {
-						console.log("NOTIFY TIMEOUT");
-						this.setState({
-							notifyText: ""
-						})
-					}} />
-                } */}
             </span>
         );
     }

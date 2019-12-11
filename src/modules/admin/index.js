@@ -78,6 +78,10 @@ class AdminModule {
             apiKey: serverConfig.get('admin.api_key'),
         };
     }
+
+    getAdminClientEntry() {
+        return this._modulePath+'/client/src/modules/common/index.js';
+    }
 }
 
 module.exports = AdminModule;
