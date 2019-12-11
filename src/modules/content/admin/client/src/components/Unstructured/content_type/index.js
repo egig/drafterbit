@@ -2,7 +2,6 @@
 import React, { Component, Fragment } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux';
-// import withDrafterbit from '../../../../../withDrqafterbit';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
 class ContentType extends React.Component {

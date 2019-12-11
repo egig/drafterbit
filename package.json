@@ -26,6 +26,7 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "drafterbit": "file:.",
     "drafterbit-module-admin": "file:src/modules/admin",
     "drafterbit-module-content": "file:src/modules/content",
     "emotion": "^10.0.23",

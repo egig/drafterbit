@@ -7,8 +7,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';
 
-// TODO improve the ugly ../../../../../../
-const { getFieldTypes, getFieldType } = require('../../../../../../fieldTypes');
+const { getFieldTypes, getFieldType } = require('drafterbit/src/fieldTypes');
 
 class FieldForm extends React.Component {
 
