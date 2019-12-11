@@ -3,7 +3,7 @@ node_js:
   - 10
   - 12
 before_script:
-  - npm install -g codecov nyc
+  - npm install -g codecov nyc mocha
   - npm install
 script:
   - npm test
