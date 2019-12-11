@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFile} from '@fortawesome/free-regular-svg-icons';
 import {Link} from 'react-router-dom';
 import querystring from "querystring";
+import DropZone from './DropZone';
 
 class Files extends React.Component {
 
@@ -64,28 +65,34 @@ class Files extends React.Component {
         }
 
         return (
-            <TablePage
-                data={ this.state.files }
-                contentCount={0}
-                columns={ columns }
-                // select={true}
-                loadContents={this.loadContents}
-                addText="Upload"
-                // handleDelete={this.handleDelete}
-                // onClickAdd={this.onClickAdd}
-                render={(filter, table, pagination) => {
-                    return(
-                        <div>
-                            {filter}
-                            {paths.map((p,i) => {
-                                return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
-                            })}
-                            {table}
-                            {pagination}
-                        </div>
-                    )
-                }}
-            />
+            <Fragment>
+                <TablePage
+                    headerText="Files"
+                    data={ this.state.files }
+                    contentCount={0}
+                    columns={ columns }
+                    // select={true}
+                    loadContents={this.loadContents}
+                    addText="Upload"
+                    // handleDelete={this.handleDelete}
+                    // onClickAdd={this.onClickAdd}
+                    render={(filter, table, pagination) => {
+                        return(
+                            <div>
+                                <DropZone/>
+                                <div className="mb-2"/>
+                                {filter}
+                                {paths.map((p,i) => {
+                                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
+                                })}
+                                <div className="mb-2"/>
+                                {table}
+                                {pagination}
+                            </div>
+                        )
+                    }}
+                />
+            </Fragment>
         );
     }
 }
