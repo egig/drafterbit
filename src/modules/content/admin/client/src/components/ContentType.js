@@ -8,7 +8,7 @@ import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import FieldForm from './FieldForm';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
-const { getFieldTypeName }  = require('drafterbit/src/fieldTypes');
+const { getFieldTypeName }  = require('../../../../../../fieldTypes');
 
 class ContentType extends React.Component {
 
