@@ -2,9 +2,6 @@ const path = require('path');
 const express = require('express');
 const validateRequest = require('../../middlewares/validateRequest');
 const FileServer = require('./FileServer');
-const multer = require('multer');
-const upload = multer({ dest: 'files/' });
-
 
 let router = express.Router();
 
@@ -12,16 +9,16 @@ let router = express.Router();
  * @swagger
  * /files:
  *   get:
- *     description: Check user login state
+ *     description: Get files
  *     parameters:
  *       - in: query
- *         name: token
+ *         name: op
  *         type: string
  *         schema:
  *           type: string
  *         required: true
  *       - in: query
- *         name: user_id
+ *         name: path
  *         type: integer
  *         schema:
  *           type: integer
@@ -45,6 +42,44 @@ router.get('/files',
                 fServer.handle(req, res);
 
             } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
+
+        })();
+    });
+
+router.post('/files',
+    function (req, res) {
+        (async function () {
+
+            try {
+
+                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
+                let fServer = new FileServer(basePath);
+                fServer.handle(req, res);
+
+            } catch (e ) {
+                res.status(500);
+                res.send(e.message);
+            }
+
+        })();
+    });
+
+
+router.put('/files',
+    function (req, res) {
+        (async function () {
+
+            try {
+
+                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
+                let fServer = new FileServer(basePath);
+                fServer.handleUpload(req, res);
+
+            } catch (e ) {
+                console.log(e)
                 res.status(500);
                 res.send(e.message);
             }

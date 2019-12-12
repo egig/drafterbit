@@ -1,6 +1,15 @@
 const fs = require('fs-extra');
 const path = require('path');
 const rimraf = require('rimraf');
+const multer = require('multer');
+
+// location destionation file
+const pathdocs = 'public/uploads/document/car';
+const pathphoto = 'public/uploads/car';
+
+// allowed extension file
+const allowedphotosext = ['.png', '.jpg', '.jpeg'];
+const alloweddocsext = ['.pdf'];
 
 class FileServer {
 
@@ -16,33 +25,31 @@ class FileServer {
         return path.replace(base, '').trimLeft('/');
     }
 
-    handleUpload (request, response) {
+    handleUpload (req, res) {
 
-        let q_path = request.body.path;
-        let reqx_path = this.preparePath(q_path);
+        let storage = multer.diskStorage({
+            destination: (req, file, cb) => {
+                return cb(null, this.preparePath(req.body.path));
+            },
+            filename: (req, file, cb) => {
+                cb(null, file.originalname.replace(/ /g,''))
+            },
+        });
 
-        let json_response = [];
-        for(let i=0; i<request.files.length; i++) {
+        let limits = { fileSize: 1024 * 1024 * 2 }; // 2MB
+        const upload = multer({limits, storage }).single("f");
 
-            let tmp_path = request.files[i].path;
+        upload(req, res, function (err) {
+            if (err) {
+                res.status(500).send({
+                    message: err.message
+                })
+            }
 
-            // The original name of the uploaded file
-            // is stored in the letiable "originalname".
-            let name = request.files[i].originalname;
-            let target_path = reqx_path+'/' + request.files[i].originalname;
-
-            let src = fs.createReadStream(tmp_path);
-            let dest = fs.createWriteStream(target_path);
-            src.pipe(dest);
-
-            json_response.push({uploaded: name});
-
-            // @todo
-            // src.on('end', function() { res.render('complete'); });
-            /// src.on('error', function(err) { res.render('error'); });
-        }
-
-        response.json(json_response);
+            res.json({
+                filePath: path.join(req.body.path, req.file.originalname)
+            });
+        });
     }
 
     handle (request, response) {
