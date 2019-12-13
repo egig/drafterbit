@@ -143,7 +143,7 @@ class TablePage extends React.Component {
             data,
             columns,
             onClickAdd,
-            handleDelete,
+            addButton,
             select
         } = this.props;
 
@@ -164,7 +164,9 @@ class TablePage extends React.Component {
                         <h2>{this.props.headerText}</h2>
                     </div>
                     <div className="col-md-6">
-                        <button className="btn btn btn-outline-success mb-2 btn-sm float-right" onClick={onClickAdd} >{this.props.addText}</button>
+                        {onClickAdd &&
+                            <button className="btn btn btn-outline-success mb-2 btn-sm float-right" onClick={onClickAdd} >{this.props.addText}</button>
+                        }
                         {!!selected.length &&
                             <button className="btn btn-outline-danger mr-2 mb-2 btn-sm float-right"  onClick={this.handleDelete} >
                                 {this.props.deleteText} {selected.length} items
@@ -203,6 +205,8 @@ class TablePage extends React.Component {
 }
 
 TablePage.defaultProps = {
+    addButton: true,
+    select: false,
     headerText: "Untitled Page",
     addText: "Add New",
     deleteText: "Delete"

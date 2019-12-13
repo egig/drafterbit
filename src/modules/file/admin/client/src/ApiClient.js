@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 class ApiClient {
 
     constructor(axiosInstance) {

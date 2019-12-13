@@ -88,7 +88,6 @@ class Files extends React.Component {
                     columns={ columns }
                     // select={true}
                     loadContents={this.loadContents}
-                    addText="Upload"
                     // handleDelete={this.handleDelete}
                     // onClickAdd={this.onClickAdd}
                     render={(filter, table, pagination) => {
