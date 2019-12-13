@@ -73,7 +73,6 @@ router.put('/files',
         (async function () {
 
             try {
-
                 let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
                 let fServer = new FileServer(basePath);
                 fServer.handleUpload(req, res);

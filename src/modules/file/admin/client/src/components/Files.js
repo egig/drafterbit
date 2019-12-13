@@ -30,7 +30,19 @@ class Files extends React.Component {
             })
     };
 
+    fileDidUpload = (r) => {
+
+        let qs = querystring.parse(this.props.location.search.substr(1));
+        let sortBy = qs['sort_by'];
+        let sortDir = qs['sort_dir'];
+        let fqStr = qs['fq'];
+        let page = qs['page'];
+
+        this.loadContents(this.props.match, page, sortBy, sortDir, fqStr, qs)
+    };
+
     render() {
+
         const columns = [{
             dataField: 'text',
             text: 'Name',
@@ -50,7 +62,10 @@ class Files extends React.Component {
             label: "Files",
             path: "/files?path=/"
         }];
+
+        let uploadPath = "/";
         if (qs['path']) {
+            uploadPath = qs['path'];
             let restPath = decodeURIComponent(qs['path']).split("/").filter( p => !!p);
             let cp = "";
             let ps = [];
@@ -79,7 +94,7 @@ class Files extends React.Component {
                     render={(filter, table, pagination) => {
                         return(
                             <div>
-                                <DropZone/>
+                                <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
                                 <div className="mb-2"/>
                                 {filter}
                                 {paths.map((p,i) => {

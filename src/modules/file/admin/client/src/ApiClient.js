@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 class ApiClient {
 
     constructor(axiosInstance) {
@@ -12,6 +14,18 @@ class ApiClient {
             }
         });
         return response.data;
+    }
+
+    async upload(file, path) {
+        let formData = new FormData();
+        formData.set("path", path);
+        formData.append("f", file);
+
+
+        let res = await  this.axiosInstance.put('/files', formData, {
+            headers: {'Content-Type': 'multipart/form-data' }
+        });
+        return res.data
     }
 }
 

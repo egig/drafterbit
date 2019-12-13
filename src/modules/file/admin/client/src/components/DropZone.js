@@ -1,6 +1,8 @@
 import React from 'react';
-import {useDropzone} from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
+import ApiClient from '../ApiClient';
+import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
 const getColor = (props) => {
     if (props.isDragAccept) {
@@ -31,19 +33,37 @@ const Container = styled.div`
   transition: border .24s ease-in-out;
 `;
 
-export default function DropZone(props) {
-    const {
-        getRootProps,
-        getInputProps,
-        isDragActive,
-        isDragAccept,
-        isDragReject
-    } = useDropzone({accept: '*'});
+class DropZone extends React.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <Container {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
-            <input {...getInputProps()} />
-            <p>Drag 'n' drop some files here, or click to select files</p>
-        </Container>
-    );
+        this.state = {
+            files: []
+        };
+    }
+
+    onDrop = (files) => {
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+
+        client.upload(files[0], this.props.path)
+            .then(r => {
+                this.props.fileDidUpload(r);
+            })
+    };
+
+    render() {
+
+        return (
+            <Dropzone onDrop={this.onDrop}>
+                {({getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject}) => (
+                    <Container {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
+                        <input {...getInputProps()} />
+                        <p>Drag 'n' drop some files here, or click to select files</p>
+                    </Container>
+                )}
+            </Dropzone>
+        );
+    }
 }
+
+export default withDrafterbit(DropZone);
