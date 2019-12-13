@@ -41,7 +41,6 @@ let preRenderActions =  drafterbit.modules.map(mo => {
 
 Promise.all(preRenderActions)
     .then(reslist => {
-        // defaultState.USER.currentUser = {};
         renderApp(defaultState);
     })
     .catch(e => {

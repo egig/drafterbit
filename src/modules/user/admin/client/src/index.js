@@ -46,8 +46,10 @@ function createUserClientModule() {
             return route;
         },
         preRenderAction(state) {
-            let t = getCookie('dt_auth_token')
+            let t = getCookie('dt_auth_token');
             if (!!t) {
+                // TODO get logged in user detail here
+                // And set to redux user
                 state.USER.token = t;
             }
         },

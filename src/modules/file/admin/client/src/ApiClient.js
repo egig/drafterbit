@@ -19,7 +19,6 @@ class ApiClient {
         formData.set("path", path);
         formData.append("f", file);
 
-
         let res = await  this.axiosInstance.put('/files', formData, {
             headers: {'Content-Type': 'multipart/form-data' }
         });
