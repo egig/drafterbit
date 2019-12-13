@@ -30,11 +30,6 @@ class Drafterbit extends EventEmitter {
         return axios.create(apiClientOptions);
     }
 
-    userApiClient = apiClient.createUserApiClient({
-        baseURL: getConfig('userApiBaseURL'),
-        apiKey: getConfig('userApiKey')
-    });
-
     addModule(moduleObject) {
         this.modules.push(moduleObject)
     }

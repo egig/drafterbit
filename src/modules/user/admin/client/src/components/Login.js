@@ -7,6 +7,7 @@ import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import { setCookie } from 'drafterbit-module-admin/client/src/cookie';
 
 import './Login.css'
+import ApiClient from '../ApiClient';
 
 class Login extends React.Component {
 
@@ -23,7 +24,8 @@ class Login extends React.Component {
         let email = form.email.value;
         let password = form.password.value;
 
-        let c = this.props.drafterbit.userApiClient.createUserSession(email, password)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.createUserSession(email, password)
 		    .then(r => {
 			    // TODO redirect to referrer
                 setCookie("dt_auth_token", r.token);
