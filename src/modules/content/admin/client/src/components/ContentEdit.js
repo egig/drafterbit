@@ -107,6 +107,105 @@ class ContentEdit extends React.Component {
         }
     }
 
+    renderRichText(f,i,value) {
+        return <Field value={value} onChange={(e) => {
+
+            this.setState(oldState => {
+                let formData = oldState.formData;
+                formData[f.name] = e.target.getContent();
+                return Object.assign({}, oldState, {
+                    formData
+                });
+            });
+
+        }} key={i} field={f} />;
+    }
+
+    renderRelationToOne(f,i,value) {
+        return <Field value={value} onChange={(selected, actionsContainer) => {
+
+            this.setState(oldState => {
+
+                let formData = oldState.formData;
+                formData[f.name] = selected.value;
+                return Object.assign({}, oldState, {
+                    formData
+                });
+
+            });
+
+
+        }} key={i} field={f} />;
+    }
+
+    renderRelationToMany(f,i,value) {
+        return <Field value={value} onChange={(selectedList, actionsContainer) => {
+
+            selectedList = selectedList || [];
+
+            this.setState(oldState => {
+
+                let formData = oldState.formData;
+                formData[f.name] =  selectedList.map(s => s.value);
+                return Object.assign({}, oldState, {
+                    formData
+                });
+
+            });
+
+
+        }} key={i} field={f} />;
+    }
+
+    renderUnstructured(f,i,value) {
+        let editorValue;
+        let fValue = this.state.formData[f.name];
+        if(!!fValue) {
+            editorValue = Value.isValue(fValue) ? fValue : blocksToSlateValue(fValue);
+        } else {
+            editorValue = blocksToSlateValue(testInitValue);
+        }
+
+        return <div key={i} className="form-group">
+            <label htmlFor={f.name}>{f.label}</label>
+            <Editor
+                value={editorValue}
+                onChange={(change) => {
+
+                    this.setState( oldState => {
+
+                        let formData = oldState.formData;
+                        formData[f.name] = change.value;
+                        let res = Object.assign(oldState, {
+                            formData
+                        });
+
+                        return  res;
+
+                    });
+                }}/>
+        </div>;
+    }
+
+    renderCommonField(f,i,value) {
+        return <Field value={value} onChange={e => {
+
+            let value = e.target.value;
+
+            this.setState(oldState => {
+
+                let formData = oldState.formData;
+                formData[f.name] = value;
+                return Object.assign({}, oldState, {
+                    formData
+                });
+
+            });
+
+
+        }} key={i} field={f} />;
+    }
+
     render() {
         return (
             <Fragment>
@@ -119,107 +218,25 @@ class ContentEdit extends React.Component {
                             }} >
 					            {this.state.ctFields.map((f,i) => {
 
+					                let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
 
-						            let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
-
-						            // CKEditor
 						            if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
-							            return <Field value={value} onChange={(e) => {
-
-							                this.setState(oldState => {
-                                                let formData = oldState.formData;
-                                                formData[f.name] = e.target.getContent();
-                                                return Object.assign({}, oldState, {
-                                                    formData
-                                                });
-                                            });
-
-                                        }} key={i} field={f} />;
+						                return this.renderRichText(f,i,value)
 						            }
 
                                     if(parseInt(f.type_id) === parseInt(FIELD_RELATION_TO_ONE)){
-                                        return <Field value={value} onChange={(selected, actionsContainer) => {
-
-                                                    this.setState(oldState => {
-
-                                                        let formData = oldState.formData;
-                                                        formData[f.name] = selected.value;
-                                                        return Object.assign({}, oldState, {
-                                                            formData
-                                                        });
-
-                                                    });
-
-
-                                                }} key={i} field={f} />;
+                                        return this.renderRelationToOne(f,i,value)
                                     }
 
                                     if(parseInt(f.type_id) === parseInt(FIELD_RELATION_TO_MANY)) {
-                                        return <Field value={value} onChange={(selectedList, actionsContainer) => {
-
-                                                    selectedList = selectedList || [];
-
-                                                    this.setState(oldState => {
-
-                                                        let formData = oldState.formData;
-                                                        formData[f.name] =  selectedList.map(s => s.value);
-                                                        return Object.assign({}, oldState, {
-                                                            formData
-                                                        });
-
-                                                    });
-
-
-                                                }} key={i} field={f} />;
+                                        return this.renderRelationToMany(f,i,value)
                                     }
 
                                     if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
-
-                                        let editorValue;
-                                        let fValue = this.state.formData[f.name];
-                                        if(!!fValue) {
-                                            editorValue = Value.isValue(fValue) ? fValue : blocksToSlateValue(fValue);
-                                        } else {
-                                            editorValue = blocksToSlateValue(testInitValue);
-                                        }
-
-                                        return <div key={i} className="form-group">
-                                            <label htmlFor={f.name}>{f.label}</label>
-                                            <Editor
-                                                value={editorValue}
-                                                onChange={(change) => {
-
-                                                    this.setState( oldState => {
-
-                                                        let formData = oldState.formData;
-                                                        formData[f.name] = change.value;
-                                                        let res = Object.assign(oldState, {
-                                                            formData
-                                                        });
-
-                                                        return  res;
-
-                                                    });
-                                                }}/>
-                                            </div>;
+                                        return this.renderUnstructured(f,i,value)
                                     }
 
-                                    return <Field value={value} onChange={e => {
-
-						                let value = e.target.value;
-
-                                        this.setState(oldState => {
-
-                                            let formData = oldState.formData;
-                                            formData[f.name] = value;
-                                            return Object.assign({}, oldState, {
-                                                formData
-                                            });
-
-                                        });
-
-
-                                    }} key={i} field={f} />;
+                                    return this.renderCommonField(f,i,value)
 					            })}
 
 					            <div className="form-group">
