@@ -6,13 +6,13 @@ import { renderToStaticMarkup } from 'react-dom/server'
 export function blocksToSlateValue(rootBlocks) {
     let rootNodes = rootBlocks.map(b => {
 
-        if(b.type == "paragraph") {
+        if(b.type === "paragraph") {
             let fragment= htmlSerializer.parseHtml(b.html_text);
             const children = Array.from(fragment.childNodes)
             return htmlSerializer.deserializeElements(children)[0];
         }
 
-        if(b.type == "content_type") {
+        if(b.type === "content_type") {
             return {
                 object: "block",
                 type: "content_type",
