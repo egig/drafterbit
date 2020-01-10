@@ -2,7 +2,6 @@ import { Editor } from 'slate-react'
 import { Value } from 'slate'
 
 import React from 'react'
-import initialValue from './value.json'
 import { isKeyHotkey } from 'is-hotkey'
 import { Button, Toolbar } from './RichTextComponents'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

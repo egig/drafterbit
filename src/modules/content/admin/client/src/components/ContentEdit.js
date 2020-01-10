@@ -87,19 +87,33 @@ class ContentEdit extends React.Component {
         let contentId = params.content_id;
         let slug = params.content_type_slug;
 
-        this.props.drafterbit.getApiClient().getContentType(slug)
-            .then(contentType => {
-                this.setState({
-                    ctFields: contentType.fields
-                })
+        let client = this.props.drafterbit.getApiClient();
+        Promise.all([
+            client.getContentType(slug),
+            client.getEntry(slug, contentId)
+        ]).then(resList => {
+            let [ contentType, entry ] = resList;
+            let fields = contentType.fields;
+
+            let formData = {};
+            fields.map(f => {
+
+                if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
+                    formData[f.name] = blocksToSlateValue(entry[f.name])
+                } else if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
+                    formData[f.name] = htmlSerializer.deserialize(entry[f.name])
+                } else {
+                    formData[f.name] = entry[f.name]
+                }
+
             });
 
-        this.props.drafterbit.getApiClient().getEntry(slug, contentId)
-            .then(entry => {
-                this.setState({
-                    formData: entry
-                })
+            this.setState({
+                ctFields: contentType.fields,
+                formData: formData
             });
+
+        });
     }
 
     componentDidUpdate(prevProps) {
@@ -117,11 +131,8 @@ class ContentEdit extends React.Component {
 
     renderRichText(f,i,value) {
 
-        let editorValue;
-        let fValue = this.state.formData[f.name];
-        if(!!fValue) {
-            editorValue = Value.isValue(fValue) ? fValue : htmlSerializer.deserialize(fValue);
-        } else {
+        let editorValue = this.state.formData[f.name];
+        if(!editorValue) {
             editorValue = Value.fromJSON(richTextInitialValue);
         }
 
@@ -175,12 +186,10 @@ class ContentEdit extends React.Component {
     }
 
     renderUnstructured(f,i,value) {
-        let editorValue;
-        let fValue = this.state.formData[f.name];
-        if(!!fValue) {
-            editorValue = Value.isValue(fValue) ? fValue : blocksToSlateValue(fValue);
-        } else {
-            editorValue = blocksToSlateValue(testInitValue);
+
+        let editorValue = this.state.formData[f.name];
+        if(!editorValue) {
+            editorValue = blocksToSlateValue(richTextInitialValue);
         }
 
         return <div key={i} className="form-group">
