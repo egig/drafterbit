@@ -95,18 +95,35 @@ class ContentEdit extends React.Component {
             let [ contentType, entry ] = resList;
             let fields = contentType.fields;
 
-            let formData = {};
-            fields.map(f => {
+            let formData = fields.reduce((formData, f) => {
 
                 if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
-                    formData[f.name] = blocksToSlateValue(entry[f.name])
+                    if (!(f.name in entry)) {
+                        formData[f.name] = locksToSlateValue(testInitValue);
+                        return formData
+                    } else {
+                        formData[f.name] = blocksToSlateValue(entry[f.name])
+                    }
+
                 } else if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
-                    formData[f.name] = htmlSerializer.deserialize(entry[f.name])
+
+                    if (!(f.name in entry)) {
+                        formData[f.name] = Value.fromJSON(richTextInitialValue)
+                        return formData
+                    } else {
+                        formData[f.name] = htmlSerializer.deserialize(entry[f.name])
+                    }
+
                 } else {
-                    formData[f.name] = entry[f.name]
+                    if (!(f.name in entry)) {
+                        formData[f.name] = "";
+                    } else {
+                        formData[f.name] = entry[f.name]
+                    }
                 }
 
-            });
+                return formData;
+            }, {});
 
             this.setState({
                 ctFields: contentType.fields,
@@ -135,6 +152,8 @@ class ContentEdit extends React.Component {
         if(!editorValue) {
             editorValue = Value.fromJSON(richTextInitialValue);
         }
+
+        console.log("editorValue", editorValue)
 
         return <Field value={editorValue} onChange={(value) => {
 
