@@ -27,7 +27,7 @@ class Field extends React.Component {
                           className="form-control"/>
             ),
             [FIELD_RICH_TEXT]: () => (
-                <RichText initialValue={value} onChange={this.props.onChange}/>
+                <RichText initialValue={value} value={value}  onChange={this.props.onChange}/>
             ),
             [FIELD_RELATION_TO_ONE]: () => (
                 <Relation relatedContentTypeSlug={field.related_content_type_slug} onChange={this.props.onChange}

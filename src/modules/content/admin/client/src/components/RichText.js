@@ -48,31 +48,22 @@ class RichText extends React.Component {
      * @type {Object}
      */
 
-    state = {
-        value: Value.fromJSON(initialValue),
-    }
-
     /**
-     * Check if the current selection has a mark with `type` in it.
-     *
-     * @param {String} type
-     * @return {Boolean}
+     * @param type
+     * @param value
+     * @returns {*}
      */
-
-    hasMark = type => {
-        const { value } = this.state
+    hasMark = (type, value) => {
         return value.activeMarks.some(mark => mark.type === type)
     }
 
     /**
-     * Check if the any of the currently selected blocks are of `type`.
      *
-     * @param {String} type
-     * @return {Boolean}
+     * @param type
+     * @param value
+     * @returns {*}
      */
-
-    hasBlock = type => {
-        const { value } = this.state
+    hasBlock = (type, value) => {
         return value.blocks.some(node => node.type === type)
     }
 
@@ -93,25 +84,28 @@ class RichText extends React.Component {
      */
 
     render() {
+
+        let value = this.props.value;
+
         return (
             <div>
                 <Toolbar>
-                    {this.renderMarkButton('bold', <FontAwesomeIcon icon={faBold}/>)}
-                    {this.renderMarkButton('italic', <FontAwesomeIcon icon={faItalic}/>)}
-                    {this.renderMarkButton('underlined', <FontAwesomeIcon icon={faUnderline}/>)}
-                    {this.renderMarkButton('code', <FontAwesomeIcon icon={faCode}/>)}
-                    {this.renderBlockButton('heading-one', <span><FontAwesomeIcon icon={faHeading}/>1</span>)}
-                    {this.renderBlockButton('heading-two', <span><FontAwesomeIcon icon={faHeading}/>2</span>)}
-                    {this.renderBlockButton('block-quote', <FontAwesomeIcon icon={faQuoteRight}/>)}
-                    {this.renderBlockButton('numbered-list', <FontAwesomeIcon icon={faListOl}/>)}
-                    {this.renderBlockButton('bulleted-list', <FontAwesomeIcon icon={faListUl}/>)}
+                    {this.renderMarkButton('bold', <FontAwesomeIcon icon={faBold}/>, value)}
+                    {this.renderMarkButton('italic', <FontAwesomeIcon icon={faItalic}/>, value)}
+                    {this.renderMarkButton('underlined', <FontAwesomeIcon icon={faUnderline}/>, value)}
+                    {this.renderMarkButton('code', <FontAwesomeIcon icon={faCode}/>, value)}
+                    {this.renderBlockButton('heading-one', <span><FontAwesomeIcon icon={faHeading}/>1</span>, value)}
+                    {this.renderBlockButton('heading-two', <span><FontAwesomeIcon icon={faHeading}/>2</span>, value)}
+                    {this.renderBlockButton('block-quote', <FontAwesomeIcon icon={faQuoteRight}/>, value)}
+                    {this.renderBlockButton('numbered-list', <FontAwesomeIcon icon={faListOl}/>, value)}
+                    {this.renderBlockButton('bulleted-list', <FontAwesomeIcon icon={faListUl}/>, value)}
                 </Toolbar>
                 <Editor
                     spellCheck
                     autoFocus
                     placeholder="Enter some rich text..."
                     ref={this.ref}
-                    value={this.state.value}
+                    value={value}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
                     renderBlock={this.renderBlock}
@@ -129,8 +123,8 @@ class RichText extends React.Component {
      * @return {Element}
      */
 
-    renderMarkButton = (type, icon) => {
-        const isActive = this.hasMark(type)
+    renderMarkButton = (type, icon, value) => {
+        const isActive = this.hasMark(type, value)
 
         return (
             <Button
@@ -141,30 +135,30 @@ class RichText extends React.Component {
         )
     }
 
-    /**
-     * Render a block-toggling toolbar button.
-     *
-     * @param {String} type
-     * @param {String} icon
-     * @return {Element}
-     */
 
-    renderBlockButton = (type, icon) => {
-        let isActive = this.hasBlock(type)
+    /**
+     *
+     * @param type
+     * @param icon
+     * @param value
+     * @returns {*}
+     */
+    renderBlockButton = (type, icon, value) => {
+        let isActive = this.hasBlock(type, value)
 
         if (['numbered-list', 'bulleted-list'].includes(type)) {
-            const { value: { document, blocks } } = this.state
+            const { document, blocks } = value;
 
             if (blocks.size > 0) {
                 const parent = document.getParent(blocks.first().key)
-                isActive = this.hasBlock('list-item') && parent && parent.type === type
+                isActive = this.hasBlock('list-item', value) && parent && parent.type === type
             }
         }
 
         return (
             <Button
                 active={isActive}
-                onMouseDown={event => this.onClickBlock(event, type)}
+                onMouseDown={event => this.onClickBlock(event, type, value)}
             >{icon}
             </Button>
         )
@@ -179,6 +173,7 @@ class RichText extends React.Component {
 
     renderBlock = (props, editor, next) => {
         const { attributes, children, node } = props
+
 
         switch (node.type) {
         case 'block-quote':
@@ -229,8 +224,8 @@ class RichText extends React.Component {
      */
 
     onChange = ({ value }) => {
-        this.setState({ value })
-    }
+        this.props.onChange(value)
+    };
 
     /**
      * On key down, if it's a formatting command toggle a mark.
@@ -272,12 +267,11 @@ class RichText extends React.Component {
     }
 
     /**
-     * When a block button is clicked, toggle the block type.
      *
-     * @param {Event} event
-     * @param {String} type
+     * @param event
+     * @param type
+     * @param value
      */
-
     onClickBlock = (event, type) => {
         event.preventDefault()
 
@@ -287,8 +281,8 @@ class RichText extends React.Component {
 
         // Handle everything but list buttons.
         if (type !== 'bulleted-list' && type !== 'numbered-list') {
-            const isActive = this.hasBlock(type)
-            const isList = this.hasBlock('list-item')
+            const isActive = this.hasBlock(type, value)
+            const isList = this.hasBlock('list-item', value)
 
             if (isList) {
                 editor
@@ -300,7 +294,7 @@ class RichText extends React.Component {
             }
         } else {
             // Handle the extra wrapping required for list buttons.
-            const isList = this.hasBlock('list-item')
+            const isList = this.hasBlock('list-item', value)
             const isType = value.blocks.some(block => {
                 return !!document.getClosest(block.key, parent => parent.type === type)
             })

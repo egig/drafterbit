@@ -12,17 +12,21 @@ import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 const { FIELD_RICH_TEXT, FIELD_RELATION_TO_ONE,
     FIELD_RELATION_TO_MANY, FIELD_UNSTRUCTURED } = window.__DT_CONST;
 
+import htmlSerializer from './Unstructured/htmlSerializer';
+
 // TODO move this to editor module
-let initialValue = {
+let richTextInitialValue = {
     "object": "value",
     "document": {
+        "object": "document",
         "nodes": [
             {
                 "object": "block",
                 "type": "paragraph",
                 "nodes": [
                     {
-                        "object": "text"
+                        "object": "text",
+                        "text": ""
                     }
                 ]
             }
@@ -63,6 +67,10 @@ class ContentEdit extends React.Component {
 
             if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
                 data[f.name] = slateValueToBlocks(this.state.formData[f.name])
+            }
+
+            if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
+                data[f.name] = htmlSerializer.serialize(this.state.formData[f.name])
             }
         });
 
@@ -108,11 +116,20 @@ class ContentEdit extends React.Component {
     }
 
     renderRichText(f,i,value) {
-        return <Field value={value} onChange={(e) => {
+
+        let editorValue;
+        let fValue = this.state.formData[f.name];
+        if(!!fValue) {
+            editorValue = Value.isValue(fValue) ? fValue : htmlSerializer.deserialize(fValue);
+        } else {
+            editorValue = Value.fromJSON(richTextInitialValue);
+        }
+
+        return <Field value={editorValue} onChange={(value) => {
 
             this.setState(oldState => {
                 let formData = oldState.formData;
-                formData[f.name] = e.target.getContent();
+                formData[f.name] = value;
                 return Object.assign({}, oldState, {
                     formData
                 });
