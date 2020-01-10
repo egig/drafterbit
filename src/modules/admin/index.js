@@ -5,8 +5,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const createWebpackConfig = require('./client/webpack.config');
 const routes = require('./routes');
 
-const DEBUG = true;
-
 class AdminModule {
 
     constructor(app) {
@@ -16,7 +14,7 @@ class AdminModule {
             this.webpackOutputPath = app._root+'/build';            
             app.use('/', express.static(this.webpackOutputPath));
 
-            if(DEBUG) {
+            if(app.get('config').get('debug')) {
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
                 const compiler = webpack(webpackConfig);
                 app.use(
@@ -33,19 +31,24 @@ class AdminModule {
         });
 
         app.on('build', () => {
+
             let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
             const compiler = webpack(webpackConfig);
 
             compiler.run((err, stats) => {
-                console.log('webpack compiling...');
+                console.log('Webpack build done.');
+                process.exit(0)
             });
         });
     }
 
     prepareWebpackConfig(app, webpackOutputPath) {
 
+        let isProduction = (app.get('config').get('NODE_ENV') === "production");
+
         let webpackConfig = createWebpackConfig({
-            outputPath: webpackOutputPath
+            outputPath: webpackOutputPath,
+            production: isProduction
         });
 
         webpackConfig.output.path = webpackOutputPath;
@@ -62,7 +65,6 @@ class AdminModule {
     }
 
     registerConfig(config) {
-
         config.use('admin', {
             type: 'literal',
             store: {

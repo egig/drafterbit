@@ -10,6 +10,7 @@ function createConfig(options) {
     const defaultConfig = {
         'appName': 'Unnamed App',
         'debug': true,
+        'NODE_ENV': "development",
         'PORT': 3000,
         'SESSION_SECRET': 'secr3t',
         'MONGODB_PROTOCOL': 'mongodb+srv',

@@ -6,7 +6,7 @@ const AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = env => {
 
-    console.log("creating webpack config with output: ", env.outputPath);
+    console.log("Build output path: ", env.outputPath);
 
     let commonConfig = {
         entry: [ '@babel/polyfill', __dirname+'/src/index.js', __dirname+'/src/app.js'],
