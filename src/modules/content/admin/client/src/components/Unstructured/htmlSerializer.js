@@ -5,23 +5,29 @@ const BLOCK_TAGS = {
     blockquote: 'quote',
     p: 'paragraph',
     pre: 'code',
-  }
+    h1: 'heading-one',
+    h2: 'heading-two',
+    ol: 'numbered-list',
+    ul: 'bulleted-list',
+    li: 'list-item'
+  };
   
   // Add a dictionary of mark tags.
   const MARK_TAGS = {
     em: 'italic',
     strong: 'bold',
     u: 'underline',
-  }
+    code: 'code'
+  };
 
   const INLINE_TAGS = {
     a: 'link'
-  }
+  };
   
   const rules = [
     {
       deserialize(el, next) {
-        const type = BLOCK_TAGS[el.tagName.toLowerCase()]
+        const type = BLOCK_TAGS[el.tagName.toLowerCase()];
         if (type) {
           return {
             object: 'block',
@@ -34,7 +40,7 @@ const BLOCK_TAGS = {
         }
       },
       serialize(obj, children) {
-        if (obj.object == 'block') {
+        if (obj.object === 'block') {
           switch (obj.type) {
             case 'code':
               return (
@@ -46,6 +52,16 @@ const BLOCK_TAGS = {
               return <p className={obj.data.className}>{children}</p>
             case 'quote':
               return <blockquote>{children}</blockquote>
+            case 'heading-one':
+              return <h1>{children}</h1>
+            case 'heading-two':
+              return <h2>{children}</h2>
+            case 'bulleted-list':
+              return <ul>{children}</ul>
+            case 'numbered-list':
+              return <ol>{children}</ol>
+            case 'list-item':
+              return <li>{children}</li>
           }
         }
       },
@@ -63,14 +79,16 @@ const BLOCK_TAGS = {
         }
       },
       serialize(obj, children) {
-        if (obj.object == 'mark') {
+        if (obj.object === 'mark') {
           switch (obj.type) {
             case 'bold':
-              return <strong>{children}</strong>
+              return <strong>{children}</strong>;
             case 'italic':
-              return <em>{children}</em>
+              return <em>{children}</em>;
             case 'underline':
-              return <u>{children}</u>
+              return <u>{children}</u>;
+            case 'code':
+            return <code>{children}</code>;
           }
         }
       },

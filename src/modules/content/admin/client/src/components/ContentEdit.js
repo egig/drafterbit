@@ -99,7 +99,7 @@ class ContentEdit extends React.Component {
 
                 if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
                     if (!(f.name in entry)) {
-                        formData[f.name] = locksToSlateValue(testInitValue);
+                        formData[f.name] = blocksToSlateValue(testInitValue);
                         return formData
                     } else {
                         formData[f.name] = blocksToSlateValue(entry[f.name])
@@ -152,8 +152,6 @@ class ContentEdit extends React.Component {
         if(!editorValue) {
             editorValue = Value.fromJSON(richTextInitialValue);
         }
-
-        console.log("editorValue", editorValue)
 
         return <Field value={editorValue} onChange={(value) => {
 
