@@ -47,6 +47,7 @@ class ContentTypes extends React.Component {
         return (
             <Fragment>
                 <TablePage
+                    headerText="Content Types"
                     data={ this.state.contentTypes }
                     contentCount={this.state.contentCount}
                     columns={ columns }

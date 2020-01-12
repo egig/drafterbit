@@ -11,6 +11,9 @@ class Contents extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            contentType: {
+                name: ""
+            },
 	        contents: [],
 	        contentCount:0,
 	        sortBy: "",
@@ -27,6 +30,7 @@ class Contents extends React.Component {
 		    .then(contentType => {
 
 		        this.setState({
+                    contentType: contentType,
                     ctFields: contentType.fields
                 });
 
@@ -104,6 +108,7 @@ class Contents extends React.Component {
 
         return (
             <TablePage
+                headerText={this.state.contentType.name}
                 data={ this.state.contents }
                 contentCount={this.state.contentCount}
                 columns={ columns }

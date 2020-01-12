@@ -1,24 +1,18 @@
 import React, { Fragment } from 'react';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux"
+import actions from '../actions'
+import { bindActionCreators } from 'redux';
 
 class MenuSection extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            contentTypes: []
-        }
-    }
 
     componentDidMount() {
         // TODO changes this to store redux state
         let client = this.props.drafterbit.getApiClient();
         client.getContentTypes()
             .then((contentTypes) => {
-                this.setState({
-                    contentTypes: contentTypes
-                });
+                this.props.actions.setContentTypes(contentTypes);
             });
     }
 
@@ -36,7 +30,7 @@ class MenuSection extends React.Component {
 
     render() {
 
-        let { contentTypes } =  this.state;
+        let { contentTypes } =  this.props;
         let menuItems = contentTypes.map(ct => {
             return {
                 link: `/contents/${ct.slug}`,
@@ -59,4 +53,16 @@ class MenuSection extends React.Component {
     }
 }
 
-export default withDrafterbit(MenuSection)
+const mapStateToProps = state => {
+    return {
+        contentTypes: state.CONTENT.contentTypes
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(MenuSection))

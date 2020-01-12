@@ -137,5 +137,6 @@ export default{
     getContents,
     getContent,
     getCTFieldsAndGetContent,
-    deleteContents
+    deleteContents,
+    setContentTypes
 };
