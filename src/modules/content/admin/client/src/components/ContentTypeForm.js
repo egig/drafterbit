@@ -6,6 +6,9 @@ import { Modal, ModalBody, FormGroup, Label, Input } from 'reactstrap';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 
+// TODO fix this ugly require path
+const { slugify } = require("../../../../../../utils");
+
 class ContentTypeForm extends React.Component {
 
     constructor(props) {
@@ -67,8 +70,11 @@ class ContentTypeForm extends React.Component {
                             <label htmlFor="name">Name</label>
                             <input type="text" className="form-control" name="name" value={this.state.name}
                             onChange={e => {
+
+                                let { value }  = e.target;
                                 this.setState({
-                                    name: e.target.value
+                                    name: value,
+                                    slug: slugify(value)
                                 })
                             }}/>
                         </div>

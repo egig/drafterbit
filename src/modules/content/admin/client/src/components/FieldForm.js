@@ -7,7 +7,9 @@ import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';
 
+// TODO ugly required path
 const { getFieldTypes, getFieldType } = require('../../../../../../fieldTypes');
+const { slugify } = require("../../../../../../utils");
 
 class FieldForm extends React.Component {
 
@@ -208,7 +210,8 @@ class FieldForm extends React.Component {
                                                 id="label" value={this.state.label}
                                                 onChange={e => {
                                                     this.setState({
-                                                        label: e.target.value
+                                                        label: e.target.value,
+                                                        name: slugify(e.target.value, "_")
                                                     })
                                                 }}
                                             />
@@ -218,7 +221,7 @@ class FieldForm extends React.Component {
                                             <input  disabled={this.disabled()} type="text" className="form-control" name="name" id="name" value={this.state.name}
                                                    onChange={e => {
                                                        this.setState({
-                                                           name: e.target.value
+                                                           name: e.target.value,
                                                        })
                                                    }}
                                             />
