@@ -1,8 +1,8 @@
-function slugify(str, separator="") {
+function slugify(str, separator='') {
     return str.toLowerCase().replace(/ +/g, separator)
-        .replace(/[^\w-]+/g,'')
+        .replace(/[^\w-]+/g,'');
 }
 
 module.exports = {
     slugify
-}
+};

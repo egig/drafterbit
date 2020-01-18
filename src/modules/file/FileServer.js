@@ -32,18 +32,18 @@ class FileServer {
                 return cb(null, this.preparePath(req.body.path));
             },
             filename: (req, file, cb) => {
-                cb(null, file.originalname.replace(/ /g,''))
+                cb(null, file.originalname.replace(/ /g,''));
             },
         });
 
         let limits = { fileSize: 1024 * 1024 * 2 }; // 2MB
-        const upload = multer({limits, storage }).single("f");
+        const upload = multer({limits, storage }).single('f');
 
         upload(req, res, function (err) {
             if (err) {
                 res.status(500).send({
                     message: err.message
-                })
+                });
             }
 
             res.json({

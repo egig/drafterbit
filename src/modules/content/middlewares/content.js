@@ -1,17 +1,17 @@
-const {FIELD_RELATION_TO_MANY, FIELD_RELATION_TO_ONE} = require( '../../../fieldTypes');
+const FieldType = require( '../../../FieldType');
 const fieldsToSchema = require( '../../../fieldsToSchema');
 
 function getSchema(fields) {
     let fieldsObj = {};
     fields.forEach(f => {
 
-        if (f.type_id === FIELD_RELATION_TO_MANY) {
+        if (f.type_id === FieldType.RELATION_TO_MANY) {
             fieldsObj[f.name] = [{
                 type: f.type_id,
                 ref: f.related_content_type_slug
             }];
 
-        } else if (f.type_id === FIELD_RELATION_TO_ONE) {
+        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
 
             fieldsObj[f.name] = {
                 type: f.type_id,
@@ -60,7 +60,7 @@ module.exports = function contentMiddleware() {
                 let relatedContentTypes = [];
                 let lookupFields = [];
                 contentType.fields.forEach(f => {
-                    if ((f.type_id === FIELD_RELATION_TO_MANY) || (f.type_id === FIELD_RELATION_TO_ONE)) {
+                    if ((f.type_id === FieldType.RELATION_TO_MANY) || (f.type_id === FieldType.RELATION_TO_ONE)) {
                         relatedContentTypes.push(f.related_content_type_slug);
                         lookupFields.push(f);
                     }

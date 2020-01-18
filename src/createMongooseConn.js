@@ -10,8 +10,8 @@ module.exports = function createMongooseConn(app, protocol, dbName, host, user, 
         host = `@${host}`;
     }
 
-    pass = !!pass ? `:${pass}` : '';
-    port = !!port ? `:${port}` : '';
+    pass = pass ? `:${pass}` : '';
+    port = port ? `:${port}` : '';
 
     let uri = `${protocol}://${user}${pass}${host}${port}/${dbName}?retryWrites=true&w=majority`;
 

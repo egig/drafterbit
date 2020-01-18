@@ -34,12 +34,6 @@ router.get('/', function (req, res) {
         }
     });
 
-    let ft = req.app._getFieldTypes();
-    let constants = {};
-    ft.map(f => {
-        constants[f.code] = f.id;
-    });
-
     return res.send(minify(`<!DOCTYPE html>
           <html>
             <head>
@@ -55,7 +49,6 @@ router.get('/', function (req, res) {
                     window.__PRELOADED_LANGUAGE_RESOURCES__=${JSON.stringify([])};
                     window.__DRAFTERBIT_CONFIG__=${JSON.stringify(drafterbitConfig)};
                     window.__DT_FIELD_TYPES=${JSON.stringify(req.app._getFieldTypes())};
-                    window.__DT_CONST=${JSON.stringify(constants)};
                 </script>
                 <script src="${assetPath(req, webpackAssets.main.js)}"></script>
             </body>

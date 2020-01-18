@@ -8,7 +8,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink,
     FormGroup, Input, Label} from 'reactstrap';
 
 // TODO ugly required path
-const { getFieldTypes, getFieldType } = require('../../../../../../fieldTypes');
+const FieldType = require('../../../../../../FieldType');
 const { slugify } = require("../../../../../../utils");
 
 class FieldForm extends React.Component {
@@ -129,7 +129,7 @@ class FieldForm extends React.Component {
 
     render() {
 
-        let field = getFieldType(this.state.type_id);
+        let field = FieldType.get(this.state.type_id);
 
         let validationOptions = !!field ? field.validationOptions : [];
 
@@ -182,7 +182,7 @@ class FieldForm extends React.Component {
                                                     type_id: e.target.value
                                                 })
                                             }} value={this.state.type_id}>
-                                                {getFieldTypes().map((f,i) => {
+                                                {FieldType.fieldTypes.map((f,i) => {
                                                     return <option key={i} value={f.id}>{f.name}</option>;
                                                 })}
                                             </select >

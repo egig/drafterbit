@@ -1,15 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const {
-    FIELD_SHORT_TEXT,
-    FIELD_LONG_TEXT,
-    FIELD_RICH_TEXT,
-    FIELD_RELATION_TO_ONE,
-    FIELD_RELATION_TO_MANY,
-    FIELD_NUMBER,
-    FIELD_UNSTRUCTURED
-} = require('./fieldTypes');
+const FieldType = require('./FieldType');
 
 /**
  * Converts type names into actual types supported by mongoose.
@@ -21,19 +13,19 @@ const {
 function matchType(type) {
 
     switch (type) {
-    case FIELD_SHORT_TEXT:
-    case FIELD_LONG_TEXT:
-    case FIELD_RICH_TEXT:
+    case FieldType.SHORT_TEXT:
+    case FieldType.LONG_TEXT:
+    case FieldType.RICH_TEXT:
         return String;
 
-    case FIELD_UNSTRUCTURED:
+    case FieldType.UNSTRUCTURED:
         return Schema.Types.Mixed;
 
-    case FIELD_NUMBER:
+    case FieldType.NUMBER:
         return Number;
 
-    case FIELD_RELATION_TO_MANY:
-    case FIELD_RELATION_TO_ONE:
+    case FieldType.RELATION_TO_MANY:
+    case FieldType.RELATION_TO_ONE:
         return Schema.Types.ObjectId;
     default:
         throw new Error('unknown type '+type);

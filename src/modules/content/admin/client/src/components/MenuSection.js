@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux"
 import actions from '../actions'
 import { bindActionCreators } from 'redux';
+import ApiClient from '../ApiClient';
 
 class MenuSection extends React.Component {
 
     componentDidMount() {
         // TODO changes this to store redux state
-        let client = this.props.drafterbit.getApiClient();
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         client.getContentTypes()
             .then((contentTypes) => {
                 this.props.actions.setContentTypes(contentTypes);

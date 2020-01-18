@@ -10,7 +10,7 @@ export default function createPagination(c, m) {
             range.push(i);
         }
     }
-    if (m != 1) range.push(m);
+    if (m !== 1) range.push(m);
 
     for (let i of range) {
         if (l) {

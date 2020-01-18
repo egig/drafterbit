@@ -12,7 +12,13 @@ let ContentTypeSchema = new mongoose.Schema({
         name: String,
         label: String,
         validation_rules: String
-    }]
+    }],
+    created_at: Number,
+    updated_at: Number,
+    deleted_at: Number,
+    created_user_id: String,
+    updated_user_id: String,
+    deleted_user_id: String
 });
 
 /**

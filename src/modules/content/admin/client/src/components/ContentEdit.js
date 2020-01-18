@@ -9,8 +9,7 @@ import Notify from 'drafterbit-module-admin/client/src/components/Notify';
 import Card from 'drafterbit-module-admin/client/src/components/Card/Card';
 import { Row, Col } from 'reactstrap';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
-const { FIELD_RICH_TEXT, FIELD_RELATION_TO_ONE,
-    FIELD_RELATION_TO_MANY, FIELD_UNSTRUCTURED } = window.__DT_CONST;
+const FieldType = require('../../../../../../FieldType');
 
 import htmlSerializer from './Unstructured/htmlSerializer';
 
@@ -42,6 +41,7 @@ let testInitValue = [
 ]
 
 import { blocksToSlateValue, slateValueToBlocks } from "./Unstructured/contentTypeSerializer";
+import ApiClient from '../ApiClient';
 
 class ContentEdit extends React.Component {
 
@@ -65,16 +65,17 @@ class ContentEdit extends React.Component {
         this.state.ctFields.map(f => {
             data[f.name] = this.state.formData[f.name];
 
-            if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
+            if(parseInt(f.type_id) === FieldType.UNSTRUCTURED) {
                 data[f.name] = slateValueToBlocks(this.state.formData[f.name])
             }
 
-            if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
+            if(parseInt(f.type_id) === FieldType.RICH_TEXT) {
                 data[f.name] = htmlSerializer.serialize(this.state.formData[f.name])
             }
         });
 
-        this.props.drafterbit.getApiClient().updateEntry(slug, contentId, data)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.updateEntry(slug, contentId, data)
             .then(r => {
                 this.setState({
                     successText: 'Content successfully updated'
@@ -87,7 +88,7 @@ class ContentEdit extends React.Component {
         let contentId = params.content_id;
         let slug = params.content_type_slug;
 
-        let client = this.props.drafterbit.getApiClient();
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         Promise.all([
             client.getContentType(slug),
             client.getEntry(slug, contentId)
@@ -97,7 +98,7 @@ class ContentEdit extends React.Component {
 
             let formData = fields.reduce((formData, f) => {
 
-                if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
+                if(parseInt(f.type_id) === FieldType.UNSTRUCTURED) {
                     if (!(f.name in entry)) {
                         formData[f.name] = blocksToSlateValue(testInitValue);
                         return formData
@@ -105,7 +106,7 @@ class ContentEdit extends React.Component {
                         formData[f.name] = blocksToSlateValue(entry[f.name])
                     }
 
-                } else if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
+                } else if(parseInt(f.type_id) === FieldType.RICH_TEXT) {
 
                     if (!(f.name in entry)) {
                         formData[f.name] = Value.fromJSON(richTextInitialValue)
@@ -263,19 +264,19 @@ class ContentEdit extends React.Component {
 
 					                let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
 
-						            if(parseInt(f.type_id) === parseInt(FIELD_RICH_TEXT)) {
+						            if(parseInt(f.type_id) === FieldType.RICH_TEXT) {
 						                return this.renderRichText(f,i,value)
 						            }
 
-                                    if(parseInt(f.type_id) === parseInt(FIELD_RELATION_TO_ONE)){
+                                    if(parseInt(f.type_id) === FieldType.RELATION_TO_ONE){
                                         return this.renderRelationToOne(f,i,value)
                                     }
 
-                                    if(parseInt(f.type_id) === parseInt(FIELD_RELATION_TO_MANY)) {
+                                    if(parseInt(f.type_id) === FieldType.RELATION_TO_MANY) {
                                         return this.renderRelationToMany(f,i,value)
                                     }
 
-                                    if(parseInt(f.type_id) === parseInt(FIELD_UNSTRUCTURED)) {
+                                    if(parseInt(f.type_id) === FieldType.UNSTRUCTURED) {
                                         return this.renderUnstructured(f,i,value)
                                     }
 

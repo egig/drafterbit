@@ -37,14 +37,14 @@ class AdminModule {
 
             compiler.run((err, stats) => {
                 console.log('Webpack build done.');
-                process.exit(0)
+                process.exit(0);
             });
         });
     }
 
     prepareWebpackConfig(app, webpackOutputPath) {
 
-        let isProduction = (app.get('config').get('NODE_ENV') === "production");
+        let isProduction = (app.get('config').get('NODE_ENV') === 'production');
 
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,

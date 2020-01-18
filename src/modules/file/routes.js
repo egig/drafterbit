@@ -78,7 +78,7 @@ router.put('/files',
                 fServer.handleUpload(req, res);
 
             } catch (e ) {
-                console.log(e)
+                console.log(e);
                 res.status(500);
                 res.send(e.message);
             }

@@ -7,7 +7,6 @@ const cors = require('cors');
 const expressValidator = require('express-validator');
 const { ERR_NO_ROOT_DIR } = require('./constants');
 
-const { getFieldTypes } = require('./fieldTypes');
 const resolveModule = require('./resolveModule');
 const createMongooseConn = require('./createMongooseConn');
 
@@ -159,7 +158,5 @@ app.getDB = function getDB(dbName) {
 
     return this._mongo_connections[dbName];
 };
-
-app._getFieldTypes = getFieldTypes;
 
 module.exports = app;

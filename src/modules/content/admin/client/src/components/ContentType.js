@@ -8,7 +8,7 @@ import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import FieldForm from './FieldForm';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
-const { getFieldTypeName }  = require('../../../../../../fieldTypes');
+const FieldType  = require('../../../../../../FieldType');
 
 class ContentType extends React.Component {
 
@@ -129,7 +129,7 @@ class ContentType extends React.Component {
                                                 })
                                             }}>{f.name}</a></td>
                                             <td>{f.label}</td>
-                                            <td>{getFieldTypeName(f.type_id)}</td>
+                                            <td>{FieldType.get(f.type_id).name}</td>
 								            <td><Button size="sm" onClick={e => {
 								            	this.deleteField(f);
 								            }}>&times;</Button></td>

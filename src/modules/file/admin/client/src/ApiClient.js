@@ -16,13 +16,13 @@ class ApiClient {
 
     async upload(file, path) {
         let formData = new FormData();
-        formData.set("path", path);
-        formData.append("f", file);
+        formData.set('path', path);
+        formData.append('f', file);
 
         let res = await  this.axiosInstance.put('/files', formData, {
             headers: {'Content-Type': 'multipart/form-data' }
         });
-        return res.data
+        return res.data;
     }
 }
 

@@ -5,6 +5,9 @@ import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import TablePage from 'drafterbit-module-admin/client/src/components/TablePage';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
+import ApiClient from '../ApiClient';
+
+const FieldType = require('../../../../../../FieldType');
 
 class Contents extends React.Component {
 
@@ -26,7 +29,8 @@ class Contents extends React.Component {
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
         let ctSlug = match.params.content_type_slug;
-	    this.props.drafterbit.getApiClient().getContentType(ctSlug)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.getContentType(ctSlug)
 		    .then(contentType => {
 
 		        this.setState({
@@ -34,7 +38,7 @@ class Contents extends React.Component {
                     ctFields: contentType.fields
                 });
 
-                this.props.drafterbit.getApiClient().getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
+                client.getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
 			    .then(response => {
 
 			        let contentCount = response.headers['content-range'].split("/")[1];
@@ -48,7 +52,7 @@ class Contents extends React.Component {
 
     handleDelete = (selected) => {
         let slug = this.props.match.params["content_type_slug"];
-        let client = this.props.drafterbit.getApiClient();
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance())
         let deleteActionPromise = selected.map(entryId => {
             return client.deleteEntry(slug, entryId);
         });
@@ -62,7 +66,8 @@ class Contents extends React.Component {
     onClickAdd = (e) => {
         // create draft
         let slug = this.props.match.params["content_type_slug"]
-        this.props.drafterbit.getApiClient().createDraft(slug)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.createDraft(slug)
             .then(d => {
                 this.props.history.push(`/contents/${slug}/${d.item._id}`);
             })
@@ -84,19 +89,13 @@ class Contents extends React.Component {
 	        width: "80px"
         }];
 
-        const {
-            FIELD_RELATION_TO_MANY,
-            FIELD_RELATION_TO_ONE,
-            FIELD_RICH_TEXT,
-            FIELD_UNSTRUCTURED
-        } = window.__DT_CONST;
         this.state.ctFields.map(f => {
         	// Don't display some column type by default
             if([
-                FIELD_RELATION_TO_MANY,
-                FIELD_RELATION_TO_ONE,
-                FIELD_RICH_TEXT,
-                FIELD_UNSTRUCTURED
+                FieldType.RELATION_TO_MANY,
+                FieldType.RELATION_TO_ONE,
+                FieldType.RICH_TEXT,
+                FieldType.UNSTRUCTURED
                 ].indexOf(f.type_id) === -1) {
 		        columns.push({
 			        dataField: f.name,
