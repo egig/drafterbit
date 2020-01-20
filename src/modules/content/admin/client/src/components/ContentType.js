@@ -8,6 +8,8 @@ import { Button, Row, Col, Modal, ModalBody } from 'reactstrap';
 import FieldForm from './FieldForm';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
+import ApiClient from '../ApiClient';
+
 const FieldType  = require('../../../../../../FieldType');
 
 class ContentType extends React.Component {
@@ -33,7 +35,8 @@ class ContentType extends React.Component {
     }
 
     fetchContentType() {
-        return this.props.drafterbit.getApiClient().getContentType(this.props.match.params.content_type_id)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        return client.getContentType(this.props.match.params.content_type_id)
             .then(contentType => {
 
                 this.setState({
@@ -62,7 +65,8 @@ class ContentType extends React.Component {
 
     deleteContentType(deleteForm) {
         // TODO create alert
-        this.props.drafterbit.getApiClient().deleteContentType(deleteForm.id.value)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.deleteContentType(deleteForm.id.value)
             .then(r => {
                 // TODO create success notif
                 this.props.history.push('/content_types');
@@ -70,7 +74,8 @@ class ContentType extends React.Component {
     }
 
     doUpdate() {
-        this.props.drafterbit.getApiClient().updateContentType(
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.updateContentType(
             this.state._id,
             this.state.name,
             this.state.slug,

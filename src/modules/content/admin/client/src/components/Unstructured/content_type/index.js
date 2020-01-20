@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
+import ApiClient from '../../../ApiClient';
 
 class ContentType extends React.Component {
 
@@ -24,7 +25,7 @@ class ContentType extends React.Component {
 
   componentDidMount() {
 
-    let client = this.props.drafterbit.getApiClient();
+    let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
     client.getContentTypes()
         .then((contentTypes) => {
           this.setState({
@@ -42,7 +43,8 @@ class ContentType extends React.Component {
   }
 
   loadContent = (contentType) => {
-    this.props.drafterbit.getApiClient().getEntries(contentType)
+    let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+    client.getEntries(contentType)
             .then((res) => {
                 this.setState({
                   contentEntryOptions: res.data

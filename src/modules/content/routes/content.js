@@ -1,17 +1,25 @@
 const express = require('express');
-const validateRequest  = require('../../../middlewares/validateRequest');
-const FilterQuery  = require('../../../FilterQuery');
+const validateRequest = require('../../../middlewares/validateRequest');
+const FilterQuery = require( '../../../FilterQuery');
+const contentMiddleware = require('../middlewares/content');
+const handleFunc = require('../../../handleFunc');
 
 let router = express.Router();
 
 /**
  * @swagger
- * /contents/{content_id}:
- *   get:
- *     description: Get single content
+ * /{slug}/{id}:
+ *   delete:
+ *     description: Delete contents
  *     parameters:
  *       - in: path
- *         name: content_id
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
  *         type: string
  *         schema:
  *           type: string
@@ -19,251 +27,234 @@ let router = express.Router();
  *     responses:
  *       200:
  *         description: success
+ *
  *     tags:
- *        - /contents
+ *        - /{slug}
  */
-router.get('/contents/:content_id',
+router.delete('/:slug/:id',
     validateRequest({
-        content_id: {
+        slug: {
             notEmpty: true,
-            errorMessage: 'content_id required'
-        }
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
     }),
-    function (req, res) {
+    contentMiddleware(),
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.params['slug']);
+        return await Model.findOneAndDelete({_id: req.params.id });
+    })
+);
 
-        (async function () {
-
-            try {
-                let m = req.app.model('@content/Content');
-                let results = await m.getContent(req.params.content_id);
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
 
 /**
  * @swagger
- * /content_types/{content_type_id}/contents:
+ * /{slug}/{id}:
+ *   get:
+ *     description: Get content
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /{slug}
+ */
+router.get('/:slug/:id',
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
+    }),
+    contentMiddleware(),
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
+        return await Model.findOne({_id: req.params.id });
+    })
+);
+
+/**
+ * @swagger
+ * /{slug}/{id}:
+ *   patch:
+ *     description: Update contents
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /{slug}
+ */
+router.patch('/:slug/:id',
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        },
+        id: {
+            notEmpty: true,
+            errorMessage: 'id required'
+        },
+    }),
+    contentMiddleware(),
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
+        return await Model.findOneAndUpdate({_id: req.params.id }, req.body);
+    })    
+);
+
+/**
+ * @swagger
+ * /{slug}:
+ *   post:
+ *     description: Create contents
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         type: string
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: payload
+ *         type: object
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /{slug}
+ */
+router.post('/:slug',
+    validateRequest({
+        slug: {
+            notEmpty: true,
+            errorMessage: 'slug required'
+        }
+    }),
+    contentMiddleware(),
+    handleFunc(async function(req) {
+        let  Model = req.app.model(req.contentType.slug);
+
+        let item = await Model.create(req.body);
+        return {
+            message: 'created',
+            item
+        };
+    })
+);
+
+
+/**
+ * @swagger
+ * /{slug}:
  *   get:
  *     description: Get contents
  *     parameters:
  *       - in: path
- *         name: content_type_id
- *         type: integer
+ *         name: slug
+ *         type: string
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
- *       - in: query
- *         name: page
- *         type: integer
- *         schema:
- *           type: integer
- *       - in: query
- *         name: sort_by
- *         type: string
- *         schema:
- *           type: string
- *       - in: query
- *         name: sort_dir
- *         type: string
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         description: success
  *
  *     tags:
- *        - /contents
+ *        - /{slug}
  */
-router.get('/content_types/:content_type_id/contents',
+router.get('/:slug',
     validateRequest({
-        content_type_id: {
+        slug: {
             notEmpty: true,
-            errorMessage: 'content_type_id required'
+            errorMessage: 'slug required'
         }
     }),
-    function (req, res) {
+    contentMiddleware(),
+    handleFunc(async function(req, res) {
 
-        (async function () {
+        let page = req.query.page || 1;
+        let sortBy = req.query.sort_by;
+        let sortDir = req.query.sort_dir || 'asc';
+        const PER_PAGE = 10;
+        let offset = (page*PER_PAGE) - PER_PAGE;
+        let max = PER_PAGE;
 
-            let page = req.query.page || 1;
-            let sortBy = req.query.sort_by;
-            let sortDir = req.query.sort_dir || 'asc';
-            const PER_PAGE = 10;
-            let offset = (page*PER_PAGE) - PER_PAGE;
-            let max = PER_PAGE;
+        let filterObj = FilterQuery.fromString(req.query.fq).toMap();
+        let m = req.app.model(req.params['slug']);
 
-            let filterObj = FilterQuery.fromString(req.query.fq).toMap();
+        let sortD = sortDir === 'asc' ? 1 : -1;
 
-            try {
-                let m = req.app.model('@content/Content');
-                // TODO validation to req.body
-                let results = await m.getContents(req.params.content_type_id, offset, max, sortBy, sortDir, filterObj);
-                let count = await m.getCount(req.params.content_type_id,  filterObj);
-                res.set('DT-Data-Count', count);
-                res.set('DT-Page-Number', page);
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                req.app.get('log').error(e);
-                res.send(e.message);
-            }
-
-        })();
-    });
-
-/**
- * @swagger
- * /content_types/:content_type_id/contents:
- *   post:
- *     consumes:
- *       - application/json
- *     description: Create content
- *     parameters:
- *       - in: path
- *         name: content_type_id
- *         type: string
- *         schema:
- *           type: string
- *         required: true
- *       - in: body
- *         name: payload
- *         type: object
- *         schema:
- *           type: object
- *           properties:
- *             content:
- *               type: object
- *     responses:
- *       200:
- *         description: success
- *
- *     tags:
- *        - /contents
- */
-router.post('/content_types/:content_type_id/contents',
-    validateRequest({
-        content_type_id: {
-            notEmpty: true,
-            errorMessage: 'content_type_id required'
+        let matchRule = {};
+        if(filterObj) {
+            Object.keys(filterObj).forEach((k) => {
+                matchRule[k] = {
+                    $regex: `.*${filterObj[k]}.*`
+                };
+            });
         }
-    }),
-    function (req, res) {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('@content/Content');
-                let results = await m.createContent(req.params.content_type_id, req.body.fields);
-                res.send(results);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
 
 
-/**
- * @swagger
- * /contents/{content_id}:
- *   delete:
- *     description: Delete content
- *     parameters:
- *       - in: path
- *         name: content_id
- *         type: integer
- *         schema:
- *           type: integer
- *         required: true
- *     responses:
- *       200:
- *         description: success
- *     tags:
- *        - /contents
- */
-router.delete('/contents/:content_id',
-    validateRequest({
-        content_id: {
-            notEmpty: true,
-            errorMessage: 'content_id required'
+        let sortObj;
+        if(!!sortBy && sortBy !== '_id') {
+            sortObj = {
+                [sortBy]: sortD
+            };
+        } else {
+            sortObj = {'_id': sortD};
         }
-    }),
-    (req, res) => {
 
-        (async function () {
+        let query = m.find(matchRule, null, {
+            sort: sortObj
+        }).select(['-__v']).skip(offset).limit(max);
 
-            try {
-                let m = req.app.model('@content/Content');
-                await m.deleteContent(req.params.content_id);
-                res.send({message: 'OK'});
+        req.lookupFields.forEach(f => {
+            query.populate({
+                path: f.name,
+                select: '-__v',
+                options: { limit: 5 }
+            });
+        });
 
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
+        let results = await query.exec();
 
-        })();
+        let dataCount = await m.find(matchRule).estimatedDocumentCount();
+        res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
+        res.send(results);
+    })
+);
 
-    });
-
-
-/**
- * @swagger
- * /contents/{content_id}:
- *   patch:
- *     description: Delete content
- *     parameters:
- *       - in: path
- *         name: content_id
- *         type: string
- *         schema:
- *           type: string
- *         required: true
- *       - in: body
- *         name: payload
- *         type: object
- *         schema:
- *           type: object
- *           properties:
- *             fields:
- *               type: array
- *     responses:
- *       200:
- *         description: success
- *     tags:
- *        - /contents
- */
-router.patch('/contents/:content_id',
-    validateRequest({
-        content_id: {
-            notEmpty: true,
-            errorMessage: 'content_id required'
-        }
-    }),
-    (req, res) => {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('@content/Content');
-                await m.updateContent(req.params.content_id, req.body);
-                res.send({message: 'OK'});
-
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
-
-module.exports =  router;
+module.exports = router;
