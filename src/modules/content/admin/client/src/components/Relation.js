@@ -1,6 +1,7 @@
 import React from 'react';
 import withDrafterbit from 'drafterbit-module-admin/client/src/withDrafterbit';
 import Select from 'react-select'
+import ApiClient from '../ApiClient';
 
 class Relation extends React.Component {
 
@@ -13,7 +14,8 @@ class Relation extends React.Component {
 
     componentDidMount() {
 
-        this.props.drafterbit.getApiClient().getEntries(this.props.relatedContentTypeSlug)
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.getEntries(this.props.relatedContentTypeSlug)
             .then((res) => {
                 this.setState({
                     contents: res.data
@@ -40,7 +42,7 @@ class Relation extends React.Component {
             });
         } else {
             let tmp = options.filter(o => {
-                return this.props.value == o.value;
+                return this.props.value === o.value;
             });
 
             defaultValue = !!tmp.length ? tmp[0] : null;

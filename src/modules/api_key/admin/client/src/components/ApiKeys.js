@@ -30,7 +30,8 @@ class ApiKeys extends React.Component {
     };
 
     componentDidMount() {
-        this.props.drafterbit.getApiClient().getApiKeys()
+        let client =  new ApiClient(this.props.drafterbit.getAxiosInstance());
+        client.getApiKeys()
             .then(apiKeys => {
                 this.setState({
                     apiKeys

@@ -48,7 +48,6 @@ router.get('/', function (req, res) {
                     window.__PRELOADED_STATE__=${JSON.stringify(defaultState)};
                     window.__PRELOADED_LANGUAGE_RESOURCES__=${JSON.stringify([])};
                     window.__DRAFTERBIT_CONFIG__=${JSON.stringify(drafterbitConfig)};
-                    window.__DT_FIELD_TYPES=${JSON.stringify(req.app._getFieldTypes())};
                 </script>
                 <script src="${assetPath(req, webpackAssets.main.js)}"></script>
             </body>
