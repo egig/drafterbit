@@ -1,3 +1,4 @@
+const fs = require('fs');
 const nconf = require('nconf');
 
 /**
@@ -5,7 +6,7 @@ const nconf = require('nconf');
  * @param options
  * @return {Provider}
  */
-function createConfig(options) {
+function createConfig(options = {}) {
 
     const defaultConfig = {
         'appName': 'Unnamed App',
@@ -26,8 +27,7 @@ function createConfig(options) {
         ]
     };
 
-    // Config file
-    if (typeof options == 'string') {
+    if (typeof options == 'string' && fs.existsSync(options)) {
         options = require(options);
     }
 

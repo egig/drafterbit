@@ -14,6 +14,7 @@ import {
     faQuoteRight,
     faUnderline
 } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components'
 
 /**
  * Define the default node type.
@@ -33,6 +34,21 @@ const isBoldHotkey = isKeyHotkey('mod+b')
 const isItalicHotkey = isKeyHotkey('mod+i')
 const isUnderlinedHotkey = isKeyHotkey('mod+u')
 const isCodeHotkey = isKeyHotkey('mod+`')
+
+const RichTextContainer = styled.div`
+    border: 1px solid #ced4da;
+    margin: 0;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .25rem
+`;
 
 /**
  * The rich text example.
@@ -87,7 +103,7 @@ class RichText extends React.Component {
         let value = this.props.value;
 
         return (
-            <div>
+            <RichTextContainer>
                 <Toolbar>
                     {this.renderMarkButton('bold', <FontAwesomeIcon icon={faBold}/>, value)}
                     {this.renderMarkButton('italic', <FontAwesomeIcon icon={faItalic}/>, value)}
@@ -110,7 +126,7 @@ class RichText extends React.Component {
                     renderBlock={this.renderBlock}
                     renderMark={this.renderMark}
                 />
-            </div>
+            </RichTextContainer>
         )
     }
 
