@@ -12,7 +12,7 @@ class FileModule {
     // }
     //
     getAdminClientEntry() {
-        return this._modulePath+'/admin/client/src/index.js';
+        return this._modulePath+'/client/src/index.js';
     }
     //
     registerConfig(config) {

@@ -22,7 +22,7 @@ function createConfig(options = {}) {
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
         'modules': [
-            './src/modules/admin',
+            './src/modules/core',
             './src/modules/content',
         ]
     };
