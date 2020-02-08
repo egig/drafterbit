@@ -74,6 +74,11 @@ class CoreModule {
                 'API_KEY': ''
             }
         });
+
+        config.env([
+            'API_BASE_URL',
+            'API_KEY'
+        ])
     }
 
     registerClientConfig(serverConfig) {

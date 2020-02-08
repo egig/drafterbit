@@ -35,6 +35,10 @@ class AuthModule {
                 ]
             }
         });
+
+        config.env([
+            'ADMIN_API_KEY',
+        ])
     }
 }
 
