@@ -1,7 +1,5 @@
-
 const webpack = require('webpack');
 const express = require('express');
-const webpackDevMiddleware = require('webpack-dev-middleware');
 const createWebpackConfig = require('./client/webpack.config');
 const routes = require('./routes');
 
@@ -14,7 +12,9 @@ class CoreModule {
             this.webpackOutputPath = app._root+'/build';            
             app.use('/', express.static(this.webpackOutputPath));
 
-            if(app.get('config').get('debug')) {
+            if(app.get('config').get('NODE_ENV') !== "production") {
+                const webpackDevMiddleware = require('webpack-dev-middleware');
+
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
                 const compiler = webpack(webpackConfig);
                 app.use(
