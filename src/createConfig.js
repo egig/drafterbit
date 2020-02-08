@@ -9,8 +9,8 @@ const nconf = require('nconf');
 function createConfig(options = {}) {
 
     const defaultConfig = {
-        'appName': 'Unnamed App',
-        'debug': true,
+        'APP_NAME': 'Unnamed App',
+        'DEBUG': true,
         'NODE_ENV': 'development',
         'PORT': 3000,
         'SESSION_SECRET': 'secr3t',

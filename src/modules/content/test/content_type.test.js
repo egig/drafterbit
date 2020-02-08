@@ -19,7 +19,7 @@ describe('Content Types', () => {
         const dbName = await mongod.getDbName();
         let options = {
             'ROOT_DIR': __dirname,
-            'debug': false,
+            'DEBUG': false,
             'PORT': 3000,
             'SESSION_SECRET': 'secr3t',
             'MONGODB_PROTOCOL': 'mongodb',

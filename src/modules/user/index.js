@@ -21,16 +21,16 @@ class UserModule {
         config.use('user', {
             type: 'literal',
             store: {
-                'admin.user_api_base_url': '/',
-                'admin.user_api_key': '',
+                'USER_API_BASE_URL': '/',
+                'USER_API_KEY': '',
             }
         });
     }
 
     registerClientConfig(serverConfig) {
         return {
-            userApiBaseURL: serverConfig.get('admin.user_api_base_url'),
-            userApiKey: serverConfig.get('admin.user_api_key')
+            userApiBaseURL: serverConfig.get('USER_API_BASE_URL'),
+            userApiKey: serverConfig.get('USER_API_KEY')
         };
     }
 }

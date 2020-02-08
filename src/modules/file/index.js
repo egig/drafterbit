@@ -20,17 +20,10 @@ class FileModule {
         config.use('file_module', {
             type: 'literal',
             store: {
-                'filesBasePath': './files'
+                'FILES_BASE_PATH': './files'
             }
         });
     }
-    //
-    // registerClientConfig(serverConfig) {
-    //     return {
-    //         userApiBaseURL: serverConfig.get('admin.user_api_base_url'),
-    //         userApiKey: serverConfig.get('admin.user_api_key')
-    //     };
-    // }
 }
 
 module.exports = FileModule;

@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
     let config = req.app.get('config');
 
     let drafterbitConfig = {
-        appName: config.get('appName'),
+        appName: config.get('APP_NAME'),
         debug: +config.get('DEBUG')
     };
 

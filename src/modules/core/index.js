@@ -70,16 +70,16 @@ class CoreModule {
         config.use('core', {
             type: 'literal',
             store: {
-                'admin.api_base_url': '/',
-                'admin.api_key': ''
+                'API_BASE_URL': '/',
+                'API_KEY': ''
             }
         });
     }
 
     registerClientConfig(serverConfig) {
         return {
-            apiBaseURL: serverConfig.get('admin.api_base_url'),
-            apiKey: serverConfig.get('admin.api_key'),
+            apiBaseURL: serverConfig.get('API_BASE_URL'),
+            apiKey: serverConfig.get('API_KEY'),
         };
     }
 

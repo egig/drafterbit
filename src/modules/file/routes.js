@@ -37,7 +37,7 @@ router.get('/files',
 
             try {
 
-                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
+                let basePath = path.join(req.app._root,req.app.get('config').get('FILES_BASE_PATH'));
                 let fServer = new FileServer(basePath);
                 fServer.handle(req, res);
 
@@ -55,7 +55,7 @@ router.post('/files',
 
             try {
 
-                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
+                let basePath = path.join(req.app._root,req.app.get('config').get('FILES_BASE_PATH'));
                 let fServer = new FileServer(basePath);
                 fServer.handle(req, res);
 
@@ -73,7 +73,7 @@ router.put('/files',
         (async function () {
 
             try {
-                let basePath = path.join(req.app._root,req.app.get('config').get('filesBasePath'));
+                let basePath = path.join(req.app._root,req.app.get('config').get('FILES_BASE_PATH'));
                 let fServer = new FileServer(basePath);
                 fServer.handleUpload(req, res);
 

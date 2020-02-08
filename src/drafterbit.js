@@ -65,7 +65,7 @@ app.boot = function boot(options) {
 
     // build skeletons
     let config = createConfig(options);
-    let logger = createLogger(config.get('debug'));
+    let logger = createLogger(config.get('DEBUG'));
     this.set('log', logger);
 
     this. _mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
