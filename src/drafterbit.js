@@ -27,6 +27,12 @@ app.start = function () {
 
 
 app.build = function build() {
+
+    console.log("Building...");
+    console.log("APP_NAME",this.get('config').get("APP_NAME"));
+    console.log("DEBUG",this.get('config').get("DEBUG"));
+    console.log("NODE_ENV",this.get('config').get("NODE_ENV"));
+
     this.emit('build');
 };
 
