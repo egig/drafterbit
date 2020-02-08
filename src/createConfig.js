@@ -39,6 +39,7 @@ function createConfig(options = {}) {
 
     nconf
         .env([
+            'APP_NAME',
             'PORT',
             'SESSION_SECRET',
             'NODE_ENV',
