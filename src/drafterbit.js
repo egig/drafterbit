@@ -21,7 +21,7 @@ app.start = function () {
         throw new Error('Please run app.boot before app.start');
     }
 
-    let port = this.get('config').get('PORT');
+    let port = process.env.PORT || this.get('config').get('PORT');
     return this.listen(port, () => this.get('log').info(`Listening on port ${port}!`));
 };
 
