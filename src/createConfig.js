@@ -22,8 +22,12 @@ function createConfig(options = {}) {
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
         'modules': [
+            './src/modules/file',
             './src/modules/core',
-            './src/modules/content',
+            './src/modules/user',
+            './src/modules/api_key',
+            './src/modules/swagger',
+            './src/modules/content'
         ]
     };
 
