@@ -16,20 +16,11 @@ class UserModule {
         return this._modulePath+'/client/src/index.js';
     }
 
-    registerConfig(config) {
-
-        config.use('user', {
-            type: 'literal',
-            store: {
-                'USER_API_BASE_URL': '/',
-                'USER_API_KEY': '',
-            }
-        });
-
-        config.env([
-            'USER_API_BASE_URL',
-            'USER_API_KEY'
-        ])
+    config() {
+        return {
+            'USER_API_BASE_URL': '/',
+            'USER_API_KEY': '',
+        }
     }
 
     registerClientConfig(serverConfig) {

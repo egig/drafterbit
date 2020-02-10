@@ -66,19 +66,11 @@ class CoreModule {
         return webpackConfig;
     }
 
-    registerConfig(config) {
-        config.use('core', {
-            type: 'literal',
-            store: {
-                'API_BASE_URL': '/',
-                'API_KEY': ''
-            }
-        });
-
-        config.env([
-            'API_BASE_URL',
-            'API_KEY'
-        ])
+    config() {
+        return {
+            'API_BASE_URL': '/',
+            'API_KEY': ''
+        }
     }
 
     registerClientConfig(serverConfig) {

@@ -7,22 +7,14 @@ class FileModule {
         });
     }
 
-    // registerSchema(db) {
-    //     db.model('User', UserSchema, '_users');
-    // }
-    //
     getAdminClientEntry() {
         return this._modulePath+'/client/src/index.js';
     }
-    //
-    registerConfig(config) {
 
-        config.use('file_module', {
-            type: 'literal',
-            store: {
-                'FILES_BASE_PATH': './files'
-            }
-        });
+    config() {
+        return {
+            'FILES_BASE_PATH': './files'
+        }
     }
 }
 

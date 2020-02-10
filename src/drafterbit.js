@@ -70,7 +70,7 @@ app.boot = function boot(options) {
     }
 
     // build skeletons
-    let config = createConfig(options);
+    let config = createConfig(this._root);
     let logger = createLogger(config.get('DEBUG'));
     this.set('log', logger);
 
@@ -98,8 +98,8 @@ app.boot = function boot(options) {
         }
 
         // register config
-        if(typeof moduleInstance.registerConfig == 'function') {
-            moduleInstance.registerConfig(config);
+        if(typeof moduleInstance.config == 'function') {
+            config.registerConfig(moduleInstance.config())
         }
 
         return moduleInstance;

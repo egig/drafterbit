@@ -21,24 +21,16 @@ class AuthModule {
         return this._modulePath+'/client/src/index.js';
     }
 
-    registerConfig(config) {
-
-        config.use('api_key', {
-            type: 'literal',
-            store: {
-                'ADMIN_API_KEY': 'test',
-                'api_key_exclude_pattern': [
-                    '^\/$',
-                    '^\/(css|js|img|fonts|locales)\/(.+)',
-                    '^/favicon.ico',
-                    '/swagger.json'
-                ]
-            }
-        });
-
-        config.env([
-            'ADMIN_API_KEY',
-        ])
+    config() {
+        return {
+            'ADMIN_API_KEY': 'test',
+            'api_key_exclude_pattern': [
+                '^\/$',
+                '^\/(css|js|img|fonts|locales)\/(.+)',
+                '^/favicon.ico',
+                '/swagger.json'
+            ]
+        }
     }
 }
 
