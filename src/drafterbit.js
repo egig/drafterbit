@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const createConfig = require('./createConfig');
@@ -57,20 +58,8 @@ app.boot = function boot(options) {
     this._mongoConfig = {};
     this._modules = [];
 
-    // this is config file
-    if (typeof options == 'string') {
-        this._root = path.dirname(options);
-    } else {
-
-        if(!options['ROOT_DIR']) {
-            throw new Error(ERR_NO_ROOT_DIR);
-        }
-
-        this._root = options['ROOT_DIR'];
-    }
-
     // build skeletons
-    let config = createConfig(this._root);
+    let config = createConfig(options);
     let logger = createLogger(config.get('DEBUG'));
     this.set('log', logger);
 
@@ -86,7 +75,7 @@ app.boot = function boot(options) {
     // init modules
     let modules = config.get('modules');
     this._modules = modules.map(m => {
-        let modulePath = resolveModule(m, this._root);
+        let modulePath = resolveModule(m, config.get('ROOT_DIR'));
         let ModulesClass = require(modulePath.resolvedPath);
         let moduleInstance = new ModulesClass(this);
         moduleInstance._modulePath = modulePath.resolvedPath;

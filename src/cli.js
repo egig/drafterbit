@@ -10,9 +10,7 @@ program
     .command('start')
     .description('start server')
     .action(() => {
-
-        let configFile = `${process.cwd()}/config.js`;
-        drafterbit.boot(configFile);
+        drafterbit.boot(process.cwd());
         drafterbit.start();
     });
 
@@ -20,8 +18,7 @@ program
     .command('build')
     .description('build the app')
     .action(() => {
-        let configFile = `${process.cwd()}/config.js`;
-        drafterbit.boot(configFile);
+        drafterbit.boot(process.cwd());
         drafterbit.build();
     });
 

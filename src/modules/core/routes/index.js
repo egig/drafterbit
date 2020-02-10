@@ -15,7 +15,7 @@ function assetPath(req, asset) {
 
 router.get('/', function (req, res) {
 
-    const webpackAssets = require(req.app._root+'/build/assets.json');
+    const webpackAssets = require(req.app.get('config').get('ROOT_DIR')+'/build/assets.json');
 
     let defaultState = {COMMON: {}};
     defaultState.COMMON.language = req.language;

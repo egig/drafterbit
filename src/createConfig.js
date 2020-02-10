@@ -1,6 +1,6 @@
 const path = require('path');
-// const fs = require('fs');
-// const nconf = require('nconf');
+const fs = require('fs');
+const { ERR_NO_CONFIG_FILE } = require('./constants');
 
 class Config {
     constructor(ROOT, defaults) {
@@ -20,8 +20,22 @@ class Config {
     }
 }
 
-function createConfig(ROOT) {
-    const defaultConfig = {
+function createConfig(options) {
+
+    let configFileName = 'config.js';
+
+    if (typeof options === 'string') {
+        let rootDir = options;
+        let configFile = `${options}/${configFileName}`;
+        if (fs.existsSync(configFile)) {
+            options = require(configFile);
+        } else {
+            options = {}
+        }
+        options['ROOT_DIR'] = rootDir
+    }
+
+    const defaults = {
         'APP_NAME': 'Unnamed App',
         'DEBUG': false,
         'NODE_ENV': 'production',
@@ -44,32 +58,8 @@ function createConfig(ROOT) {
         ]
     };
 
-    return new Config(ROOT, defaultConfig)
-
-    //
-    // if (typeof options == 'string' && fs.existsSync(options)) {
-    //     options = require(options);
-    // }
-    //
-    // let config = Object.assign({}, defaultConfig, options);
-    //
-    // nconf
-    //     .env([
-    //         'APP_NAME',
-    //         'PORT',
-    //         'SESSION_SECRET',
-    //         'NODE_ENV',
-    //         'MONGODB_URL',
-    //         'MONGODB_PATH',
-    //         'MONGODB_NAME',
-    //         'MONGODB_HOST',
-    //         'MONGODB_PORT',
-    //         'MONGODB_USER',
-    //         'MONGODB_PASS',
-    //     ])
-    //     .defaults(config);
-    //
-    // return nconf;
+    let config = Object.assign({}, defaults, options);
+    return new Config(options["ROOT_DIR"], config)
 }
 
 

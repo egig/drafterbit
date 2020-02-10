@@ -9,7 +9,7 @@ class CoreModule {
 
         app.on('boot', () => {
             
-            this.webpackOutputPath = app._root+'/build';            
+            this.webpackOutputPath = app.get('config').get('ROOT_DIR')+'/build';
             app.use('/', express.static(this.webpackOutputPath));
 
             if(app.get('config').get('NODE_ENV') !== "production") {
