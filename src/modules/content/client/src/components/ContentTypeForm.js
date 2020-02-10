@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Modal, ModalBody, FormGroup, Label, Input } from 'reactstrap';
 import Card from '../../../../core/client/src/components/Card/Card';
 import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import ApiClient from '../ApiClient';
 
 // TODO fix this ugly require path
 const { slugify } = require("../../../../../utils");
@@ -23,7 +24,7 @@ class ContentTypeForm extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if(nextProps.contentTypeId != this.props.contentTypeId) {
+        if(nextProps.contentTypeId !== this.props.contentTypeId) {
             this.setState({
                 contentTypeId: nextProps.contentTypeId,
                 name: nextProps.name,
@@ -34,8 +35,8 @@ class ContentTypeForm extends React.Component {
     }
 
     onSubmit(form) {
-        let { contentTypeId, name, slug, description } = this.state
-        let client = this.props.drafterbit.getApiClient();
+        let { contentTypeId, name, slug, description } = this.state;
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
     
         (() => {
             if(!!contentTypeId) {
