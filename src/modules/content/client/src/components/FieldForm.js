@@ -6,11 +6,11 @@ import withDrafterbit from '../../../../core/client/src/withDrafterbit';
 import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';
+import ApiClient from '../ApiClient'
 
 // TODO ugly required path
 const FieldType = require('../../../../../FieldType');
 const { slugify } = require("../../../../../utils");
-const ApiClient = require('../ApiClient')
 
 class FieldForm extends React.Component {
 
