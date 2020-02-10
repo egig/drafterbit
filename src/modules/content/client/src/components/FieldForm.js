@@ -10,6 +10,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink,
 // TODO ugly required path
 const FieldType = require('../../../../../FieldType');
 const { slugify } = require("../../../../../utils");
+const ApiClient = require('../ApiClient')
 
 class FieldForm extends React.Component {
 
@@ -41,7 +42,7 @@ class FieldForm extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        let client = this.props.drafterbit.getApiClient();
+        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         (() => {
             if(!!this.props.fieldId) {
                 return client.updateContentTypeField(
@@ -82,7 +83,8 @@ class FieldForm extends React.Component {
         } = this.props;
 
         if(!!fieldId) {
-            this.props.drafterbit.getApiClient().getContentType(contentTypeId)
+            let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+            client.getContentType(contentTypeId)
             .then(ct => {
 
                 let f = ct.fields.filter(fi => fi._id == fieldId)[0];
@@ -182,6 +184,7 @@ class FieldForm extends React.Component {
                                                     type_id: e.target.value
                                                 })
                                             }} value={this.state.type_id}>
+                                                <option value="">Select Field Type</option>
                                                 {FieldType.fieldTypes.map((f,i) => {
                                                     return <option key={i} value={f.id}>{f.name}</option>;
                                                 })}
