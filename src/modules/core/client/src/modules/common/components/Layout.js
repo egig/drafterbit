@@ -36,7 +36,7 @@ class Layout extends React.Component {
         return (
             <span>
 	            <Helmet>
-		            <title>{this.props.title} - Drafterbit</title>
+		            <title>{this.props.title} - {this.props.drafterbit.getConfig("appName")}</title>
 	            </Helmet>
 	            <Navbar color="dark" dark sticky="top" className="flex-md-nowrap p-0" expand="md">
 		            <NavbarBrand tag="span" className={'layout-navbarBrand col-sm-3 col-md-2 mr-0'}>

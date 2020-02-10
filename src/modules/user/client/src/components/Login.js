@@ -46,7 +46,7 @@ class Login extends React.Component {
         return (
             <AuthCard title={t('login:title')}>
                 <Helmet>
-                    <title>Login - Drafterbit</title>
+                    <title>Login - {this.props.drafterbit.getConfig("appName")}</title>
                 </Helmet>
 
                 {this.state.errorText &&

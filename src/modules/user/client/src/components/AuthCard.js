@@ -25,7 +25,7 @@ class AuthCard extends React.Component {
                                 </CardBody>
                             </Card>
                             <div className="auth_card-loginFooter">
-                                Copyright &copy; 2019 &mdash; drafterbit
+                                Copyright &copy; {this.props.drafterbit.getConfig("appName")}
                             </div>
                         </div>
                     </div>
