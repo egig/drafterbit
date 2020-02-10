@@ -81,7 +81,8 @@ class Notify extends React.Component {
 }
 
 Notify.defaultProps = {
-    isActive: false
+    isActive: false,
+    onTimeout: function () {}
 };
 
 export default Notify;

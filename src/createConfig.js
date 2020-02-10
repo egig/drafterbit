@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { ERR_NO_CONFIG_FILE } = require('./constants');
+const { ERR_NO_ROOT_DIR } = require('./constants');
 
 class Config {
     constructor(ROOT, defaults) {
@@ -26,13 +26,17 @@ function createConfig(options) {
 
     if (typeof options === 'string') {
         let rootDir = options;
-        let configFile = `${options}/${configFileName}`;
+        let configFile = `${rootDir}/${configFileName}`;
         if (fs.existsSync(configFile)) {
             options = require(configFile);
         } else {
             options = {}
         }
         options['ROOT_DIR'] = rootDir
+    }
+
+    if (typeof options['ROOT_DIR'] === 'undefined') {
+        throw new Error(ERR_NO_ROOT_DIR)
     }
 
     const defaults = {

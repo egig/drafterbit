@@ -100,16 +100,16 @@ class ContentType extends React.Component {
 
     if(!!data.get('content_type')) {
       defaultValue = options.filter(o => {
-        return data.get('content_type') == o.value
+        return data.get('content_type') === o.value
       })[0]
     }
 
     let contentOptions = this.state.contentEntryOptions.map(c => {
       return {
         value: c._id,
-        label: c.name // TODO determine default field for entry name
+        label: c.name || c.title // TODO determine default field for entry name
       }
-    })
+    });
 
     return (
       <Fragment>

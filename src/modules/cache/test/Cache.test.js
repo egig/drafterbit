@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const Cache = require('../../src/lib/cache/Cache');
+const Cache = require('../lib/Cache');
 
 describe('Cache manager', function () {
 

@@ -1,13 +1,10 @@
-const path = require('path');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
+const cors = require('cors');
+
 const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
-const cors = require('cors');
-const expressValidator = require('express-validator');
-const { ERR_NO_ROOT_DIR } = require('./constants');
-
 const resolveModule = require('./resolveModule');
 const createMongooseConn = require('./createMongooseConn');
 
@@ -15,6 +12,7 @@ let app = {};
 
 /**
  *
+ * @returns {http.Server}
  */
 app.start = function () {
 
@@ -28,12 +26,6 @@ app.start = function () {
 
 
 app.build = function build() {
-
-    console.log("Building...");
-    console.log("APP_NAME",this.get('config').get("APP_NAME"));
-    console.log("DEBUG",this.get('config').get("DEBUG"));
-    console.log("NODE_ENV",this.get('config').get("NODE_ENV"));
-
     this.emit('build');
 };
 
@@ -63,7 +55,7 @@ app.boot = function boot(options) {
     let logger = createLogger(config.get('DEBUG'));
     this.set('log', logger);
 
-    this. _mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
+    this._mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
     this._mongoConfig[this._mongoDefaultConn] = {
         protocol: config.get('MONGODB_PROTOCOL'),
         host: config.get('MONGODB_HOST'),
@@ -113,7 +105,6 @@ app.boot = function boot(options) {
         }
     }));
 
-    // this.use(modelMiddleware());
     this.emit('boot');
 
     this.emit('routing');
