@@ -5,30 +5,33 @@ const swaggerJSDoc = require('swagger-jsdoc');
 
 let router = express.Router();
 
-const swaggerSpec = swaggerJSDoc({
-    swaggerDefinition: {
-        info: {
-            title: 'Drafterbit',
-            version: 'v3.0'
+
+function createSwaggerSpec(title, version) {
+    return swaggerJSDoc({
+        swaggerDefinition: {
+            info: {
+                title: title,
+                version: version
+            },
+            produces: ['application/json'],
+            host: '',
+            basePath: '/',
+            securityDefinitions: {
+                'api_key': {
+                    'type': 'apiKey',
+                    'name': 'api_key',
+                    'in': 'query'
+                }
+            },
+            security: [
+                {api_key: []}
+            ]
         },
-        produces: ['application/json'],
-        host: '',
-        basePath: '/',
-        securityDefinitions: {
-            'api_key': {
-                'type': 'apiKey',
-                'name': 'api_key',
-                'in': 'query'
-            }
-	  },
-        security: [
-            {api_key: []}
+        apis: [
+            // path.resolve(__dirname + '/../content/*.js')
         ]
-    },
-    apis: [
-        // path.resolve(__dirname + '/../content/*.js')
-    ]
-});
+    });
+}
 
 // TODO use custom css
 // const showExplorer = false;
@@ -99,7 +102,9 @@ router.get('/swagger.json',  function (req, res) {
                 //     }
                 // };
             });
-            
+
+            let version = "1.0"; // TODO
+            let swaggerSpec = createSwaggerSpec(req.app.get('config').get('APP_NAME'), version)
             swaggerSpec.paths = Object.assign({}, paths, swaggerSpec.paths);
 
             res.send(swaggerSpec);
