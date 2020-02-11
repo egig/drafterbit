@@ -30,7 +30,7 @@ class Contents extends React.Component {
 
         let ctSlug = match.params.content_type_slug;
         let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
-        client.getContentType(ctSlug)
+        return client.getContentType(ctSlug)
 		    .then(contentType => {
 
 		        this.setState({
@@ -38,7 +38,7 @@ class Contents extends React.Component {
                     ctFields: contentType.fields
                 });
 
-                client.getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
+                return client.getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
 			    .then(response => {
 
 			        let contentCount = response.headers['content-range'].split("/")[1];

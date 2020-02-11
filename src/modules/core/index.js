@@ -58,7 +58,6 @@ class CoreModule {
         console.log("Number of modules:", app._modules.length);
         app._modules.map(mo => {
             if(typeof mo.getAdminClientEntry == 'function') {
-                console.log("including module", mo._modulePath, "in build");
                 webpackConfig.entry.push(mo.getAdminClientEntry());
             }
         });

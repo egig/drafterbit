@@ -16,7 +16,7 @@ class Users extends React.Component {
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
         let client =  new ApiClient(this.props.drafterbit.getAxiosInstance());
 
-        client.getUsers()
+        return client.getUsers()
             .then(users => {
                 this.setState({
                     users

@@ -22,7 +22,7 @@ class Files extends React.Component {
         let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
 
         let path = qs['path'] || "/";
-        client.getFiles(path)
+        return client.getFiles(path)
             .then(files => {
                 this.setState({
                     files

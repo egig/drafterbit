@@ -13,6 +13,7 @@ class TablePage extends React.Component {
         super(props);
         this.state = {
             selected: [],
+            loading: true,
         };
     }
 
@@ -29,7 +30,15 @@ class TablePage extends React.Component {
             return;
         }
 
-        this.loadContents(nextProps);
+        this.setState({
+            loading: true
+        });
+        this.loadContents(nextProps)
+            .then(r => {
+                this.setState({
+                    loading: false
+                })
+            })
     }
 
     loadContents = (props) => {
@@ -38,11 +47,15 @@ class TablePage extends React.Component {
         let sortDir = qs['sort_dir'];
         let fqStr = qs['fq'];
         let page = qs['page'];
-        this.props.loadContents(props.match, page, sortBy, sortDir, fqStr, qs);
+        return this.props.loadContents(props.match, page, sortBy, sortDir, fqStr, qs);
     };
 
     componentDidMount() {
-        this.loadContents(this.props)
+        return this.loadContents(this.props).then(r => {
+            this.setState({
+                loading: false
+            })
+        })
     }
 
     handleOnSelect = (isSelect, row) => {
@@ -174,31 +187,34 @@ class TablePage extends React.Component {
                         }
                     </div>
                 </div>
-                    <DataTable
-                        idField="_id"
-                        data={ data }
-                        columns={ columns }
-                        select={select}
-                        selected={selected}
-                        onSelect={this.handleOnSelect}
-                        onSelectAll={this.handleOnSelectAll}
-                        sortBy={sortBy}
-                        sortDir={sortDir}
-                        onSort={this.handleSort}
-                        onApplyFilter={this.applyFilter}
-                        onFilterChange={this.onFilterChange}
-                        onReset={this.onReset}
-                        filterObjects={filterObjects}
-                        currentPage={page}
-                        totalPageCount={Math.ceil(this.props.contentCount/10)}
-                        renderPaginationLink={(p) => (
-                            <Link className="page-link" to={this.props.match.url+"?page="+p}>{p}</Link>
-                        )}
-                        onRowClick={this.props.onRowClick}
-                        onDeleteFilter={this.onDeleteFilter}
-                        popFilter={this.popFilter}
-                        render={this.props.render}
-                    />
+                {this.state.loading && <div>Loading&hellip;</div>}
+                {this.state.loading ||
+                <DataTable
+                    idField="_id"
+                    data={data}
+                    columns={columns}
+                    select={select}
+                    selected={selected}
+                    onSelect={this.handleOnSelect}
+                    onSelectAll={this.handleOnSelectAll}
+                    sortBy={sortBy}
+                    sortDir={sortDir}
+                    onSort={this.handleSort}
+                    onApplyFilter={this.applyFilter}
+                    onFilterChange={this.onFilterChange}
+                    onReset={this.onReset}
+                    filterObjects={filterObjects}
+                    currentPage={page}
+                    totalPageCount={Math.ceil(this.props.contentCount / 10)}
+                    renderPaginationLink={(p) => (
+                        <Link className="page-link" to={this.props.match.url + "?page=" + p}>{p}</Link>
+                    )}
+                    onRowClick={this.props.onRowClick}
+                    onDeleteFilter={this.onDeleteFilter}
+                    popFilter={this.popFilter}
+                    render={this.props.render}
+                />
+                }
             </Fragment>
         );
     }

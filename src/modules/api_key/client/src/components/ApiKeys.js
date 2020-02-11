@@ -15,7 +15,7 @@ class ApiKeys extends React.Component {
 
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
         let client =  new ApiClient(this.props.drafterbit.getAxiosInstance());
-        client.getApiKeys()
+        return client.getApiKeys()
             .then(apiKeys => {
                 this.setState({
                     apiKeys
