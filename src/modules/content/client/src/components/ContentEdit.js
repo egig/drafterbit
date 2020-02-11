@@ -52,7 +52,8 @@ class ContentEdit extends React.Component {
             ctFields: [],
             entry: null,
             successText: '',
-            formData: {}
+            formData: {},
+            loading: true
         };
     }
 
@@ -128,7 +129,8 @@ class ContentEdit extends React.Component {
 
             this.setState({
                 ctFields: contentType.fields,
-                formData: formData
+                formData: formData,
+                loading: false
             });
 
         });
@@ -136,7 +138,6 @@ class ContentEdit extends React.Component {
 
     componentDidUpdate(prevProps) {
         if(this.props.content !== prevProps.content) {
-            console.log('updating content');
             this.props.content.fields.map(f => {
                 this.formData[f.name] = f;
                 this.setState({
@@ -253,43 +254,46 @@ class ContentEdit extends React.Component {
     render() {
         return (
             <Fragment>
-	            <Row>
-		            <Col md="8">
-			            <Card headerText="Edit Content" >
-				            <form onSubmit={e => {
-                                e.preventDefault();
-                                this.onSubmit(e.target);
-                            }} >
-					            {this.state.ctFields.map((f,i) => {
+                {this.state.loading && <div>Loading&hellip;</div>}
+                {this.state.loading ||
+                    <Row>
+                        <Col md="8">
+                            <Card headerText="Edit Content" >
+                                <form onSubmit={e => {
+                                    e.preventDefault();
+                                    this.onSubmit(e.target);
+                                }} >
+                                    {this.state.ctFields.map((f,i) => {
 
-					                let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
+                                        let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
 
-						            if(parseInt(f.type_id) === FieldType.RICH_TEXT) {
-						                return this.renderRichText(f,i,value)
-						            }
+                                        if(parseInt(f.type_id) === FieldType.RICH_TEXT) {
+                                            return this.renderRichText(f,i,value)
+                                        }
 
-                                    if(parseInt(f.type_id) === FieldType.RELATION_TO_ONE){
-                                        return this.renderRelationToOne(f,i,value)
-                                    }
+                                        if(parseInt(f.type_id) === FieldType.RELATION_TO_ONE){
+                                            return this.renderRelationToOne(f,i,value)
+                                        }
 
-                                    if(parseInt(f.type_id) === FieldType.RELATION_TO_MANY) {
-                                        return this.renderRelationToMany(f,i,value)
-                                    }
+                                        if(parseInt(f.type_id) === FieldType.RELATION_TO_MANY) {
+                                            return this.renderRelationToMany(f,i,value)
+                                        }
 
-                                    if(parseInt(f.type_id) === FieldType.UNSTRUCTURED) {
-                                        return this.renderUnstructured(f,i,value)
-                                    }
+                                        if(parseInt(f.type_id) === FieldType.UNSTRUCTURED) {
+                                            return this.renderUnstructured(f,i,value)
+                                        }
 
-                                    return this.renderCommonField(f,i,value)
-					            })}
+                                        return this.renderCommonField(f,i,value)
+                                    })}
 
-					            <div className="form-group">
-						            <button type="submit" className="btn btn-success">Save</button>
-					            </div>
-				            </form>
-			            </Card>
-		            </Col>
-	            </Row>
+                                    <div className="form-group">
+                                        <button type="submit" className="btn btn-success">Save</button>
+                                    </div>
+                                </form>
+                            </Card>
+                        </Col>
+                    </Row>
+                }
 	            {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </Fragment>);
     }
