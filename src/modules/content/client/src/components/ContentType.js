@@ -27,6 +27,7 @@ class ContentType extends React.Component {
 	        editedFieldId: "",
             fieldTypeSelected: null,
             basicEditForm: false,
+            loading: true
         };
 
         this.deleteField = this.deleteField.bind(this);
@@ -44,7 +45,8 @@ class ContentType extends React.Component {
                     name: contentType.name,
                     slug: contentType.slug,
                     description: contentType.description,
-                    fields: contentType.fields
+                    fields: contentType.fields,
+                    loading: false
                 });
             });
     }
@@ -92,8 +94,10 @@ class ContentType extends React.Component {
 
         return (
             <Fragment>
-	            <Row>
-		            <Col md="12" className="mb-3">
+                {this.state.loading && <div>Loading&hellip;</div>}
+                {this.state.loading ||
+                <Row>
+                    <Col md="12" className="mb-3">
                         <h2>{this.state.name} <small className="text-muted"><a href="/" onClick={e => {
                             e.preventDefault();
                             this.setState({
@@ -101,30 +105,31 @@ class ContentType extends React.Component {
                             })
                         }}><i className="icon-note"/></a></small></h2>
                         <small>{this.state.description}</small>
-			            <div className="mb-3" />
-		            </Col>
-		            <Col md="12">
-			            <Card headerText="Fields">
+                        <div className="mb-3"/>
+                    </Col>
+                    <Col md="12">
+                        <Card headerText="Fields">
                             <button onClick={e => {
                                 e.preventDefault();
                                 this.setState({
                                     fieldDialogActive: true,
                                     editedFieldId: ""
                                 });
-                            }} className="btn btn-success btn-sm mb-2">Add Field</button>
-				            <table className="table table-sm table-bordered">
-					            <thead>
-					            <tr>
-						            <th>Name</th>
-						            <th>Label</th>
-						            <th>Type</th>
-						            <th></th>
-					            </tr>
-					            </thead>
-					            <tbody>
-					            {this.state.fields.map((f,i) => {
-						            return (
-							            <tr key={i}>
+                            }} className="btn btn-success btn-sm mb-2">Add Field
+                            </button>
+                            <table className="table table-sm table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Label</th>
+                                    <th>Type</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.state.fields.map((f, i) => {
+                                    return (
+                                        <tr key={i}>
                                             <td><a href="#" onClick={e => {
                                                 e.preventDefault();
 
@@ -135,24 +140,28 @@ class ContentType extends React.Component {
                                             }}>{f.name}</a></td>
                                             <td>{f.label}</td>
                                             <td>{FieldType.get(f.type_id).name}</td>
-								            <td><Button size="sm" onClick={e => {
-								            	this.deleteField(f);
-								            }}>&times;</Button></td>
-							            </tr>
-						            );
-					            })}
-					            </tbody>
-				            </table>
-			            </Card>
-                        <div className="mb-3" />
+                                            <td><Button size="sm" onClick={e => {
+                                                this.deleteField(f);
+                                            }}>&times;</Button></td>
+                                        </tr>
+                                    );
+                                })}
+                                </tbody>
+                            </table>
+                        </Card>
+                        <div className="mb-3"/>
                         <Card headerText={`Delete Content Type : ${this.state.name}`}>
-                            <form onSubmit={e => { e.preventDefault(); this.deleteContentType(e.target); }}>
-                                <input type="hidden" name="id" id="id" value={this.state._id} />
+                            <form onSubmit={e => {
+                                e.preventDefault();
+                                this.deleteContentType(e.target);
+                            }}>
+                                <input type="hidden" name="id" id="id" value={this.state._id}/>
                                 <button type="submit" className="btn btn-danger">Delete Content Type</button>
                             </form>
                         </Card>
-		            </Col>
-	            </Row>
+                    </Col>
+                </Row>
+                }
                 <FieldForm
                     isOpen={this.state.fieldDialogActive}
                     contentTypeId={this.state._id}
