@@ -4,12 +4,12 @@ const UserSchema  = require('./models/User');
 class UserModule {
     constructor(app) {
         app.on('routing', () => {
-            // app.use(routes);
+            app.use(routes);
         });
     }
 
     registerSchema(db) {
-        db.model('User', UserSchema, '_users');
+        // db.model('User', UserSchema, '_users');
     }
 
     getAdminClientEntry() {

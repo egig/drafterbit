@@ -48,12 +48,13 @@ class ApiClient {
         return response.data;
     }
 
-    async updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules)  {
+    async updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules, showInList)  {
         let url = `/content_types/${contentTypeId}/fields/${fieldId}`;
         let response = await this.axiosInstance.patch(url, {
             label, name,
             related_content_type_slug: relatedContentTypeSlug,
-            validation_rules: validationRules
+            validation_rules: validationRules,
+            show_in_list: showInList
         });
         return response.data;
     }
@@ -68,14 +69,15 @@ class ApiClient {
      * @param validationRules
      * @returns {Promise<*>}
      */
-    async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules)  {
+    async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules, showInList)  {
         let url = `/content_types/${contentTypeId}/fields`;
         let response = await this.axiosInstance.post(url, {
             label,
             name,
             type_id: typeId,
             related_content_type_slug: relatedContentTypeSlug,
-            validation_rules: validationRules
+            validation_rules: validationRules,
+            show_in_list: showInList
         });
         return response.data;
     }

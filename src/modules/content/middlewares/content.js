@@ -1,6 +1,7 @@
 const FieldType = require( '../../../FieldType');
 const fieldsToSchema = require( '../../../fieldsToSchema');
 
+// TODO move this to lib
 function getSchema(fields) {
     let fieldsObj = {};
     fields.forEach(f => {
@@ -79,6 +80,9 @@ module.exports = function contentMiddleware() {
                 return Promise.all(ctPromises)
                     .then(rList => {
                         rList.map(function (ct) {
+
+                            // For all related content type, we try to register model
+                            // Unless Mongoose.populate in content list will not work
                             createModel(req.app, ct.slug, ct.schemaObj);
                         });
                     })
