@@ -21,6 +21,14 @@ program
         drafterbit.boot(process.cwd());
         drafterbit.build();
     });
+program
+    .command('initdb')
+    .description('initialize DB things')
+    .action(() => {
+        drafterbit.boot(process.cwd());
+        drafterbit.initContentTypes().catch(e => console.error(e))
+        process.exit(0)
+    });
 
 program.parse(process.argv);
 

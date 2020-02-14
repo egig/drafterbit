@@ -172,7 +172,7 @@ router.post('/token',
  *     tags:
  *        - /users/
  */
-router.get('/users', function (req, res) {
+router.get('/admin_users', function (req, res) {
 
     (async function () {
 
