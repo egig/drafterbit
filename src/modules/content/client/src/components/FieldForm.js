@@ -90,7 +90,7 @@ class FieldForm extends React.Component {
             client.getContentType(contentTypeId)
             .then(ct => {
 
-                let f = ct.fields.filter(fi => fi._id == fieldId)[0];
+                let f = ct.fields.filter(fi => fi._id === fieldId)[0];
                 this.setState({
                     type_id: f.type_id,
                     label: f.label,
@@ -234,15 +234,17 @@ class FieldForm extends React.Component {
                                             />
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" name="show_in_list"
-                                                   type="checkbox"
-                                                   checked={this.state.show_in_list ? "checked" : "false"}
-                                                   onChange={(e) => {
-                                                       this.setState({
-                                                           show_in_list: e.target.checked
-                                                       })
-                                                   }}/>
-                                            <label className="form-check-label" htmlFor="show_in_list">Show In List</label>
+                                            <label className="form-check-label" htmlFor="show_in_list">
+                                                <input className="form-check-input" name="show_in_list"
+                                                       type="checkbox"
+                                                       checked={this.state.show_in_list ? "checked" : false}
+                                                       onChange={(e) => {
+                                                           this.setState({
+                                                               show_in_list: e.target.checked
+                                                           })
+                                                       }}/>
+                                                Show In List
+                                            </label>
                                         </div>
                                 </Col>
                             </Row>
