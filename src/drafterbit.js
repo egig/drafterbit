@@ -145,4 +145,30 @@ app.getDB = function getDB(dbName) {
     return this._mongo_connections[dbName];
 };
 
+app.initContentTypes = function initContentTypes() {
+    let m = this.model("ContentType");
+    return m.createContentType("User", "users", "", [
+        {
+            type_id: 1,
+            name: 'name',
+            label: "Name",
+            validation_rules: "required"
+        },
+        {
+            type_id: 1,
+            name: 'email',
+            label: "Email",
+            validation_rules: "required"
+        },
+        {
+            type_id: 1,
+            name: 'password',
+            label: "Password",
+            validation_rules: "required"
+        },
+    ]).then(r => {
+        console.log("Create content type users success")
+    });
+};
+
 module.exports = app;

@@ -1,7 +1,6 @@
 const routes  = require('./routes');
-const UserSchema  = require('./models/User');
 
-class UserModule {
+class AuthModule {
     constructor(app) {
         app.on('routing', () => {
             app.use(routes);
@@ -9,7 +8,7 @@ class UserModule {
     }
 
     registerSchema(db) {
-        db.model('User', UserSchema, '_users');
+        // db.model('User', UserSchema, '_users');
     }
 
     getAdminClientEntry() {
@@ -31,4 +30,4 @@ class UserModule {
     }
 }
 
-module.exports = UserModule;
+module.exports = AuthModule;

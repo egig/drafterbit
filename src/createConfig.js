@@ -55,7 +55,7 @@ function createConfig(options) {
         'modules': [
             './src/modules/file',
             './src/modules/core',
-            './src/modules/user',
+            './src/modules/auth',
             './src/modules/api_key',
             './src/modules/swagger',
             './src/modules/content'

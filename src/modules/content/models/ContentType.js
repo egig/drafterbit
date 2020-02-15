@@ -11,7 +11,8 @@ let ContentTypeSchema = new mongoose.Schema({
         type_id: Number,
         name: String,
         label: String,
-        validation_rules: String
+        validation_rules: String,
+        show_in_list: { type: Boolean, default: true }
     }],
     created_at: Number,
     updated_at: Number,

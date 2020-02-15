@@ -5,8 +5,40 @@ const UserAuthError  = require('./UserAuthError');
 const validateRequest = require('../../middlewares/validateRequest');
 const { sendResetPasswordEmail } = require('./lib/mail');
 const createSession = require('./createSession');
+const fieldsToSchema = require( '../../fieldsToSchema');
+const FieldType = require( '../../FieldType');
+
 
 let router = express.Router();
+
+
+// TODO move this
+function getSchema(fields) {
+    let fieldsObj = {};
+    fields.forEach(f => {
+
+        if (f.type_id === FieldType.RELATION_TO_MANY) {
+            fieldsObj[f.name] = [{
+                type: f.type_id,
+                ref: f.related_content_type_slug
+            }];
+
+        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
+
+            fieldsObj[f.name] = {
+                type: f.type_id,
+                ref: f.related_content_type_slug
+            };
+
+        } else {
+            fieldsObj[f.name] = {
+                type: f.type_id
+            };
+        }
+    });
+
+    return fieldsToSchema.convert(fieldsObj);
+}
 
 
 function createSessionKey(token, user_id) {
@@ -110,9 +142,26 @@ router.post('/token',
                 let email = req.body.email;
                 let rawPassword = req.body.password;
 
-                let m = req.app.model('User');
-                let user = await m.getUserByEmail(email);
+                let m = req.app.model('ContentType');
 
+                let userCollectionSlug = 'users';
+                let contentType = await  m.getContentType(userCollectionSlug);
+                let schemaObj = getSchema(contentType.fields);
+                let userModel;
+                try {
+                    userModel = req.app.getDB().model(userCollectionSlug);
+                } catch (error) {
+                    userModel = req.app.getDB().model(userCollectionSlug, schemaObj, userCollectionSlug);
+                }
+
+                let user = await userModel.findOne({
+                    email: email
+                });
+
+                //
+                // let m = req.app.model('User');
+                // let user = await m.getUserByEmail(email);
+                //
                 if(!user) {
                     throw new UserAuthError('Wrong email or password');
                 }
@@ -128,7 +177,7 @@ router.post('/token',
                     email: user.email,
                     first_name: user.first_name,
                     last_name: user.last_name,
-                }, 'secretkey');
+                }, 'secretkey'); // TODO save this in config
 
                 let authUser = {
                     id: user.id,
@@ -172,22 +221,22 @@ router.post('/token',
  *     tags:
  *        - /users/
  */
-router.get('/users', function (req, res) {
-
-    (async function () {
-
-        try {
-            let m = req.app.model('User');
-            let results = await m.getUsers();
-            res.send(results);
-        } catch (e) {
-            res.status(500);
-            res.send(e.message);
-        }
-
-    })();
-
-});
+// router.get('/admin_users', function (req, res) {
+//
+//     (async function () {
+//
+//         try {
+//             let m = req.app.model('User');
+//             let results = await m.getUsers();
+//             res.send(results);
+//         } catch (e) {
+//             res.status(500);
+//             res.send(e.message);
+//         }
+//
+//     })();
+//
+// });
 
 
 /**
@@ -209,31 +258,31 @@ router.get('/users', function (req, res) {
  *     tags:
  *        - /users/
  */
-router.get('/users/:user_id',
-    validateRequest({
-        user_id: {
-            notEmpty: true,
-            errorMessage: 'user_id must be integer'
-        },
-    }),
-    (req, res) => {
-
-        (async function () {
-
-            try {
-
-                let m = req.app.model('User');
-                let user = await m.findOne({_id: req.params.user_id});
-                res.send(user);
-
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+// router.get('/users/:user_id',
+//     validateRequest({
+//         user_id: {
+//             notEmpty: true,
+//             errorMessage: 'user_id must be integer'
+//         },
+//     }),
+//     (req, res) => {
+//
+//         (async function () {
+//
+//             try {
+//
+//                 let m = req.app.model('User');
+//                 let user = await m.findOne({_id: req.params.user_id});
+//                 res.send(user);
+//
+//             } catch (e ) {
+//                 res.status(500);
+//                 res.send(e.message);
+//             }
+//
+//         })();
+//
+//     });
 
 /**
  * @swagger
@@ -268,45 +317,45 @@ router.get('/users/:user_id',
  *     tags:
  *        - /users/
  */
-router.post('/users',
-    validateRequest({
-        name: {
-            isString: true,
-            errorMessage: 'first_name is required'
-        },
-        email: {
-            isString: true,
-            errorMessage: 'email is required'
-        },
-        password: {
-            isString: true,
-            errorMessage: 'password is required'
-        },
-    }),
-    function (req, res) {
-        (async function () {
-
-            try {
-                let hashedPassword = await password.hash(req.body.password);
-
-                let m = req.app.model('User');
-                // TODO validation
-                let newUser = await m.createUser(
-                    req.body.name,
-                    req.body.email,
-                    hashedPassword,
-                );
-
-                res.status(201).send(newUser);
-
-            } catch (e) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+// router.post('/users',
+//     validateRequest({
+//         name: {
+//             isString: true,
+//             errorMessage: 'first_name is required'
+//         },
+//         email: {
+//             isString: true,
+//             errorMessage: 'email is required'
+//         },
+//         password: {
+//             isString: true,
+//             errorMessage: 'password is required'
+//         },
+//     }),
+//     function (req, res) {
+//         (async function () {
+//
+//             try {
+//                 let hashedPassword = await password.hash(req.body.password);
+//
+//                 let m = req.app.model('User');
+//                 // TODO validation
+//                 let newUser = await m.createUser(
+//                     req.body.name,
+//                     req.body.email,
+//                     hashedPassword,
+//                 );
+//
+//                 res.status(201).send(newUser);
+//
+//             } catch (e) {
+//                 res.status(500);
+//                 res.send(e.message);
+//             }
+//
+//         })();
+//
+//     });
 
 /**
  * @swagger
@@ -327,31 +376,31 @@ router.post('/users',
  *     tags:
  *        - /users/
  */
-router.delete('/users/:user_id',
-    validateRequest({
-        user_id: {
-            notEmpty: true,
-            errorMessage: 'user_id must be integer'
-        },
-    }),
-    (req, res) => {
-
-        (async function () {
-
-            try {
-
-                let m = req.app.model('User');
-                await m.deleteUser(req.params.user_id);
-                res.send({message: 'OK'});
-
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-
-    });
+// router.delete('/users/:user_id',
+//     validateRequest({
+//         user_id: {
+//             notEmpty: true,
+//             errorMessage: 'user_id must be integer'
+//         },
+//     }),
+//     (req, res) => {
+//
+//         (async function () {
+//
+//             try {
+//
+//                 let m = req.app.model('User');
+//                 await m.deleteUser(req.params.user_id);
+//                 res.send({message: 'OK'});
+//
+//             } catch (e ) {
+//                 res.status(500);
+//                 res.send(e.message);
+//             }
+//
+//         })();
+//
+//     });
 
 /**
  * @swagger
@@ -387,42 +436,42 @@ router.delete('/users/:user_id',
  *     tags:
  *        - /users/
  */
-router.patch('/users/:user_id',
-    validateRequest({
-        user_id: {
-            notEmpty: true,
-            errorMessage: 'user_id must be integer'
-        },
-        first_name: {
-            optional: true,
-            errorMessage: 'first_name is required'
-        },
-        last_name: {
-            optional: true,
-            errorMessage: 'last_name is required'
-        },
-        email: {
-            optional: true,
-            errorMessage: 'email is required'
-        }
-    }),
-    (req, res) => {
-
-        (async function () {
-
-            try {
-                let m = req.app.model('User');
-                // TODO validation
-                await m.updateUser(req.params.user_id, req.body);
-                res.send({message: 'OK'});
-
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+// router.patch('/users/:user_id',
+//     validateRequest({
+//         user_id: {
+//             notEmpty: true,
+//             errorMessage: 'user_id must be integer'
+//         },
+//         first_name: {
+//             optional: true,
+//             errorMessage: 'first_name is required'
+//         },
+//         last_name: {
+//             optional: true,
+//             errorMessage: 'last_name is required'
+//         },
+//         email: {
+//             optional: true,
+//             errorMessage: 'email is required'
+//         }
+//     }),
+//     (req, res) => {
+//
+//         (async function () {
+//
+//             try {
+//                 let m = req.app.model('User');
+//                 // TODO validation
+//                 await m.updateUser(req.params.user_id, req.body);
+//                 res.send({message: 'OK'});
+//
+//             } catch (e ) {
+//                 res.status(500);
+//                 res.send(e.message);
+//             }
+//
+//         })();
+//     });
 
 
 /**
@@ -471,31 +520,31 @@ router.post('/users/reset_password',
 
     });
 
-router.post('/login', function (req, res) {
+// router.post('/login', function (req, res) {
+//
+//     (async function () {
+//
+//         try {
+//
+//             let user = await createSession(req.app, req.body.email, req.body.password);
+//             req.session.user = user;
+//             res.send(user);
+//
+//         } catch (e) {
+//             res.status(e.status || 500);
+//             res.send({
+//                 message: e.message
+//             });
+//         }
+//
+//     })();
+//
+// });
 
-    (async function () {
 
-        try {
-
-            let user = await createSession(req.app, req.body.email, req.body.password);
-            req.session.user = user;
-            res.send(user);
-
-        } catch (e) {
-            res.status(e.status || 500);
-            res.send({
-                message: e.message
-            });
-        }
-
-    })();
-
-});
-
-
-router.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
-});
+// router.get('/logout', (req, res) => {
+//     req.session.destroy();
+//     res.redirect('/');
+// });
 
 module.exports =  router;

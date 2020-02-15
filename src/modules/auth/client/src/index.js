@@ -7,7 +7,6 @@ const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
 const ResetPassword = lazy(() => import('./components/ResetPassword'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
-const Users = lazy(() => import('./components/Users'));
 const RegisterSuccess = lazy(() => import('./components/RegisterSuccess'));
 
 function createUserClientModule() {
@@ -22,13 +21,10 @@ function createUserClientModule() {
             {path: "/forgot-password", component: ForgotPassword},
             {path: "/register-success", component: RegisterSuccess}
         ],
-        routes: [
-            {path: "/users", component: Users},
-        ],
         generalMenus: [
             {link: "/users", label: "Users", iconClass: "icon-user"}
         ],
-        processRoute(route, location, state) {
+        processRoute(route, location, state) { x
 
             if(location.pathname === "/login") {
                 return route;
@@ -49,6 +45,7 @@ function createUserClientModule() {
             let t = getCookie('dt_auth_token');
             if (!!t) {
                 // TODO get logged in user detail here
+                // Send token to server to get user detail
                 // And set to redux user
                 state.USER.token = t;
             }

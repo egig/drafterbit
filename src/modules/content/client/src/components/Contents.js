@@ -76,6 +76,15 @@ class Contents extends React.Component {
             })
     };
 
+    canBeDisplayed(field) {
+        return ([
+            FieldType.RELATION_TO_MANY,
+            FieldType.RELATION_TO_ONE,
+            FieldType.RICH_TEXT,
+            FieldType.UNSTRUCTURED
+        ].indexOf(field.type_id) === -1) && field.show_in_list
+    }
+
     render() {
 
         let slug = this.props.match.params.content_type_slug;
@@ -91,12 +100,7 @@ class Contents extends React.Component {
 
         this.state.ctFields.map(f => {
         	// Don't display some column type by default
-            if([
-                FieldType.RELATION_TO_MANY,
-                FieldType.RELATION_TO_ONE,
-                FieldType.RICH_TEXT,
-                FieldType.UNSTRUCTURED
-                ].indexOf(f.type_id) === -1) {
+            if(this.canBeDisplayed(f)) {
 		        columns.push({
 			        dataField: f.name,
 			        text: f.label,

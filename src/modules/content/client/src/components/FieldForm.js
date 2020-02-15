@@ -22,6 +22,7 @@ class FieldForm extends React.Component {
             type_id: 0,
             label: "",
             name: "",
+            show_in_list: true,
             related_content_type_slug: "",
             activeTab: '1',
             validation_rules: []
@@ -51,7 +52,8 @@ class FieldForm extends React.Component {
                     this.state.label,
                     this.state.name,
                     this.state.related_content_type_slug,
-                    this.state.validation_rules.join("|")
+                    this.state.validation_rules.join("|"),
+                    this.state.show_in_list
                 )
             } else {
                 // create
@@ -61,7 +63,8 @@ class FieldForm extends React.Component {
                     this.state.name,
                     this.state.type_id,
                     this.state.related_content_type_slug,
-                    this.state.validation_rules.join("|")
+                    this.state.validation_rules.join("|"),
+                    this.state.show_in_list
                 )
             }
             
@@ -87,11 +90,12 @@ class FieldForm extends React.Component {
             client.getContentType(contentTypeId)
             .then(ct => {
 
-                let f = ct.fields.filter(fi => fi._id == fieldId)[0];
+                let f = ct.fields.filter(fi => fi._id === fieldId)[0];
                 this.setState({
                     type_id: f.type_id,
                     label: f.label,
                     name: f.name,
+                    show_in_list: f.show_in_list,
                     validation_rules: !!f.validation_rules ?  f.validation_rules.split("|") :[]
                 })
             });
@@ -192,7 +196,7 @@ class FieldForm extends React.Component {
                                         </div>
                                         {!!_.includes([4,5], parseInt(this.state.type_id)) &&
                                         <div className="form-group">
-                                            <select  disabled={this.disabled()} className="form-control"
+                                            <select className={`form-control ${this.disabled() ? 'disabled': ''}`}
                                                     name="related_content_type_slug"
                                                     id="related_content_type_slug"
                                                     value={this.state.related_content_type_slug}
@@ -228,6 +232,19 @@ class FieldForm extends React.Component {
                                                        })
                                                    }}
                                             />
+                                        </div>
+                                        <div className="form-check">
+                                            <label className="form-check-label" htmlFor="show_in_list">
+                                                <input className="form-check-input" name="show_in_list"
+                                                       type="checkbox"
+                                                       checked={this.state.show_in_list ? "checked" : false}
+                                                       onChange={(e) => {
+                                                           this.setState({
+                                                               show_in_list: e.target.checked
+                                                           })
+                                                       }}/>
+                                                Show In List
+                                            </label>
                                         </div>
                                 </Col>
                             </Row>

@@ -7,8 +7,8 @@ module.exports =  function sendResetPasswordEmail(to) {
         'Messages':[
             {
                 'From': {
-                    'Email': 'noreply@drafterbit.com',
-                    'Name': 'Drafterbit Team'
+                    'Email': 'noreply@apname.com',
+                    'Name': 'apname Team'
                 },
                 'To': [
                     {
@@ -16,7 +16,7 @@ module.exports =  function sendResetPasswordEmail(to) {
                     }
                 ],
                 'Subject': 'Password Reset Request',
-                'HTMLPart': '<h1>Lost your Password ?</h1> <p>Its okay, let\'s create new one</p> <p>Please click link below<p/> <a href="https://www.drafterbit.com/reset-password?token=7f9036ca8527e7ff6d1cb4bf6ad0002">Reset My Password</a>'
+                'HTMLPart': '<h1>Lost your Password ?</h1> <p>Its okay, let\'s create new one</p> <p>Please click link below<p/> <a href="#">Reset My Password</a>'
             }
         ]
     };

@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { Switch } from 'react-router';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-import Dashboard from './modules/common/components/Dashboard';
 import Layout from './modules/common/components/Layout';
 import { HashRouter, Redirect } from 'react-router-dom';
 

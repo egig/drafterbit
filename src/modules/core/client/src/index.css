@@ -1,9 +1,6 @@
 body {
     font-size: 14px;
-}
-
-label {
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
 }
 
 blockquote {
