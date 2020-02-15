@@ -9,7 +9,7 @@ const ResetPassword = lazy(() => import('./components/ResetPassword'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
 const RegisterSuccess = lazy(() => import('./components/RegisterSuccess'));
 
-function createUserClientModule() {
+function createAuthClientModule() {
 
     return {
         name: "user",
@@ -24,7 +24,7 @@ function createUserClientModule() {
         generalMenus: [
             {link: "/users", label: "Users", iconClass: "icon-user"}
         ],
-        processRoute(route, location, state) { x
+        processRoute(route, location, state) {
 
             if(location.pathname === "/login") {
                 return route;
@@ -56,4 +56,4 @@ function createUserClientModule() {
     }
 }
 
-window.__DRAFTERBIT__.addModule(createUserClientModule(window.__DRAFTERBIT__));
+window.__DRAFTERBIT__.addModule(createAuthClientModule(window.__DRAFTERBIT__));
