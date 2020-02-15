@@ -30,6 +30,10 @@ class Drafterbit extends React.Component {
                                         <Suspense fallback={<div>Loading...</div>}>
                                             <Switch location={location}>
                                                 {this.props.drafterbit.modules.map(m => {
+                                                    if (!m.routes || !m.routes.length) {
+                                                        return
+                                                    }
+
                                                     return m.routes.map(route => {
 
                                                         for (let i=0; i<this.props.drafterbit.modules.length;i++) {
