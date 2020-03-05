@@ -36,8 +36,8 @@ class AuthModule {
     commands(app) {
         return [
             {
-                command: "auth:install",
-                description: "Install user auth",
+                command: "auth:init",
+                description: "Init user auth",
                 action: () => {
 
                     console.log("Welcome! Please provide email and password to create root user account.")

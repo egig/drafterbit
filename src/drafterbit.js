@@ -63,6 +63,7 @@ app.boot = function boot(options) {
     let config = createConfig(options);
     let logger = createLogger(config.get('DEBUG'));
     this.set('log', logger);
+    this.set('config', config);
 
     this._mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
     this._mongoConfig[this._mongoDefaultConn] = {
@@ -116,7 +117,6 @@ app.boot = function boot(options) {
     });
 
     this.set('cmd', cmd);
-    this.set('config', config);
 
     // build http schema
     this.use(cors({
