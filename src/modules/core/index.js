@@ -2,10 +2,12 @@ const webpack = require('webpack');
 const express = require('express');
 const createWebpackConfig = require('./client/webpack.config');
 const routes = require('./routes');
+const Module = require('../../Module');
 
-class CoreModule {
+class CoreModule extends Module {
 
     constructor(app) {
+        super(app);
 
         app.on('boot', () => {
             

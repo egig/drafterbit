@@ -59,6 +59,7 @@
     "i18next-sync-fs-backend": "^1.1.1",
     "i18next-xhr-backend": "^1.5.1",
     "immutable": "^3.8.2",
+    "inquirer": "^7.0.6",
     "is-hotkey": "^0.1.6",
     "js-video-url-parser": "^0.4.0",
     "jsonwebtoken": "^8.5.1",
@@ -130,12 +131,13 @@
   },
   "scripts": {
     "start": "node ./src/cli.js start",
+    "init": "node ./src/cli.js init",
     "build": "node ./src/cli.js build",
     "test": "nyc --reporter=none mocha './test/**/*.test.js' './src/modules/*/test/**/*.test.js'  --timeout=3000 --reporter=spec  --exit --recursive",
     "coverage": "nyc report --reporter=text-summary",
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
-    "dev": "nodemon --ignore 'tmp/' bin/www",
+    "dev": "nodemon./sr --ignore 'tmp/' bin/www",
     "linter": "./node_modules/.bin/eslint --fix ./src"
   },
   "pre-push": {

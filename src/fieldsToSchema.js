@@ -49,6 +49,42 @@ let convert = function (descriptor) {
     });
 };
 
+/**
+ * Get Schema from fields
+ *
+ * @param fields
+ * @returns {any}
+ */
+function getSchema(fields) {
+    let fieldsObj = {};
+    fields.forEach(f => {
+
+        if (f.type_id === FieldType.RELATION_TO_MANY) {
+            fieldsObj[f.name] = [{
+                type: f.type_id,
+                ref: f.related_content_type_slug
+            }];
+
+        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
+
+            fieldsObj[f.name] = {
+                type: f.type_id,
+                ref: f.related_content_type_slug
+            };
+
+        } else {
+            fieldsObj[f.name] = {
+                type: f.type_id,
+                unique: f.unique,
+                index: f.index ? f.index : f.unique
+            };
+        }
+    });
+
+    return convert(fieldsObj);
+}
+
 module.exports = {
-    convert
+    convert,
+    getSchema
 };

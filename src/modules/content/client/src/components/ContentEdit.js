@@ -264,6 +264,9 @@ class ContentEdit extends React.Component {
                                     this.onSubmit(e.target);
                                 }} >
                                     {this.state.ctFields.map((f,i) => {
+                                        if (!f.show_in_form) {
+                                            return
+                                        }
 
                                         let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
 

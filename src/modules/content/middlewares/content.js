@@ -1,34 +1,6 @@
 const FieldType = require( '../../../FieldType');
 const fieldsToSchema = require( '../../../fieldsToSchema');
 
-// TODO move this to lib
-function getSchema(fields) {
-    let fieldsObj = {};
-    fields.forEach(f => {
-
-        if (f.type_id === FieldType.RELATION_TO_MANY) {
-            fieldsObj[f.name] = [{
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            }];
-
-        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
-
-            fieldsObj[f.name] = {
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            };
-
-        } else {
-            fieldsObj[f.name] = {
-                type: f.type_id
-            };
-        }
-    });
-
-    return fieldsToSchema.convert(fieldsObj);
-}
-
 /**
  *
  * @param app
@@ -72,7 +44,7 @@ module.exports = function contentMiddleware() {
                         .then(ct => {
                             return {
                                 slug: ct.slug,
-                                schemaObj: getSchema(ct.fields)
+                                schemaObj: fieldsToSchema.getSchema(ct.fields)
                             };
                         });
                 });
@@ -87,7 +59,7 @@ module.exports = function contentMiddleware() {
                         });
                     })
                     .then(() => {
-                        let schemaObj = getSchema(contentType.fields);
+                        let schemaObj = fieldsToSchema.getSchema(contentType.fields);
                         // We need to do try catch this
                         // so if new model, we create one
                         createModel(req.app, contentType.slug, schemaObj);

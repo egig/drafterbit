@@ -6,40 +6,9 @@ const validateRequest = require('../../middlewares/validateRequest');
 const { sendResetPasswordEmail } = require('./lib/mail');
 const createSession = require('./createSession');
 const fieldsToSchema = require( '../../fieldsToSchema');
-const FieldType = require( '../../FieldType');
 
 
 let router = express.Router();
-
-
-// TODO move this
-function getSchema(fields) {
-    let fieldsObj = {};
-    fields.forEach(f => {
-
-        if (f.type_id === FieldType.RELATION_TO_MANY) {
-            fieldsObj[f.name] = [{
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            }];
-
-        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
-
-            fieldsObj[f.name] = {
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            };
-
-        } else {
-            fieldsObj[f.name] = {
-                type: f.type_id
-            };
-        }
-    });
-
-    return fieldsToSchema.convert(fieldsObj);
-}
-
 
 function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;
@@ -71,30 +40,30 @@ function createSessionKey(token, user_id) {
  *     tags:
  *        - /users/
  */
-router.get('/users/is_login',
-    validateRequest({
-        user_id: {
-            isInt: true,
-            errorMessage: 'user_id must be integer'
-        },
-        token: {
-            isString: true,
-            errorMessage: 'token is required'
-        },
-    }),
-    function (req, res) {
-        (async function () {
-
-            try {
-                let result = await req.app.get('cache').get(createSessionKey(req.query.token, req.query.user_id));
-                res.send(result);
-            } catch (e ) {
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
-    });
+// router.get('/users/is_login',
+//     validateRequest({
+//         user_id: {
+//             isInt: true,
+//             errorMessage: 'user_id must be integer'
+//         },
+//         token: {
+//             isString: true,
+//             errorMessage: 'token is required'
+//         },
+//     }),
+//     function (req, res) {
+//         (async function () {
+//
+//             try {
+//                 let result = await req.app.get('cache').get(createSessionKey(req.query.token, req.query.user_id));
+//                 res.send(result);
+//             } catch (e ) {
+//                 res.status(500);
+//                 res.send(e.message);
+//             }
+//
+//         })();
+//     });
 
 /**
  * @swagger
@@ -146,7 +115,7 @@ router.post('/token',
 
                 let userCollectionSlug = 'users';
                 let contentType = await  m.getContentType(userCollectionSlug);
-                let schemaObj = getSchema(contentType.fields);
+                let schemaObj = fieldsToSchema.getSchema(contentType.fields);
                 let userModel;
                 try {
                     userModel = req.app.getDB().model(userCollectionSlug);

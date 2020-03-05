@@ -3,16 +3,18 @@ const mongoose = require('mongoose');
 
 let ContentTypeSchema = new mongoose.Schema({
     name: String,
-    slug: String,
+    slug: { type: String, unique: true },
     description: String,
-    is_structured: false,
+    is_structured: { type: Boolean, default: false },
     fields: [{
         related_content_type_slug: String,
         type_id: Number,
         name: String,
         label: String,
         validation_rules: String,
-        show_in_list: { type: Boolean, default: true }
+        show_in_list: { type: Boolean, default: true },
+        show_in_form: { type: Boolean, default: true },
+        unique: { type: Boolean, default: false }
     }],
     created_at: Number,
     updated_at: Number,

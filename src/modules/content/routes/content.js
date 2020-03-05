@@ -89,6 +89,7 @@ router.get('/:slug/:id',
     contentMiddleware(),
     handleFunc(async function(req) {
         let  Model = req.app.model(req.contentType.slug);
+        // TODO add filter here, e.g to hide password field
         return await Model.findOne({_id: req.params.id });
     })
 );
@@ -168,6 +169,7 @@ router.post('/:slug',
     handleFunc(async function(req) {
         let  Model = req.app.model(req.contentType.slug);
 
+        // TODO add filter here, e.g to hash password field
         let item = await Model.create(req.body);
         return {
             message: 'created',
@@ -251,6 +253,7 @@ router.get('/:slug',
 
         let results = await query.exec();
 
+        // TODO add filter here, e.g to decode password field
         let dataCount = await m.find(matchRule).estimatedDocumentCount();
         res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
         res.send(results);

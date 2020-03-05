@@ -7,6 +7,9 @@ const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
 const resolveModule = require('./resolveModule');
 const createMongooseConn = require('./createMongooseConn');
+const FieldType = require("./FieldType");
+const fieldsToSchema = require("./fieldsToSchema");
+const password = require("./modules/auth/lib/password");
 
 let app = {};
 
@@ -145,30 +148,143 @@ app.getDB = function getDB(dbName) {
     return this._mongo_connections[dbName];
 };
 
-app.initContentTypes = function initContentTypes() {
+app.install = function install(email, password) {
+
     let m = this.model("ContentType");
+
+    return m.deleteMany({
+        $or: [
+            {slug: "users"},
+            {slug: "groups"},
+            {slug: "permissions"},
+        ]
+    }).then(r => {
+
+        return createPermission(m)
+            .then(r => {
+                return createGroup(m);
+            }).then(r => {
+                return createUser(m, email, password, this);
+            }).then(r => {
+                console.log("SUCCESS");
+                console.log(r)
+            }).catch(e => {
+                console.error(e)
+            })
+
+    });
+};
+
+function createPermission(m) {
+    console.log("CREATE PERMISSION")
+    return m.createContentType("Permission", "permissions", "", [
+        {
+            type_id: FieldType.SHORT_TEXT,
+            name: "name",
+            label: "Name",
+            validation_rules: "required"
+        },
+        {
+            type_id: FieldType.LONG_TEXT,
+            name: "description",
+            label: "Description",
+            validation_rules: ""
+        },
+    ])
+}
+
+
+function createGroup(m) {
+    return  m.createContentType("Group", "groups", "", [
+        {
+            type_id: FieldType.SHORT_TEXT,
+            name: "name",
+            label: "Name",
+            validation_rules: "required"
+        },
+        {
+            type_id: FieldType.LONG_TEXT,
+            name: "description",
+            label: "Description",
+            validation_rules: ""
+        },
+        {
+            type_id: FieldType.RELATION_TO_MANY,
+            related_content_type_slug: "permissions",
+            name: "permissions",
+            label: "Permissions",
+            validation_rules: "",
+            show_in_list: false
+        }
+    ]);
+}
+
+function createUser(m, email, passwordStr, app) {
+
+    let userCollectionSlug = 'users';
+
     return m.createContentType("User", "users", "", [
         {
-            type_id: 1,
+            type_id: FieldType.SHORT_TEXT,
             name: 'name',
             label: "Name",
             validation_rules: "required"
         },
         {
-            type_id: 1,
+            type_id: FieldType.SHORT_TEXT,
             name: 'email',
             label: "Email",
-            validation_rules: "required"
+            validation_rules: "required",
+            unique: true
         },
         {
-            type_id: 1,
+            type_id: FieldType.SHORT_TEXT,
             name: 'password',
             label: "Password",
-            validation_rules: "required"
+            validation_rules: "required",
+            show_in_list: false,
+            show_in_form: false
         },
-    ]).then(r => {
-        console.log("Create content type users success")
-    });
-};
+        {
+            type_id: FieldType.RELATION_TO_MANY,
+            related_content_type_slug: "groups",
+            name: "groups",
+            label: "Groups",
+            validation_rules: "",
+            show_in_list: false
+        }
+    ])
+        .then(r => {
+
+            return m.getContentType(userCollectionSlug);
+
+        })
+        .then(contentType => {
+
+            let schemaObj = fieldsToSchema.getSchema(contentType.fields);
+
+            let userModel;
+            try {
+                userModel = app.getDB().model(userCollectionSlug);
+            } catch (error) {
+                userModel = app.getDB().model(userCollectionSlug, schemaObj, userCollectionSlug);
+            }
+
+            return password.hash(passwordStr)
+                .then(hashedPassword=> {
+                    return userModel.create({
+                        email: email,
+                        password: hashedPassword
+                    }).then(r => {
+                        console.log(r)
+                    })
+            })
+        });
+
+
+
+    // TODO insert users
+    // $2a$05$DiMFhbLVo675diOW3TT9xuIW1N8tNiIP4rW6y5500QaaF5sIBq8XG
+}
 
 module.exports = app;
