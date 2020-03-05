@@ -1,6 +1,8 @@
 const routes  = require('./routes');
 const inquirer = require('inquirer');
-
+const FieldType = require("../../FieldType");
+const fieldsToSchema = require("../../fieldsToSchema");
+const password = require("./lib/password");
 
 class AuthModule {
     constructor(app) {
@@ -107,7 +109,7 @@ function install(app, email, password) {
             .then(r => {
                 return createGroup(m);
             }).then(r => {
-                return createUser(m, email, password, this);
+                return createUser(m, email, password, app);
             }).then(r => {
                 console.log(r)
             }).catch(e => {
@@ -129,7 +131,7 @@ function createPermission(m) {
             label: "Description",
             validation_rules: ""
         },
-    ])
+    ], true)
 }
 
 function createGroup(m) {
@@ -154,7 +156,7 @@ function createGroup(m) {
             validation_rules: "",
             show_in_list: false
         }
-    ]);
+    ], true);
 }
 
 function createUser(m, email, passwordStr, app) {
@@ -191,7 +193,7 @@ function createUser(m, email, passwordStr, app) {
             validation_rules: "",
             show_in_list: false
         }
-    ])
+    ], true)
         .then(r => {
 
             return m.getContentType(userCollectionSlug);

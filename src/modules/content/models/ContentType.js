@@ -83,14 +83,16 @@ ContentTypeSchema.statics.getContentTypeBySlug = function(slug) {
  * @param slug
  * @param description
  * @param fields
- * @return {Promise}
+ * @param system
+ * @returns {*}
  */
-ContentTypeSchema.statics.createContentType = function(name, slug, description, fields) {
+ContentTypeSchema.statics.createContentType = function(name, slug, description, fields, system = false) {
     let newContentType = new this({
         name,
         slug,
         description,
         fields: fields,
+        system
     });
 
     return newContentType.save();

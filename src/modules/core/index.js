@@ -9,7 +9,7 @@ class CoreModule extends Module {
     constructor(app) {
         super(app);
 
-        app.on('boot', () => {
+        app.on('pre-start', () => {
             
             this.webpackOutputPath = app.get('config').get('ROOT_DIR')+'/build';
             app.use('/', express.static(this.webpackOutputPath));

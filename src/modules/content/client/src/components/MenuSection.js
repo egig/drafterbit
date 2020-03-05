@@ -13,6 +13,8 @@ class MenuSection extends React.Component {
         let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         client.getContentTypes()
             .then((contentTypes) => {
+                // Display only non-system collection
+                contentTypes = contentTypes.filter(c => !c.system);
                 this.props.actions.setContentTypes(contentTypes);
             });
     }

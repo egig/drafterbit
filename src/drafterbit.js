@@ -7,9 +7,6 @@ const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
 const resolveModule = require('./resolveModule');
 const createMongooseConn = require('./createMongooseConn');
-const FieldType = require("./FieldType");
-const fieldsToSchema = require("./fieldsToSchema");
-const password = require("./modules/auth/lib/password");
 const commander = require('commander');
 
 let app = {};
@@ -23,6 +20,10 @@ app.start = function () {
     if(!this._booted) {
         throw new Error('Please run app.boot before app.start');
     }
+
+    this.emit('pre-start');
+
+    this.emit('routing');
 
     let port = process.env.PORT || this.get('config').get('PORT');
     return this.listen(port, () => this.get('log').info(`Listening on port ${port}!`));
@@ -68,11 +69,11 @@ app.boot = function boot(options) {
         pass: config.get('MONGODB_PASS')
     };
 
-    let cmd = new commander.Command();
+    let cmd = commander
 
-    cmd
-        .version('0.0.1')
-        .option('-d, --debug', 'output extra debugging');
+    // cmd
+    //     .version('0.0.1')
+    //     .option('-d, --debug', 'output extra debugging');
 
     // init modules
     let modules = config.get('modules');
@@ -131,8 +132,6 @@ app.boot = function boot(options) {
     }));
 
     this.emit('boot');
-
-    this.emit('routing');
 
     this._booted = true;
     return app;
