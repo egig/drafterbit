@@ -6,6 +6,7 @@ let ContentTypeSchema = new mongoose.Schema({
     slug: { type: String, unique: true },
     description: String,
     is_structured: { type: Boolean, default: false },
+    system: { type: Boolean, default: false }, // Content Type is used by system, not user defined
     fields: [{
         related_content_type_slug: String,
         type_id: Number,

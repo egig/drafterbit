@@ -84,6 +84,25 @@ class CoreModule extends Module {
     getAdminClientEntry() {
         return this._modulePath+'/client/src/modules/common/index.js';
     }
+
+    commands(app) {
+        return [
+            {
+                command: "start",
+                description: "start server",
+                action: () => {
+                    app.start();
+                }
+            },
+            {
+                command: "build",
+                description: "build the app",
+                action: () => {
+                    app.build();
+                }
+            },
+        ]
+    }
 }
 
 module.exports = CoreModule;

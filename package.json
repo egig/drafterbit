@@ -131,7 +131,7 @@
   },
   "scripts": {
     "start": "node ./src/cli.js start",
-    "init": "node ./src/cli.js init",
+    "install": "node ./src/cli.js auth:install",
     "build": "node ./src/cli.js build",
     "test": "nyc --reporter=none mocha './test/**/*.test.js' './src/modules/*/test/**/*.test.js'  --timeout=3000 --reporter=spec  --exit --recursive",
     "coverage": "nyc report --reporter=text-summary",
