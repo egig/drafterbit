@@ -23,7 +23,7 @@ app.start = function () {
 
     this.emit('pre-start');
 
-    this.emit('routing');
+    this.routing();
 
     let port = process.env.PORT || this.get('config').get('PORT');
     return this.listen(port, () => this.get('log').info(`Listening on port ${port}!`));
@@ -32,6 +32,10 @@ app.start = function () {
 
 app.build = function build() {
     this.emit('build');
+};
+
+app.routing = function build() {
+    this.emit('routing');
 };
 
 /**

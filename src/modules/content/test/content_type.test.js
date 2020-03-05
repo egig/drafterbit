@@ -35,6 +35,8 @@ describe('Content Types', () => {
         };
 
         drafterbit.boot(options);
+        drafterbit.routing();
+
     });
 
     after(async () => {

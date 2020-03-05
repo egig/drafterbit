@@ -54,6 +54,7 @@ describe('ApiKeys', () => {
         apiKeyId = newApiKey._id;
 
         drafterbit.boot(options);
+        drafterbit.routing();
     });
 
     after(async () => {

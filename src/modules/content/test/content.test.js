@@ -57,6 +57,8 @@ describe('Content', () => {
         await testCT.save();
 
         drafterbit.boot(options);
+        drafterbit.routing();
+
     });
 
     after(async () => {
