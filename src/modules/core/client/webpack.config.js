@@ -108,6 +108,7 @@ module.exports = env => {
         // devtool: "inline-source-map", this is slow !!
         devServer: {
             disableHostCheck: true,
+            writeToDisk: true
         }
     })
 };

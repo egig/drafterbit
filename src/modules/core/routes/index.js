@@ -1,5 +1,6 @@
 const express = require('express');
 const minify = require('html-minifier').minify;
+const fs = require('fs');
 
 let router = express.Router();
 
@@ -15,7 +16,8 @@ function assetPath(req, asset) {
 
 router.get('/', function (req, res) {
 
-    const webpackAssets = require(req.app.get('config').get('ROOT_DIR')+'/build/assets.json');
+    let assetsStr = fs.readFileSync(req.app.get('config').get('ROOT_DIR')+'/build/assets.json')
+    const webpackAssets = JSON.parse(assetsStr.toString());
 
     let defaultState = {COMMON: {}};
     defaultState.COMMON.language = req.language;
