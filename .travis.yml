@@ -3,10 +3,11 @@ node_js:
   - 12
 before_script:
   - npm install -g codecov
-  - npm install
+  - npm install -g lerna
+  - lerna exec npm install
 script:
-  - npm test
-  - npm run coverage:lcov
+  - lerna exec npm test
+  - lerna exec npm run coverage:lcov
   - codecov
 branches:
   only:

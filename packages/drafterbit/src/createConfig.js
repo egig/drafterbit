@@ -53,12 +53,12 @@ function createConfig(options) {
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
         'modules': [
-            './src/modules/file',
-            './src/modules/core',
-            './src/modules/auth',
-            './src/modules/api_key',
-            './src/modules/swagger',
-            './src/modules/content'
+            './packages/drafterbit/src/modules/file',
+            './packages/drafterbit/src/modules/core',
+            './packages/drafterbit/src/modules/auth',
+            './packages/drafterbit/src/modules/api_key',
+            './packages/drafterbit/src/modules/swagger',
+            './packages/drafterbit/src/modules/content'
         ]
     };
 
