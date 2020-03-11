@@ -1,0 +1,22 @@
+{
+  "name": "@drafterbit/auth",
+  "version": "3.0.0-dev.6",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@drafterbit/drafterbit": "file:../drafterbit",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "inquirer": "^7.0.6",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

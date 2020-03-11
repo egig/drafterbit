@@ -1,0 +1,57 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import withDrafterbit from '../../../withDrafterbit';
+
+
+import './SideNav.css';
+
+class SideNav extends React.Component {
+
+    renderMenuItems(menuItems) {
+        return menuItems.map((mn,i) => {
+            return (
+                <li className="nav-item" key={i}>
+                    <Link className="nav-link" to={mn.link}>
+                        <i className={mn.iconClass}/> {mn.label}
+                    </Link>
+                </li>
+            )
+        }); 
+    }
+
+    render() {
+
+        return (
+            <nav className={'col-md-2 d-none d-md-block bg-light sidebar'}>
+                <div className="sidebarSticky">
+                    {this.props.drafterbit.modules.map((mo,i) => {
+                        if(typeof mo.renderMenuSection === "function") {
+                            return mo.renderMenuSection(i);
+                        }
+                    })}
+
+                    <h6 className={'sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'}>
+                        <span><i className="icon-equalizer"/> General</span>
+                    </h6>
+                    <ul className="nav flex-column mb-2 side-menu">
+                    {this.props.drafterbit.modules.map(mo => {
+                        if (!!mo.generalMenus && !!mo.generalMenus.length) {
+                            return mo.generalMenus.map((mn,i) => {
+                                return (
+                                    <li className="nav-item" key={i}>
+                                        <Link className="nav-link" to={mn.link}>
+                                            <i className={mn.iconClass}/> {mn.label}
+                                        </Link>
+                                    </li>
+                                )
+                            });
+                        }
+                    })}
+                    </ul>
+                </div>
+            </nav>
+        );
+    }
+}
+
+export default withDrafterbit(SideNav);
