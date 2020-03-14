@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import AuthCard from './AuthCard';
 import ApiClient from '../ApiClient';
 import './Register.css';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 class Register extends React.Component {
 

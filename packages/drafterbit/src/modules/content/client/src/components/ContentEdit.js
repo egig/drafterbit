@@ -5,11 +5,11 @@ import { Value } from "slate";
 import actions from '../actions';
 import Field from './Field';
 import Editor from "./Unstructured/Editor"
-import Notify from '../../../../core/client/src/components/Notify';
-import Card from '../../../../core/client/src/components/Card/Card';
+import Notify from '@drafterbit/common/client/components/Notify';
+import Card from '@drafterbit/common/client/components/Card/Card';
 import { Row, Col } from 'reactstrap';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
-const FieldType = require('../../../../../FieldType');
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
+const FieldType = require('@drafterbit/common/FieldType');
 
 import htmlSerializer from './Unstructured/htmlSerializer';
 

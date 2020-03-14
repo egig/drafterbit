@@ -2,7 +2,7 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
 import ApiClient from '../ApiClient';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 const getColor = (props) => {
     if (props.isDragAccept) {

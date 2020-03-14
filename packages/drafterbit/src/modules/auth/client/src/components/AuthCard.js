@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Card, CardBody, CardHeader } from 'reactstrap';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 import './AuthCard.css';
 

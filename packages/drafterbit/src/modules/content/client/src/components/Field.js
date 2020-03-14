@@ -2,8 +2,7 @@ import React from 'react';
 import RichText from './RichText';
 import Relation  from './Relation';
 
-// TODO ugly path
-const FieldType = require('../../../../../FieldType');
+const FieldType = require('@drafterbit/common/FieldType');
 
 class Field extends React.Component {
 

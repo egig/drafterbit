@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-import TablePage from '../../../../core/client/src/components/TablePage';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import TablePage from '@drafterbit/common/client/components/TablePage';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import ApiClient from '../ApiClient';
 
-const FieldType = require('../../../../../FieldType');
+const FieldType = require('@drafterbit/common/FieldType');
 
 class Contents extends React.Component {
 

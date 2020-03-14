@@ -3,12 +3,11 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, FormGroup, Label, Input } from 'reactstrap';
-import Card from '../../../../core/client/src/components/Card/Card';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import Card from '@drafterbit/common/client/components/Card/Card';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import ApiClient from '../ApiClient';
 
-// TODO fix this ugly require path
-const { slugify } = require("../../../../../utils");
+const { slugify } = require("@drafterbit/common/utils");
 
 class ContentTypeForm extends React.Component {
 

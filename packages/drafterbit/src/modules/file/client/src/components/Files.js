@@ -1,7 +1,7 @@
 import path from 'path';
 import React, {Fragment} from 'react';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
-import TablePage from '../../../../core/client/src/components/TablePage';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
+import TablePage from '@drafterbit/common/client/components/TablePage';
 import ApiClient from '../ApiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFile} from '@fortawesome/free-regular-svg-icons';

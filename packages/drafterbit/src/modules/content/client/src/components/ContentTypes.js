@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm';
 import { setNotifyText }  from '../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import TablePage from '../../../../core/client/src/components/TablePage';
+import TablePage from '@drafterbit/common/client/components/TablePage';
 import ApiClient from '../ApiClient';
 
 class ContentTypes extends React.Component {

@@ -5,7 +5,7 @@ import withDrafterbit from '../withDrafterbit';
 import DataTable from './DataTable';
 import _ from 'lodash';
 
-const FilterQuery = require('../../../../../FilterQuery');
+const FilterQuery = require('../../FilterQuery');
 
 class TablePage extends React.Component {
 

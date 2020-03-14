@@ -112,7 +112,8 @@
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.2",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "@drafterbit/common": "latest"
   },
   "devDependencies": {
     "chai": "^4.2.0",

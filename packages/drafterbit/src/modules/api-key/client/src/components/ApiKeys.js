@@ -1,7 +1,7 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
-import TablePage from '../../../../core/client/src/components/TablePage';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import TablePage from '@drafterbit/common/client/components/TablePage';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import ApiClient from '../ApiClient';
 
 class ApiKeys extends React.Component {

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux"
 import actions from '../actions'

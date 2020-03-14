@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const validateRequest = require('../../middlewares/validateRequest');
 const FileServer = require('./FileServer');
 
 let router = express.Router();

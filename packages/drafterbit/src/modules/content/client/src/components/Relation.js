@@ -1,5 +1,5 @@
 import React from 'react';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import Select from 'react-select'
 import ApiClient from '../ApiClient';
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 
 import './SideNav.css';

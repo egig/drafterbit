@@ -2,15 +2,15 @@ import React, { Fragment } from 'react';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Notify from '../../../../core/client/src/components/Notify';
-import Card from '../../../../core/client/src/components/Card/Card';
+import Notify from '@drafterbit/common/client/components/Notify';
+import Card from '@drafterbit/common/client/components/Card/Card';
 import { Button, Row, Col } from 'reactstrap';
 import FieldForm from './FieldForm';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import ContentTypeForm from './ContentTypeForm'
 import ApiClient from '../ApiClient';
 
-const FieldType  = require('../../../../../FieldType');
+const FieldType  = require('@drafterbit/common/FieldType');
 
 class ContentType extends React.Component {
 

@@ -3,9 +3,9 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ApiClient from '../ApiClient';
-import Notify from '../../../../core/client/src/components/Notify';
-import Card from '../../../../core/client/src/components/Card/Card';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import Notify from '@drafterbit/common/client/components/Notify';
+import Card from '@drafterbit/common/client/components/Card/Card';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 class ApiKeyNew extends React.Component {
 

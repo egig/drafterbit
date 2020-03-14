@@ -1,8 +1,8 @@
 const express = require('express');
-const validateRequest = require('../../../middlewares/validateRequest');
-const FilterQuery = require( '../../../FilterQuery');
+const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
+const FilterQuery = require( '@drafterbit/common/FilterQuery');
 const contentMiddleware = require('../middlewares/content');
-const handleFunc = require('../../../handleFunc');
+const handleFunc = require('@drafterbit/common/handleFunc');
 
 let router = express.Router();
 

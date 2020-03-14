@@ -1,5 +1,5 @@
-const FieldType = require( '../../../FieldType');
-const fieldsToSchema = require( '../../../fieldsToSchema');
+const FieldType = require( '@drafterbit/common/FieldType');
+const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
 
 /**
  *

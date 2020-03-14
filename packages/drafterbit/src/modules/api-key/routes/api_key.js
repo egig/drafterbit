@@ -1,6 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
-const validateRequest = require('../../../middlewares/validateRequest');
+const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 
 let router = express.Router();
 

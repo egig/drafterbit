@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 import translate from '../../../../core/client/src/translate';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import { setCookie } from '../../../../core/client/src/cookie';
 
 import './Login.css'

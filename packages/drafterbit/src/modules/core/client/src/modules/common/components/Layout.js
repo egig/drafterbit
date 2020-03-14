@@ -3,12 +3,12 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import translate from '../../../translate';
-import LoaderTrap from '../../../components/LoaderTrap';
+import LoaderTrap from '@drafterbit/common/client/components/LoaderTrap';
 import { Container, Navbar, NavbarBrand, Nav, NavbarToggler, Collapse } from 'reactstrap';
 import SideNav from './SideNav';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import withDrafterbit from '../../../withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 import './Layout.css';
 

@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import _ from 'lodash';
-import withDrafterbit from '../../../../core/client/src/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 import { TabContent, TabPane, Nav, NavItem, NavLink,
     Modal, ModalBody, ModalFooter, Row, Col,
     FormGroup, Input, Label} from 'reactstrap';
 import ApiClient from '../ApiClient'
 
 // TODO ugly required path
-const FieldType = require('../../../../../FieldType');
-const { slugify } = require("../../../../../utils");
+const FieldType = require('@drafterbit/common/FieldType');
+const { slugify } = require("@drafterbit/common/utils");
 
 class FieldForm extends React.Component {
 

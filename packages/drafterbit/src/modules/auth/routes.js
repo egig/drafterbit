@@ -2,10 +2,9 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const password = require('./lib/password');
 const UserAuthError  = require('./UserAuthError');
-const validateRequest = require('../../middlewares/validateRequest');
+const validateRequest  = require('@drafterbit/common/middlewares/validateRequest');
 const { sendResetPasswordEmail } = require('./lib/mail');
-const createSession = require('./createSession');
-const fieldsToSchema = require( '../../fieldsToSchema');
+const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
 
 
 let router = express.Router();
