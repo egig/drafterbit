@@ -16,3 +16,4 @@ coverage/
 test/tmp
 coverage.lcov
 .env
+lerna-debug.log
