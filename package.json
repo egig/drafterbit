@@ -5,9 +5,8 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
-    "start": "node ./packages/drafterbit/src/cli.js start",
-    "auth:init": "node ./packages/drafterbit/src/cli.js auth:init",
-    "build": "node ./packages/drafterbit/src/cli.js build"
-  },
-  "dependencies": {}
+    "start": "node packages/cli/index.js start",
+    "auth:init": "node packages/cli/index.js auth:init",
+    "bootstrap": "lerna bootstrap --hoist"
+  }
 }

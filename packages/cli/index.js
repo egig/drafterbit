@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const drafterbit = require('./index')();
+const drafterbit = require('../drafterbit/src')();
 
 drafterbit.boot(process.cwd());
 let program = drafterbit.get('cmd');

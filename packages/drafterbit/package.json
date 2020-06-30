@@ -5,9 +5,6 @@
   "license": "ISC",
   "description": "",
   "main": "./src/index.js",
-  "bin": {
-    "drafterbit": "./src/cli.js"
-  },
   "dependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",

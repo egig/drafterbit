@@ -50,7 +50,8 @@ class CoreModule extends Module {
 
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,
-            production: isProduction
+            production: isProduction,
+            projectRoot: app.get('config').get('ROOT_DIR')
         });
 
         webpackConfig.output.path = webpackOutputPath;

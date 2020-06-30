@@ -20,7 +20,10 @@ module.exports = env => {
             rules: [
                 {
                     test: /\.(js|jsx)$/,
-                    exclude: /node_modules/,
+                    include: [
+                        path.resolve(env.projectRoot, "node_modules/@drafterbit"),
+                        path.resolve(env.projectRoot, "packages"),
+                    ],
                     use: [
                         {
                             loader: 'babel-loader',
