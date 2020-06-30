@@ -1,9 +1,11 @@
 {
   "name": "@drafterbit/cli",
-  "version": "3.0.0-dev.8",
+  "version": "3.0.0-dev.9",
   "description": "",
   "main": "index.js",
-  "bin" : { "drafterbit" : "./index.js.js" },
+  "bin": {
+    "drafterbit": "./index.js.js"
+  },
   "directories": {
     "test": "test"
   },
