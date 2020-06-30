@@ -5,18 +5,18 @@ const { ERR_NO_ROOT_DIR } = require('./constants');
 class Config {
     constructor(ROOT, defaults) {
         require('dotenv').config({ path: path.join(ROOT,'.env') });
-        this.defaults = defaults
+        this.defaults = defaults;
     }
 
     get(key) {
         if (key in process.env) {
-            return process.env[key]
+            return process.env[key];
         }
-        return this.defaults[key]
+        return this.defaults[key];
     }
 
     registerConfig(defaults) {
-        this.defaults = Object.assign({}, this.defaults, defaults)
+        this.defaults = Object.assign({}, this.defaults, defaults);
     }
 }
 
@@ -30,13 +30,13 @@ function createConfig(options) {
         if (fs.existsSync(configFile)) {
             options = require(configFile);
         } else {
-            options = {}
+            options = {};
         }
-        options['ROOT_DIR'] = rootDir
+        options['ROOT_DIR'] = rootDir;
     }
 
     if (typeof options['ROOT_DIR'] === 'undefined') {
-        throw new Error(ERR_NO_ROOT_DIR)
+        throw new Error(ERR_NO_ROOT_DIR);
     }
 
     const defaults = {
@@ -63,7 +63,7 @@ function createConfig(options) {
     };
 
     let config = Object.assign({}, defaults, options);
-    return new Config(options["ROOT_DIR"], config)
+    return new Config(options['ROOT_DIR'], config);
 }
 
 

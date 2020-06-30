@@ -1,14 +1,14 @@
 function reducer(state = {}, action) {
     switch (action.type) {
-        case '@common/SET_AJAX_LOADING':
-            return Object.assign({}, state, {
-                isAjaxLoading: action.payload
-            });
+    case '@common/SET_AJAX_LOADING':
+        return Object.assign({}, state, {
+            isAjaxLoading: action.payload
+        });
         
-        case '@common/SET_NOTIFY_TEXT':
-            return Object.assign({}, state, {
-                notifyText: action.payload
-            });
+    case '@common/SET_NOTIFY_TEXT':
+        return Object.assign({}, state, {
+            notifyText: action.payload
+        });
     }
 
     return state;
@@ -19,8 +19,8 @@ export default {
         language: 'en',
         languages: ['en', 'id'],
         isAjaxLoading: false,
-        notifyText: ""
+        notifyText: ''
     },
-    stateName: "COMMON",
+    stateName: 'COMMON',
     reducer
-}
+};

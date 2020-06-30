@@ -14,7 +14,7 @@ class FileModule {
     config() {
         return {
             'FILES_BASE_PATH': './files'
-        }
+        };
     }
 }
 

@@ -1,8 +1,8 @@
 const routes  = require('./routes');
 const inquirer = require('inquirer');
-const FieldType = require("@drafterbit/common/FieldType");
-const fieldsToSchema = require("@drafterbit/common/fieldsToSchema");
-const password = require("./lib/password");
+const FieldType = require('@drafterbit/common/FieldType');
+const fieldsToSchema = require('@drafterbit/common/fieldsToSchema');
+const password = require('./lib/password');
 
 class AuthModule {
     constructor(app) {
@@ -23,7 +23,7 @@ class AuthModule {
         return {
             'USER_API_BASE_URL': '/',
             'USER_API_KEY': '',
-        }
+        };
     }
 
     registerClientConfig(serverConfig) {
@@ -36,11 +36,11 @@ class AuthModule {
     commands(app) {
         return [
             {
-                command: "auth:init",
-                description: "Init user auth",
+                command: 'auth:init',
+                description: 'Init user auth',
                 action: () => {
 
-                    console.log("Welcome! Please provide email and password to create root user account.")
+                    console.log('Welcome! Please provide email and password to create root user account.');
                     inquirer
                         .prompt([
                             {
@@ -51,7 +51,7 @@ class AuthModule {
                                     // TODO validate email
                                     // var valid = !isNaN(parseFloat(value));
                                     // return valid || 'Please enter a number';
-                                    return true
+                                    return true;
                                 },
                                 filter: String
                             },
@@ -69,18 +69,18 @@ class AuthModule {
                         .then(answers => {
 
                             if (answers.password !== answers.password_confirm) {
-                                console.log("Password is not match please repeat");
+                                console.log('Password is not match please repeat');
                                 process.exit(0);
                             }
 
                             return install(app, answers.email, answers.password)
                                 .then(r => {
                                     console.log(r);
-                                    process.exit(0)
+                                    process.exit(0);
                                 });
                         })
                         .catch(error => {
-                            console.error(error)
+                            console.error(error);
                             if(error.isTtyError) {
                                 // Prompt couldn't be rendered in the current environment
                             } else {
@@ -89,19 +89,19 @@ class AuthModule {
                         });
                 }
             }
-        ]
+        ];
     }
 }
 
 function install(app, email, password) {
 
-    let m = app.model("ContentType");
+    let m = app.model('ContentType');
 
     return m.deleteMany({
         $or: [
-            {slug: "users"},
-            {slug: "groups"},
-            {slug: "permissions"},
+            {slug: 'users'},
+            {slug: 'groups'},
+            {slug: 'permissions'},
         ]
     }).then(r => {
 
@@ -111,49 +111,49 @@ function install(app, email, password) {
             }).then(r => {
                 return createUser(m, email, password, app);
             }).then(r => {
-                console.log(r)
+                console.log(r);
             }).catch(e => {
-                console.error(e)
-            })
-    })
+                console.error(e);
+            });
+    });
 }
 
 function createPermission(m) {
-    return m.createContentType("Permission", "permissions", "", [{
+    return m.createContentType('Permission', 'permissions', '', [{
         type_id: FieldType.SHORT_TEXT,
-        name: "name",
-        label: "Name",
-        validation_rules: "required"
+        name: 'name',
+        label: 'Name',
+        validation_rules: 'required'
     },
-        {
-            type_id: FieldType.LONG_TEXT,
-            name: "description",
-            label: "Description",
-            validation_rules: ""
-        },
-    ], true)
+    {
+        type_id: FieldType.LONG_TEXT,
+        name: 'description',
+        label: 'Description',
+        validation_rules: ''
+    },
+    ], true);
 }
 
 function createGroup(m) {
-    return  m.createContentType("Group", "groups", "", [
+    return  m.createContentType('Group', 'groups', '', [
         {
             type_id: FieldType.SHORT_TEXT,
-            name: "name",
-            label: "Name",
-            validation_rules: "required"
+            name: 'name',
+            label: 'Name',
+            validation_rules: 'required'
         },
         {
             type_id: FieldType.LONG_TEXT,
-            name: "description",
-            label: "Description",
-            validation_rules: ""
+            name: 'description',
+            label: 'Description',
+            validation_rules: ''
         },
         {
             type_id: FieldType.RELATION_TO_MANY,
-            related_content_type_slug: "permissions",
-            name: "permissions",
-            label: "Permissions",
-            validation_rules: "",
+            related_content_type_slug: 'permissions',
+            name: 'permissions',
+            label: 'Permissions',
+            validation_rules: '',
             show_in_list: false
         }
     ], true);
@@ -163,34 +163,34 @@ function createUser(m, email, passwordStr, app) {
 
     let userCollectionSlug = 'users';
 
-    return m.createContentType("User", "users", "", [
+    return m.createContentType('User', 'users', '', [
         {
             type_id: FieldType.SHORT_TEXT,
             name: 'name',
-            label: "Name",
-            validation_rules: "required"
+            label: 'Name',
+            validation_rules: 'required'
         },
         {
             type_id: FieldType.SHORT_TEXT,
             name: 'email',
-            label: "Email",
-            validation_rules: "required",
+            label: 'Email',
+            validation_rules: 'required',
             unique: true
         },
         {
             type_id: FieldType.SHORT_TEXT,
             name: 'password',
-            label: "Password",
-            validation_rules: "required",
+            label: 'Password',
+            validation_rules: 'required',
             show_in_list: false,
             show_in_form: false
         },
         {
             type_id: FieldType.RELATION_TO_MANY,
-            related_content_type_slug: "groups",
-            name: "groups",
-            label: "Groups",
-            validation_rules: "",
+            related_content_type_slug: 'groups',
+            name: 'groups',
+            label: 'Groups',
+            validation_rules: '',
             show_in_list: false
         }
     ], true)
@@ -216,9 +216,9 @@ function createUser(m, email, passwordStr, app) {
                         email: email,
                         password: hashedPassword
                     }).then(r => {
-                        console.log(r)
-                    })
-                })
+                        console.log(r);
+                    });
+                });
         });
 }
 

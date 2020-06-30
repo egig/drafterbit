@@ -30,7 +30,7 @@ class AuthModule {
                 '^/favicon.ico',
                 '/swagger.json'
             ]
-        }
+        };
     }
 }
 

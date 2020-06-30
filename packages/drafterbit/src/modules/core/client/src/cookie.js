@@ -1,9 +1,9 @@
-export function setCookie(cname, cvalue, exdays, domain = "") {
+export function setCookie(cname, cvalue, exdays, domain = '') {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = 'expires='+d.toUTCString();
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-    if (!!domain) {
+    if (domain) {
         document.cookie = cname + '=' + cvalue + ';' + expires + ';domain='+ domain +';path=/';
     }
 }

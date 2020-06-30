@@ -14,7 +14,7 @@ class CoreModule extends Module {
         app.on('pre-start', () => {
             app.use('/', express.static(this.webpackOutputPath));
 
-            if(app.get('config').get('NODE_ENV') !== "production") {
+            if(app.get('config').get('NODE_ENV') !== 'production') {
                 const webpackDevMiddleware = require('webpack-dev-middleware');
 
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
@@ -58,7 +58,7 @@ class CoreModule extends Module {
 
         // Insert module entries
         let clientEntryPoint = webpackConfig.entry.pop();
-        console.log("Number of modules:", app._modules.length);
+        console.log('Number of modules:', app._modules.length);
         app._modules.map(mo => {
             if(typeof mo.getAdminClientEntry == 'function') {
                 webpackConfig.entry.push(mo.getAdminClientEntry());
@@ -72,7 +72,7 @@ class CoreModule extends Module {
         return {
             'API_BASE_URL': '/',
             'API_KEY': ''
-        }
+        };
     }
 
     registerClientConfig(serverConfig) {
@@ -89,20 +89,20 @@ class CoreModule extends Module {
     commands(app) {
         return [
             {
-                command: "start",
-                description: "start server",
+                command: 'start',
+                description: 'start server',
                 action: () => {
                     app.start();
                 }
             },
             {
-                command: "build",
-                description: "build the app",
+                command: 'build',
+                description: 'build the app',
                 action: () => {
                     app.build();
                 }
             },
-        ]
+        ];
     }
 }
 

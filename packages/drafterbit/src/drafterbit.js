@@ -74,7 +74,7 @@ app.boot = function boot(options) {
         pass: config.get('MONGODB_PASS')
     };
 
-    let cmd = commander
+    let cmd = commander;
 
     // cmd
     //     .version('0.0.1')
@@ -96,12 +96,12 @@ app.boot = function boot(options) {
 
         // register config
         if(typeof moduleInstance.config == 'function') {
-            config.registerConfig(moduleInstance.config())
+            config.registerConfig(moduleInstance.config());
         }
 
         // register cmd
         if(typeof moduleInstance.config == 'function') {
-            config.registerConfig(moduleInstance.config())
+            config.registerConfig(moduleInstance.config());
         }
 
         if(typeof moduleInstance.commands == 'function') {

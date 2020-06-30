@@ -4,8 +4,8 @@ const RedisDriver = require('../lib/RedisDriver');
 function cache(config) {
     return function (req, res, next) {
 
-        if (!!req.app.get('cache')) {
-            return next()
+        if (req.app.get('cache')) {
+            return next();
         }
 
         const redisDriver = new RedisDriver({

@@ -103,8 +103,8 @@ router.get('/swagger.json',  function (req, res) {
                 // };
             });
 
-            let version = "1.0"; // TODO
-            let swaggerSpec = createSwaggerSpec(req.app.get('config').get('APP_NAME'), version)
+            let version = '1.0'; // TODO
+            let swaggerSpec = createSwaggerSpec(req.app.get('config').get('APP_NAME'), version);
             swaggerSpec.paths = Object.assign({}, paths, swaggerSpec.paths);
 
             res.send(swaggerSpec);

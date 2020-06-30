@@ -4,7 +4,7 @@
  */
 export default function getConfig(name) {
     if(!window.__DRAFTERBIT_CONFIG__) {
-        throw new Error("Can not find global config");
+        throw new Error('Can not find global config');
     }
 
     if(!window.__DRAFTERBIT_CONFIG__.hasOwnProperty(name)) {

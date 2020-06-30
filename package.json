@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node packages/cli/index.js start",
     "auth:init": "node packages/cli/index.js auth:init",
-    "bootstrap": "lerna bootstrap --hoist"
+    "bootstrap": "lerna bootstrap --hoist",
+    "linter": "./node_modules/.bin/eslint --fix ./packages"
   }
 }

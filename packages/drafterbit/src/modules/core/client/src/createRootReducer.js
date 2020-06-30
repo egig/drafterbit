@@ -4,7 +4,7 @@ export default function createRootReducer(drafterbit) {
 
     let reducerMap = {};
     drafterbit.modules.map(mo => {
-        if(!!mo.stateReducer) {
+        if(mo.stateReducer) {
             reducerMap[mo.stateReducer.stateName] = mo.stateReducer.reducer;
         }
     });

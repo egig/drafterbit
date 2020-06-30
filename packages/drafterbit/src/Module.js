@@ -1,6 +1,7 @@
 class Module {
 
-    constructor(app) {}
+    constructor(app) {
+    }
 
     config() {}
 
@@ -8,11 +9,11 @@ class Module {
     registerSchema(db) {}
 
     registerClientConfig(serverConfig) {
-        return {}
+        return {};
     }
 
     getAdminClientEntry() {
-        return ""
+        return this._modulePath+'/client/src/index.js';
     }
 }
 

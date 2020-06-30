@@ -16,7 +16,7 @@ function assetPath(req, asset) {
 
 router.get('/', function (req, res) {
 
-    let assetsStr = fs.readFileSync(req.app.get('config').get('ROOT_DIR')+'/build/assets.json')
+    let assetsStr = fs.readFileSync(req.app.get('config').get('ROOT_DIR')+'/build/assets.json');
     const webpackAssets = JSON.parse(assetsStr.toString());
 
     let defaultState = {COMMON: {}};

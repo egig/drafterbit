@@ -1,12 +1,12 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = env => {
 
-    console.log("Build output path: ", env.outputPath);
+    console.log('Build output path: ', env.outputPath);
 
     let commonConfig = {
         entry: [ '@babel/polyfill', __dirname+'/src/index.js', __dirname+'/src/app.js'],
@@ -21,8 +21,8 @@ module.exports = env => {
                 {
                     test: /\.(js|jsx)$/,
                     include: [
-                        path.resolve(env.projectRoot, "node_modules/@drafterbit"),
-                        path.resolve(env.projectRoot, "packages"),
+                        path.resolve(env.projectRoot, 'node_modules/@drafterbit'),
+                        path.resolve(env.projectRoot, 'packages'),
                     ],
                     use: [
                         {
@@ -74,7 +74,7 @@ module.exports = env => {
                 },
                 {
                     test: /\.svg$/,
-                    use: ["@svgr/webpack", "url-loader"]
+                    use: ['@svgr/webpack', 'url-loader']
                 }
             ]
         },
@@ -82,16 +82,16 @@ module.exports = env => {
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
-                filename: "css/[name].[hash].css",
-                chunkFilename: "css/[chunkhash].[hash].css"
+                filename: 'css/[name].[hash].css',
+                chunkFilename: 'css/[chunkhash].[hash].css'
             }),
             new CopyPlugin([
                 // {from: "public"},
-                 {from: __dirname+"/public/img", to: "img"},
-                 {from: __dirname+"/public/locales", to: "locales"},
-                 {from: __dirname+"/public/favicon.ico", to: "favicon.ico"}
+                {from: __dirname+'/public/img', to: 'img'},
+                {from: __dirname+'/public/locales', to: 'locales'},
+                {from: __dirname+'/public/favicon.ico', to: 'favicon.ico'}
             ]),
-            new AssetsPlugin({path: env.outputPath, filename: "assets.json"})
+            new AssetsPlugin({path: env.outputPath, filename: 'assets.json'})
         ],
         resolve: {
             extensions: ['*', '.js', '.jsx', '.css']
@@ -101,17 +101,17 @@ module.exports = env => {
 
     if(!!env && env.production) {
         return merge(commonConfig, {
-            mode: "production",
-            devtool: "source-map"
-        })
+            mode: 'production',
+            devtool: 'source-map'
+        });
     }
 
     return merge(commonConfig, {
-        mode: "development",
+        mode: 'development',
         // devtool: "inline-source-map", this is slow !!
         devServer: {
             disableHostCheck: true,
             writeToDisk: true
         }
-    })
+    });
 };
