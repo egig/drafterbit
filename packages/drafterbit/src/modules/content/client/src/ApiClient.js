@@ -20,15 +20,15 @@ class ApiClient {
     }
 
     async getContentTypes() {
-        return this._doGetRequest('/content_types');
+        return this._doGetRequest('/types');
     }
 
     async getContentType(contentTypeId) {
-        return this._doGetRequest(`/content_types/${contentTypeId}`);
+        return this._doGetRequest(`/types/${contentTypeId}`);
     }
 
     async createContentType(name, slug, description, fields=[]) {
-        return this._doPostRequest('/content_types', {
+        return this._doPostRequest('/types', {
             name,
             slug,
             description,
@@ -37,19 +37,19 @@ class ApiClient {
     }
 
     async deleteContentType(contentTypeId) {
-        let response = await this.axiosInstance.delete(`/content_types/${contentTypeId}`);
+        let response = await this.axiosInstance.delete(`/types/${contentTypeId}`);
         return response.data;
     }
 
     async updateContentType(contentTypeId, name, slug, description, fields) {
-        let response = await this.axiosInstance.patch(`/content_types/${contentTypeId}`, {
+        let response = await this.axiosInstance.patch(`/types/${contentTypeId}`, {
             name, slug, description, fields
         });
         return response.data;
     }
 
     async updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules, showInList)  {
-        let url = `/content_types/${contentTypeId}/fields/${fieldId}`;
+        let url = `/types/${contentTypeId}/fields/${fieldId}`;
         let response = await this.axiosInstance.patch(url, {
             label, name,
             related_content_type_slug: relatedContentTypeSlug,
@@ -70,7 +70,7 @@ class ApiClient {
      * @returns {Promise<*>}
      */
     async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules, showInList)  {
-        let url = `/content_types/${contentTypeId}/fields`;
+        let url = `/types/${contentTypeId}/fields`;
         let response = await this.axiosInstance.post(url, {
             label,
             name,
@@ -83,7 +83,7 @@ class ApiClient {
     }
 
     async getContentTypeFields(slug, page) {
-        let response = await this.axiosInstance.get(`/content_types/${slug}`);
+        let response = await this.axiosInstance.get(`/types/${slug}`);
         return response.data;
     }
 
@@ -119,7 +119,7 @@ class ApiClient {
     }
 
     async createContent(contentTypeId, fields) {
-        let response = await this.axiosInstance.post(`/content_types/${contentTypeId}/contents`, {
+        let response = await this.axiosInstance.post(`/types/${contentTypeId}/contents`, {
             fields: fields
         });
         return response.data;
@@ -138,7 +138,7 @@ class ApiClient {
     }
 
     async getContents(contentTypeId, page, sortBy, sortDir, fqSr) {
-    	return this.axiosInstance.get(`/content_types/${contentTypeId}/contents`, {
+    	return this.axiosInstance.get(`/types/${contentTypeId}/contents`, {
             params: {
                 page,
                 sort_by: sortBy,

@@ -6,12 +6,12 @@ let router = express.Router();
 
 /**
  * @swagger
- * /content_types/{content_type_id}:
+ * /types/{type_id}:
  *   get:
  *     description: Get content type
  *     parameters:
  *       - in: path
- *         name: content_type_id
+ *         name: type_id
  *         type: integer
  *         schema:
  *           type: integer
@@ -22,25 +22,25 @@ let router = express.Router();
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.get('/content_types/:content_type_id',
+router.get('/types/:type_id',
     validateRequest({
-        content_type_id: {
+        type_id: {
             notEmpty: true,
-            errorMessage: 'content_type_id is required'
+            errorMessage: 'type_id is required'
         }
     }),
     handleFunc(async (req) => {
         let m = req.app.model('Type');
-        return await m.getContentType(req.params.content_type_id);
+        return await m.getContentType(req.params.type_id);
     })
 );
 
 
 /**
  * @swagger
- * /content_types:
+ * /types:
  *   get:
  *     description: Get content types
  *     responses:
@@ -48,23 +48,23 @@ router.get('/content_types/:content_type_id',
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.get('/content_types', handleFunc(async (req) => {
+router.get('/types', handleFunc(async (req) => {
     let m = req.app.model('Type');
     return await m.getContentTypes();
 }));
 
 /**
  * @swagger
- * /content_types:
+ * /types:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
  *       - in: body
- *         name: content_type
+ *         name: type
  *         schema:
  *           type: object
  *           required:
@@ -88,9 +88,9 @@ router.get('/content_types', handleFunc(async (req) => {
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.post('/content_types',
+router.post('/types',
     validateRequest({
         name: {
             notEmpty: true,
@@ -119,14 +119,14 @@ router.post('/content_types',
 
 /**
  * @swagger
- * /content_types/{content_type_id}/fields:
+ * /types/{type_id}/fields:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
  *       - in: path
- *         name: content_type_id
+ *         name: type_id
  *         type: string
  *         required: true
  *       - in: body
@@ -154,14 +154,14 @@ router.post('/content_types',
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.post('/content_types/:content_type_id/fields',
+router.post('/types/:type_id/fields',
     validateRequest({
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        let contentTypeId = req.params['content_type_id'];
+        let contentTypeId = req.params['type_id'];
         let s = await m.addField(contentTypeId, req.body);
 
         // update compiled models
@@ -174,12 +174,12 @@ router.post('/content_types/:content_type_id/fields',
 
 /**
  * @swagger
- * /content_types/:content_type_id:
+ * /types/:type_id:
  *   delete:
  *     description: Delete content type
  *     parameters:
  *       - in: query
- *         name: content_type_id
+ *         name: type_id
  *         type: integer
  *         schema:
  *           type: integer
@@ -190,37 +190,37 @@ router.post('/content_types/:content_type_id/fields',
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.delete('/content_types/:content_type_id',
+router.delete('/types/:type_id',
     validateRequest({
-        content_type_id: {
+        type_id: {
             notEmpty: true,
-            errorMessage: 'content_type_id required'
+            errorMessage: 'type_id required'
         }
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        return await m.deleteContentType(req.params.content_type_id);
+        return m.deleteContentType(req.params.type_id);
     })
 );
 
 /**
  * @swagger
- * /content_types/{content_type_id}:
+ * /types/{type_id}:
  *   patch:
  *     consumes:
  *       - application/json
  *     description: Update content type
  *     parameters:
  *       - in: path
- *         name: content_type_id
+ *         name: type_id
  *         type: string
  *         schema:
  *           type: string
  *         required: true
  *       - in: body
- *         name: content_type
+ *         name: type
  *         schema:
  *           type: object
  *           required:
@@ -237,13 +237,13 @@ router.delete('/content_types/:content_type_id',
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.patch('/content_types/:content_type_id',
+router.patch('/types/:type_id',
     validateRequest({
-        content_type_id: {
+        type_id: {
             notEmpty: true,
-            errorMessage: 'content_type_id is required'
+            errorMessage: 'type_id is required'
         },
         name: {
             optional: true,
@@ -260,7 +260,7 @@ router.patch('/content_types/:content_type_id',
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        let contentTypeId = req.params.content_type_id;
+        let contentTypeId = req.params.type_id;
 
         let s =  await m.updateContentType(contentTypeId, req.body);
 
@@ -275,7 +275,7 @@ router.patch('/content_types/:content_type_id',
 
 /**
  * @swagger
- * /content_types/{content_type_id}/fields/{field_id}:
+ * /types/{type_id}/fields/{field_id}:
  *   patch:
  *     consumes:
  *       - application/json
@@ -285,7 +285,7 @@ router.patch('/content_types/:content_type_id',
  *           type: string
  *         required: true
  *       - in: path
- *         name: content_type_id
+ *         name: type_id
  *         type: string
  *         schema:
  *           type: string
@@ -304,13 +304,13 @@ router.patch('/content_types/:content_type_id',
  *         description: success
  *
  *     tags:
- *        - /content_types
+ *        - /types
  */
-router.patch('/content_types/:content_type_id/fields/:field_id',
+router.patch('/types/:type_id/fields/:field_id',
     validateRequest({
-        content_type_id: {
+        type_id: {
             notEmpty: true,
-            errorMessage: 'content_type_id is required'
+            errorMessage: 'type_id is required'
         },
         name: {
             optional: true,
@@ -326,7 +326,7 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
         },
     }),
     handleFunc(async function(req) {
-        let contentTypeId = req.params['content_type_id'];
+        let contentTypeId = req.params['type_id'];
         let fieldId = req.params['field_id'];
         let m = req.app.model('Type');
         let s = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
