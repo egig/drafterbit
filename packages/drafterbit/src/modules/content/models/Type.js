@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-let ContentTypeSchema = new mongoose.Schema({
+let TypeSchema = new mongoose.Schema({
     name: String,
     slug: { type: String, unique: true },
     description: String,
@@ -31,7 +31,7 @@ let ContentTypeSchema = new mongoose.Schema({
  * @param field
  * @return {Promise}
  */
-ContentTypeSchema.statics.addField = function(contentTypeId, field) {
+TypeSchema.statics.addField = function(contentTypeId, field) {
     return this.updateOne({ _id: contentTypeId }, { $push: { fields: field } });
 };
 
@@ -40,7 +40,7 @@ ContentTypeSchema.statics.addField = function(contentTypeId, field) {
  * @param contentTypeId
  * @return {Promise}
  */
-ContentTypeSchema.statics.getContentType = function(contentTypeId) {
+TypeSchema.statics.getContentType = function(contentTypeId) {
     return new Promise((resolve, reject) => {
 
         let ObjectId = mongoose.Types.ObjectId;
@@ -62,7 +62,7 @@ ContentTypeSchema.statics.getContentType = function(contentTypeId) {
 /**
  * @return {Promise}
  */
-ContentTypeSchema.statics.getContentTypes = function() {
+TypeSchema.statics.getContentTypes = function() {
     return this.find().select(['-__v']).exec();
 };
 
@@ -72,7 +72,7 @@ ContentTypeSchema.statics.getContentTypes = function() {
  * @param slug
  * @return {Promise}
  */
-ContentTypeSchema.statics.getContentTypeBySlug = function(slug) {
+TypeSchema.statics.getContentTypeBySlug = function(slug) {
     return this.findOne({slug: slug});
 };
 
@@ -86,7 +86,7 @@ ContentTypeSchema.statics.getContentTypeBySlug = function(slug) {
  * @param system
  * @returns {*}
  */
-ContentTypeSchema.statics.createContentType = function(name, slug, description, fields, system = false) {
+TypeSchema.statics.createContentType = function(name, slug, description, fields, system = false) {
     let newContentType = new this({
         name,
         slug,
@@ -104,7 +104,7 @@ ContentTypeSchema.statics.createContentType = function(name, slug, description, 
  * @param contentTypeId
  * @return {Promise}
  */
-ContentTypeSchema.statics.deleteContentType = function(contentTypeId) {
+TypeSchema.statics.deleteContentType = function(contentTypeId) {
     return this.deleteOne({_id: contentTypeId});
 };
 
@@ -115,7 +115,7 @@ ContentTypeSchema.statics.deleteContentType = function(contentTypeId) {
  * @param payload
  * @return {Promise}
  */
-ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
+TypeSchema.statics.updateContentType = function(contentTypeId, payload) {
     return this.updateOne({ _id: contentTypeId }, payload);
 };
 
@@ -127,7 +127,7 @@ ContentTypeSchema.statics.updateContentType = function(contentTypeId, payload) {
  * @param payload
  * @return {Promise}
  */
-ContentTypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
+TypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
 
     let setter = {};
     for (let k of Object.keys(payload)) {
@@ -139,4 +139,4 @@ ContentTypeSchema.statics.updateContentTypeField = function(contentTypeId, field
     });
 };
 
-module.exports = ContentTypeSchema;
+module.exports = TypeSchema;

@@ -1,5 +1,5 @@
 const routes  = require('./routes');
-const ContentTypeSchema  = require('./models/ContentType');
+const TypeSchema  = require('./models/Type');
 
 class ContentModule {
     constructor(app) {
@@ -9,7 +9,7 @@ class ContentModule {
     }
 
     registerSchema(db) {
-        db.model('ContentType', ContentTypeSchema, '_content_types');
+        db.model('Type', TypeSchema, '_types');
     }
 
     getAdminClientEntry() {

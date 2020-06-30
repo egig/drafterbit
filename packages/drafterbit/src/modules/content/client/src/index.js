@@ -20,7 +20,7 @@ function createContentClientModule(drafterbit) {
             {path: "/content_types", component: ContentTypes},
         ],
         generalMenus: [
-            {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
+            {link: "/content_types", label: "Types", iconClass: "icon-puzzle"}
         ],
         renderMenuSection(i) {
             return <MenuSection key={i} />

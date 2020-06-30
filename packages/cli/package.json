@@ -4,18 +4,19 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "drafterbit": "./index.js.js"
+    "drafterbit": "./index.js"
   },
   "directories": {
     "test": "test"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "gitHead": "e0b64b0a224e85dbd5dcafec7835873467807b32",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "drafterbit": "^3.0.0-dev.9"
   }
 }

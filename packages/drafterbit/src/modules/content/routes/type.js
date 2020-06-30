@@ -32,7 +32,7 @@ router.get('/content_types/:content_type_id',
         }
     }),
     handleFunc(async (req) => {
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         return await m.getContentType(req.params.content_type_id);
     })
 );
@@ -51,7 +51,7 @@ router.get('/content_types/:content_type_id',
  *        - /content_types
  */
 router.get('/content_types', handleFunc(async (req) => {
-    let m = req.app.model('ContentType');
+    let m = req.app.model('Type');
     return await m.getContentTypes();
 }));
 
@@ -111,7 +111,7 @@ router.post('/content_types',
         }
     }),
     handleFunc(async function(req) {
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         return await m.createContentType(req.body.name, req.body.slug,
             req.body.description, req.body.fields);
     })
@@ -160,7 +160,7 @@ router.post('/content_types/:content_type_id/fields',
     validateRequest({
     }),
     handleFunc(async function(req) {
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         let contentTypeId = req.params['content_type_id'];
         let s = await m.addField(contentTypeId, req.body);
 
@@ -200,7 +200,7 @@ router.delete('/content_types/:content_type_id',
         }
     }),
     handleFunc(async function(req) {
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         return await m.deleteContentType(req.params.content_type_id);
     })
 );
@@ -259,7 +259,7 @@ router.patch('/content_types/:content_type_id',
         },
     }),
     handleFunc(async function(req) {
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         let contentTypeId = req.params.content_type_id;
 
         let s =  await m.updateContentType(contentTypeId, req.body);
@@ -328,7 +328,7 @@ router.patch('/content_types/:content_type_id/fields/:field_id',
     handleFunc(async function(req) {
         let contentTypeId = req.params['content_type_id'];
         let fieldId = req.params['field_id'];
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
         let s = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
 
         delete req.app.getDB().models[contentTypeId];

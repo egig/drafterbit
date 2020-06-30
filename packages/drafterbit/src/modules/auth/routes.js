@@ -110,7 +110,7 @@ router.post('/token',
                 let email = req.body.email;
                 let rawPassword = req.body.password;
 
-                let m = req.app.model('ContentType');
+                let m = req.app.model('Type');
 
                 let userCollectionSlug = 'users';
                 let contentType = await  m.getContentType(userCollectionSlug);

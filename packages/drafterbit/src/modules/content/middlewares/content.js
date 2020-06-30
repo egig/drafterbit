@@ -20,7 +20,7 @@ module.exports = function contentMiddleware() {
 
         let contentTypeSlug = req.params['slug'];
 
-        let m = req.app.model('ContentType');
+        let m = req.app.model('Type');
 
         m.getContentType(contentTypeSlug)
             .then(contentType => {
