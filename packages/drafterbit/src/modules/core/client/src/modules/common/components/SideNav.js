@@ -1,4 +1,79 @@
-import React, {Fragment} from 'react';
+// import React, {Fragment} from 'react';
+// import { Link } from 'react-router-dom';
+// import { withRouter } from 'react-router';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
+//
+//
+// import './SideNav.css';
+//
+// class SideNav extends React.Component {
+//
+//     renderMenuItems(menuItems) {
+//         return menuItems.map((mn,i) => {
+//             return (
+//                 <li className="nav-item" key={i}>
+//                     <Link className="nav-link" to={mn.link}>
+//                         <i className={mn.iconClass}/> {mn.label}
+//                     </Link>
+//                 </li>
+//             )
+//         });
+//     }
+//
+//     render() {
+//
+//         return (
+//             <nav className={'col-md-2 d-none d-md-block bg-light sidebar'}>
+//                 <div className="sidebarSticky">
+//                     {this.props.drafterbit.modules.map((mo,i) => {
+//                         if(typeof mo.renderMenuSection == "function") {
+//                             return mo.renderMenuSection(i);
+//                         }
+//                     })}
+//
+//                     <h6 className={'sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'}>
+//                         <span><i className="icon-equalizer"/> General</span>
+//                     </h6>
+//                     <ul className="nav flex-column mb-2 side-menu">
+//                     {this.props.drafterbit.modules.map(mo => {
+//                         if (!!mo.generalMenus && !!mo.generalMenus.length) {
+//                             return mo.generalMenus.map((mn,i) => {
+//                                 return (
+//                                     <li className="nav-item" key={i}>
+//                                         <Link className="nav-link" to={mn.link}>
+//                                             <i className={mn.iconClass}/> {mn.label}
+//                                         </Link>
+//                                     </li>
+//                                 )
+//                             });
+//                         }
+//                     })}
+//                     </ul>
+//                 </div>
+//             </nav>
+//         );
+//     }
+// }
+//
+// const mapStateToProps = (state) => {
+//     return {
+//         contentTypes: state.CONTENT.contentTypes
+//     };
+// };
+//
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         // actions: bindActionCreators({
+//         //     getContentTypes: getContentTypes
+//         // }, dispatch)
+//     }
+// };
+//
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(SideNav)));
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -8,51 +83,54 @@ import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 import './SideNav.css';
 
-class SideNav extends React.Component {
+import { Layout as BaseLayout, Menu } from 'antd';
+import {
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
+    DesktopOutlined,
+    PieChartOutlined,
+    FileOutlined,
+    TeamOutlined,
+} from '@ant-design/icons';
 
-    renderMenuItems(menuItems) {
-        return menuItems.map((mn,i) => {
-            return (
-                <li className="nav-item" key={i}>
-                    <Link className="nav-link" to={mn.link}>
-                        <i className={mn.iconClass}/> {mn.label}
-                    </Link>
-                </li>
-            )
-        }); 
-    }
+import "antd/dist/antd.css";
+
+const { Sider } = BaseLayout;
+const { SubMenu } = Menu;
+
+class SideNav extends React.Component {
 
     render() {
 
         return (
-            <nav className={'col-md-2 d-none d-md-block bg-light sidebar'}>
-                <div className="sidebarSticky">
-                    {this.props.drafterbit.modules.map((mo,i) => {
-                        if(typeof mo.renderMenuSection == "function") {
-                            return mo.renderMenuSection(i);
-                        }
-                    })}
-
-                    <h6 className={'sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'}>
-                        <span><i className="icon-equalizer"/> General</span>
-                    </h6>
-                    <ul className="nav flex-column mb-2 side-menu">
-                    {this.props.drafterbit.modules.map(mo => {
+            <Sider style={{
+                overflow: 'auto',
+                height: '100vh',
+                position: 'fixed',
+                left: 0,
+            }} trigger={null} collapsible collapsed={this.props.collapsed}>
+                <div className="logo" />
+                {/*<Link to={"/"}><h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1></Link>*/}
+                {this.props.drafterbit.modules.map((mo,i) => {
+                    if(typeof mo.renderMenuSection == "function") {
+                        return mo.renderMenuSection(i);
+                    }
+                })}
+                <Menu theme="dark" selectable={false} mode="inline">
+                    {this.props.drafterbit.modules.map((mo, i) => {
                         if (!!mo.generalMenus && !!mo.generalMenus.length) {
-                            return mo.generalMenus.map((mn,i) => {
+                            return mo.generalMenus.map((mn,j) => {
                                 return (
-                                    <li className="nav-item" key={i}>
-                                        <Link className="nav-link" to={mn.link}>
-                                            <i className={mn.iconClass}/> {mn.label}
-                                        </Link>
-                                    </li>
+                                    <Menu.Item icon={mn.icon}  key={i+"-"+j}><Link to={mn.link}>{mn.label}</Link></Menu.Item>
                                 )
                             });
                         }
                     })}
-                    </ul>
-                </div>
-            </nav>
+                </Menu>
+            </Sider>
         );
     }
 }

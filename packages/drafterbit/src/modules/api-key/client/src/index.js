@@ -5,6 +5,10 @@ import { Redirect } from 'react-router-dom';
 const ApiKeyNew = lazy(() => import('./components/ApiKeyNew'));
 const ApiKeyEdit = lazy(() => import('./components/ApiKeyEdit'));
 const ApiKeys = lazy(() => import('./components/ApiKeys'));
+import {
+    KeyOutlined,
+} from '@ant-design/icons'
+
 
 function createApiKeyClientModule(drafterbit) {
 
@@ -17,7 +21,7 @@ function createApiKeyClientModule(drafterbit) {
             {path: "/api_keys", component: ApiKeys},
         ],
         generalMenus: [
-            {link: "/api_keys", label: "Api Keys", iconClass: "icon-key"}
+            {link: "/api_keys", label: "Api Keys", iconClass: "icon-key", icon: <KeyOutlined/>}
         ],
         // renderMenuSection() {
         //     return <MenuSection />

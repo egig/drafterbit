@@ -22,7 +22,7 @@ module.exports = env => {
                     test: /\.(js|jsx)$/,
                     include: [
                         path.resolve(env.projectRoot, 'node_modules/@drafterbit'),
-                        path.resolve(env.projectRoot, 'packages'),
+                        path.resolve(env.projectRoot, 'packages/drafterbit/src/modules'),
                     ],
                     use: [
                         {

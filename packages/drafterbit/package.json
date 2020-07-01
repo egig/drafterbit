@@ -22,6 +22,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@ljharb/eslint-config": "^14.1.0",
     "@svgr/webpack": "^4.3.2",
+    "antd": "^4.4.0",
     "assets-webpack-plugin": "^3.9.10",
     "axios": "^0.18.1",
     "babel-loader": "^8.0.6",

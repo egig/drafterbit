@@ -4,6 +4,10 @@ import Settings from './components/Settings';
 import MenuSection from './components/MenuSection';
 import stateReducer from './stateReducer';
 
+import {
+    SettingOutlined,
+} from '@ant-design/icons';
+
 function createCommonModule(drafterbit) {
 
     return {
@@ -14,7 +18,7 @@ function createCommonModule(drafterbit) {
             {path: "/settings", component: Settings},
         ],
         generalMenus: [
-            {link: "/settings", label: "Settings", iconClass: "icon-settings"}
+            {link: "/settings", label: "Settings", iconClass: "icon-settings", icon: <SettingOutlined />}
         ],
         renderMenuSection(i) {
             return <MenuSection key={i} />

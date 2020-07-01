@@ -5,6 +5,10 @@ const Files = lazy(() => import('./components/Files'));
 // const ApiKeyEdit = lazy(() => import('./components/ApiKeyEdit'));
 // const ApiKeys = lazy(() => import('./components/ApiKeys'));
 
+import {
+    FolderOutlined,
+} from '@ant-design/icons';
+
 function createFileClientModule(drafterbit) {
 
     return {
@@ -19,7 +23,7 @@ function createFileClientModule(drafterbit) {
             // {path: "/api_keys", component: ApiKeys},
         ],
         generalMenus: [
-            {link: "/files", label: "Files", iconClass: "icon-folder"}
+            {link: "/files", label: "Files", iconClass: "icon-folder", icon: <FolderOutlined/>}
         ],
         // renderMenuSection() {
         //     return <MenuSection />

@@ -8,6 +8,10 @@ const Contents = lazy(() => import('./components/Contents'));
 const ContentTypes = lazy(() => import('./components/ContentTypes'));
 const ContentType = lazy(() => import('./components/ContentType'));
 
+import {
+    BuildOutlined,
+} from '@ant-design/icons';
+
 function createContentClientModule(drafterbit) {
 
     return {
@@ -20,7 +24,7 @@ function createContentClientModule(drafterbit) {
             {path: "/content_types", component: ContentTypes},
         ],
         generalMenus: [
-            {link: "/content_types", label: "Types", iconClass: "icon-puzzle"}
+            {link: "/content_types", label: "Types", icon: <BuildOutlined/>}
         ],
         renderMenuSection(i) {
             return <MenuSection key={i} />

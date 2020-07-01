@@ -5,6 +5,11 @@ import { connect } from "react-redux"
 import actions from '../actions'
 import { bindActionCreators } from 'redux';
 import ApiClient from '../ApiClient';
+import {Menu} from 'antd';
+
+import {
+    FileTextOutlined
+} from '@ant-design/icons';
 
 class MenuSection extends React.Component {
 
@@ -17,18 +22,6 @@ class MenuSection extends React.Component {
                 contentTypes = contentTypes.filter(c => !c.system);
                 this.props.actions.setContentTypes(contentTypes);
             });
-    }
-
-    renderMenuItems(menuItems) {
-        return menuItems.map((mn, i) => {
-            return (
-                <li className="nav-item" key={i}>
-                    <Link className="nav-link" to={mn.link}>
-                        <i className={mn.iconClass}/> {mn.label}
-                    </Link>
-                </li>
-            )
-        }); 
     }
 
     render() {
@@ -44,14 +37,16 @@ class MenuSection extends React.Component {
 
         // TODO componentize the menu section and menu item, it render same accross module
         return (
-            <Fragment>
-                <h6 className={'sidebarHeading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'}>
-                    <span><i className="icon-docs"/> Contents</span>
-                </h6>
-                <ul className="nav flex-column mb-2 side-menu">
-                    {this.renderMenuItems(menuItems)}
-                </ul>
-            </Fragment>
+            <Menu theme="dark" selectable={false} mode="inline">
+                <Menu.SubMenu icon={<FileTextOutlined />}  key="sub-menu-contents" title="Contents">
+                    {menuItems.map((mn, i) => {
+                        return (
+                            <Menu.Item key={i}><Link to={mn.link}>{mn.label}</Link></Menu.Item>
+                        )
+                    })
+                    }
+                </Menu.SubMenu>
+            </Menu>
         )
     }
 }

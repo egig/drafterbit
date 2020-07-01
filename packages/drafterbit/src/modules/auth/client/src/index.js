@@ -9,6 +9,10 @@ const ResetPassword = lazy(() => import('./components/ResetPassword'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
 const RegisterSuccess = lazy(() => import('./components/RegisterSuccess'));
 
+import {
+    UserOutlined,
+} from '@ant-design/icons'
+
 function createAuthClientModule() {
 
     return {
@@ -22,7 +26,7 @@ function createAuthClientModule() {
             {path: "/register-success", component: RegisterSuccess}
         ],
         generalMenus: [
-            {link: "/users", label: "Users", iconClass: "icon-user"}
+            {link: "/users", label: "Users", iconClass: "icon-user", icon: <UserOutlined/>}
         ],
         processRoute(route, location, state) {
 

@@ -2,6 +2,9 @@ import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const Request = lazy(() => import('./components/Request'));
+import {
+    ApiOutlined,
+} from '@ant-design/icons'
 
 function createSwaggerClientModule(drafterbit) {
 
@@ -11,7 +14,7 @@ function createSwaggerClientModule(drafterbit) {
             {path: "/requests", component: Request}
         ],
         generalMenus: [
-            {link: "/requests", label: "Requests", iconClass: "icon-target"}
+            {link: "/requests", label: "Requests", iconClass: "icon-target", icon: <ApiOutlined/>}
         ],
         // renderMenuSection() {
         //     return <MenuSection />
