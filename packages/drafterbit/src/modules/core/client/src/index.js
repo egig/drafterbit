@@ -16,6 +16,8 @@ import getConfig from './getConfig';
 // TODO
 const drafterbit = window.__DRAFTERBIT__;
 
+drafterbit.initApiClient2();
+
 const i18n = i18next.createInstance();
 i18n.init({
     lng: 'id',

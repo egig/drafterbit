@@ -1,5 +1,6 @@
 import React  from 'react';
 import Dashboard from './components/Dashboard';
+import Settings from './components/Settings';
 import MenuSection from './components/MenuSection';
 import stateReducer from './stateReducer';
 
@@ -10,15 +11,24 @@ function createCommonModule(drafterbit) {
         stateReducer: stateReducer,
         routes: [
             {path: "/", component: Dashboard},
+            {path: "/settings", component: Settings},
         ],
         generalMenus: [
-            // {link: "/content_types", label: "Content Types", iconClass: "icon-puzzle"}
+            {link: "/settings", label: "Settings", iconClass: "icon-settings"}
         ],
         renderMenuSection(i) {
             return <MenuSection key={i} />
         },
         processRoute(route) {
             //..
+        },
+
+        registerApiClient() {
+            return {
+                getSettings: async function () {
+                    return this._doGetRequest("/settings");
+                }
+            }
         }
     }
 }
