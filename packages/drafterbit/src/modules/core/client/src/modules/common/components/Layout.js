@@ -96,13 +96,6 @@ import { Layout as BaseLayout, Menu } from 'antd';
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
-	UserOutlined,
-	VideoCameraOutlined,
-	UploadOutlined,
-	DesktopOutlined,
-	PieChartOutlined,
-	FileOutlined,
-	TeamOutlined,
 } from '@ant-design/icons';
 
 import "antd/dist/antd.css";
@@ -126,16 +119,25 @@ class Layout extends React.Component {
 		return (
 			<BaseLayout>
 				<SideNav collapsed={this.state.collapsed} />
-				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin }}>
-					<Header className="site-layout-background" style={{ padding: 0 }}>
+				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh", backgroundColor: "#FFF" }}>
+					<Header className="site-layout-background" style={{
+						padding: 0,
+						display:'flex',
+						justifyContent: "space-between", borderBottom: '1px solid #e1e1e1' }}>
 						{React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
 							className: 'trigger',
 							onClick: this.toggle,
 						})}
+
+						{this.props.drafterbit.modules.map((mo,i) => {
+							if(typeof mo.renderNavBarMenu == "function") {
+								return mo.renderNavBarMenu(i);
+							}
+						})}
 					</Header>
 					<Content
 						// className="site-layout-background"
-						style={{ margin: '24px 16px 0', overflow: 'initial' }}
+						style={{ margin: '24px 16px 0', overflow: 'initial'}}
 					>
 						{this.props.children}
 					</Content>

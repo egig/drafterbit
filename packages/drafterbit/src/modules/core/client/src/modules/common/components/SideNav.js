@@ -111,6 +111,7 @@ class SideNav extends React.Component {
                 height: '100vh',
                 position: 'fixed',
                 left: 0,
+                zIndex: 1000
             }} trigger={null} collapsible collapsed={this.props.collapsed}>
                 <div className="logo" />
                 {/*<Link to={"/"}><h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1></Link>*/}
