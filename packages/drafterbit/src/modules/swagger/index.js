@@ -1,8 +1,9 @@
 const routes  = require('./routes');
+const Module = require('../../Module');
 
-class SwaggerModule {
+class SwaggerModule extends Module {
     constructor(app) {
-    
+        super(app)
         app.on('routing', () => {
             app.use(routes);
         });

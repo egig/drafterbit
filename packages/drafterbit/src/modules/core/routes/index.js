@@ -14,6 +14,59 @@ function assetPath(req, asset) {
     return asset;
 }
 
+/**
+ * @swagger
+ * /settings:
+ *   get:
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /settings
+ */
+router.get("/settings", function (req, res) {
+    (async function () {
+
+        try {
+            let m = req.app.model('Setting');
+            let results = await m.getSettings();
+            res.send(results);
+        } catch (e) {
+            res.status(500);
+            res.send(e.message);
+        }
+
+    })();
+});
+
+/**
+ * @swagger
+ * /settings:
+ *   patch:
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - /settings
+ */
+router.patch("/settings", function (req, res) {
+    (async function () {
+
+        try {
+            let m = req.app.model('Setting');
+            let results = await m.setSetting(req.body.fieldset_name, req.body);
+            res.send(results);
+        } catch (e) {
+            console.log(e)
+            res.status(500);
+            res.send(e.message);
+        }
+
+    })();
+});
+
 router.get('/', function (req, res) {
 
     let assetsStr = fs.readFileSync(req.app.get('config').get('ROOT_DIR')+'/build/assets.json');

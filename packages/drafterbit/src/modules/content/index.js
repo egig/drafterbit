@@ -13,10 +13,6 @@ class ContentModule extends Module {
     registerSchema(db) {
         db.model('Type', TypeSchema, '_types');
     }
-
-    getAdminClientEntry() {
-        return this._modulePath+'/client/src/index.js';
-    }
 }
 
 module.exports = ContentModule;

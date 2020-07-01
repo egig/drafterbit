@@ -3,6 +3,7 @@ const express = require('express');
 const createWebpackConfig = require('./client/webpack.config');
 const routes = require('./routes');
 const Module = require('../../Module');
+const SettingSchema = require('./models/Setting');
 
 class CoreModule extends Module {
 
@@ -84,6 +85,10 @@ class CoreModule extends Module {
 
     getAdminClientEntry() {
         return this._modulePath+'/client/src/modules/common/index.js';
+    }
+
+    registerSchema(db) {
+        db.model('Setting', SettingSchema, '_settings');
     }
 
     commands(app) {

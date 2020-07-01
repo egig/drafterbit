@@ -5,7 +5,6 @@ class Module {
 
     config() {}
 
-
     registerSchema(db) {}
 
     registerClientConfig(serverConfig) {

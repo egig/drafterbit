@@ -100,10 +100,6 @@ app.boot = function boot(options) {
         }
 
         // register cmd
-        if(typeof moduleInstance.config == 'function') {
-            config.registerConfig(moduleInstance.config());
-        }
-
         if(typeof moduleInstance.commands == 'function') {
             let commands = moduleInstance.commands(this);
             commands.map(command => {

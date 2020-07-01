@@ -1,43 +1,62 @@
-import EventEmitter from 'eventemitter3';
-import apiClient from './apiClient';
+import React, { lazy } from 'react';
+import ReactDOM from 'react-dom';
+import moment from 'moment';
+import i18next from 'i18next';
+
+// CSS dependency first
+import 'simple-line-icons/css/simple-line-icons.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
+
+import Shell from './Shell';
+import storeFromState  from './storeFromState';
+import createDefaultState from './createDefaultState';
 import getConfig from './getConfig';
-import axios from 'axios';
-import React from 'react';
 
-class Drafterbit extends EventEmitter {
+// TODO
+const drafterbit = window.__DRAFTERBIT__;
 
-    modules = [];
-    getConfig = getConfig;
-    getApiClient () {
-        if(!this.apiClient) {
-            this.apiClient =  apiClient.createClient({
-                baseURL: getConfig('apiBaseURL'),
-                apiKey: getConfig('apiKey')
-            });
-        }
-        return this.apiClient;
+const i18n = i18next.createInstance();
+i18n.init({
+    lng: 'id',
+    fallbackLng: 'en',
+    debug: !!parseInt(getConfig("debug")),
+    resources: [],
+});
+
+moment.locale('id', {
+    months: 'januari_februari_maret_april_mei_juni_juli_agustus_september_oktober_november_desember'.split('_'),
+    monthsShort: 'jan_feb_mar_apr_mei_jun_jul_agu_sep_okt_nov_des'.split('_')
+});
+
+let languageContext = {namespaces: [], i18n};
+
+let defaultState = createDefaultState(drafterbit);
+
+let preRenderActions =  drafterbit.modules.map(mo => {
+    if(typeof mo.preRenderAction === "function") {
+        return mo.preRenderAction(defaultState);
     }
+}).filter(i => !!i);
 
-    getAxiosInstance() {
-        let apiClientOptions = {
-            baseURL: getConfig('apiBaseURL'),
-            timeout: 10000,
-            params: {
-                api_key: getConfig('apiKey')
-            }
-        };
+Promise.all(preRenderActions)
+    .then(reslist => {
+        renderApp(defaultState);
+    })
+    .catch(e => {
+        console.error(e);
+        let message = "Oops, Please try again in few minutes";
+        ReactDOM.render(<div style={{margin: "25px"}}>{ message }</div>, document.getElementById('app'));
+    });
 
-        return axios.create(apiClientOptions);
-    }
+function renderApp(dState) {
 
-    addModule(moduleObject) {
-        this.modules.push(moduleObject)
-    }
+    const store = storeFromState(dState, drafterbit);
+    drafterbit.store = store;
+
+    ReactDOM.render(
+        <Shell
+                store={store}
+                drafterbit={drafterbit}
+                languageContext={languageContext} />, document.getElementById('app'));
 }
-
-const drafterbit = new Drafterbit();
-window.__DRAFTERBIT__ = drafterbit;
-
-export default drafterbit
-
-

@@ -3,9 +3,11 @@ const inquirer = require('inquirer');
 const FieldType = require('@drafterbit/common/FieldType');
 const fieldsToSchema = require('@drafterbit/common/fieldsToSchema');
 const password = require('./lib/password');
+const Module = require('../../Module');
 
-class AuthModule {
+class AuthModule extends Module {
     constructor(app) {
+        super(app);
         app.on('routing', () => {
             app.use(routes);
         });
@@ -13,10 +15,6 @@ class AuthModule {
 
     registerSchema(db) {
         // db.model('User', UserSchema, '_users');
-    }
-
-    getAdminClientEntry() {
-        return this._modulePath+'/client/src/index.js';
     }
 
     config() {
@@ -95,7 +93,7 @@ class AuthModule {
 
 function install(app, email, password) {
 
-    let m = app.model('ContentType');
+    let m = app.model('Type');
 
     return m.deleteMany({
         $or: [

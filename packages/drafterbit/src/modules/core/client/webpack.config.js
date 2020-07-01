@@ -9,7 +9,7 @@ module.exports = env => {
     console.log('Build output path: ', env.outputPath);
 
     let commonConfig = {
-        entry: [ '@babel/polyfill', __dirname+'/src/index.js', __dirname+'/src/app.js'],
+        entry: [ '@babel/polyfill', __dirname+'/src/init.js', __dirname+'/src/index.js'],
         output: {
             path: env.outputPath,
             filename: 'js/[name].[hash].js',

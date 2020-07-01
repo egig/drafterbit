@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 import Layout from './modules/common/components/Layout';
 import { HashRouter, Redirect } from 'react-router-dom';
 
-class Drafterbit extends React.Component {
+class Shell extends React.Component {
 
     render() {
         return (
@@ -85,9 +85,9 @@ class Drafterbit extends React.Component {
     }
 }
 
-Drafterbit.childContextTypes = {
+Shell.childContextTypes = {
     drafterbit: PropTypes.object.isRequired,
     languageContext: PropTypes.object.isRequired
 };
 
-export default Drafterbit;
+export default Shell;
