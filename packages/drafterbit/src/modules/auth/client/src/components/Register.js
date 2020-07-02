@@ -6,6 +6,8 @@ import ApiClient from '../ApiClient';
 import './Register.css';
 import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
+import { Form, Input, Button, Checkbox } from 'antd';
+
 class Register extends React.Component {
 
     constructor(props) {
@@ -14,15 +16,17 @@ class Register extends React.Component {
         this.state = {
             errorText: ''
         };
+
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(form) {
+    onSubmit(values) {
         let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
         return client
             .createUser(
-                form.full_name.value,
-                form.email.value,
-                form.password.value
+                values.full_name,
+                values.email,
+                values.password
             )
             .then(response => {
                 this.props.history.push('/register-success');
@@ -48,40 +52,28 @@ class Register extends React.Component {
 		            </div>
 	            }
 
-	            <form onSubmit={(e) => {
-                    e.preventDefault();
-                    this.onSubmit(e.target);
-                }}>
-                    <div className="form-group">
-                        <label htmlFor="full_name">Full Name</label>
-                        <input type="text" name="full_name" className={'form-control register-formControlBorder'} id="full_name" required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="email">E-Mail</label>
-                        <input type="email" name="email" className={'form-control register-formControlBorder'} id="email" required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input id="password" type="password" className={'form-control register-formControlBorder'} name="password" required />
-                    </div>
-
-                    <div className="form-group">
-                        <span>
-                            <input type="checkbox" name="agree_term" /> I agree to the Terms and Conditions
-                        </span>
-                    </div>
-
-                    <div className={'form-group register-noMargin'}>
-                        <button type="submit" className={'btn btn-success btn-block register-btnPadding'}>
-                            Register
-                        </button>
-                    </div>
-                    <div className={'register-marginTop20 text-center'}>
-                        Already have an account? <Link to="/login">Login</Link>
-                    </div>
-                </form>
+                <Form
+                    layout="vertical"
+                    onFinish={this.onSubmit}>
+                    <Form.Item label="Full Name">
+                        <Input name="full_name" placeholder="Full Name" />
+                    </Form.Item>
+                    <Form.Item label="Email">
+                        <Input name="email" placeholder="Email" />
+                    </Form.Item>
+                    <Form.Item label="Password">
+                        <Input type="password" name="password" placeholder="Password" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                            <Checkbox>Agree with Term & condition</Checkbox>
+                        </Form.Item>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button htmlType="submit" className="register-form-button" type="primary">Submit</Button>
+                    </Form.Item>
+                    Or  <Link to="/login">Login</Link>
+                </Form>
             </AuthCard>
         );
     }

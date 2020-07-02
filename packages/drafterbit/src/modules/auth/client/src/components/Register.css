@@ -1,19 +1,23 @@
-.register-formControlBorder {
-    border-width: 2px;
-}
+/*.register-formControlBorder {*/
+/*    border-width: 2px;*/
+/*}*/
 
-.register-btnBlockPadding {
-    padding: 12px 10px;
-}
+/*.register-btnBlockPadding {*/
+/*    padding: 12px 10px;*/
+/*}*/
 
-.register-marginTop20 {
-    margin-top: 20px;
-}
+/*.register-marginTop20 {*/
+/*    margin-top: 20px;*/
+/*}*/
 
-.register-noMargin {
-    margin: 0
-}
+/*.register-noMargin {*/
+/*    margin: 0*/
+/*}*/
 
-.register-btnPadding {
-    padding: 12px 10px;
+/*.register-btnPadding {*/
+/*    padding: 12px 10px;*/
+/*}*/
+
+.register-form-button {
+    width: 100%;
 }
