@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
+import ApiClient from './ApiClient';
 import { Redirect } from 'react-router-dom';
 
 const ApiKeyNew = lazy(() => import('./components/ApiKeyNew'));
@@ -23,6 +24,9 @@ function createApiKeyClientModule(drafterbit) {
         generalMenus: [
             {link: "/api_keys", label: "Api Keys", iconClass: "icon-key", icon: <KeyOutlined/>}
         ],
+        registerApiClient() {
+            return ApiClient
+        }
         // renderMenuSection() {
         //     return <MenuSection />
         // },

@@ -28,7 +28,7 @@ class Login extends React.Component {
         let email = values.email;
         let password = values.password;
 
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.createUserSession(email, password)
 		    .then(r => {
 			    // TODO redirect to referrer

@@ -1,30 +1,14 @@
-import axios from 'axios';
+const ApiClient = {
 
-class ApiClient {
-
-    constructor(axiosInstance) {
-        this.axiosInstance = axiosInstance;
-    }
-
-    async _doGetRequest(path) {
-        let response = await this.axiosInstance.get(`${path}`);
-        return response.data;
-    }
-
-    async _doPostRequest(path, data) {
-        let response = await this.axiosInstance.post(`${path}`, data);
-        return response.data;
-    }
-
-    async getApiKeys() {
+    getApiKeys: async function getApiKeys() {
         return this._doGetRequest('/api_keys');
-    }
+    },
 
-    async getApiKey(apiKeyId) {
+    getApiKey: async function getApiKey(apiKeyId) {
         return this._doGetRequest(`/api_keys/${apiKeyId}`);
-    }
+    },
 
-    async createApiKey(name, key, restrictionType, restrictionValue) {
+    createApiKey: async function createApiKey(name, key, restrictionType, restrictionValue) {
         let response = await this.axiosInstance.post('/api_keys', {
             name,
             key,
@@ -33,9 +17,9 @@ class ApiClient {
         });
 
         return response.data;
-    }
+    },
 
-    async updateApiKey(apiKeyId, name, key, restrictionType, restrictionValue) {
+    updateApiKey: async function updateApiKey(apiKeyId, name, key, restrictionType, restrictionValue) {
         let response = await this.axiosInstance.patch(`/api_keys/${apiKeyId}`, {
             apiKeyId, name, key, restriction_type: restrictionType, restriction_value: restrictionValue
         });

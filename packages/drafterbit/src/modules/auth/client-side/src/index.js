@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
 import { getCookie } from '@drafterbit/common/client-side/cookie';
 import NavBarMenu from './components/NavBarMenu';
+import ApiClient from './ApiClient';
 
 const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
@@ -56,6 +57,9 @@ function createAuthClientModule() {
         },
         renderNavBarMenu(i) {
             return <NavBarMenu key={i} />
+        },
+        registerApiClient() {
+            return ApiClient
         }
     }
 }

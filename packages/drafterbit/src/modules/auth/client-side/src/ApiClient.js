@@ -1,18 +1,13 @@
-import axios from 'axios';
 import handleAxiosError from './handleAxiosError';
 
-class ApiClient {
+const ApiClient = {
 
-    constructor(axiosInstance) {
-        this.axiosInstance = axiosInstance;
-    }
-
-    async getUsers() {
+    getUsers: async function getUsers() {
         let response = await this.axiosInstance.get('/users');
         return response.data;
-    }
+    },
 
-    async createUserSession(email, password) {
+    createUserSession: async function createUserSession(email, password) {
         try {
 
             let response = await this.axiosInstance.post('/token', {
@@ -23,9 +18,9 @@ class ApiClient {
         } catch (error) {
             handleAxiosError(error);
         }
-    }
+    },
 
-    async validateToken(token) {
+    validateToken: async function validateToken(token) {
         try {
 
             let response = await this.axiosInstance.get('/token_validate', {
@@ -38,9 +33,9 @@ class ApiClient {
         } catch (error) {
             handleAxiosError(error);
         }
-    }
+    },
 
-    async createUser(name, email, password) {
+    createUser: async function createUser(name, email, password) {
         try {
 
             let response = await this.axiosInstance.post('/users', {
