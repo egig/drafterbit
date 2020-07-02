@@ -19,7 +19,7 @@ class ContentTypes extends React.Component {
     }
 
     loadContents = () => {
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         return client.getContentTypes()
             .then((contentTypes) => {
                 this.setState({

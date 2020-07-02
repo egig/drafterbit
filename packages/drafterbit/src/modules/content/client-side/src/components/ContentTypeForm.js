@@ -35,7 +35,7 @@ class ContentTypeForm extends React.Component {
 
     onSubmit(form) {
         let { contentTypeId, name, slug, description } = this.state;
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
     
         (() => {
             if(!!contentTypeId) {

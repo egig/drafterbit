@@ -75,7 +75,7 @@ class ContentEdit extends React.Component {
             }
         });
 
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.updateEntry(slug, contentId, data)
             .then(r => {
                 this.setState({
@@ -89,7 +89,7 @@ class ContentEdit extends React.Component {
         let contentId = params.content_id;
         let slug = params.content_type_slug;
 
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         Promise.all([
             client.getContentType(slug),
             client.getEntry(slug, contentId)

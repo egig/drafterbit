@@ -29,7 +29,7 @@ class Contents extends React.Component {
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
         let ctSlug = match.params.content_type_slug;
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         return client.getContentType(ctSlug)
 		    .then(contentType => {
 
@@ -52,7 +52,7 @@ class Contents extends React.Component {
 
     handleDelete = (selected) => {
         let slug = this.props.match.params["content_type_slug"];
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance())
+        let client = this.props.drafterbit.getApiClient2();
         let deleteActionPromise = selected.map(entryId => {
             return client.deleteEntry(slug, entryId);
         });
@@ -66,7 +66,7 @@ class Contents extends React.Component {
     onClickAdd = (e) => {
         // create draft
         let slug = this.props.match.params["content_type_slug"]
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.createDraft(slug)
             .then(d => {
                 this.props.history.push(`/contents/${slug}/${d.item._id}`);

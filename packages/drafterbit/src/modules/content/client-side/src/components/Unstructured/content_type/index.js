@@ -25,7 +25,7 @@ class ContentType extends React.Component {
 
   componentDidMount() {
 
-    let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+    let client = this.props.drafterbit.getApiClient2();
     client.getContentTypes()
         .then((contentTypes) => {
           this.setState({
@@ -43,7 +43,7 @@ class ContentType extends React.Component {
   }
 
   loadContent = (contentType) => {
-    let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+    let client = this.props.drafterbit.getApiClient2();
     client.getEntries(contentType)
             .then((res) => {
                 this.setState({

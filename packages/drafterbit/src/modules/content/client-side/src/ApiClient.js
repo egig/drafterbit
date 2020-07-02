@@ -1,54 +1,40 @@
-class ApiClient {
+const ApiClient = {
 
-    constructor(axiosInstance) {
-        this.axiosInstance = axiosInstance;
-    }
-
-    async _doGetRequest(path) {
-        let response = await this.axiosInstance.get(`${path}`);
-        return response.data;
-    }
-
-    async _doPostRequest(path, data) {
-        let response = await this.axiosInstance.post(`${path}`, data);
-        return response.data;
-    }
-
-    async getFieldTypes() {
+    getFieldTypes: async function getFieldTypes() {
         let response = await this.axiosInstance.get('/field_types');
         return response.data;
-    }
+    },
 
-    async getContentTypes() {
+    getContentTypes: async function getContentTypes() {
         return this._doGetRequest('/types');
-    }
+    },
 
-    async getContentType(contentTypeId) {
+    getContentType: async function getContentType(contentTypeId) {
         return this._doGetRequest(`/types/${contentTypeId}`);
-    }
+    },
 
-    async createContentType(name, slug, description, fields=[]) {
+    createContentType: async function createContentType(name, slug, description, fields=[]) {
         return this._doPostRequest('/types', {
             name,
             slug,
             description,
             fields,
         });
-    }
+    },
 
-    async deleteContentType(contentTypeId) {
+    deleteContentType: async function deleteContentType(contentTypeId) {
         let response = await this.axiosInstance.delete(`/types/${contentTypeId}`);
         return response.data;
-    }
+    },
 
-    async updateContentType(contentTypeId, name, slug, description, fields) {
+    updateContentType: async function updateContentType(contentTypeId, name, slug, description, fields) {
         let response = await this.axiosInstance.patch(`/types/${contentTypeId}`, {
             name, slug, description, fields
         });
         return response.data;
-    }
+    },
 
-    async updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules, showInList)  {
+    updateContentTypeField: async function updateContentTypeField(contentTypeId, fieldId, label, name, relatedContentTypeSlug, validationRules, showInList)  {
         let url = `/types/${contentTypeId}/fields/${fieldId}`;
         let response = await this.axiosInstance.patch(url, {
             label, name,
@@ -57,7 +43,7 @@ class ApiClient {
             show_in_list: showInList
         });
         return response.data;
-    }
+    },
 
     /**
      *
@@ -69,7 +55,7 @@ class ApiClient {
      * @param validationRules
      * @returns {Promise<*>}
      */
-    async addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules, showInList)  {
+    addContentTypeField: async function addContentTypeField(contentTypeId, label, name, typeId, relatedContentTypeSlug, validationRules, showInList)  {
         let url = `/types/${contentTypeId}/fields`;
         let response = await this.axiosInstance.post(url, {
             label,
@@ -80,19 +66,19 @@ class ApiClient {
             show_in_list: showInList
         });
         return response.data;
-    }
+    },
 
-    async getContentTypeFields(slug, page) {
+    getContentTypeFields: async function getContentTypeFields(slug, page) {
         let response = await this.axiosInstance.get(`/types/${slug}`);
         return response.data;
-    }
+    },
 
-    async createDraft(slug) {
+    createDraft: async function createDraft(slug) {
         let response = await this.axiosInstance.post(`/${slug}`, {});
         return response.data;
-    }
+    },
 
-    async getEntries(slug, page, sortBy, sortDir, fqSr) {
+    getEntries: async function getEntries(slug, page, sortBy, sortDir, fqSr) {
         return this.axiosInstance.get(`/${slug}`, {
             params: {
                 page,
@@ -101,43 +87,43 @@ class ApiClient {
                 fq: fqSr
             }
         });
-    }
+    },
 
-    async getEntry(slug, entryId) {
+    getEntry: async function getEntry(slug, entryId) {
         let response = await this.axiosInstance.get(`/${slug}/${entryId}`);
         return response.data;
-    }
+    },
 
-    async updateEntry(slug, entryId, data) {
+    updateEntry: async function updateEntry(slug, entryId, data) {
         let response = await this.axiosInstance.patch(`/${slug}/${entryId}`, data);
         return response.data;
-    }
+    },
 
-    async deleteEntry(slug, entryId) {
+    deleteEntry: async function deleteEntry(slug, entryId) {
         let response = await this.axiosInstance.delete(`${slug}/${entryId}`);
         return response.data;
-    }
+    },
 
-    async createContent(contentTypeId, fields) {
+    createContent: async function createContent(contentTypeId, fields) {
         let response = await this.axiosInstance.post(`/types/${contentTypeId}/contents`, {
             fields: fields
         });
         return response.data;
-    }
+    },
 
-    async updateContent(contentId, fields) {
+    updateContent: async function updateContent(contentId, fields) {
         let response = await this.axiosInstance.patch(`/contents/${contentId}`, {
             fields: fields
         });
         return response.data;
-    }
+    },
 
-    async deleteContent(contentId) {
+    deleteContent: async function deleteContent(contentId) {
         let response = await this.axiosInstance.delete(`/contents/${contentId}`);
         return response.data;
-    }
+    },
 
-    async getContents(contentTypeId, page, sortBy, sortDir, fqSr) {
+    getContents: async function getContents(contentTypeId, page, sortBy, sortDir, fqSr) {
     	return this.axiosInstance.get(`/types/${contentTypeId}/contents`, {
             params: {
                 page,
@@ -146,9 +132,9 @@ class ApiClient {
                 fq: fqSr
             }
         });
-    }
+    },
 
-    async getContent(contentId) {
+    getContent: async function getContent(contentId) {
         let response = await this.axiosInstance.get(`/contents/${contentId}`);
         return response.data;
     }

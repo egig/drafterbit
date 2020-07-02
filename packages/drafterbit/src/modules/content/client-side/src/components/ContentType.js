@@ -36,7 +36,7 @@ class ContentType extends React.Component {
     }
 
     fetchContentType() {
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         return client.getContentType(this.props.match.params.content_type_id)
             .then(contentType => {
 
@@ -67,7 +67,7 @@ class ContentType extends React.Component {
 
     deleteContentType(deleteForm) {
         // TODO create alert
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.deleteContentType(deleteForm.id.value)
             .then(r => {
                 // TODO create success notif
@@ -76,7 +76,7 @@ class ContentType extends React.Component {
     }
 
     doUpdate() {
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.updateContentType(
             this.state._id,
             this.state.name,

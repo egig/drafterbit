@@ -15,7 +15,7 @@ class MenuSection extends React.Component {
 
     componentDidMount() {
         // TODO changes this to store redux state
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.getContentTypes()
             .then((contentTypes) => {
                 // Display only non-system collection

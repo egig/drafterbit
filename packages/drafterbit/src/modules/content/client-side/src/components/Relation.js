@@ -14,7 +14,7 @@ class Relation extends React.Component {
 
     componentDidMount() {
 
-        let client = new ApiClient(this.props.drafterbit.getAxiosInstance());
+        let client = this.props.drafterbit.getApiClient2();
         client.getEntries(this.props.relatedContentTypeSlug)
             .then((res) => {
                 this.setState({

@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
+import ApiClient from './ApiClient';
 import MenuSection from './components/MenuSection';
 import { Redirect } from 'react-router-dom';
 
@@ -31,6 +32,10 @@ function createContentClientModule(drafterbit) {
         },
         processRoute(route) {
             //..
+        },
+
+        registerApiClient() {
+            return ApiClient
         }
     }
 }
