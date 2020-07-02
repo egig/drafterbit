@@ -100,7 +100,7 @@ import {
 
 import "antd/dist/antd.css";
 
-const { Header, Sider, Content, Footer } = BaseLayout;
+const { Header, Content, Footer } = BaseLayout;
 const { SubMenu } = Menu;
 
 class Layout extends React.Component {
@@ -115,7 +115,7 @@ class Layout extends React.Component {
 	};
 
 	render() {
-		let layoutMargin = this.state.collapsed ? 80 : 200;
+		let layoutMargin = this.state.collapsed ? 80 : 220;
 		return (
 			<BaseLayout>
 				<SideNav collapsed={this.state.collapsed} />
