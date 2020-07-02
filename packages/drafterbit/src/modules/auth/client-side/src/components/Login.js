@@ -4,7 +4,7 @@ import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 import translate from '@drafterbit/common/client-side/translate';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import { setCookie } from '../../../../admin/client-side/src/cookie';
+import { setCookie } from '@drafterbit/common/client-side/cookie';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'

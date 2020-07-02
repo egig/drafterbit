@@ -1,6 +1,4 @@
-import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from 'reactstrap';
-import {Link} from 'react-router-dom';
-import {setCookie} from '../../../../admin/client-side/src/cookie';
+import {setCookie} from '@drafterbit/common/client-side/cookie';
 import React from 'react';
 import {Menu, Dropdown} from 'antd';
 

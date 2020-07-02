@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
-import { getCookie } from '../../../admin/client-side/src/cookie';
+import { getCookie } from '@drafterbit/common/client-side/cookie';
 import NavBarMenu from './components/NavBarMenu';
 
 const Login = lazy(() => import('./components/Login'));
