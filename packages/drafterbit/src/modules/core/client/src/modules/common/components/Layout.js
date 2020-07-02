@@ -100,7 +100,7 @@ import {
 
 import "antd/dist/antd.css";
 
-const { Header, Sider, Content } = BaseLayout;
+const { Header, Sider, Content, Footer } = BaseLayout;
 const { SubMenu } = Menu;
 
 class Layout extends React.Component {
@@ -141,6 +141,7 @@ class Layout extends React.Component {
 					>
 						{this.props.children}
 					</Content>
+					<Footer style={{ textAlign: 'center' }}>Thank you for building with us</Footer>
 				</BaseLayout>
 			</BaseLayout>
 		);

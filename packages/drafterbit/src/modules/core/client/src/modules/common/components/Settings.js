@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import translate from '../../../translate';
-import Card from '@drafterbit/common/client/components/Card/Card';
+import {Row, Col, Card} from 'antd'
 import withDrafterbit from '@drafterbit/common/client/withDrafterbit';
 
 class Settings extends React.Component {
@@ -27,9 +27,9 @@ class Settings extends React.Component {
     render() {
 
         return (
-            <div className="row justify-content-md-center mt-2">
-                <div className="col col-md-12">
-                    <Card headerText="Settings">
+            <Row>
+                <Col span={24}>
+                    <Card title="Settings">
                         {this.state.settings.map((setting, i) => {
                             return (<table key={i}>
                                 <tbody>
@@ -42,8 +42,8 @@ class Settings extends React.Component {
                             </table>)
                         })}
                     </Card>
-                </div>
-            </div>
+                </Col>
+            </Row>
         );
     }
 }

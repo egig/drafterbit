@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card as BaseCard, CardHeader, CardBody} from 'reactstrap';
-
 class Card extends React.Component {
 
     render() {

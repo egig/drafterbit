@@ -1,16 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import translate from '../../../translate';
-import Card from '@drafterbit/common/client/components/Card/Card';
+import { Row, Col, Card } from 'antd'
 
 class Dashboard extends React.Component {
 
     render() {
 
         return (
-            <Card headerText="Home">
-                <p>Welcome !</p>
-            </Card>
+            <Row>
+                <Col span={24}>
+                    <Card title="Dashboard">
+                    <p>Welcome !</p>
+                    </Card>
+                </Col>
+            </Row>
         );
     }
 }

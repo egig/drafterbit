@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
-    HomeOutlined
+    MonitorOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 
@@ -18,7 +18,7 @@ class MenuSection extends React.Component {
     render() {
         return (
             <Menu theme="dark" selectable={false} mode="inline">
-                <Menu.Item icon={<HomeOutlined />} key="item-group-dashboard-home"><Link to="/">Home</Link></Menu.Item>
+                <Menu.Item icon={<MonitorOutlined />} key="item-group-dashboard-home"><Link to="/">Dashboard</Link></Menu.Item>
             </Menu>
         )
     }
