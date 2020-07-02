@@ -8,10 +8,6 @@ class SwaggerModule extends Module {
             app.use(routes);
         });
     }
-
-    getAdminClientEntry() {
-        return this._modulePath+'/client/src/index.js';
-    }
 }
 
 module.exports = SwaggerModule;

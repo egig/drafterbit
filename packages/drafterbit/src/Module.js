@@ -11,8 +11,8 @@ class Module {
         return {};
     }
 
-    getAdminClientEntry() {
-        return this._modulePath+'/client/src/index.js';
+    getAdminClientSideEntry() {
+        return this._modulePath+'/client-side/src/index.js';
     }
 }
 

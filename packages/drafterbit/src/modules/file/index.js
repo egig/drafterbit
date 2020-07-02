@@ -9,10 +9,6 @@ class FileModule extends Module {
         });
     }
 
-    getAdminClientEntry() {
-        return this._modulePath+'/client/src/index.js';
-    }
-
     config() {
         return {
             'FILES_BASE_PATH': './files'
