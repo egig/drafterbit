@@ -1,4 +1,3 @@
-import apiClient from '../../../admin/client-side/src/apiClient';
 import {SET_CONTENT_TYPES} from './action_types';
 
 
@@ -55,88 +54,87 @@ const setContent = (content) => {
     };
 };
 
-const getContents = (contentTypeId, page) => (dispatch) => {
-    let client = apiClient.createClient({});
-    client.getContents(contentTypeId, page)
-        .then((contents) => {
-            return dispatch(setContents(contents));
-        });
-};
-
-const getContent = (contentId) => (dispatch) => {
-    let client = apiClient.createClient({});
-    client.getContent(contentId)
-        .then((content) => {
-            return dispatch(setContent(content));
-        });
-};
-
-
-const getContentTypeFields = (ctSlug) => (dispatch) => {
-    let client = apiClient.createClient({});
-    return client.getContentTypeFields(ctSlug)
-        .then((contentType) => {
-            return dispatch(setContentTypeField(contentType));
-        });
-};
-
-const getCTFieldsAndGetContent = (ctSlug, contentId) => (dispatch) => {
-    let client = apiClient.createClient({});
-    return Promise.all([
-        client.getContentTypeFields(ctSlug)
-            .then((contentType) => {
-                return dispatch(setContentTypeField(contentType));
-            }),
-        client.getContent(contentId)
-            .then((content) => {
-                return dispatch(setContent(content));
-            })
-    ]);
-};
-
-
-const createContent = (contentTypeId, formData) => (dispatch) => {
-
-    dispatch(setAjaxLoading(true));
-
-    let client = apiClient.createClient({});
-    return client.createContent(contentTypeId, formData)
-        .then((r) => {
-            return dispatch(setAjaxLoading(false));
-        });
-};
-
-const updateContent = (contentId, formData) => (dispatch) => {
-
-    dispatch(setAjaxLoading(true));
-
-    let client = apiClient.createClient({});
-    return client.updateContent(contentId, formData)
-
-	    .then((r) => {
-            return dispatch(setAjaxLoading(false));
-        });
-};
-
-const deleteContents = (contentIds, formData) => (dispatch) => {
-
-    let client = apiClient.createClient({});
-    let deleteActionPromise = contentIds.map(contentId => {
-        return client.deleteContent(contentId);
-    });
-
-    return Promise.all(deleteActionPromise);
-};
-
+// const getContents = (contentTypeId, page) => (dispatch) => {
+//     let client = apiClient.createClient({});
+//     client.getContents(contentTypeId, page)
+//         .then((contents) => {
+//             return dispatch(setContents(contents));
+//         });
+// };
+//
+// const getContent = (contentId) => (dispatch) => {
+//     let client = apiClient.createClient({});
+//     client.getContent(contentId)
+//         .then((content) => {
+//             return dispatch(setContent(content));
+//         });
+// };
+//
+//
+// const getContentTypeFields = (ctSlug) => (dispatch) => {
+//     let client = apiClient.createClient({});
+//     return client.getContentTypeFields(ctSlug)
+//         .then((contentType) => {
+//             return dispatch(setContentTypeField(contentType));
+//         });
+// };
+//
+// const getCTFieldsAndGetContent = (ctSlug, contentId) => (dispatch) => {
+//     let client = apiClient.createClient({});
+//     return Promise.all([
+//         client.getContentTypeFields(ctSlug)
+//             .then((contentType) => {
+//                 return dispatch(setContentTypeField(contentType));
+//             }),
+//         client.getContent(contentId)
+//             .then((content) => {
+//                 return dispatch(setContent(content));
+//             })
+//     ]);
+// };
+//
+//
+// const createContent = (contentTypeId, formData) => (dispatch) => {
+//
+//     dispatch(setAjaxLoading(true));
+//
+//     let client = apiClient.createClient({});
+//     return client.createContent(contentTypeId, formData)
+//         .then((r) => {
+//             return dispatch(setAjaxLoading(false));
+//         });
+// };
+//
+// const updateContent = (contentId, formData) => (dispatch) => {
+//
+//     dispatch(setAjaxLoading(true));
+//
+//     let client = apiClient.createClient({});
+//     return client.updateContent(contentId, formData)
+//
+// 	    .then((r) => {
+//             return dispatch(setAjaxLoading(false));
+//         });
+// };
+//
+// const deleteContents = (contentIds, formData) => (dispatch) => {
+//
+//     let client = apiClient.createClient({});
+//     let deleteActionPromise = contentIds.map(contentId => {
+//         return client.deleteContent(contentId);
+//     });
+//
+//     return Promise.all(deleteActionPromise);
+// };
 
 
 export default{
-    getContentTypeFields,
-    createContent,
-    updateContent,
-    getContents,
-    getContent,
-    getCTFieldsAndGetContent,
-    deleteContents,
+    // getContentTypeFields,
+    // createContent,
+    // updateContent,
+    // getContents,
+    // getContent,
+    // getCTFieldsAndGetContent,
+    // deleteContents,
     setContentTypes
 };

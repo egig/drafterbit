@@ -1,6 +1,6 @@
-import Drafterbit from './Drafterbit'
+import ClientSide from './ClientSide'
 
-const drafterbit = new Drafterbit();
+const drafterbit = new ClientSide();
 window.$dt = drafterbit;
 
 export default drafterbit

@@ -1,4 +1,4 @@
-import handleAxiosError from './handleAxiosError';
+import handleAxiosError from '@drafterbit/common/client-side/handleAxiosError';
 
 const ApiClient = {
 

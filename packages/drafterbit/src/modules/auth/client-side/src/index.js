@@ -45,7 +45,7 @@ import {
 
             return route;
         },
-        preRenderAction(state) {
+        stateFilter(state) {
             let t = getCookie('dt_auth_token');
             if (!!t) {
                 // TODO get logged in user detail here

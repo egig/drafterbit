@@ -19,13 +19,13 @@ moment.locale('id', {
 
     let defaultState = $dt.createDefaultState();
 
-    let preRenderActions =  $dt.modules.map(mo => {
-        if(typeof mo.preRenderAction === "function") {
-            return mo.preRenderAction(defaultState);
+    let stateFilters =  $dt.modules.map(mo => {
+        if(typeof mo.stateFilter === "function") {
+            return mo.stateFilter(defaultState);
         }
     }).filter(i => !!i);
 
-    Promise.all(preRenderActions)
+    Promise.all(stateFilters)
         .then(() => {
             $dt.storeFromState(defaultState);
             ReactDOM.render(<Shell drafterbit={$dt}/>, document.getElementById('app'));

@@ -1,9 +1,7 @@
 import EventEmitter from 'eventemitter3';
-import apiClient from './apiClient';
 import getConfig from './getConfig';
-import axios from 'axios';
 import React from 'react';
-import FuncClient from './apiClient/FuncClient';
+import ApiClient from './ApiClient';
 import { combineReducers } from 'redux';
 import { createStore, applyMiddleware } from  'redux';
 import thunk from 'redux-thunk';
@@ -17,7 +15,7 @@ i18n.init({
     resources: [],
 });
 
-class Drafterbit extends EventEmitter {
+class ClientSide extends EventEmitter {
 
     modules = [];
     store = [];
@@ -38,13 +36,13 @@ class Drafterbit extends EventEmitter {
         });
 
 
-        FuncClient.prototype  = Object.assign({}, FuncClient.prototype, clientProto);
+        ApiClient.prototype  = Object.assign({}, ApiClient.prototype, clientProto);
         let options = {
             baseURL: getConfig('apiBaseURL'),
             apiKey: getConfig('apiKey')
         };
 
-        this.apiClient2 = new FuncClient(options);
+        this.apiClient2 = new ApiClient(options);
     }
 
     getApiClient() {
@@ -81,4 +79,4 @@ class Drafterbit extends EventEmitter {
     }
 }
 
-export default Drafterbit
+export default ClientSide
