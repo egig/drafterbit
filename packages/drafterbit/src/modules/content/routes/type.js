@@ -165,9 +165,7 @@ router.post('/types/:type_name/fields',
         let s = await m.addField(typeName, req.body);
 
         // update compiled models
-        let contentType = await  m.getType(typeName);
-        delete req.app.getDB().models[contentType.slug];
-
+        delete req.app.getDB().models[typeName];
         return s;
     })
 );

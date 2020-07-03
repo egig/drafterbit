@@ -186,20 +186,12 @@ class ContentEdit extends React.Component {
     // }
 
     renderRelation(f,i,value) {
-        return <Field value={value} onChange={(selectedList, actionsContainer) => {
-
-            selectedList = selectedList || [];
-
-            console.log(selectedList, actionsContainer);
+        return <Field value={value} onChange={(value, selectedObjList) => {
 
             this.setState(oldState => {
 
                 let formData = oldState.formData;
-                if (f.multiple) {
-                    formData[f.name] =  selectedList.map(s => s.value);
-                } else {
-                    formData[f.name] = selectedList.value;
-                }
+                formData[f.name] =  value;
                 return Object.assign({}, oldState, {
                     formData
                 });

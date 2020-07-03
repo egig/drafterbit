@@ -1,9 +1,8 @@
 
-import React, { Component, Fragment } from 'react'
-import Select from 'react-select'
+import React, { Fragment } from 'react'
+import Select from 'react-select' // TODO use antd.Select instead
 import { connect } from 'react-redux';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import ApiClient from '../../../ApiClient';
 
 class ContentType extends React.Component {
 

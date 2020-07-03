@@ -76,12 +76,7 @@ class Contents extends React.Component {
     };
 
     canBeDisplayed(field) {
-        return ([
-            FieldType.RELATION_TO_MANY,
-            FieldType.RELATION_TO_ONE,
-            FieldType.RICH_TEXT,
-            FieldType.UNSTRUCTURED
-        ].indexOf(field.type_name) === -1) && field.show_in_list
+        return (FieldType.primitives().indexOf(field.type_name) !== -1) && field.show_in_list
     }
 
     render() {
