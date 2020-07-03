@@ -1,7 +1,7 @@
 import Drafterbit from './Drafterbit'
 
 const drafterbit = new Drafterbit();
-window.__DRAFTERBIT__ = drafterbit;
+window.$dt = drafterbit;
 
 export default drafterbit
 

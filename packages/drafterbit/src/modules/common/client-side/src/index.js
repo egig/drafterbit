@@ -8,9 +8,9 @@ import {
     SettingOutlined,
 } from '@ant-design/icons';
 
-function createCommonModule(drafterbit) {
+(($dt) => {
 
-    return {
+    $dt.addModule({
         name: "common",
         stateReducer: stateReducer,
         routes: [
@@ -34,7 +34,6 @@ function createCommonModule(drafterbit) {
                 }
             }
         }
-    }
-}
+    });
 
-window.__DRAFTERBIT__.addModule(createCommonModule(window.__DRAFTERBIT__));
+})(window.$dt);

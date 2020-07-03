@@ -13,15 +13,14 @@ import {
     BuildOutlined,
 } from '@ant-design/icons';
 
-function createContentClientModule(drafterbit) {
-
-    return {
+(($dt) => {
+    $dt.addModule({
         name: "content",
         stateReducer: stateReducer,
         routes: [
             {path: "/contents/:content_type_slug/:content_id", component: ContentEdit},
             {path: "/contents/:content_type_slug", component: Contents},
-            {path: "/content_types/:content_type_id", component: ContentType},                
+            {path: "/content_types/:content_type_id", component: ContentType},
             {path: "/content_types", component: ContentTypes},
         ],
         generalMenus: [
@@ -30,14 +29,8 @@ function createContentClientModule(drafterbit) {
         renderMenuSection(i) {
             return <MenuSection key={i} />
         },
-        processRoute(route) {
-            //..
-        },
-
         registerApiClient() {
             return ApiClient
         }
-    }
-}
-
-window.__DRAFTERBIT__.addModule(createContentClientModule(window.__DRAFTERBIT__))
+    })
+})(window.$dt);

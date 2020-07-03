@@ -6,23 +6,14 @@ import {
     ApiOutlined,
 } from '@ant-design/icons'
 
-function createSwaggerClientModule(drafterbit) {
-
-    return {
+(($dt) => {
+    $dt.addModule({
         name: "swagger",
         routes: [
             {path: "/requests", component: Request}
         ],
         generalMenus: [
             {link: "/requests", label: "Requests", iconClass: "icon-target", icon: <ApiOutlined/>}
-        ],
-        // renderMenuSection() {
-        //     return <MenuSection />
-        // },
-        // processRoute(route) {
-        //     //..
-        // }
-    }
-}
-
-window.__DRAFTERBIT__.addModule(createSwaggerClientModule(window.__DRAFTERBIT__))
+        ]
+    })
+})(window.$dt)

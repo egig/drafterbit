@@ -1,41 +1,26 @@
 import React, { lazy } from 'react';
-// import reducer from './reducer';
 import ApiClient from './ApiClient';
 
 const Files = lazy(() => import('./components/Files'));
-// const ApiKeyEdit = lazy(() => import('./components/ApiKeyEdit'));
-// const ApiKeys = lazy(() => import('./components/ApiKeys'));
 
 import {
     FolderOutlined,
 } from '@ant-design/icons';
 
-function createFileClientModule(drafterbit) {
-
-    return {
+(($dt) => {
+    $dt.addModule({
         name: "file",
         stateName: "FILES",
         defaultState: {
         },
-        // reducer: reducer,
         routes: [
             {path: "/files", component: Files},
-            // {path: "/api_keys/:api_key_id", component: ApiKeyEdit},
-            // {path: "/api_keys", component: ApiKeys},
         ],
         generalMenus: [
             {link: "/files", label: "Files", iconClass: "icon-folder", icon: <FolderOutlined/>}
         ],
-        // renderMenuSection() {
-        //     return <MenuSection />
-        // },
-        // processRoute(route) {
-        //     //..
-        // }
         registerApiClient() {
             return ApiClient;
         }
-    }
-}
-
-window.__DRAFTERBIT__.addModule(createFileClientModule(window.__DRAFTERBIT__));
+    })
+})(window.$dt);

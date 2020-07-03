@@ -14,15 +14,14 @@ import {
     UserOutlined,
 } from '@ant-design/icons'
 
-function createAuthClientModule() {
-
-    return {
+(($dt) =>{
+    $dt.addModule({
         name: "user",
         stateReducer: stateReducer,
         pageRoutes: [
-            {path: "/login", component: Login},               
+            {path: "/login", component: Login},
             {path: "/register", component: Register},
-            {path: "/reset-password", component: ResetPassword},               
+            {path: "/reset-password", component: ResetPassword},
             {path: "/forgot-password", component: ForgotPassword},
             {path: "/register-success", component: RegisterSuccess}
         ],
@@ -61,7 +60,5 @@ function createAuthClientModule() {
         registerApiClient() {
             return ApiClient
         }
-    }
-}
-
-window.__DRAFTERBIT__.addModule(createAuthClientModule(window.__DRAFTERBIT__));
+    })
+})(window.$dt);

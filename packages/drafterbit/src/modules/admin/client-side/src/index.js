@@ -1,20 +1,19 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import i18next from 'i18next';
+import Shell from './components/Shell';
+import storeFromState  from './storeFromState';
+import createDefaultState from './createDefaultState';
+import getConfig from './getConfig';
 
 // CSS dependency first
 import 'simple-line-icons/css/simple-line-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import Shell from './components/Shell';
-import storeFromState  from './storeFromState';
-import createDefaultState from './createDefaultState';
-import getConfig from './getConfig';
-
 // TODO
-const drafterbit = window.__DRAFTERBIT__;
+const drafterbit = window.$dt;
 
 drafterbit.initApiClient();
 
@@ -42,7 +41,7 @@ let preRenderActions =  drafterbit.modules.map(mo => {
 }).filter(i => !!i);
 
 Promise.all(preRenderActions)
-    .then(reslist => {
+    .then(() => {
         renderApp(defaultState);
     })
     .catch(e => {
