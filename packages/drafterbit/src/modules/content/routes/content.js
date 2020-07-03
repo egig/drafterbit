@@ -139,12 +139,12 @@ router.patch('/:type_name/:id',
 
 /**
  * @swagger
- * /{slug}:
+ * /{type_name}:
  *   post:
  *     description: Create contents
  *     parameters:
  *       - in: path
- *         name: slug
+ *         name: type_name
  *         type: string
  *         schema:
  *           type: string
@@ -158,16 +158,16 @@ router.patch('/:type_name/:id',
  *     tags:
  *        - /{slug}
  */
-router.post('/:slug',
+router.post('/:type_name',
     validateRequest({
-        slug: {
+        type_name: {
             notEmpty: true,
-            errorMessage: 'slug required'
+            errorMessage: 'type_name required'
         }
     }),
     contentMiddleware(),
     handleFunc(async function(req) {
-        let  Model = req.app.model(req.contentType.slug);
+        let  Model = req.app.model(req.params.type_name);
 
         // TODO add filter here, e.g to hash password field
         let item = await Model.create(req.body);

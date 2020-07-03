@@ -100,6 +100,10 @@ router.post('/types',
             notEmpty: true,
             errorMessage: 'slug is required'
         },
+        display_text: {
+            notEmpty: true,
+            errorMessage: 'display_text is required'
+        },
         description: {
             optional: true,
             isString: true,
@@ -112,7 +116,8 @@ router.post('/types',
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        return await m.createContentType(req.body.name, req.body.slug,
+        return await m.createType(req.body.name, req.body.slug,
+            req.body.display_text,
             req.body.description, req.body.fields);
     })
 );

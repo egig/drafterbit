@@ -126,6 +126,20 @@ TypeSchema.statics.createContentType = function(name, slug, description, fields,
 };
 
 
+TypeSchema.statics.createType = function(name, slug, displayText, description, fields, system = false) {
+    let newContentType = new this({
+        name,
+        slug,
+        display_text: displayText,
+        description,
+        fields: fields,
+        system
+    });
+
+    return newContentType.save();
+};
+
+
 /**
  *
  * @param contentTypeId
