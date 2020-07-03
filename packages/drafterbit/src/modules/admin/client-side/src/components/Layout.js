@@ -98,8 +98,6 @@ import {
 	MenuFoldOutlined,
 } from '@ant-design/icons';
 
-import "antd/dist/antd.css";
-
 const { Header, Content, Footer } = BaseLayout;
 const { SubMenu } = Menu;
 

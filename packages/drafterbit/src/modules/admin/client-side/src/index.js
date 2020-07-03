@@ -6,6 +6,7 @@ import Shell from './components/Shell';
 // CSS dependency first
 import 'simple-line-icons/css/simple-line-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import "antd/dist/antd.css";
 import './index.css';
 
 moment.locale('id', {

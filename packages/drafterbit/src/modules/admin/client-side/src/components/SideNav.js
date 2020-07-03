@@ -84,19 +84,6 @@ import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import './SideNav.css';
 
 import { Layout as BaseLayout, Menu } from 'antd';
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    DesktopOutlined,
-    PieChartOutlined,
-    FileOutlined,
-    TeamOutlined,
-} from '@ant-design/icons';
-
-import "antd/dist/antd.css";
 
 const { Sider } = BaseLayout;
 const { SubMenu } = Menu;
@@ -104,6 +91,8 @@ const { SubMenu } = Menu;
 class SideNav extends React.Component {
 
     render() {
+
+        let brandImgURL = this.props.drafterbit.store.getState().COMMON.settings.General.brand_img_url;
 
         return (
             <Sider style={{
@@ -113,7 +102,9 @@ class SideNav extends React.Component {
                 left: 0,
                 zIndex: 1000
             }} width={220} trigger={null} collapsible collapsed={this.props.collapsed}>
-                <div className="logo" />
+                <div className="logo" >
+                    <img src={brandImgURL}/>
+                </div>
                 {/*<Link to={"/"}><h1 className="layout-navbarBrandImg">{this.props.drafterbit.getConfig("appName")}</h1></Link>*/}
                 {this.props.drafterbit.modules.map((mo,i) => {
                     if(typeof mo.renderMenuSection == "function") {
