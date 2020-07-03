@@ -9,8 +9,10 @@ import { HashRouter, Redirect } from 'react-router-dom';
 class Shell extends React.Component {
 
     render() {
+        let store = this.props.drafterbit.store;
+
         return (
-            <Provider store={this.props.store}>            
+            <Provider store={store}>
                 <HashRouter>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Route path="/" render={({ location }) => {
@@ -43,7 +45,7 @@ class Shell extends React.Component {
                                                             }
 
                                                             let old = route;
-                                                            route = mo.processRoute(route, location, this.props.store.getState());
+                                                            route = mo.processRoute(route, location, store.getState());
                                                             if(!route) {
                                                                 route = old;
                                                             }
@@ -80,7 +82,7 @@ class Shell extends React.Component {
     getChildContext() {
         return {
             drafterbit: this.props.drafterbit,
-            languageContext: this.props.languageContext
+            languageContext: this.props.drafterbit.languageContext
         };
     }
 }

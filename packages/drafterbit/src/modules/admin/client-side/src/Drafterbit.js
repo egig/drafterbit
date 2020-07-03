@@ -4,10 +4,24 @@ import getConfig from './getConfig';
 import axios from 'axios';
 import React from 'react';
 import FuncClient from './apiClient/FuncClient';
+import { combineReducers } from 'redux';
+import { createStore, applyMiddleware } from  'redux';
+import thunk from 'redux-thunk';
+import i18next from 'i18next';
+
+const i18n = i18next.createInstance();
+i18n.init({
+    lng: 'id',
+    fallbackLng: 'en',
+    debug: !!parseInt(getConfig("debug")),
+    resources: [],
+});
 
 class Drafterbit extends EventEmitter {
 
     modules = [];
+    store = [];
+    languageContext =  {namespaces: [], i18n};
     getConfig = getConfig;
 
     addModule(moduleObject) {
@@ -35,6 +49,35 @@ class Drafterbit extends EventEmitter {
 
     getApiClient() {
         return this.apiClient2;
+    }
+
+    createRootReducer() {
+        let reducerMap = {};
+        this.modules.map(mo => {
+            if(mo.stateReducer) {
+                reducerMap[mo.stateReducer.stateName] = mo.stateReducer.reducer;
+            }
+        });
+
+        return combineReducers(reducerMap);
+    }
+
+    storeFromState(defaultState) {
+        const middleWares = [thunk];
+        this.store = createStore(this.createRootReducer(), defaultState, applyMiddleware(...middleWares));;
+    }
+
+    createDefaultState() {
+
+        let defaultState = {};
+
+        this.modules.map(mo => {
+            if(mo.stateReducer) {
+                defaultState[mo.stateReducer.stateName] = mo.stateReducer.defaultState;
+            }
+        });
+
+        return defaultState;
     }
 }
 
