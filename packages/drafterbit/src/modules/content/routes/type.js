@@ -119,14 +119,14 @@ router.post('/types',
 
 /**
  * @swagger
- * /types/{type_id}/fields:
+ * /types/{type_name}/fields:
  *   post:
  *     consumes:
  *       - application/json
  *     description: Create content type
  *     parameters:
  *       - in: path
- *         name: type_id
+ *         name: type_name
  *         type: string
  *         required: true
  *       - in: body
@@ -156,16 +156,16 @@ router.post('/types',
  *     tags:
  *        - /types
  */
-router.post('/types/:type_id/fields',
+router.post('/types/:type_name/fields',
     validateRequest({
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        let contentTypeId = req.params['type_id'];
-        let s = await m.addField(contentTypeId, req.body);
+        let typeName = req.params['type_name'];
+        let s = await m.addField(typeName, req.body);
 
         // update compiled models
-        let contentType = await  m.getContentType(contentTypeId);
+        let contentType = await  m.getType(typeName);
         delete req.app.getDB().models[contentType.slug];
 
         return s;
@@ -285,7 +285,7 @@ router.patch('/types/:type_id',
  *           type: string
  *         required: true
  *       - in: path
- *         name: type_id
+ *         name: type_name
  *         type: string
  *         schema:
  *           type: string
@@ -306,11 +306,11 @@ router.patch('/types/:type_id',
  *     tags:
  *        - /types
  */
-router.patch('/types/:type_id/fields/:field_id',
+router.patch('/types/:type_name/fields/:field_id',
     validateRequest({
-        type_id: {
+        type_name: {
             notEmpty: true,
-            errorMessage: 'type_id is required'
+            errorMessage: 'type_name is required'
         },
         name: {
             optional: true,
@@ -326,12 +326,12 @@ router.patch('/types/:type_id/fields/:field_id',
         },
     }),
     handleFunc(async function(req) {
-        let contentTypeId = req.params['type_id'];
+        let typeName = req.params['type_name'];
         let fieldId = req.params['field_id'];
         let m = req.app.model('Type');
-        let s = await m.updateContentTypeField(contentTypeId, fieldId, req.body);
+        let s = await m.updateTypeField(typeName, fieldId, req.body);
 
-        delete req.app.getDB().models[contentTypeId];
+        delete req.app.getDB().models[typeName];
 
         return s;
     })

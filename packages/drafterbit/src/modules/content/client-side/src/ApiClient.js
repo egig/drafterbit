@@ -9,6 +9,10 @@ const ApiClient = {
         return this._doGetRequest('/types');
     },
 
+    getTypes: async function getContentTypes() {
+        return this._doGetRequest('/types');
+    },
+
     getContentType: async function getContentType(contentTypeId) {
         return this._doGetRequest(`/types/${contentTypeId}`);
     },
@@ -60,6 +64,12 @@ const ApiClient = {
         return response.data;
     },
 
+    updateTypeField: async function updateTypeField(belongToTypeName, fieldId, payload)  {
+        let url = `/types/${belongToTypeName}/fields/${fieldId}`;
+        let response = await this.axiosInstance.patch(url, payload);
+        return response.data;
+    },
+
     /**
      *
      * @param contentTypeId
@@ -78,6 +88,21 @@ const ApiClient = {
             type_id: typeId,
             related_content_type_slug: relatedContentTypeSlug,
             validation_rules: validationRules,
+            show_in_list: showInList
+        });
+        return response.data;
+    },
+
+    addTypeField: async function addTypeField(belongsToTypeName, typeName,
+        name,displayText,multiple, showInList, showInForm)  {
+        let url = `/types/${belongsToTypeName}/fields`;
+        let response = await this.axiosInstance.post(url, {
+            belongs_to_type_name: belongsToTypeName,
+            name,
+            display_text: displayText,
+            type_name: typeName,
+            multiple,
+            show_in_form: showInForm,
             show_in_list: showInList
         });
         return response.data;

@@ -6,7 +6,7 @@
 // import LoaderTrap from '@drafterbit/common/client-side/components/LoaderTrap';
 // import { Container, Navbar, NavbarBrand, Nav, NavbarToggler, Collapse } from 'reactstrap';
 import SideNav from './SideNav';
-// import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 // import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 //
@@ -116,6 +116,9 @@ class Layout extends React.Component {
 		let layoutMargin = this.state.collapsed ? 80 : 220;
 		return (
 			<BaseLayout>
+				<Helmet>
+					<title>{this.props.title}</title>
+				</Helmet>
 				<SideNav collapsed={this.state.collapsed} />
 				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh", backgroundColor: "#FFF" }}>
 					<Header className="site-layout-background" style={{

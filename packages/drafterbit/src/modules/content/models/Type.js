@@ -16,7 +16,10 @@ let TypeSchema = new mongoose.Schema({
         validation_rules: String,
         show_in_list: { type: Boolean, default: true },
         show_in_form: { type: Boolean, default: true },
-        unique: { type: Boolean, default: false }
+        unique: { type: Boolean, default: false },
+        type_name: String,
+        display_text: String,
+        multiple: { type: Boolean, default: false }
     }],
     created_at: Number,
     updated_at: Number,
@@ -28,12 +31,12 @@ let TypeSchema = new mongoose.Schema({
 
 /**
  *
- * @param contentTypeId
+ * @param typeName
  * @param field
  * @return {Promise}
  */
-TypeSchema.statics.addField = function(contentTypeId, field) {
-    return this.updateOne({ _id: contentTypeId }, { $push: { fields: field } });
+TypeSchema.statics.addField = function(typeName, field) {
+    return this.updateOne({ name: typeName }, { $push: { fields: field } });
 };
 
 
@@ -52,6 +55,22 @@ TypeSchema.statics.getContentType = function(contentTypeId) {
             condition = {slug: contentTypeId};
         }
 
+        this.findOne(condition, function(err, contentType) {
+            if (err) return reject(err);
+            return resolve(contentType);
+        });
+    });
+};
+
+/**
+ *
+ * @param typeName
+ * @returns {Promise<unknown>}
+ */
+TypeSchema.statics.getType = function(typeName) {
+    return new Promise((resolve, reject) => {
+
+        let condition = {name: typeName};
         this.findOne(condition, function(err, contentType) {
             if (err) return reject(err);
             return resolve(contentType);
@@ -128,14 +147,33 @@ TypeSchema.statics.updateContentType = function(contentTypeId, payload) {
  * @param payload
  * @return {Promise}
  */
-TypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
+// TypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
+//
+//     let setter = {};
+//     for (let k of Object.keys(payload)) {
+//         setter[`fields.$.${k}`] = payload[k];
+//     }
+//
+//     return this.updateOne({ _id: contentTypeId, 'fields._id': fieldId }, {
+//         $set: setter
+//     });
+// };
+
+/**
+ *
+ * @param typeName
+ * @param fieldId
+ * @param payload
+ * @returns {*}
+ */
+TypeSchema.statics.updateTypeField = function(typeName, fieldId, payload) {
 
     let setter = {};
     for (let k of Object.keys(payload)) {
         setter[`fields.$.${k}`] = payload[k];
     }
 
-    return this.updateOne({ _id: contentTypeId, 'fields._id': fieldId }, {
+    return this.updateOne({ name: typeName, 'fields._id': fieldId }, {
         $set: setter
     });
 };

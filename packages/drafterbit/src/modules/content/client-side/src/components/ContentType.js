@@ -3,13 +3,12 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '@drafterbit/common/client-side/components/Notify';
-import Card from '@drafterbit/common/client-side/components/Card/Card';
-import { Button, Row, Col } from 'reactstrap';
-import FieldForm from './FieldForm';
+// import Card from '@drafterbit/common/client-side/components/Card/Card';
+import FieldForm3 from './FieldForm3';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm'
 
-const FieldType  = require('@drafterbit/common/FieldType');
+import {Row, Col, Tabs, Button, Card} from 'antd';
 
 class ContentType extends React.Component {
 
@@ -27,7 +26,9 @@ class ContentType extends React.Component {
 	        editedFieldId: "",
             fieldTypeSelected: null,
             basicEditForm: false,
-            loading: true
+            loading: true,
+            editedField: null,
+            types: []
         };
 
         this.deleteField = this.deleteField.bind(this);
@@ -54,6 +55,16 @@ class ContentType extends React.Component {
 
     componentDidMount() {
         this.fetchContentType()
+            .then(() => {
+                let client = this.props.drafterbit.getApiClient();
+                client.getTypes()
+                    .then(types => {
+                        this.setState({
+                            types: types
+                        })
+                    })
+            })
+
     }
 
     deleteField(f) {
@@ -98,7 +109,7 @@ class ContentType extends React.Component {
                 {this.state.loading && <div>Loading&hellip;</div>}
                 {this.state.loading ||
                 <Row>
-                    <Col md="12" className="mb-3">
+                    <Col span="24">
                         <h2>{this.state.display_text} <small className="text-muted"><a href="/" onClick={e => {
                             e.preventDefault();
                             this.setState({
@@ -108,82 +119,54 @@ class ContentType extends React.Component {
                         <small>{this.state.description}</small>
                         <div className="mb-3"/>
                     </Col>
-                    <Col md="12">
-                        <Card headerText="Fields">
-                            <button onClick={e => {
-                                e.preventDefault();
-                                this.setState({
-                                    fieldDialogActive: true,
-                                    editedFieldId: ""
-                                });
-                            }} className="btn btn-success btn-sm mb-2">Add Field
-                            </button>
-                            <table className="table table-sm table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Label</th>
-                                    <th>Type</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                    <Col span="12">
+                        <Card title="Fields">
+                            <Tabs type="card" tabPosition="left">
                                 {this.state.fields.map((f, i) => {
                                     return (
-                                        <tr key={i}>
-                                            <td><a href="#" onClick={e => {
-                                                e.preventDefault();
-
-                                                this.setState({
-                                                    fieldDialogActive: true,
-                                                    editedFieldId: f._id
-                                                })
-                                            }}>{f.name}</a></td>
-                                            <td>{f.label}</td>
-                                            <td>{FieldType.get(f.type_id).name}</td>
-                                            <td><Button size="sm" onClick={e => {
+                                        <Tabs.TabPane tab={f.display_text} key={f.name}>
+                                            <FieldForm3 field={f}
+                                                        belongsToTypeName={this.state.name}
+                                                        onSuccess={() => {
+                                                            this.fetchContentType().then(() => {
+                                                                this.setState({
+                                                                    notifyText: 'Content type successfully saved.'
+                                                                });
+                                                            });
+                                                        }}
+                                                        types={this.state.types} />
+                                            <Button danger type="line" onClick={e => {
                                                 this.deleteField(f);
-                                            }}>&times;</Button></td>
-                                        </tr>
-                                    );
+                                            }}>Delete</Button>
+                                        </Tabs.TabPane>
+                                    )
                                 })}
-                                </tbody>
-                            </table>
+                                <Tabs.TabPane tab="+ Add Field" key="_add_field">
+                                    <FieldForm3 belongsToTypeName={this.state.name}
+                                                onSuccess={() => {
+                                                    this.fetchContentType().then(() => {
+                                                        this.setState({
+                                                            notifyText: 'Content type successfully saved.'
+                                                        });
+                                                    });
+                                                }}
+                                                types={this.state.types} />
+                                </Tabs.TabPane>
+                            </Tabs>
                         </Card>
                         <div className="mb-3"/>
-                        <Card headerText={`Delete Content Type : ${this.state.name}`}>
+                        <Card title={`Delete Content Type : ${this.state.name}`}>
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 this.deleteContentType(e.target);
                             }}>
                                 <input type="hidden" name="id" id="id" value={this.state._id}/>
-                                <button type="submit" className="btn btn-danger">Delete Content Type</button>
+                                <Button type="line" htmlType="submit" danger>Delete Content Type</Button>
                             </form>
                         </Card>
                     </Col>
                 </Row>
                 }
-                <FieldForm
-                    isOpen={this.state.fieldDialogActive}
-                    contentTypeId={this.state._id}
-                    fieldId={this.state.editedFieldId}
-                    onCancel={e => {
-                        e.preventDefault();
-                        this.setState({
-                            fieldDialogActive: false,
-                            editedFieldId: ""
-                        });
-                    }}
-                    onSuccess={e => {
-                        this.fetchContentType()
-                            .then(() => {
-                                this.setState({
-                                    fieldDialogActive: false,
-                                    editedFieldId: ""
-                                });
-                            })
-                    }}
-                />
                 {this.state.notifyText &&
                   <Notify type="success" message={this.state.notifyText} />
                 }
