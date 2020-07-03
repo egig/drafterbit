@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import Layout from './Layout';
 import { HashRouter, Redirect } from 'react-router-dom';
+import DTContext  from '@drafterbit/common/client-side/DTContext';
 
 class Shell extends React.Component {
 
@@ -13,6 +14,7 @@ class Shell extends React.Component {
 
         return (
             <Provider store={store}>
+                <DTContext.Provider value={this.props.drafterbit}>
                 <HashRouter>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Route path="/" render={({ location }) => {
@@ -73,7 +75,8 @@ class Shell extends React.Component {
 
                         }} />
                     </Suspense>
-                </HashRouter>                    
+                </HashRouter>
+                </DTContext.Provider>
             </Provider>
         );
 
