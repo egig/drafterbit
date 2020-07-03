@@ -5,13 +5,10 @@ import { Helmet } from 'react-helmet';
 import translate from '@drafterbit/common/client-side/translate';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import { setCookie } from '@drafterbit/common/client-side/cookie';
-
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 import './Login.css'
-import ApiClient from '../ApiClient';
-
 
 
 class Login extends React.Component {
@@ -46,10 +43,13 @@ class Login extends React.Component {
     render() {
 
         let t = this.props.t;
+        let state = this.props.drafterbit.store.getState();
+        let setting = state.COMMON.settings.General;
+
         return (
             <AuthCard title={t('login:title')}>
                 <Helmet>
-                    <title>Login - {this.props.drafterbit.getConfig("appName")}</title>
+                    <title>Login - {setting.app_name}</title>
                 </Helmet>
                 <Form
                     name="normal_login"
@@ -89,7 +89,9 @@ class Login extends React.Component {
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>
+                        {setting.enable_reset_password &&
                         <Link to="/forgot-password" className="login-form-forgot">Forgot Password?</Link>
+                        }
                     </Form.Item>
 
                     <Form.Item>
@@ -97,57 +99,12 @@ class Login extends React.Component {
                             Log in
                         </Button>
                     </Form.Item>
-                    Or  <Link to="/register">Create account</Link>
+                    {setting.enable_register &&
+                    <span>Or  <Link to="/register">Create account</Link></span>
+                    }
                 </Form>
             </AuthCard>
         );
-
-        // return (
-        //     <AuthCard title={t('login:title')}>
-                {/*<Helmet>*/}
-                {/*    <title>Login - {this.props.drafterbit.getConfig("appName")}</title>*/}
-                {/*</Helmet>*/}
-
-        //         {this.state.errorText &&
-        //             <div className="alert alert-warning">
-        //                 {this.state.errorText}
-        //             </div>
-        //         }
-        //         <form onSubmit={(e) => {
-        //             e.preventDefault();
-        //             this.doLogin(e);
-        //         }}>
-        //             <div className="form-group">
-        //                 <label htmlFor="email">E-Mail Address</label>
-        //                 <input type="email" name="email" className={`form-control login-formControlBorder`} id="email" aria-describedby="emailHelp"/>
-        //             </div>
-        //
-        //             <div className="form-group">
-        //                 <label htmlFor="password" className="login-labelWidth">Password
-        //                     <Link to="/forgot-password" className="float-right">
-        //                         Forgot Password?
-        //                     </Link>
-        //                 </label>
-        //                 <input id="password" type="password" className={`form-control login-formControlBorder`} name="password" required data-eye />
-        //             </div>
-        //
-        //             <div className="form-group">
-        //                 <label>
-        //                     <input type="checkbox" name="remember" /> Remember Me
-        //                 </label>
-        //             </div>
-        //
-        //             <div className={`form-group no-margin login-noMargin`}>
-        //                 <button type="submit" className={`btn btn-success btn-block login-btnPadding`}>
-        //                     Login
-        //                 </button>
-        //             </div>
-        //             <div className={`login-marginTop20 text-center`}>
-        //                 Don't have an account? <Link to="/register">Create account</Link>
-        //             </div>
-        //         </form>
-        //     </AuthCard>
-        // );
     }
 }
 

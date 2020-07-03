@@ -9,9 +9,14 @@ import { Form, Input, Button, Checkbox } from 'antd';
 
 class ForgotPassword extends React.Component {
 
-    onSubmit(from) {
+    constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onSubmit(values) {
         // TODO send email
-        this.props.history.push('forgot-password-requested');
+        this.props.history.push('/forgot-password-requested');
     }
 
     render() {
@@ -27,7 +32,6 @@ class ForgotPassword extends React.Component {
                     onFinish={this.onSubmit}
                 >
                     <Form.Item
-                        name="email"
                         rules={[
                             {
                                 required: true,
@@ -35,7 +39,7 @@ class ForgotPassword extends React.Component {
                             },
                         ]}
                     >
-                        <Input placeholder="Email" />
+                        <Input name="email" placeholder="Email" />
                         <div className="form-text text-muted">
                             By clicking "Reset Password" we will send a password reset link
                         </div>

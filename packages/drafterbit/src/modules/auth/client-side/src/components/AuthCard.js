@@ -7,6 +7,10 @@ import './AuthCard.css';
 class AuthCard extends React.Component {
 
     render() {
+
+        let state = this.props.drafterbit.store.getState();
+        let appName = state.COMMON.settings.General.app_name;
+
         return (
             <div className="h-100 my-login-page">
                 <Container className="h-100">
@@ -14,7 +18,7 @@ class AuthCard extends React.Component {
                         <div className="auth_card-cardWrapper">
                             <div className={'brand auth_card-brandContainer'}>
                                 {/*<img className="auth_card-brandImg" src="/img/dtlogo3-black.png" />*/}
-                                <h1 className="auth_card-brandImg">{this.props.drafterbit.getConfig("appName")}</h1>
+                                <h1 className="auth_card-brandImg">{appName}</h1>
                             </div>
                             <Card className="fat">
 		                            <CardHeader>

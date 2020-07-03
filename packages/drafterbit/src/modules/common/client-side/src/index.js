@@ -7,6 +7,7 @@ import stateReducer from './stateReducer';
 import {
     SettingOutlined,
 } from '@ant-design/icons';
+import {getCookie} from '@drafterbit/common/client-side/cookie';
 
 (($dt) => {
 
@@ -33,7 +34,15 @@ import {
                     return this._doGetRequest("/settings");
                 }
             }
-        }
+        },
+        stateFilter(state) {
+            return $dt.getApiClient().getSettings()
+                .then(settings => {
+                    settings.map(s => {
+                        state.COMMON.settings[s["fieldset_name"]] = s;
+                    })
+                })
+        },
     });
 
 })(window.$dt);

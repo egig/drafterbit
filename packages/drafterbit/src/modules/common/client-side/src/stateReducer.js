@@ -19,7 +19,8 @@ export default {
         language: 'en',
         languages: ['en', 'id'],
         isAjaxLoading: false,
-        notifyText: ''
+        notifyText: '',
+        settings: {}
     },
     stateName: 'COMMON',
     reducer
