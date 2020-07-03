@@ -22,6 +22,16 @@ const ApiClient = {
         });
     },
 
+    createType: async function createType(name, slug, display_text, description, fields=[]) {
+        return this._doPostRequest('/types', {
+            name,
+            slug,
+            display_text,
+            description,
+            fields,
+        });
+    },
+
     deleteContentType: async function deleteContentType(contentTypeId) {
         let response = await this.axiosInstance.delete(`/types/${contentTypeId}`);
         return response.data;
@@ -31,6 +41,11 @@ const ApiClient = {
         let response = await this.axiosInstance.patch(`/types/${contentTypeId}`, {
             name, slug, description, fields
         });
+        return response.data;
+    },
+
+    updateType: async function updateType(typeId, payload) {
+        let response = await this.axiosInstance.patch(`/types/${typeId}`, payload);
         return response.data;
     },
 

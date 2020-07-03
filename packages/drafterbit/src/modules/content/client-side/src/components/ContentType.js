@@ -7,8 +7,7 @@ import Card from '@drafterbit/common/client-side/components/Card/Card';
 import { Button, Row, Col } from 'reactstrap';
 import FieldForm from './FieldForm';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import ContentTypeForm from './ContentTypeForm'
-import ApiClient from '../ApiClient';
+import TypeForm from './TypeForm'
 
 const FieldType  = require('@drafterbit/common/FieldType');
 
@@ -20,6 +19,7 @@ class ContentType extends React.Component {
             _id: '',
             name: '',
             slug: '',
+            display_text: '',
             description: '',
             fields: [],
             notifyText: '',
@@ -44,6 +44,7 @@ class ContentType extends React.Component {
                     _id: contentType._id,
                     name: contentType.name,
                     slug: contentType.slug,
+                    display_text: contentType.display_text,
                     description: contentType.description,
                     fields: contentType.fields,
                     loading: false
@@ -98,7 +99,7 @@ class ContentType extends React.Component {
                 {this.state.loading ||
                 <Row>
                     <Col md="12" className="mb-3">
-                        <h2>{this.state.name} <small className="text-muted"><a href="/" onClick={e => {
+                        <h2>{this.state.display_text} <small className="text-muted"><a href="/" onClick={e => {
                             e.preventDefault();
                             this.setState({
                                 basicEditForm: true
@@ -186,10 +187,11 @@ class ContentType extends React.Component {
                 {this.state.notifyText &&
                   <Notify type="success" message={this.state.notifyText} />
                 }
-                <ContentTypeForm
-                    isOpen={this.state.basicEditForm}
-                    contentTypeId={this.state._id}
+                <TypeForm
+                    visible={this.state.basicEditForm}
+                    typeId={this.state._id}
                     name={this.state.name}
+                    displayText={this.state.display_text}
                     slug={this.state.slug}
                     description={this.state.description}
                     onCancel={e => {

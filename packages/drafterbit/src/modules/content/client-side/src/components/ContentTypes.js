@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import ContentTypeForm from './ContentTypeForm';
+import TypeForm from './TypeForm';
 import { setNotifyText }  from '../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
-import ApiClient from '../ApiClient';
 
 class ContentTypes extends React.Component {
 
@@ -56,7 +55,7 @@ class ContentTypes extends React.Component {
                     handleDelete={this.handleDelete}
                     onClickAdd={this.onClickAdd}
                 />
-                <ContentTypeForm isOpen={this.state.newFormOpen}
+                <TypeForm visible={this.state.newFormOpen}
                     onCancel={e => {
                         this.setState({
                             newFormOpen: false  

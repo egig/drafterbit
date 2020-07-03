@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 
 let TypeSchema = new mongoose.Schema({
-    name: String,
+    name: { type: String, unique: true },
+    display_text: { type: String, unique: true },
     slug: { type: String, unique: true },
     description: String,
     is_structured: { type: Boolean, default: false },

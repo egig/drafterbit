@@ -5,7 +5,6 @@ import {bindActionCreators } from 'redux';
 import actions from '../actions';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import ApiClient from '../ApiClient';
 
 const FieldType = require('@drafterbit/common/FieldType');
 
