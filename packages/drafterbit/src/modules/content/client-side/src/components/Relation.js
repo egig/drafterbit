@@ -1,7 +1,6 @@
 import React from 'react';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import Select from 'react-select'
-import ApiClient from '../ApiClient';
 
 class Relation extends React.Component {
 
@@ -15,7 +14,7 @@ class Relation extends React.Component {
     componentDidMount() {
 
         let client = this.props.drafterbit.getApiClient();
-        client.getEntries(this.props.relatedContentTypeSlug)
+        client.getEntries(this.props.typeName)
             .then((res) => {
                 this.setState({
                     contents: res.data

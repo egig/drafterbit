@@ -1,16 +1,16 @@
 class FieldType {
-    static SHORT_TEXT = 1;
-    static LONG_TEXT = 2;
-    static RICH_TEXT = 3;
+    static SHORT_TEXT = "ShortText";
+    static LONG_TEXT = "LongText";
+    static RICH_TEXT = "RichText";
     static RELATION_TO_ONE = 4;
     static RELATION_TO_MANY = 5;
-    static NUMBER = 6;
-    static UNSTRUCTURED = 7;
-    static IMAGE = 8;
-    static VIDEO = 9;
-    static DATE = 10;
-    static LOCATION = 11;
-    static TOGGLE = 12;
+    static NUMBER = "Number";
+    static UNSTRUCTURED = "Unstructured";
+    static IMAGE = "Image";
+    static VIDEO = "Video";
+    static DATE = "Date";
+    static LOCATION = "Location";
+    static TOGGLE = "Toggle";
 
     static fieldTypes = [
         {
@@ -101,6 +101,12 @@ class FieldType {
 
     static get(id) {
         return FieldType.asObject()[id];
+    }
+
+    static primitives() {
+        return FieldType.fieldTypes.map(t => {
+            return t.id
+        });
     }
 }
 

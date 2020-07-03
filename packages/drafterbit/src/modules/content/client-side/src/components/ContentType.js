@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '@drafterbit/common/client-side/components/Notify';
 // import Card from '@drafterbit/common/client-side/components/Card/Card';
-import FieldForm3 from './FieldForm3';
+import FieldForm from './FieldForm';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm'
 
@@ -125,16 +125,16 @@ class ContentType extends React.Component {
                                 {this.state.fields.map((f, i) => {
                                     return (
                                         <Tabs.TabPane tab={f.display_text} key={f.name}>
-                                            <FieldForm3 field={f}
-                                                        belongsToTypeName={this.state.name}
-                                                        onSuccess={() => {
+                                            <FieldForm field={f}
+                                                       belongsToTypeName={this.state.name}
+                                                       onSuccess={() => {
                                                             this.fetchContentType().then(() => {
                                                                 this.setState({
                                                                     notifyText: 'Content type successfully saved.'
                                                                 });
                                                             });
                                                         }}
-                                                        types={this.state.types} />
+                                                       types={this.state.types} />
                                             <Button danger type="line" onClick={e => {
                                                 this.deleteField(f);
                                             }}>Delete</Button>
@@ -142,15 +142,15 @@ class ContentType extends React.Component {
                                     )
                                 })}
                                 <Tabs.TabPane tab="+ Add Field" key="_add_field">
-                                    <FieldForm3 belongsToTypeName={this.state.name}
-                                                onSuccess={() => {
+                                    <FieldForm belongsToTypeName={this.state.name}
+                                               onSuccess={() => {
                                                     this.fetchContentType().then(() => {
                                                         this.setState({
                                                             notifyText: 'Content type successfully saved.'
                                                         });
                                                     });
                                                 }}
-                                                types={this.state.types} />
+                                               types={this.state.types} />
                                 </Tabs.TabPane>
                             </Tabs>
                         </Card>

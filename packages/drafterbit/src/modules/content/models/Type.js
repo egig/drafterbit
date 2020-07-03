@@ -70,7 +70,14 @@ TypeSchema.statics.getContentType = function(contentTypeId) {
 TypeSchema.statics.getType = function(typeName) {
     return new Promise((resolve, reject) => {
 
-        let condition = {name: typeName};
+        let ObjectId = mongoose.Types.ObjectId;
+        let condition;
+        if(ObjectId.isValid(typeName)) {
+            condition = {_id: typeName};
+        } else {
+            condition = {name: typeName};
+        }
+
         this.findOne(condition, function(err, contentType) {
             if (err) return reject(err);
             return resolve(contentType);

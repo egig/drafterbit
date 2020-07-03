@@ -6,12 +6,12 @@ let router = express.Router();
 
 /**
  * @swagger
- * /types/{type_id}:
+ * /types/{type_name}:
  *   get:
  *     description: Get content type
  *     parameters:
  *       - in: path
- *         name: type_id
+ *         name: type_name
  *         type: integer
  *         schema:
  *           type: integer
@@ -24,16 +24,16 @@ let router = express.Router();
  *     tags:
  *        - /types
  */
-router.get('/types/:type_id',
+router.get('/types/:type_name',
     validateRequest({
-        type_id: {
+        type_name: {
             notEmpty: true,
             errorMessage: 'type_id is required'
         }
     }),
     handleFunc(async (req) => {
         let m = req.app.model('Type');
-        return await m.getContentType(req.params.type_id);
+        return await m.getType(req.params.type_name);
     })
 );
 

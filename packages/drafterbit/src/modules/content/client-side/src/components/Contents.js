@@ -27,17 +27,17 @@ class Contents extends React.Component {
 
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
-        let ctSlug = match.params.content_type_slug;
+        let typeName = match.params.content_type_slug;
         let client = this.props.drafterbit.getApiClient();
-        return client.getContentType(ctSlug)
-		    .then(contentType => {
+        return client.getType(typeName)
+		    .then(type => {
 
 		        this.setState({
-                    contentType: contentType,
-                    ctFields: contentType.fields
+                    contentType: type,
+                    ctFields: type.fields
                 });
 
-                return client.getEntries(contentType.slug, page, sortBy, sortDir, fqStr)
+                return client.getEntries(type.name, page, sortBy, sortDir, fqStr)
 			    .then(response => {
 
 			        let contentCount = response.headers['content-range'].split("/")[1];
@@ -64,7 +64,7 @@ class Contents extends React.Component {
 
     onClickAdd = (e) => {
         // create draft
-        let slug = this.props.match.params["content_type_slug"]
+        let slug = this.props.match.params["content_type_slug"];
         let client = this.props.drafterbit.getApiClient();
         client.createDraft(slug)
             .then(d => {
@@ -81,7 +81,7 @@ class Contents extends React.Component {
             FieldType.RELATION_TO_ONE,
             FieldType.RICH_TEXT,
             FieldType.UNSTRUCTURED
-        ].indexOf(field.type_id) === -1) && field.show_in_list
+        ].indexOf(field.type_name) === -1) && field.show_in_list
     }
 
     render() {
@@ -102,7 +102,7 @@ class Contents extends React.Component {
             if(this.canBeDisplayed(f)) {
 		        columns.push({
 			        dataField: f.name,
-			        text: f.label,
+			        text: f.display_text,
 			        sort: true
 		        })
 	        }

@@ -23,12 +23,8 @@ function matchType(type) {
 
     case FieldType.NUMBER:
         return Number;
-
-    case FieldType.RELATION_TO_MANY:
-    case FieldType.RELATION_TO_ONE:
-        return Schema.Types.ObjectId;
     default:
-        throw new Error('unknown type '+type);
+        return Schema.Types.ObjectId;
     }
 }
 
@@ -57,27 +53,30 @@ let convert = function (descriptor) {
  */
 function getSchema(fields) {
     let fieldsObj = {};
+    let primitiveTypes = FieldType.fieldTypes.map(t => {
+        return t.id
+    });
+
     fields.forEach(f => {
 
-        if (f.type_id === FieldType.RELATION_TO_MANY) {
-            fieldsObj[f.name] = [{
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            }];
-
-        } else if (f.type_id === FieldType.RELATION_TO_ONE) {
-
+        if (primitiveTypes.indexOf(f.type_name) !== -1) {
             fieldsObj[f.name] = {
-                type: f.type_id,
-                ref: f.related_content_type_slug
-            };
-
-        } else {
-            fieldsObj[f.name] = {
-                type: f.type_id,
+                type: f.type_name,
                 unique: f.unique,
                 index: f.index ? f.index : f.unique
             };
+        } else {
+            if (f.multiple) {
+                fieldsObj[f.name] = [{
+                    type: f.type_name,
+                    ref: f.type_name
+                }];
+            } else {
+                fieldsObj[f.name] = {
+                    type: f.type_name,
+                    ref: f.type_name
+                };
+            }
         }
     });
 

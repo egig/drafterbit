@@ -52,12 +52,12 @@ router.delete('/:slug/:id',
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /{type_name}/{id}:
  *   get:
  *     description: Get content
  *     parameters:
  *       - in: path
- *         name: slug
+ *         name: type_name
  *         type: string
  *         schema:
  *           type: string
@@ -75,9 +75,9 @@ router.delete('/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.get('/:slug/:id',
+router.get('/:type_name/:id',
     validateRequest({
-        slug: {
+        type_name: {
             notEmpty: true,
             errorMessage: 'slug required'
         },
@@ -88,7 +88,7 @@ router.get('/:slug/:id',
     }),
     contentMiddleware(),
     handleFunc(async function(req) {
-        let  Model = req.app.model(req.contentType.slug);
+        let  Model = req.app.model(req.params.type_name);
         // TODO add filter here, e.g to hide password field
         return await Model.findOne({_id: req.params.id });
     })
@@ -96,12 +96,12 @@ router.get('/:slug/:id',
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /{type_name}/{id}:
  *   patch:
  *     description: Update contents
  *     parameters:
  *       - in: path
- *         name: slug
+ *         name: type_name
  *         type: string
  *         schema:
  *           type: string
@@ -119,9 +119,9 @@ router.get('/:slug/:id',
  *     tags:
  *        - /{slug}
  */
-router.patch('/:slug/:id',
+router.patch('/:type_name/:id',
     validateRequest({
-        slug: {
+        type_name: {
             notEmpty: true,
             errorMessage: 'slug required'
         },
@@ -132,7 +132,7 @@ router.patch('/:slug/:id',
     }),
     contentMiddleware(),
     handleFunc(async function(req) {
-        let  Model = req.app.model(req.contentType.slug);
+        let  Model = req.app.model(req.params.type_name);
         return await Model.findOneAndUpdate({_id: req.params.id }, req.body);
     })    
 );
@@ -181,7 +181,7 @@ router.post('/:slug',
 
 /**
  * @swagger
- * /{slug}:
+ * /{type_name}:
  *   get:
  *     description: Get contents
  *     parameters:
@@ -196,13 +196,13 @@ router.post('/:slug',
  *         description: success
  *
  *     tags:
- *        - /{slug}
+ *        - /{type_name}
  */
-router.get('/:slug',
+router.get('/:type_name',
     validateRequest({
-        slug: {
+        type_name: {
             notEmpty: true,
-            errorMessage: 'slug required'
+            errorMessage: 'type_name required'
         }
     }),
     contentMiddleware(),
@@ -216,7 +216,7 @@ router.get('/:slug',
         let max = PER_PAGE;
 
         let filterObj = FilterQuery.fromString(req.query.fq).toMap();
-        let m = req.app.model(req.params['slug']);
+        let m = req.app.model(req.params['type_name']);
 
         let sortD = sortDir === 'asc' ? 1 : -1;
 

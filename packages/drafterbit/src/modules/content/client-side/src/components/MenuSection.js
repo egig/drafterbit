@@ -16,10 +16,10 @@ class MenuSection extends React.Component {
     componentDidMount() {
         // TODO changes this to store redux state
         let client = this.props.drafterbit.getApiClient();
-        client.getContentTypes()
+        client.getTypes()
             .then((contentTypes) => {
                 // Display only non-system collection
-                contentTypes = contentTypes.filter(c => !c.system);
+                // contentTypes = contentTypes.filter(c => !c.system);
                 this.props.actions.setContentTypes(contentTypes);
             });
     }
@@ -29,7 +29,7 @@ class MenuSection extends React.Component {
         let { contentTypes } =  this.props;
         let menuItems = contentTypes.map(ct => {
             return {
-                link: `/contents/${ct.slug}`,
+                link: `/contents/${ct.name}`,
                 label: ct.name,
                 iconClass: "icon-doc"
             }

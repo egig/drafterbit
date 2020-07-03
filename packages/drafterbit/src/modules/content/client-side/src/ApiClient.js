@@ -17,6 +17,10 @@ const ApiClient = {
         return this._doGetRequest(`/types/${contentTypeId}`);
     },
 
+    getType: async function getType(typeName) {
+        return this._doGetRequest(`/types/${typeName}`);
+    },
+
     createContentType: async function createContentType(name, slug, description, fields=[]) {
         return this._doPostRequest('/types', {
             name,
@@ -118,8 +122,8 @@ const ApiClient = {
         return response.data;
     },
 
-    getEntries: async function getEntries(slug, page, sortBy, sortDir, fqSr) {
-        return this.axiosInstance.get(`/${slug}`, {
+    getEntries: async function getEntries(typeName, page, sortBy, sortDir, fqSr) {
+        return this.axiosInstance.get(`/${typeName}`, {
             params: {
                 page,
                 sort_by: sortBy,
