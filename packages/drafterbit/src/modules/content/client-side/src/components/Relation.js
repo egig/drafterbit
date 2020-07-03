@@ -14,7 +14,7 @@ class Relation extends React.Component {
 
     componentDidMount() {
 
-        let client = this.props.drafterbit.getApiClient2();
+        let client = this.props.drafterbit.getApiClient();
         client.getEntries(this.props.relatedContentTypeSlug)
             .then((res) => {
                 this.setState({

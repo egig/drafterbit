@@ -43,7 +43,7 @@ class FieldForm extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        let client = this.props.drafterbit.getApiClient2();
+        let client = this.props.drafterbit.getApiClient();
         (() => {
             if(!!this.props.fieldId) {
                 return client.updateContentTypeField(
@@ -86,7 +86,7 @@ class FieldForm extends React.Component {
         } = this.props;
 
         if(!!fieldId) {
-            let client = this.props.drafterbit.getApiClient2();
+            let client = this.props.drafterbit.getApiClient();
             client.getContentType(contentTypeId)
             .then(ct => {
 

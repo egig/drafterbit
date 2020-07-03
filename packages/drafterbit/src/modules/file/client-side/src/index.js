@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 // import reducer from './reducer';
+import ApiClient from './ApiClient';
 
 const Files = lazy(() => import('./components/Files'));
 // const ApiKeyEdit = lazy(() => import('./components/ApiKeyEdit'));
@@ -31,6 +32,9 @@ function createFileClientModule(drafterbit) {
         // processRoute(route) {
         //     //..
         // }
+        registerApiClient() {
+            return ApiClient;
+        }
     }
 }
 

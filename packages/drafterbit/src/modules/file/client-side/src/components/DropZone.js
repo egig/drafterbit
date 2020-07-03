@@ -43,7 +43,7 @@ class DropZone extends React.Component {
     }
 
     onDrop = (files) => {
-        let client = this.props.drafterbit.getApiClient2();
+        let client = this.props.drafterbit.getApiClient();
         client.upload(files[0], this.props.path)
             .then(r => {
                 this.props.fileDidUpload(r);

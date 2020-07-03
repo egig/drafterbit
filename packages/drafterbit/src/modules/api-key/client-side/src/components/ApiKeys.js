@@ -14,7 +14,7 @@ class ApiKeys extends React.Component {
     }
 
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
-        let client =  this.props.drafterbit.getApiClient2()
+        let client =  this.props.drafterbit.getApiClient()
         return client.getApiKeys()
             .then(apiKeys => {
                 this.setState({
@@ -28,7 +28,7 @@ class ApiKeys extends React.Component {
     };
 
     componentDidMount() {
-        let client =  this.props.drafterbit.getApiClient2()
+        let client =  this.props.drafterbit.getApiClient()
         client.getApiKeys()
             .then(apiKeys => {
                 this.setState({

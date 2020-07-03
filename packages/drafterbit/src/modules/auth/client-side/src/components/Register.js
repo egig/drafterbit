@@ -21,7 +21,7 @@ class Register extends React.Component {
     }
 
     onSubmit(values) {
-        let client = his.props.drafterbit.getApiClient2();
+        let client = his.props.drafterbit.getApiClient();
         return client
             .createUser(
                 values.full_name,

@@ -9,33 +9,12 @@ class Drafterbit extends EventEmitter {
 
     modules = [];
     getConfig = getConfig;
-    getApiClient () {
-        if(!this.apiClient) {
-            this.apiClient =  apiClient.createClient({
-                baseURL: getConfig('apiBaseURL'),
-                apiKey: getConfig('apiKey')
-            });
-        }
-        return this.apiClient;
-    }
-
-    getAxiosInstance() {
-        let apiClientOptions = {
-            baseURL: getConfig('apiBaseURL'),
-            timeout: 10000,
-            params: {
-                api_key: getConfig('apiKey')
-            }
-        };
-
-        return axios.create(apiClientOptions);
-    }
 
     addModule(moduleObject) {
         this.modules.push(moduleObject)
     }
 
-    initApiClient2() {
+    initApiClient() {
 
         let clientProto = {};
         this.modules.map(m => {
@@ -54,7 +33,7 @@ class Drafterbit extends EventEmitter {
         this.apiClient2 = new FuncClient(options);
     }
 
-    getApiClient2() {
+    getApiClient() {
         return this.apiClient2;
     }
 }

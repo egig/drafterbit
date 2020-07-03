@@ -75,7 +75,7 @@ class ContentEdit extends React.Component {
             }
         });
 
-        let client = this.props.drafterbit.getApiClient2();
+        let client = this.props.drafterbit.getApiClient();
         client.updateEntry(slug, contentId, data)
             .then(r => {
                 this.setState({
@@ -89,7 +89,7 @@ class ContentEdit extends React.Component {
         let contentId = params.content_id;
         let slug = params.content_type_slug;
 
-        let client = this.props.drafterbit.getApiClient2();
+        let client = this.props.drafterbit.getApiClient();
         Promise.all([
             client.getContentType(slug),
             client.getEntry(slug, contentId)

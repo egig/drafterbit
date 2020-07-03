@@ -27,7 +27,7 @@ class ApiKeyEdit extends React.Component {
 
         let restrictionValue = this.state.restrictedType === 0 ? '' : form.restriction_value.value;
 
-        this.props.drafterbit.getApiClient2().createApiKey(
+        this.props.drafterbit.getApiClient().createApiKey(
             form.name.value,
             form.key.value,
             this.state.restrictedType,

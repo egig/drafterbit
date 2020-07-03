@@ -1,10 +1,6 @@
-class ApiClient {
+const ApiClient = {
 
-    constructor(axiosInstance) {
-        this.axiosInstance = axiosInstance;
-    }
-
-    async getFiles(path) {
+    getFiles: async function getFiles(path) {
         let response = await this.axiosInstance.get('/files', {
             params: {
                 op: 'ls',
@@ -12,9 +8,9 @@ class ApiClient {
             }
         });
         return response.data;
-    }
+    },
 
-    async upload(file, path) {
+    upload: async function upload(file, path) {
         let formData = new FormData();
         formData.set('path', path);
         formData.append('f', file);
@@ -24,6 +20,6 @@ class ApiClient {
         });
         return res.data;
     }
-}
+};
 
 export default ApiClient;
