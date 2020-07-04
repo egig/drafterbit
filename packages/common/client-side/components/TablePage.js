@@ -4,6 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import DataTable from './DataTable';
 import _ from 'lodash';
+import { Table } from 'antd'
+
 
 const FilterQuery = require('../../FilterQuery');
 
@@ -170,6 +172,25 @@ class TablePage extends React.Component {
         let page = !!qs['page'] ? qs['page'] : 1;
         let filterObjects = FilterQuery.fromString(qs['fq']).getFilters();
 
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+
+                this.setState({
+                    selected: selectedRows.map(s => s._id)
+                });
+            },
+            getCheckboxProps: record => ({
+                name: "_ids",
+                value: record._id,
+            }),
+        };
+
+        data = data.map(d => {
+            d.key = d._id;
+            return d;
+        });
+
         return (
             <Fragment>
                 <div className="row">
@@ -188,33 +209,46 @@ class TablePage extends React.Component {
                     </div>
                 </div>
                 {this.state.loading && <div>Loading&hellip;</div>}
+                {/*{this.state.loading ||*/}
+                {/*<DataTable*/}
+                {/*    idField="_id"*/}
+                {/*    data={data}*/}
+                {/*    columns={columns}*/}
+                {/*    select={select}*/}
+                {/*    selected={selected}*/}
+                {/*    onSelect={this.handleOnSelect}*/}
+                {/*    onSelectAll={this.handleOnSelectAll}*/}
+                {/*    sortBy={sortBy}*/}
+                {/*    sortDir={sortDir}*/}
+                {/*    onSort={this.handleSort}*/}
+                {/*    onApplyFilter={this.applyFilter}*/}
+                {/*    onFilterChange={this.onFilterChange}*/}
+                {/*    onReset={this.onReset}*/}
+                {/*    filterObjects={filterObjects}*/}
+                {/*    currentPage={page}*/}
+                {/*    totalPageCount={Math.ceil(this.props.contentCount / 10)}*/}
+                {/*    renderPaginationLink={(p) => (*/}
+                {/*        <Link className="page-link" to={this.props.match.url + "?page=" + p}>{p}</Link>*/}
+                {/*    )}*/}
+                {/*    onRowClick={this.props.onRowClick}*/}
+                {/*    onDeleteFilter={this.onDeleteFilter}*/}
+                {/*    popFilter={this.popFilter}*/}
+                {/*    render={this.props.render}*/}
+                {/*/>*/}
+
                 {this.state.loading ||
-                <DataTable
-                    idField="_id"
-                    data={data}
-                    columns={columns}
-                    select={select}
-                    selected={selected}
-                    onSelect={this.handleOnSelect}
-                    onSelectAll={this.handleOnSelectAll}
-                    sortBy={sortBy}
-                    sortDir={sortDir}
-                    onSort={this.handleSort}
-                    onApplyFilter={this.applyFilter}
-                    onFilterChange={this.onFilterChange}
-                    onReset={this.onReset}
-                    filterObjects={filterObjects}
-                    currentPage={page}
-                    totalPageCount={Math.ceil(this.props.contentCount / 10)}
-                    renderPaginationLink={(p) => (
-                        <Link className="page-link" to={this.props.match.url + "?page=" + p}>{p}</Link>
-                    )}
-                    onRowClick={this.props.onRowClick}
-                    onDeleteFilter={this.onDeleteFilter}
-                    popFilter={this.popFilter}
-                    render={this.props.render}
-                />
+                    <Table
+                        bordered
+                        size="small"
+                        rowSelection={{
+                            type: "checkbox",
+                            ...rowSelection,
+                        }}
+                        columns={columns}
+                        dataSource={data}
+                    />
                 }
+
             </Fragment>
         );
     }

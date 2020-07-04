@@ -8,12 +8,12 @@ let router = express.Router();
 
 /**
  * @swagger
- * /{slug}/{id}:
+ * /{type_name}/{id}:
  *   delete:
  *     description: Delete contents
  *     parameters:
  *       - in: path
- *         name: slug
+ *         name: type_name
  *         type: string
  *         schema:
  *           type: string
@@ -31,9 +31,9 @@ let router = express.Router();
  *     tags:
  *        - /{slug}
  */
-router.delete('/:slug/:id',
+router.delete('/:type_name/:id',
     validateRequest({
-        slug: {
+        type_name: {
             notEmpty: true,
             errorMessage: 'slug required'
         },
@@ -44,7 +44,7 @@ router.delete('/:slug/:id',
     }),
     contentMiddleware(),
     handleFunc(async function(req) {
-        let  Model = req.app.model(req.params['slug']);
+        let  Model = req.app.model(req.params['type_name']);
         return await Model.findOneAndDelete({_id: req.params.id });
     })
 );

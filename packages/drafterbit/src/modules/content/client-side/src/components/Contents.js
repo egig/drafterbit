@@ -85,9 +85,14 @@ class Contents extends React.Component {
 
         const columns = [{
             dataField: '_id',
+            dataIndex: '_id',
             text: '#ID',
+            title: '#ID',
             formatter: (cell, row) => {
                 return <span><Link to={`/contents/${slug}/${row._id}`}>{cell.substr(0,3)}&hellip;</Link></span>;
+            },
+            render: (text, row) => {
+                return <span><Link to={`/contents/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
             },
 	        width: "80px"
         }];
@@ -97,7 +102,9 @@ class Contents extends React.Component {
             if(this.canBeDisplayed(f)) {
 		        columns.push({
 			        dataField: f.name,
+			        dataIndex: f.name,
 			        text: f.display_text,
+			        title: f.display_text,
 			        sort: true
 		        })
 	        }
