@@ -6,8 +6,7 @@ import actions from '../actions';
 import Field from './Field';
 import Editor from "./Unstructured/Editor"
 import Notify from '@drafterbit/common/client-side/components/Notify';
-import Card from '@drafterbit/common/client-side/components/Card/Card';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Card } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 const FieldType = require('@drafterbit/common/FieldType');
 
@@ -168,23 +167,6 @@ class ContentEdit extends React.Component {
         }} key={i} field={f} />;
     }
 
-    // renderRelationToOne(f,i,value) {
-    //     return <Field value={value} onChange={(selected, actionsContainer) => {
-    //
-    //         this.setState(oldState => {
-    //
-    //             let formData = oldState.formData;
-    //             formData[f.name] = selected.value;
-    //             return Object.assign({}, oldState, {
-    //                 formData
-    //             });
-    //
-    //         });
-    //
-    //
-    //     }} key={i} field={f} />;
-    // }
-
     renderRelation(f,i,value) {
         return <Field value={value} onChange={(value, selectedObjList) => {
 
@@ -201,25 +183,6 @@ class ContentEdit extends React.Component {
         }} key={i} field={f} />;
     }
 
-    // renderRelationToMany(f,i,value) {
-    //     return <Field value={value} onChange={(selectedList, actionsContainer) => {
-    //
-    //         selectedList = selectedList || [];
-    //
-    //         this.setState(oldState => {
-    //
-    //             let formData = oldState.formData;
-    //             formData[f.name] =  selectedList.map(s => s.value);
-    //             return Object.assign({}, oldState, {
-    //                 formData
-    //             });
-    //
-    //         });
-    //
-    //
-    //     }} key={i} field={f} />;
-    // }
-    //
     renderUnstructured(f,i,value) {
 
         let editorValue = this.state.formData[f.name];
@@ -273,8 +236,8 @@ class ContentEdit extends React.Component {
                 {this.state.loading && <div>Loading&hellip;</div>}
                 {this.state.loading ||
                     <Row>
-                        <Col md="8">
-                            <Card headerText="Edit Content" >
+                        <Col span="12">
+                            <Card title="Edit Content" >
                                 <form onSubmit={e => {
                                     e.preventDefault();
                                     this.onSubmit(e.target);

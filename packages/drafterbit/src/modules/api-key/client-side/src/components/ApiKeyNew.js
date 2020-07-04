@@ -3,8 +3,8 @@ import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Notify from '@drafterbit/common/client-side/components/Notify';
-import Card from '@drafterbit/common/client-side/components/Card/Card';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import { Row, Col, Card } from 'antd'
 
 class ApiKeyEdit extends React.Component {
 
@@ -43,9 +43,9 @@ class ApiKeyEdit extends React.Component {
 
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-6">
-                        <Card headerText="Create Api Key" >
+                <Row>
+                    <Col span={12}>
+                        <Card title="Create Api Key" >
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 this.onSubmit(e.target);
@@ -124,8 +124,8 @@ class ApiKeyEdit extends React.Component {
                                 </div>
                             </form>
                         </Card>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 {this.state.successText &&
                     <Notify type="success" message={this.state.successText} />
                 }

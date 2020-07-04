@@ -2,7 +2,6 @@ import React  from 'react';
 import { Link } from 'react-router-dom';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import ApiClient from '../ApiClient';
 
 class ApiKeys extends React.Component {
 
@@ -14,7 +13,7 @@ class ApiKeys extends React.Component {
     }
 
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
-        let client =  this.props.drafterbit.getApiClient()
+        let client =  this.props.drafterbit.getApiClient();
         return client.getApiKeys()
             .then(apiKeys => {
                 this.setState({
@@ -28,7 +27,7 @@ class ApiKeys extends React.Component {
     };
 
     componentDidMount() {
-        let client =  this.props.drafterbit.getApiClient()
+        let client =  this.props.drafterbit.getApiClient();
         client.getApiKeys()
             .then(apiKeys => {
                 this.setState({
@@ -59,6 +58,10 @@ class ApiKeys extends React.Component {
 
         return (
             <TablePage
+                onClickAdd={() => {
+                    this.props.history.push(`/api_keys/new`);
+                }}
+                addText="New Api Key"
                 idField='_id'
                 select={true}
                 data={ this.state.apiKeys }
