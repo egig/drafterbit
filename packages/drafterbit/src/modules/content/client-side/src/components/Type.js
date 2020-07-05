@@ -44,6 +44,7 @@ class Type extends React.Component {
                     slug: contentType.slug,
                     display_text: contentType.display_text,
                     description: contentType.description,
+                    has_fields: contentType.has_fields,
                     fields: contentType.fields,
                     loading: false
                 });
@@ -80,7 +81,7 @@ class Type extends React.Component {
         client.deleteContentType(deleteForm.id.value)
             .then(r => {
                 // TODO create success notif
-                this.props.history.push('/content_types');
+                this.props.history.push('/types');
             });
     }
 
@@ -115,38 +116,41 @@ class Type extends React.Component {
                         <div className="mb-3"/>
                     </Col>
                     <Col span="12">
-                        <Card title="Fields">
-                            <Tabs type="card" tabPosition="left">
-                                {this.state.fields.map((f, i) => {
-                                    return (
-                                        <Tabs.TabPane tab={f.display_text} key={f.name}>
-                                            <FieldForm field={f}
-                                                       belongsToTypeName={this.state.name}
-                                                       onSuccess={() => {
-                                                            this.fetchContentType().then(() => {
-                                                                message.success("Content Type Saved Successfully !");
-                                                            });
-                                                        }}
-                                                       types={this.state.types} />
-                                            <Button danger type="line" onClick={e => {
-                                                this.deleteField(f);
-                                            }}>Delete</Button>
-                                        </Tabs.TabPane>
-                                    )
-                                })}
-                                <Tabs.TabPane tab="+ Add Field" key="_add_field">
-                                    <FieldForm belongsToTypeName={this.state.name}
-                                               onSuccess={() => {
-                                                    this.fetchContentType().then(() => {
-                                                        message.success("Content Type Saved Successfully !");
-                                                    });
-                                                }}
-                                               types={this.state.types} />
-                                </Tabs.TabPane>
-                            </Tabs>
-                        </Card>
+                        {this.state.has_fields &&
+                            <Card title="Fields">
+                                <Tabs type="card" tabPosition="left">
+                                    {this.state.fields.map((f, i) => {
+                                        return (
+                                            <Tabs.TabPane tab={f.display_text} key={f.name}>
+                                                <FieldForm field={f}
+                                                           belongsToTypeName={this.state.name}
+                                                           onSuccess={() => {
+                                                               this.fetchContentType().then(() => {
+                                                                   message.success("Content Type Saved Successfully !");
+                                                               });
+                                                           }}
+                                                           types={this.state.types} />
+                                                <Button danger type="line" onClick={e => {
+                                                    this.deleteField(f);
+                                                }}>Delete</Button>
+                                            </Tabs.TabPane>
+                                        )
+                                    })}
+                                    <Tabs.TabPane tab="+ Add Field" key="_add_field">
+                                        <FieldForm belongsToTypeName={this.state.name}
+                                                   onSuccess={() => {
+                                                       this.fetchContentType().then(() => {
+                                                           message.success("Content Type Saved Successfully !");
+                                                       });
+                                                   }}
+                                                   types={this.state.types} />
+                                    </Tabs.TabPane>
+                                </Tabs>
+                            </Card>
+                        }
+
                         <div className="mb-3"/>
-                        <Card title={`Delete Content Type : ${this.state.name}`}>
+                        <Card title={`Delete Type : ${this.state.name}`}>
                             <form onSubmit={e => {
                                 e.preventDefault();
                                 this.deleteContentType(e.target);
@@ -165,6 +169,7 @@ class Type extends React.Component {
                     displayText={this.state.display_text}
                     slug={this.state.slug}
                     description={this.state.description}
+                    has_fields={this.state.has_fields}
                     onCancel={e => {
                         this.setState({
                             basicEditForm: false

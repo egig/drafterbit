@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, Switch } from 'antd';
 import DTContext from '@drafterbit/common/client-side/DTContext';
 
 const TypeForm = ({ visible, typeId, name, slug, displayText,
-    description, onCancel, onSuccess }) => {
+    description, has_fields, onCancel, onSuccess }) => {
     const [form] = Form.useForm();
     let $dt = useContext(DTContext);
 
     const onSave = (values) => {
-        let { name, slug, display_text, description } = values;
+        let { name, slug, display_text, has_fields, description } = values;
 
         (() => {
             if(!!typeId) {
@@ -16,6 +16,7 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                     name,
                     slug,
                     display_text,
+                    has_fields,
                     description
                 })
                     .then(() => {
@@ -27,7 +28,7 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                         }
                     })
             } else {
-                return $dt.getApiClient().createType(name, slug, display_text,description)
+                return $dt.getApiClient().createType(name, slug, display_text, description, has_fields)
             }
         })()
             .then(contentType => {
@@ -62,7 +63,8 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                     name,
                     slug,
                     display_text: displayText,
-                    description
+                    description,
+                    has_fields
                 }}
             >
                 <Form.Item
@@ -100,6 +102,9 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                     ]}
                 >
                     <Input />
+                </Form.Item>
+                <Form.Item valuePropName="checked" name="has_fields" label="Has Fields">
+                    <Switch size="small" />
                 </Form.Item>
                 <Form.Item name="description" label="Description">
                     <Input.TextArea/>

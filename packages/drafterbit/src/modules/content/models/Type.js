@@ -7,10 +7,8 @@ let TypeSchema = new mongoose.Schema({
     slug: { type: String, unique: true },
     description: String,
     is_structured: { type: Boolean, default: false },
-    system: { type: Boolean, default: false }, // Content Type is used by system, not user defined
+    has_fields: { type: Boolean, default: false },
     fields: [{
-        related_content_type_slug: String,
-        type_id: Number,
         name: String,
         label: String,
         validation_rules: String,
@@ -108,35 +106,22 @@ TypeSchema.statics.getContentTypeBySlug = function(slug) {
  *
  * @param name
  * @param slug
+ * @param displayText
  * @param description
+ * @param has_fields
  * @param fields
- * @param system
- * @returns {*}
  */
-TypeSchema.statics.createContentType = function(name, slug, description, fields, system = false) {
-    let newContentType = new this({
-        name,
-        slug,
-        description,
-        fields: fields,
-        system
-    });
-
-    return newContentType.save();
-};
-
-
-TypeSchema.statics.createType = function(name, slug, displayText, description, fields, system = false) {
-    let newContentType = new this({
+TypeSchema.statics.createType = function(name, slug, displayText, description, has_fields, fields = []) {
+    let newType = new this({
         name,
         slug,
         display_text: displayText,
         description,
+        has_fields,
         fields: fields,
-        system
     });
 
-    return newContentType.save();
+    return newType.save();
 };
 
 
@@ -152,33 +137,14 @@ TypeSchema.statics.deleteContentType = function(contentTypeId) {
 
 /**
  *
- * @param contentTypeId
+ * @param typeId
  * @param payload
  * @return {Promise}
  */
-TypeSchema.statics.updateContentType = function(contentTypeId, payload) {
-    return this.updateOne({ _id: contentTypeId }, payload);
+TypeSchema.statics.updateType = function(typeId, payload) {
+    return this.updateOne({ _id: typeId }, payload);
 };
 
-
-/**
- *
- * @param contentTypeId
- * @param fieldId
- * @param payload
- * @return {Promise}
- */
-// TypeSchema.statics.updateContentTypeField = function(contentTypeId, fieldId, payload) {
-//
-//     let setter = {};
-//     for (let k of Object.keys(payload)) {
-//         setter[`fields.$.${k}`] = payload[k];
-//     }
-//
-//     return this.updateOne({ _id: contentTypeId, 'fields._id': fieldId }, {
-//         $set: setter
-//     });
-// };
 
 /**
  *

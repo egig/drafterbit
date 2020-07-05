@@ -15,6 +15,7 @@ class Settings extends React.Component {
         let client = this.props.$dt.getApiClient();
         client.getSettings()
             .then(settings => {
+                // TODO support another fieldset
                 this.formRef.current.setFieldsValue(settings[0])
             })
     }
@@ -41,11 +42,11 @@ class Settings extends React.Component {
                                     <Form.Item name="app_name" label="App Name">
                                         <Input/>
                                     </Form.Item>
-                                    <Form.Item name="enable_register" label="Enable Register">
-                                        <Switch/>
+                                    <Form.Item valuePropName="checked" name="enable_register" label="Enable Register">
+                                        <Switch size="small"/>
                                     </Form.Item>
-                                    <Form.Item name="enable_reset_password" label="Enable Reset Password">
-                                        <Switch/>
+                                    <Form.Item valuePropName="checked" name="enable_reset_password" label="Enable Reset Password">
+                                        <Switch size="small"/>
                                     </Form.Item>
                                     <Form.Item name="brand_img_url" label="Brand Image URL">
                                         <Input/>

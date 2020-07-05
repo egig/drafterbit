@@ -118,7 +118,7 @@ router.post('/types',
         let m = req.app.model('Type');
         return await m.createType(req.body.name, req.body.slug,
             req.body.display_text,
-            req.body.description, req.body.fields);
+            req.body.description, req.body.has_fields, req.body.fields);
     })
 );
 
@@ -263,13 +263,13 @@ router.patch('/types/:type_id',
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        let contentTypeId = req.params.type_id;
+        let typeId = req.params.type_id;
 
-        let s =  await m.updateContentType(contentTypeId, req.body);
+        let s =  await m.updateType(typeId, req.body);
 
         // update compiled models
-        let contentType = await  m.getContentType(contentTypeId);
-        delete req.app.getDB().models[contentType.slug];
+        let type = await  m.getContentType(typeId);
+        delete req.app.getDB().models[type.name];
 
         return s;
     })

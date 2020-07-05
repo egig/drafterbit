@@ -42,11 +42,11 @@ class ClientSide extends EventEmitter {
             apiKey: getConfig('apiKey')
         };
 
-        this.apiClient2 = new ApiClient(options);
+        this.apiClient = new ApiClient(options);
     }
 
     getApiClient() {
-        return this.apiClient2;
+        return this.apiClient;
     }
 
     createRootReducer() {
