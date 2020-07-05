@@ -16,7 +16,7 @@ class Types extends React.Component {
     }
 
     loadContents = () => {
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         return client.getTypes()
             .then((types) => {
                 this.setState({

@@ -15,7 +15,7 @@ class Settings extends React.Component {
     }
 
     componentDidMount() {
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         client.getSettings()
             .then(settings => {
                 this.setState({

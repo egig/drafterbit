@@ -2,13 +2,13 @@ class FieldType {
     static SHORT_TEXT = "ShortText";
     static LONG_TEXT = "LongText";
     static RICH_TEXT = "RichText";
-    static RELATION_TO_ONE = 4;
-    static RELATION_TO_MANY = 5;
     static NUMBER = "Number";
     static UNSTRUCTURED = "Unstructured";
     static IMAGE = "Image";
     static VIDEO = "Video";
     static DATE = "Date";
+    static TIME = "Time";
+    static DATE_TIME = "DateTime";
     static LOCATION = "Location";
     static TOGGLE = "Toggle";
 
@@ -43,23 +43,6 @@ class FieldType {
                 'is_required',
                 'min_length',
                 'max_length',
-            ]
-        },
-        {
-            id: FieldType.RELATION_TO_ONE,
-            code: 'FIELD_RELATION_TO_ONE',
-            name: 'Relation to One',
-            validationOptions: [
-                'is_required',
-                'unique',
-            ]
-        },
-        {
-            id: FieldType.RELATION_TO_MANY,
-            code: 'FIELD_RELATION_TO_MANY',
-            name: 'Relation to Many',
-            validationOptions: [
-                'is_required',
             ]
         },
         {

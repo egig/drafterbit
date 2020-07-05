@@ -7,7 +7,7 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
         render() {
 
             const newProps = {
-                drafterbit: this.context.drafterbit,
+                $dt: this.context.$dt,
             };
 
             return <WrappedComponent {...this.props} {...newProps} />;
@@ -16,7 +16,7 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
 
     DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
     DrafterbitHOC.contextTypes = {
-        drafterbit: PropTypes.object.isRequired,
+        $dt: PropTypes.object.isRequired,
     };
 
     return DrafterbitHOC;

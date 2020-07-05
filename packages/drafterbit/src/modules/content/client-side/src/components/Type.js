@@ -34,7 +34,7 @@ class Type extends React.Component {
     }
 
     fetchContentType() {
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         return client.getContentType(this.props.match.params.content_type_id)
             .then(contentType => {
 
@@ -53,7 +53,7 @@ class Type extends React.Component {
     componentDidMount() {
         this.fetchContentType()
             .then(() => {
-                let client = this.props.drafterbit.getApiClient();
+                let client = this.props.$dt.getApiClient();
                 client.getTypes()
                     .then(types => {
                         this.setState({
@@ -76,7 +76,7 @@ class Type extends React.Component {
 
     deleteContentType(deleteForm) {
         // TODO create alert
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         client.deleteContentType(deleteForm.id.value)
             .then(r => {
                 // TODO create success notif
@@ -85,7 +85,7 @@ class Type extends React.Component {
     }
 
     doUpdate() {
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         client.updateContentType(
             this.state._id,
             this.state.name,

@@ -1,6 +1,6 @@
 import React from 'react';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import {Row, Col, Card} from 'antd'
+import {Card} from 'antd'
 
 import './AuthCard.css';
 
@@ -8,7 +8,7 @@ class AuthCard extends React.Component {
 
     render() {
 
-        let state = this.props.drafterbit.store.getState();
+        let state = this.props.$dt.store.getState();
         let appName = state.COMMON.settings.General.app_name;
 
         return (
@@ -24,7 +24,7 @@ class AuthCard extends React.Component {
                                 {this.props.children}
                             </Card>
                             <div className="auth_card-loginFooter">
-                                Copyright &copy; {this.props.drafterbit.getConfig("appName")}
+                                Copyright &copy; {this.props.$dt.getConfig("appName")}
                             </div>
                         </div>
                     </div>

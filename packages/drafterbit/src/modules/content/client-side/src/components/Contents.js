@@ -28,7 +28,7 @@ class Contents extends React.Component {
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
         let typeName = match.params.content_type_slug;
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         return client.getType(typeName)
 		    .then(type => {
 
@@ -51,7 +51,7 @@ class Contents extends React.Component {
 
     handleDelete = (selected) => {
         let slug = this.props.match.params["content_type_slug"];
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         let deleteActionPromise = selected.map(entryId => {
             return client.deleteEntry(slug, entryId);
         });
@@ -65,7 +65,7 @@ class Contents extends React.Component {
     onClickAdd = (e) => {
         // create draft
         let slug = this.props.match.params["content_type_slug"];
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         client.createDraft(slug)
             .then(d => {
                 this.props.history.push(`/contents/${slug}/${d.item._id}`);

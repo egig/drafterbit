@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Value } from "slate";
@@ -45,8 +45,6 @@ class ContentEdit extends React.Component {
     formRef = React.createRef();
     state = {
         ctFields: [],
-        entry: null,
-        loading: true
     };
 
     componentDidMount() {
@@ -54,7 +52,7 @@ class ContentEdit extends React.Component {
         let contentId = params.content_id;
         let slug = params.content_type_slug;
 
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         Promise.all([
             client.getContentType(slug),
             client.getEntry(slug, contentId)
@@ -168,9 +166,9 @@ class ContentEdit extends React.Component {
             }
         });
 
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         client.updateEntry(slug, contentId, data)
-            .then(r => {
+            .then(() => {
                 message.success('Content successfully updated')
             });
 
@@ -178,8 +176,7 @@ class ContentEdit extends React.Component {
 
     render() {
         return (
-            <Fragment>
-                {this.state.loading && <div>Loading&hellip;</div>}
+            <>
                 <Row>
                     <Col span="12" sm="24">
                         <Card title="Edit Content" >
@@ -214,7 +211,7 @@ class ContentEdit extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-            </Fragment>);
+            </>);
     }
 }
 

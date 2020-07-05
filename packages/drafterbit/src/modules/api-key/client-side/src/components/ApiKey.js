@@ -9,7 +9,7 @@ class ApiKey extends React.Component {
     componentDidMount() {
         let id = parseInt(this.props.match.params.api_key_id);
         if (id !== 0) {
-            let client = this.props.drafterbit.getApiClient();
+            let client = this.props.$dt.getApiClient();
             client.getApiKey(this.props.match.params.api_key_id)
                 .then(r => {
                     this.formRef.current.setFieldsValue({
@@ -34,7 +34,7 @@ class ApiKey extends React.Component {
     onFinish = (values) => {
 
         let id = parseInt(this.props.match.params.api_key_id);
-        let client =  this.props.drafterbit.getApiClient();
+        let client =  this.props.$dt.getApiClient();
         if (id === 0) {
            client.createApiKey(
                 values.name,

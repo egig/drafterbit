@@ -43,7 +43,7 @@ class Register extends React.Component {
         return (
             <AuthCard title="Register">
                 <Helmet>
-                    <title>Register - {this.props.drafterbit.getConfig("appName")}</title>
+                    <title>Register - {this.props.$dt.getConfig("appName")}</title>
                 </Helmet>
 
 	            {this.state.errorText &&

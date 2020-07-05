@@ -20,7 +20,7 @@ class Files extends React.Component {
 
     loadContents = (match, page, sortBy, sortDir, fqStr, qs) => {
 
-        let client = this.props.drafterbit.getApiClient();
+        let client = this.props.$dt.getApiClient();
         let path = qs['path'] || "/";
         return client.getFiles(path)
             .then(files => {

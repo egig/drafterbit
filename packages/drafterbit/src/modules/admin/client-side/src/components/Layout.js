@@ -6,7 +6,6 @@ import {
 } from '@ant-design/icons';
 import SideNav from './SideNav';
 import { Helmet } from 'react-helmet';
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import './Layout.css';
 
 const { Header, Content, Footer } = BaseLayout;
@@ -40,7 +39,7 @@ class Layout extends React.Component {
 							onClick: this.toggle,
 						})}
 
-						{this.props.drafterbit.modules.map((mo,i) => {
+						{this.props.$dt.modules.map((mo,i) => {
 							if(typeof mo.renderNavBarMenu == "function") {
 								return mo.renderNavBarMenu(i);
 							}
@@ -59,4 +58,4 @@ class Layout extends React.Component {
 	}
 }
 
-export default withDrafterbit(Layout);
+export default Layout;

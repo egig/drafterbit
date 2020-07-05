@@ -34,7 +34,7 @@ class SideNav extends React.Component {
         };
 
         let menuPromises = [];
-        this.props.drafterbit.modules.map((mo,i) => {
+        this.props.$dt.modules.map((mo,i) => {
             if(typeof mo.getMenu == "function") {
                 menuPromises.push(mo.getMenu());
             }
@@ -56,7 +56,7 @@ class SideNav extends React.Component {
 
     render() {
 
-        let settings = this.props.drafterbit.store.getState().COMMON.settings.General;
+        let settings = this.props.$dt.store.getState().COMMON.settings.General;
         let brandImgURL = settings.brand_img_url;
         let AppName = settings.app_name;
 
