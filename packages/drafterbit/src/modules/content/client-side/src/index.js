@@ -17,9 +17,9 @@ import {
         name: "content",
         stateReducer: stateReducer,
         routes: [
-            {path: "/contents/:content_type_slug/:content_id", component: ContentEdit},
-            {path: "/contents/:content_type_slug", component: Contents},
-            {path: "/types/:content_type_id", component: Type},
+            {path: "/contents/:type_name/:content_id", component: ContentEdit},
+            {path: "/contents/:type_name", component: Contents},
+            {path: "/types/:type_id", component: Type},
             {path: "/types", component: Types},
         ],
         registerApiClient() {

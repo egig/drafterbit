@@ -13,7 +13,7 @@ class Contents extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            contentType: {
+            type: {
                 name: ""
             },
 	        contents: [],
@@ -27,13 +27,13 @@ class Contents extends React.Component {
 
     loadContents = (match, page, sortBy, sortDir, fqStr) => {
 
-        let typeName = match.params.content_type_slug;
+        let typeName = match.params.type_name;
         let client = this.props.$dt.getApiClient();
         return client.getType(typeName)
 		    .then(type => {
 
 		        this.setState({
-                    contentType: type,
+                    type: type,
                     ctFields: type.fields
                 });
 
@@ -50,7 +50,7 @@ class Contents extends React.Component {
     };
 
     handleDelete = (selected) => {
-        let slug = this.props.match.params["content_type_slug"];
+        let slug = this.props.match.params["type_name"];
         let client = this.props.$dt.getApiClient();
         let deleteActionPromise = selected.map(entryId => {
             return client.deleteEntry(slug, entryId);
@@ -64,7 +64,7 @@ class Contents extends React.Component {
 
     onClickAdd = (e) => {
         // create draft
-        let slug = this.props.match.params["content_type_slug"];
+        let slug = this.props.match.params["type_name"];
         let client = this.props.$dt.getApiClient();
         client.createDraft(slug)
             .then(d => {
@@ -81,16 +81,11 @@ class Contents extends React.Component {
 
     render() {
 
-        let slug = this.props.match.params.content_type_slug;
+        let slug = this.props.match.params.type_name;
 
         const columns = [{
-            dataField: '_id',
             dataIndex: '_id',
-            text: '#ID',
             title: '#ID',
-            formatter: (cell, row) => {
-                return <span><Link to={`/contents/${slug}/${row._id}`}>{cell.substr(0,3)}&hellip;</Link></span>;
-            },
             render: (text, row) => {
                 return <span><Link to={`/contents/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
             },
@@ -112,7 +107,7 @@ class Contents extends React.Component {
 
         return (
             <TablePage
-                headerText={this.state.contentType.name}
+                headerText={this.state.type.name}
                 data={ this.state.contents }
                 contentCount={this.state.contentCount}
                 columns={ columns }

@@ -112,14 +112,14 @@ router.post('/token',
 
                 let m = req.app.model('Type');
 
-                let userCollectionSlug = 'users';
-                let contentType = await  m.getContentType(userCollectionSlug);
-                let schemaObj = fieldsToSchema.getSchema(contentType.fields);
+                let userCollectionName = 'User';
+                let type = await  m.getType(userCollectionName);
+                let schemaObj = fieldsToSchema.getSchema(type.fields);
                 let userModel;
                 try {
-                    userModel = req.app.getDB().model(userCollectionSlug);
+                    userModel = req.app.getDB().model(userCollectionName);
                 } catch (error) {
-                    userModel = req.app.getDB().model(userCollectionSlug, schemaObj, userCollectionSlug);
+                    userModel = req.app.getDB().model(userCollectionName, schemaObj);
                 }
 
                 let user = await userModel.findOne({

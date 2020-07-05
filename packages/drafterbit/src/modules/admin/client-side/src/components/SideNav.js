@@ -1,17 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-
+import { Layout as BaseLayout, Menu } from 'antd';
 
 import './SideNav.css';
 
-import { Layout as BaseLayout, Menu } from 'antd';
-
 const { Sider } = BaseLayout;
-const { SubMenu } = Menu;
 import {
     MonitorOutlined
 } from '@ant-design/icons';
@@ -93,18 +88,4 @@ class SideNav extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        contentTypes: state.CONTENT.contentTypes
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // actions: bindActionCreators({
-        //     getContentTypes: getContentTypes
-        // }, dispatch)
-    }
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(SideNav)));
+export default withRouter(withDrafterbit(SideNav));

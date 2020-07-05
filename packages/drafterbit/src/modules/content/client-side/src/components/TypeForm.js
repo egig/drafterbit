@@ -24,6 +24,7 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                             _id: typeId,
                             name,
                             slug,
+                            has_fields,
                             description
                         }
                     })
@@ -31,8 +32,8 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                 return $dt.getApiClient().createType(name, slug, display_text, description, has_fields)
             }
         })()
-            .then(contentType => {
-                onSuccess(contentType);
+            .then(type => {
+                onSuccess(type);
             });
     };
 

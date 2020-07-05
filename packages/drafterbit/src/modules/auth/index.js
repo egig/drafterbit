@@ -117,7 +117,7 @@ function install(app, email, password) {
 }
 
 function createPermission(m) {
-    return m.createContentType('Permission', 'permissions', '', [{
+    return m.createType('Permission', 'permissions', '', [{
         type_id: FieldType.SHORT_TEXT,
         name: 'name',
         label: 'Name',
@@ -133,7 +133,7 @@ function createPermission(m) {
 }
 
 function createGroup(m) {
-    return  m.createContentType('Group', 'groups', '', [
+    return  m.createType('Group', 'groups', '', [
         {
             type_id: FieldType.SHORT_TEXT,
             name: 'name',
@@ -147,8 +147,8 @@ function createGroup(m) {
             validation_rules: ''
         },
         {
-            type_id: FieldType.RELATION_TO_MANY,
-            related_content_type_slug: 'permissions',
+            type_name: 'Permission',
+            multiple: true,
             name: 'permissions',
             label: 'Permissions',
             validation_rules: '',
@@ -161,7 +161,7 @@ function createUser(m, email, passwordStr, app) {
 
     let userCollectionSlug = 'users';
 
-    return m.createContentType('User', 'users', '', [
+    return m.createType('User', 'users', '', [
         {
             type_id: FieldType.SHORT_TEXT,
             name: 'name',
@@ -184,22 +184,22 @@ function createUser(m, email, passwordStr, app) {
             show_in_form: false
         },
         {
-            type_id: FieldType.RELATION_TO_MANY,
-            related_content_type_slug: 'groups',
+            type_name: 'Group',
             name: 'groups',
             label: 'Groups',
+            multiple: true,
             validation_rules: '',
             show_in_list: false
         }
     ], true)
         .then(r => {
 
-            return m.getContentType(userCollectionSlug);
+            return m.getType(userCollectionSlug);
 
         })
-        .then(contentType => {
+        .then(type => {
 
-            let schemaObj = fieldsToSchema.getSchema(contentType.fields);
+            let schemaObj = fieldsToSchema.getSchema(type.fields);
 
             let userModel;
             try {

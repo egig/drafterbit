@@ -1,10 +1,6 @@
 import React  from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Value } from "slate";
-import actions from '../actions';
 import Field from './Field';
-import Editor from "./Unstructured/Editor"
 import { Row, Col, Card, Form, Button, message } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import htmlSerializer from './Unstructured/htmlSerializer';
@@ -36,9 +32,7 @@ let testInitValue = [
         type: "paragraph",
         html_text: "<p></p"
     }
-]
-
-import { blocksToSlateValue, slateValueToBlocks } from "./Unstructured/contentTypeSerializer";
+];
 
 class ContentEdit extends React.Component {
 
@@ -50,27 +44,18 @@ class ContentEdit extends React.Component {
     componentDidMount() {
         let params = this.props.match.params;
         let contentId = params.content_id;
-        let slug = params.content_type_slug;
+        let typeName = params.type_name;
 
         let client = this.props.$dt.getApiClient();
         Promise.all([
-            client.getContentType(slug),
-            client.getEntry(slug, contentId)
+            client.getType(typeName),
+            client.getEntry(typeName, contentId)
         ]).then(resList => {
-            let [ contentType, entry ] = resList;
-            let fields = contentType.fields;
+            let [ type, entry ] = resList;
+            let fields = type.fields;
 
             let formData = fields.reduce((formData, f) => {
-
-                if(f.type_name === FieldType.UNSTRUCTURED) {
-                    if (!(f.name in entry)) {
-                        formData[f.name] = blocksToSlateValue(testInitValue);
-                        return formData
-                    } else {
-                        formData[f.name] = blocksToSlateValue(entry[f.name])
-                    }
-
-                } else if(f.type_name === FieldType.RICH_TEXT) {
+                if(f.type_name === FieldType.RICH_TEXT) {
 
                     if (!(f.name in entry)) {
                         formData[f.name] = Value.fromJSON(richTextInitialValue)
@@ -93,7 +78,7 @@ class ContentEdit extends React.Component {
             this.formRef.current.setFieldsValue(formData);
 
             this.setState({
-                ctFields: contentType.fields,
+                ctFields: type.fields,
                 loading: false
             });
 
@@ -119,39 +104,11 @@ class ContentEdit extends React.Component {
         return <Field key={i} field={f} />;
     }
 
-    renderUnstructured(f,i,value) {
-
-        let editorValue = this.state.formData[f.name];
-        if(!editorValue) {
-            editorValue = blocksToSlateValue(richTextInitialValue);
-        }
-
-        return <div key={i} className="form-group">
-            <label htmlFor={f.name}>{f.display_text}</label>
-            <Editor
-                value={editorValue}
-                onChange={(change) => {
-
-                    this.setState( oldState => {
-
-                        let formData = oldState.formData;
-                        formData[f.name] = change.value;
-                        let res = Object.assign(oldState, {
-                            formData
-                        });
-
-                        return  res;
-
-                    });
-                }}/>
-        </div>;
-    }
-
     onFinish = values => {
 
         let params = this.props.match.params;
         let contentId = params.content_id;
-        let slug = params.content_type_slug;
+        let typeName = params.type_name;
 
         let data = {};
         this.state.ctFields.map(f => {
@@ -167,7 +124,7 @@ class ContentEdit extends React.Component {
         });
 
         let client = this.props.$dt.getApiClient();
-        client.updateEntry(slug, contentId, data)
+        client.updateEntry(typeName, contentId, data)
             .then(() => {
                 message.success('Content successfully updated')
             });
@@ -193,10 +150,6 @@ class ContentEdit extends React.Component {
                                         return this.renderRichText(f,i)
                                     }
 
-                                    if(f.type_name === FieldType.UNSTRUCTURED) {
-                                        return this.renderUnstructured(f,i,value)
-                                    }
-
                                     if (FieldType.primitives().indexOf(f.type_name) !== -1) {
                                         return <Field key={i} field={f} />;
                                     }
@@ -215,15 +168,4 @@ class ContentEdit extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        content: state.CONTENT.content,
-        contentTypeFields: state.CONTENT.ctFields.fields
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(ContentEdit));
+export default withDrafterbit(ContentEdit);

@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let drafterbit = require('../../../../src')(); // TODO make this global ?
-let ContentTypeSchema = require('../models/ContentType');
+let TypeSchema = require('../models/Type');
 let should = chai.should();
 let expect = chai.expect;
 
@@ -42,9 +42,9 @@ describe('Content', () => {
 
         // const opts = { useMongoClient: true }; 
         conn = mongoose.createConnection(mongoURI); 
-        ContentType = conn.model(`${dbName}_ContentType`, ContentTypeSchema, '_content_types');
+        let Type = conn.model(`${dbName}_Type`, TypeSchema, '_types');
   
-        let testCT = new ContentType({
+        let testCT = new Type({
             name: 'Articles',
             slug: 'articles',
             fields: [{

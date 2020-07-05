@@ -50,7 +50,7 @@ describe('Content Types', () => {
 
             // TODO using mongoose to create fixtures instead
             chai.request(drafterbit)
-                .post('/content_types?api_key=test')
+                .post('/type?api_key=test')
                 .send({
                     name: 'test ct4',
                     slug: 'test-ct4',
@@ -66,12 +66,12 @@ describe('Content Types', () => {
 
         it('it should delete a content types', (done) => {
             chai.request(drafterbit)
-                .delete(`/content_types/${testId}?api_key=test`)
+                .delete(`/types/${testId}?api_key=test`)
                 .end((err, res) => {
                     res.should.have.status(200);
 
                     chai.request(drafterbit)
-                        .get('/content_types?api_key=test')
+                        .get('/types?api_key=test')
                         .end((err, res) => {
                             res.body.should.be.a('array');
                             res.body.length.should.be.eql(0);
@@ -84,7 +84,7 @@ describe('Content Types', () => {
     describe('/GET content types', () => {
         it('it should get all the content types', (done) => {
             chai.request(drafterbit)
-                .get('/content_types?api_key=test')
+                .get('/types?api_key=test')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -99,7 +99,7 @@ describe('Content Types', () => {
 
         it('it should create a content type', (done) => {
             chai.request(drafterbit)
-                .post('/content_types?api_key=test')
+                .post('/types?api_key=test')
                 .send({
                     name: 'test ct',
                     slug: 'test-ct',
@@ -114,7 +114,7 @@ describe('Content Types', () => {
 
         it('it should get one after add', (done) => {
             chai.request(drafterbit)
-                .get('/content_types?api_key=test')
+                .get('/types?api_key=test')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -130,7 +130,7 @@ describe('Content Types', () => {
         before((done) => {
 
             chai.request(drafterbit)
-                .post('/content_types?api_key=test')
+                .post('/types?api_key=test')
                 .send({
                     name: 'test ct2',
                     slug: 'test-ct2',
@@ -147,7 +147,7 @@ describe('Content Types', () => {
         it('it should get a content type by id', (done) => {
 
             chai.request(drafterbit)
-                .get(`/content_types/${testId}?api_key=test`)
+                .get(`/types/${testId}?api_key=test`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -163,7 +163,7 @@ describe('Content Types', () => {
         before((done) => {
 
             chai.request(drafterbit)
-                .post('/content_types?api_key=test')
+                .post('/types?api_key=test')
                 .send({
                     name: 'test ct3',
                     slug: 'test-ct3',
@@ -180,7 +180,7 @@ describe('Content Types', () => {
         it('it should update a content type', (done) => {
 
             chai.request(drafterbit)
-                .patch(`/content_types/${testId}?api_key=test`)
+                .patch(`/types/${testId}?api_key=test`)
                 .send({
                     name: 'test ct3 edited',
                 })
@@ -188,7 +188,7 @@ describe('Content Types', () => {
                     // res.should.have.status(200);
 
                     chai.request(drafterbit)
-                        .get(`/content_types/${testId}?api_key=test`)
+                        .get(`/types/${testId}?api_key=test`)
                         .end((err, res) => {
                             res.body.name.should.be.eql('test ct3 edited');
                             res.body.slug.should.be.eql('test-ct3');

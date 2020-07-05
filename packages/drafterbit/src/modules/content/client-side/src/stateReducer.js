@@ -1,4 +1,4 @@
-import { SET_CONTENT_TYPES } from './action_types';
+import { SET_TYPES } from './action_types';
 
 let defaultState = {
     content: {
@@ -6,10 +6,10 @@ let defaultState = {
     },
     contents: [],
     ctFields: {fields: []},
-    contentType: {
+    type: {
         fields: []
     },
-    contentTypes: []
+    types: []
 };
 
 export default {
@@ -29,9 +29,9 @@ export default {
             return Object.assign({}, state, {
                 content: action.payload
             });
-        case SET_CONTENT_TYPES:
+        case SET_TYPES:
             return Object.assign({}, state, {
-                contentTypes: action.payload
+                types: action.payload
             });
         }
 

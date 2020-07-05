@@ -58,7 +58,7 @@ router.get('/swagger.json',  function (req, res) {
 
         try {
             let m = req.app.model('Type');
-            let results = await m.getContentTypes();
+            let results = await m.getTypes();
             
             let paths = {};
             results.map((r) => {

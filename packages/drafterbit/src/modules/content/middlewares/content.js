@@ -69,7 +69,7 @@ module.exports = function contentMiddleware() {
                         // so if new model, we create one
                         createModel(req.app, type.name, schemaObj);
 
-                        req.contentType = type;
+                        req.type = type;
                         req.lookupFields = lookupFields;
 
                         next();

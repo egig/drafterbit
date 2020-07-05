@@ -52,7 +52,7 @@ router.get('/types/:type_name',
  */
 router.get('/types', handleFunc(async (req) => {
     let m = req.app.model('Type');
-    return await m.getContentTypes();
+    return await m.getTypes();
 }));
 
 /**
@@ -149,8 +149,6 @@ router.post('/types',
  *               type: string
  *             type_id:
  *               type: number
- *             related_content_type_slug:
- *               type: string
  *             validation_rules:
  *               type: string
  *
@@ -204,7 +202,7 @@ router.delete('/types/:type_id',
     }),
     handleFunc(async function(req) {
         let m = req.app.model('Type');
-        return m.deleteContentType(req.params.type_id);
+        return m.deleteType(req.params.type_id);
     })
 );
 
@@ -268,7 +266,7 @@ router.patch('/types/:type_id',
         let s =  await m.updateType(typeId, req.body);
 
         // update compiled models
-        let type = await  m.getContentType(typeId);
+        let type = await  m.getType(typeId);
         delete req.app.getDB().models[type.name];
 
         return s;

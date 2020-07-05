@@ -30,29 +30,29 @@ class Type extends React.Component {
 
         this.deleteField = this.deleteField.bind(this);
         this.doUpdate = this.doUpdate.bind(this);
-        this.fetchContentType = this.fetchContentType.bind(this);
+        this.fetchType = this.fetchType.bind(this);
     }
 
-    fetchContentType() {
+    fetchType() {
         let client = this.props.$dt.getApiClient();
-        return client.getContentType(this.props.match.params.content_type_id)
-            .then(contentType => {
+        return client.getType(this.props.match.params.type_name)
+            .then(type => {
 
                 this.setState({
-                    _id: contentType._id,
-                    name: contentType.name,
-                    slug: contentType.slug,
-                    display_text: contentType.display_text,
-                    description: contentType.description,
-                    has_fields: contentType.has_fields,
-                    fields: contentType.fields,
+                    _id: type._id,
+                    name: type.name,
+                    slug: type.slug,
+                    display_text: type.display_text,
+                    description: type.description,
+                    has_fields: type.has_fields,
+                    fields: type.fields,
                     loading: false
                 });
             });
     }
 
     componentDidMount() {
-        this.fetchContentType()
+        this.fetchType()
             .then(() => {
                 let client = this.props.$dt.getApiClient();
                 client.getTypes()
@@ -75,10 +75,10 @@ class Type extends React.Component {
 	    }, this.doUpdate);
     }
 
-    deleteContentType(deleteForm) {
+    deleteType(deleteForm) {
         // TODO create alert
         let client = this.props.$dt.getApiClient();
-        client.deleteContentType(deleteForm.id.value)
+        client.deleteType(deleteForm.id.value)
             .then(r => {
                 // TODO create success notif
                 this.props.history.push('/types');
@@ -87,7 +87,7 @@ class Type extends React.Component {
 
     doUpdate() {
         let client = this.props.$dt.getApiClient();
-        client.updateContentType(
+        client.updateType(
             this.state._id,
             this.state.name,
             this.state.slug,
@@ -125,7 +125,7 @@ class Type extends React.Component {
                                                 <FieldForm field={f}
                                                            belongsToTypeName={this.state.name}
                                                            onSuccess={() => {
-                                                               this.fetchContentType().then(() => {
+                                                               this.fetchType().then(() => {
                                                                    message.success("Content Type Saved Successfully !");
                                                                });
                                                            }}
@@ -139,7 +139,7 @@ class Type extends React.Component {
                                     <Tabs.TabPane tab="+ Add Field" key="_add_field">
                                         <FieldForm belongsToTypeName={this.state.name}
                                                    onSuccess={() => {
-                                                       this.fetchContentType().then(() => {
+                                                       this.fetchType().then(() => {
                                                            message.success("Content Type Saved Successfully !");
                                                        });
                                                    }}
@@ -153,10 +153,10 @@ class Type extends React.Component {
                         <Card title={`Delete Type : ${this.state.name}`}>
                             <form onSubmit={e => {
                                 e.preventDefault();
-                                this.deleteContentType(e.target);
+                                this.deleteType(e.target);
                             }}>
                                 <input type="hidden" name="id" id="id" value={this.state._id}/>
-                                <Button type="line" htmlType="submit" danger>Delete Content Type</Button>
+                                <Button type="line" htmlType="submit" danger>Delete Type</Button>
                             </form>
                         </Card>
                     </Col>
@@ -190,7 +190,7 @@ class Type extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        contentTypes: state.CONTENT.contentTypes
+        types: state.CONTENT.types
     };
 };
 

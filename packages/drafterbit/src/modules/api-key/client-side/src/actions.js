@@ -7,10 +7,10 @@ const setAjaxLoading = (isLoading) => {
     };
 };
 
-const setApiKeys = (contentTypes) => {
+const setApiKeys = (payload) => {
     return {
         type: '@api_key/SET_API_KEYS',
-        payload: contentTypes
+        payload
     };
 };
 

@@ -37,29 +37,6 @@ TypeSchema.statics.addField = function(typeName, field) {
     return this.updateOne({ name: typeName }, { $push: { fields: field } });
 };
 
-
-/**
- * @param contentTypeId
- * @return {Promise}
- */
-TypeSchema.statics.getContentType = function(contentTypeId) {
-    return new Promise((resolve, reject) => {
-
-        let ObjectId = mongoose.Types.ObjectId;
-        let condition;
-        if(ObjectId.isValid(contentTypeId)) {
-            condition = {_id: contentTypeId};
-        } else {
-            condition = {slug: contentTypeId};
-        }
-
-        this.findOne(condition, function(err, contentType) {
-            if (err) return reject(err);
-            return resolve(contentType);
-        });
-    });
-};
-
 /**
  *
  * @param typeName
@@ -76,9 +53,9 @@ TypeSchema.statics.getType = function(typeName) {
             condition = {name: typeName};
         }
 
-        this.findOne(condition, function(err, contentType) {
+        this.findOne(condition, function(err, type) {
             if (err) return reject(err);
-            return resolve(contentType);
+            return resolve(type);
         });
     });
 };
@@ -87,20 +64,9 @@ TypeSchema.statics.getType = function(typeName) {
 /**
  * @return {Promise}
  */
-TypeSchema.statics.getContentTypes = function() {
+TypeSchema.statics.getTypes = function() {
     return this.find().select(['-__v']).exec();
 };
-
-
-/**
- *
- * @param slug
- * @return {Promise}
- */
-TypeSchema.statics.getContentTypeBySlug = function(slug) {
-    return this.findOne({slug: slug});
-};
-
 
 /**
  *
@@ -127,11 +93,11 @@ TypeSchema.statics.createType = function(name, slug, displayText, description, h
 
 /**
  *
- * @param contentTypeId
+ * @param typeId
  * @return {Promise}
  */
-TypeSchema.statics.deleteContentType = function(contentTypeId) {
-    return this.deleteOne({_id: contentTypeId});
+TypeSchema.statics.deleteType = function(typeId) {
+    return this.deleteOne({_id: typeId});
 };
 
 

@@ -21,9 +21,9 @@ SettingSchema.statics.getSetting = function(fieldsetName) {
     return new Promise((resolve, reject) => {
 
         let condition = {fieldset_name: fieldsetName};
-        this.findOne(condition, function(err, contentType) {
+        this.findOne(condition, function(err, setting) {
             if (err) return reject(err);
-            return resolve(contentType);
+            return resolve(setting);
         });
     });
 };
