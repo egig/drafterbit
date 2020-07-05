@@ -2,15 +2,13 @@ import React, { Fragment } from 'react';
 import actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Notify from '@drafterbit/common/client-side/components/Notify';
-// import Card from '@drafterbit/common/client-side/components/Card/Card';
 import FieldForm from './FieldForm';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm'
 
-import {Row, Col, Tabs, Button, Card} from 'antd';
+import {Row, Col, Tabs, Button, Card, message} from 'antd';
 
-class ContentType extends React.Component {
+class Type extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,7 +19,6 @@ class ContentType extends React.Component {
             display_text: '',
             description: '',
             fields: [],
-            notifyText: '',
 	        fieldDialogActive: false,
 	        editedFieldId: "",
             fieldTypeSelected: null,
@@ -96,9 +93,7 @@ class ContentType extends React.Component {
             this.state.description,
             this.state.fields
         ).then(r => {
-            this.setState({
-                notifyText: 'Content type successfully saved.'
-            });
+            message.success("Content Type Saved Successfully !");
         });
     }
 
@@ -129,9 +124,7 @@ class ContentType extends React.Component {
                                                        belongsToTypeName={this.state.name}
                                                        onSuccess={() => {
                                                             this.fetchContentType().then(() => {
-                                                                this.setState({
-                                                                    notifyText: 'Content type successfully saved.'
-                                                                });
+                                                                message.success("Content Type Saved Successfully !");
                                                             });
                                                         }}
                                                        types={this.state.types} />
@@ -145,9 +138,7 @@ class ContentType extends React.Component {
                                     <FieldForm belongsToTypeName={this.state.name}
                                                onSuccess={() => {
                                                     this.fetchContentType().then(() => {
-                                                        this.setState({
-                                                            notifyText: 'Content type successfully saved.'
-                                                        });
+                                                        message.success("Content Type Saved Successfully !");
                                                     });
                                                 }}
                                                types={this.state.types} />
@@ -167,9 +158,6 @@ class ContentType extends React.Component {
                     </Col>
                 </Row>
                 }
-                {this.state.notifyText &&
-                  <Notify type="success" message={this.state.notifyText} />
-                }
                 <TypeForm
                     visible={this.state.basicEditForm}
                     typeId={this.state._id}
@@ -185,8 +173,9 @@ class ContentType extends React.Component {
                     onSuccess={ct => {
                         this.setState({
                             basicEditForm: false,
-                            notifyText: "Content Type Saved Successfully !"
-                        })
+                        });
+
+                        message.success("Content Type Saved Successfully !");
                     }}
                     />
             </Fragment>
@@ -204,4 +193,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(ContentType));
+export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(Type));

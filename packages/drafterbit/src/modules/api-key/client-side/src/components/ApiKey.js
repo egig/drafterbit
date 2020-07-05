@@ -1,14 +1,10 @@
 import React  from 'react';
-import Notify from '@drafterbit/common/client-side/components/Notify';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import { Row, Col, Card, Form, Input, Radio, Button } from 'antd'
+import { Row, Col, Card, Form, Input, Radio, Button, message } from 'antd'
 
 class ApiKey extends React.Component {
 
     formRef = React.createRef();
-    state = {
-        successText: ""
-    };
 
     componentDidMount() {
         let id = parseInt(this.props.match.params.api_key_id);
@@ -46,9 +42,7 @@ class ApiKey extends React.Component {
                 values.restriction_type,
                 values.restriction_value
             ).then(r => {
-                this.setState({
-                    successText: 'Api key successfully saved'
-                });
+               message.success('Api key successfully saved');
 
                 window.setTimeout(() => {
                     this.props.history.push(`/api_keys/${r._id}`);
@@ -62,9 +56,7 @@ class ApiKey extends React.Component {
                 values.restriction_type,
                 values.restriction_value
             ).then(r => {
-                this.setState ({
-                    successText: 'Api key successfully updated'
-                });
+                message.success('Api key successfully updated');
             });
         }
     };
@@ -121,9 +113,6 @@ class ApiKey extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-                {this.state.successText &&
-                <Notify type="success" message={this.state.successText} />
-                }
             </>
         );
     }

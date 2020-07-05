@@ -5,8 +5,7 @@ import { Value } from "slate";
 import actions from '../actions';
 import Field from './Field';
 import Editor from "./Unstructured/Editor"
-import Notify from '@drafterbit/common/client-side/components/Notify';
-import { Row, Col, Card, Form, Button } from 'antd';
+import { Row, Col, Card, Form, Button, message } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import htmlSerializer from './Unstructured/htmlSerializer';
 
@@ -40,7 +39,6 @@ let testInitValue = [
 ]
 
 import { blocksToSlateValue, slateValueToBlocks } from "./Unstructured/contentTypeSerializer";
-import ApiClient from '../ApiClient';
 
 class ContentEdit extends React.Component {
 
@@ -48,7 +46,6 @@ class ContentEdit extends React.Component {
     state = {
         ctFields: [],
         entry: null,
-        successText: '',
         loading: true
     };
 
@@ -174,9 +171,7 @@ class ContentEdit extends React.Component {
         let client = this.props.drafterbit.getApiClient();
         client.updateEntry(slug, contentId, data)
             .then(r => {
-                this.setState({
-                    successText: 'Content successfully updated'
-                });
+                message.success('Content successfully updated')
             });
 
     };
@@ -219,8 +214,6 @@ class ContentEdit extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-
-                {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </Fragment>);
     }
 }

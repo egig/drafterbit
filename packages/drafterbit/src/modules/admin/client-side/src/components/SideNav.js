@@ -75,7 +75,7 @@ class SideNav extends React.Component {
                     {this.state.menus.map((mn, i) => {
                         if(!!mn.children) {
                             return (
-                                <Menu.SubMenu icon={mn.icon} skey={i} title={mn.label}>
+                                <Menu.SubMenu icon={mn.icon} key={i} title={mn.label}>
                                     {mn.children.map((mn, j) => (
                                         <Menu.Item key={i+"-"+j}><Link to={mn.link}>{mn.label}</Link></Menu.Item>
                                     ))

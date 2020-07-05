@@ -6,6 +6,9 @@ import { Route } from 'react-router-dom';
 import Layout from './Layout';
 import { HashRouter, Redirect } from 'react-router-dom';
 import DTContext  from '@drafterbit/common/client-side/DTContext';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class Shell extends React.Component {
 
@@ -16,7 +19,7 @@ class Shell extends React.Component {
             <Provider store={store}>
                 <DTContext.Provider value={this.props.drafterbit}>
                 <HashRouter>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<Spin indicator={LoadingIcon} />}>
                         <Route path="/" render={({ location }) => {
 
                             let pagePattern = this.props.drafterbit.modules.map(m => {
@@ -31,7 +34,7 @@ class Shell extends React.Component {
                             if(r.test(location.pathname)) {
                                 return (
                                     <Layout drafterbit={this.props.drafterbit}>
-                                        <Suspense fallback={<div>Loading...</div>}>
+                                        <Suspense fallback={<Spin indicator={LoadingIcon} />}>
                                             <Switch location={location}>
                                                 {this.props.drafterbit.modules.map(m => {
                                                     if (!m.routes || !m.routes.length) {

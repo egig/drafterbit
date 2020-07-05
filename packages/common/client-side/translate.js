@@ -25,7 +25,7 @@ export default function translate(namespaces) {
             // Try to use displayName of wrapped component
             static displayName = `Translate(${getDisplayName(WrappedComponent)})`;
 
-            componentWillMount() {
+            UNSAFE_componentWillMount() {
                 // Get namespace for server side rendering
                 this.context.languageContext.namespaces = this.context.languageContext.namespaces.concat(namespaces);
             }

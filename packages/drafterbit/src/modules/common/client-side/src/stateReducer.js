@@ -4,11 +4,6 @@ function reducer(state = {}, action) {
         return Object.assign({}, state, {
             isAjaxLoading: action.payload
         });
-        
-    case '@common/SET_NOTIFY_TEXT':
-        return Object.assign({}, state, {
-            notifyText: action.payload
-        });
     }
 
     return state;
@@ -19,7 +14,6 @@ export default {
         language: 'en',
         languages: ['en', 'id'],
         isAjaxLoading: false,
-        notifyText: '',
         settings: {}
     },
     stateName: 'COMMON',

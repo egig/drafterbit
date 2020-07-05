@@ -5,6 +5,8 @@ import { Form, Input } from 'antd'
 
 const FieldType = require('@drafterbit/common/FieldType');
 
+
+// TODO import multiple primitive ?
 class Field extends React.Component {
 
     render() {

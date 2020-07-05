@@ -15,16 +15,6 @@ const setAjaxLoading = (isLoading) => {
     };
 };
 
-export const setNotifyText = (notifyText) => {
-
-    console.log(notifyText);
-
-    return {
-        type: '@common/SET_NOTIFY_TEXT',
-        payload: notifyText
-    };
-};
-
 export const getContentTypes = (client) => (dispatch) => {
 
     client.getContentTypes()

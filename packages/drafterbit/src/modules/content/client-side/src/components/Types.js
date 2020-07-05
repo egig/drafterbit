@@ -2,27 +2,25 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm';
-import { setNotifyText }  from '../actions'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
+import { message } from 'antd';
 
-class ContentTypes extends React.Component {
+class Types extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             newFormOpen: false,
-            contentTypes: []
+            types: []
         };
     }
 
     loadContents = () => {
         let client = this.props.drafterbit.getApiClient();
-        return client.getContentTypes()
-            .then((contentTypes) => {
+        return client.getTypes()
+            .then((types) => {
                 this.setState({
-                    contentTypes: contentTypes
+                    types: types
                 });
             })
     };
@@ -36,20 +34,18 @@ class ContentTypes extends React.Component {
     render() {
 
         const columns = [{
-            dataField: 'name',
             dataIndex: 'name',
-            text: 'Name',
             title: 'Name',
             render: (cell, row) => {
-                return <Link to={`/content_types/${row._id}`}>{cell}</Link>;
+                return <Link to={`/types/${row._id}`}>{cell}</Link>;
             }
         }];
 
         return (
             <Fragment>
                 <TablePage
-                    headerText="Content Types"
-                    data={ this.state.contentTypes }
+                    headerText="Types"
+                    data={ this.state.types }
                     contentCount={this.state.contentCount}
                     columns={ columns }
                     select={true}
@@ -63,13 +59,13 @@ class ContentTypes extends React.Component {
                             newFormOpen: false  
                         })
                     }}
-                    onSuccess={contentType => {
-                        this.props.actions.setNotifyText("Content Type Saved Successfully !");
+                    onSuccess={type => {
+                        message.success("Content Type Saved Successfully !");
                         this.setState({
                             newFormOpen: false
-                        })
+                        });
                         setTimeout(() => {
-                            this.props.history.push(`/content_types/${contentType._id}`);
+                            this.props.history.push(`/types/${type._id}`);
                         }, 2000)
                     }}
                  />
@@ -78,14 +74,4 @@ class ContentTypes extends React.Component {
     }
 }
 
-
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators({
-            setNotifyText
-        }, dispatch)
-    };
-};
-
-export default connect(null, mapDispatchToProps)(withDrafterbit(ContentTypes));
+export default withDrafterbit(Types);
