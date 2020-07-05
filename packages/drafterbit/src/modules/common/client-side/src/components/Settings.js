@@ -1,26 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import translate from '@drafterbit/common/client-side/translate';
 import {Row, Col, Card} from 'antd'
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import {Form, Tabs, Input, Switch, message, Button} from 'antd';
 
 class Settings extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            settings: []
-        }
+        this.formRef = React.createRef();
     }
 
     componentDidMount() {
         let client = this.props.$dt.getApiClient();
         client.getSettings()
             .then(settings => {
-                this.setState({
-                    settings
-                })
+                this.formRef.current.setFieldsValue(settings[0])
+            })
+    }
+
+    onFinish = (values) => {
+        this.props.$dt.getApiClient().setSettings(values)
+            .then(() => {
+                message.success("Settings successfully saved !")
             })
     }
 
@@ -30,17 +32,30 @@ class Settings extends React.Component {
             <Row>
                 <Col span={24}>
                     <Card title="Settings">
-                        {this.state.settings.map((setting, i) => {
-                            return (<table key={i}>
-                                <tbody>
-                                {Object.keys(setting).map((k,i) => {
-                                    if (['fieldset_name', '_id'].indexOf(k) === -1) {
-                                        return <tr key={i}><td>{k}</td><td> : {setting[k]}</td></tr>
-                                    }
-                                })}
-                                </tbody>
-                            </table>)
-                        })}
+                        <Tabs>
+                            <Tabs.TabPane tab="General" key="1">
+                                <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish}>
+                                    <Form.Item name="fieldset_name" noStyle>
+                                        <Input hidden/>
+                                    </Form.Item>
+                                    <Form.Item name="app_name" label="App Name">
+                                        <Input/>
+                                    </Form.Item>
+                                    <Form.Item name="enable_register" label="Enable Register">
+                                        <Switch/>
+                                    </Form.Item>
+                                    <Form.Item name="enable_reset_password" label="Enable Reset Password">
+                                        <Switch/>
+                                    </Form.Item>
+                                    <Form.Item name="brand_img_url" label="Brand Image URL">
+                                        <Input/>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit">Save</Button>
+                                    </Form.Item>
+                                </Form>
+                            </Tabs.TabPane>
+                        </Tabs>
                     </Card>
                 </Col>
             </Row>
@@ -48,10 +63,4 @@ class Settings extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.USER.currentUser
-    };
-};
-
-export default translate(['dashboard'])(connect(mapStateToProps)(withDrafterbit(Settings)));
+export default translate(['settings'])(withDrafterbit(Settings));

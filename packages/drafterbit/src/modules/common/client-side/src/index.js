@@ -32,6 +32,9 @@ import {
             return {
                 getSettings: async function () {
                     return this._doGetRequest("/settings");
+                },
+                setSettings: async function (payload) {
+                    return this.axiosInstance.patch("/settings", payload);
                 }
             }
         },
