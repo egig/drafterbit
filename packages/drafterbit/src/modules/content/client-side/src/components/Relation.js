@@ -11,7 +11,7 @@ const Relation = ({multiple, typeName, value, onChange}) => {
             .then((res) => {
                 setContents(res.data);
             });
-    }, [])
+    }, []);
 
     const options = contents.map(c => {
         return {

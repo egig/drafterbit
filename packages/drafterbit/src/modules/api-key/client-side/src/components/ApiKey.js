@@ -62,7 +62,7 @@ class ApiKey extends React.Component {
                 values.restriction_type,
                 values.restriction_value
             ).then(r => {
-                this.setState({
+                this.setState ({
                     successText: 'Api key successfully updated'
                 });
             });

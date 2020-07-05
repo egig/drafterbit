@@ -224,33 +224,6 @@ class TablePage extends React.Component {
 
                     </div>
                 </div>
-                {/*{this.state.loading && <div>Loading&hellip;</div>}*/}
-                {/*{this.state.loading ||*/}
-                {/*<DataTable*/}
-                {/*    idField="_id"*/}
-                {/*    data={data}*/}
-                {/*    columns={columns}*/}
-                {/*    select={select}*/}
-                {/*    selected={selected}*/}
-                {/*    onSelect={this.handleOnSelect}*/}
-                {/*    onSelectAll={this.handleOnSelectAll}*/}
-                {/*    sortBy={sortBy}*/}
-                {/*    sortDir={sortDir}*/}
-                {/*    onSort={this.handleSort}*/}
-                {/*    onApplyFilter={this.applyFilter}*/}
-                {/*    onFilterChange={this.onFilterChange}*/}
-                {/*    onReset={this.onReset}*/}
-                {/*    filterObjects={filterObjects}*/}
-                {/*    currentPage={page}*/}
-                {/*    totalPageCount={Math.ceil(this.props.contentCount / 10)}*/}
-                {/*    renderPaginationLink={(p) => (*/}
-                {/*        <Link className="page-link" to={this.props.match.url + "?page=" + p}>{p}</Link>*/}
-                {/*    )}*/}
-                {/*    onRowClick={this.props.onRowClick}*/}
-                {/*    onDeleteFilter={this.onDeleteFilter}*/}
-                {/*    popFilter={this.popFilter}*/}
-                {/*    render={this.props.render}*/}
-                {/*/>*/}
 
                 <Table
                     bordered
@@ -270,7 +243,6 @@ class TablePage extends React.Component {
                 <Pagination
                     onChange={onChange}
                     defaultCurrent={1}
-                    // current={page}
                     total={20}
                     // showSizeChanger
                     itemRender={itemRender}

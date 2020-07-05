@@ -40,7 +40,7 @@ class ContentTypes extends React.Component {
             dataIndex: 'name',
             text: 'Name',
             title: 'Name',
-            formatter: (cell, row) => {
+            render: (cell, row) => {
                 return <Link to={`/content_types/${row._id}`}>{cell}</Link>;
             }
         }];

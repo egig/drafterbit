@@ -44,44 +44,13 @@ import ApiClient from '../ApiClient';
 
 class ContentEdit extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.formData = {};
-        this.state = {
-            ctFields: [],
-            entry: null,
-            successText: '',
-            formData: {},
-            loading: true
-        };
-    }
-
-    onSubmit() {
-        let params = this.props.match.params;
-        let contentId = params.content_id;
-        let slug = params.content_type_slug;
-        
-        let data = {};
-        this.state.ctFields.map(f => {
-            data[f.name] = this.state.formData[f.name];
-
-            if(f.type_name === FieldType.UNSTRUCTURED) {
-                data[f.name] = slateValueToBlocks(this.state.formData[f.name])
-            }
-
-            if(f.type_name === FieldType.RICH_TEXT) {
-                data[f.name] = htmlSerializer.serialize(this.state.formData[f.name])
-            }
-        });
-
-        let client = this.props.drafterbit.getApiClient();
-        client.updateEntry(slug, contentId, data)
-            .then(r => {
-                this.setState({
-                    successText: 'Content successfully updated'
-                });
-            });
-    }
+    formRef = React.createRef();
+    state = {
+        ctFields: [],
+        entry: null,
+        successText: '',
+        loading: true
+    };
 
     componentDidMount() {
         let params = this.props.match.params;
@@ -126,61 +95,45 @@ class ContentEdit extends React.Component {
                 return formData;
             }, {});
 
+            this.formRef.current.setFieldsValue(formData);
+
             this.setState({
                 ctFields: contentType.fields,
-                formData: formData,
                 loading: false
             });
 
         });
     }
 
-    componentDidUpdate(prevProps) {
-        if(this.props.content !== prevProps.content) {
-            this.props.content.fields.map(f => {
-                this.formData[f.name] = f;
-                this.setState({
-                    formData: this.formData
-                });
-
-            });
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if(this.props.content !== prevProps.content) {
+    //         this.props.content.fields.map(f => {
+    //             this.formData[f.name] = f;
+    //             this.setState({
+    //                 formData: this.formData
+    //             });
+    //
+    //         });
+    //     }
+    // }
 
     renderRichText(f,i,value) {
 
-        let editorValue = this.state.formData[f.name];
+        let editorValue = this.formRef.current.getFieldValue[f.name];
         if(!editorValue) {
             editorValue = Value.fromJSON(richTextInitialValue);
         }
 
         return <Field value={editorValue} onChange={(value) => {
-
-            this.setState(oldState => {
-                let formData = oldState.formData;
-                formData[f.name] = value;
-                return Object.assign({}, oldState, {
-                    formData
-                });
-            });
+            this.formRef.current.setFieldsValue({
+                [f.name]: value
+            })
 
         }} key={i} field={f} />;
     }
 
-    renderRelation(f,i,value) {
-        return <Field value={value} onChange={(value, selectedObjList) => {
-
-            this.setState(oldState => {
-
-                let formData = oldState.formData;
-                formData[f.name] =  value;
-                return Object.assign({}, oldState, {
-                    formData
-                });
-
-            });
-
-        }} key={i} field={f} />;
+    renderRelation(f,i) {
+        return <Field key={i} field={f} />;
     }
 
     renderUnstructured(f,i,value) {
@@ -211,78 +164,75 @@ class ContentEdit extends React.Component {
         </div>;
     }
 
-    renderCommonField(f,i,value) {
-        return <Field value={value} onChange={e => {
+    onFinish = values => {
 
-            let value = e.target.value;
+        let params = this.props.match.params;
+        let contentId = params.content_id;
+        let slug = params.content_type_slug;
 
-            this.setState(oldState => {
+        let data = {};
+        this.state.ctFields.map(f => {
+            data[f.name] = values[f.name];
 
-                let formData = oldState.formData;
-                formData[f.name] = value;
-                return Object.assign({}, oldState, {
-                    formData
+            if(f.type_name === FieldType.UNSTRUCTURED) {
+                data[f.name] = slateValueToBlocks(values[f.name])
+            }
+
+            if(f.type_name === FieldType.RICH_TEXT) {
+                data[f.name] = htmlSerializer.serialize(values[f.name])
+            }
+        });
+
+        let client = this.props.drafterbit.getApiClient();
+        client.updateEntry(slug, contentId, data)
+            .then(r => {
+                this.setState({
+                    successText: 'Content successfully updated'
                 });
-
             });
 
-
-        }} key={i} field={f} />;
-    }
+    };
 
     render() {
         return (
             <Fragment>
                 {this.state.loading && <div>Loading&hellip;</div>}
-                {this.state.loading ||
-                    <Row>
-                        <Col span="12">
-                            <Card title="Edit Content" >
-                                <Form
-                                    layout="vertical"
-                                    onSubmit={e => {
-                                    e.preventDefault();
-                                    this.onSubmit(e.target);
-                                }} >
-                                    {this.state.ctFields.map((f,i) => {
-                                        if (!f.show_in_form) {
-                                            return
-                                        }
+                <Row>
+                    <Col span="12" sm="24">
+                        <Card title="Edit Content" >
+                            <Form
+                                ref={this.formRef}
+                                layout="vertical"
+                                onFinish={this.onFinish} >
+                                {this.state.ctFields.map((f,i) => {
+                                    if (!f.show_in_form) {
+                                        return
+                                    }
 
-                                        let value = this.state.formData[f.name] ? this.state.formData[f.name] : '';
+                                    if(f.type_name === FieldType.RICH_TEXT) {
+                                        return this.renderRichText(f,i)
+                                    }
 
-                                        if(f.type_name === FieldType.RICH_TEXT) {
-                                            return this.renderRichText(f,i,value)
-                                        }
+                                    if(f.type_name === FieldType.UNSTRUCTURED) {
+                                        return this.renderUnstructured(f,i,value)
+                                    }
 
-                                        // if(f.type_name === FieldType.RELATION_TO_ONE){
-                                        //     return this.renderRelationToOne(f,i,value)
-                                        // }
+                                    if (FieldType.primitives().indexOf(f.type_name) !== -1) {
+                                        return <Field key={i} field={f} />;
+                                    }
 
-                                        // if(f.type_name === FieldType.RELATION_TO_MANY) {
-                                        //     return this.renderRelationToMany(f,i,value)
-                                        // }
-                                        //
-                                        if(f.type_name === FieldType.UNSTRUCTURED) {
-                                            return this.renderUnstructured(f,i,value)
-                                        }
+                                    return this.renderRelation(f,i);
+                                })}
 
-                                        if (FieldType.primitives().indexOf(f.type_name) !== -1) {
-                                            return this.renderCommonField(f,i,value)
-                                        }
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit">Save</Button>
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    </Col>
+                </Row>
 
-                                        return this.renderRelation(f,i, value);
-                                    })}
-
-                                    <Form.Item>
-                                        <Button type="primary" htmlType="submit">Save</Button>
-                                    </Form.Item>
-                                </Form>
-                            </Card>
-                        </Col>
-                    </Row>
-                }
-	            {this.state.successText && <Notify type="success" message={this.state.successText} />}
+                {this.state.successText && <Notify type="success" message={this.state.successText} />}
             </Fragment>);
     }
 }

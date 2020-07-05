@@ -12,7 +12,7 @@ class Field extends React.Component {
         let value = this.props.value;
         let types = {
             [FieldType.SHORT_TEXT]: () => (
-                <Input value={value} onChange={this.props.onChange}/>
+                <Input onChange={this.props.onChange}/>
             ),
             [FieldType.LONG_TEXT]: () => (
                 <Input.TextArea value={value} onChange={this.props.onChange}/>
