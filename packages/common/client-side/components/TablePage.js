@@ -1,10 +1,9 @@
 import querystring from 'querystring';
 import React, { Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
-import DataTable from './DataTable';
 import _ from 'lodash';
-import { Table, Pagination, Button } from 'antd'
+import { Table, Button } from 'antd'
 
 
 const FilterQuery = require('../../FilterQuery');
@@ -76,9 +75,16 @@ class TablePage extends React.Component {
 
     handleSort = (dataField, sortDir) => {
         this.modifyQS((qs) => {
-            let newSortDir = (sortDir === 'desc') ? 'asc' : 'desc';
             qs['sort_by'] = dataField;
-            qs['sort_dir'] = newSortDir;
+            qs['sort_dir'] = sortDir;
+            return qs;
+        });
+    };
+
+    handlePage = (current, pageSize) => {
+        this.modifyQS((qs) => {
+            qs['page'] = current;
+            qs['page_size'] = pageSize;
             return qs;
         });
     };
@@ -191,9 +197,9 @@ class TablePage extends React.Component {
             return d;
         });
 
-        const onChange = page => {
-            this.props.history.push(this.props.match.url + "?page=" + page)
-        };
+        // const onChange = page => {
+        //     this.props.history.push(this.props.match.url + "?page=" + page)
+        // };
 
         function itemRender(current, type, originalElement) {
             if (type === 'prev') {
@@ -204,6 +210,18 @@ class TablePage extends React.Component {
             }
             return originalElement;
         }
+
+
+        const onChange = (pagination, filters, sorter, extra) => {
+            console.log('params', pagination, filters, sorter, extra);
+            if (extra.action === 'sort') {
+                this.handleSort(sorter.field, sorter.order);
+            }
+
+            if (extra.action === 'paginate') {
+                this.handlePage(pagination.current, pagination.pageSize);
+            }
+        };
 
         return (
             <Fragment>
@@ -236,17 +254,12 @@ class TablePage extends React.Component {
                     dataSource={data}
                     rowKey={record => record._id}
                     loading={this.state.loading}
-                    // onChange={this.handleTableChange}
-                    pagination={false}
-                />
-                <div style={{marginBottom: "10px"}}/>
-                <Pagination
                     onChange={onChange}
-                    defaultCurrent={1}
-                    total={20}
-                    // showSizeChanger
-                    itemRender={itemRender}
-                    pageSize={10} />
+                    pagination={{
+                        total:20,
+                        pageSize:10,
+                    }}
+                />
 
             </Fragment>
         );

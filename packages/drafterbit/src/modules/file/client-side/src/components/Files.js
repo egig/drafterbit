@@ -45,8 +45,10 @@ class Files extends React.Component {
 
         const columns = [{
             dataField: 'text',
+            dataIndex: 'text',
             text: 'Name',
-            formatter: (cell, row) => {
+            title: 'Name',
+            render: (cell, row) => {
                 if (row.type === "dir") {
                     return <span><Link to={`/files?path=${row.path}`}>
                         <FontAwesomeIcon icon={faFolder} /> {cell}
@@ -81,6 +83,10 @@ class Files extends React.Component {
 
         return (
             <Fragment>
+                <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
+                {paths.map((p,i) => {
+                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
+                })}
                 <TablePage
                     headerText="Files"
                     data={ this.state.files }
@@ -93,12 +99,9 @@ class Files extends React.Component {
                     render={(filter, table, pagination) => {
                         return(
                             <div>
-                                <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
                                 <div className="mb-2"/>
                                 {filter}
-                                {paths.map((p,i) => {
-                                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
-                                })}
+
                                 <div className="mb-2"/>
                                 {table}
                                 {pagination}

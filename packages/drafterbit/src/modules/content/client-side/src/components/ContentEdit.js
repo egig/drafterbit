@@ -8,9 +8,9 @@ import Editor from "./Unstructured/Editor"
 import Notify from '@drafterbit/common/client-side/components/Notify';
 import { Row, Col, Card, Form, Button } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-const FieldType = require('@drafterbit/common/FieldType');
-
 import htmlSerializer from './Unstructured/htmlSerializer';
+
+const FieldType = require('@drafterbit/common/FieldType');
 
 // TODO move this to editor module
 let richTextInitialValue = {
@@ -104,18 +104,6 @@ class ContentEdit extends React.Component {
 
         });
     }
-
-    // componentDidUpdate(prevProps) {
-    //     if(this.props.content !== prevProps.content) {
-    //         this.props.content.fields.map(f => {
-    //             this.formData[f.name] = f;
-    //             this.setState({
-    //                 formData: this.formData
-    //             });
-    //
-    //         });
-    //     }
-    // }
 
     renderRichText(f,i,value) {
 

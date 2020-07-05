@@ -105,7 +105,7 @@ class Contents extends React.Component {
 			        dataIndex: f.name,
 			        text: f.display_text,
 			        title: f.display_text,
-			        sort: true
+                    sorter: true
 		        })
 	        }
         });
