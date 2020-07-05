@@ -3,8 +3,8 @@ import React, { Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
-import { Table, Button } from 'antd'
-
+import { Row, Col, Table, Button } from 'antd'
+import TableFilter from './TableFilter';
 
 const FilterQuery = require('../../FilterQuery');
 
@@ -58,20 +58,6 @@ class TablePage extends React.Component {
             })
         })
     }
-
-    handleOnSelect = (isSelect, row) => {
-        this.setState(() => ({
-            selected: isSelect ? [...this.state.selected, row._id] :
-                this.state.selected.filter(x => x !== row._id)
-        }));
-    };
-
-    handleOnSelectAll = (isSelect, rows) => {
-        const ids = rows.map(r => r._id);
-        this.setState(() => ({
-            selected: isSelect ? ids : []
-        }));
-    };
 
     handleSort = (dataField, sortDir) => {
         this.modifyQS((qs) => {
@@ -225,11 +211,11 @@ class TablePage extends React.Component {
 
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-md-6">
+                <Row>
+                    <Col span="12">
                         <h2>{this.props.headerText}</h2>
-                    </div>
-                    <div className="col-md-6" style={{display: "flex", justifyContent:"flex-end"}}>
+                    </Col>
+                    <Col span="12" style={{display: "flex", justifyContent:"flex-end"}}>
                         {!!selected.length &&
                         <Button type="line" danger  onClick={this.handleDelete} >
                             {this.props.deleteText} {selected.length} items
@@ -239,9 +225,17 @@ class TablePage extends React.Component {
                         {onClickAdd &&
                             <Button type="primary" onClick={onClickAdd} >{this.props.addText}</Button>
                         }
+                    </Col>
+                </Row>
 
-                    </div>
-                </div>
+                <TableFilter
+                onFilterKeyUp={this.onFilterKeyUp}
+                onFilterChange={this.onFilterChange}
+                deleteFilter={this.deleteFilter}
+                onApplyFilter={this.onApplyFilter}
+                columns={this.props.columns}
+                filterObjects={this.props.filterObjects}
+                typedQ={this.state.typedQ} />
 
                 <Table
                     bordered
@@ -258,6 +252,7 @@ class TablePage extends React.Component {
                     pagination={{
                         total:20,
                         pageSize:10,
+                        itemRender: itemRender
                     }}
                 />
 

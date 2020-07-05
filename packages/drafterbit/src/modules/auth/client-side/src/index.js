@@ -26,7 +26,7 @@ import {
             {path: "/register-success", component: RegisterSuccess}
         ],
         generalMenus: [
-            {link: "/users", label: "Users", iconClass: "icon-user", icon: <UserOutlined/>}
+            {link: "/contents/User", label: "Users", iconClass: "icon-user", icon: <UserOutlined/>}
         ],
         processRoute(route, location, state) {
 

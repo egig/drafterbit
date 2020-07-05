@@ -78,7 +78,7 @@ class TableFilter extends React.Component {
                     {this.props.typedQ &&
                     <ListContainer>
                         {this.props.columns.map((c,i) => {
-                            let fStr = `${c.text}:${this.props.typedQ}`;
+                            let fStr = `${c.title}:${this.props.typedQ}`;
                             return <ListItem key={i} onClick={e => {
                                 this.props.onApplyFilter(c.text, this.props.typedQ);
                             }}>{fStr}</ListItem>
