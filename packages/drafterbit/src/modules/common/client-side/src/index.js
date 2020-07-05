@@ -1,13 +1,11 @@
 import React  from 'react';
 import Dashboard from './components/Dashboard';
 import Settings from './components/Settings';
-import MenuSection from './components/MenuSection';
 import stateReducer from './stateReducer';
 
 import {
     SettingOutlined,
 } from '@ant-design/icons';
-import {getCookie} from '@drafterbit/common/client-side/cookie';
 
 (($dt) => {
 
@@ -21,9 +19,6 @@ import {getCookie} from '@drafterbit/common/client-side/cookie';
         generalMenus: [
             {link: "/settings", label: "Settings", iconClass: "icon-settings", icon: <SettingOutlined />}
         ],
-        renderMenuSection(i) {
-            return <MenuSection key={i} />
-        },
         processRoute(route) {
             //..
         },

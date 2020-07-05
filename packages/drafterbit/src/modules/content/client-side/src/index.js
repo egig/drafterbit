@@ -1,8 +1,6 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
 import ApiClient from './ApiClient';
-import MenuSection from './components/MenuSection';
-import { Redirect } from 'react-router-dom';
 
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
@@ -11,6 +9,7 @@ const ContentType = lazy(() => import('./components/ContentType'));
 
 import {
     BuildOutlined,
+    FileTextOutlined
 } from '@ant-design/icons';
 
 (($dt) => {
@@ -26,11 +25,29 @@ import {
         generalMenus: [
             {link: "/types", label: "Types", icon: <BuildOutlined/>}
         ],
-        renderMenuSection(i) {
-            return <MenuSection key={i} />
-        },
         registerApiClient() {
             return ApiClient
+        },
+        async getMenu() {
+            let client = $dt.getApiClient();
+            return client.getTypes()
+                .then((contentTypes) => {
+                    let menus = contentTypes.map(ct => {
+                        return {
+                            link: `/contents/${ct.name}`,
+                            label: ct.name,
+                        }
+                    });
+
+                    return [
+                        {
+                            icon: <FileTextOutlined />,
+                            label: "Contents",
+                            children: menus
+                        }
+                    ]
+
+                });
         }
     })
 })(window.$dt);

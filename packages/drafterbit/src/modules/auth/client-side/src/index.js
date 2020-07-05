@@ -25,9 +25,11 @@ import {
             {path: "/forgot-password", component: ForgotPassword},
             {path: "/register-success", component: RegisterSuccess}
         ],
-        generalMenus: [
-            {link: "/contents/User", label: "Users", iconClass: "icon-user", icon: <UserOutlined/>}
-        ],
+        getMenu() {
+            return [
+                {link: "/contents/User", label: "Users", iconClass: "icon-user", icon: <UserOutlined/>}
+            ]
+        },
         processRoute(route, location, state) {
 
             if(location.pathname === "/login") {

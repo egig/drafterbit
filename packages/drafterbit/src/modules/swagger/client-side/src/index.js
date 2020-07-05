@@ -12,8 +12,10 @@ import {
         routes: [
             {path: "/requests", component: Request}
         ],
-        generalMenus: [
-            {link: "/requests", label: "Requests", iconClass: "icon-target", icon: <ApiOutlined/>}
-        ]
+        getMenu() {
+            return [
+                {link: "/requests", label: "Requests", iconClass: "icon-target", icon: <ApiOutlined/>}
+            ]
+        }
     })
 })(window.$dt)

@@ -16,11 +16,13 @@ import {
             {path: "/api_keys/:api_key_id", component: ApiKey},
             {path: "/api_keys", component: ApiKeys},
         ],
-        generalMenus: [
-            {link: "/api_keys", label: "Api Keys", iconClass: "icon-key", icon: <KeyOutlined/>}
-        ],
         registerApiClient() {
             return ApiClient
+        },
+        async getMenu() {
+            return [
+                {link: "/api_keys", label: "Api Keys", iconClass: "icon-key", icon: <KeyOutlined/>}
+            ]
         }
     })
 

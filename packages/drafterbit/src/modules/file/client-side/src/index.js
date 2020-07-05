@@ -16,9 +16,11 @@ import {
         routes: [
             {path: "/files", component: Files},
         ],
-        generalMenus: [
-            {link: "/files", label: "Files", iconClass: "icon-folder", icon: <FolderOutlined/>}
-        ],
+        getMenu() {
+            return [
+                {link: "/files", label: "Files", iconClass: "icon-folder", icon: <FolderOutlined/>}
+            ]
+        },
         registerApiClient() {
             return ApiClient;
         }
