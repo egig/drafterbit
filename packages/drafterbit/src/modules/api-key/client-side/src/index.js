@@ -21,7 +21,12 @@ import {
         },
         async getMenu() {
             return [
-                {link: "/api_keys", label: "Api Keys", iconClass: "icon-key", icon: <KeyOutlined/>}
+                {
+                    link: "/api_keys",
+                    label: "Api Keys",
+                    icon: <KeyOutlined/>,
+                    order:5
+                }
             ]
         }
     })

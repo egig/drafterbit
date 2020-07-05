@@ -14,7 +14,12 @@ import {
         ],
         getMenu() {
             return [
-                {link: "/requests", label: "Requests", iconClass: "icon-target", icon: <ApiOutlined/>}
+                {
+                    link: "/requests",
+                    label: "Requests",
+                    icon: <ApiOutlined/>,
+                    order: 4
+                }
             ]
         }
     })

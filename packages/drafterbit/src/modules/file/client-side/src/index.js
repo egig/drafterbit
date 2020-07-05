@@ -18,7 +18,12 @@ import {
         ],
         getMenu() {
             return [
-                {link: "/files", label: "Files", iconClass: "icon-folder", icon: <FolderOutlined/>}
+                {
+                    link: "/files",
+                    label: "Files",
+                    icon: <FolderOutlined/>,
+                    order: 3,
+                }
             ]
         },
         registerApiClient() {

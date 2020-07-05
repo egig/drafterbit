@@ -22,17 +22,14 @@ import {
             {path: "/content_types/:content_type_id", component: ContentType},
             {path: "/types", component: Types},
         ],
-        generalMenus: [
-            {link: "/types", label: "Types", icon: <BuildOutlined/>}
-        ],
         registerApiClient() {
             return ApiClient
         },
         async getMenu() {
             let client = $dt.getApiClient();
             return client.getTypes()
-                .then((contentTypes) => {
-                    let menus = contentTypes.map(ct => {
+                .then((types) => {
+                    let menus = types.map(ct => {
                         return {
                             link: `/contents/${ct.name}`,
                             label: ct.name,
@@ -43,7 +40,14 @@ import {
                         {
                             icon: <FileTextOutlined />,
                             label: "Contents",
-                            children: menus
+                            children: menus,
+                            order: 2
+                        },
+                        {
+                            link: "/types",
+                            label: "Types",
+                            icon: <BuildOutlined/>,
+                            order: 9
                         }
                     ]
 

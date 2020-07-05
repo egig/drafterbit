@@ -20,6 +20,7 @@ class SideNav extends React.Component {
 
     state = {
         menus: [{
+            order: 0,
             icon: <MonitorOutlined/>,
             link: "/",
             label: "Dashboard",
@@ -39,10 +40,14 @@ class SideNav extends React.Component {
             }
         });
 
-        // TODO add menu order
         Promise.all(menuPromises)
             .then(moduleMenus => {
-                let menus = moduleMenus.reduce(menuReducer, this.state.menus);
+                let menus = moduleMenus.reduce(menuReducer, this.state.menus)
+                    .sort((a,b) => {
+                        let aOrder = (typeof a.order === 'undefined') ? 999 : a.order;
+                        let bOrder = (typeof b.order === 'undefined') ? 999 : b.order;
+                        return aOrder - bOrder;
+                    });
                 this.setState({
                     menus
                 })

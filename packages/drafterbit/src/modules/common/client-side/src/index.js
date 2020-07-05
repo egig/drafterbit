@@ -16,9 +16,14 @@ import {
             {path: "/", component: Dashboard},
             {path: "/settings", component: Settings},
         ],
-        generalMenus: [
-            {link: "/settings", label: "Settings", iconClass: "icon-settings", icon: <SettingOutlined />}
-        ],
+        getMenu() {
+            return [
+                {
+                    link: "/settings",
+                    label: "Settings",
+                    icon: <SettingOutlined />}
+            ]
+        },
         processRoute(route) {
             //..
         },
