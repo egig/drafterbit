@@ -45,21 +45,25 @@ class ApiKeys extends React.Component {
         let columns = [
             {
                 dataField: 'name',
+                dataIndex: 'name',
                 text: 'Name',
-                formatter: (cell, row) => {
+                title: 'Name',
+                render: (cell, row) => {
                     return <Link to={`/api_keys/${row._id}`}>{cell}</Link>;
                 }
             },
             {
                 dataField: 'key',
-                text: 'Key'
+                dataIndex: 'key',
+                text: 'Key',
+                title: 'Key'
             }
         ];
 
         return (
             <TablePage
                 onClickAdd={() => {
-                    this.props.history.push(`/api_keys/new`);
+                    this.props.history.push(`/api_keys/0`);
                 }}
                 addText="New Api Key"
                 idField='_id'

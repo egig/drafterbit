@@ -30,7 +30,8 @@ ApiKeySchema.statics.createApiKey = function(name, key, restrictionType, restric
         restriction_value: restrictionValue,
     });
 
-    return newApiKey.save();
+    newApiKey.save();
+    return newApiKey;
 };
 
 /**

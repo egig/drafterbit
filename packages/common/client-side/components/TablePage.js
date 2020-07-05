@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import DataTable from './DataTable';
 import _ from 'lodash';
-import { Table } from 'antd'
+import { Table, Pagination, Button } from 'antd'
 
 
 const FilterQuery = require('../../FilterQuery');
@@ -15,7 +15,7 @@ class TablePage extends React.Component {
         super(props);
         this.state = {
             selected: [],
-            loading: true,
+            loading: false,
         };
     }
 
@@ -191,24 +191,40 @@ class TablePage extends React.Component {
             return d;
         });
 
+        const onChange = page => {
+            this.props.history.push(this.props.match.url + "?page=" + page)
+        };
+
+        function itemRender(current, type, originalElement) {
+            if (type === 'prev') {
+                return <a>Previous</a>;
+            }
+            if (type === 'next') {
+                return <a>Next</a>;
+            }
+            return originalElement;
+        }
+
         return (
             <Fragment>
                 <div className="row">
                     <div className="col-md-6">
                         <h2>{this.props.headerText}</h2>
                     </div>
-                    <div className="col-md-6">
-                        {onClickAdd &&
-                            <button className="btn btn btn-outline-success mb-2 btn-sm float-right" onClick={onClickAdd} >{this.props.addText}</button>
-                        }
+                    <div className="col-md-6" style={{display: "flex", justifyContent:"flex-end"}}>
                         {!!selected.length &&
-                            <button className="btn btn-outline-danger mr-2 mb-2 btn-sm float-right"  onClick={this.handleDelete} >
-                                {this.props.deleteText} {selected.length} items
-                            </button>
+                        <Button type="line" danger  onClick={this.handleDelete} >
+                            {this.props.deleteText} {selected.length} items
+                        </Button>
                         }
+                        <span style={{marginLeft:"6px"}}/>
+                        {onClickAdd &&
+                            <Button type="primary" onClick={onClickAdd} >{this.props.addText}</Button>
+                        }
+
                     </div>
                 </div>
-                {this.state.loading && <div>Loading&hellip;</div>}
+                {/*{this.state.loading && <div>Loading&hellip;</div>}*/}
                 {/*{this.state.loading ||*/}
                 {/*<DataTable*/}
                 {/*    idField="_id"*/}
@@ -236,18 +252,29 @@ class TablePage extends React.Component {
                 {/*    render={this.props.render}*/}
                 {/*/>*/}
 
-                {this.state.loading ||
-                    <Table
-                        bordered
-                        size="small"
-                        rowSelection={{
-                            type: "checkbox",
-                            ...rowSelection,
-                        }}
-                        columns={columns}
-                        dataSource={data}
-                    />
-                }
+                <Table
+                    bordered
+                    size="small"
+                    rowSelection={{
+                        type: "checkbox",
+                        ...rowSelection,
+                    }}
+                    columns={columns}
+                    dataSource={data}
+                    rowKey={record => record._id}
+                    loading={this.state.loading}
+                    // onChange={this.handleTableChange}
+                    pagination={false}
+                />
+                <div style={{marginBottom: "10px"}}/>
+                <Pagination
+                    onChange={onChange}
+                    defaultCurrent={1}
+                    // current={page}
+                    total={20}
+                    // showSizeChanger
+                    itemRender={itemRender}
+                    pageSize={10} />
 
             </Fragment>
         );

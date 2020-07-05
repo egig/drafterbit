@@ -1,8 +1,7 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
 import ApiClient from './ApiClient';
-const ApiKeyNew = lazy(() => import('./components/ApiKeyNew'));
-const ApiKeyEdit = lazy(() => import('./components/ApiKeyEdit'));
+const ApiKey = lazy(() => import('./components/ApiKey'));
 const ApiKeys = lazy(() => import('./components/ApiKeys'));
 import {
     KeyOutlined,
@@ -14,8 +13,7 @@ import {
         name: "api_key",
         stateReducer: stateReducer,
         routes: [
-            {path: "/api_keys/new", component: ApiKeyNew},
-            {path: "/api_keys/:api_key_id", component: ApiKeyEdit},
+            {path: "/api_keys/:api_key_id", component: ApiKey},
             {path: "/api_keys", component: ApiKeys},
         ],
         generalMenus: [

@@ -73,10 +73,6 @@ router.post('/api_keys',
         restriction_type: {
             isInt: true,
             errorMessage: 'restriction_type must be integer'
-        },
-        restriction_value: {
-            isString: true,
-            errorMessage: 'restriction_value is required'
         }
     }),
     function (req, res) {
@@ -86,13 +82,13 @@ router.post('/api_keys',
             try {
 
                 let m = req.app.model('ApiKey');
-                await m.createApiKey(
+                let r = await m.createApiKey(
                     req.body.name,
                     crypto.randomBytes(32).toString('hex'),
                     req.body.restriction_type,
                     req.body.restriction_value
                 );
-                res.status(201).send({message: 'OK'});
+                res.status(201).send(r);
 
             } catch (e ) {
                 req.app.get('log').error(e);

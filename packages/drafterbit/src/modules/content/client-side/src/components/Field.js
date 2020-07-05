@@ -1,6 +1,7 @@
 import React from 'react';
 import RichText from './RichText';
 import Relation  from './Relation';
+import { Form, Input } from 'antd'
 
 const FieldType = require('@drafterbit/common/FieldType');
 
@@ -11,38 +12,40 @@ class Field extends React.Component {
         let value = this.props.value;
         let types = {
             [FieldType.SHORT_TEXT]: () => (
-                <input value={value} onChange={this.props.onChange} name={field.name} type="text"
-                       className="form-control"/>
+                <Input value={value} onChange={this.props.onChange}/>
             ),
             [FieldType.LONG_TEXT]: () => (
-                <textarea value={value} onChange={this.props.onChange} name={field.name}
-                          className="form-control"/>
+                <Input.TextArea value={value} onChange={this.props.onChange}/>
             ),
             [FieldType.RICH_TEXT]: () => (
                 <RichText initialValue={value} value={value}  onChange={this.props.onChange}/>
             ),
             [FieldType.NUMBER]: () => (
-                <input value={value} onChange={this.props.onChange} name={field.name} type="number"
-                       className="form-control"/>
+                <Input value={value} onChange={this.props.onChange} name={field.name} htmlType="number"/>
             )
         };
 
         if (FieldType.primitives().indexOf(field.type_name) !== -1) {
             return (
-                <div className="form-group">
-                    <label htmlFor={field.name}>{field.display_text}</label>
+                <Form.Item
+                    label={field.display_text}
+                    name={field.name}
+                >
+                    {/*<label htmlFor={field.name}>{field.display_text}</label>*/}
                     {types[field.type_name]()}
-                </div>
+                </Form.Item>
             );
         } else {
             return (
-                <div className="form-group">
-                    <label htmlFor={field.name}>{field.display_text}</label>
+                <Form.Item
+                    label={field.display_text}
+                    name={field.name}
+                >
                     <Relation multiple={field.multiple}
                               typeName={field.type_name}
                               onChange={this.props.onChange}
                               value={value ? value : []}/>
-                </div>
+                </Form.Item>
             )
         }
     }

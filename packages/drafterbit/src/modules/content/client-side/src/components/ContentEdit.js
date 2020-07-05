@@ -6,7 +6,7 @@ import actions from '../actions';
 import Field from './Field';
 import Editor from "./Unstructured/Editor"
 import Notify from '@drafterbit/common/client-side/components/Notify';
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Form, Button } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 const FieldType = require('@drafterbit/common/FieldType');
 
@@ -238,7 +238,9 @@ class ContentEdit extends React.Component {
                     <Row>
                         <Col span="12">
                             <Card title="Edit Content" >
-                                <form onSubmit={e => {
+                                <Form
+                                    layout="vertical"
+                                    onSubmit={e => {
                                     e.preventDefault();
                                     this.onSubmit(e.target);
                                 }} >
@@ -272,10 +274,10 @@ class ContentEdit extends React.Component {
                                         return this.renderRelation(f,i, value);
                                     })}
 
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-success">Save</button>
-                                    </div>
-                                </form>
+                                    <Form.Item>
+                                        <Button type="primary" htmlType="submit">Save</Button>
+                                    </Form.Item>
+                                </Form>
                             </Card>
                         </Col>
                     </Row>

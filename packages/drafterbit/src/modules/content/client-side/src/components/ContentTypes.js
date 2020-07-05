@@ -37,7 +37,9 @@ class ContentTypes extends React.Component {
 
         const columns = [{
             dataField: 'name',
+            dataIndex: 'name',
             text: 'Name',
+            title: 'Name',
             formatter: (cell, row) => {
                 return <Link to={`/content_types/${row._id}`}>{cell}</Link>;
             }
