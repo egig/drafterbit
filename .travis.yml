@@ -4,6 +4,7 @@ node_js:
 before_script:
   - npm install -g codecov
   - npm install -g lerna
+  - npm install mongodb-memory-server-global
   - lerna exec npm install
 script:
   - lerna exec npm test
