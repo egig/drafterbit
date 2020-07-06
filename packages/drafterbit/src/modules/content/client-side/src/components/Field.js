@@ -23,7 +23,7 @@ class Field extends React.Component {
                 <RichText initialValue={value} value={value}  onChange={this.props.onChange}/>
             ),
             [FieldType.NUMBER]: () => (
-                <Input value={value} onChange={this.props.onChange} name={field.name} htmlType="number"/>
+                <Input value={value} onChange={this.props.onChange} name={field.name} type="number"/>
             )
         };
 

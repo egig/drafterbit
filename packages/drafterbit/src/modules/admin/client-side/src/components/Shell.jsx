@@ -60,7 +60,9 @@ class Shell extends React.Component {
                                                             return <Redirect to={route.redirect}/>
                                                         }
 
-                                                        return <Route key={route.path} exact={true} path={route.path} component={route.component} />
+                                                        return <Route key={route.path} exact={true} path={route.path} render={(props) => {
+                                                            return <route.component {...props}/>
+                                                        }} />
                                                     })
                                                 })}
                                             </Switch>
@@ -71,7 +73,9 @@ class Shell extends React.Component {
                             return this.props.$dt.modules.map(m => {
                                 if(!!m.pageRoutes && !!m.pageRoutes.length) {
                                     return m.pageRoutes.map(r => {
-                                        return <Route key={r.path} exact={true} path={r.path} component={r.component} />
+                                        return <Route key={r.path} exact={true} path={r.path} render={(props) => {
+                                            return <r.component {...props}/>
+                                        }} />
                                     })
                                 }
                             });
