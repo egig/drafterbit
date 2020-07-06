@@ -54,11 +54,8 @@ function createConfig(options) {
         'MONGODB_PASS': '',
         'modules': [
             './packages/drafterbit/src/modules/common',
-            './packages/drafterbit/src/modules/file',
             './packages/drafterbit/src/modules/admin',
             './packages/drafterbit/src/modules/auth',
-            './packages/drafterbit/src/modules/api-key',
-            './packages/drafterbit/src/modules/swagger',
             './packages/drafterbit/src/modules/content'
         ]
     };
