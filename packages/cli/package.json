@@ -17,6 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "drafterbit": "^3.0.0-dev.12"
+    "drafterbit": "latest"
   }
 }

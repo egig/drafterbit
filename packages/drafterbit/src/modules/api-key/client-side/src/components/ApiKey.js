@@ -83,9 +83,9 @@ class ApiKey extends React.Component {
                                 </Form.Item>
                                 <Form.Item name="restriction_type" label="Restriction Type">
                                     <Radio.Group>
-                                        <Radio value="0">None</Radio>
-                                        <Radio value="1">HTTP Referrer</Radio>
-                                        <Radio value="2">IP Address</Radio>
+                                        <Radio.Button value="0">None</Radio.Button>
+                                        <Radio.Button value="1">HTTP Referrer</Radio.Button>
+                                        <Radio.Button value="2">IP Address</Radio.Button>
                                     </Radio.Group>
                                 </Form.Item>
                                 <Form.Item

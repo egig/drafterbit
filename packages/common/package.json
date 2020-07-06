@@ -15,5 +15,8 @@
   "gitHead": "e0b64b0a224e85dbd5dcafec7835873467807b32",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "react-highlight-words": "^0.16.0"
   }
 }

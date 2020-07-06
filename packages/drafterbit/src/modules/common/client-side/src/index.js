@@ -24,9 +24,6 @@ import {
                     icon: <SettingOutlined />}
             ]
         },
-        processRoute(route) {
-            //..
-        },
 
         registerApiClient() {
             return {

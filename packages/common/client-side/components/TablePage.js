@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
 import { Row, Col, Table, Button } from 'antd'
-import TableFilter from './TableFilter';
+import TableFilter2 from './TableFilter2';
 
 const FilterQuery = require('../../FilterQuery');
 
@@ -86,6 +86,10 @@ class TablePage extends React.Component {
         qs = fn(qs);
         let newLink = match.url + "?" + querystring.stringify(qs);
         history.push(newLink);
+    };
+
+    onApplyFilters = (filters) => {
+        //..
     };
 
     applyFilter = (k, v) => {
@@ -183,10 +187,6 @@ class TablePage extends React.Component {
             return d;
         });
 
-        // const onChange = page => {
-        //     this.props.history.push(this.props.match.url + "?page=" + page)
-        // };
-
         function itemRender(current, type, originalElement) {
             if (type === 'prev') {
                 return <a>Previous</a>;
@@ -228,14 +228,10 @@ class TablePage extends React.Component {
                     </Col>
                 </Row>
 
-                <TableFilter
-                onFilterKeyUp={this.onFilterKeyUp}
-                onFilterChange={this.onFilterChange}
-                deleteFilter={this.deleteFilter}
-                onApplyFilter={this.onApplyFilter}
-                columns={this.props.columns}
-                filterObjects={this.props.filterObjects}
-                typedQ={this.state.typedQ} />
+                <TableFilter2
+                    onApplyFilters={this.onApplyFilters}
+                    columns={columns} />
+                <div style={{marginBottom:"6px"}}/>
 
                 <Table
                     bordered

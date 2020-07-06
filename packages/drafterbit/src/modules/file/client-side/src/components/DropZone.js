@@ -1,7 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import styled from 'styled-components';
-import ApiClient from '../ApiClient';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 
 const getColor = (props) => {
