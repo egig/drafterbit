@@ -231,7 +231,7 @@ class TablePage extends React.Component {
                 <TableFilter2
                     onApplyFilters={this.onApplyFilters}
                     columns={columns} />
-                <div style={{marginBottom:"6px"}}/>
+                <div style={{marginBottom:"8px"}}/>
 
                 <Table
                     bordered

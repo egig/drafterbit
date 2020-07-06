@@ -62,6 +62,7 @@ class ApiKeys extends React.Component {
 
         return (
             <TablePage
+                headerText="Api Keys"
                 onClickAdd={() => {
                     this.props.history.push(`/api_keys/0`);
                 }}
