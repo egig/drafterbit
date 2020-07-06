@@ -101,7 +101,7 @@ router.get('/', function (req, res) {
                 <script>
                     window.__PRELOADED_STATE__=${JSON.stringify(defaultState)};
                     window.__PRELOADED_LANGUAGE_RESOURCES__=${JSON.stringify([])};
-                    window.__DRAFTERBIT_CONFIG__=${JSON.stringify(drafterbitConfig)};
+                    window.__DT_CONFIG__=${JSON.stringify(drafterbitConfig)};
                 </script>
                 <script src="${assetPath(req, webpackAssets.main.js)}"></script>
             </body>

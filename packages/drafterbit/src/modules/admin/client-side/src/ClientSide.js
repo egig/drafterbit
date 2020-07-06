@@ -1,5 +1,4 @@
 import EventEmitter from 'eventemitter3';
-import getConfig from './getConfig';
 import React from 'react';
 import ApiClient from './ApiClient';
 import { combineReducers } from 'redux';
@@ -7,20 +6,32 @@ import { createStore, applyMiddleware } from  'redux';
 import thunk from 'redux-thunk';
 import i18next from 'i18next';
 
-const i18n = i18next.createInstance();
-i18n.init({
-    lng: 'id',
-    fallbackLng: 'en',
-    debug: !!parseInt(getConfig("debug")),
-    resources: [],
-});
-
 class ClientSide extends EventEmitter {
 
-    modules = [];
-    store = [];
-    languageContext =  {namespaces: [], i18n};
-    getConfig = getConfig;
+    constructor(config) {
+        super();
+
+        this.config = config;
+        this.modules = [];
+        this.store = null;
+
+        this.i18n = i18next.createInstance();
+        this.i18n.init({
+            lng: 'id',
+            fallbackLng: 'en',
+            debug: !!parseInt(this.getConfig("debug")),
+            resources: [],
+        });
+        this.languageContext =  {namespaces: [], i18n: this.i18n};
+    }
+
+    getConfig(name) {
+        if(!this.config.hasOwnProperty(name)) {
+            throw new Error(`Can not find config value for: ${name}`);
+        }
+
+        return this.config[name];
+    };
 
     addModule(moduleObject) {
         this.modules.push(moduleObject)
@@ -38,8 +49,8 @@ class ClientSide extends EventEmitter {
 
         ApiClient.prototype  = Object.assign({}, ApiClient.prototype, clientProto);
         let options = {
-            baseURL: getConfig('apiBaseURL'),
-            apiKey: getConfig('apiKey')
+            baseURL: this.getConfig('apiBaseURL'),
+            apiKey: this.getConfig('apiKey')
         };
 
         this.apiClient = new ApiClient(options);
