@@ -2,12 +2,12 @@ import path from 'path';
 import React, {Fragment} from 'react';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
-import ApiClient from '../ApiClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFile} from '@fortawesome/free-regular-svg-icons';
 import {Link} from 'react-router-dom';
 import querystring from "querystring";
 import DropZone from './DropZone';
+import { Card } from 'antd';
 
 class Files extends React.Component {
 
@@ -83,10 +83,13 @@ class Files extends React.Component {
 
         return (
             <Fragment>
-                <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
-                {paths.map((p,i) => {
-                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
-                })}
+                <Card>
+                    {paths.map((p,i) => {
+                        return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
+                    })}
+                    <div style={{marginBottom:"6px"}}/>
+                    <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
+                </Card>
                 <TablePage
                     headerText="Files"
                     data={ this.state.files }

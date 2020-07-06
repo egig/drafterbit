@@ -59,6 +59,7 @@ class Login extends React.Component {
                                 <title>Login - {appName}</title>
                             </Helmet>
                             <Form
+                                size="large"
                                 name="normal_login"
                                 className="login-form"
                                 initialValues={{
@@ -86,9 +87,8 @@ class Login extends React.Component {
                                         },
                                     ]}
                                 >
-                                    <Input
+                                    <Input.Password
                                         prefix={<LockOutlined className="site-form-item-icon" />}
-                                        type="password"
                                         placeholder="Password"
                                     />
                                 </Form.Item>

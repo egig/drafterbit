@@ -53,6 +53,7 @@ class Register extends React.Component {
 	            }
 
                 <Form
+                    size="large"
                     layout="vertical"
                     onFinish={this.onSubmit}>
                     <Form.Item label="Full Name">
@@ -62,7 +63,7 @@ class Register extends React.Component {
                         <Input name="email" placeholder="Email" />
                     </Form.Item>
                     <Form.Item label="Password">
-                        <Input type="password" name="password" placeholder="Password" />
+                        <Input.Password name="password" placeholder="Password" />
                     </Form.Item>
                     <Form.Item>
                         <Form.Item name="remember" valuePropName="checked" noStyle>

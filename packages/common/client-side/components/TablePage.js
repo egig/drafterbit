@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
-import { Row, Col, Table, Button } from 'antd'
+import { Row, Col, Table, Button, PageHeader, Card } from 'antd'
 import TableFilter2 from './TableFilter2';
 
 const FilterQuery = require('../../FilterQuery');
@@ -209,48 +209,61 @@ class TablePage extends React.Component {
             }
         };
 
+        let extra = [];
+
+        if(!!selected.length) {
+            extra.push(
+                <Button type="line" danger  onClick={this.handleDelete} >
+                    {this.props.deleteText} {selected.length} items
+                </Button>
+            )
+        }
+
+        if (!!onClickAdd) {
+            extra.push(<Button key="add" type="primary" onClick={onClickAdd} >{this.props.addText}</Button>)
+        }
+
         return (
             <Fragment>
+
+                <PageHeader
+                    ghost={false}
+                    // onBack={() => window.history.back()}
+                    title={this.props.headerText}
+                    // subTitle="This is a subtitle"
+                    extra={extra}
+                >
+                </PageHeader>
+
                 <Row>
-                    <Col span="12">
-                        <h2>{this.props.headerText}</h2>
-                    </Col>
-                    <Col span="12" style={{display: "flex", justifyContent:"flex-end"}}>
-                        {!!selected.length &&
-                        <Button type="line" danger  onClick={this.handleDelete} >
-                            {this.props.deleteText} {selected.length} items
-                        </Button>
-                        }
-                        <span style={{marginLeft:"6px"}}/>
-                        {onClickAdd &&
-                            <Button type="primary" onClick={onClickAdd} >{this.props.addText}</Button>
-                        }
+                    <Col span={24}>
+                        <Card>
+                            <TableFilter2
+                                onApplyFilters={this.onApplyFilters}
+                                columns={columns} />
+                            <div style={{marginBottom:"8px"}}/>
+
+                            <Table
+                                bordered
+                                size="small"
+                                rowSelection={{
+                                    type: "checkbox",
+                                    ...rowSelection,
+                                }}
+                                columns={columns}
+                                dataSource={data}
+                                rowKey={record => record._id}
+                                loading={this.state.loading}
+                                onChange={onChange}
+                                pagination={{
+                                    total:20,
+                                    pageSize:10,
+                                    itemRender: itemRender
+                                }}
+                            />
+                        </Card>
                     </Col>
                 </Row>
-
-                <TableFilter2
-                    onApplyFilters={this.onApplyFilters}
-                    columns={columns} />
-                <div style={{marginBottom:"8px"}}/>
-
-                <Table
-                    bordered
-                    size="small"
-                    rowSelection={{
-                        type: "checkbox",
-                        ...rowSelection,
-                    }}
-                    columns={columns}
-                    dataSource={data}
-                    rowKey={record => record._id}
-                    loading={this.state.loading}
-                    onChange={onChange}
-                    pagination={{
-                        total:20,
-                        pageSize:10,
-                        itemRender: itemRender
-                    }}
-                />
 
             </Fragment>
         );

@@ -23,10 +23,10 @@ class NavBarMenu extends React.Component {
         return (
             <Dropdown overlay={menu}>
                 <img style={{
-                    width: '42px',
-                    height: '42px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
-                    margin: '14px',
+                    margin: '16px',
                     cursor: 'pointer'
                 }} alt="avatar" className="layout-avatar-img" src={"/img/default-avatar.png"} />
             </Dropdown>

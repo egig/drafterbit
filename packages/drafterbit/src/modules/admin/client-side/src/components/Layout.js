@@ -29,7 +29,7 @@ class Layout extends React.Component {
 					<title>{this.props.title}</title>
 				</Helmet>
 				<SideNav collapsed={this.state.collapsed} />
-				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh", backgroundColor: "#FFF" }}>
+				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh" }}>
 					<Header className="site-layout-background" style={{
 						padding: 0,
 						display:'flex',

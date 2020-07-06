@@ -31,7 +31,7 @@ class Settings extends React.Component {
 
         return (
             <Row>
-                <Col span={24}>
+                <Col span={12}>
                     <Card title="Settings">
                         <Tabs>
                             <Tabs.TabPane tab="General" key="1">

@@ -1,6 +1,7 @@
 import React from 'react';
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
+import { Card } from 'antd';
 
 class Request extends React.Component {
 
@@ -8,7 +9,9 @@ class Request extends React.Component {
         let t = this.props.t;
 
         return (
-            <SwaggerUI url="/swagger.json" />            
+            <Card>
+                <SwaggerUI url="/swagger.json" />
+            </Card>
         );
     }
 }
