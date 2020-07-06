@@ -4,11 +4,10 @@ node_js:
 before_script:
   - npm install -g codecov
   - npm install -g lerna
-  - npm install mongodb-memory-server-global
-  - lerna exec npm install
+  - npm run bootstrap
 script:
-  - lerna exec npm test
-  - lerna exec npm run coverage:lcov
+  - lerna run test
+  - lerna run coverage:lcov
   - codecov
 branches:
   only:
