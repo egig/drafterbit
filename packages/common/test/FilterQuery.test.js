@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const FilterQuery = require('../src/FilterQuery');
+const FilterQuery = require('../FilterQuery');
 
 describe("FilterQuery", () => {
 

@@ -4,8 +4,8 @@ const should = chai.should();
 const expect = chai.expect;
 const Schema = mongoose.Schema;
 
-const { convert } = require('../src/fieldsToSchema');
-const FieldType = require('../src/FieldType');
+const { convert } = require('../fieldsToSchema');
+const FieldType = require('../FieldType');
 
 describe("fieldsToSchema", () => {
 
@@ -30,7 +30,7 @@ describe("fieldsToSchema", () => {
     it("should convert relation to mongoose objectId", () => {
         let schema = convert({
             title: {
-                type: FieldType.RELATION_TO_MANY
+                type: "UnknownPrimitiveType"
             }
         });
         expect(schema.title.type).to.equal(Schema.Types.ObjectId)

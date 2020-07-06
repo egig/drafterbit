@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const FieldType = require('../src/FieldType');
+const FieldType = require('../FieldType');
 
 describe("FieldType", () => {
 

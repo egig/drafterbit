@@ -6,7 +6,10 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "nyc --reporter=none mocha './test/**/*.test.js' --timeout=3000 --reporter=spec  --exit --recursive --bail",
+    "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov"
+  },
   "author": "",
   "license": "ISC",
   "gitHead": "e0b64b0a224e85dbd5dcafec7835873467807b32",
