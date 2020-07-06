@@ -50,9 +50,10 @@ describe('Content Types', () => {
 
             // TODO using mongoose to create fixtures instead
             chai.request(drafterbit)
-                .post('/type?api_key=test')
+                .post('/types?api_key=test')
                 .send({
-                    name: 'test ct4',
+                    name: 'testct4',
+                    display_text: 'testct4',
                     slug: 'test-ct4',
                     description: 'desc',
                     fields: []
@@ -101,7 +102,8 @@ describe('Content Types', () => {
             chai.request(drafterbit)
                 .post('/types?api_key=test')
                 .send({
-                    name: 'test ct',
+                    name: 'testct',
+                    display_text: 'testct',
                     slug: 'test-ct',
                     description: 'desc',
                     fields: []
@@ -124,7 +126,7 @@ describe('Content Types', () => {
         });
     });
 
-    describe('/GET content types/:id ', () => {
+    describe('/GET types/:id ', () => {
 
         let testId;
         before((done) => {
@@ -132,9 +134,11 @@ describe('Content Types', () => {
             chai.request(drafterbit)
                 .post('/types?api_key=test')
                 .send({
-                    name: 'test ct2',
+                    name: 'testct2',
                     slug: 'test-ct2',
+                    display_text: 'test-ct2',
                     description: 'desc',
+                    has_fields: false,
                     fields: []
                 })
                 .end((err, res) => {
@@ -165,7 +169,8 @@ describe('Content Types', () => {
             chai.request(drafterbit)
                 .post('/types?api_key=test')
                 .send({
-                    name: 'test ct3',
+                    name: 'testct3',
+                    display_text: 'testct3',
                     slug: 'test-ct3',
                     description: 'desc',
                     fields: []

@@ -11,7 +11,7 @@ let expect = chai.expect;
 let ApiKeySchema = require('../models/ApiKey');
 
 chai.use(chaiHttp);
-const mongod = new MongoMemoryServer();
+const mongod = new MongoMemoryServer({ binary: { version: 'latest' }});
 let apikeyModel;
 let apiKeyId;
 

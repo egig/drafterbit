@@ -118,7 +118,7 @@
     "eslint-config-dev": "^2.0.0",
     "eslint-plugin-react": "^7.14.3",
     "mocha": "^6.1.4",
-    "mongodb-memory-server": "^5.2.1",
+    "mongodb-memory-server": "^6.6.1",
     "nodemon": "^1.18.9",
     "nyc": "^14.1.1",
     "pre-push": "^0.1.1",
@@ -127,7 +127,7 @@
     "webpack-dev-middleware": "^3.7.0"
   },
   "scripts": {
-    "test": "nyc --reporter=none mocha './test/**/*.test.js' './src/modules/*/test/**/*.test.js'  --timeout=3000 --reporter=spec  --exit --recursive",
+    "test": "nyc --reporter=none mocha './test/**/*.test.js' './src/modules/*/test/**/*.test.js'  --timeout=3000 --reporter=spec  --exit --recursive --bail",
     "coverage": "nyc report --reporter=text-summary",
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",

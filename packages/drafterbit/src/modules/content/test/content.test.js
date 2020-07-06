@@ -45,10 +45,11 @@ describe('Content', () => {
         let Type = conn.model(`${dbName}_Type`, TypeSchema, '_types');
   
         let testCT = new Type({
-            name: 'Articles',
+            name: 'articles',
+            display_text: 'articles',
             slug: 'articles',
             fields: [{
-                type_id: 1,
+                type_name: "ShortText",
                 name: 'title',
                 label: 'Title',
             }]
