@@ -33,7 +33,9 @@ class Layout extends React.Component {
 					<Header className="site-layout-background" style={{
 						padding: 0,
 						display:'flex',
-						justifyContent: "space-between", borderBottom: '1px solid #e1e1e1' }}>
+						justifyContent: "space-between",
+						borderBottom: '1px solid #e1e1e1'
+					}}>
 						{React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
 							className: 'trigger',
 							onClick: this.toggle,
@@ -46,8 +48,7 @@ class Layout extends React.Component {
 						})}
 					</Header>
 					<Content
-						// className="site-layout-background"
-						style={{ margin: '24px 16px 0', overflow: 'initial'}}
+						style={{overflow: 'initial'}}
 					>
 						{this.props.children}
 					</Content>

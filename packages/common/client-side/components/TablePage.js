@@ -1,10 +1,13 @@
 import querystring from 'querystring';
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
 import { Row, Col, Table, Button, PageHeader, Card } from 'antd'
 import TableFilter2 from './TableFilter2';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const FilterQuery = require('../../FilterQuery');
 
@@ -147,6 +150,10 @@ class TablePage extends React.Component {
         });
     }
 
+    renderTableFilter = () => {
+
+    }
+
     render() {
 
         let {
@@ -223,49 +230,62 @@ class TablePage extends React.Component {
             extra.push(<Button key="add" type="primary" onClick={onClickAdd} >{this.props.addText}</Button>)
         }
 
+        const tableFilter = (<TableFilter2
+            onApplyFilters={this.onApplyFilters}
+            columns={columns} />);
+
+        const tableData = (
+            <Table
+                bordered
+                size="small"
+                rowSelection={{
+                    type: "checkbox",
+                    ...rowSelection,
+                }}
+                columns={columns}
+                dataSource={data}
+                rowKey={record => record._id}
+                onChange={onChange}
+                loading={{
+                    spinning: this.state.loading,
+                    indicator: LoadingIcon,
+                }}
+                pagination={{
+                    total:20,
+                    pageSize:10,
+                    itemRender: itemRender
+                }}
+            />
+        );
+
+        let tableContent = (
+            <Card>
+                {tableFilter}
+                <div style={{marginBottom:"8px"}}/>
+                {tableData}
+            </Card>
+        );
+
+        if(typeof this.props.renderContent === "function") {
+            tableContent = this.props.renderContent(tableFilter, tableData)
+        }
+
         return (
-            <Fragment>
-
-                <PageHeader
-                    ghost={false}
-                    // onBack={() => window.history.back()}
-                    title={this.props.headerText}
-                    // subTitle="This is a subtitle"
-                    extra={extra}
-                >
-                </PageHeader>
-
+            <>
                 <Row>
                     <Col span={24}>
-                        <Card>
-                            <TableFilter2
-                                onApplyFilters={this.onApplyFilters}
-                                columns={columns} />
-                            <div style={{marginBottom:"8px"}}/>
-
-                            <Table
-                                bordered
-                                size="small"
-                                rowSelection={{
-                                    type: "checkbox",
-                                    ...rowSelection,
-                                }}
-                                columns={columns}
-                                dataSource={data}
-                                rowKey={record => record._id}
-                                loading={this.state.loading}
-                                onChange={onChange}
-                                pagination={{
-                                    total:20,
-                                    pageSize:10,
-                                    itemRender: itemRender
-                                }}
-                            />
-                        </Card>
+                        <PageHeader
+                            // onBack={() => window.history.back()}
+                            title={this.props.headerText}
+                            // subTitle="This is a subtitle"
+                            extra={extra}
+                        >
+                            {tableContent}
+                        </PageHeader>
                     </Col>
                 </Row>
 
-            </Fragment>
+            </>
         );
     }
 }

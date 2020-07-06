@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import translate from '@drafterbit/common/client-side/translate';
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, PageHeader } from 'antd'
 
 class Dashboard extends React.Component {
 
@@ -10,9 +10,11 @@ class Dashboard extends React.Component {
         return (
             <Row>
                 <Col span={24}>
-                    <Card title="Dashboard">
-                    <p>Welcome !</p>
-                    </Card>
+                    <PageHeader title="Dashboard">
+                        <Card>
+                            Welcome !
+                        </Card>
+                    </PageHeader>
                 </Col>
             </Row>
         );

@@ -6,7 +6,7 @@ import FieldForm from './FieldForm';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm'
 
-import {Row, Col, Tabs, Button, Card, message} from 'antd';
+import {Row, Col, Tabs, Button, Card, message, PageHeader} from 'antd';
 
 class Type extends React.Component {
 
@@ -101,22 +101,22 @@ class Type extends React.Component {
     render() {
 
         return (
-            <Fragment>
-                {this.state.loading && <div>Loading&hellip;</div>}
-                {this.state.loading ||
-                <Row>
-                    <Col span="24">
-                        <h2>{this.state.display_text} <small className="text-muted"><a href="/" onClick={e => {
-                            e.preventDefault();
-                            this.setState({
-                                basicEditForm: true
-                            })
-                        }}><i className="icon-note"/></a></small></h2>
-                        <small>{this.state.description}</small>
-                        <div className="mb-3"/>
-                    </Col>
-                    <Col span="12">
-                        {this.state.has_fields &&
+            <>
+                <PageHeader
+                    // onBack={() => window.history.back()}
+                    title={this.state.display_text}
+                    subTitle={this.state.description}
+                    extra={[<Button type="line" onClick={e => {
+                        e.preventDefault();
+                        this.setState({
+                            basicEditForm: true
+                        })
+                    }}><i className="icon-note"/> Edit </Button>]}
+                >
+                    {this.state.loading ||
+                    <Row>
+                        <Col span="12">
+                            {this.state.has_fields &&
                             <Card title="Fields">
                                 <Tabs type="card" tabPosition="left">
                                     {this.state.fields.map((f, i) => {
@@ -147,21 +147,23 @@ class Type extends React.Component {
                                     </Tabs.TabPane>
                                 </Tabs>
                             </Card>
-                        }
+                            }
 
-                        <div className="mb-3"/>
-                        <Card title={`Delete Type : ${this.state.name}`}>
-                            <form onSubmit={e => {
-                                e.preventDefault();
-                                this.deleteType(e.target);
-                            }}>
-                                <input type="hidden" name="id" id="id" value={this.state._id}/>
-                                <Button type="line" htmlType="submit" danger>Delete Type</Button>
-                            </form>
-                        </Card>
-                    </Col>
-                </Row>
-                }
+                            <div className="mb-3"/>
+                            <Card title={`Delete Type : ${this.state.name}`}>
+                                <form onSubmit={e => {
+                                    e.preventDefault();
+                                    this.deleteType(e.target);
+                                }}>
+                                    <input type="hidden" name="id" id="id" value={this.state._id}/>
+                                    <Button type="line" htmlType="submit" danger>Delete Type</Button>
+                                </form>
+                            </Card>
+                        </Col>
+                    </Row>
+                    }
+                </PageHeader>
+                {this.state.loading && <div>Loading&hellip;</div>}
                 <TypeForm
                     visible={this.state.basicEditForm}
                     typeId={this.state._id}
@@ -183,7 +185,7 @@ class Type extends React.Component {
                         message.success("Content Type Saved Successfully !");
                     }}
                     />
-            </Fragment>
+            </>
         );
     }
 }

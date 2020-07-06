@@ -1,6 +1,6 @@
 import React  from 'react';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import { Row, Col, Card, Form, Input, Radio, Button, message } from 'antd'
+import { Row, Col, Card, Form, Input, Radio, Button, message, PageHeader } from 'antd'
 
 class ApiKey extends React.Component {
 
@@ -65,16 +65,23 @@ class ApiKey extends React.Component {
 
         return (
             <>
-                <Row>
-                    <Col span={12}>
-                        <Card title="Create Api Key">
-                            <Form layout="vertical"
-                                  ref={this.formRef}
-                                  onFinish={this.onFinish}
-                                  initialValues={{
-                                      restriction_type: "0"
-                                  }}
-                                  onValuesChange={this.onValuesChange}>
+            <Form layout="vertical"
+                  ref={this.formRef}
+                  onFinish={this.onFinish}
+                  initialValues={{
+                      restriction_type: "0"
+                  }}
+                  onValuesChange={this.onValuesChange}>
+                <PageHeader
+                    title="Api Key"
+                    extra={[
+                        <Button type="primary" htmlType="submit">Save</Button>
+                    ]}
+                >
+                    <Row>
+                        <Col span={24}>
+                            <Card>
+
                                 <Form.Item label="Name" name="name">
                                     <Input/>
                                 </Form.Item>
@@ -106,13 +113,11 @@ class ApiKey extends React.Component {
 
                                 }}
                                 </Form.Item>
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit">Save</Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </Col>
-                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
+                </PageHeader>
+            </Form>
             </>
         );
     }

@@ -1,7 +1,7 @@
 import React  from 'react';
 import { Value } from "slate";
 import Field from './Field';
-import { Row, Col, Card, Form, Button, message } from 'antd';
+import { Row, Col, Card, Form, Button, message, PageHeader } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import htmlSerializer from './Unstructured/htmlSerializer';
 
@@ -135,33 +135,36 @@ class ContentEdit extends React.Component {
         return (
             <>
                 <Row>
-                    <Col span="12" sm="24">
-                        <Card title="Edit Content" >
-                            <Form
-                                ref={this.formRef}
-                                layout="vertical"
-                                onFinish={this.onFinish} >
-                                {this.state.ctFields.map((f,i) => {
-                                    if (!f.show_in_form) {
-                                        return
-                                    }
+                    <Col span="24">
+                        <Form
+                            ref={this.formRef}
+                            layout="vertical"
+                            onFinish={this.onFinish} >
+                            <PageHeader
+                                // onBack={() => window.history.back()}
+                                title="Edit Entry"
+                                // subTitle="This is a subtitle"
+                                extra={[ <Button type="primary" htmlType="submit">Save</Button>]}
+                            >
+                                <Card>
+                                        {this.state.ctFields.map((f,i) => {
+                                            if (!f.show_in_form) {
+                                                return
+                                            }
 
-                                    if(f.type_name === FieldType.RICH_TEXT) {
-                                        return this.renderRichText(f,i)
-                                    }
+                                            if(f.type_name === FieldType.RICH_TEXT) {
+                                                return this.renderRichText(f,i)
+                                            }
 
-                                    if (FieldType.primitives().indexOf(f.type_name) !== -1) {
-                                        return <Field key={i} field={f} />;
-                                    }
+                                            if (FieldType.primitives().indexOf(f.type_name) !== -1) {
+                                                return <Field key={i} field={f} />;
+                                            }
 
-                                    return this.renderRelation(f,i);
-                                })}
-
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit">Save</Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
+                                            return this.renderRelation(f,i);
+                                        })}
+                                </Card>
+                            </PageHeader>
+                        </Form>
                     </Col>
                 </Row>
             </>);

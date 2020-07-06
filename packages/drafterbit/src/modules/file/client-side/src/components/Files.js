@@ -1,5 +1,5 @@
 import path from 'path';
-import React, {Fragment} from 'react';
+import React from 'react';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -82,14 +82,7 @@ class Files extends React.Component {
         }
 
         return (
-            <Fragment>
-                <Card>
-                    {paths.map((p,i) => {
-                        return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
-                    })}
-                    <div style={{marginBottom:"6px"}}/>
-                    <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
-                </Card>
+            <>
                 <TablePage
                     headerText="Files"
                     data={ this.state.files }
@@ -99,20 +92,24 @@ class Files extends React.Component {
                     loadContents={this.loadContents}
                     // handleDelete={this.handleDelete}
                     // onClickAdd={this.onClickAdd}
-                    render={(filter, table, pagination) => {
+                    renderContent={(tableFilter, tableData) => {
                         return(
-                            <div>
-                                <div className="mb-2"/>
-                                {filter}
-
-                                <div className="mb-2"/>
-                                {table}
-                                {pagination}
-                            </div>
+                            <Card>
+                                <div style={{marginBottom:"6px"}}/>
+                                {tableFilter}
+                                <div style={{marginBottom:"6px"}}/>
+                                <DropZone path={uploadPath} fileDidUpload={this.fileDidUpload}/>
+                                <div style={{marginBottom:"6px"}}/>
+                                {paths.map((p,i) => {
+                                    return <span key={i}> <Link to={p.path}>{p.label.trim()}</Link> / </span>
+                                })}
+                                <div style={{marginBottom:"6px"}}/>
+                                {tableData}
+                            </Card>
                         )
                     }}
                 />
-            </Fragment>
+            </>
         );
     }
 }
