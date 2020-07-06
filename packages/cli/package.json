@@ -1,6 +1,6 @@
 {
   "name": "@drafterbit/cli",
-  "version": "3.0.0-dev.11",
+  "version": "3.0.0-dev.12",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -17,6 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "drafterbit": "^3.0.0-dev.11"
+    "drafterbit": "^3.0.0-dev.12"
   }
 }
