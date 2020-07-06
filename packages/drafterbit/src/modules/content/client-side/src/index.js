@@ -17,9 +17,9 @@ import {
         name: "content",
         stateReducer: stateReducer,
         routes: [
-            {path: "/contents/:type_name/:content_id", component: ContentEdit},
-            {path: "/contents/:type_name", component: Contents},
-            {path: "/types/:type_id", component: Type},
+            {path: "/c/:type_name/:content_id", component: ContentEdit},
+            {path: "/c/:type_name", component: Contents},
+            {path: "/types/:type_name", component: Type},
             {path: "/types", component: Types},
         ],
         registerApiClient() {
@@ -27,11 +27,12 @@ import {
         },
         async getMenu() {
             let client = $dt.getApiClient();
-            return client.getTypes()
+            return client.getTypes({fq:"has_fields:true"})
                 .then((types) => {
+
                     let menus = types.map(ct => {
                         return {
-                            link: `/contents/${ct.name}`,
+                            link: `/c/${ct.name}`,
                             label: ct.name,
                         }
                     });
@@ -39,7 +40,7 @@ import {
                     return [
                         {
                             icon: <FileTextOutlined />,
-                            label: "Contents",
+                            label: "Collections",
                             children: menus,
                             order: 2
                         },

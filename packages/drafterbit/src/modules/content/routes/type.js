@@ -1,6 +1,7 @@
 const express = require('express');
 const validateRequest  = require('@drafterbit/common/middlewares/validateRequest');
 const handleFunc = require('@drafterbit/common/handleFunc');
+const FilterQuery = require('@drafterbit/common/FilterQuery');
 
 let router = express.Router();
 
@@ -52,7 +53,8 @@ router.get('/types/:type_name',
  */
 router.get('/types', handleFunc(async (req) => {
     let m = req.app.model('Type');
-    return await m.getTypes();
+    let fq = FilterQuery.fromString(req.query.fq);
+    return await m.getTypes(fq.toMap());
 }));
 
 /**

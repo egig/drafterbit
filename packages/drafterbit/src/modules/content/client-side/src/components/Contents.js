@@ -68,7 +68,7 @@ class Contents extends React.Component {
         let client = this.props.$dt.getApiClient();
         client.createDraft(slug)
             .then(d => {
-                this.props.history.push(`/contents/${slug}/${d.item._id}`);
+                this.props.history.push(`/c/${slug}/${d.item._id}`);
             })
             .catch(e => {
                 console.error(e)
@@ -87,7 +87,7 @@ class Contents extends React.Component {
             dataIndex: '_id',
             title: '#ID',
             render: (text, row) => {
-                return <span><Link to={`/contents/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
+                return <span><Link to={`/c/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
             },
 	        width: "80px"
         }];

@@ -5,8 +5,9 @@ const ApiClient = {
         return response.data;
     },
 
-    getTypes: async function getTypess() {
-        return this._doGetRequest('/types');
+    getTypes: async function getTypes(params = {}) {
+        let response = await this.axiosInstance.get('/types', {params});
+        return response.data;
     },
 
     getType: async function getType(typeName) {

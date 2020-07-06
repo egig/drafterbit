@@ -64,8 +64,8 @@ TypeSchema.statics.getType = function(typeName) {
 /**
  * @return {Promise}
  */
-TypeSchema.statics.getTypes = function() {
-    return this.find().select(['-__v']).exec();
+TypeSchema.statics.getTypes = function(filter = {}) {
+    return this.find(filter).select(['-__v']).exec();
 };
 
 /**
