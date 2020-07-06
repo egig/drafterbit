@@ -2,12 +2,17 @@
   "name": "drafterbit-monorepo",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "lerna": "^3.20.2",
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
     "start": "node packages/cli/index.js start",
     "auth:init": "node packages/cli/index.js auth:init",
     "bootstrap": "lerna bootstrap --hoist",
-    "linter": "./node_modules/.bin/eslint --fix ./packages"
+    "linter": "./node_modules/.bin/eslint --fix ./packages",
+    "test": "lerna run test"
+  },
+  "pre-commit": {
+    "run": "test"
   }
 }
