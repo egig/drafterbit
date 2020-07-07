@@ -106,7 +106,7 @@ class Type extends React.Component {
                     // onBack={() => window.history.back()}
                     title={this.state.display_text}
                     subTitle={this.state.description}
-                    extra={[<Button type="line" onClick={e => {
+                    extra={[<Button key="edit" type="line" onClick={e => {
                         e.preventDefault();
                         this.setState({
                             basicEditForm: true

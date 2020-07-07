@@ -173,8 +173,6 @@ class TablePage extends React.Component {
 
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-
                 this.setState({
                     selected: selectedRows.map(s => s._id)
                 });

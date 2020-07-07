@@ -122,8 +122,8 @@ class TableFilter extends React.Component {
                             </Form.Item>
                             <Form.Item noStyle name="op">
                                 <Select>
-                                    {["=", "=~", ">", "<"].map(op => {
-                                        return <Select.Option value={op}>{op}</Select.Option>
+                                    {["=", "=~", ">", "<"].map((op,i) => {
+                                        return <Select.Option key={i} value={op}>{op}</Select.Option>
                                     })}
                                 </Select>
                             </Form.Item>
