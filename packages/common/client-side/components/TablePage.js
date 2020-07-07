@@ -245,7 +245,7 @@ class TablePage extends React.Component {
                     indicator: LoadingIcon,
                 }}
                 pagination={{
-                    total:20,
+                    total:this.props.contentCount,
                     pageSize:10,
                     itemRender: itemRender
                 }}
@@ -271,7 +271,7 @@ class TablePage extends React.Component {
                         <PageHeader
                             // onBack={() => window.history.back()}
                             title={this.props.headerText}
-                            // subTitle="This is a subtitle"
+                            subTitle={`Found ${this.props.contentCount} entries`}
                             extra={extra}
                         >
                             {tableContent}
@@ -289,7 +289,8 @@ TablePage.defaultProps = {
     select: false,
     headerText: "Untitled Page",
     addText: "Add New",
-    deleteText: "Delete"
+    deleteText: "Delete",
+    contentCount: 1000,
 };
 
 export default withDrafterbit(withRouter(TablePage));

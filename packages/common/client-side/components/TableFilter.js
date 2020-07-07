@@ -9,7 +9,6 @@ class TableFilter extends React.Component {
     };
 
     formRef = React.createRef();
-    inputRef = React.createRef();
 
     handleClose = removedFilter => {
         const filters = this.state.filters.filter(f => f.key !== removedFilter.key);
@@ -112,7 +111,7 @@ class TableFilter extends React.Component {
                           onFinish={values => {
                               this.handleInputConfirm(values)
                           }}>
-                        <Input.Group compact ref={this.inputRef} >
+                        <Input.Group compact >
                             <Form.Item noStyle name="key">
                                 <Select showSearch style={{minWidth: "120px"}}>
                                     {this.props.columns.map((c,i) => {
@@ -135,7 +134,6 @@ class TableFilter extends React.Component {
                                     }}
                                     onKeyDown={e => {
                                         // ESC
-                                        console.log(e);
                                         if (e.keyCode === 27) {
                                             this.setState({inputVisible: false})
                                         }

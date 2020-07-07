@@ -74,17 +74,17 @@ TypeSchema.statics.getTypes = function(filter = {}) {
  * @param slug
  * @param displayText
  * @param description
- * @param has_fields
+ * @param hasFields
  * @param fields
  */
-TypeSchema.statics.createType = function(name, slug, displayText, description, has_fields, fields = []) {
+TypeSchema.statics.createType = function(name, slug, displayText, description, hasFields, fields = []) {
     let newType = new this({
         name,
         slug,
         display_text: displayText,
         description,
-        has_fields,
-        fields: fields,
+        has_fields: hasFields,
+        fields,
     });
 
     return newType.save();

@@ -144,7 +144,7 @@ class ContentEdit extends React.Component {
                 ref={this.formRef}
                 layout="vertical"
                 initialValues={{
-                    status: "0"
+                    status: "draft"
                 }}
                 onFinish={this.onFinish} >
                 <PageHeader
@@ -177,9 +177,10 @@ class ContentEdit extends React.Component {
                             <CardWrapper>
                                 <Card>
                                     <Form.Item label="Status" name="status">
-                                        <Select>
-                                            <Select.Option value="0">Draft</Select.Option>
-                                            <Select.Option value="1">Published</Select.Option>
+                                        <Select >
+                                            <Select.Option value="">Select Status</Select.Option>
+                                            <Select.Option value="draft">Draft</Select.Option>
+                                            <Select.Option value="published">Published</Select.Option>
                                         </Select>
                                     </Form.Item>
                                 </Card>

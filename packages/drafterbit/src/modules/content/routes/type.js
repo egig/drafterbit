@@ -116,11 +116,76 @@ router.post('/types',
             errorMessage: 'fields must be array'
         }
     }),
-    handleFunc(async function(req) {
+    handleFunc(async function  (req) {
         let m = req.app.model('Type');
-        return await m.createType(req.body.name, req.body.slug,
+
+        let fields = [
+            {
+                name: 'status',
+                type_name: 'Number',
+                display_text: 'Status',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'published_at',
+                type_name: 'Number',
+                display_text: 'Create At',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'created_at',
+                type_name: 'Number',
+                display_text: 'Create At',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'updated_at',
+                type_name: 'Number',
+                display_text: 'Updated At',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'deleted_at',
+                type_name: 'Number',
+                display_text: 'Deleted At',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'created_user_id',
+                type_name: 'ShortText',
+                display_text: 'Created User ID',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'updated_user_id',
+                type_name: 'ShortText',
+                display_text: 'Updated User ID',
+                show_in_form: false,
+                show_in_list: false
+            },
+            {
+                name: 'deleted_user_id',
+                type_name: 'ShortText',
+                display_text: 'Deleted User ID',
+                show_in_form: false,
+                show_in_list: false
+            },
+        ];
+
+        return await m.createType(
+            req.body.name,
+            req.body.slug,
             req.body.display_text,
-            req.body.description, req.body.has_fields, req.body.fields);
+            req.body.description,
+            req.body.has_fields,
+            fields
+        );
     })
 );
 
