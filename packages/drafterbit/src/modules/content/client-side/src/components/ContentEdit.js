@@ -1,11 +1,17 @@
 import React  from 'react';
 import { Value } from "slate";
 import Field from './Field';
-import { Row, Col, Card, Form, Button, message, PageHeader } from 'antd';
+import { Row, Col, Card, Form, Button, message, PageHeader, Select } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import htmlSerializer from './Unstructured/htmlSerializer';
+import styled from 'styled-components';
 
 const FieldType = require('@drafterbit/common/FieldType');
+
+
+const CardWrapper = styled.div`
+    padding: 0 0 0 15px;
+`;
 
 // TODO move this to editor module
 let richTextInitialValue = {
@@ -134,39 +140,54 @@ class ContentEdit extends React.Component {
     render() {
         return (
             <>
-                <Row>
-                    <Col span="24">
-                        <Form
-                            ref={this.formRef}
-                            layout="vertical"
-                            onFinish={this.onFinish} >
-                            <PageHeader
-                                // onBack={() => window.history.back()}
-                                title="Edit Entry"
-                                // subTitle="This is a subtitle"
-                                extra={[ <Button type="primary" htmlType="submit">Save</Button>]}
-                            >
+            <Form
+                ref={this.formRef}
+                layout="vertical"
+                initialValues={{
+                    status: "0"
+                }}
+                onFinish={this.onFinish} >
+                <PageHeader
+                    // onBack={() => window.history.back()}
+                    title="Edit Entry"
+                    // subTitle="This is a subtitle"
+                    extra={[ <Button key="save" type="primary" htmlType="submit">Save</Button>]}
+                >
+                    <Row>
+                        <Col span={16}>
+                            <Card>
+                                {this.state.ctFields.map((f,i) => {
+                                    if (!f.show_in_form) {
+                                        return
+                                    }
+
+                                    if(f.type_name === FieldType.RICH_TEXT) {
+                                        return this.renderRichText(f,i)
+                                    }
+
+                                    if (FieldType.primitives().indexOf(f.type_name) !== -1) {
+                                        return <Field key={i} field={f} />;
+                                    }
+
+                                    return this.renderRelation(f,i);
+                                })}
+                            </Card>
+                        </Col>
+                        <Col span={8}>
+                            <CardWrapper>
                                 <Card>
-                                        {this.state.ctFields.map((f,i) => {
-                                            if (!f.show_in_form) {
-                                                return
-                                            }
-
-                                            if(f.type_name === FieldType.RICH_TEXT) {
-                                                return this.renderRichText(f,i)
-                                            }
-
-                                            if (FieldType.primitives().indexOf(f.type_name) !== -1) {
-                                                return <Field key={i} field={f} />;
-                                            }
-
-                                            return this.renderRelation(f,i);
-                                        })}
+                                    <Form.Item label="Status" name="status">
+                                        <Select>
+                                            <Select.Option value="0">Draft</Select.Option>
+                                            <Select.Option value="1">Published</Select.Option>
+                                        </Select>
+                                    </Form.Item>
                                 </Card>
-                            </PageHeader>
-                        </Form>
-                    </Col>
-                </Row>
+                            </CardWrapper>
+                        </Col>
+                    </Row>
+                </PageHeader>
+            </Form>
             </>);
     }
 }

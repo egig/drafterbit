@@ -4,7 +4,7 @@ import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 import translate from '@drafterbit/common/client-side/translate';
 import { setCookie } from '@drafterbit/common/client-side/cookie';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import DTContext from '@drafterbit/common/client-side/DTContext';
 
@@ -58,6 +58,14 @@ class Login extends React.Component {
                             <Helmet>
                                 <title>Login - {appName}</title>
                             </Helmet>
+                            {this.state.errorText &&
+                            <Alert message={this.state.errorText} type="warning" closable onClose={() => {
+                                this.setState({
+                                    errorText: "",
+                                })
+                            }}  />
+                            }
+                            <div style={{marginBottom: "6px"}}/>
                             <Form
                                 size="large"
                                 name="normal_login"

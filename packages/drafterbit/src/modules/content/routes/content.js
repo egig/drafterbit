@@ -88,9 +88,15 @@ router.get('/:type_name/:id',
     }),
     contentMiddleware(),
     handleFunc(async function(req) {
-        let  Model = req.app.model(req.params.type_name);
-        // TODO add filter here, e.g to hide password field
-        return await Model.findOne({_id: req.params.id });
+        let typeName = req.params['type_name'];
+        let  Model = req.app.model(typeName);
+        let selectFields = ['-__v'];
+        req.app._modules.map(m => {
+            if (!!m.selectFields) {
+                selectFields = m.selectFields[typeName];
+            }
+        });
+        return Model.findOne({_id: req.params.id }).select(selectFields).exec();
     })
 );
 
@@ -216,7 +222,15 @@ router.get('/:type_name',
         let max = PER_PAGE;
 
         let filterObj = FilterQuery.fromString(req.query.fq).toMap();
+        let typeName = req.params['type_name'];
         let m = req.app.model(req.params['type_name']);
+
+        let selectFields = ['-__v'];
+        req.app._modules.map(m => {
+            if (!!m.selectFields) {
+                selectFields = m.selectFields[typeName];
+            }
+        });
 
         let sortD = sortDir === 'asc' ? 1 : -1;
 
@@ -241,7 +255,7 @@ router.get('/:type_name',
 
         let query = m.find(matchRule, null, {
             sort: sortObj
-        }).select(['-__v']).skip(offset).limit(max);
+        }).select(selectFields).skip(offset).limit(max);
 
         req.lookupFields.forEach(f => {
             query.populate({

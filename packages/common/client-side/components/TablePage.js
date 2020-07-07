@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
 import { Row, Col, Table, Button, PageHeader, Card } from 'antd'
-import TableFilter2 from './TableFilter2';
+import TableFilter from './TableFilter';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -150,10 +150,6 @@ class TablePage extends React.Component {
         });
     }
 
-    renderTableFilter = () => {
-
-    }
-
     render() {
 
         let {
@@ -220,7 +216,7 @@ class TablePage extends React.Component {
 
         if(!!selected.length) {
             extra.push(
-                <Button type="line" danger  onClick={this.handleDelete} >
+                <Button key="delete" type="line" danger  onClick={this.handleDelete} >
                     {this.props.deleteText} {selected.length} items
                 </Button>
             )
@@ -230,7 +226,7 @@ class TablePage extends React.Component {
             extra.push(<Button key="add" type="primary" onClick={onClickAdd} >{this.props.addText}</Button>)
         }
 
-        const tableFilter = (<TableFilter2
+        const tableFilter = (<TableFilter
             onApplyFilters={this.onApplyFilters}
             columns={columns} />);
 

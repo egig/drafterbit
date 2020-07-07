@@ -2,7 +2,7 @@ import React from 'react';
 import { Tag, Input, Tooltip, Form, Select, Button } from 'antd';
 import { PlusOutlined, FilterFilled, CloseCircleOutlined } from '@ant-design/icons';
 
-class TableFilter2 extends React.Component {
+class TableFilter extends React.Component {
     state = {
         filters: [],
         inputVisible: false,
@@ -114,9 +114,9 @@ class TableFilter2 extends React.Component {
                           }}>
                         <Input.Group compact ref={this.inputRef} >
                             <Form.Item noStyle name="key">
-                                <Select>
-                                    {this.props.columns.map(c => {
-                                        return <Select.Option value={c.dataIndex}>{c.title}</Select.Option>
+                                <Select showSearch style={{minWidth: "120px"}}>
+                                    {this.props.columns.map((c,i) => {
+                                        return <Select.Option key={i} value={c.dataIndex}>{c.title}</Select.Option>
                                     })}
                                 </Select>
                             </Form.Item>
@@ -158,4 +158,4 @@ class TableFilter2 extends React.Component {
     }
 }
 
-export default TableFilter2
+export default TableFilter

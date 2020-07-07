@@ -11,10 +11,10 @@ class AuthModule extends Module {
         app.on('routing', () => {
             app.use(routes);
         });
-    }
 
-    registerSchema(db) {
-        // db.model('User', UserSchema, '_users');
+        this.selectFields = {
+            "User": ['-__v', '-password']
+        };
     }
 
     config() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import RichText from './RichText';
 import Relation  from './Relation';
-import { Form, Input } from 'antd'
+import { Form, Input, InputNumber } from 'antd'
 
 const FieldType = require('@drafterbit/common/FieldType');
 
@@ -17,13 +17,13 @@ class Field extends React.Component {
                 <Input onChange={this.props.onChange}/>
             ),
             [FieldType.LONG_TEXT]: () => (
-                <Input.TextArea value={value} onChange={this.props.onChange}/>
+                <Input.TextArea  onChange={this.props.onChange}/>
             ),
             [FieldType.RICH_TEXT]: () => (
                 <RichText initialValue={value} value={value}  onChange={this.props.onChange}/>
             ),
             [FieldType.NUMBER]: () => (
-                <Input value={value} onChange={this.props.onChange} name={field.name} type="number"/>
+                <InputNumber style={{width:"100%"}} onChange={this.props.onChange} name={field.name} />
             )
         };
 
