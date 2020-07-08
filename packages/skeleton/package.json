@@ -115,5 +115,6 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "9984e33702ffefd56b318eaf7c3bb1553034308e"
 }

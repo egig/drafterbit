@@ -5,6 +5,9 @@
   "license": "ISC",
   "description": "",
   "main": "./src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -136,5 +139,6 @@
   },
   "pre-push": {
     "run": "test"
-  }
+  },
+  "gitHead": "9984e33702ffefd56b318eaf7c3bb1553034308e"
 }
