@@ -1,3 +1,4 @@
+const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 const FilterQuery = require( '@drafterbit/common/FilterQuery');
 const contentMiddleware = require('../middlewares/content');
 const Router = require('@koa/router');
@@ -30,16 +31,14 @@ let router = new Router();
  *        - /{slug}
  */
 router.delete('/:type_name/:id',
-    // validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'slug required'
-    //     },
-    //     id: {
-    //         notEmpty: true,
-    //         errorMessage: 'id required'
-    //     },
-    // }),
+    validateRequest({
+        type_name: {
+            presence: true
+        },
+        id: {
+            presence: true
+        },
+    }),
     contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params['type_name']);
@@ -74,16 +73,14 @@ router.delete('/:type_name/:id',
  *        - /{slug}
  */
 router.get('/:type_name/:id',
-    // validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'slug required'
-    //     },
-    //     id: {
-    //         notEmpty: true,
-    //         errorMessage: 'id required'
-    //     },
-    // }),
+    validateRequest({
+        type_name: {
+            presence: true
+        },
+        id: {
+            presence: true
+        },
+    }),
     contentMiddleware(),
     async function(ctx, next) {
         let typeName = ctx.params['type_name'];
@@ -124,16 +121,14 @@ router.get('/:type_name/:id',
  *        - /{slug}
  */
 router.patch('/:type_name/:id',
-    // validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'slug required'
-    //     },
-    //     id: {
-    //         notEmpty: true,
-    //         errorMessage: 'id required'
-    //     },
-    // }),
+    validateRequest({
+        type_name: {
+            presence: true
+        },
+        id: {
+            presence: true
+        },
+    }),
     contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
@@ -163,12 +158,11 @@ router.patch('/:type_name/:id',
  *        - /{slug}
  */
 router.post('/:type_name',
-    // validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_name required'
-    //     }
-    // }),
+    validateRequest({
+        type_name: {
+            presence: true
+        }
+    }),
     contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
@@ -203,12 +197,11 @@ router.post('/:type_name',
  *        - /{type_name}
  */
 router.get('/:type_name',
-    // validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_name required'
-    //     }
-    // }),
+    validateRequest({
+        type_name: {
+            presence: true
+        }
+    }),
     contentMiddleware(),
     async function(ctx, next) {
 

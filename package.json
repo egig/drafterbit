@@ -15,5 +15,8 @@
   },
   "pre-commit": {
     "run": "test"
+  },
+  "dependencies": {
+    "validate.js": "^0.13.1"
   }
 }

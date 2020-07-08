@@ -1,3 +1,4 @@
+const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 const FilterQuery = require('@drafterbit/common/FilterQuery');
 const Router = require('@koa/router');
 
@@ -24,12 +25,11 @@ let router = new Router();
  *        - /types
  */
 router.get('/types/:type_name',
-    // c2k(validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_id is required'
-    //     }
-    // })),
+    validateRequest({
+        type_name: {
+            presence: true,
+        }
+    }),
     async (ctx, next) => {
         let m = ctx.app.model('Type');
         ctx.body = await m.getType(ctx.params.type_name);
@@ -91,29 +91,24 @@ router.get('/types', async (ctx, next) => {
  *        - /types
  */
 router.post('/types',
-    // c2k(validateRequest({
-    //     name: {
-    //         notEmpty: true,
-    //         errorMessage: 'name is required'
-    //     },
-    //     slug: {
-    //         notEmpty: true,
-    //         errorMessage: 'slug is required'
-    //     },
-    //     display_text: {
-    //         notEmpty: true,
-    //         errorMessage: 'display_text is required'
-    //     },
-    //     description: {
-    //         optional: true,
-    //         isString: true,
-    //         errorMessage: 'description must be string'
-    //     },
-    //     fields: {
-    //         isArray: true,
-    //         errorMessage: 'fields must be array'
-    //     }
-    // })),
+    validateRequest({
+        name: {
+            presence: true,
+        },
+        slug: {
+            presence: true,
+        },
+        display_text: {
+            presence: true,
+        },
+        description: {
+            presence: false,
+            type: 'string',
+        },
+        fields: {
+            type: 'array',
+        }
+    }),
     async function  (ctx, next) {
         let m = ctx.app.model('Type');
 
@@ -176,12 +171,13 @@ router.post('/types',
             },
         ];
 
+        let reqBody = ctx.request.body;
         ctx.body = await m.createType(
-            ctx.body.name,
-            ctx.body.slug,
-            ctx.body.display_text,
-            ctx.body.description,
-            ctx.body.has_fields,
+            reqBody.name,
+            reqBody.slug,
+            reqBody.display_text,
+            reqBody.description,
+            reqBody.has_fields,
             fields
         );
     }
@@ -257,12 +253,11 @@ router.post('/types/:type_name/fields',
  *        - /types
  */
 router.delete('/types/:type_id',
-    // c2k(validateRequest({
-    //     type_id: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_id required'
-    //     }
-    // })),
+    validateRequest({
+        type_id: {
+            presence: true
+        }
+    }),
     async function(ctx, next) {
         ctx.body = await m.deleteType(ctx.params.type_id);
     }
@@ -303,24 +298,11 @@ router.delete('/types/:type_id',
  *        - /types
  */
 router.patch('/types/:type_id',
-    // c2k(validateRequest({
-    //     type_id: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_id is required'
-    //     },
-    //     name: {
-    //         optional: true,
-    //         errorMessage: 'name is required'
-    //     },
-    //     slug: {
-    //         optional: true,
-    //         errorMessage: 'slug is required'
-    //     },
-    //     description: {
-    //         optional: true,
-    //         errorMessage: 'description must be string'
-    //     },
-    // })),
+    validateRequest({
+        type_id: {
+            presence: true,
+        }
+    }),
     async function(ctx) {
         let m = ctx.app.model('Type');
         let typeId = ctx.params.type_id;
@@ -370,24 +352,11 @@ router.patch('/types/:type_id',
  *        - /types
  */
 router.patch('/types/:type_name/fields/:field_id',
-    // c2k(validateRequest({
-    //     type_name: {
-    //         notEmpty: true,
-    //         errorMessage: 'type_name is required'
-    //     },
-    //     name: {
-    //         optional: true,
-    //         errorMessage: 'name is required'
-    //     },
-    //     slug: {
-    //         optional: true,
-    //         errorMessage: 'slug is required'
-    //     },
-    //     description: {
-    //         optional: true,
-    //         errorMessage: 'description must be string'
-    //     },
-    // })),
+    validateRequest({
+        type_name: {
+            presence: true
+        }
+    }),
     async function(ctx) {
         let typeName = ctx.params['type_name'];
         let fieldId = ctx.params['field_id'];

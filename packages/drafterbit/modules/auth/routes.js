@@ -92,16 +92,14 @@ function createSessionKey(token, user_id) {
  *        - /users/
  */
 router.post('/token',
-    // validateRequest({
-    //     email: {
-    //         isString: true,
-    //         errorMessage: 'email is requiredr'
-    //     },
-    //     password: {
-    //         isString: true,
-    //         errorMessage: 'password is required'
-    //     }
-    // }),
+    validateRequest({
+        email: {
+            presence: true
+        },
+        password: {
+            presence: true
+        }
+    }),
     async function (ctx, next) {
 
         try {
@@ -463,8 +461,7 @@ router.post('/token',
 router.post('/users/reset_password',
     validateRequest({
         email: {
-            isString: true,
-            errorMessage: 'first_name is required'
+            presence: true
         }
     }),
     function (req, res) {

@@ -12,7 +12,7 @@
   },
   "author": "",
   "license": "ISC",
-  "gitHead": "9984e33702ffefd56b318eaf7c3bb1553034308e",
+  "gitHead": "673f6efce44a44a5c1df10444daa1ec9877cd8e8",
   "publishConfig": {
     "access": "public"
   },
@@ -23,7 +23,8 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.4.18",
     "react": "16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "chai": "^4.2.0"
