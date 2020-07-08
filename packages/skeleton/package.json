@@ -1,6 +1,6 @@
 {
   "name": "@drafterbit/skeleton",
-  "version": "1.0.0",
+  "version": "3.0.0-dev.14",
   "description": "",
   "main": "server.js",
   "dependencies": {
@@ -38,7 +38,7 @@
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
     "dotenv": "^8.2.0",
-    "drafterbit": "^3.0.0-dev.12",
+    "drafterbit": "^3.0.0-dev.14",
     "emotion": "^10.0.23",
     "eventemitter3": "^4.0.0",
     "exenv": "^1.2.2",
@@ -111,7 +111,6 @@
     "webpack-merge": "^4.2.2",
     "winston": "^3.2.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node server.js"
   },
