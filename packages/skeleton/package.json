@@ -3,6 +3,12 @@
   "version": "3.0.0-dev.16",
   "description": "",
   "main": "server.js",
+  "files": [
+    "server.js",
+    "package.json",
+    "package-lock.json",
+    ".env.example"
+  ],
   "dependencies": {
     "drafterbit": "latest"
   },
