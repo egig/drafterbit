@@ -9,6 +9,7 @@
     "start": "node packages/cli/index.js start",
     "auth:init": "node packages/cli/index.js auth:init",
     "bootstrap": "lerna bootstrap --hoist",
+    "link": "lerna link --force-local",
     "linter": "./node_modules/.bin/eslint --fix ./packages",
     "test": "lerna run test"
   },

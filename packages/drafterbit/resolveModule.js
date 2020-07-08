@@ -4,7 +4,15 @@ function isRelative(filename) {
     return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
 }
 
+function isDTModule(filePath) {
+    return (filePath.indexOf('drafterbit') === 0);
+}
+
 module.exports = function resolveModule(m, root) {
+    if(isDTModule(m)){
+        m = m.replace(/^drafterbit/gi, __dirname)
+    }
+
     if(path.isAbsolute(m)) {
         return {
             isAbsolute: true,
@@ -21,7 +29,7 @@ module.exports = function resolveModule(m, root) {
 
     // @todo ensure this return path across OS
     try {
-        let resolvedPath = require.resolve(m);
+        let resolvedPath = path.dirname(require.resolve(m));
         return {
             resolvedPath: resolvedPath
         };

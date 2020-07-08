@@ -1,10 +1,8 @@
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
-import { Switch } from 'react-router';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Switch, HashRouter, Redirect  } from 'react-router-dom';
 import Layout from './Layout';
-import { HashRouter, Redirect } from 'react-router-dom';
 import DTContext  from '@drafterbit/common/client-side/DTContext';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -17,9 +15,9 @@ class Shell extends React.Component {
         return (
             <Provider store={store}>
                 <DTContext.Provider value={this.props.$dt}>
-                <HashRouter hashType="slash">
+                <HashRouter>
                     <Suspense fallback={<Spin indicator={LoadingIcon} />}>
-                        <Route render={({ location }) => {
+                        <Route path="/" render={({ location }) => {
 
                             let pagePattern = this.props.$dt.modules.map(m => {
                                 if(!!m.pageRoutes && !!m.pageRoutes.length) {

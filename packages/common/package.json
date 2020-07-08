@@ -17,6 +17,15 @@
     "access": "public"
   },
   "dependencies": {
-    "react-highlight-words": "^0.16.0"
+    "@ant-design/icons": "^4.2.1",
+    "antd": "^4.4.0",
+    "react": "16.13.1",
+    "axios": "0.19.2",
+    "react-router-dom": "^5.2.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.18"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
   }
 }

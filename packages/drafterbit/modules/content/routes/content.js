@@ -1,8 +1,5 @@
-const express = require('express');
-const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 const FilterQuery = require( '@drafterbit/common/FilterQuery');
 const contentMiddleware = require('../middlewares/content');
-const handleFunc = require('@drafterbit/common/handleFunc');
 const Router = require('@koa/router');
 
 let router = new Router();
@@ -44,10 +41,10 @@ router.delete('/:type_name/:id',
     //     },
     // }),
     contentMiddleware(),
-    handleFunc(async function(ctx, next) {
+    async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params['type_name']);
         ctx.body = await Model.findOneAndDelete({_id: ctx.params.id });
-    })
+    }
 );
 
 
@@ -140,7 +137,7 @@ router.patch('/:type_name/:id',
     contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
-        ctx.body = await Model.findOneAndUpdate({_id: ctx.params.id }, ctx.body);
+        ctx.body = await Model.findOneAndUpdate({_id: ctx.params.id }, ctx.request.body);
     }
 );
 
@@ -173,11 +170,11 @@ router.post('/:type_name',
     //     }
     // }),
     contentMiddleware(),
-    async function(ctx, nexy) {
+    async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
-
-        // TODO add filter here, e.g to hash password field
-        let item = await Model.create(ctx.body);
+        // TODO add filter here, e.g to hash password fiel
+        let item = new Model(ctx.request.body);
+        await item.save();
         ctx.body = {
             message: 'created',
             item

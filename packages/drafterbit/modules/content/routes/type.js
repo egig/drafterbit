@@ -1,9 +1,5 @@
-const express = require('express');
-const validateRequest  = require('@drafterbit/common/middlewares/validateRequest');
-const handleFunc = require('@drafterbit/common/handleFunc');
 const FilterQuery = require('@drafterbit/common/FilterQuery');
 const Router = require('@koa/router');
-const c2k = require('koa-connect');
 
 let router = new Router();
 

@@ -1,10 +1,9 @@
 const webpack = require('webpack');
-const express = require('express');
+const serve = require('koa-static');
 const createWebpackConfig = require('./client-side/webpack.config');
 const routes = require('./routes');
 const Module = require('../../Module');
 const SettingSchema = require('./models/Setting');
-const c2k = require('koa-connect');
 const koaWebpack = require('koa-webpack');
 class CoreModule extends Module {
 
@@ -15,23 +14,14 @@ class CoreModule extends Module {
 
         app.on('pre-start', async () => {
 
-            app.use(c2k(express.static(this.webpackOutputPath)));
+            app.use(serve(this.webpackOutputPath));
 
             if(app.get('config').get('NODE_ENV') !== 'production') {
-
-                // const webpackDevMiddleware = require('webpack-dev-middleware');
                 //
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
                 const compiler = webpack(webpackConfig);
-                // app.use(c2k(
-                //     webpackDevMiddleware(compiler, {
-                //         publicPath: webpackConfig.output.publicPath,
-                //         writeToDisk: true
-                //     })
-                // ));
-
                 const middleware = await koaWebpack({
-                    config: webpackConfig,
+                    compiler,
                     devMiddleware: {
                         publicPath: webpackConfig.output.publicPath,
                         writeToDisk: true

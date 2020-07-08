@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm';
@@ -42,7 +42,7 @@ class Types extends React.Component {
         }];
 
         return (
-            <Fragment>
+            <>
                 <TablePage
                     headerText="Types"
                     data={ this.state.types }
@@ -69,7 +69,7 @@ class Types extends React.Component {
                         }, 2000)
                     }}
                  />
-            </Fragment>
+            </>
         );
     }
 }

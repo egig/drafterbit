@@ -293,4 +293,4 @@ TablePage.defaultProps = {
     contentCount: 1000,
 };
 
-export default withDrafterbit(withRouter(TablePage));
+export default withRouter(withDrafterbit(TablePage));

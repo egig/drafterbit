@@ -24,6 +24,7 @@ module.exports = env => {
                         /node_modules\/@drafterbit/,
                         /node_modules\/drafterbit/,
                         /drafterbit\/modules/,
+                        /common/,
                     ],
                     use: [
                         {
