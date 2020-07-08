@@ -1,6 +1,6 @@
 {
   "name": "@drafterbit/common",
-  "version": "3.0.0-dev.15",
+  "version": "3.0.0-dev.16",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -19,11 +19,11 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "antd": "^4.4.0",
-    "react": "16.13.1",
     "axios": "0.19.2",
-    "react-router-dom": "^5.2.0",
     "lodash": "^4.17.11",
-    "mongoose": "^5.4.18"
+    "mongoose": "^5.4.18",
+    "react": "16.13.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0"
