@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import translate from '@drafterbit/common/client-side/translate';
 import { Row, Col, Card, PageHeader } from 'antd'
 
@@ -21,10 +20,4 @@ class Dashboard extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.USER.currentUser
-    };
-};
-
-export default translate(['dashboard'])(connect(mapStateToProps)(Dashboard));
+export default translate(['dashboard'])(Dashboard);

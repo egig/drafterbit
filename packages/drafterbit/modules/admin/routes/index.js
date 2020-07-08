@@ -1,15 +1,15 @@
 const express = require('express');
 const minify = require('html-minifier').minify;
 const fs = require('fs');
-
-let router = express.Router();
+const Router = require('@koa/router');
+let router = new Router();
 
 /**
  *
  * @param {*} req
  * @param {*} asset
  */
-function assetPath(req, asset) {
+function assetPath(ctx, asset) {
     // TODO support cdn
     return asset;
 }
@@ -25,19 +25,16 @@ function assetPath(req, asset) {
  *     tags:
  *        - /settings
  */
-router.get("/settings", function (req, res) {
-    (async function () {
+router.get("/settings", async function (ctx, next) {
 
-        try {
-            let m = req.app.model('Setting');
-            let results = await m.getSettings();
-            res.send(results);
-        } catch (e) {
-            res.status(500);
-            res.send(e.message);
-        }
+    try {
+        let m = ctx.app.model('Setting');
+        ctx.body = await m.getSettings();
+    } catch (e) {
+        ctx.status = 500;
+        ctx.body = e.message;
+    }
 
-    })();
 });
 
 /**
@@ -67,34 +64,34 @@ router.patch("/settings", function (req, res) {
     })();
 });
 
-router.get('/', function (req, res) {
+router.get('/', function (ctx, next) {
 
-    let assetsStr = fs.readFileSync(req.app.get('config').get('ROOT_DIR')+'/build/assets.json');
+    let assetsStr = fs.readFileSync(ctx.app.get('config').get('ROOT_DIR')+'/build/assets.json');
     const webpackAssets = JSON.parse(assetsStr.toString());
 
     let defaultState = {COMMON: {}};
-    defaultState.COMMON.language = req.language;
-    defaultState.COMMON.languages = req.languages;
+    defaultState.COMMON.language = ""; //req.language;
+    defaultState.COMMON.languages = []; //req.languages;
 
-    let config = req.app.get('config');
+    let config = ctx.app.get('config');
 
     let drafterbitConfig = {
         appName: config.get('APP_NAME'),
         debug: +config.get('DEBUG')
     };
 
-    req.app._modules.map(mo => {
+    ctx.app._modules.map(mo => {
         if (typeof mo.registerClientConfig == 'function') {
             drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config));
         }
     });
 
-    return res.send(minify(`<!DOCTYPE html>
+    ctx.body = `<!DOCTYPE html>
           <html>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-                <link rel="stylesheet" type="text/css" href="${assetPath(req, webpackAssets.main.css)}" />
+                <link rel="stylesheet" type="text/css" href="${assetPath(ctx, webpackAssets.main.css)}" />
             </head>
             <body>
                 <div id="app" ></div>
@@ -103,9 +100,9 @@ router.get('/', function (req, res) {
                     window.__PRELOADED_LANGUAGE_RESOURCES__=${JSON.stringify([])};
                     window.__DT_CONFIG__=${JSON.stringify(drafterbitConfig)};
                 </script>
-                <script src="${assetPath(req, webpackAssets.main.js)}"></script>
+                <script src="${assetPath(ctx, webpackAssets.main.js)}"></script>
             </body>
-        </html>`, { collapseWhitespace: true, minifyJS: true, minifyCSS: true }));
+        </html>`;
 });
 
-module.exports = router;
+module.exports = router.routes();

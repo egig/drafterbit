@@ -28,6 +28,7 @@ moment.locale('id', {
     Promise.all(stateFilters)
         .then(() => {
             $dt.storeFromState(defaultState);
+
             ReactDOM.render(<Shell $dt={$dt}/>, document.getElementById('app'));
         })
         .catch(e => {

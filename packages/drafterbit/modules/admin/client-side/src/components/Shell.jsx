@@ -14,13 +14,12 @@ class Shell extends React.Component {
 
     render() {
         let store = this.props.$dt.store;
-
         return (
             <Provider store={store}>
                 <DTContext.Provider value={this.props.$dt}>
-                <HashRouter>
+                <HashRouter hashType="slash">
                     <Suspense fallback={<Spin indicator={LoadingIcon} />}>
-                        <Route path="/" render={({ location }) => {
+                        <Route render={({ location }) => {
 
                             let pagePattern = this.props.$dt.modules.map(m => {
                                 if(!!m.pageRoutes && !!m.pageRoutes.length) {
@@ -30,8 +29,16 @@ class Shell extends React.Component {
                                 }
                             }).filter(i => !!i).join("|");
 
-                            let r = new RegExp(`^\/(?!(?:${pagePattern})\/?$).*$`);
-                            if(r.test(location.pathname)) {
+                            let matchPagePath = function() {
+                                if (pagePattern === "") {
+                                    return true;
+                                }
+
+                                let r = new RegExp(`^\/(?!(?:${pagePattern})\/?$).*$`);
+                                return r.test(location.pathname);
+                            };
+
+                            if(matchPagePath()) {
                                 return (
                                     <Layout $dt={this.props.$dt}>
                                         <Suspense fallback={<Spin indicator={LoadingIcon} />}>
@@ -60,7 +67,7 @@ class Shell extends React.Component {
                                                             return <Redirect to={route.redirect}/>
                                                         }
 
-                                                        return <Route key={route.path} exact={true} path={route.path} render={(props) => {
+                                                        return <Route key={route.path} exact path={route.path} render={(props) => {
                                                             return <route.component {...props}/>
                                                         }} />
                                                     })
@@ -70,6 +77,7 @@ class Shell extends React.Component {
                                     </Layout>
                                 )
                             }
+
                             return this.props.$dt.modules.map(m => {
                                 if(!!m.pageRoutes && !!m.pageRoutes.length) {
                                     return m.pageRoutes.map(r => {

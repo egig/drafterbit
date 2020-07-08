@@ -4,7 +4,8 @@ const createWebpackConfig = require('./client-side/webpack.config');
 const routes = require('./routes');
 const Module = require('../../Module');
 const SettingSchema = require('./models/Setting');
-
+const c2k = require('koa-connect');
+const koaWebpack = require('koa-webpack');
 class CoreModule extends Module {
 
     constructor(app) {
@@ -12,21 +13,33 @@ class CoreModule extends Module {
 
         this.webpackOutputPath = app.get('config').get('ROOT_DIR')+'/build';
 
-        app.on('pre-start', () => {
-            app.use('/', express.static(this.webpackOutputPath));
+        app.on('pre-start', async () => {
+
+            app.use(c2k(express.static(this.webpackOutputPath)));
 
             if(app.get('config').get('NODE_ENV') !== 'production') {
-                const webpackDevMiddleware = require('webpack-dev-middleware');
 
+                // const webpackDevMiddleware = require('webpack-dev-middleware');
+                //
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
                 const compiler = webpack(webpackConfig);
-                app.use(
-                    webpackDevMiddleware(compiler, {
+                // app.use(c2k(
+                //     webpackDevMiddleware(compiler, {
+                //         publicPath: webpackConfig.output.publicPath,
+                //         writeToDisk: true
+                //     })
+                // ));
+
+                const middleware = await koaWebpack({
+                    config: webpackConfig,
+                    devMiddleware: {
                         publicPath: webpackConfig.output.publicPath,
                         writeToDisk: true
-                    })
-                );
+                    }
+                });
+                app.use(middleware);
             }
+
         });
 
         app.on('routing', function () {

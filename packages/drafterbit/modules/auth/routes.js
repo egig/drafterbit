@@ -5,9 +5,9 @@ const UserAuthError  = require('./UserAuthError');
 const validateRequest  = require('@drafterbit/common/middlewares/validateRequest');
 const { sendResetPasswordEmail } = require('./lib/mail');
 const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
+const Router = require('@koa/router');
 
-
-let router = express.Router();
+let router = new Router();
 
 function createSessionKey(token, user_id) {
     return `session-${user_id}-${token}`;
@@ -92,90 +92,86 @@ function createSessionKey(token, user_id) {
  *        - /users/
  */
 router.post('/token',
-    validateRequest({
-        email: {
-            isString: true,
-            errorMessage: 'email is requiredr'
-        },
-        password: {
-            isString: true,
-            errorMessage: 'password is required'
-        }
-    }),
-    function (req, res) {
+    // validateRequest({
+    //     email: {
+    //         isString: true,
+    //         errorMessage: 'email is requiredr'
+    //     },
+    //     password: {
+    //         isString: true,
+    //         errorMessage: 'password is required'
+    //     }
+    // }),
+    async function (ctx, next) {
 
-        (async function () {
+        try {
+            let email = ctx.request.body.email;
+            let rawPassword = ctx.request.body.password;
 
+            let m = ctx.app.model('Type');
+
+            let userCollectionName = 'User';
+            let type = await  m.getType(userCollectionName);
+            let schemaObj = fieldsToSchema.getSchema(type.fields);
+            let userModel;
             try {
-                let email = req.body.email;
-                let rawPassword = req.body.password;
-
-                let m = req.app.model('Type');
-
-                let userCollectionName = 'User';
-                let type = await  m.getType(userCollectionName);
-                let schemaObj = fieldsToSchema.getSchema(type.fields);
-                let userModel;
-                try {
-                    userModel = req.app.getDB().model(userCollectionName);
-                } catch (error) {
-                    userModel = req.app.getDB().model(userCollectionName, schemaObj);
-                }
-
-                let user = await userModel.findOne({
-                    email: email
-                });
-
-                //
-                // let m = req.app.model('User');
-                // let user = await m.getUserByEmail(email);
-                //
-                if(!user) {
-                    throw new UserAuthError('Wrong email or password');
-                }
-
-                let isMatch  = await password.compare(rawPassword, user.password);
-
-                if(!isMatch) {
-                    throw new UserAuthError('Wrong email or password');
-                }
-
-                let token = jwt.sign({
-                    id: user.id,
-                    email: user.email,
-                    first_name: user.first_name,
-                    last_name: user.last_name,
-                }, 'secretkey'); // TODO save this in config
-
-                let authUser = {
-                    id: user.id,
-                    email: user.email,
-                    first_name: user.first_name,
-                    last_name: user.last_name,
-                    token: token
-                };
-
-                // let cache = req.app.get('cache');
-                // let key = createSessionKey(token, user.id);
-                // await cache.delWithPattern(`*session-${user.id}-*`);
-                // await cache.set(key, JSON.stringify(authUser), {
-                //     ttl: 28800
-                // });
-
-                res.send(authUser);
-
-            } catch (e ) {
-                res.status(500);
-
-                if(e instanceof UserAuthError) {
-                    res.status(401);
-                }
-
-                res.send(e.message);
+                userModel = ctx.app.getDB().model(userCollectionName);
+            } catch (error) {
+                userModel = ctx.app.getDB().model(userCollectionName, schemaObj);
             }
 
-        })();
-    });
+            let user = await userModel.findOne({
+                email: email
+            });
+
+            //
+            // let m = req.app.model('User');
+            // let user = await m.getUserByEmail(email);
+            //
+            if(!user) {
+                throw new UserAuthError('Wrong email or password');
+            }
+
+            let isMatch  = await password.compare(rawPassword, user.password);
+
+            if(!isMatch) {
+                throw new UserAuthError('Wrong email or password');
+            }
+
+            let token = jwt.sign({
+                id: user.id,
+                email: user.email,
+                first_name: user.first_name,
+                last_name: user.last_name,
+            }, 'secretkey'); // TODO save this in config
+
+            let authUser = {
+                id: user.id,
+                email: user.email,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                token: token
+            };
+
+            // let cache = req.app.get('cache');
+            // let key = createSessionKey(token, user.id);
+            // await cache.delWithPattern(`*session-${user.id}-*`);
+            // await cache.set(key, JSON.stringify(authUser), {
+            //     ttl: 28800
+            // });
+
+            ctx.body = authUser;
+
+        } catch (e) {s
+            if(e instanceof UserAuthError) {
+                ctx.status =401;
+            }
+
+            ctx.throw(e)
+        }
+
+    }
+    );
 
 /**
  * @swagger
@@ -515,4 +511,4 @@ router.post('/users/reset_password',
 //     res.redirect('/');
 // });
 
-module.exports =  router;
+module.exports =  router.routes();

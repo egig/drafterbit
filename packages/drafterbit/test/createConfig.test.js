@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const createConfig = require('../src/createConfig');
+const createConfig = require('../createConfig');
 
 describe("createConfig", () => {
 

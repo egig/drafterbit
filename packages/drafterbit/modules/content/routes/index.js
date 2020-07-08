@@ -1,9 +1,9 @@
-const express = require('express');
 const type = require('./type');
 const content = require('./content');
+const Router = require('@koa/router');
 
-let router = express.Router();
+let router = new Router();
 router.use(type);
 router.use(content);
 
-module.exports =  router;
+module.exports =  router.routes();

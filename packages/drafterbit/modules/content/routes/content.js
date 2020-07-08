@@ -3,8 +3,9 @@ const validateRequest = require('@drafterbit/common/middlewares/validateRequest'
 const FilterQuery = require( '@drafterbit/common/FilterQuery');
 const contentMiddleware = require('../middlewares/content');
 const handleFunc = require('@drafterbit/common/handleFunc');
+const Router = require('@koa/router');
 
-let router = express.Router();
+let router = new Router();
 
 /**
  * @swagger
@@ -32,20 +33,20 @@ let router = express.Router();
  *        - /{slug}
  */
 router.delete('/:type_name/:id',
-    validateRequest({
-        type_name: {
-            notEmpty: true,
-            errorMessage: 'slug required'
-        },
-        id: {
-            notEmpty: true,
-            errorMessage: 'id required'
-        },
-    }),
+    // validateRequest({
+    //     type_name: {
+    //         notEmpty: true,
+    //         errorMessage: 'slug required'
+    //     },
+    //     id: {
+    //         notEmpty: true,
+    //         errorMessage: 'id required'
+    //     },
+    // }),
     contentMiddleware(),
-    handleFunc(async function(req) {
-        let  Model = req.app.model(req.params['type_name']);
-        return await Model.findOneAndDelete({_id: req.params.id });
+    handleFunc(async function(ctx, next) {
+        let  Model = ctx.app.model(ctx.params['type_name']);
+        ctx.body = await Model.findOneAndDelete({_id: ctx.params.id });
     })
 );
 
@@ -76,28 +77,28 @@ router.delete('/:type_name/:id',
  *        - /{slug}
  */
 router.get('/:type_name/:id',
-    validateRequest({
-        type_name: {
-            notEmpty: true,
-            errorMessage: 'slug required'
-        },
-        id: {
-            notEmpty: true,
-            errorMessage: 'id required'
-        },
-    }),
+    // validateRequest({
+    //     type_name: {
+    //         notEmpty: true,
+    //         errorMessage: 'slug required'
+    //     },
+    //     id: {
+    //         notEmpty: true,
+    //         errorMessage: 'id required'
+    //     },
+    // }),
     contentMiddleware(),
-    handleFunc(async function(req) {
-        let typeName = req.params['type_name'];
-        let  Model = req.app.model(typeName);
+    async function(ctx, next) {
+        let typeName = ctx.params['type_name'];
+        let  Model = ctx.app.model(typeName);
         let selectFields = ['-__v'];
-        req.app._modules.map(m => {
+        ctx.app._modules.map(m => {
             if (!!m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }
         });
-        return Model.findOne({_id: req.params.id }).select(selectFields).exec();
-    })
+        ctx.body = await Model.findOne({_id: ctx.params.id }).select(selectFields).exec();
+    }
 );
 
 /**
@@ -126,21 +127,21 @@ router.get('/:type_name/:id',
  *        - /{slug}
  */
 router.patch('/:type_name/:id',
-    validateRequest({
-        type_name: {
-            notEmpty: true,
-            errorMessage: 'slug required'
-        },
-        id: {
-            notEmpty: true,
-            errorMessage: 'id required'
-        },
-    }),
+    // validateRequest({
+    //     type_name: {
+    //         notEmpty: true,
+    //         errorMessage: 'slug required'
+    //     },
+    //     id: {
+    //         notEmpty: true,
+    //         errorMessage: 'id required'
+    //     },
+    // }),
     contentMiddleware(),
-    handleFunc(async function(req) {
-        let  Model = req.app.model(req.params.type_name);
-        return await Model.findOneAndUpdate({_id: req.params.id }, req.body);
-    })    
+    async function(ctx, next) {
+        let  Model = ctx.app.model(ctx.params.type_name);
+        ctx.body = await Model.findOneAndUpdate({_id: ctx.params.id }, ctx.body);
+    }
 );
 
 /**
@@ -165,23 +166,23 @@ router.patch('/:type_name/:id',
  *        - /{slug}
  */
 router.post('/:type_name',
-    validateRequest({
-        type_name: {
-            notEmpty: true,
-            errorMessage: 'type_name required'
-        }
-    }),
+    // validateRequest({
+    //     type_name: {
+    //         notEmpty: true,
+    //         errorMessage: 'type_name required'
+    //     }
+    // }),
     contentMiddleware(),
-    handleFunc(async function(req) {
-        let  Model = req.app.model(req.params.type_name);
+    async function(ctx, nexy) {
+        let  Model = ctx.app.model(ctx.params.type_name);
 
         // TODO add filter here, e.g to hash password field
-        let item = await Model.create(req.body);
-        return {
+        let item = await Model.create(ctx.body);
+        ctx.body = {
             message: 'created',
             item
         };
-    })
+    }
 );
 
 
@@ -205,28 +206,28 @@ router.post('/:type_name',
  *        - /{type_name}
  */
 router.get('/:type_name',
-    validateRequest({
-        type_name: {
-            notEmpty: true,
-            errorMessage: 'type_name required'
-        }
-    }),
+    // validateRequest({
+    //     type_name: {
+    //         notEmpty: true,
+    //         errorMessage: 'type_name required'
+    //     }
+    // }),
     contentMiddleware(),
-    handleFunc(async function(req, res) {
+    async function(ctx, next) {
 
-        let page = req.query.page || 1;
-        let sortBy = req.query.sort_by;
-        let sortDir = req.query.sort_dir || 'asc';
+        let page = ctx.query.page || 1;
+        let sortBy = ctx.query.sort_by;
+        let sortDir = ctx.query.sort_dir || 'asc';
         const PER_PAGE = 10;
         let offset = (page*PER_PAGE) - PER_PAGE;
         let max = PER_PAGE;
 
-        let filterObj = FilterQuery.fromString(req.query.fq).toMap();
-        let typeName = req.params['type_name'];
-        let m = req.app.model(req.params['type_name']);
+        let filterObj = FilterQuery.fromString(ctx.query.fq).toMap();
+        let typeName = ctx.params['type_name'];
+        let m = ctx.app.model(ctx.params['type_name']);
 
         let selectFields = ['-__v'];
-        req.app._modules.map(m => {
+        ctx.app._modules.map(m => {
             if (!!m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }
@@ -257,7 +258,7 @@ router.get('/:type_name',
             sort: sortObj
         }).select(selectFields).skip(offset).limit(max);
 
-        req.lookupFields.forEach(f => {
+        ctx.state.lookupFields.forEach(f => {
             query.populate({
                 path: f.name,
                 select: '-__v',
@@ -269,9 +270,9 @@ router.get('/:type_name',
 
         // TODO add filter here, e.g to decode password field
         let dataCount = await m.find(matchRule).estimatedDocumentCount();
-        res.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
-        res.send(results);
-    })
+        ctx.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
+        ctx.body = results;
+    }
 );
 
-module.exports = router;
+module.exports = router.routes();

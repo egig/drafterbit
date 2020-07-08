@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const resolveModule = require('../src/resolveModule');
+const resolveModule = require('../resolveModule');
 
 describe("resolveModule", () => {
 

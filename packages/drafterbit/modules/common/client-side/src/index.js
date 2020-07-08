@@ -1,7 +1,9 @@
-import React  from 'react';
-import Dashboard from './components/Dashboard';
+import React, { lazy}  from 'react';
+// import Dashboard from './components/Dashboard';
 import Settings from './components/Settings';
 import stateReducer from './stateReducer';
+
+const Dashboard = lazy(() => import('./components/Dashboard'));
 
 import {
     SettingOutlined,
@@ -13,15 +15,16 @@ import {
         name: "common",
         stateReducer: stateReducer,
         routes: [
-            {path: "/", component: Dashboard},
             {path: "/settings", component: Settings},
+            {path: "/", component: Dashboard},
         ],
         getMenu() {
             return [
                 {
                     link: "/settings",
                     label: "Settings",
-                    icon: <SettingOutlined />}
+                    icon: <SettingOutlined />
+                }
             ]
         },
 

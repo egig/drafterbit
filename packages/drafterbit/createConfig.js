@@ -53,10 +53,12 @@ function createConfig(options) {
         'MONGODB_USER': '',
         'MONGODB_PASS': '',
         'modules': [
-            './packages/drafterbit/src/modules/common',
-            './packages/drafterbit/src/modules/admin',
-            './packages/drafterbit/src/modules/auth',
-            './packages/drafterbit/src/modules/content'
+            // content should go last
+            // './packages/drafterbit/src/modules/common',
+            './drafterbit/modules/auth',
+            './drafterbit/modules/common',
+            './drafterbit/modules/admin',
+            './drafterbit/modules/content',
         ]
     };
 
