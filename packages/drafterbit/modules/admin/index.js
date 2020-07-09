@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const serve = require('koa-static');
 const createWebpackConfig = require('./client-side/webpack.config');
-const routes = require('./routes');
 const Module = require('../../Module');
 const SettingSchema = require('./models/Setting');
 const koaWebpack = require('koa-webpack');
@@ -12,7 +11,7 @@ class CoreModule extends Module {
     constructor(app) {
         super(app);
 
-        this.webpackOutputPath = path.join(app.get('config').get('ROOT_DIR'), 'build');
+        this.webpackOutputPath = path.join(app.projectDir, 'build');
         app.use(serve(this.webpackOutputPath));
 
         app.on('pre-start', async () => {
@@ -51,7 +50,7 @@ class CoreModule extends Module {
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,
             production: isProduction,
-            projectRoot: app.get('config').get('ROOT_DIR')
+            projectRoot: app.projectDir
         });
 
         webpackConfig.output.path = webpackOutputPath;
@@ -71,13 +70,6 @@ class CoreModule extends Module {
         return webpackConfig;
     }
 
-    config() {
-        return {
-            'API_BASE_URL': '/',
-            'API_KEY': ''
-        };
-    }
-
     registerClientConfig(serverConfig) {
         return {
             apiBaseURL: serverConfig.get('API_BASE_URL'),
@@ -91,25 +83,6 @@ class CoreModule extends Module {
 
     registerSchema(db) {
         db.model('Setting', SettingSchema, '_settings');
-    }
-
-    commands(app) {
-        return [
-            {
-                command: 'start',
-                description: 'start server',
-                action: () => {
-                    app.start();
-                }
-            },
-            {
-                command: 'build',
-                description: 'build the app',
-                action: () => {
-                    app.build();
-                }
-            },
-        ];
     }
 }
 

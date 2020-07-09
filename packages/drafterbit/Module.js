@@ -4,18 +4,30 @@ class Module {
 
     constructor(app) {
         this.app = app;
+        this._modulePath = "";
     }
 
     loadRoutes() {
-        try {
-            let routes = require(this._modulePath+"/routes");
+        if (this.canLoad('routes')) {
+            let routes = this.require('routes');
             this.app.use(routes)
-        } catch (ex) {
-            //..
         }
     }
 
-    config() {}
+    loadCommands() {
+        if (this.canLoad('commands')) {
+            let commands = this.require('commands');
+            commands.map(c => {
+                this.app.get('cmd').command(c.command)
+                    .description(c.description)
+                    .action(c.createAction(this));
+            });
+        }
+    }
+
+    require(file) {
+        return require(path.join(this._modulePath, file));
+    }
 
     registerSchema(db) {}
 
@@ -25,6 +37,19 @@ class Module {
 
     getAdminClientSideEntry() {
         return this._modulePath+'/client-side/src/index.js';
+    }
+
+    canLoad(files) {
+        try {
+            require.resolve(path.join(this._modulePath,files));
+            return true
+        } catch (e) {
+            if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+                return false;
+            } else {
+                throw e;
+            }
+        }
     }
 
     static _isRelative(filename) {

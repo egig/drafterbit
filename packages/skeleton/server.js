@@ -8,7 +8,7 @@ app.modules = [
     'drafterbit/modules/content',
 ];
 
-app.boot({ROOT_DIR: __dirname+'/../../'});
+app.boot(__dirname+'/../../');
 app.routing();
 app.emit('pre-start');
 

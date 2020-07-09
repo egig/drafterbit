@@ -1,9 +1,11 @@
+const fs = require('fs');
+const path = require('path');
 const Koa = require('koa');
 const c2k = require('koa-connect');
 
 const bodyParser = require('koa-bodyparser');
 const cors = require('cors');
-const createConfig = require('./createConfig');
+const Config = require('./Config');
 const createLogger = require('./createLogger');
 const Module = require('./Module');
 const createMongooseConn = require('./createMongooseConn');
@@ -21,6 +23,7 @@ class Drafterbit extends Koa {
         this._modules = [];
         this.modules = [];
         this.services = [];
+        this.projectDir = "";
     }
 
     set(key, value){
@@ -45,16 +48,26 @@ class Drafterbit extends Koa {
         this._mongoDefaultConn = str;
     };
 
-    boot(options) {
+    boot(rootDir) {
 
         this._booted = false;
         this._mongo_connections = {};
         this._mongoDefaultConn = null; // TODO move this to req.locals
         this._mongoConfig = {};
         this._modules = [];
+        this.projectDir = rootDir;
 
         // build skeletons
-        let config = createConfig(options);
+        let options;
+        let configFileName = 'config.js';
+        let configFile = `${rootDir}/${configFileName}`;
+        if (fs.existsSync(configFile)) {
+            options = require(configFile);
+        } else {
+            options = {};
+        }
+
+        let config = new Config(rootDir, options);
         let logger = createLogger(config.get('DEBUG'));
         this.set('log', logger);
         this.set('config', config);
@@ -69,10 +82,11 @@ class Drafterbit extends Koa {
         };
 
         let cmd = commander;
+        cmd
+            .version('0.0.1')
+            .option('-d, --debug', 'output extra debugging');
 
-        // cmd
-        //     .version('0.0.1')
-        //     .option('-d, --debug', 'output extra debugging');
+        this.set('cmd', cmd);
 
         // init modules
         this._modules = this.modules.map(m => {
@@ -88,23 +102,14 @@ class Drafterbit extends Koa {
             }
 
             // register config
-            if(typeof moduleInstance.config == 'function') {
-                config.registerConfig(moduleInstance.config());
+            if (moduleInstance.canLoad('config')) {
+                config.registerConfig(moduleInstance.require('config'))
             }
 
-            // register cmd
-            if(typeof moduleInstance.commands == 'function') {
-                let commands = moduleInstance.commands(this);
-                commands.map(command => {
-                    cmd.command(command.command)
-                        .description(command.description)
-                        .action(command.action);
-                });
-            }
+            moduleInstance.loadCommands();
+
             return moduleInstance;
         });
-
-        this.set('cmd', cmd);
 
         // this.use(serve('./build'));
 

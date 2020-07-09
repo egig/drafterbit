@@ -1,6 +1,7 @@
 const express = require('express');
 const minify = require('html-minifier').minify;
 const fs = require('fs');
+const path = require('path');
 const Router = require('@koa/router');
 let router = new Router();
 
@@ -66,7 +67,7 @@ router.patch("/settings", function (req, res) {
 
 router.get('/', function (ctx, next) {
 
-    let assetsStr = fs.readFileSync(ctx.app.get('config').get('ROOT_DIR')+'/build/assets.json');
+    let assetsStr = fs.readFileSync(path.join(ctx.app.projectDir,'/build/assets.json'));
     const webpackAssets = JSON.parse(assetsStr.toString());
 
     let defaultState = {COMMON: {}};
