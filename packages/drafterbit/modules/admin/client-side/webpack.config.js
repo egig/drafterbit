@@ -9,7 +9,7 @@ module.exports = env => {
     console.log('Build output path: ', env.outputPath);
 
     let commonConfig = {
-        entry: [ '@babel/polyfill', __dirname+'/src/init.js', __dirname+'/src/index.js'],
+        entry: [ '@babel/polyfill', path.join(__dirname,'src/init.js'), path.join(__dirname,'src/index.js')],
         output: {
             path: env.outputPath,
             filename: 'js/[name].[hash].js',
@@ -25,6 +25,7 @@ module.exports = env => {
                         /node_modules\/drafterbit/,
                         /drafterbit\/modules/,
                         /common/,
+                        env.projectRoot
                     ],
                     use: [
                         {

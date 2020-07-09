@@ -7,19 +7,11 @@ import { Layout as BaseLayout, Menu } from 'antd';
 import './SideNav.css';
 
 const { Sider } = BaseLayout;
-import {
-    MonitorOutlined
-} from '@ant-design/icons';
 
 class SideNav extends React.Component {
 
     state = {
-        menus: [{
-            order: 0,
-            icon: <MonitorOutlined/>,
-            link: "/",
-            label: "Dashboard",
-        }]
+        menus: []
     };
 
     componentDidMount() {
