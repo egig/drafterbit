@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const serve = require('koa-static');
 const createWebpackConfig = require('./client-side/webpack.config');
@@ -5,17 +6,16 @@ const routes = require('./routes');
 const Module = require('../../Module');
 const SettingSchema = require('./models/Setting');
 const koaWebpack = require('koa-webpack');
+
 class CoreModule extends Module {
 
     constructor(app) {
         super(app);
 
-        this.webpackOutputPath = app.get('config').get('ROOT_DIR')+'/build';
+        this.webpackOutputPath = path.join(app.get('config').get('ROOT_DIR'), 'build');
+        app.use(serve(this.webpackOutputPath));
 
         app.on('pre-start', async () => {
-
-            app.use(serve(this.webpackOutputPath));
-
             if(app.get('config').get('NODE_ENV') !== 'production') {
                 //
                 let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
@@ -30,10 +30,6 @@ class CoreModule extends Module {
                 app.use(middleware);
             }
 
-        });
-
-        app.on('routing', function () {
-            app.use(routes);
         });
 
         app.on('build', () => {

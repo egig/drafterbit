@@ -160,7 +160,7 @@ router.post('/token',
 
             ctx.body = authUser;
 
-        } catch (e) {s
+        } catch (e) {
             if(e instanceof UserAuthError) {
                 ctx.status =401;
             }

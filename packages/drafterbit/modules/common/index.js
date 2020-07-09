@@ -1,14 +1,5 @@
 const Module = require('../../Module');
 
-class CommonModule extends Module {
-
-    constructor(app) {
-        super(app);
-        //
-        // app.on('routing', function () {
-        //     app.use(routes);
-        // });
-    }
-}
+class CommonModule extends Module { }
 
 module.exports = CommonModule;

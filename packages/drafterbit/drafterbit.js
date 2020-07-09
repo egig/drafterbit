@@ -2,15 +2,12 @@ const Koa = require('koa');
 const c2k = require('koa-connect');
 
 const bodyParser = require('koa-bodyparser');
-const cookieParser = require('cookie-parser');
-const expressValidator = require('express-validator');
 const cors = require('cors');
 const createConfig = require('./createConfig');
 const createLogger = require('./createLogger');
-const resolveModule = require('./resolveModule');
+const Module = require('./Module');
 const createMongooseConn = require('./createMongooseConn');
 const commander = require('commander');
-const serve = require('koa-static');
 
 class Drafterbit extends Koa {
 
@@ -39,7 +36,9 @@ class Drafterbit extends Koa {
     }
 
     routing() {
-        this.emit('routing');
+        this._modules.map(m => {
+            m.loadRoutes();
+        })
     };
 
     setDefaultConn(str) {
@@ -77,10 +76,10 @@ class Drafterbit extends Koa {
 
         // init modules
         this._modules = this.modules.map(m => {
-            let modulePath = resolveModule(m, config.get('ROOT_DIR'));
-            let ModulesClass = require(modulePath.resolvedPath);
+            let modulePath = Module.resolve(m, config.get('ROOT_DIR'));
+            let ModulesClass = require(modulePath);
             let moduleInstance = new ModulesClass(this);
-            moduleInstance._modulePath = modulePath.resolvedPath;
+            moduleInstance._modulePath = modulePath;
 
             // register db schema
             let db = this.getDB();
@@ -102,13 +101,12 @@ class Drafterbit extends Koa {
                         .action(command.action);
                 });
             }
-
             return moduleInstance;
         });
 
         this.set('cmd', cmd);
 
-        this.use(serve('./build'));
+        // this.use(serve('./build'));
 
         this.use(async (ctx, next) => {
             try {

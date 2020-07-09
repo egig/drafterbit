@@ -2,9 +2,9 @@ const drafterbit = require('drafterbit/drafterbit');
 
 const app = new drafterbit();
 app.modules = [
+    'drafterbit/modules/admin',
     'drafterbit/modules/auth',
     'drafterbit/modules/common',
-    'drafterbit/modules/admin',
     'drafterbit/modules/content',
 ];
 

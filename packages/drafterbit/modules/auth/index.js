@@ -8,9 +8,6 @@ const Module = require('../../Module');
 class AuthModule extends Module {
     constructor(app) {
         super(app);
-        app.on('routing', () => {
-            app.use(routes);
-        });
 
         this.selectFields = {
             "User": ['-__v', '-password']
