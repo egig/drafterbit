@@ -1,4 +1,3 @@
-const routes  = require('./routes');
 const TypeSchema  = require('./models/Type');
 const Module = require('../../Module');
 

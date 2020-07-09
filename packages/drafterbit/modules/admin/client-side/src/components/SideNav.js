@@ -30,9 +30,7 @@ class SideNav extends React.Component {
 
         let menuPromises = [];
         this.props.$dt.modules.map((mo,i) => {
-            if(typeof mo.getMenu == "function") {
-                menuPromises.push(mo.getMenu());
-            }
+            menuPromises.push(mo.getMenu());
         });
 
         Promise.all(menuPromises)

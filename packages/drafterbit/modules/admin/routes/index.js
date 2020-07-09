@@ -1,4 +1,3 @@
-const express = require('express');
 const minify = require('html-minifier').minify;
 const fs = require('fs');
 const path = require('path');
@@ -82,12 +81,10 @@ router.get('/admin', function (ctx, next) {
     };
 
     ctx.app._modules.map(mo => {
-        if (typeof mo.registerClientConfig == 'function') {
-            drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config));
-        }
+        drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config));
     });
 
-    ctx.body = `<!DOCTYPE html>
+    ctx.body = minify(`<!DOCTYPE html>
           <html>
             <head>
                 <meta charSet="utf-8" />
@@ -103,7 +100,7 @@ router.get('/admin', function (ctx, next) {
                 </script>
                 <script src="${assetPath(ctx, webpackAssets.main.js)}"></script>
             </body>
-        </html>`;
+        </html>`, { collapseWhitespace: true, minifyJS: true, minifyCSS: true });
 });
 
 module.exports = router.routes();

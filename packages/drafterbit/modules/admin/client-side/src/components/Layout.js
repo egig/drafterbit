@@ -42,9 +42,7 @@ class Layout extends React.Component {
 						})}
 
 						{this.props.$dt.modules.map((mo,i) => {
-							if(typeof mo.renderNavBarMenu == "function") {
-								return mo.renderNavBarMenu(i);
-							}
+							return mo.renderNavBarMenu(i);
 						})}
 					</Header>
 					<Content

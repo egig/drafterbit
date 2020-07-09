@@ -1,6 +1,7 @@
 import EventEmitter from 'eventemitter3';
 import React from 'react';
 import ApiClient from './ApiClient';
+import Module from './Module';
 import { combineReducers } from 'redux';
 import { createStore, applyMiddleware } from  'redux';
 import thunk from 'redux-thunk';
@@ -33,17 +34,18 @@ class ClientSide extends EventEmitter {
         return this.config[name];
     };
 
-    addModule(moduleObject) {
-        this.modules.push(moduleObject)
+    addModule(moduleProto) {
+        function M() {}
+        M.prototype = Object.assign({}, Module.prototype, moduleProto);
+        let moduleObject = new M();
+        this.modules.push(moduleObject);
     }
 
     initApiClient() {
 
         let clientProto = {};
         this.modules.map(m => {
-            if (typeof m.registerApiClient == "function") {
-                clientProto = Object.assign({}, clientProto, m.registerApiClient())
-            }
+            clientProto = Object.assign({}, clientProto, m.registerApiClient())
         });
 
 

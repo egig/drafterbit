@@ -3,6 +3,7 @@ import stateReducer from './stateReducer';
 import { getCookie } from '@drafterbit/common/client-side/cookie';
 import NavBarMenu from './components/NavBarMenu';
 import ApiClient from './ApiClient';
+import { Redirect } from 'react-router-dom';
 
 const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
@@ -25,14 +26,15 @@ import {
             {path: "/forgot-password", component: ForgotPassword},
             {path: "/register-success", component: RegisterSuccess}
         ],
-        processRoute(route, location, state) {
+        routeFilter(route, location, state) {
 
             if(location.pathname === "/login") {
                 return route;
             }
 
             if(!state.USER.token) {
-                route.redirect = {
+                route.component = Redirect;
+                route.to = {
                     pathname: '/login',
                     state: {
                         referrer: route.location

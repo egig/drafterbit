@@ -50,12 +50,9 @@ class Shell extends React.Component {
 
                                                         for (let i=0; i<this.props.$dt.modules.length;i++) {
                                                             let mo = this.props.$dt.modules[i];
-                                                            if(typeof mo.processRoute !== "function") {
-                                                                continue;
-                                                            }
 
                                                             let old = route;
-                                                            route = mo.processRoute(route, location, store.getState());
+                                                            route = mo.routeFilter(route, location, store.getState());
                                                             if(!route) {
                                                                 route = old;
                                                             }
@@ -65,9 +62,7 @@ class Shell extends React.Component {
                                                             return <Redirect to={route.redirect}/>
                                                         }
 
-                                                        return <Route key={route.path} exact path={route.path} render={(props) => {
-                                                            return <route.component {...props}/>
-                                                        }} />
+                                                        return <Route exact {...route} />
                                                     })
                                                 })}
                                             </Switch>
