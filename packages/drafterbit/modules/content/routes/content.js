@@ -5,6 +5,8 @@ const Router = require('@koa/router');
 
 let router = new Router();
 
+router.param('type_name',  contentMiddleware());
+
 /**
  * @swagger
  * /{type_name}/{id}:
@@ -39,7 +41,6 @@ router.delete('/:type_name/:id',
             presence: true
         },
     }),
-    contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params['type_name']);
         ctx.body = await Model.findOneAndDelete({_id: ctx.params.id });
@@ -81,7 +82,6 @@ router.get('/:type_name/:id',
             presence: true
         },
     }),
-    contentMiddleware(),
     async function(ctx, next) {
         let typeName = ctx.params['type_name'];
         let  Model = ctx.app.model(typeName);
@@ -129,7 +129,6 @@ router.patch('/:type_name/:id',
             presence: true
         },
     }),
-    contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
         ctx.body = await Model.findOneAndUpdate({_id: ctx.params.id }, ctx.request.body);
@@ -163,7 +162,6 @@ router.post('/:type_name',
             presence: true
         }
     }),
-    contentMiddleware(),
     async function(ctx, next) {
         let  Model = ctx.app.model(ctx.params.type_name);
         // TODO add filter here, e.g to hash password fiel
@@ -202,7 +200,6 @@ router.get('/:type_name',
             presence: true
         }
     }),
-    contentMiddleware(),
     async function(ctx, next) {
 
         let page = ctx.query.page || 1;

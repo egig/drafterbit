@@ -17,10 +17,9 @@ function createModel(app, modelName, schemaObj) {
 }
 
 module.exports = function contentMiddleware() {
-    return async function(ctx, next) {
+    return async function(typeName, ctx, next) {
 
         try {
-            let typeName = ctx.params['type_name'];
 
             let m = ctx.app.model('Type');
             let type = await m.getType(typeName);
