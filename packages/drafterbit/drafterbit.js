@@ -69,10 +69,11 @@ class Drafterbit extends Koa {
         };
 
         let cmd = commander;
+        cmd
+            .version('0.0.1')
+            .option('-d, --debug', 'output extra debugging');
 
-        // cmd
-        //     .version('0.0.1')
-        //     .option('-d, --debug', 'output extra debugging');
+        this.set('cmd', cmd);
 
         // init modules
         this._modules = this.modules.map(m => {
@@ -88,23 +89,14 @@ class Drafterbit extends Koa {
             }
 
             // register config
-            if(typeof moduleInstance.config == 'function') {
-                config.registerConfig(moduleInstance.config());
+            if (moduleInstance.canLoad('config')) {
+                config.registerConfig(moduleInstance.require('config'))
             }
 
-            // register cmd
-            if(typeof moduleInstance.commands == 'function') {
-                let commands = moduleInstance.commands(this);
-                commands.map(command => {
-                    cmd.command(command.command)
-                        .description(command.description)
-                        .action(command.action);
-                });
-            }
+            moduleInstance.loadCommands();
+
             return moduleInstance;
         });
-
-        this.set('cmd', cmd);
 
         // this.use(serve('./build'));
 

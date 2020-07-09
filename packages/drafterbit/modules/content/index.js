@@ -5,9 +5,6 @@ const Module = require('../../Module');
 class ContentModule extends Module {
     constructor(app) {
         super(app);
-        app.on('routing', () => {
-            app.use(routes);
-        });
     }
 
     registerSchema(db) {
