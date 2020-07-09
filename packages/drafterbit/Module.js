@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 class Module {
 
@@ -36,7 +37,12 @@ class Module {
     }
 
     getAdminClientSideEntry() {
-        return this._modulePath+'/client-side/src/index.js';
+        let entryPath = this._modulePath+'/client-side/src/index.js';
+        if (fs.existsSync(entryPath)) {
+            return entryPath;
+        }
+
+        return false;
     }
 
     canLoad(files) {

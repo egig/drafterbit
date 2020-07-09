@@ -65,7 +65,7 @@ router.patch("/settings", function (req, res) {
     })();
 });
 
-router.get('/', function (ctx, next) {
+router.get('/admin', function (ctx, next) {
 
     let assetsStr = fs.readFileSync(path.join(ctx.app.projectDir,'/build/assets.json'));
     const webpackAssets = JSON.parse(assetsStr.toString());

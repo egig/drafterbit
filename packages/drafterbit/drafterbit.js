@@ -44,10 +44,6 @@ class Drafterbit extends Koa {
         })
     };
 
-    setDefaultConn(str) {
-        this._mongoDefaultConn = str;
-    };
-
     boot(rootDir) {
 
         this._booted = false;
@@ -90,7 +86,7 @@ class Drafterbit extends Koa {
 
         // init modules
         this._modules = this.modules.map(m => {
-            let modulePath = Module.resolve(m, config.get('ROOT_DIR'));
+            let modulePath = Module.resolve(m, this.projectDir);
             let ModulesClass = require(modulePath);
             let moduleInstance = new ModulesClass(this);
             moduleInstance._modulePath = modulePath;
