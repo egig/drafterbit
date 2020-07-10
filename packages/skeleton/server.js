@@ -1,4 +1,4 @@
-const drafterbit = require('drafterbit/drafterbit');
+const drafterbit = require('drafterbit');
 
 const app = new drafterbit();
 app.modules = [

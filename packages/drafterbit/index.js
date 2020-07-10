@@ -11,7 +11,7 @@ const Module = require('./Module');
 const createMongooseConn = require('./createMongooseConn');
 const commander = require('commander');
 
-class Drafterbit extends Koa {
+class Application extends Koa {
 
     constructor(options) {
         super(options);
@@ -159,4 +159,4 @@ class Drafterbit extends Koa {
 
 }
 
-module.exports = Drafterbit;
+module.exports = Application;

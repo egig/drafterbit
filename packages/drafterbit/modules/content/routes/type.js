@@ -115,7 +115,7 @@ router.post('/types',
         let fields = [
             {
                 name: 'status',
-                type_name: 'Number',
+                type_name: 'ShortText',
                 display_text: 'Status',
                 show_in_form: false,
                 show_in_list: false
