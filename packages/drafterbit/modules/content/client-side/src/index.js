@@ -16,7 +16,7 @@ import {
     $dt.addModule({
         name: "content",
         stateReducer: stateReducer,
-        routes: [
+        adminRoutes: [
             {path: "/c/:type_name/:content_id", component: ContentEdit},
             {path: "/c/:type_name", component: Contents},
             {path: "/types/:type_name", component: Type},

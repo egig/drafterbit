@@ -10,7 +10,7 @@ import {
 
     $dt.addModule({
         name: "common",
-        routes: [
+        adminRoutes: [
             {path: "/", component: Dashboard},
         ],
         async getMenu() {

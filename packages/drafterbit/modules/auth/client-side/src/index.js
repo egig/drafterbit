@@ -19,7 +19,7 @@ import {
     $dt.addModule({
         name: "user",
         stateReducer: stateReducer,
-        pageRoutes: [
+        routes: [
             {path: "/login", component: Login},
             {path: "/register", component: Register},
             {path: "/reset-password", component: ResetPassword},
@@ -32,13 +32,14 @@ import {
                 return route;
             }
 
-            if(!state.USER.token) {
-                route.component = Redirect;
-                route.to = {
-                    pathname: '/login',
-                    state: {
-                        referrer: route.location
-                    }
+            if(!state['USER'].token) {
+                return {
+                    component:  () => <Redirect to={{
+                        pathname: '/login',
+                        state: {
+                            referrer: route.location
+                        }
+                    }}/>
                 }
             }
 

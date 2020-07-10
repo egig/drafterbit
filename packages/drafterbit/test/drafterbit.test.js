@@ -3,7 +3,7 @@ const should = chai.should();
 const expect = chai.expect;
 const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
-const drafterbit = require('../drafterbit');
+const drafterbit = require('../index');
 chai.should();
 chai.use(sinonChai);
 

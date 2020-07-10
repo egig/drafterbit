@@ -2,6 +2,9 @@ export default function Module() {
 
 }
 
+Module.prototype.routes = [];
+Module.prototype.adminRoutes = [];
+
 Module.prototype.routeFilter = function routeFilter(route) {
     return route;
 };

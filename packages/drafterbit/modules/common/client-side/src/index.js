@@ -12,7 +12,7 @@ import {
     $dt.addModule({
         name: "common",
         stateReducer: stateReducer,
-        routes: [
+        adminRoutes: [
             {path: "/settings", component: Settings},
         ],
         getMenu() {
