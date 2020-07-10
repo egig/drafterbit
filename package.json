@@ -6,7 +6,7 @@
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "start": "node packages/cli/index.js start",
+    "start": "node packages/skeleton/server.js",
     "auth:init": "node packages/cli/index.js auth:init",
     "bootstrap": "lerna bootstrap --hoist",
     "link": "lerna link --force-local",

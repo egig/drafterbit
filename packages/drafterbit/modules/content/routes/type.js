@@ -224,7 +224,7 @@ router.post('/types/:type_name/fields',
     async function(ctx, next) {
         let m = ctx.app.model('Type');
         let typeName = ctx.params['type_name'];
-        let s = await m.addField(typeName, ctx.body);
+        let s = await m.addField(typeName, ctx.request.body);
 
         // update compiled models
         delete ctx.app.getDB().models[typeName];
@@ -361,7 +361,7 @@ router.patch('/types/:type_name/fields/:field_id',
         let typeName = ctx.params['type_name'];
         let fieldId = ctx.params['field_id'];
         let m = ctx.app.model('Type');
-        let s = await m.updateTypeField(typeName, fieldId, ctx.body);
+        let s = await m.updateTypeField(typeName, fieldId, ctx.request.body);
 
         delete ctx.app.getDB().models[typeName];
 
