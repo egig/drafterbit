@@ -20,7 +20,7 @@ class Field extends React.Component {
                 <Input.TextArea  onChange={this.props.onChange}/>
             ),
             [FieldType.RICH_TEXT]: () => (
-                <RichText initialValue={value} value={value}  onChange={this.props.onChange}/>
+                <RichText initialValue={value} value={value} onChange={this.props.onChange}/>
             ),
             [FieldType.NUMBER]: () => (
                 <InputNumber style={{width:"100%"}} onChange={this.props.onChange} name={field.name} />

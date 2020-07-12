@@ -1,5 +1,4 @@
 import React  from 'react';
-import { Value } from "slate";
 import Field from './Field';
 import { Row, Col, Card, Form, Button, message, PageHeader, Select } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
@@ -14,24 +13,12 @@ const CardWrapper = styled.div`
 `;
 
 // TODO move this to editor module
-let richTextInitialValue = {
-    "object": "value",
-    "document": {
-        "object": "document",
-        "nodes": [
-            {
-                "object": "block",
-                "type": "paragraph",
-                "nodes": [
-                    {
-                        "object": "text",
-                        "text": ""
-                    }
-                ]
-            }
-        ]
-    }
-}
+let richTextInitialValue = [
+    {
+        type: 'paragraph',
+        children: [{ text: 'A line of text in a paragraph.' }],
+    },
+]
 
 let testInitValue = [
     {
@@ -64,7 +51,7 @@ class ContentEdit extends React.Component {
                 if(f.type_name === FieldType.RICH_TEXT) {
 
                     if (!(f.name in entry)) {
-                        formData[f.name] = Value.fromJSON(richTextInitialValue)
+                        formData[f.name] = richTextInitialValue
                         return formData
                     } else {
                         formData[f.name] = htmlSerializer.deserialize(entry[f.name])
@@ -95,7 +82,7 @@ class ContentEdit extends React.Component {
 
         let editorValue = this.formRef.current.getFieldValue[f.name];
         if(!editorValue) {
-            editorValue = Value.fromJSON(richTextInitialValue);
+            editorValue = richTextInitialValue;
         }
 
         return <Field value={editorValue} onChange={(value) => {

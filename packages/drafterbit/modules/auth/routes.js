@@ -1,4 +1,3 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const password = require('./lib/password');
 const UserAuthError  = require('./UserAuthError');
