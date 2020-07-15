@@ -1,15 +1,18 @@
 const fs = require('fs');
-const path = require('path');
 const Koa = require('koa');
 const c2k = require('koa-connect');
 
 const bodyParser = require('koa-bodyparser');
 const cors = require('cors');
 const Config = require('./Config');
-const createLogger = require('./createLogger');
 const Module = require('./Module');
-const createMongooseConn = require('./createMongooseConn');
 const commander = require('commander');
+const winston = require('winston');
+const mongoose = require('mongoose');
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', true);
+mongoose.set('useUnifiedTopology', true);
 
 class Application extends Koa {
 
@@ -17,7 +20,7 @@ class Application extends Koa {
         super(options);
 
         this._booted = false;
-        this._mongo_connections = {};
+        this._mongoConnections = {};
         this._mongoDefaultConn = null; // TODO move this to req.locals
         this._mongoConfig = {};
         this._modules = [];
@@ -47,7 +50,7 @@ class Application extends Koa {
     boot(rootDir) {
 
         this._booted = false;
-        this._mongo_connections = {};
+        this._mongoConnections = {};
         this._mongoDefaultConn = null; // TODO move this to req.locals
         this._mongoConfig = {};
         this._modules = [];
@@ -64,17 +67,13 @@ class Application extends Koa {
         }
 
         let config = new Config(rootDir, options);
-        let logger = createLogger(config.get('DEBUG'));
+        let logger = this.createLogger(config.get('DEBUG'));
         this.set('log', logger);
         this.set('config', config);
 
         this._mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
         this._mongoConfig[this._mongoDefaultConn] = {
-            protocol: config.get('MONGODB_PROTOCOL'),
-            host: config.get('MONGODB_HOST'),
-            port: config.get('MONGODB_PORT'),
-            user: config.get('MONGODB_USER'),
-            pass: config.get('MONGODB_PASS')
+            uri: config.get('MONGODB_URI'),
         };
 
         let cmd = commander;
@@ -142,20 +141,53 @@ class Application extends Koa {
 
         dbName = dbName || this._mongoDefaultConn;
         let {
-            protocol,
-            host,
-            port,
-            user,
-            pass
+            uri
         } = this._mongoConfig[dbName];
 
-        if(!this._mongo_connections[dbName]) {
-            this._mongo_connections[dbName] = createMongooseConn(this, protocol, dbName, host, user, pass, port);
+        if(!this._mongoConnections[dbName]) {
+            this._mongoConnections[dbName] = this.createMongooseConn(uri);
         }
 
-        return this._mongo_connections[dbName];
+        return this._mongoConnections[dbName];
     };
 
+    createMongooseConn(uri) {
+
+        let conn = mongoose.createConnection(uri, {
+            connectTimeoutMS: 9000,
+        }, err => {
+            if(err) {
+                this.get('log').error('Error create connection for', dbName);
+                this.get('log').error(err);
+            }
+        });
+
+        conn.on('error', err => {
+            if(err) {
+                this.get('log').error(err);
+            }
+        });
+
+        return conn;
+    };
+
+    createLogger(debug) {
+
+        // TODO add rotate file logger
+        const logger = winston.createLogger({
+            level: debug ? 'debug' : 'warn',
+            format: winston.format.json(),
+            transports: []
+        });
+
+        if (process.env.NODE_ENV !== 'production') {
+            logger.add(new winston.transports.Console({
+                format: winston.format.simple()
+            }));
+        }
+
+        return logger;
+    };
 
 }
 

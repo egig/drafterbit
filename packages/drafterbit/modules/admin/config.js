@@ -3,13 +3,7 @@ module.exports = {
     'API_KEY': '',
     'PORT': 3000,
     'SESSION_SECRET': 'secr3t',
-    'MONGODB_PROTOCOL': 'mongodb+srv',
-    'MONGODB_URL': '',
-    'MONGODB_NAME': '',
-    'MONGODB_HOST': '',
-    'MONGODB_PORT': '',
-    'MONGODB_USER': '',
-    'MONGODB_PASS': '',
+    'MONGODB_URI': 'mongodb://localhost:27017/dt?retryWrites=true&w=majority',
     'modules': [
         // content should go last
         './drafterbit/modules/auth',

@@ -259,6 +259,7 @@ router.delete('/types/:type_id',
         }
     }),
     async function(ctx, next) {
+        let m = ctx.app.model('Type');
         ctx.body = await m.deleteType(ctx.params.type_id);
     }
 );
