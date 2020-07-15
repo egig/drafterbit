@@ -92,7 +92,8 @@ module.exports = env => {
                 // {from: "public"},
                 {from: __dirname+'/public/img', to: 'img'},
                 {from: __dirname+'/public/locales', to: 'locales'},
-                {from: __dirname+'/public/favicon.ico', to: 'favicon.ico'}
+                {from: __dirname+'/public/favicon.ico', to: 'favicon.ico'},
+                {from: env.projectRoot+'/node_modules/tinymce/skins', to: env.outputPath+'/skins'},
             ]),
             new AssetsPlugin({path: env.outputPath, filename: 'assets.json'})
         ],

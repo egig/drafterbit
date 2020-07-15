@@ -45,30 +45,8 @@ class ContentEdit extends React.Component {
             client.getEntry(typeName, contentId)
         ]).then(resList => {
             let [ type, entry ] = resList;
-            let fields = type.fields;
 
-            let formData = fields.reduce((formData, f) => {
-                if(f.type_name === FieldType.RICH_TEXT) {
-
-                    if (!(f.name in entry)) {
-                        formData[f.name] = richTextInitialValue
-                        return formData
-                    } else {
-                        formData[f.name] = htmlSerializer.deserialize(entry[f.name])
-                    }
-
-                } else {
-                    if (!(f.name in entry)) {
-                        formData[f.name] = "";
-                    } else {
-                        formData[f.name] = entry[f.name]
-                    }
-                }
-
-                return formData;
-            }, {});
-
-            this.formRef.current.setFieldsValue(formData);
+            this.formRef.current.setFieldsValue(entry);
 
             this.setState({
                 ctFields: type.fields,
@@ -78,12 +56,9 @@ class ContentEdit extends React.Component {
         });
     }
 
-    renderRichText(f,i,value) {
+    renderRichText(f,i) {
 
-        let editorValue = this.formRef.current.getFieldValue[f.name];
-        if(!editorValue) {
-            editorValue = richTextInitialValue;
-        }
+        let editorValue = this.formRef.current.getFieldValue(f.name);
 
         return <Field value={editorValue} onChange={(value) => {
             this.formRef.current.setFieldsValue({
@@ -106,14 +81,6 @@ class ContentEdit extends React.Component {
         let data = {};
         this.state.ctFields.map(f => {
             data[f.name] = values[f.name];
-
-            if(f.type_name === FieldType.UNSTRUCTURED) {
-                data[f.name] = slateValueToBlocks(values[f.name])
-            }
-
-            if(f.type_name === FieldType.RICH_TEXT) {
-                data[f.name] = htmlSerializer.serialize(values[f.name])
-            }
         });
 
         let client = this.props.$dt.getApiClient();

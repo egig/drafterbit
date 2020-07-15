@@ -352,16 +352,19 @@ router.patch('/types/:type_id',
  *     tags:
  *        - /types
  */
-router.patch('/types/:type_name/fields/:field_id',
+router.patch('/types/:t_name/fields/:field_id',
     validateRequest({
-        type_name: {
+        t_name: {
             presence: true
         }
     }),
     async function(ctx) {
-        let typeName = ctx.params['type_name'];
+        let typeName = ctx.params['t_name'];
         let fieldId = ctx.params['field_id'];
         let m = ctx.app.model('Type');
+
+        console.log(ctx.params, fieldId);
+
         let s = await m.updateTypeField(typeName, fieldId, ctx.request.body);
 
         delete ctx.app.getDB().models[typeName];

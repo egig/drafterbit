@@ -157,7 +157,6 @@ class Application extends Koa {
             connectTimeoutMS: 9000,
         }, err => {
             if(err) {
-                this.get('log').error('Error create connection for', dbName);
                 this.get('log').error(err);
             }
         });
