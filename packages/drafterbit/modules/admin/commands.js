@@ -13,6 +13,7 @@ module.exports = [
         description: 'build the app',
         createAction: app => {
             return () => {
+                console.log("app building...");
                 app.build();
             }
         }
