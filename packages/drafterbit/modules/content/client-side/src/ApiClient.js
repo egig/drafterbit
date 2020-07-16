@@ -42,12 +42,12 @@ const ApiClient = {
     },
 
     addTypeField: async function addTypeField(belongsToTypeName, typeName,
-        name,displayText,multiple, showInList, showInForm)  {
+        name, label,multiple, showInList, showInForm)  {
         let url = `/types/${belongsToTypeName}/fields`;
         let response = await this.axiosInstance.post(url, {
             belongs_to_type_name: belongsToTypeName,
             name,
-            display_text: displayText,
+            label: label,
             type_name: typeName,
             multiple,
             show_in_form: showInForm,

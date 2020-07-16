@@ -363,8 +363,6 @@ router.patch('/types/:t_name/fields/:field_id',
         let fieldId = ctx.params['field_id'];
         let m = ctx.app.model('Type');
 
-        console.log(ctx.params, fieldId);
-
         let s = await m.updateTypeField(typeName, fieldId, ctx.request.body);
 
         delete ctx.app.getDB().models[typeName];

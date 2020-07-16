@@ -121,7 +121,7 @@ class Type extends React.Component {
                                 <Tabs type="card" tabPosition="left">
                                     {this.state.fields.map((f, i) => {
                                         return (
-                                            <Tabs.TabPane tab={f.display_text} key={f.name}>
+                                            <Tabs.TabPane tab={f.label} key={f.name}>
                                                 <FieldForm field={f}
                                                            belongsToTypeName={this.state.name}
                                                            onSuccess={() => {

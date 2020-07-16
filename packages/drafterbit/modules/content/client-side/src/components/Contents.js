@@ -96,10 +96,8 @@ class Contents extends React.Component {
         	// Don't display some column type by default
             if(this.canBeDisplayed(f)) {
 		        columns.push({
-			        dataField: f.name,
 			        dataIndex: f.name,
-			        text: f.display_text,
-			        title: f.display_text,
+			        title: f.label,
                     sorter: true
 		        })
 	        }
@@ -118,7 +116,7 @@ class Contents extends React.Component {
             />
         );
     }
-}
+}w
 
 const mapStateToProps = (state) => {
     return {

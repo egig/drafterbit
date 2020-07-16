@@ -20,7 +20,7 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
                     {
                         type_name,
                         name,
-                        display_text,
+                        label,
                         multiple,
                         show_in_form,
                         show_in_list,
@@ -29,7 +29,7 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
             } else {
                 // create
                 return $dt.getApiClient().addTypeField(belongsToTypeName,
-                    type_name, name, display_text, multiple, show_in_list, show_in_form
+                    type_name, name, label, multiple, show_in_list, show_in_form
                 )
                     .then(()=> {
                         form.resetFields();
@@ -46,7 +46,7 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
         show_in_form: true,
         name: "",
         type_name: "",
-        display_text: ""
+        label: ""
     };
     if (!!field) {
         initialValues =  field;
@@ -98,8 +98,8 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
             </Form.Item>
 
             <Form.Item
-                name="display_text"
-                label="Display Text"
+                name="label"
+                label="Label"
                 rules={[
                     {
                         required: true,
