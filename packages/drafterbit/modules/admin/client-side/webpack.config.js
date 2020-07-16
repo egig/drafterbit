@@ -98,7 +98,11 @@ module.exports = env => {
             new AssetsPlugin({path: env.outputPath, filename: 'assets.json'})
         ],
         resolve: {
-            extensions: ['*', '.js', '.jsx', '.css']
+            extensions: ['*', '.js', '.jsx', '.css'],
+            alias: {
+                "react": path.resolve(path.join(env.projectRoot, 'node_modules/react')),
+                "react-dom": path.resolve(path.join(env.projectRoot, 'node_modules/react-dom'))
+            },
         },
     };
 

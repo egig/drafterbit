@@ -5,8 +5,8 @@ const password = require('./lib/password');
 
 module.exports = [
     {
-        command: 'auth:init',
-        description: 'Init user auth',
+        command: 'install',
+        description: 'Install app data',
         createAction: app => {
             return () => {
 
@@ -43,6 +43,7 @@ module.exports = [
                             process.exit(0);
                         }
 
+                        // TODO using transactions
                         return install(app, answers.email, answers.password)
                             .then(r => {
                                 console.log(r);
@@ -68,9 +69,9 @@ function install(app, email, password) {
 
     return m.deleteMany({
         $or: [
-            {slug: 'users'},
-            {slug: 'groups'},
-            {slug: 'permissions'},
+            {name: 'User'},
+            {name: 'Group'},
+            {name: 'Permission'},
         ]
     }).then(r => {
 
@@ -80,6 +81,10 @@ function install(app, email, password) {
             }).then(r => {
                 return createUser(m, email, password, app);
             }).then(r => {
+                return installSettings(app);
+            }).then(r => {
+                return installPrimitives(app);
+            }).then(r => {
                 console.log(r);
             }).catch(e => {
                 console.error(e);
@@ -87,32 +92,71 @@ function install(app, email, password) {
     });
 }
 
+function installPrimitives(app) {
+    let primitives = [
+        { name: 'ShortText', slug: 'short-text', displayText: "Short Text"},
+        { name: 'LongText',  slug: 'long-text', displayText: "Long Text"},
+        { name: 'RichText',  slug: 'rich-text', displayText: "Rich Text"},
+        { name: 'Number',  slug: 'numbers', displayText: "Number"},
+    ];
+
+    let m = app.model('Type');
+    let createTypes = primitives.map(t => {
+        return m.createType(t.name, t.slug, t.displayText, "", false, []);
+    });
+
+    return Promise.all(createTypes);
+}
+
+function installSettings(app) {
+    let m = app.model('Setting');
+    return m.setSetting('General', {
+        "app_name": "Awesome app",
+        "enable_register": false,
+        "enable_reset_password": false,
+        "brand_img_url": "/img/app_name_here.png"
+    });
+}
+
 function createPermission(m) {
-    return m.createType('Permission', 'permissions', '', [{
-        type_id: FieldType.SHORT_TEXT,
+    let name = 'Permission';
+    let slug = 'permissions';
+    let displayText = 'Permission';
+    let description = '';
+    let hasFields = true;
+    let fields = [{
+        type_name: FieldType.SHORT_TEXT,
         name: 'name',
         label: 'Name',
         validation_rules: 'required'
     },
-    {
-        type_id: FieldType.LONG_TEXT,
-        name: 'description',
-        label: 'Description',
-        validation_rules: ''
-    },
-    ], true);
+        {
+            type_name: FieldType.LONG_TEXT,
+            name: 'description',
+            label: 'Description',
+            validation_rules: ''
+        },
+    ];
+
+    return m.createType(name, slug, displayText, description, hasFields, fields);
 }
 
 function createGroup(m) {
-    return  m.createType('Group', 'groups', '', [
+
+    let name = 'Group';
+    let slug = 'groups';
+    let displayText = 'Group';
+    let description = '';
+    let hasFields = true;
+    let fields = [
         {
-            type_id: FieldType.SHORT_TEXT,
+            type_name: FieldType.SHORT_TEXT,
             name: 'name',
             label: 'Name',
             validation_rules: 'required'
         },
         {
-            type_id: FieldType.LONG_TEXT,
+            type_name: FieldType.LONG_TEXT,
             name: 'description',
             label: 'Description',
             validation_rules: ''
@@ -125,29 +169,34 @@ function createGroup(m) {
             validation_rules: '',
             show_in_list: false
         }
-    ], true);
+    ];
+
+    return m.createType(name, slug, displayText, description, hasFields, fields);
 }
 
 function createUser(m, email, passwordStr, app) {
 
-    let userCollectionSlug = 'users';
-
-    return m.createType('User', 'users', '', [
+    let name = 'User';
+    let slug = 'users';
+    let displayText = 'User';
+    let description = '';
+    let hasFields = true;
+    let fields = [
         {
-            type_id: FieldType.SHORT_TEXT,
+            type_name: FieldType.SHORT_TEXT,
             name: 'name',
             label: 'Name',
             validation_rules: 'required'
         },
         {
-            type_id: FieldType.SHORT_TEXT,
+            type_name: FieldType.SHORT_TEXT,
             name: 'email',
             label: 'Email',
             validation_rules: 'required',
             unique: true
         },
         {
-            type_id: FieldType.SHORT_TEXT,
+            type_name: FieldType.SHORT_TEXT,
             name: 'password',
             label: 'Password',
             validation_rules: 'required',
@@ -162,10 +211,11 @@ function createUser(m, email, passwordStr, app) {
             validation_rules: '',
             show_in_list: false
         }
-    ], true)
-        .then(r => {
+    ];
 
-            return m.getType(userCollectionSlug);
+    return m.createType(name, slug, displayText, description, hasFields, fields)
+        .then(r => {
+            return m.getType('User');
 
         })
         .then(type => {
@@ -174,9 +224,9 @@ function createUser(m, email, passwordStr, app) {
 
             let userModel;
             try {
-                userModel = app.getDB().model(userCollectionSlug);
+                userModel = app.getDB().model('User');
             } catch (error) {
-                userModel = app.getDB().model(userCollectionSlug, schemaObj, userCollectionSlug);
+                userModel = app.getDB().model('User', schemaObj);
             }
 
             return password.hash(passwordStr)
