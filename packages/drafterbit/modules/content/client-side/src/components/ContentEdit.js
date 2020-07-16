@@ -2,7 +2,6 @@ import React  from 'react';
 import Field from './Field';
 import { Row, Col, Card, Form, Button, message, PageHeader, Select } from 'antd';
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
-import htmlSerializer from './Unstructured/htmlSerializer';
 import styled from 'styled-components';
 
 const FieldType = require('@drafterbit/common/FieldType');
