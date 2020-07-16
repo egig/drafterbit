@@ -24,14 +24,21 @@ npm install
 npm link
 ```
 
-#### 4. Create Config File
+#### 4. Clone App skeleton
 
-Create `config .js` based on `config.js.example` and adjust the file content accordingly.
+Move to another directory where you can clone the app skeleton
+```bash
+git clone https://github.com/drafterbit/app.git my-app
+cd my-app
+npm install
+npm link drafterbit
+```
+
 
 #### 5. Start Application
 
 ```bash
-drafterbit start
+npm start
 ```
 
 Then you can visit the application in ```http://localhost:3000```

@@ -2,4 +2,4 @@
 
 Welcome to Drafterbit Documentation!.
 
-Drafterbit is a CMS, aimed to support various kind of content including the Document oriented/Unstructured.
+This app still in experimental phase and not production ready, use at your own risk !
