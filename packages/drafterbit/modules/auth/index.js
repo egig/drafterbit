@@ -5,7 +5,7 @@ class AuthModule extends Module {
         super(app);
 
         this.selectFields = {
-            "User": ['-__v', '-password']
+            'User': ['-__v', '-password']
         };
     }
 

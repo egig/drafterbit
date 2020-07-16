@@ -60,7 +60,7 @@ class CoreModule extends Module {
         console.log('Number of modules:', app._modules.length);
         app._modules.map(mo => {
             let entry = mo.getAdminClientSideEntry();
-            if (!!entry) {
+            if (entry) {
                 webpackConfig.entry.push(entry);
             }
         });
@@ -76,7 +76,7 @@ class CoreModule extends Module {
     }
 
     getAdminClientSideEntry() {
-        return false
+        return false;
     }
 
     registerSchema(db) {

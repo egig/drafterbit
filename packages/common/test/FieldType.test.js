@@ -4,19 +4,19 @@ let expect = chai.expect;
 
 const FieldType = require('../FieldType');
 
-describe("FieldType", () => {
+describe('FieldType', () => {
 
-    describe("FieldType.fieldTypes", () => {
+    describe('FieldType.fieldTypes', () => {
 
-        it("should return field types array", () => {
+        it('should return field types array', () => {
             expect(FieldType.fieldTypes).to.be.an('array');
         });
 
     });
 
-    describe("fieldTypes.getTypeName", () => {
+    describe('fieldTypes.getTypeName', () => {
 
-        it("should return correct field name", () => {
+        it('should return correct field name', () => {
             let fieldName = FieldType.getTypeName(FieldType.SHORT_TEXT);
             expect(fieldName).to.equal('Short Text');
         });

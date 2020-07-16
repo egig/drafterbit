@@ -54,7 +54,7 @@ let convert = function (descriptor) {
 function getSchema(fields) {
     let fieldsObj = {};
     let primitiveTypes = FieldType.fieldTypes.map(t => {
-        return t.id
+        return t.id;
     });
 
     fields.forEach(f => {

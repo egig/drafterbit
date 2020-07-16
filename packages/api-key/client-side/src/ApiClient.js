@@ -25,6 +25,6 @@ const ApiClient = {
         });
         return response.data;
     }
-}
+};
 
 export default ApiClient;

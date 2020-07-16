@@ -57,7 +57,7 @@ module.exports = [
                             // Something else when wrong
                         }
                     });
-            }
+            };
         }
     }
 ];
@@ -94,12 +94,12 @@ function createPermission(m) {
         label: 'Name',
         validation_rules: 'required'
     },
-        {
-            type_id: FieldType.LONG_TEXT,
-            name: 'description',
-            label: 'Description',
-            validation_rules: ''
-        },
+    {
+        type_id: FieldType.LONG_TEXT,
+        name: 'description',
+        label: 'Description',
+        validation_rules: ''
+    },
     ], true);
 }
 

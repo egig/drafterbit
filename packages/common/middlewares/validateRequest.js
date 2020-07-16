@@ -1,5 +1,5 @@
 const validate  = require('validate.js');
-validate.validators.presence.options = {allowEmpty: false, message: "is required"};
+validate.validators.presence.options = {allowEmpty: false, message: 'is required'};
 
 module.exports = function validateRequest(constraints) {
     return async (ctx, next) => {

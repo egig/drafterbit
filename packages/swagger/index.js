@@ -3,7 +3,7 @@ const Module = require('../../Module');
 
 class SwaggerModule extends Module {
     constructor(app) {
-        super(app)
+        super(app);
         app.on('routing', () => {
             app.use(routes);
         });

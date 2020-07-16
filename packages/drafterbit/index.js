@@ -26,7 +26,7 @@ class Application extends Koa {
         this._modules = [];
         this.modules = [];
         this.services = [];
-        this.projectDir = "";
+        this.projectDir = '';
     }
 
     set(key, value){
@@ -44,8 +44,8 @@ class Application extends Koa {
     routing() {
         this._modules.map(m => {
             m.loadRoutes();
-        })
-    };
+        });
+    }
 
     boot(rootDir) {
 
@@ -98,7 +98,7 @@ class Application extends Koa {
 
             // register config
             if (moduleInstance.canLoad('config')) {
-                config.registerConfig(moduleInstance.require('config'))
+                config.registerConfig(moduleInstance.require('config'));
             }
 
             moduleInstance.loadCommands();
@@ -131,11 +131,11 @@ class Application extends Koa {
 
         this._booted = true;
         return this;
-    };
+    }
 
     model(name) {
         return this.getDB().model(name);
-    };
+    }
 
     getDB(dbName) {
 
@@ -149,7 +149,7 @@ class Application extends Koa {
         }
 
         return this._mongoConnections[dbName];
-    };
+    }
 
     createMongooseConn(uri) {
 
@@ -168,7 +168,7 @@ class Application extends Koa {
         });
 
         return conn;
-    };
+    }
 
     createLogger(debug) {
 
@@ -186,7 +186,7 @@ class Application extends Koa {
         }
 
         return logger;
-    };
+    }
 
 }
 

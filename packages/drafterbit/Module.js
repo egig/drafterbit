@@ -5,23 +5,23 @@ class Module {
 
     constructor(app) {
         this.app = app;
-        this._modulePath = "";
+        this._modulePath = '';
     }
 
     loadRoutes() {
         if (this.canLoad('routes')) {
             let routes = this.require('routes');
-            this.app.use(routes)
+            this.app.use(routes);
         }
     }
 
     loadCommands() {
 
-        console.log("loading command...");
+        console.log('loading command...');
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
             commands.map(c => {
-                console.log("loading command:", c.command);
+                console.log('loading command:', c.command);
                 this.app.get('cmd').command(c.command)
                     .description(c.description)
                     .action(c.createAction(this.app));
@@ -50,12 +50,12 @@ class Module {
 
     canLoad(files) {
         let resolvingPath = path.join(this._modulePath,files);
-        console.log("resolving path", resolvingPath);
+        console.log('resolving path', resolvingPath);
         try {
             require.resolve(resolvingPath);
-            console.log("path resolved");
-            console.log("---");
-            return true
+            console.log('path resolved');
+            console.log('---');
+            return true;
         } catch (e) {
             if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
                 return false;
@@ -75,11 +75,11 @@ class Module {
 
     static resolve(filePath, root) {
         if(Module.isDTModule(filePath)){
-            return filePath.replace(/^drafterbit/gi, __dirname)
+            return filePath.replace(/^drafterbit/gi, __dirname);
         }
 
         if(path.isAbsolute(filePath)) {
-            return filePath
+            return filePath;
         }
 
         if(Module._isRelative(filePath)) {
@@ -96,7 +96,7 @@ class Module {
                 throw e;
             }
         }
-    };
+    }
 }
 
 module.exports = Module;

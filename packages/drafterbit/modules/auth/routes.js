@@ -164,11 +164,11 @@ router.post('/token',
                 ctx.status =401;
             }
 
-            ctx.throw(e)
+            ctx.throw(e);
         }
 
     }
-    );
+);
 
 /**
  * @swagger

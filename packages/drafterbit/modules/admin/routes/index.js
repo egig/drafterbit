@@ -25,7 +25,7 @@ function assetPath(ctx, asset) {
  *     tags:
  *        - /settings
  */
-router.get("/settings", async function (ctx, next) {
+router.get('/settings', async function (ctx, next) {
 
     try {
         let m = ctx.app.model('Setting');
@@ -48,7 +48,7 @@ router.get("/settings", async function (ctx, next) {
  *     tags:
  *        - /settings
  */
-router.patch("/settings", function (req, res) {
+router.patch('/settings', function (req, res) {
     (async function () {
 
         try {
@@ -56,7 +56,7 @@ router.patch("/settings", function (req, res) {
             let results = await m.setSetting(req.body.fieldset_name, req.body);
             res.send(results);
         } catch (e) {
-            console.log(e)
+            console.log(e);
             res.status(500);
             res.send(e.message);
         }
@@ -70,7 +70,7 @@ router.get('/admin', function (ctx, next) {
     const webpackAssets = JSON.parse(assetsStr.toString());
 
     let defaultState = {COMMON: {}};
-    defaultState.COMMON.language = ""; //req.language;
+    defaultState.COMMON.language = ''; //req.language;
     defaultState.COMMON.languages = []; //req.languages;
 
     let config = ctx.app.get('config');

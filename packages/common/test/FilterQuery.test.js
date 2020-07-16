@@ -4,24 +4,24 @@ let expect = chai.expect;
 
 const FilterQuery = require('../FilterQuery');
 
-describe("FilterQuery", () => {
+describe('FilterQuery', () => {
 
     let o = new FilterQuery();
 
-    describe("FilterQuery.toString", () => {
-        o.addFilter("foo", "bar");
+    describe('FilterQuery.toString', () => {
+        o.addFilter('foo', 'bar');
 
-        it("should return correct string", () => {
+        it('should return correct string', () => {
             expect(o.toString()).to.eq('foo:bar');
         });
     });
 
-    describe("FilterQuery.pop", () => {
+    describe('FilterQuery.pop', () => {
         let m = new FilterQuery();
-        m.addFilter("foo", "bar");
+        m.addFilter('foo', 'bar');
         m.pop();
 
-        it("should return correct filters after pop", () => {
+        it('should return correct filters after pop', () => {
             expect(m.getFilters().length).to.eq(0);
         });
     });
