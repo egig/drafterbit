@@ -57,8 +57,8 @@ class CoreModule extends Module {
 
         // Insert module entries
         let clientEntryPoint = webpackConfig.entry.pop();
-        console.log('Number of modules:', app._modules.length);
-        app._modules.map(mo => {
+        console.log('Number of modules:', app.modules().length);
+        app.modules().map(mo => {
             let entry = mo.getAdminClientSideEntry();
             if (entry) {
                 webpackConfig.entry.push(entry);

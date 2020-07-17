@@ -16,61 +16,95 @@ mongoose.set('useUnifiedTopology', true);
 
 class Application extends Koa {
 
-    constructor(options) {
+    #modules = [];
+    #odmConnections = {};
+    #odmDefaultConn = '_default';
+    #odmConfig = {};
+    projectDir = "";
+    #services = [];
+    #modulePaths = [];
+
+    /**
+     *
+     * @param options
+     */
+    constructor(options = {}) {
         super(options);
-
-        this._booted = false;
-        this._mongoConnections = {};
-        this._mongoDefaultConn = null; // TODO move this to req.locals
-        this._mongoConfig = {};
-        this._modules = [];
-        this.modules = [];
-        this.services = [];
-        this.projectDir = '';
+        this.#modulePaths = options.modules || [];
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
     set(key, value){
-        this.services[key] = value;
+        this.#services[key] = value;
     }
 
+    /**
+     *
+     * @param key
+     * @returns {*}
+     */
     get(key){
-        return this.services[key];
+        return this.#services[key];
     }
 
+    /**
+     *
+     */
     build() {
         this.emit('build');
     }
 
+    /**
+     *
+     * @returns {Array}
+     */
+    modules() {
+        return this.#modules
+    }
+
+    /**
+     *
+     * @returns {Promise<[unknown]>}
+     */
     install() {
 
-        let installs = this._modules.map(m => {
+        // TODO use mongoose transaction
+        let installs = this.#modules.map(m => {
             return m.install(this)
         });
 
         return Promise.all(installs)
             .then(() => {
-                console.info("Installation Complete.");
+                this.get('log').info("Installation Complete.");
                 process.exit(0)
             })
             .catch(e => {
-                console.info("Installation Failed.");
+                this.get('log').error("Installation Failed.");
                 process.exit(1)
             })
     }
 
+    /**
+     *
+     */
     routing() {
-        this._modules.map(m => {
+        this.#modules.map(m => {
             m.loadRoutes();
         });
     }
 
+    /**
+     *
+     * @param rootDir
+     * @returns {Application}
+     */
     boot(rootDir) {
 
         this._booted = false;
-        this._mongoConnections = {};
-        this._mongoDefaultConn = null; // TODO move this to req.locals
-        this._mongoConfig = {};
-        this._modules = [];
         this.projectDir = rootDir;
 
         // build skeletons
@@ -88,8 +122,7 @@ class Application extends Koa {
         this.set('log', logger);
         this.set('config', config);
 
-        this._mongoDefaultConn = config.get('MONGODB_NAME')  || '_default';
-        this._mongoConfig[this._mongoDefaultConn] = {
+        this.#odmConfig[this.#odmDefaultConn] = {
             uri: config.get('MONGODB_URI'),
         };
 
@@ -101,17 +134,14 @@ class Application extends Koa {
         this.set('cmd', cmd);
 
         // init modules
-        this._modules = this.modules.map(m => {
+        this.#modules = this.#modulePaths.map(m => {
             let modulePath = Module.resolve(m, this.projectDir);
             let ModulesClass = require(modulePath);
             let moduleInstance = new ModulesClass(this);
-            moduleInstance._modulePath = modulePath;
+            moduleInstance.setPath(modulePath);
 
-            // register db schema
-            let db = this.getDB();
-            if(typeof moduleInstance.registerSchema == 'function') {
-                moduleInstance.registerSchema(db);
-            }
+            let db = this.odm();
+            moduleInstance.registerSchema(db);
 
             // register config
             if (moduleInstance.canLoad('config')) {
@@ -123,8 +153,7 @@ class Application extends Koa {
             return moduleInstance;
         });
 
-        // this.use(serve('./build'));
-
+        // Error handling
         this.use(async (ctx, next) => {
             try {
                 await next();
@@ -151,24 +180,34 @@ class Application extends Koa {
     }
 
     model(name) {
-        return this.getDB().model(name);
+        return this.odm().model(name);
     }
 
-    getDB(dbName) {
+    /**
+     *
+     * @param dbName
+     * @returns {*}
+     */
+    odm(name) {
 
-        dbName = dbName || this._mongoDefaultConn;
+        name = name || this.#odmDefaultConn;
         let {
             uri
-        } = this._mongoConfig[dbName];
+        } = this.#odmConfig[name];
 
-        if(!this._mongoConnections[dbName]) {
-            this._mongoConnections[dbName] = this.createMongooseConn(uri);
+        if(!this.#odmConnections[name]) {
+            this.#odmConnections[name] = this.createODMConn(uri);
         }
 
-        return this._mongoConnections[dbName];
+        return this.#odmConnections[name];
     }
 
-    createMongooseConn(uri) {
+    /**
+     *
+     * @param uri
+     * @returns {*}
+     */
+    createODMConn(uri) {
 
         let conn = mongoose.createConnection(uri, {
             connectTimeoutMS: 9000,
@@ -186,6 +225,7 @@ class Application extends Koa {
 
         return conn;
     }
+
 
     createLogger(debug) {
 

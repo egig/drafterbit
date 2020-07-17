@@ -183,9 +183,9 @@ function createUser(m, email, passwordStr, app) {
 
             let userModel;
             try {
-                userModel = app.getDB().model('User');
+                userModel = app.odm().model('User');
             } catch (error) {
-                userModel = app.getDB().model('User', schemaObj);
+                userModel = app.odm().model('User', schemaObj);
             }
 
             return password.hash(passwordStr)

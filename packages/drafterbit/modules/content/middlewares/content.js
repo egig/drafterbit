@@ -10,9 +10,9 @@ const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
 function createModel(app, modelName, schemaObj) {
     // TODO figure out the mongoCollectionName
     try {
-        app.getDB().model(modelName);
+        app.odm().model(modelName);
     } catch (error) {
-        app.getDB().model(modelName, schemaObj);
+        app.odm().model(modelName, schemaObj);
     }
 }
 

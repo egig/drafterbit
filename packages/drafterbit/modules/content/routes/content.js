@@ -86,7 +86,7 @@ router.get('/:type_name/:id',
         let typeName = ctx.params['type_name'];
         let  Model = ctx.app.model(typeName);
         let selectFields = ['-__v'];
-        ctx.app._modules.map(m => {
+        ctx.app.modules().map(m => {
             if (m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }
@@ -214,7 +214,7 @@ router.get('/:type_name',
         let m = ctx.app.model(ctx.params['type_name']);
 
         let selectFields = ['-__v'];
-        ctx.app._modules.map(m => {
+        ctx.app.modules().map(m => {
             if (m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }

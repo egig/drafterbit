@@ -227,7 +227,7 @@ router.post('/types/:type_name/fields',
         let s = await m.addField(typeName, ctx.request.body);
 
         // update compiled models
-        delete ctx.app.getDB().models[typeName];
+        delete ctx.app.odm().models[typeName];
         ctx.body = s;
     }
 );
@@ -312,7 +312,7 @@ router.patch('/types/:type_id',
 
         // update compiled models
         let type = await  m.getType(typeId);
-        delete ctx.app.getDB().models[type.name];
+        delete ctx.app.odm().models[type.name];
 
         ctx.body = type;
     }
@@ -365,7 +365,7 @@ router.patch('/types/:t_name/fields/:field_id',
 
         let s = await m.updateTypeField(typeName, fieldId, ctx.request.body);
 
-        delete ctx.app.getDB().models[typeName];
+        delete ctx.app.odm().models[typeName];
 
         ctx.body = s;
     }

@@ -112,9 +112,9 @@ router.post('/token',
             let schemaObj = fieldsToSchema.getSchema(type.fields);
             let userModel;
             try {
-                userModel = ctx.app.getDB().model(userCollectionName);
+                userModel = ctx.app.odm().model(userCollectionName);
             } catch (error) {
-                userModel = ctx.app.getDB().model(userCollectionName, schemaObj);
+                userModel = ctx.app.odm().model(userCollectionName, schemaObj);
             }
 
             let user = await userModel.findOne({

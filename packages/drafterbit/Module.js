@@ -3,15 +3,21 @@ const fs = require('fs');
 
 class Module {
 
+    #path = '';
+    #app = null;
+
     constructor(app) {
-        this.app = app;
-        this._modulePath = '';
+        this.#app = app;
+    }
+
+    setPath(p) {
+        this.#path = p;
     }
 
     loadRoutes() {
         if (this.canLoad('routes')) {
             let routes = this.require('routes');
-            this.app.use(routes);
+            this.#app.use(routes);
         }
     }
 
@@ -19,15 +25,15 @@ class Module {
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
             commands.map(c => {
-                this.app.get('cmd').command(c.command)
+                this.#app.get('cmd').command(c.command)
                     .description(c.description)
-                    .action(c.createAction(this.app));
+                    .action(c.createAction(this.#app));
             });
         }
     }
 
     require(file) {
-        return require(path.join(this._modulePath, file));
+        return require(path.join(this.#path, file));
     }
 
     registerSchema(db) {}
@@ -37,7 +43,7 @@ class Module {
     }
 
     getAdminClientSideEntry() {
-        let entryPath = this._modulePath+'/client-side/src/index.js';
+        let entryPath = this.#path+'/client-side/src/index.js';
         if (fs.existsSync(entryPath)) {
             return entryPath;
         }
@@ -46,7 +52,7 @@ class Module {
     }
 
     canLoad(files) {
-        let resolvingPath = path.join(this._modulePath,files);
+        let resolvingPath = path.join(this.#path,files);
         try {
             require.resolve(resolvingPath);
             return true;
@@ -80,7 +86,6 @@ class Module {
             return path.resolve(root, filePath);
         }
 
-        // TODO ensure this return path across OS
         try {
             return path.dirname(require.resolve(filePath));
         } catch (e) {
