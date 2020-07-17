@@ -41,6 +41,23 @@ class Application extends Koa {
         this.emit('build');
     }
 
+    install() {
+
+        let installs = this._modules.map(m => {
+            return m.install(this)
+        });
+
+        return Promise.all(installs)
+            .then(() => {
+                console.info("Installation Complete.");
+                process.exit(0)
+            })
+            .catch(e => {
+                console.info("Installation Failed.");
+                process.exit(1)
+            })
+    }
+
     routing() {
         this._modules.map(m => {
             m.loadRoutes();

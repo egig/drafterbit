@@ -3,68 +3,59 @@ const FieldType = require('@drafterbit/common/FieldType');
 const fieldsToSchema = require('@drafterbit/common/fieldsToSchema');
 const password = require('./lib/password');
 
-module.exports = [
-    {
-        command: 'install',
-        description: 'Install app data',
-        createAction: app => {
-            return () => {
+module.exports = function install(app) {
+    return promptAndInstall(app)
+};
 
-                console.log('Welcome! Please provide email and password to create root user account.');
-                inquirer
-                    .prompt([
-                        {
-                            type: 'input',
-                            name: 'email',
-                            message: 'Email:',
-                            validate: function(value) {
-                                // TODO validate email
-                                // var valid = !isNaN(parseFloat(value));
-                                // return valid || 'Please enter a number';
-                                return true;
-                            },
-                            filter: String
-                        },
-                        {
-                            type: 'password',
-                            name: 'password',
-                            message: 'Password:'
-                        },
-                        {
-                            type: 'password',
-                            name: 'password_confirm',
-                            message: 'Password Confirm:'
-                        },
-                    ])
-                    .then(answers => {
+function promptAndInstall(app) {
+    console.log('Welcome! Please provide email and password to create root user account.');
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Email:',
+                validate: function(value) {
+                    // TODO validate email
+                    // var valid = !isNaN(parseFloat(value));
+                    // return valid || 'Please enter a number';
+                    return true;
+                },
+                filter: String
+            },
+            {
+                type: 'password',
+                name: 'password',
+                message: 'Password:'
+            },
+            {
+                type: 'password',
+                name: 'password_confirm',
+                message: 'Password Confirm:'
+            },
+        ])
+        .then(answers => {
 
-                        if (answers.password !== answers.password_confirm) {
-                            console.log('Password is not match please repeat');
-                            process.exit(0);
-                        }
+            if (answers.password !== answers.password_confirm) {
+                console.log('Password is not match please repeat');
+                process.exit(0);
+            }
 
-                        // TODO using transactions
-                        return install(app, answers.email, answers.password)
-                            .then(r => {
-                                console.log(r);
-                                process.exit(0);
-                            });
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        if(error.isTtyError) {
-                            // Prompt couldn't be rendered in the current environment
-                        } else {
-                            // Something else when wrong
-                        }
-                    });
-            };
-        }
-    }
-];
+            // TODO using transactions
+            return diInstall(app, answers.email, answers.password)
 
-function install(app, email, password) {
+        })
+        .catch(error => {
+            console.error(error);
+            if(error.isTtyError) {
+                // Prompt couldn't be rendered in the current environment
+            } else {
+                // Something else when wrong
+            }
+        });
+}
 
+function diInstall(app, email, password) {
     let m = app.model('Type');
 
     return m.deleteMany({
@@ -80,41 +71,9 @@ function install(app, email, password) {
                 return createGroup(m);
             }).then(r => {
                 return createUser(m, email, password, app);
-            }).then(r => {
-                return installSettings(app);
-            }).then(r => {
-                return installPrimitives(app);
-            }).then(r => {
-                console.log(r);
             }).catch(e => {
                 console.error(e);
             });
-    });
-}
-
-function installPrimitives(app) {
-    let primitives = [
-        { name: 'ShortText', slug: 'short-text', displayText: "Short Text"},
-        { name: 'LongText',  slug: 'long-text', displayText: "Long Text"},
-        { name: 'RichText',  slug: 'rich-text', displayText: "Rich Text"},
-        { name: 'Number',  slug: 'numbers', displayText: "Number"},
-    ];
-
-    let m = app.model('Type');
-    let createTypes = primitives.map(t => {
-        return m.createType(t.name, t.slug, t.displayText, "", false, []);
-    });
-
-    return Promise.all(createTypes);
-}
-
-function installSettings(app) {
-    let m = app.model('Setting');
-    return m.setSetting('General', {
-        "app_name": "Awesome app",
-        "enable_register": false,
-        "enable_reset_password": false,
-        "brand_img_url": "/img/app_name_here.png"
     });
 }
 
@@ -234,9 +193,7 @@ function createUser(m, email, passwordStr, app) {
                     return userModel.create({
                         email: email,
                         password: hashedPassword
-                    }).then(r => {
-                        console.log(r);
-                    });
+                    })
                 });
         });
 }

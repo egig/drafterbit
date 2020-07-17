@@ -16,12 +16,9 @@ class Module {
     }
 
     loadCommands() {
-
-        console.log('loading command...');
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
             commands.map(c => {
-                console.log('loading command:', c.command);
                 this.app.get('cmd').command(c.command)
                     .description(c.description)
                     .action(c.createAction(this.app));
@@ -50,11 +47,8 @@ class Module {
 
     canLoad(files) {
         let resolvingPath = path.join(this._modulePath,files);
-        console.log('resolving path', resolvingPath);
         try {
             require.resolve(resolvingPath);
-            console.log('path resolved');
-            console.log('---');
             return true;
         } catch (e) {
             if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
@@ -96,6 +90,10 @@ class Module {
                 throw e;
             }
         }
+    }
+
+    install(app) {
+        return Promise.all([]);
     }
 }
 

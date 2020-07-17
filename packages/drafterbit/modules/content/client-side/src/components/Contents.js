@@ -116,7 +116,7 @@ class Contents extends React.Component {
             />
         );
     }
-}w
+}
 
 const mapStateToProps = (state) => {
     return {

@@ -1,4 +1,5 @@
 const Module = require('../../Module');
+const install = require('./install');
 
 class AuthModule extends Module {
     constructor(app) {
@@ -14,6 +15,10 @@ class AuthModule extends Module {
             userApiBaseURL: serverConfig.get('USER_API_BASE_URL'),
             userApiKey: serverConfig.get('USER_API_KEY')
         };
+    }
+
+    install(app) {
+        return install(app);
     }
 }
 
