@@ -1,9 +1,8 @@
 const fs = require('fs');
 const Koa = require('koa');
-const c2k = require('koa-connect');
 
 const bodyParser = require('koa-bodyparser');
-const cors = require('cors');
+const cors = require('@koa/cors');
 const Config = require('./Config');
 const Module = require('./Module');
 const commander = require('commander');
@@ -164,12 +163,11 @@ class Application extends Koa {
             }
         });
 
-        // build http schema
-        this.use(c2k(cors({
+        this.use(cors({
             'origin': '*',
             'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
             'exposedHeaders': 'Content-Range,X-Content-Range'
-        })));
+        }));
 
         this.use(bodyParser());
 
@@ -179,13 +177,17 @@ class Application extends Koa {
         return this;
     }
 
+    /**
+     *
+     * @param name
+     */
     model(name) {
         return this.odm().model(name);
     }
 
     /**
      *
-     * @param dbName
+     * @param name
      * @returns {*}
      */
     odm(name) {
@@ -226,7 +228,11 @@ class Application extends Koa {
         return conn;
     }
 
-
+    /**
+     *
+     * @param debug
+     * @returns {winston.Logger}
+     */
     createLogger(debug) {
 
         // TODO add rotate file logger
