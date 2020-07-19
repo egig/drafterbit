@@ -7,15 +7,19 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "lib/index.js",
+  "files": [
+    "./lib",
+    "./package.json",
+    "./package-lock.json"
+  ],
   "dependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
-    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.0.0",
     "@drafterbit/common": "latest",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -121,6 +125,8 @@
     "eslint": "^4.10.0",
     "eslint-config-dev": "^2.0.0",
     "eslint-plugin-react": "^7.14.3",
+    "flow-bin": "^0.129.0",
+    "flow-remove-types": "^2.129.0",
     "mocha": "^6.1.4",
     "nodemon": "^1.18.9",
     "nyc": "^14.1.1",
@@ -130,11 +136,13 @@
     "webpack-dev-middleware": "^3.7.0"
   },
   "scripts": {
-    "test": "nyc --reporter=none mocha './test/**/*.test.js' --timeout=3000 --reporter=spec  --exit --recursive --bail",
+    "test": "npm run build && nyc --reporter=none mocha './test/**/*.test.js' --timeout=3000 --reporter=spec  --exit --recursive --bail",
     "coverage": "nyc report --reporter=text-summary",
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
-    "linter": "./node_modules/.bin/eslint --fix ./src"
+    "linter": "./node_modules/.bin/eslint --fix ./src",
+    "build": "rm -R lib & flow && cp -r src lib && flow-remove-types src/ -d lib/",
+    "flow": "flow check src"
   },
   "pre-push": {
     "run": "test"

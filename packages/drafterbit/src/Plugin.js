@@ -1,16 +1,28 @@
+// @flow
 const path = require('path');
 const fs = require('fs');
 
+/*::
+interface PluginInterface {
+    constructor(app: any): void,
+    setPath(p: string): void,
+    getPath(): string,
+    loadRoutes(): void,
+    loadCommands(): void,
+    require(file: string): any,
+}
+*/
+
 class Plugin {
 
-    #path = '';
-    #app = null;
+    #path: string = '';
+    #app: any = null;
 
     /**
      *
      * @param app drafterbit app instance
      */
-    constructor(app) {
+    constructor(app: any): void {
         this.#app = app;
     }
 
@@ -18,19 +30,19 @@ class Plugin {
      *
      * @param p
      */
-    setPath(p) {
+    setPath(p: string): void {
         this.#path = p;
     }
 
 
-    getPath() {
+    getPath(): string {
         return this.#path;
     }
 
     /**
      * Load Routes to app
      */
-    loadRoutes() {
+    loadRoutes(): void {
         if (this.canLoad('routes')) {
             let routes = this.require('routes');
             this.#app.use(routes);
@@ -56,22 +68,23 @@ class Plugin {
      * @param file
      * @returns {any}
      */
-    require(file) {
-        return require(path.join(this.#path, file));
+    require(file: string): any {
+        let p: string = path.join(this.#path, file);
+        return require(p);
     }
 
     /**
      *
      * @param db
      */
-    registerSchema(db) {}
+    registerSchema(db: any): any {}
 
     /**
      *
      * @param serverConfig
      * @returns {{}}
      */
-    registerClientConfig(serverConfig) {
+    registerClientConfig(serverConfig: string) {
         return {};
     }
 
@@ -93,7 +106,7 @@ class Plugin {
      * @param files
      * @returns {boolean}
      */
-    canLoad(files) {
+    canLoad(files: string) {
         let resolvingPath = path.join(this.#path,files);
         try {
             require.resolve(resolvingPath);
@@ -113,7 +126,7 @@ class Plugin {
      * @returns {boolean}
      * @private
      */
-    static _isRelative(filename) {
+    static _isRelative(filename: string) {
         return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
     }
 
@@ -122,7 +135,7 @@ class Plugin {
      * @param filePath
      * @returns {boolean}
      */
-    static isDTModule(filePath) {
+    static isDTPlugin(filePath: string) {
         return (filePath.indexOf('drafterbit') === 0);
     }
 
@@ -132,8 +145,8 @@ class Plugin {
      * @param root
      * @returns {void | string|string|*}
      */
-    static resolve(filePath, root) {
-        if(Plugin.isDTModule(filePath)){
+    static resolve(filePath: string, root: string) {
+        if(Plugin.isDTPlugin(filePath)){
             return filePath.replace(/^drafterbit/gi, __dirname);
         }
 
@@ -161,7 +174,7 @@ class Plugin {
      * @param app
      * @returns {Promise<[unknown]>}
      */
-    install(app) {
+    install(app: any) {
         return Promise.all([]);
     }
 }

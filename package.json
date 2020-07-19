@@ -11,7 +11,8 @@
     "bootstrap": "lerna bootstrap --hoist",
     "link": "lerna link --force-local",
     "linter": "./node_modules/.bin/eslint --fix ./packages",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "build": "lerna run build"
   },
   "pre-commit": {
     "run": "test"

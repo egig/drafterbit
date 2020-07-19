@@ -1,3 +1,4 @@
+// @flow
 const fs = require('fs');
 const Koa = require('koa');
 
@@ -13,21 +14,25 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
 mongoose.set('useUnifiedTopology', true);
 
+type Options = {
+    plugins: string[]
+}
+
 class Application extends Koa {
 
-    #plugins = [];
-    #odmConnections = {};
-    #odmDefaultConn = '_default';
-    #odmConfig = {};
+    #plugins: any[] = [];
+    #odmConnections: any = {};
+    #odmDefaultConn: string = '_default';
+    #odmConfig: any = {};
     projectDir = "";
-    #services = [];
-    #pluginPaths = [];
+    #services: any = {};
+    #pluginPaths: string[] = [];
 
     /**
      *
      * @param options
      */
-    constructor(options = {}) {
+    constructor(options: Options = { plugins: [] }): void {
         super(options);
         this.#pluginPaths = options.plugins || [];
     }
@@ -37,7 +42,7 @@ class Application extends Koa {
      * @param key
      * @param value
      */
-    set(key, value){
+    set(key: string, value: any): void{
         this.#services[key] = value;
     }
 
@@ -46,14 +51,14 @@ class Application extends Koa {
      * @param key
      * @returns {*}
      */
-    get(key){
+    get(key: string): any{
         return this.#services[key];
     }
 
     /**
      *
      */
-    build() {
+    build(): void {
         this.emit('build');
     }
 
@@ -101,7 +106,7 @@ class Application extends Koa {
      * @param rootDir
      * @returns {Application}
      */
-    boot(rootDir) {
+    boot(rootDir: string) {
 
         this._booted = false;
         this.projectDir = rootDir;
@@ -117,9 +122,10 @@ class Application extends Koa {
         }
 
         let config = new Config(rootDir, options);
-        let logger = this.createLogger(config.get('DEBUG'));
-        this.set('log', logger);
         this.set('config', config);
+
+        let logger = this.createLogger();
+        this.set('log', logger);
 
         this.#odmConfig[this.#odmDefaultConn] = {
             uri: config.get('MONGODB_URI'),
@@ -181,7 +187,7 @@ class Application extends Koa {
      *
      * @param name
      */
-    model(name) {
+    model(name: string) {
         return this.odm().model(name);
     }
 
@@ -190,15 +196,17 @@ class Application extends Koa {
      * @param name
      * @returns {*}
      */
-    odm(name) {
+    odm(name?: string) {
 
         name = name || this.#odmDefaultConn;
-        let {
-            uri
-        } = this.#odmConfig[name];
+
+        let config = this.#odmConfig[name];
+        if (typeof config === 'undefined') {
+            throw new Error('Unknown connection name '+name )
+        }
 
         if(!this.#odmConnections[name]) {
-            this.#odmConnections[name] = this.createODMConn(uri);
+            this.#odmConnections[name] = this.createODMConn(config.uri);
         }
 
         return this.#odmConnections[name];
@@ -209,7 +217,7 @@ class Application extends Koa {
      * @param uri
      * @returns {*}
      */
-    createODMConn(uri) {
+    createODMConn(uri: string) {
 
         let conn = mongoose.createConnection(uri, {
             connectTimeoutMS: 9000,
@@ -233,11 +241,11 @@ class Application extends Koa {
      * @param debug
      * @returns {winston.Logger}
      */
-    createLogger(debug) {
+    createLogger() {
 
         // TODO add rotate file logger
         const logger = winston.createLogger({
-            level: debug ? 'debug' : 'warn',
+            level: this.get('config').get('DEBUG') ? 'debug' : 'warn',
             format: winston.format.json(),
             transports: []
         });

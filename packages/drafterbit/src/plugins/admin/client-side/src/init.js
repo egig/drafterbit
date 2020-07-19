@@ -1,3 +1,5 @@
+// @flow
+
 import ClientSide from './ClientSide'
 
 const drafterbit = new ClientSide(window.__DT_CONFIG__);

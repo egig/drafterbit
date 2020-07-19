@@ -1,7 +1,7 @@
 let chai = require('chai');
 let expect = chai.expect;
 
-const Module = require('../Plugin');
+const Module = require('../lib/Plugin');
 
 describe('Module', () => {
 

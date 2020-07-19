@@ -1,3 +1,4 @@
+// @flow
 import EventEmitter from 'eventemitter3';
 import React from 'react';
 import ApiClient from './ApiClient';
@@ -9,7 +10,7 @@ import i18next from 'i18next';
 
 class ClientSide extends EventEmitter {
 
-    constructor(config) {
+    constructor(config: Object): void {
         super();
 
         this.config = config;
@@ -26,7 +27,7 @@ class ClientSide extends EventEmitter {
         this.languageContext =  {namespaces: [], i18n: this.i18n};
     }
 
-    getConfig(name) {
+    getConfig(name: string) {
         if(!this.config.hasOwnProperty(name)) {
             throw new Error(`Can not find config value for: ${name}`);
         }
@@ -34,7 +35,7 @@ class ClientSide extends EventEmitter {
         return this.config[name];
     };
 
-    addModule(moduleProto) {
+    addModule(moduleProto: Object) {
         function M() {}
         M.prototype = Object.assign({}, Module.prototype, moduleProto);
         let moduleObject = new M();
@@ -73,7 +74,7 @@ class ClientSide extends EventEmitter {
         return combineReducers(reducerMap);
     }
 
-    storeFromState(defaultState) {
+    storeFromState(defaultState: Object) {
         const middleWares = [thunk];
         this.store = createStore(this.createRootReducer(), defaultState, applyMiddleware(...middleWares));;
     }
