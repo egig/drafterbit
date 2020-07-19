@@ -3,7 +3,9 @@ export default function Module() {
 }
 
 Module.prototype.routes = [];
-Module.prototype.adminRoutes = [];
+Module.prototype.admin = {
+    routes: []
+};
 
 Module.prototype.routeFilter = function routeFilter(route) {
     return route;

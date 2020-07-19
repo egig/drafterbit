@@ -40,7 +40,7 @@ class Shell extends React.Component {
                                         <Suspense fallback={<Spin indicator={LoadingIcon} />}>
                                             <Switch location={location}>
                                                 {this.props.$dt.modules.map(m => {
-                                                    return m.adminRoutes.map(route => {
+                                                    return m.admin.routes.map(route => {
 
                                                         for (let i=0; i<this.props.$dt.modules.length;i++) {
                                                             let mo = this.props.$dt.modules[i];
@@ -53,7 +53,7 @@ class Shell extends React.Component {
                                                         }
 
                                                         return <Route exact {...route} />
-                                                    })
+                                 w                   })
                                                 })}
                                             </Switch>
                                         </Suspense>

@@ -12,9 +12,11 @@ import {
     $dt.addModule({
         name: "common",
         stateReducer: stateReducer,
-        adminRoutes: [
-            {path: "/settings", component: Settings},
-        ],
+        admin: {
+            routes: [
+                {path: "/settings", component: Settings},
+            ],
+        },
         getMenu() {
             return [
                 {
