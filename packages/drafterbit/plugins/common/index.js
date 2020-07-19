@@ -1,7 +1,7 @@
-const Module = require('../../Module');
+const Plugin = require('../../Plugin');
 const install = require('./install');
 
-class CommonModule extends Module {
+class CommonPlugin extends Plugin {
     constructor(app) {
         super(app);
     }
@@ -11,4 +11,4 @@ class CommonModule extends Module {
     }
 }
 
-module.exports = CommonModule;
+module.exports = CommonPlugin;

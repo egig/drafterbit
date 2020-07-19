@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-export default function createRootReducer(drafterbit) {
+export default function createRootReducer($dt) {
 
     let reducerMap = {};
-    drafterbit.modules.map(mo => {
+    $dt.modules.map(mo => {
         if(mo.stateReducer) {
             reducerMap[mo.stateReducer.stateName] = mo.stateReducer.reducer;
         }

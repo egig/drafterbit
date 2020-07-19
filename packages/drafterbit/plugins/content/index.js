@@ -1,7 +1,7 @@
 const TypeSchema  = require('./models/Type');
-const Module = require('../../Module');
+const Plugin = require('../../Plugin');
 
-class ContentModule extends Module {
+class ContentPlugin extends Plugin {
     constructor(app) {
         super(app);
     }
@@ -11,4 +11,4 @@ class ContentModule extends Module {
     }
 }
 
-module.exports = ContentModule;
+module.exports = ContentPlugin;

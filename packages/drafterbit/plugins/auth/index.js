@@ -1,7 +1,7 @@
-const Module = require('../../Module');
+const Plugin = require('../../Plugin');
 const install = require('./install');
 
-class AuthModule extends Module {
+class AuthPlugin extends Plugin {
     constructor(app) {
         super(app);
 
@@ -23,4 +23,4 @@ class AuthModule extends Module {
 }
 
 
-module.exports = AuthModule;
+module.exports = AuthPlugin;

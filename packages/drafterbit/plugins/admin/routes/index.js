@@ -80,7 +80,7 @@ router.get('/admin', function (ctx, next) {
         debug: +config.get('DEBUG')
     };
 
-    ctx.app.modules().map(mo => {
+    ctx.app.plugins().map(mo => {
         drafterbitConfig = Object.assign({}, drafterbitConfig, mo.registerClientConfig(config));
     });
 

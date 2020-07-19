@@ -4,7 +4,7 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
 const Config = require('./Config');
-const Module = require('./Module');
+const Module = require('./Plugin');
 const commander = require('commander');
 const winston = require('winston');
 const mongoose = require('mongoose');
@@ -15,13 +15,13 @@ mongoose.set('useUnifiedTopology', true);
 
 class Application extends Koa {
 
-    #modules = [];
+    #plugins = [];
     #odmConnections = {};
     #odmDefaultConn = '_default';
     #odmConfig = {};
     projectDir = "";
     #services = [];
-    #modulePaths = [];
+    #pluginPaths = [];
 
     /**
      *
@@ -29,7 +29,7 @@ class Application extends Koa {
      */
     constructor(options = {}) {
         super(options);
-        this.#modulePaths = options.modules || [];
+        this.#pluginPaths = options.plugins || [];
     }
 
     /**
@@ -61,8 +61,8 @@ class Application extends Koa {
      *
      * @returns {Array}
      */
-    modules() {
-        return this.#modules
+    plugins() {
+        return this.#plugins
     }
 
     /**
@@ -72,7 +72,7 @@ class Application extends Koa {
     install() {
 
         // TODO use mongoose transaction
-        let installs = this.#modules.map(m => {
+        let installs = this.#plugins.map(m => {
             return m.install(this)
         });
 
@@ -91,7 +91,7 @@ class Application extends Koa {
      *
      */
     routing() {
-        this.#modules.map(m => {
+        this.#plugins.map(m => {
             m.loadRoutes();
         });
     }
@@ -132,8 +132,8 @@ class Application extends Koa {
 
         this.set('cmd', cmd);
 
-        // init modules
-        this.#modules = this.#modulePaths.map(m => {
+        // init plugins
+        this.#plugins = this.#pluginPaths.map(m => {
             let modulePath = Module.resolve(m, this.projectDir);
             let ModulesClass = require(modulePath);
             let moduleInstance = new ModulesClass(this);

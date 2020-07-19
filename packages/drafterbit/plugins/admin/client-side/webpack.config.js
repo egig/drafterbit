@@ -9,7 +9,10 @@ module.exports = env => {
     console.log('Build output path: ', env.outputPath);
 
     let includePaths = env.modulePaths || [];
-    let jsIncludes = [/@drafterbit\/common/].concat(includePaths);
+    let jsIncludes = [
+        /drafterbit\/common/,
+        /drafterbit\/packages\/common/,
+    ].concat(includePaths);
 
     let commonConfig = {
         entry: [ '@babel/polyfill', path.join(__dirname,'src/init.js'), path.join(__dirname,'src/index.js')],

@@ -2,11 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const serve = require('koa-static');
 const createWebpackConfig = require('./client-side/webpack.config');
-const Module = require('../../Module');
+const Plugin = require('../../Plugin');
 const SettingSchema = require('./models/Setting');
 const koaWebpack = require('koa-webpack');
 
-class CoreModule extends Module {
+class AdminPlugin extends Plugin {
 
     constructor(app) {
         super(app);
@@ -47,7 +47,7 @@ class CoreModule extends Module {
 
         let isProduction = (app.get('config').get('NODE_ENV') === 'production');
 
-        let modulePaths = app.modules().map(mo => mo.getPath());
+        let modulePaths = app.plugins().map(mo => mo.getPath());
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,
             production: isProduction,
@@ -59,8 +59,8 @@ class CoreModule extends Module {
 
         // Insert module entries
         let clientEntryPoint = webpackConfig.entry.pop();
-        console.log('Number of modules:', app.modules().length);
-        app.modules().map(mo => {
+        console.log('Number of plugins:', app.plugins().length);
+        app.plugins().map(mo => {
             let entry = mo.getAdminClientSideEntry();
             if (entry) {
                 webpackConfig.entry.push(entry);
@@ -86,4 +86,4 @@ class CoreModule extends Module {
     }
 }
 
-module.exports = CoreModule;
+module.exports = AdminPlugin;

@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-class Module {
+class Plugin {
 
     #path = '';
     #app = null;
@@ -133,7 +133,7 @@ class Module {
      * @returns {void | string|string|*}
      */
     static resolve(filePath, root) {
-        if(Module.isDTModule(filePath)){
+        if(Plugin.isDTModule(filePath)){
             return filePath.replace(/^drafterbit/gi, __dirname);
         }
 
@@ -141,7 +141,7 @@ class Module {
             return filePath;
         }
 
-        if(Module._isRelative(filePath)) {
+        if(Plugin._isRelative(filePath)) {
             return path.resolve(root, filePath);
         }
 
@@ -166,4 +166,4 @@ class Module {
     }
 }
 
-module.exports = Module;
+module.exports = Plugin;
