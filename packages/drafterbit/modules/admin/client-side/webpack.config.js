@@ -8,6 +8,9 @@ module.exports = env => {
 
     console.log('Build output path: ', env.outputPath);
 
+    let includePaths = env.modulePaths || [];
+    let jsIncludes = [/@drafterbit\/common/].concat(includePaths);
+
     let commonConfig = {
         entry: [ '@babel/polyfill', path.join(__dirname,'src/init.js'), path.join(__dirname,'src/index.js')],
         output: {
@@ -20,13 +23,7 @@ module.exports = env => {
             rules: [
                 {
                     test: /\.(js|jsx)$/,
-                    include: [
-                        /node_modules\/@drafterbit/,
-                        /node_modules\/drafterbit/,
-                        /drafterbit\/modules/,
-                        /common/,
-                        env.projectRoot
-                    ],
+                    include: jsIncludes,
                     use: [
                         {
                             loader: 'babel-loader',

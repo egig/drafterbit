@@ -22,6 +22,11 @@ class Module {
         this.#path = p;
     }
 
+
+    getPath() {
+        return this.#path;
+    }
+
     /**
      * Load Routes to app
      */

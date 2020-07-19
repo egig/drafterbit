@@ -47,10 +47,12 @@ class CoreModule extends Module {
 
         let isProduction = (app.get('config').get('NODE_ENV') === 'production');
 
+        let modulePaths = app.modules().map(mo => mo.getPath());
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,
             production: isProduction,
-            projectRoot: app.projectDir
+            projectRoot: app.projectDir,
+            modulePaths: modulePaths
         });
 
         webpackConfig.output.path = webpackOutputPath;
