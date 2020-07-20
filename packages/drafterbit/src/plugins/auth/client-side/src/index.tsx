@@ -61,8 +61,8 @@ class AuthModule extends Module2 {
     };
 
 
-    renderNavBarMenu() {
-        return <NavBarMenu />
+    renderNavBarMenu(i: string) {
+        return <NavBarMenu key={i} />
     };
 
     registerApiClient() {

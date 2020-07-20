@@ -18,7 +18,7 @@ class CommonModule extends Module2 {
         ],
     };
 
-    getMenu(): any[] {
+    async getMenu(): Promise<any> {
         return [
             {
                 link: "/settings",

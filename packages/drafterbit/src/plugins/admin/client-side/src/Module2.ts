@@ -27,11 +27,11 @@ class Module2 {
         return route;
     };
 
-    getMenu(): any[] {
+    async getMenu(): Promise<any[]> {
         return [];
     };
 
-    renderNavBarMenu(): any {
+    renderNavBarMenu(i: string): any {
         return null;
     };
 
