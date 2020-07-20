@@ -9,9 +9,7 @@
   },
   "main": "lib/index.js",
   "files": [
-    "./lib/*",
-    "./package.json",
-    "./package-lock.json"
+    "lib"
   ],
   "dependencies": {
     "@babel/node": "^7.5.5",
