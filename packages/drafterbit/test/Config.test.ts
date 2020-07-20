@@ -1,8 +1,9 @@
+// @ts-nocheck
 let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-import { Config } from '../src/Config';
+import Config from '../src/Config';
 
 describe('createConfig', () => {
 

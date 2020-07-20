@@ -1,5 +1,8 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
+import Application  from "./index"
+import Config from "./Config";
+import mongoose from 'mongoose';
 
 class Plugin {
 
@@ -65,14 +68,14 @@ class Plugin {
      *
      * @param db
      */
-    registerSchema(db: any): any {}
+    registerSchema(db: mongoose.Connection): any {}
 
     /**
      *
      * @param serverConfig
      * @returns {{}}
      */
-    registerClientConfig(serverConfig: string) {
+    registerClientConfig(serverConfig: Config) {
         return {};
     }
 
@@ -162,7 +165,7 @@ class Plugin {
      * @param app
      * @returns {Promise<[unknown]>}
      */
-    install(app: any) {
+    install(app: Application) {
         return Promise.all([]);
     }
 }

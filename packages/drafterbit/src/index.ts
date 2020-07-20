@@ -3,7 +3,7 @@ const Koa = require('koa');
 
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
-import { Config } from './Config';
+import Config from './Config';
 import Plugin from './Plugin';
 const commander = require('commander');
 const winston = require('winston');
@@ -20,7 +20,7 @@ type Options = {
 class Application extends Koa {
 
     private _booted: boolean = false;
-    private _plugins: any[] = [];
+    private _plugins: Plugin[] = [];
     private _odmConnections: any = {};
     private _odmDefaultConn: string = '_default';
     private _odmConfig: any = {};
@@ -255,4 +255,4 @@ class Application extends Koa {
 
 }
 
-module.exports = Application;
+export = Application;

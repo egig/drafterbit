@@ -1,12 +1,10 @@
 const TypeSchema  = require('./models/Type');
-const Plugin = require('../../Plugin');
+import Plugin from '../../Plugin';
+import mongoose from 'mongoose';
 
 class ContentPlugin extends Plugin {
-    constructor(app) {
-        super(app);
-    }
 
-    registerSchema(db) {
+    registerSchema(db: mongoose.Connection) {
         db.model('Type', TypeSchema, '_types');
     }
 }

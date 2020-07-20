@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-export class Config {
+class Config {
 
     defaults: Object = {};
     /**
@@ -33,3 +33,5 @@ export class Config {
         this.defaults = Object.assign({}, this.defaults, defaults);
     }
 }
+
+export = Config

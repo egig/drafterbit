@@ -29,6 +29,7 @@
     "@ljharb/eslint-config": "^14.1.0",
     "@svgr/webpack": "^4.3.2",
     "@tinymce/tinymce-react": "^3.6.0",
+    "@types/mongoose": "^5.7.32",
     "antd": "^4.4.0",
     "assets-webpack-plugin": "^3.9.10",
     "axios": "^0.18.1",

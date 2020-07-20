@@ -1,8 +1,14 @@
-const Plugin = require('../../Plugin');
+import Application from "../../index";
+import Plugin from '../../Plugin';
+import Config from '../../Config';
 const install = require('./install');
 
+
 class AuthPlugin extends Plugin {
-    constructor(app) {
+
+    selectFields: Object;
+
+    constructor(app: Application) {
         super(app);
 
         this.selectFields = {
@@ -10,14 +16,14 @@ class AuthPlugin extends Plugin {
         };
     }
 
-    registerClientConfig(serverConfig) {
+    registerClientConfig(serverConfig: Config) {
         return {
             userApiBaseURL: serverConfig.get('USER_API_BASE_URL'),
             userApiKey: serverConfig.get('USER_API_KEY')
         };
     }
 
-    install(app) {
+    install(app: Application) {
         return install(app);
     }
 }
