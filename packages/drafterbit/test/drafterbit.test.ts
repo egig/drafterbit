@@ -1,6 +1,6 @@
-const chai = require('chai');
+import  * as chai from 'chai';
 const sinonChai = require('sinon-chai');
-const drafterbit = require('../lib/index');
+const drafterbit = require('../src/index');
 chai.should();
 chai.use(sinonChai);
 

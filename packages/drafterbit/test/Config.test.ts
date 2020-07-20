@@ -2,7 +2,7 @@ let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const Config = require('../lib/Config');
+import { Config } from '../src/Config';
 
 describe('createConfig', () => {
 

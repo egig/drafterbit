@@ -2,13 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 const serve = require('koa-static');
 const createWebpackConfig = require('./client-side/webpack.config');
-const Plugin = require('../../Plugin');
+import Plugin from '../../Plugin';
 const SettingSchema = require('./models/Setting');
 const koaWebpack = require('koa-webpack');
 
 class AdminPlugin extends Plugin {
 
-    constructor(app) {
+    webpackOutputPath: string;
+
+    constructor(app: any) {
         super(app);
 
         this.webpackOutputPath = path.join(app.projectDir, 'build');
@@ -36,18 +38,18 @@ class AdminPlugin extends Plugin {
             let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
             const compiler = webpack(webpackConfig);
 
-            compiler.run((err, stats) => {
+            compiler.run((err: any, stats: Object) => {
                 console.log('Webpack build done.');
                 process.exit(0);
             });
         });
     }
 
-    prepareWebpackConfig(app, webpackOutputPath) {
+    prepareWebpackConfig(app: any, webpackOutputPath: string) {
 
         let isProduction = (app.get('config').get('NODE_ENV') === 'production');
 
-        let modulePaths = app.plugins().map(mo => mo.getPath());
+        let modulePaths = app.plugins().map((mo:Plugin) => mo.getPath());
         let webpackConfig = createWebpackConfig({
             outputPath: webpackOutputPath,
             production: isProduction,
@@ -60,7 +62,7 @@ class AdminPlugin extends Plugin {
         // Insert module entries
         let clientEntryPoint = webpackConfig.entry.pop();
         console.log('Number of plugins:', app.plugins().length);
-        app.plugins().map(mo => {
+        app.plugins().map((mo: Plugin) => {
             let entry = mo.getAdminClientSideEntry();
             if (entry) {
                 webpackConfig.entry.push(entry);
@@ -70,7 +72,7 @@ class AdminPlugin extends Plugin {
         return webpackConfig;
     }
 
-    registerClientConfig(serverConfig) {
+    registerClientConfig(serverConfig: any) {
         return {
             apiBaseURL: serverConfig.get('API_BASE_URL'),
             apiKey: serverConfig.get('API_KEY'),
@@ -81,7 +83,7 @@ class AdminPlugin extends Plugin {
         return false;
     }
 
-    registerSchema(db) {
+    registerSchema(db: any) {
         db.model('Setting', SettingSchema, '_settings');
     }
 }

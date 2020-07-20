@@ -1,11 +1,10 @@
-// @flow
 const fs = require('fs');
 const Koa = require('koa');
 
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
-const Config = require('./Config');
-const Module = require('./Plugin');
+import { Config } from './Config';
+import Plugin from './Plugin';
 const commander = require('commander');
 const winston = require('winston');
 const mongoose = require('mongoose');
@@ -20,21 +19,22 @@ type Options = {
 
 class Application extends Koa {
 
-    #plugins: any[] = [];
-    #odmConnections: any = {};
-    #odmDefaultConn: string = '_default';
-    #odmConfig: any = {};
+    private _booted: boolean = false;
+    private _plugins: any[] = [];
+    private _odmConnections: any = {};
+    private _odmDefaultConn: string = '_default';
+    private _odmConfig: any = {};
     projectDir = "";
-    #services: any = {};
-    #pluginPaths: string[] = [];
+    private _services: any = {};
+    private _pluginPaths: string[] = [];
 
     /**
      *
      * @param options
      */
-    constructor(options: Options = { plugins: [] }): void {
+    constructor(options: Options = { plugins: [] }) {
         super(options);
-        this.#pluginPaths = options.plugins || [];
+        this._pluginPaths= options.plugins || [];
     }
 
     /**
@@ -43,7 +43,7 @@ class Application extends Koa {
      * @param value
      */
     set(key: string, value: any): void{
-        this.#services[key] = value;
+        this._services[key] = value;
     }
 
     /**
@@ -52,7 +52,7 @@ class Application extends Koa {
      * @returns {*}
      */
     get(key: string): any{
-        return this.#services[key];
+        return this._services[key];
     }
 
     /**
@@ -67,7 +67,7 @@ class Application extends Koa {
      * @returns {Array}
      */
     plugins() {
-        return this.#plugins
+        return this._plugins
     }
 
     /**
@@ -77,7 +77,7 @@ class Application extends Koa {
     install() {
 
         // TODO use mongoose transaction
-        let installs = this.#plugins.map(m => {
+        let installs = this._plugins.map(m => {
             return m.install(this)
         });
 
@@ -96,7 +96,7 @@ class Application extends Koa {
      *
      */
     routing() {
-        this.#plugins.map(m => {
+        this._plugins.map(m => {
             m.loadRoutes();
         });
     }
@@ -127,7 +127,7 @@ class Application extends Koa {
         let logger = this.createLogger();
         this.set('log', logger);
 
-        this.#odmConfig[this.#odmDefaultConn] = {
+        this._odmConfig[this._odmDefaultConn] = {
             uri: config.get('MONGODB_URI'),
         };
 
@@ -139,8 +139,8 @@ class Application extends Koa {
         this.set('cmd', cmd);
 
         // init plugins
-        this.#plugins = this.#pluginPaths.map(m => {
-            let modulePath = Module.resolve(m, this.projectDir);
+        this._plugins = this._pluginPaths.map(m => {
+            let modulePath = Plugin.resolve(m, this.projectDir);
             let ModulesClass = require(modulePath);
             let moduleInstance = new ModulesClass(this);
             moduleInstance.setPath(modulePath);
@@ -159,7 +159,7 @@ class Application extends Koa {
         });
 
         // Error handling
-        this.use(async (ctx, next) => {
+        this.use(async (ctx: any, next: any) => {
             try {
                 await next();
             } catch (err) {
@@ -198,18 +198,18 @@ class Application extends Koa {
      */
     odm(name?: string) {
 
-        name = name || this.#odmDefaultConn;
+        name = name || this._odmDefaultConn;
 
-        let config = this.#odmConfig[name];
+        let config = this._odmConfig[name];
         if (typeof config === 'undefined') {
             throw new Error('Unknown connection name '+name )
         }
 
-        if(!this.#odmConnections[name]) {
-            this.#odmConnections[name] = this.createODMConn(config.uri);
+        if(!this._odmConnections[name]) {
+            this._odmConnections[name] = this.createODMConn(config.uri);
         }
 
-        return this.#odmConnections[name];
+        return this._odmConnections[name];
     }
 
     /**
@@ -219,15 +219,9 @@ class Application extends Koa {
      */
     createODMConn(uri: string) {
 
-        let conn = mongoose.createConnection(uri, {
-            connectTimeoutMS: 9000,
-        }, err => {
-            if(err) {
-                this.get('log').error(err);
-            }
-        });
+        let conn = mongoose.createConnection(uri);
 
-        conn.on('error', err => {
+        conn.on('error', (err: any) => {
             if(err) {
                 this.get('log').error(err);
             }

@@ -1,7 +1,6 @@
-// @flow
 const path = require('path');
 
-class Config {
+export class Config {
 
     defaults: Object = {};
     /**
@@ -23,7 +22,7 @@ class Config {
         if (key in process.env) {
             return process.env[key];
         }
-        return this.defaults[key];
+        return (this.defaults as any)[key];
     }
 
     /**
@@ -34,6 +33,3 @@ class Config {
         this.defaults = Object.assign({}, this.defaults, defaults);
     }
 }
-
-
-module.exports = Config;

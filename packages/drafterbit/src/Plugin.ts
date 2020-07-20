@@ -1,29 +1,17 @@
-// @flow
 const path = require('path');
 const fs = require('fs');
 
-/*::
-interface PluginInterface {
-    constructor(app: any): void,
-    setPath(p: string): void,
-    getPath(): string,
-    loadRoutes(): void,
-    loadCommands(): void,
-    require(file: string): any,
-}
-*/
-
 class Plugin {
 
-    #path: string = '';
-    #app: any = null;
+    _path: string = '';
+    _app: any = null;
 
     /**
      *
      * @param app drafterbit app instance
      */
-    constructor(app: any): void {
-        this.#app = app;
+    constructor(app: any) {
+        this._app = app;
     }
 
     /**
@@ -31,12 +19,12 @@ class Plugin {
      * @param p
      */
     setPath(p: string): void {
-        this.#path = p;
+        this._path = p;
     }
 
 
     getPath(): string {
-        return this.#path;
+        return this._path;
     }
 
     /**
@@ -45,7 +33,7 @@ class Plugin {
     loadRoutes(): void {
         if (this.canLoad('routes')) {
             let routes = this.require('routes');
-            this.#app.use(routes);
+            this._app.use(routes);
         }
     }
 
@@ -55,10 +43,10 @@ class Plugin {
     loadCommands() {
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
-            commands.map(c => {
-                this.#app.get('cmd').command(c.command)
+            commands.map((c: any) => {
+                this._app.get('cmd').command(c.command)
                     .description(c.description)
-                    .action(c.createAction(this.#app));
+                    .action(c.createAction(this._app));
             });
         }
     }
@@ -69,7 +57,7 @@ class Plugin {
      * @returns {any}
      */
     require(file: string): any {
-        let p: string = path.join(this.#path, file);
+        let p: string = path.join(this._path, file);
         return require(p);
     }
 
@@ -92,8 +80,8 @@ class Plugin {
      *
      * @returns {string|boolean}
      */
-    getAdminClientSideEntry() {
-        let entryPath = this.#path+'/client-side/src/index.js';
+    getAdminClientSideEntry(): any {
+        let entryPath = this._path+'/client-side/src/index.js';
         if (fs.existsSync(entryPath)) {
             return entryPath;
         }
@@ -107,12 +95,12 @@ class Plugin {
      * @returns {boolean}
      */
     canLoad(files: string) {
-        let resolvingPath = path.join(this.#path,files);
+        let resolvingPath = path.join(this._path,files);
         try {
             require.resolve(resolvingPath);
             return true;
         } catch (e) {
-            if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+            if (e instanceof Error && (e as any).code === 'MODULE_NOT_FOUND') {
                 return false;
             } else {
                 throw e;
@@ -161,7 +149,7 @@ class Plugin {
         try {
             return path.dirname(require.resolve(filePath));
         } catch (e) {
-            if (e instanceof Error && e.code === 'MODULE_NOT_FOUND') {
+            if (e instanceof Error && (e as any).code === 'MODULE_NOT_FOUND') {
                 return filePath;
             } else {
                 throw e;
@@ -179,4 +167,4 @@ class Plugin {
     }
 }
 
-module.exports = Plugin;
+export = Plugin

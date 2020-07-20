@@ -1,4 +1,3 @@
-// @flow
 import EventEmitter from 'eventemitter3';
 import React from 'react';
 import ApiClient from './ApiClient';
@@ -10,7 +9,14 @@ import i18next from 'i18next';
 
 class ClientSide extends EventEmitter {
 
-    constructor(config: Object): void {
+    config: any;
+    modules: any[];
+    store: any;
+    i18n: any;
+    languageContext: any;
+    apiClient: any;
+
+    constructor(config: Object) {
         super();
 
         this.config = config;
@@ -23,7 +29,7 @@ class ClientSide extends EventEmitter {
             fallbackLng: 'en',
             debug: !!parseInt(this.getConfig("debug")),
             resources: [],
-        });
+        } as any);
         this.languageContext =  {namespaces: [], i18n: this.i18n};
     }
 
@@ -38,6 +44,7 @@ class ClientSide extends EventEmitter {
     addModule(moduleProto: Object) {
         function M() {}
         M.prototype = Object.assign({}, Module.prototype, moduleProto);
+        // @ts-ignore
         let moduleObject = new M();
         this.modules.push(moduleObject);
     }
@@ -63,11 +70,11 @@ class ClientSide extends EventEmitter {
         return this.apiClient;
     }
 
-    createRootReducer() {
+    createRootReducer(): any {
         let reducerMap = {};
         this.modules.map(mo => {
             if(mo.stateReducer) {
-                reducerMap[mo.stateReducer.stateName] = mo.stateReducer.reducer;
+                (reducerMap as any)[mo.stateReducer.stateName] = mo.stateReducer.reducer;
             }
         });
 
@@ -85,7 +92,7 @@ class ClientSide extends EventEmitter {
 
         this.modules.map(mo => {
             if(mo.stateReducer) {
-                defaultState[mo.stateReducer.stateName] = mo.stateReducer.defaultState;
+                (defaultState as any)[mo.stateReducer.stateName] = mo.stateReducer.defaultState;
             }
         });
 
