@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Shell from './components/Shell';
+import ClientSide from "./ClientSide";
 
 // CSS dependency first
 import 'simple-line-icons/css/simple-line-icons.css';
@@ -13,7 +14,7 @@ moment.locale('id', {
     monthsShort: 'jan_feb_mar_apr_mei_jun_jul_agu_sep_okt_nov_des'.split('_')
 });
 
-(($dt) => {
+(($dt: ClientSide) => {
 
     $dt.initApiClient();
 

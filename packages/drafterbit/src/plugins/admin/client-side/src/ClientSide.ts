@@ -1,5 +1,4 @@
 import EventEmitter from 'eventemitter3';
-import React from 'react';
 import ApiClient from './ApiClient';
 import Module from './Module';
 import { combineReducers } from 'redux';

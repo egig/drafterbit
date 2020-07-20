@@ -7,9 +7,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "files": [
-    "lib"
+    "dist"
   ],
   "dependencies": {
     "@babel/node": "^7.5.5",
@@ -30,6 +30,8 @@
     "@svgr/webpack": "^4.3.2",
     "@tinymce/tinymce-react": "^3.6.0",
     "@types/mongoose": "^5.7.32",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
     "antd": "^4.4.0",
     "assets-webpack-plugin": "^3.9.10",
     "axios": "^0.18.1",
@@ -141,7 +143,7 @@
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "linter": "./node_modules/.bin/eslint --fix ./src",
-    "build": "rm -rf lib && cp -r src lib && tsc",
+    "build": "rm -rf dist && cp -r src dist && tsc",
     "flow": "flow check src"
   },
   "pre-push": {
