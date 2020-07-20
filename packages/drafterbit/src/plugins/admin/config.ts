@@ -1,4 +1,4 @@
-module.exports = {
+export = {
     'API_BASE_URL': '/',
     'API_KEY': '',
     'PORT': 3000,

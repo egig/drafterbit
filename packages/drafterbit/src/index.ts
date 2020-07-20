@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Koa = require('koa');
+import Koa from 'koa';
 
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
@@ -12,6 +12,19 @@ const mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
 mongoose.set('useUnifiedTopology', true);
+
+declare namespace Application {
+    interface Request extends Koa.Request {
+        body: any
+    }
+
+    interface Context extends Koa.Context {
+        app: Application,
+        request: Request
+    }
+
+    type Next = Koa.Next
+}
 
 type Options = {
     plugins: string[]
@@ -33,7 +46,7 @@ class Application extends Koa {
      * @param options
      */
     constructor(options: Options = { plugins: [] }) {
-        super(options);
+        super();
         this._pluginPaths= options.plugins || [];
     }
 

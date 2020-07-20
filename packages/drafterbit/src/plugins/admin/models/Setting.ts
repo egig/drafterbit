@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 
 let SettingSchema = new mongoose.Schema({
@@ -15,13 +15,12 @@ let SettingSchema = new mongoose.Schema({
 /**
  *
  * @param fieldsetName
- * @returns {Promise<unknown>}
  */
-SettingSchema.statics.getSetting = function(fieldsetName) {
+SettingSchema.statics.getSetting = function(fieldsetName: string) {
     return new Promise((resolve, reject) => {
 
         let condition = {fieldset_name: fieldsetName};
-        this.findOne(condition, function(err, setting) {
+        this.findOne(condition, function(err:any, setting: Object) {
             if (err) return reject(err);
             return resolve(setting);
         });
@@ -43,7 +42,7 @@ SettingSchema.statics.getSettings = function() {
  * @param payload
  * @returns {*}
  */
-SettingSchema.statics.setSetting = function(fieldsetName, payload) {
+SettingSchema.statics.setSetting = function(fieldsetName: string, payload: Object) {
     return this.updateOne({ fieldset_name: fieldsetName }, payload,  {upsert: true});
 };
 

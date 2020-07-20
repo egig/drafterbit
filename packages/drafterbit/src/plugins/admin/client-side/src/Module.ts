@@ -7,7 +7,7 @@ Module.prototype.admin = {
     routes: []
 };
 
-Module.prototype.routeFilter = function routeFilter(route) {
+Module.prototype.routeFilter = function routeFilter(route: string) {
     return route;
 };
 

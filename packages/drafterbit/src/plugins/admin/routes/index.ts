@@ -3,13 +3,15 @@ const fs = require('fs');
 const path = require('path');
 const Router = require('@koa/router');
 let router = new Router();
+import App from "../../../index";
+import Koa from 'koa';
 
 /**
- *
- * @param {*} req
- * @param {*} asset
+ * s
+ * @param ctx
+ * @param asset
  */
-function assetPath(ctx, asset) {
+function assetPath(ctx: App.Context, asset: any) {
     // TODO support cdn
     return asset;
 }
@@ -25,7 +27,7 @@ function assetPath(ctx, asset) {
  *     tags:
  *        - /settings
  */
-router.get('/settings', async function (ctx, next) {
+router.get('/settings', async function (ctx: App.Context, next: Koa.Next) {
 
     try {
         let m = ctx.app.model('Setting');
@@ -48,31 +50,27 @@ router.get('/settings', async function (ctx, next) {
  *     tags:
  *        - /settings
  */
-router.patch('/settings', function (req, res) {
+router.patch('/settings', function (ctx: App.Context, next: App.Next) {
     (async function () {
 
         try {
-            let m = req.app.model('Setting');
-            let results = await m.setSetting(req.body.fieldset_name, req.body);
-            res.send(results);
+            let m = ctx.app.model('Setting');
+            let results = await m.setSetting(ctx.request.body.fieldset_name, ctx.body);
+            ctx.send(results);
         } catch (e) {
             console.log(e);
-            res.status(500);
-            res.send(e.message);
+            ctx.status =500;
+            ctx.body = e.message;
         }
-
     })();
 });
 
-router.get('/admin', function (ctx, next) {
+router.get('/admin', function (ctx: App.Context, next: App.Next) {
 
     let assetsStr = fs.readFileSync(path.join(ctx.app.projectDir,'/build/assets.json'));
     const webpackAssets = JSON.parse(assetsStr.toString());
 
-    let defaultState = {COMMON: {}};
-    defaultState.COMMON.language = ''; //req.language;
-    defaultState.COMMON.languages = []; //req.languages;
-
+    let defaultState = {COMMON: {language: '', languages: []}};
     let config = ctx.app.get('config');
 
     let drafterbitConfig = {

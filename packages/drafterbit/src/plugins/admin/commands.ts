@@ -1,17 +1,10 @@
+import Application from "../../index";
+
 module.exports = [
-    {
-        command: 'start',
-        description: 'start server',
-        createAction: app => {
-            return () => {
-                app.start();
-            };
-        }
-    },
     {
         command: 'build',
         description: 'build the app',
-        createAction: app => {
+        createAction: (app: Application) => {
             return () => {
                 console.log('app building...');
                 app.build();
