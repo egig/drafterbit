@@ -1,4 +1,4 @@
-function reducer(state = {}, action) {
+function reducer(state = {}, action: any) {
     switch (action.type) {
     case '@common/SET_AJAX_LOADING':
         return Object.assign({}, state, {
@@ -9,7 +9,7 @@ function reducer(state = {}, action) {
     return state;
 }
 
-export default {
+export = {
     defaultState: {
         language: 'en',
         languages: ['en', 'id'],

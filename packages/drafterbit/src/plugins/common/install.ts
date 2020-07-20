@@ -1,11 +1,13 @@
-module.exports = function install(app) {
+import Application from "../../index";
+
+module.exports = function install(app: Application) {
     return Promise.all([
         installPrimitives(app),
         installSettings(app)
     ])
 };
 
-function installPrimitives(app) {
+function installPrimitives(app: Application) {
     let primitives = [
         { name: 'ShortText', slug: 'short-text', displayText: "Short Text"},
         { name: 'LongText',  slug: 'long-text', displayText: "Long Text"},
@@ -21,7 +23,7 @@ function installPrimitives(app) {
     return Promise.all(createTypes);
 }
 
-function installSettings(app) {
+function installSettings(app: Application) {
     let m = app.model('Setting');
     return m.setSetting('General', {
         "app_name": "Awesome app",

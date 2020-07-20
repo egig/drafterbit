@@ -1,24 +1,54 @@
-export default function Module() {
+import ClientSide from './ClientSide';
 
+declare namespace Module {
+    type StateReducer = {
+        defaultState: Object,
+        stateName: string,
+        reducer: any
+    }
+
+    type AdminConfig = {routes: Object[]}
+
+    type Menu = {
+        link: string,
+        icon: any,
+        label: string,
+        children?: Module.Menu[]
+    }
 }
 
-Module.prototype.routes = [];
-Module.prototype.admin = {
-    routes: []
-};
+class Module {
 
-Module.prototype.routeFilter = function routeFilter(route: string) {
-    return route;
-};
+    $dt: ClientSide;
+    name: string = "";
+    stateReducer: Module.StateReducer = {defaultState: {}, stateName: "", reducer: null};
 
-Module.prototype.getMenu = async function getMenu() {
-    return [];
-};
+    routes: Object[] = [];
+    admin: Module.AdminConfig = {routes: []};
 
-Module.prototype.renderNavBarMenu = function () {
-    return null;
-};
+    constructor($dt: ClientSide) {
+        this.$dt = $dt;
+    }
 
-Module.prototype.registerApiClient = function registerApiClient() {
-    return {}
-};
+    routeFilter(route: any, location: any, state: any) {
+        return route;
+    };
+
+    async getMenu(): Promise<Module.Menu[]> {
+        return [];
+    };
+
+    renderNavBarMenu(i: string): any {
+        return null;
+    };
+
+    registerApiClient(): any {
+        return {}
+    };
+
+    stateFilter(state: any): any {
+        return state
+    }
+}
+
+export = Module

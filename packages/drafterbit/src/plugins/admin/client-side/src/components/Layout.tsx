@@ -7,10 +7,22 @@ import {
 import SideNav from './SideNav';
 import { Helmet } from 'react-helmet';
 import './Layout.css';
+import ClientSide from "../ClientSide";
+import Module from "../Module";
 
 const { Header, Content, Footer } = BaseLayout;
 
-class Layout extends React.Component {
+type Props = {
+	title: string,
+	$dt: ClientSide
+}
+
+type State = {
+	collapsed: boolean
+}
+
+class Layout extends React.Component<Props, State> {
+
 	state = {
 		collapsed: false,
 	};
@@ -22,13 +34,19 @@ class Layout extends React.Component {
 	};
 
 	render() {
+
+		let navProps: SideNav.Props = {
+			collapsed: this.state.collapsed,
+			$dt: this.props.$dt
+		};
+
 		let layoutMargin = this.state.collapsed ? 80 : 220;
 		return (
 			<BaseLayout>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
-				<SideNav collapsed={this.state.collapsed} />
+				<SideNav {...navProps} />
 				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh" }}>
 					<Header className="site-layout-background" style={{
 						padding: 0,
@@ -41,7 +59,7 @@ class Layout extends React.Component {
 							onClick: this.toggle,
 						})}
 
-						{this.props.$dt.modules.map((mo,i) => {
+						{this.props.$dt.modules.map((mo: Module,i: any) => {
 							return mo.renderNavBarMenu(i);
 						})}
 					</Header>

@@ -1,7 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import ApiClient from './ApiClient';
 import Module from './Module';
-import Module2 from './Module2';
 import { combineReducers } from 'redux';
 import { createStore, applyMiddleware } from  'redux';
 import thunk from 'redux-thunk';
@@ -10,7 +9,7 @@ import i18next from 'i18next';
 class ClientSide extends EventEmitter {
 
     config: any;
-    modules: Module2[];
+    modules: Module[];
     store: any;
     i18n: any;
     languageContext: any;
@@ -41,25 +40,16 @@ class ClientSide extends EventEmitter {
         return this.config[name];
     };
 
-    addModule(moduleProto: Object) {
-        function M() {}
-        M.prototype = Object.assign({}, Module.prototype, moduleProto);
-        // @ts-ignore
-        let moduleObject = new M();
-        this.modules.push(moduleObject);
-    }
-
-    addModule2(module: Module2) {
+    addModule(module: Module) {
         this.modules.push(module);
     }
 
     initApiClient() {
 
         let clientProto = {};
-        this.modules.map(m => {
+        this.modules.map((m: Module) => {
             clientProto = Object.assign({}, clientProto, m.registerApiClient())
         });
-
 
         ApiClient.prototype  = Object.assign({}, ApiClient.prototype, clientProto);
         let options = {
@@ -67,6 +57,7 @@ class ClientSide extends EventEmitter {
             apiKey: this.getConfig('apiKey')
         };
 
+        // @ts-ignore
         this.apiClient = new ApiClient(options);
     }
 

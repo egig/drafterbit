@@ -1,7 +1,7 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
 import ApiClient from './ApiClient';
-import Module2 from "../../../admin/client-side/src/Module2";
+import Module from "../../../admin/client-side/src/Module"; // TODO move to common
 
 const ContentEdit = lazy(() => import('./components/ContentEdit'));
 const Contents = lazy(() => import('./components/Contents'));
@@ -13,10 +13,10 @@ import {
     FileTextOutlined
 } from '@ant-design/icons';
 
-class ContentModule extends Module2 {
+class ContentModule extends Module {
     name: string =  "content";
-    stateReducer: Module2.StateReducer = stateReducer;
-    admin: Module2.AdminConfig = {
+    stateReducer: Module.StateReducer = stateReducer;
+    admin: Module.AdminConfig = {
         routes: [
             {path: "/c/:type_name/:content_id", component: ContentEdit},
             {path: "/c/:type_name", component: Contents},
@@ -25,11 +25,11 @@ class ContentModule extends Module2 {
         ]
     };
 
-    registerApiClient() {
+    registerApiClient(): any {
         return ApiClient
     };
 
-    async getMenu(): Promise<any[]> {
+    async getMenu(): Promise<Module.Menu[]> {
         let client = this.$dt.getApiClient();
         return client.getTypes({fq:"has_fields:true"})
             .then((types: any) => {
@@ -61,5 +61,5 @@ class ContentModule extends Module2 {
 }
 
 (($dt) => {
-    $dt.addModule2(new ContentModule($dt))
+    $dt.addModule(new ContentModule($dt))
 })(window.$dt);

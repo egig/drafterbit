@@ -1,6 +1,6 @@
 import React, { lazy}  from 'react';
 import stateReducer from './stateReducer';
-import Module2 from "../../../admin/client-side/src/Module2";
+import Module from "../../../admin/client-side/src/Module";
 
 const Settings = lazy(() => import('./components/Settings'));
 
@@ -9,16 +9,16 @@ import {
 } from '@ant-design/icons';
 
 
-class CommonModule extends Module2 {
+class CommonModule extends Module {
     name: string = "common";
-    stateReducer: Module2.StateReducer = stateReducer;
-    admin: Module2.AdminConfig = {
+    stateReducer: Module.StateReducer = stateReducer;
+    admin: Module.AdminConfig = {
         routes: [
             {path: "/settings", component: Settings},
         ],
     };
 
-    async getMenu(): Promise<any> {
+    async getMenu(): Promise<Module.Menu[]> {
         return [
             {
                 link: "/settings",
@@ -51,6 +51,6 @@ class CommonModule extends Module2 {
 
 (($dt) => {
 
-    $dt.addModule2(new CommonModule($dt));
+    $dt.addModule(new CommonModule($dt));
 
 })(window.$dt);

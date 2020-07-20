@@ -5,7 +5,7 @@ import { getCookie } from '@drafterbit/common/client-side/cookie';
 import NavBarMenu from './components/NavBarMenu';
 import ApiClient from './ApiClient';
 import { Redirect } from 'react-router-dom';
-import Module2 from "../../../admin/client-side/src/Module2";
+import Module from "../../../admin/client-side/src/Module";
 
 const Login = lazy(() => import('./components/Login'));
 const Register = lazy(() => import('./components/Register'));
@@ -17,9 +17,9 @@ import {
     UserOutlined,
 } from '@ant-design/icons'
 
-class AuthModule extends Module2 {
+class AuthModule extends Module {
     name: string = "user";
-    stateReducer: Module2.StateReducer = stateReducer;
+    stateReducer: Module.StateReducer = stateReducer;
     routes:Object[] =  [
         {path: "/login", component: Login},
         {path: "/register", component: Register},
@@ -65,11 +65,11 @@ class AuthModule extends Module2 {
         return <NavBarMenu key={i} />
     };
 
-    registerApiClient() {
+    registerApiClient(): any {
         return ApiClient
     }
 }
 
 (($dt) =>{
-    $dt.addModule2(new AuthModule($dt))
+    $dt.addModule(new AuthModule($dt))
 })(window.$dt);

@@ -1,26 +1,38 @@
 import React from 'react';
+// @ts-ignore
 import translate from '@drafterbit/common/client-side/translate';
 import {Row, Col, Card, PageHeader} from 'antd'
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import {Form, Tabs, Input, Switch, message, Button} from 'antd';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class Settings extends React.Component {
+type Props = {
+    $dt?: ClientSide
+}
 
-    constructor(props) {
+
+class Settings extends React.Component<Props, {}> {
+
+    formRef: React.RefObject<any>;
+
+    constructor(props: any) {
         super(props);
         this.formRef = React.createRef();
     }
 
     componentDidMount() {
+        // @ts-ignore
         let client = this.props.$dt.getApiClient();
         client.getSettings()
-            .then(settings => {
+            .then((settings: any) => {
                 // TODO support another fieldset
                 this.formRef.current.setFieldsValue(settings[0])
             })
     }
 
-    onFinish = (values) => {
+    onFinish = (values: any) => {
+        // @ts-ignore
         this.props.$dt.getApiClient().setSettings(values)
             .then(() => {
                 message.success("Settings successfully saved !")
