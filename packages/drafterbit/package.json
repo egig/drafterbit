@@ -9,7 +9,7 @@
   },
   "main": "lib/index.js",
   "files": [
-    "./lib",
+    "./lib/*",
     "./package.json",
     "./package-lock.json"
   ],
