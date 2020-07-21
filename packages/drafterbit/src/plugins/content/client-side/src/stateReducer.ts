@@ -15,7 +15,7 @@ let defaultState = {
 export default {
     stateName: 'CONTENT',
     defaultState,
-    reducer: function reducer(state = defaultState, action) {
+    reducer: function reducer(state = defaultState, action: any) {
         switch (action.type) {
         case '@content/SET_CT_FIELD':
             return Object.assign({}, state, {

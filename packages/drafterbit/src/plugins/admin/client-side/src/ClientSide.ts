@@ -68,7 +68,7 @@ class ClientSide extends EventEmitter {
     createRootReducer(): any {
         let reducerMap = {};
         this.modules.map(mo => {
-            if(mo.stateReducer) {
+            if (mo.stateReducer.stateName !== "") {
                 (reducerMap as any)[mo.stateReducer.stateName] = mo.stateReducer.reducer;
             }
         });
@@ -86,7 +86,7 @@ class ClientSide extends EventEmitter {
         let defaultState = {};
 
         this.modules.map(mo => {
-            if(mo.stateReducer) {
+            if (mo.stateReducer.stateName !== "") {
                 (defaultState as any)[mo.stateReducer.stateName] = mo.stateReducer.defaultState;
             }
         });

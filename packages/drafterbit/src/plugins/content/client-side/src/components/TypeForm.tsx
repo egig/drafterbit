@@ -1,13 +1,33 @@
 import React, { useContext } from 'react';
 import { Modal, Form, Input, Switch } from 'antd';
+// @ts-ignore
 import DTContext from '@drafterbit/common/client-side/DTContext';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-const TypeForm = ({ visible, typeId, name, slug, displayText,
-    description, has_fields, onCancel, onSuccess }) => {
+declare namespace TypeForm {
+    type Props = {
+        visible?: boolean,
+        typeId?: string,
+        name?: string,
+        slug?: string,
+        displayText?: string,
+        description?: string,
+        has_fields?: boolean,
+        onCancel?: any,
+        onSuccess?: any,
+    }
+}
+
+const TypeForm = (props: TypeForm.Props) => {
+
+    let {
+        visible, typeId, name, slug, displayText,
+        description, has_fields, onCancel, onSuccess } = props;
+
     const [form] = Form.useForm();
-    let $dt = useContext(DTContext);
+    let $dt:ClientSide = useContext(DTContext);
 
-    const onSave = (values) => {
+    const onSave = (values: any) => {
         let { name, slug, display_text, has_fields, description } = values;
 
         (() => {
@@ -32,7 +52,7 @@ const TypeForm = ({ visible, typeId, name, slug, displayText,
                 return $dt.getApiClient().createType(name, slug, display_text, description, has_fields)
             }
         })()
-            .then(type => {
+            .then((type: any) => {
                 onSuccess(type);
             });
     };

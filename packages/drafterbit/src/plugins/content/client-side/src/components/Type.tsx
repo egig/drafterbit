@@ -1,16 +1,38 @@
 import React, { Fragment } from 'react';
-import actions from '../actions';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import FieldForm from './FieldForm';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm'
 
 import {Row, Col, Tabs, Button, Card, message, PageHeader} from 'antd';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class Type extends React.Component {
+type Props = {
+    $dt: ClientSide,
+    history: any,
+    match: any
+}
 
-    constructor(props) {
+type State = {
+    _id: string,
+    name: string,
+    slug: string,
+    display_text: string,
+    description: string,
+    has_fields: boolean,
+    fields: any[],
+    fieldDialogActive: boolean,
+    editedFieldId: string,
+    fieldTypeSelected: any,
+    basicEditForm: boolean,
+    loading: boolean,
+    editedField: any,
+    types: any[]
+}
+
+class Type extends React.Component<Props, State> {
+
+    constructor(props: any) {
         super(props);
         this.state = {
             _id: '',
@@ -18,6 +40,7 @@ class Type extends React.Component {
             slug: '',
             display_text: '',
             description: '',
+            has_fields: false,
             fields: [],
 	        fieldDialogActive: false,
 	        editedFieldId: "",
@@ -36,7 +59,7 @@ class Type extends React.Component {
     fetchType() {
         let client = this.props.$dt.getApiClient();
         return client.getType(this.props.match.params.type_name)
-            .then(type => {
+            .then((type: any) => {
 
                 this.setState({
                     _id: type._id,
@@ -56,7 +79,7 @@ class Type extends React.Component {
             .then(() => {
                 let client = this.props.$dt.getApiClient();
                 client.getTypes()
-                    .then(types => {
+                    .then((types: any) => {
                         this.setState({
                             types: types
                         })
@@ -65,7 +88,7 @@ class Type extends React.Component {
 
     }
 
-    deleteField(f) {
+    deleteField(f: any) {
     	let newFields = this.state.fields.filter((sf) => {
 		    return (sf._id !== f._id);
 	    });
@@ -75,11 +98,11 @@ class Type extends React.Component {
 	    }, this.doUpdate);
     }
 
-    deleteType(deleteForm) {
+    deleteType(deleteForm: any) {
         // TODO create alert
         let client = this.props.$dt.getApiClient();
         client.deleteType(deleteForm.id.value)
-            .then(r => {
+            .then(()=> {
                 // TODO create success notif
                 this.props.history.push('/types');
             });
@@ -93,7 +116,7 @@ class Type extends React.Component {
             this.state.slug,
             this.state.description,
             this.state.fields
-        ).then(r => {
+        ).then(() => {
             message.success("Content Type Saved Successfully !");
         });
     }
@@ -106,7 +129,7 @@ class Type extends React.Component {
                     // onBack={() => window.history.back()}
                     title={this.state.display_text}
                     subTitle={this.state.description}
-                    extra={[<Button key="edit" type="line" onClick={e => {
+                    extra={[<Button key="edit" type="default" onClick={e => {
                         e.preventDefault();
                         this.setState({
                             basicEditForm: true
@@ -130,7 +153,7 @@ class Type extends React.Component {
                                                                });
                                                            }}
                                                            types={this.state.types} />
-                                                <Button danger type="line" onClick={e => {
+                                                <Button danger type="default" onClick={e => {
                                                     this.deleteField(f);
                                                 }}>Delete</Button>
                                             </Tabs.TabPane>
@@ -156,7 +179,7 @@ class Type extends React.Component {
                                     this.deleteType(e.target);
                                 }}>
                                     <input type="hidden" name="id" id="id" value={this.state._id}/>
-                                    <Button type="line" htmlType="submit" danger>Delete Type</Button>
+                                    <Button type="default" htmlType="submit" danger>Delete Type</Button>
                                 </form>
                             </Card>
                         </Col>
@@ -172,12 +195,12 @@ class Type extends React.Component {
                     slug={this.state.slug}
                     description={this.state.description}
                     has_fields={this.state.has_fields}
-                    onCancel={e => {
+                    onCancel={(e: any) => {
                         this.setState({
                             basicEditForm: false
                         })
                     }}
-                    onSuccess={ct => {
+                    onSuccess={(ct: any) => {
                         this.setState({
                             basicEditForm: false,
                         });
@@ -190,14 +213,5 @@ class Type extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        types: state.CONTENT.types
-    };
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withDrafterbit(Type));
+export default withDrafterbit(Type)

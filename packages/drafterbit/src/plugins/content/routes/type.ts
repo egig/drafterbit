@@ -1,3 +1,5 @@
+import App from "../../../index";
+
 const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 const FilterQuery = require('@drafterbit/common/FilterQuery');
 const Router = require('@koa/router');
@@ -30,7 +32,7 @@ router.get('/types/:type_name',
             presence: true,
         }
     }),
-    async (ctx, next) => {
+    async (ctx: App.Context, next: App.Next) => {
         let m = ctx.app.model('Type');
         ctx.body = await m.getType(ctx.params.type_name);
     }
@@ -49,7 +51,7 @@ router.get('/types/:type_name',
  *     tags:
  *        - /types
  */
-router.get('/types', async (ctx, next) => {
+router.get('/types', async (ctx: App.Context, next: App.Next) => {
     let m = ctx.app.model('Type');
     let fq = FilterQuery.fromString(ctx.query.fq);
     ctx.body = await m.getTypes(fq.toMap());
@@ -109,7 +111,7 @@ router.post('/types',
             type: 'array',
         }
     }),
-    async function  (ctx, next) {
+    async function  (ctx: App.Context, next: App.Next) {
         let m = ctx.app.model('Type');
 
         let fields = [
@@ -221,7 +223,7 @@ router.post('/types',
  *        - /types
  */
 router.post('/types/:type_name/fields',
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let m = ctx.app.model('Type');
         let typeName = ctx.params['type_name'];
         let s = await m.addField(typeName, ctx.request.body);
@@ -258,7 +260,7 @@ router.delete('/types/:type_id',
             presence: true
         }
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let m = ctx.app.model('Type');
         ctx.body = await m.deleteType(ctx.params.type_id);
     }
@@ -304,7 +306,7 @@ router.patch('/types/:type_id',
             presence: true,
         }
     }),
-    async function(ctx) {
+    async function(ctx: App.Context) {
         let m = ctx.app.model('Type');
         let typeId = ctx.params.type_id;
 
@@ -358,7 +360,7 @@ router.patch('/types/:t_name/fields/:field_id',
             presence: true
         }
     }),
-    async function(ctx) {
+    async function(ctx: App.Context) {
         let typeName = ctx.params['t_name'];
         let fieldId = ctx.params['field_id'];
         let m = ctx.app.model('Type');

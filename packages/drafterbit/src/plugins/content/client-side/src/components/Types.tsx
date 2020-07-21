@@ -1,24 +1,40 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import TypeForm from './TypeForm';
+// @ts-ignore
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
 import { message } from 'antd';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class Types extends React.Component {
+type Props = {
+    $dt: ClientSide,
+    history: any
+}
 
-    constructor(props) {
+type State = {
+    newFormOpen: boolean,
+    types: any[],
+    contentCount: number
+}
+
+class Types extends React.Component<Props,State> {
+
+    state: State = {
+        newFormOpen: false,
+        types: [],
+        contentCount: 0
+    };
+
+    constructor(props: any) {
         super(props);
-        this.state = {
-            newFormOpen: false,
-            types: []
-        };
     }
 
     loadContents = () => {
         let client = this.props.$dt.getApiClient();
         return client.getTypes()
-            .then((types) => {
+            .then((types: any[]) => {
                 this.setState({
                     types: types
                 });
@@ -36,7 +52,7 @@ class Types extends React.Component {
         const columns = [{
             dataIndex: 'name',
             title: 'Name',
-            render: (cell, row) => {
+            render: (cell: any, row: any) => {
                 return <Link to={`/types/${row._id}`}>{cell}</Link>;
             }
         }];
@@ -50,16 +66,16 @@ class Types extends React.Component {
                     columns={ columns }
                     select={true}
                     loadContents={this.loadContents}
-                    handleDelete={this.handleDelete}
+                    // handleDelete={this.handleDelete}
                     onClickAdd={this.onClickAdd}
                 />
                 <TypeForm visible={this.state.newFormOpen}
-                    onCancel={e => {
+                    onCancel={(e: any) => {
                         this.setState({
                             newFormOpen: false  
                         })
                     }}
-                    onSuccess={type => {
+                    onSuccess={(type: any) => {
                         message.success("Content Type Saved Successfully !");
                         this.setState({
                             newFormOpen: false

@@ -1,3 +1,5 @@
+import App from "../../../index";
+
 const validateRequest = require('@drafterbit/common/middlewares/validateRequest');
 const FilterQuery = require( '@drafterbit/common/FilterQuery');
 const contentMiddleware = require('../middlewares/content');
@@ -41,7 +43,7 @@ router.delete('/:type_name/:id',
             presence: true
         },
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let  Model = ctx.app.model(ctx.params['type_name']);
         ctx.body = await Model.findOneAndDelete({_id: ctx.params.id });
     }
@@ -82,11 +84,11 @@ router.get('/:type_name/:id',
             presence: true
         },
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let typeName = ctx.params['type_name'];
         let  Model = ctx.app.model(typeName);
         let selectFields = ['-__v'];
-        ctx.app.plugins().map(m => {
+        ctx.app.plugins().map((m: any) => {
             if (m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }
@@ -129,7 +131,7 @@ router.patch('/:type_name/:id',
             presence: true
         },
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let  Model = ctx.app.model(ctx.params.type_name);
         ctx.body = await Model.findOneAndUpdate({_id: ctx.params.id }, ctx.request.body);
     }
@@ -162,7 +164,7 @@ router.post('/:type_name',
             presence: true
         }
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
         let  Model = ctx.app.model(ctx.params.type_name);
         // TODO add filter here, e.g to hash password fiel
         let item = new Model(ctx.request.body);
@@ -200,7 +202,7 @@ router.get('/:type_name',
             presence: true
         }
     }),
-    async function(ctx, next) {
+    async function(ctx: App.Context, next: App.Next) {
 
         let page = ctx.query.page || 1;
         let sortBy = ctx.query.sort_by;
@@ -214,7 +216,7 @@ router.get('/:type_name',
         let m = ctx.app.model(ctx.params['type_name']);
 
         let selectFields = ['-__v'];
-        ctx.app.plugins().map(m => {
+        ctx.app.plugins().map((m: any) => {
             if (m.selectFields) {
                 selectFields = m.selectFields[typeName];
             }
@@ -222,7 +224,7 @@ router.get('/:type_name',
 
         let sortD = sortDir === 'asc' ? 1 : -1;
 
-        let matchRule = {};
+        let matchRule: any = {};
         if(filterObj) {
             Object.keys(filterObj).forEach((k) => {
                 matchRule[k] = {
@@ -245,7 +247,7 @@ router.get('/:type_name',
             sort: sortObj
         }).select(selectFields).skip(offset).limit(max);
 
-        ctx.state.lookupFields.forEach(f => {
+        ctx.state.lookupFields.forEach((f: any) => {
             query.populate({
                 path: f.name,
                 select: '-__v',

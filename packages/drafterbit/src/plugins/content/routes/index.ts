@@ -1,6 +1,6 @@
 const type = require('./type');
 const content = require('./content');
-const Router = require('@koa/router');
+import Router from '@koa/router';
 
 let router = new Router();
 router.use(type);

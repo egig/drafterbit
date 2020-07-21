@@ -3,34 +3,57 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
+// @ts-ignore
 import TablePage from '@drafterbit/common/client-side/components/TablePage';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
 const FieldType = require('@drafterbit/common/FieldType');
 
-class Contents extends React.Component {
+type State = {
+    type: {
+        name:string
+    },
+    contents: any[],
+    contentCount: number,
+    sortBy: string,
+    sortDir: string,
+    filterObject: any,
+    ctFields: []
+}
 
-    constructor(props) {
+type Props = {
+    $dt: ClientSide,
+    match: any,
+    history: any
+}
+
+class Contents extends React.Component<Props, State> {
+
+    state: State = {
+        type: {
+            name: ""
+        },
+        contents: [],
+        contentCount:0,
+        sortBy: "",
+        sortDir: 'asc',
+        filterObject: {},
+        ctFields: []
+    };
+
+    constructor(props: any) {
         super(props);
-        this.state = {
-            type: {
-                name: ""
-            },
-	        contents: [],
-	        contentCount:0,
-	        sortBy: "",
-	        sortDir: 'asc',
-	        filterObject: {},
-            ctFields: []
-        };
     }
 
-    loadContents = (match, page, sortBy, sortDir, fqStr) => {
+    loadContents = (match: any, page: number, sortBy: string, sortDir: string, fqStr: string) => {
 
         let typeName = match.params.type_name;
+        // @ts-ignore
         let client = this.props.$dt.getApiClient();
         return client.getType(typeName)
-		    .then(type => {
+		    .then((type: any) => {
 
 		        this.setState({
                     type: type,
@@ -38,7 +61,7 @@ class Contents extends React.Component {
                 });
 
                 return client.getEntries(type.name, page, sortBy, sortDir, fqStr)
-			    .then(response => {
+			    .then((response: any) => {
 
 			        let contentCount = response.headers['content-range'].split("/")[1];
 			    	this.setState({
@@ -49,10 +72,10 @@ class Contents extends React.Component {
 		    });
     };
 
-    handleDelete = (selected) => {
+    handleDelete = (selected: any) => {
         let slug = this.props.match.params["type_name"];
         let client = this.props.$dt.getApiClient();
-        let deleteActionPromise = selected.map(entryId => {
+        let deleteActionPromise = selected.map((entryId: string) => {
             return client.deleteEntry(slug, entryId);
         });
 
@@ -62,20 +85,20 @@ class Contents extends React.Component {
             })
     };
 
-    onClickAdd = (e) => {
+    onClickAdd = (e: Event) => {
         // create draft
         let slug = this.props.match.params["type_name"];
         let client = this.props.$dt.getApiClient();
         client.createDraft(slug)
-            .then(d => {
+            .then((d: any) => {
                 this.props.history.push(`/c/${slug}/${d.item._id}`);
             })
-            .catch(e => {
+            .catch((e: any) => {
                 console.error(e)
             })
     };
 
-    canBeDisplayed(field) {
+    canBeDisplayed(field: any) {
         return (FieldType.primitives().indexOf(field.type_name) !== -1) && field.show_in_list
     }
 
@@ -86,20 +109,20 @@ class Contents extends React.Component {
         const columns = [{
             dataIndex: '_id',
             title: '#ID',
-            render: (text, row) => {
+            render: (text: string, row: any) => {
                 return <span><Link to={`/c/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
             },
 	        width: "80px"
         }];
 
-        this.state.ctFields.map(f => {
+        this.state.ctFields.map((f: any) => {
         	// Don't display some column type by default
             if(this.canBeDisplayed(f)) {
 		        columns.push({
 			        dataIndex: f.name,
 			        title: f.label,
                     sorter: true
-		        })
+		        } as any)
 	        }
         });
 
@@ -118,13 +141,13 @@ class Contents extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
     return {
         ctFields: state.CONTENT.ctFields,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
     return bindActionCreators(actions, dispatch);
 };
 

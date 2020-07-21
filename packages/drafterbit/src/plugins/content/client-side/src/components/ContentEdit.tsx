@@ -1,8 +1,10 @@
 import React  from 'react';
 import Field from './Field';
 import { Row, Col, Card, Form, Button, message, PageHeader, Select } from 'antd';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import styled from 'styled-components';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
 const FieldType = require('@drafterbit/common/FieldType');
 
@@ -22,15 +24,27 @@ let richTextInitialValue = [
 let testInitValue = [
     {
         type: "paragraph",
-        html_text: "<p></p"
+        html_text: "<p></p>"
     }
 ];
 
-class ContentEdit extends React.Component {
+type Props = {
+    $dt: ClientSide,
+    match: any,
+    history: any
+}
 
-    formRef = React.createRef();
+type State = {
+    ctFields: any[],
+    loading: boolean
+}
+
+class ContentEdit extends React.Component<Props, State> {
+
+    formRef: React.RefObject<any> = React.createRef();
     state = {
         ctFields: [],
+        loading: false
     };
 
     componentDidMount() {
@@ -55,11 +69,11 @@ class ContentEdit extends React.Component {
         });
     }
 
-    renderRichText(f,i) {
+    renderRichText(f: any,i: number) {
 
         let editorValue = this.formRef.current.getFieldValue(f.name);
 
-        return <Field value={editorValue} onChange={(value) => {
+        return <Field value={editorValue} onChange={(value: any) => {
             this.formRef.current.setFieldsValue({
                 [f.name]: value
             })
@@ -67,18 +81,18 @@ class ContentEdit extends React.Component {
         }} key={i} field={f} />;
     }
 
-    renderRelation(f,i) {
+    renderRelation(f: any,i: number) {
         return <Field key={i} field={f} />;
     }
 
-    onFinish = values => {
+    onFinish = (values: any) => {
 
         let params = this.props.match.params;
         let contentId = params.content_id;
         let typeName = params.type_name;
 
-        let data = {};
-        this.state.ctFields.map(f => {
+        let data: any = {};
+        this.state.ctFields.map((f: any) => {
             data[f.name] = values[f.name];
         });
 
@@ -109,7 +123,7 @@ class ContentEdit extends React.Component {
                     <Row>
                         <Col span={16}>
                             <Card>
-                                {this.state.ctFields.map((f,i) => {
+                                {this.state.ctFields.map((f: any,i: number) => {
                                     if (!f.show_in_form) {
                                         return
                                     }

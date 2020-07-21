@@ -1,3 +1,5 @@
+import App from "../../../index";
+
 const FieldType = require( '@drafterbit/common/FieldType');
 const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
 
@@ -7,7 +9,7 @@ const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
  * @param modelName
  * @param schemaObj
  */
-function createModel(app, modelName, schemaObj) {
+function createModel(app: App, modelName: string, schemaObj: any) {
     // TODO figure out the mongoCollectionName
     try {
         app.odm().model(modelName);
@@ -17,7 +19,7 @@ function createModel(app, modelName, schemaObj) {
 }
 
 module.exports = function contentMiddleware() {
-    return async function(typeName, ctx, next) {
+    return async function(typeName: string, ctx: App.Context, next: App.Next) {
 
         try {
 
@@ -30,10 +32,10 @@ module.exports = function contentMiddleware() {
                 return await next();
             }
 
-            let relatedTypes = [];
-            let lookupFields = [];
+            let relatedTypes: any[] = [];
+            let lookupFields: any[] = [];
 
-            type.fields.forEach(f => {
+            type.fields.forEach((f: any) => {
                 if (FieldType.primitives().indexOf(f.type_name) === -1) {
                     relatedTypes.push(f.type_name);
                     lookupFields.push(f);

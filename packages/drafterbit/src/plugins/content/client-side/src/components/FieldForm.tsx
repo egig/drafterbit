@@ -1,15 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Button, Modal, Form, Input, Select, Switch } from 'antd';
+// @ts-ignore
 import DTContext from '@drafterbit/common/client-side/DTContext';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
+declare namespace FieldForm {
+    type Props = {
+        onSuccess?: any,
+        belongsToTypeName?: string,
+        field?: any,
+        types?: any
+    }
+}
 
-    let $dt = useContext(DTContext);
+const FieldForm = (props: FieldForm.Props) => {
+    let {  onSuccess, belongsToTypeName, field, types } = props;
+    let $dt: ClientSide = useContext(DTContext);
     let [form] = Form.useForm();
 
-    const onSave = values => {
+    const onSave = (values: any) => {
 
-        let {type_name, name, display_text, multiple,
+        let {type_name, name, label, multiple,
             show_in_form, show_in_list} = values;
 
         (() => {
@@ -71,14 +82,14 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
             >
                 <Select
                     showSearch
-                    placeholder="Select a person"
+                    placeholder="Select type"
                     optionFilterProp="children"
-                    filterOption={(input, option) => {
-                        if (typeof option.children != "undefined") {
-                            return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                        }
-                    }}
-                >{types.map((t,i) => {
+                    // filterOption={(input: any, option: any) => {
+                    //     if (typeof option.children != "undefined") {
+                    //         return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                    //     }
+                    // }}
+                >{types.map((t: any,i:number) => {
                     return <Select.Option key={i} value={t.name}>{t.display_text}</Select.Option>
                 })}
                 </Select>
@@ -125,4 +136,4 @@ const FieldForm = ({  onSuccess, belongsToTypeName, field, types }) => {
     );
 };
 
-export default FieldForm
+export = FieldForm

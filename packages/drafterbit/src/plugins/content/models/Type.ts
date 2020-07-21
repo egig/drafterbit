@@ -33,8 +33,8 @@ let TypeSchema = new mongoose.Schema({
  * @param field
  * @return {Promise}
  */
-TypeSchema.statics.addField = function(typeName, field) {
-    return this.updateOne({ name: typeName }, { $push: { fields: field } });
+TypeSchema.statics.addField = function(typeName: string, fields: any[]) {
+    return this.updateOne({ name: typeName }, { $push: { fields: fields } });
 };
 
 /**
@@ -42,7 +42,7 @@ TypeSchema.statics.addField = function(typeName, field) {
  * @param typeName
  * @returns {Promise<unknown>}
  */
-TypeSchema.statics.getType = function(typeName) {
+TypeSchema.statics.getType = function(typeName: string) {
     return new Promise((resolve, reject) => {
 
         let ObjectId = mongoose.Types.ObjectId;
@@ -53,7 +53,7 @@ TypeSchema.statics.getType = function(typeName) {
             condition = {name: typeName};
         }
 
-        this.findOne(condition, function(err, type) {
+        this.findOne(condition, function(err: any, type: any) {
             if (err) return reject(err);
             return resolve(type);
         });
@@ -77,7 +77,9 @@ TypeSchema.statics.getTypes = function(filter = {}) {
  * @param hasFields
  * @param fields
  */
-TypeSchema.statics.createType = function(name, slug, displayText, description, hasFields, fields = []) {
+TypeSchema.statics.createType = function(
+    name: string, slug: string, displayText: string, description: string,
+    hasFields: boolean, fields: any[] = []) {
     let newType = new this({
         name,
         slug,
@@ -96,7 +98,7 @@ TypeSchema.statics.createType = function(name, slug, displayText, description, h
  * @param typeId
  * @return {Promise}
  */
-TypeSchema.statics.deleteType = function(typeId) {
+TypeSchema.statics.deleteType = function(typeId: string) {
     return this.deleteOne({_id: typeId});
 };
 
@@ -107,7 +109,7 @@ TypeSchema.statics.deleteType = function(typeId) {
  * @param payload
  * @return {Promise}
  */
-TypeSchema.statics.updateType = function(typeId, payload) {
+TypeSchema.statics.updateType = function(typeId: string, payload: any) {
     return this.updateOne({ _id: typeId }, payload);
 };
 
@@ -119,9 +121,9 @@ TypeSchema.statics.updateType = function(typeId, payload) {
  * @param payload
  * @returns {*}
  */
-TypeSchema.statics.updateTypeField = function(typeName, fieldId, payload) {
+TypeSchema.statics.updateTypeField = function(typeName: string, fieldId: string, payload: any) {
 
-    let setter = {};
+    let setter: any = {};
     for (let k of Object.keys(payload)) {
         setter[`fields.$.${k}`] = payload[k];
     }
