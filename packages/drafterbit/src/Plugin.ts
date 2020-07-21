@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
 
 class Plugin {
 
-    _path: string = '';
-    _app: any = null;
+    private _path: string = '';
+    private readonly _app: any;
 
     /**
      *

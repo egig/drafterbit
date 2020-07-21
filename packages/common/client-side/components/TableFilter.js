@@ -1,6 +1,10 @@
 import React from 'react';
 import { Tag, Input, Tooltip, Form, Select, Button } from 'antd';
-import { PlusOutlined, FilterFilled, CloseCircleOutlined } from '@ant-design/icons';
+import {
+    PlusOutlined,
+    FilterFilled,
+    CloseCircleOutlined
+} from '@ant-design/icons';
 
 class TableFilter extends React.Component {
     state = {

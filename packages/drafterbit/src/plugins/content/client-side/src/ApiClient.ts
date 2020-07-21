@@ -9,7 +9,11 @@ const ApiClient = {
     getTypes: async function getTypes(params = {}): Promise<any> {
         // @ts-ignore
         let response = await this.axiosInstance.get('/types', {params});
-        return response.data;
+        let count = response.headers['content-range'].split("/")[1];
+        return {
+            count,
+            list: response.data
+        };
     },
 
     getType: async function getType(typeName: string): Promise<any> {

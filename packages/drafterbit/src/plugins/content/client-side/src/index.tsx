@@ -32,9 +32,9 @@ class ContentModule extends Module {
     async getMenu(): Promise<Module.Menu[]> {
         let client = this.$dt.getApiClient();
         return client.getTypes({fq:"has_fields:true"})
-            .then((types: any) => {
+            .then((response: any) => {
 
-                let menus = types.map((ct: any) => {
+                let menus = response.list.map((ct: any) => {
                     return {
                         link: `/c/${ct.name}`,
                         label: ct.name,

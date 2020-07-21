@@ -34,9 +34,10 @@ class Types extends React.Component<Props,State> {
     loadContents = () => {
         let client = this.props.$dt.getApiClient();
         return client.getTypes()
-            .then((types: any[]) => {
+            .then((response: any) => {
                 this.setState({
-                    types: types
+                    contentCount: response.count,
+                    types: response.list
                 });
             })
     };

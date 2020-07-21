@@ -79,9 +79,9 @@ class Type extends React.Component<Props, State> {
             .then(() => {
                 let client = this.props.$dt.getApiClient();
                 client.getTypes()
-                    .then((types: any) => {
+                    .then((response: any) => {
                         this.setState({
-                            types: types
+                            types: response.list
                         })
                     })
             })
