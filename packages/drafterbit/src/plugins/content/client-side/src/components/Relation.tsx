@@ -1,26 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Select } from 'antd';
+// @ts-ignore
 import DTContext from '@drafterbit/common/client-side/DTContext';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-const Relation = ({multiple, typeName, value, onChange}) => {
+type Props = {
+    multiple: boolean,
+    typeName: string,
+    value: any,
+    onChange: any
+}
+
+const Relation = (props: Props) => {
+
+    let {multiple, typeName, value, onChange} = props;
 
     let [contents, setContents] = useState([]);
-    let $dt = useContext(DTContext);
+    let $dt: ClientSide = useContext(DTContext);
     useEffect(() => {
         $dt.getApiClient().getEntries(typeName)
-            .then((res) => {
+            .then((res: any) => {
                 setContents(res.data);
             });
     }, []);
 
-    const options = contents.map(c => {
+    const options = contents.map((c: any) => {
         return {
             value: c._id,
             label: c.name,
         }
     });
 
-    let mode =  multiple ? "multiple" : null;
+    let mode:"multiple"|"tags"|undefined =  multiple ? "multiple" : undefined;
     return(
         <Select
             mode={mode}

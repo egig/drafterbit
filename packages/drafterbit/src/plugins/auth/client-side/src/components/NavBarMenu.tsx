@@ -1,3 +1,4 @@
+// @ts-ignore
 import {setCookie} from '@drafterbit/common/client-side/cookie';
 import React from 'react';
 import {Menu, Dropdown} from 'antd';

@@ -1,10 +1,18 @@
 import React from 'react';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 import {Card} from 'antd'
 
 import './AuthCard.css';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class AuthCard extends React.Component {
+
+type Props = {
+    $dt: ClientSide,
+    title: string
+}
+
+class AuthCard extends React.Component<Props, {}> {
 
     render() {
 

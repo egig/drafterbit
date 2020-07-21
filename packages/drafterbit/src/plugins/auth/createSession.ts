@@ -1,23 +1,24 @@
-const UserAuthError =  require('./UserAuthError');
+import UserAuthError from './UserAuthError';
+import App from "../../index";
 const password = require('./lib/password');
 const crypto = require('crypto');
 
-function createSessionKey(token, user_id) {
+function createSessionKey(token: string, user_id: string) {
     return `session-${user_id}-${token}`;
 }
 
-module.exports = function createSession(app, email, rawPassword) {
+module.exports = function createSession(app: App, email: string, rawPassword: string) {
 
     let m = app.model('@user/User');
     return m.getUserByEmail(email)
-        .then(user => {
+        .then((user: any) => {
 
             if(!user) {
                 return Promise.reject(new UserAuthError('Wrong email or password'));
             }
 
             return password.compare(rawPassword, user.password)
-                .then(isMatch => {
+                .then((isMatch: boolean) => {
 
                     if(!isMatch) {
                         return Promise.reject(new UserAuthError('Wrong email or password'));

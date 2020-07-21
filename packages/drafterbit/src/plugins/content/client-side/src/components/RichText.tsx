@@ -2,6 +2,7 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 // Import TinyMCE
+// @ts-ignore
 import tinymce from 'tinymce/tinymce';
 
 // Default icons are required for TinyMCE 5.3 or above
@@ -21,8 +22,13 @@ tinymce.init({
     skin_url: '/skins'
 });
 
-class RichText extends React.Component {
-    handleEditorChange = (content, editor) => {
+type Props = {
+    onChange: any,
+    initialValue: any
+}
+
+class RichText extends React.Component<Props, {}> {
+    handleEditorChange = (content: any, editor: any) => {
         this.props.onChange(content);
     };
 

@@ -38,6 +38,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.1",
+    "@types/tinymce": "^4.5.24",
     "antd": "^4.4.0",
     "assets-webpack-plugin": "^3.9.10",
     "axios": "^0.18.1",

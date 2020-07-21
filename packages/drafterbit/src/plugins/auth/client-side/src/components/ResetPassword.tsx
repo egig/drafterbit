@@ -2,14 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import actions from '../actions';
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
+// @ts-ignore
 import translate from '@drafterbit/common/client-side/translate';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class ResetPassword extends React.Component {
 
-    constructor(props) {
+type Props = {
+    $dt: ClientSide
+    t: any
+}
+
+
+type State = {
+    errorText: string
+}
+class ResetPassword extends React.Component<Props, State> {
+
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -35,7 +46,6 @@ class ResetPassword extends React.Component {
 
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    this.doLogin(e);
                 }}>
                     <div className="form-group">
                         <label htmlFor="new_password">New Password</label>
@@ -58,14 +68,4 @@ class ResetPassword extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        currentUser: state.USER.currentUser
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(actions, dispatch);
-};
-
-export default translate(['reset_password'])(connect(mapStateToProps, mapDispatchToProps)(ResetPassword));
+export default translate(['reset_password'])(ResetPassword);

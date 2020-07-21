@@ -8,7 +8,7 @@ class ForgotPasswordRequested extends React.Component {
         return (
             <AuthCard title="Forgot Password">
                 <Helmet>
-                    <title>Reset Password Requested - draferbit</title>
+                    <title>Reset Password Requested</title>
                 </Helmet>
                 <p>If your email address already registered, then you will receive a password recovery link at your email address in a few minutes.</p>
             </AuthCard>
@@ -16,4 +16,4 @@ class ForgotPasswordRequested extends React.Component {
     }
 }
 
-export default ForgotPasswordRequested;
+export = ForgotPasswordRequested;

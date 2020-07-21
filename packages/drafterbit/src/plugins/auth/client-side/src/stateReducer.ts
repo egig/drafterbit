@@ -1,4 +1,4 @@
-function reducer(state = {}, action) {
+function reducer(state = {}, action: any) {
     switch (action.type) {
     case 'AUTH_SET_USER':
         return Object.assign({}, state, {

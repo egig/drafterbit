@@ -1,13 +1,15 @@
+import Application from "../../index";
+
 const inquirer = require('inquirer');
 const FieldType = require('@drafterbit/common/FieldType');
 const fieldsToSchema = require('@drafterbit/common/fieldsToSchema');
 const password = require('./lib/password');
 
-module.exports = function install(app) {
+module.exports = function install(app: Application) {
     return promptAndInstall(app)
 };
 
-function promptAndInstall(app) {
+function promptAndInstall(app: Application) {
     console.log('Welcome! Please provide email and password to create root user account.');
     return inquirer
         .prompt([
@@ -15,7 +17,7 @@ function promptAndInstall(app) {
                 type: 'input',
                 name: 'email',
                 message: 'Email:',
-                validate: function(value) {
+                validate: function() {
                     // TODO validate email
                     // var valid = !isNaN(parseFloat(value));
                     // return valid || 'Please enter a number';
@@ -34,7 +36,7 @@ function promptAndInstall(app) {
                 message: 'Password Confirm:'
             },
         ])
-        .then(answers => {
+        .then((answers: any) => {
 
             if (answers.password !== answers.password_confirm) {
                 console.log('Password is not match please repeat');
@@ -45,7 +47,7 @@ function promptAndInstall(app) {
             return diInstall(app, answers.email, answers.password)
 
         })
-        .catch(error => {
+        .catch((error: any) => {
             console.error(error);
             if(error.isTtyError) {
                 // Prompt couldn't be rendered in the current environment
@@ -55,7 +57,7 @@ function promptAndInstall(app) {
         });
 }
 
-function diInstall(app, email, password) {
+function diInstall(app: Application, email: string, password: string) {
     let m = app.model('Type');
 
     return m.deleteMany({
@@ -64,20 +66,20 @@ function diInstall(app, email, password) {
             {name: 'Group'},
             {name: 'Permission'},
         ]
-    }).then(r => {
+    }).then(() => {
 
         return createPermission(m)
-            .then(r => {
+            .then(() => {
                 return createGroup(m);
-            }).then(r => {
+            }).then(() => {
                 return createUser(m, email, password, app);
-            }).catch(e => {
+            }).catch((e: any) => {
                 console.error(e);
             });
     });
 }
 
-function createPermission(m) {
+function createPermission(m: any) {
     let name = 'Permission';
     let slug = 'permissions';
     let displayText = 'Permission';
@@ -100,7 +102,7 @@ function createPermission(m) {
     return m.createType(name, slug, displayText, description, hasFields, fields);
 }
 
-function createGroup(m) {
+function createGroup(m: any) {
 
     let name = 'Group';
     let slug = 'groups';
@@ -133,7 +135,7 @@ function createGroup(m) {
     return m.createType(name, slug, displayText, description, hasFields, fields);
 }
 
-function createUser(m, email, passwordStr, app) {
+function createUser(m: any, email: string, passwordStr: string, app: Application) {
 
     let name = 'User';
     let slug = 'users';
@@ -173,15 +175,15 @@ function createUser(m, email, passwordStr, app) {
     ];
 
     return m.createType(name, slug, displayText, description, hasFields, fields)
-        .then(r => {
+        .then(() => {
             return m.getType('User');
 
         })
-        .then(type => {
+        .then((type: any) => {
 
             let schemaObj = fieldsToSchema.getSchema(type.fields);
 
-            let userModel;
+            let userModel: any;
             try {
                 userModel = app.odm().model('User');
             } catch (error) {
@@ -189,7 +191,7 @@ function createUser(m, email, passwordStr, app) {
             }
 
             return password.hash(passwordStr)
-                .then(hashedPassword=> {
+                .then((hashedPassword: any) => {
                     return userModel.create({
                         email: email,
                         password: hashedPassword

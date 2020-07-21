@@ -5,25 +5,30 @@ import { Form, Input, InputNumber } from 'antd'
 
 const FieldType = require('@drafterbit/common/FieldType');
 
+type Props = {
+    field: any,
+    value?: any,
+    onChange?: any,
+}
 
 // TODO import multiple primitive ?
-class Field extends React.Component {
+class Field extends React.Component<Props, {}> {
 
     render() {
-        let field = this.props.field;
-        let value = this.props.value;
-        let types = {
+
+        let { field, value, onChange } = this.props;
+         let types = {
             [FieldType.SHORT_TEXT]: () => (
-                <Input onChange={this.props.onChange}/>
+                <Input onChange={onChange}/>
             ),
             [FieldType.LONG_TEXT]: () => (
-                <Input.TextArea  onChange={this.props.onChange}/>
+                <Input.TextArea  onChange={onChange}/>
             ),
             [FieldType.RICH_TEXT]: () => (
-                <RichText initialValue={value} value={value} onChange={this.props.onChange}/>
+                <RichText initialValue={value} onChange={onChange}/>
             ),
             [FieldType.NUMBER]: () => (
-                <InputNumber style={{width:"100%"}} onChange={this.props.onChange} name={field.name} />
+                <InputNumber style={{width:"100%"}} onChange={onChange} name={field.name} />
             )
         };
 
@@ -53,4 +58,4 @@ class Field extends React.Component {
     }
 }
 
-export default Field;
+export = Field;

@@ -2,18 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
+// @ts-ignore
 import translate from '@drafterbit/common/client-side/translate';
+// @ts-ignore
 import { setCookie } from '@drafterbit/common/client-side/cookie';
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+// @ts-ignore
 import DTContext from '@drafterbit/common/client-side/DTContext';
 
 import './Login.css'
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
 
-class Login extends React.Component {
+type Props = {
+    $dt: ClientSide
+    t: any
+}
 
-    constructor(props) {
+type State = {
+    errorText: string
+}
+
+class Login extends React.Component<Props, State> {
+
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -21,18 +34,18 @@ class Login extends React.Component {
         }
     }
 
-    doLogin = ($dt, values) => {
+    doLogin = ($dt: ClientSide, values: any) => {
         let email = values.email;
         let password = values.password;
 
         let client = $dt.getApiClient();
         client.createUserSession(email, password)
-		    .then(r => {
+		    .then((r: any) => {
 			    // TODO redirect to referrer
                 setCookie("dt_auth_token", r.token);
                 window.location.replace("/");
 		    })
-		    .catch(e => {
+		    .catch((e: any) => {
 		    	this.setState({
 		    		errorText: e.message
 			    })
@@ -46,10 +59,10 @@ class Login extends React.Component {
 
         return(
             <DTContext.Consumer>
-                {$dt => {
+                {($dt: ClientSide) => {
                     let setting = $dt.store.getState().COMMON.settings.General;
                     let appName = setting.app_name;
-                    const onFinish = (values) => {
+                    const onFinish = (values: any) => {
                         this.doLogin($dt, values)
                     };
                     

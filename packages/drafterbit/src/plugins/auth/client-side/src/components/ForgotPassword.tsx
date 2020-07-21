@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom'
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
+type Props = {
+    history: any
+}
 
-class ForgotPassword extends React.Component {
+class ForgotPassword extends React.Component<Props, {}> {
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onSubmit(values) {
+    onSubmit(values: any) {
         // TODO send email
         this.props.history.push('/forgot-password-requested');
     }

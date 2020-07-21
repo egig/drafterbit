@@ -1,3 +1,5 @@
+import App from "../../index";
+
 const jwt = require('jsonwebtoken');
 const password = require('./lib/password');
 const UserAuthError  = require('./UserAuthError');
@@ -8,7 +10,7 @@ const Router = require('@koa/router');
 
 let router = new Router();
 
-function createSessionKey(token, user_id) {
+function createSessionKey(token: string, user_id: string) {
     return `session-${user_id}-${token}`;
 }
 
@@ -99,7 +101,7 @@ router.post('/token',
             presence: true
         }
     }),
-    async function (ctx, next) {
+    async function (ctx: App.Context, next: App.Next) {
 
         try {
             let email = ctx.request.body.email;
@@ -463,20 +465,14 @@ router.post('/users/reset_password',
             presence: true
         }
     }),
-    function (req, res) {
-        (async function () {
+    async function (ctx: App.Context, next: App.Next) {
+        try {
+            ctx.body = await sendResetPasswordEmail(ctx.request.body.email);;
 
-            try {
-                let response = await sendResetPasswordEmail(req.body.email);
-                res.send(response);
-
-            } catch (e) {
-                req.app.get('log').error(e);
-                res.status(500);
-                res.send(e.message);
-            }
-
-        })();
+        } catch (e) {
+            ctx.status = 500;
+            ctx.body = e.message;
+        }
 
     });
 

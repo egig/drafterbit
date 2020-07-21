@@ -2,15 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import AuthCard from './AuthCard';
-import ApiClient from '../ApiClient';
 import './Register.css';
+// @ts-ignore
 import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
 
 import { Form, Input, Button, Checkbox } from 'antd';
+import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-class Register extends React.Component {
+type Props = {
+    $dt: ClientSide
+    t: any,
+    history: any
+}
 
-    constructor(props) {
+type State = {
+    errorText: string
+}
+
+class Register extends React.Component<Props, State> {
+
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -20,18 +31,18 @@ class Register extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(values) {
-        let client = his.props.drafterbit.getApiClient();
+    onSubmit(values: any) {
+        let client = this.props.$dt.getApiClient();
         return client
             .createUser(
                 values.full_name,
                 values.email,
                 values.password
             )
-            .then(response => {
+            .then(() => {
                 this.props.history.push('/register-success');
             })
-	        .catch(e => {
+	        .catch((e: any) => {
 		        this.setState({
 			        errorText: e.message
 		        });
