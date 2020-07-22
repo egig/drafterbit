@@ -1,7 +1,7 @@
 const minify = require('html-minifier').minify;
 const fs = require('fs');
 const path = require('path');
-const Router = require('@koa/router');
+import Router from '@koa/router';
 let router = new Router();
 import App from "../../../index";
 import Koa from 'koa';
@@ -37,7 +37,7 @@ router.get('/settings', async function (ctx: App.Context, next: Koa.Next) {
         ctx.body = e.message;
     }
 
-});
+} as Koa.Middleware);
 
 /**
  * @swagger
@@ -63,9 +63,9 @@ router.patch('/settings', function (ctx: App.Context, next: App.Next) {
             ctx.body = e.message;
         }
     })();
-});
+} as Koa.Middleware);
 
-router.get('/admin', function (ctx: App.Context, next: App.Next) {
+router.get('/admin', async function (ctx: App.Context, next: App.Next) {
 
     let assetsStr = fs.readFileSync(path.join(ctx.app.projectDir,'/build/assets.json'));
     const webpackAssets = JSON.parse(assetsStr.toString());
@@ -99,6 +99,6 @@ router.get('/admin', function (ctx: App.Context, next: App.Next) {
                 <script src="${assetPath(ctx, webpackAssets.main.js)}"></script>
             </body>
         </html>`, { collapseWhitespace: true, minifyJS: true, minifyCSS: true });
-});
+} as Koa.Middleware);
 
 module.exports = router.routes();

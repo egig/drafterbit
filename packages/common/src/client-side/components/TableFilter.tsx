@@ -5,14 +5,15 @@ import {
     FilterFilled,
     CloseCircleOutlined
 } from '@ant-design/icons';
+import FilterQuery from "../../FilterQuery";
 
 type Props = {
-    onApplyFilters: any
+    onApplyFilters: (filters: FilterQuery.Filter[]) => Promise<any> | undefined
     columns: any
 }
 
 type State = {
-    filters: any[],
+    filters: FilterQuery.Filter[],
     inputVisible: boolean
     inputValue: any
     editInputValue: any
@@ -55,7 +56,7 @@ class TableFilter extends React.Component<Props, State> {
             filters,
             inputVisible: false,
         }, () => {
-            this.props.onApplyFilters(filters)
+            return this.props.onApplyFilters(filters)
         });
     };
 
@@ -92,33 +93,32 @@ class TableFilter extends React.Component<Props, State> {
                 <FilterFilled/>
                 <span style={{marginLeft:"6px"}}/>
 
-                {filters.map((f, index) => {
+                {filters.map((f: FilterQuery.Filter, index) => {
 
-                    const isLongTag = f.v.length > 20;
-                    let v=  isLongTag ? `${f.v.slice(0, 20)}...` : f.v
+                    const isLongTag = f.val.length > 20;
+                    let v=  isLongTag ? `${f.val.slice(0, 20)}...` : f.val;
 
                     const tagElem = (
-                        <Tag
-                            key={f.key}
-                            closable={true}
-                            onClose={() => this.handleClose(f)}
-                        >
-                            <span
-                                onDoubleClick={e => {
+                        <Tag key={f.key}
+                             closable={true}
+                             onClose={() => this.handleClose(f)}>
+                            <span onDoubleClick={e => {
                                     if (index !== 0) {
-                                        this.setState({ editInputIndex: index, editInputValue: tags }, () => {
+                                        this.setState({
+                                            editInputIndex: index,
+                                            editInputValue: tags },
+                                            () => {
                                             this.editInput.focus();
                                         });
                                         e.preventDefault();
                                     }
-                                }}
-                            >
+                                }}>
                                 {`${f.key}${f.op}${v}`}
                             </span>
                         </Tag>
                     );
                     return isLongTag ? (
-                        <Tooltip title={f.value} key={f.key}>
+                        <Tooltip title={f.val} key={f.key}>
                             {tagElem}
                         </Tooltip>
                     ) : (
@@ -131,7 +131,7 @@ class TableFilter extends React.Component<Props, State> {
                           layout="inline"
                           initialValues={{
                               key: this.props.columns[0].dataIndex,
-                              op:"=",
+                              op:"=~",
                               v:""
                           }}
                           onFinish={values => {
@@ -155,7 +155,7 @@ class TableFilter extends React.Component<Props, State> {
                             <Form.Item noStyle name="v">
                                 <Input
                                     style={{ width: '100px' }}
-                                    onPressEnter={e => {
+                                    onPressEnter={() => {
                                         this.formRef.current.submit()
                                     }}
                                     onKeyDown={e => {
@@ -173,7 +173,7 @@ class TableFilter extends React.Component<Props, State> {
                     </Form>
                 )}
                 {!inputVisible && (
-                    <Tag className="site-tag-plus" onClick={this.showInput}>
+                    <Tag style={{border: "1px dashed #e1e1e1"}} className="site-tag-plus" onClick={this.showInput}>
                         <PlusOutlined /> New Filter
                     </Tag>
                 )}

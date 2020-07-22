@@ -31,7 +31,7 @@ class ContentModule extends Module {
 
     async getMenu(): Promise<Module.Menu[]> {
         let client = this.$dt.getApiClient();
-        return client.getTypes({fq:"has_fields:true"})
+        return client.getTypes({fq:"has_fields:=true"})
             .then((response: any) => {
 
                 let menus = response.list.map((ct: any) => {

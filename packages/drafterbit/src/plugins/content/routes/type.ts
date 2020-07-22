@@ -53,12 +53,12 @@ router.get('/types/:type_name',
  */
 router.get('/types', async (ctx: App.Context, next: App.Next) => {
     let m = ctx.app.model('Type');
-    let fq = FilterQuery.fromString(ctx.query.fq);
+    let fq: FilterQuery = FilterQuery.fromString(ctx.query.fq);
     let dataCount = await m.find(fq.toMap()).estimatedDocumentCount();
     let offset = 0;
     const pageSize = 10;
     ctx.set('Content-Range',`resources ${offset}-${offset+pageSize - (pageSize-dataCount)}/${dataCount}`);
-    ctx.body = await m.getTypes(fq.toMap());
+    ctx.body = await m.getTypes(fq.toODMFilters());
 });
 
 /**

@@ -1,64 +1,152 @@
-class FilterQuery {
-    private filters: any;
+declare namespace FilterQuery {
+    type Filter= {
+        key: string,
+        op: string,
+        val:any
+    }
+}
 
-    constructor(filters: Object[] = []) {
+class FilterQuery {
+    private filters: FilterQuery.Filter[];
+
+    constructor(filters: FilterQuery.Filter[] = []) {
         this.filters = filters;
     }
 
-    addFilter(k: string, v: any) {
-        this.filters.push({k,v});
-    }
-
-    removeFilter(k: string, v: any) {
-        this.filters = this.filters.filter((f: any) => {
-            return !(f.k === k && f.v === v);
+    /**
+     *
+     * @param key
+     * @param op
+     * @param val
+     */
+    addFilter(key: string, op: string, val: any) {
+        this.filters.push({
+            key,
+            op,
+            val
         });
     }
 
-    getFilters() {
+    /**
+     *
+     * @param key
+     * @param op
+     * @param val
+     */
+    removeFilter(key: string, op: string, val: any) {
+        this.filters = this.filters.filter((f: any) => {
+            return !(f.key === key && f.val === val && f.op === op);
+        });
+    }
+
+    /**
+     *
+     */
+    getFilters(): FilterQuery.Filter[] {
         return this.filters;
     }
 
+    /**
+     *
+     */
     toMap() {
-        return this.filters.reduce((acc: any, curr: any) => {
-            if (typeof acc[curr.k] !== 'undefined' ) {
-                acc[curr.k] = [acc[curr.k]];
-                acc[curr.k].push(curr.v);
+        return this.filters.reduce((acc: any, curr: FilterQuery.Filter) => {
+            if (typeof acc[curr.key] !== 'undefined' ) {
+                acc[curr.key] = [acc[curr.key]];
+                acc[curr.key].push({ op: curr.op, val: curr.val});
             } else {
-                acc[curr.k] = curr.v;
+                acc[curr.key] = {op: curr.op, val: curr.val};
             }
 
             return acc;
         }, {});
     }
 
-    toString() {
+
+    /**
+     *
+     */
+    toString(): string {
         let m = this.toMap();
         return Object.keys(m).map(k => {
             let v = m[k];
+            let opV = `${v.op}${v.val}`;
             if (Array.isArray(v)) {
-                v = v.join(',');
+                opV = v.map(val => (`${val.op}${val.val}`)).join(',');
             }
-            return `${k}:${v}`;
+            return `${k}:${opV}`;
         }).join(';');
     }
 
-    static fromString(fqStr: string = ''){
+    /**
+     *
+     * @param fqStr
+     */
+    static fromString(fqStr: string){
 
         if (!fqStr) {
             return new FilterQuery();
         }
 
-        let fqObjs: Object[] = [];
-        fqStr.split(';').map((s) => {
+        let fqObjs: FilterQuery.Filter[] = [];
+        fqStr.split(';').map((s: string) => {
             let t = s.split(':');
-            let k = t[0];
+            let key = t[0];
             let vList = t[1].split(',');
-            vList.map(v => {
-                fqObjs.push({ k, v });
+            vList.map((val:string) => {
+
+                let op: string = "=";
+                const regex = /^=(~|>|<)*/gm;
+                let matches: string[] | null = val.match(regex);
+                if (matches != null) {
+                    op = matches[0];
+                    val = val.replace(regex, "").trim();
+                }
+
+                let f = {
+                    key,
+                    op,
+                    val
+                };
+
+                fqObjs.push(f);
             });
         });
         return new FilterQuery(fqObjs);
+    }
+
+    toODMFilters() {
+        let odmFilter: any = {};
+        let m = this.toMap();
+        Object.keys(m).map(k => {
+            let v = m[k];
+            if (Array.isArray(v)) {
+                odmFilter["$or"] = v.map(val => {
+                    return FilterQuery._odmFilter(val.op, val.val);
+                });
+            } else {
+                odmFilter[k] = FilterQuery._odmFilter(v.op, v.val);
+            }
+        });
+        return odmFilter;
+    }
+
+    private static _odmFilter(opSym: string, val: string) {
+        let d: any = {
+            "=": "$eq",
+            "=>": "$ge",
+            "=<": "$le",
+            "=~": "$regex",
+        };
+
+        let op: any = d[opSym];
+        if (op == "$regex") {
+            val = `/${val}/`
+        }
+
+        return {
+            [op]: val
+        }
     }
 
     pop() {

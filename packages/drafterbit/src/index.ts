@@ -1,7 +1,7 @@
-const fs = require('fs');
+import fs from 'fs';
 import Koa from 'koa';
 
-const bodyParser = require('koa-bodyparser');
+import bodyParser from 'koa-bodyparser';
 const cors = require('@koa/cors');
 import Config from './Config';
 import Plugin from './Plugin';

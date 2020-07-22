@@ -30,6 +30,9 @@ type State = {
     loading: boolean,
 }
 
+type modifyQSParam = (a: querystring.ParsedUrlQuery) => querystring.ParsedUrlQuery;
+type modifyFQParam = (a: FilterQuery) => FilterQuery;
+
 class TablePage extends React.Component<Props, State> {
 
     state: State = {
@@ -87,45 +90,73 @@ class TablePage extends React.Component<Props, State> {
         })
     }
 
+    /**
+     *
+     * @param dataField
+     * @param sortDir
+     */
     handleSort = (dataField: string, sortDir: string) => {
-        this.modifyQS((qs: any) => {
+        this.modifyQS((qs: querystring.ParsedUrlQuery) => {
             qs['sort_by'] = dataField;
             qs['sort_dir'] = sortDir;
             return qs;
         });
     };
 
+
+    /**
+     *
+     * @param current
+     * @param pageSize
+     */
     handlePage = (current: number, pageSize: number) => {
-        this.modifyQS((qs: any) => {
-            qs['page'] = current;
-            qs['page_size'] = pageSize;
+        this.modifyQS((qs: querystring.ParsedUrlQuery) => {
+            qs['page'] = ""+current;
+            qs['page_size'] = ""+pageSize;
             return qs;
         });
     };
 
-    modifyQS = (fn: any) => {
+    /**
+     *
+     * @param fn
+     */
+    modifyQS = (fn: modifyQSParam) => {
         let {
             location,
             match,
             history
         } = this.props;
 
-        let qs = querystring.parse(location.search.substr(1));
+        let qs: querystring.ParsedUrlQuery = querystring.parse(location.search.substr(1));
         qs = fn(qs);
         let newLink = match.url + "?" + querystring.stringify(qs);
         history.push(newLink);
     };
 
-    onApplyFilters = (filters: any) => {
-        //..
+    onApplyFilters = (filters: FilterQuery.Filter[]): (Promise<any> | undefined) => {
+        filters.map(f => {
+            this.applyFilter(f);
+        });
+        return;
     };
 
-    applyFilter = (k: any, v: any) => {
-        this.modifyFQ((fqObj: any) => {
-            fqObj.addFilter(k, v);
+    /**
+     *
+     * @param f
+     */
+    applyFilter = (f: FilterQuery.Filter) => {
+        this.modifyFQ((fqObj: FilterQuery) => {
+            fqObj.addFilter(f.key, f.op, f.val);
+            return fqObj;
         });
     };
 
+    /**
+     *
+     * @param dataField
+     * @param value
+     */
     onFilterChange = (dataField: string, value: any) => {
         let d: any = {};
         d[dataField] = value;
@@ -150,21 +181,41 @@ class TablePage extends React.Component<Props, State> {
         this.props.handleDelete(this.state.selected);
     };
 
-    onDeleteFilter = (k: any, v: any) => {
-        this.modifyFQ((fqObj: any) => {
-            fqObj.removeFilter(k, v);
+
+    /**
+     *
+     * @param key
+     * @param op
+     * @param val
+     */
+    onDeleteFilter = (key: string, op: string, val: any) => {
+        this.modifyFQ((fqObj: FilterQuery) => {
+            fqObj.removeFilter(key, op, val);
+            return fqObj;
         });
     };
 
+    /**
+     *
+     */
     popFilter = () => {
-        this.modifyFQ((fqObj: any) => {
+        this.modifyFQ((fqObj: FilterQuery) => {
             fqObj.pop();
+            return fqObj;
         });
     };
 
-    modifyFQ(fn: any) {
-        this.modifyQS((qs: any) => {
-            let fqObj = FilterQuery.fromString(qs['fq']);
+    /**
+     *
+     * @param fn
+     */
+    modifyFQ(fn: modifyFQParam) {
+        this.modifyQS((qs: querystring.ParsedUrlQuery) => {
+            let faStr: string | string[] = qs['fq'];
+            if (!faStr) {
+                faStr = "";
+            }
+            let fqObj: FilterQuery = FilterQuery.fromString(faStr as string);
             fn(fqObj);
             let fqStr = fqObj.toString();
             if (fqStr === "") {
@@ -248,9 +299,9 @@ class TablePage extends React.Component<Props, State> {
             extra.push(<Button key="add" type="primary" onClick={onClickAdd} >{this.props.addText}</Button>)
         }
 
-        const tableFilter = (<TableFilter
-            onApplyFilters={this.onApplyFilters}
-            columns={columns} />);
+        const tableFilter = (
+            <TableFilter onApplyFilters={this.onApplyFilters}
+                         columns={columns} />);
 
         const tableData = (
             <Table
