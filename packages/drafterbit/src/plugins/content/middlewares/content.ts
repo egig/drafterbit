@@ -1,7 +1,6 @@
 import App from "../../../index";
-
-const FieldType = require( '@drafterbit/common/FieldType');
-const fieldsToSchema = require( '@drafterbit/common/fieldsToSchema');
+import FieldType from '@drafterbit/common/dist/FieldType';
+const fieldsToSchema = require( '@drafterbit/common/dist/fieldsToSchema');
 
 /**
  *

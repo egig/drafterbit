@@ -1,5 +1,5 @@
 // @ts-nocheck
-import handleAxiosError from '@drafterbit/common/client-side/handleAxiosError';
+import handleAxiosError from '@drafterbit/common/dist/client-side/handleAxiosError';
 
 const ApiClient = {
 

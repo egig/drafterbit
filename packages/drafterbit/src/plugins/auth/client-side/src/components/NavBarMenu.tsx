@@ -1,5 +1,5 @@
 // @ts-ignore
-import {setCookie} from '@drafterbit/common/client-side/cookie';
+import {setCookie} from '@drafterbit/common/dist/client-side/cookie';
 import React from 'react';
 import {Menu, Dropdown} from 'antd';
 
@@ -13,7 +13,7 @@ const menu = (
     <Menu>
         <Menu.Item icon={<LogoutOutlined/>} key="1"><span onClick={e => {
             e.preventDefault();
-            setCookie('dt_auth_token', '')
+            setCookie('dt_auth_token', '', 2)
             window.location.replace('/')
         }}>Logout</span></Menu.Item>
     </Menu>

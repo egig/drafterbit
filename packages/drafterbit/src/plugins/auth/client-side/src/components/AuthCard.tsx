@@ -1,6 +1,6 @@
 import React from 'react';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
 import {Card} from 'antd'
 
 import './AuthCard.css';

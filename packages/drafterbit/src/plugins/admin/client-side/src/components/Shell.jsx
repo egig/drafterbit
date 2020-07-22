@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, HashRouter, Redirect  } from 'react-router-dom';
 import Layout from './Layout';
-import DTContext  from '@drafterbit/common/client-side/DTContext';
+import DTContext  from '@drafterbit/common/dist/client-side/DTContext';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

@@ -2,11 +2,11 @@ import React  from 'react';
 import Field from './Field';
 import { Row, Col, Card, Form, Button, message, PageHeader, Select } from 'antd';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
 import styled from 'styled-components';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
-const FieldType = require('@drafterbit/common/FieldType');
+import FieldType from '@drafterbit/common/dist/FieldType';
 
 
 const CardWrapper = styled.div`

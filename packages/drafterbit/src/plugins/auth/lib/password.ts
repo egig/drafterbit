@@ -1,15 +1,15 @@
 const bcrypt =  require('bcryptjs');
 
-module.exports = {
+export = {
     /**
      *  Hash raw password.
      *
      * @param raw
      * @return {Promise}
      */
-    hash: function (raw) {
+    hash: function (raw: string) {
         return new Promise((resolve, reject) => {
-            bcrypt.hash(raw, 5, (err, hashedPassword) => {
+            bcrypt.hash(raw, 5, (err: any, hashedPassword: string) => {
                 if(err) return reject(err);
                 return resolve(hashedPassword);
             });
@@ -23,9 +23,9 @@ module.exports = {
      * @param hash
      * @return {Promise}
      */
-    compare: function (raw, hash) {
+    compare: function (raw: string, hash: string) {
         return new Promise((resolve, reject)=> {
-            bcrypt.compare(raw, hash, (err, doesMatch) => {
+            bcrypt.compare(raw, hash, (err: any, doesMatch: boolean) => {
                 if(err) return reject(err);
                 return resolve(doesMatch);
             });

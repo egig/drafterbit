@@ -1,7 +1,7 @@
 const axios =  require('axios');
 
 
-module.exports =  function sendResetPasswordEmail(to) {
+module.exports =  function sendResetPasswordEmail(to: string) {
 
     let data = {
         'Messages':[
@@ -27,7 +27,7 @@ module.exports =  function sendResetPasswordEmail(to) {
             // password: config.get('MAILJET_APIKEY_PRIVATE')
         },
     })
-        .then(r => {
+        .then((r: any)  => {
             return r.data;
         });
 };

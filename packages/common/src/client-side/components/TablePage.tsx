@@ -1,30 +1,28 @@
 import querystring from 'querystring';
 import React  from 'react';
 import { withRouter } from 'react-router-dom';
-import withDrafterbit from '../withDrafterbit';
 import _ from 'lodash';
 import { Row, Col, Table, Button, PageHeader, Card } from 'antd'
 import TableFilter from './TableFilter';
 import { LoadingOutlined } from '@ant-design/icons';
+import FilterQuery from '../../FilterQuery';
 
 const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-const FilterQuery = require('../../FilterQuery');
 
 type Props = {
     history: any,
     location: any,
     match : any,
     loadContents: any
-    handleDelete: any
+    handleDelete?: any
     data: any
     columns: any
-    onClickAdd: any
-    deleteText: string
+    onClickAdd?: any
+    deleteText?: string
     contentCount: number
-    addText: string
-    renderContent: any
-    headerText: string
+    addText?: string
+    renderContent?: any
+    headerText?: string
 }
 
 type State = {
@@ -192,7 +190,7 @@ class TablePage extends React.Component<Props, State> {
             selected
         } = this.state;
 
-        let qs = querystring.parse(location.search.substr(1));
+        let qs: any = querystring.parse(location.search.substr(1));
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
         let page = !!qs['page'] ? qs['page'] : 1;
@@ -310,4 +308,4 @@ class TablePage extends React.Component<Props, State> {
     }
 }
 
-export default withRouter(withDrafterbit(TablePage));
+export default withRouter(TablePage);

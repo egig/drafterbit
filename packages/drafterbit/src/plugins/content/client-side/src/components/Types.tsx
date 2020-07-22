@@ -1,10 +1,10 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
 import TypeForm from './TypeForm';
 // @ts-ignore
-import TablePage from '@drafterbit/common/client-side/components/TablePage';
+import TablePage from '@drafterbit/common/dist/client-side/components/TablePage';
 import { message } from 'antd';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
@@ -65,7 +65,6 @@ class Types extends React.Component<Props,State> {
                     data={ this.state.types }
                     contentCount={this.state.contentCount}
                     columns={ columns }
-                    select={true}
                     loadContents={this.loadContents}
                     // handleDelete={this.handleDelete}
                     onClickAdd={this.onClickAdd}

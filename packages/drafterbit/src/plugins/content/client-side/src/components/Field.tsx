@@ -2,8 +2,8 @@ import React from 'react';
 import RichText from './RichText';
 import Relation  from './Relation';
 import { Form, Input, InputNumber } from 'antd'
+import FieldType from '@drafterbit/common/dist/FieldType';
 
-const FieldType = require('@drafterbit/common/FieldType');
 
 type Props = {
     field: any,

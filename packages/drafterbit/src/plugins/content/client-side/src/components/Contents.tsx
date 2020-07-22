@@ -4,12 +4,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
 // @ts-ignore
-import TablePage from '@drafterbit/common/client-side/components/TablePage';
+import TablePage from '@drafterbit/common/dist/client-side/components/TablePage';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
-
-const FieldType = require('@drafterbit/common/FieldType');
+import FieldType from '@drafterbit/common/dist/FieldType';
 
 type State = {
     type: {
@@ -132,7 +131,6 @@ class Contents extends React.Component<Props, State> {
                 data={ this.state.contents }
                 contentCount={this.state.contentCount}
                 columns={ columns }
-                select={true}
                 loadContents={this.loadContents}
                 handleDelete={this.handleDelete}
                 onClickAdd={this.onClickAdd}

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Modal, Form, Input, Switch } from 'antd';
 // @ts-ignore
-import DTContext from '@drafterbit/common/client-side/DTContext';
+import DTContext from '@drafterbit/common/dist/client-side/DTContext';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
 
 declare namespace TypeForm {

@@ -43,7 +43,7 @@ class FilterQuery {
         }).join(';');
     }
 
-    static fromString(fqStr = ''){
+    static fromString(fqStr: string = ''){
 
         if (!fqStr) {
             return new FilterQuery();

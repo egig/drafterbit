@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 // @ts-ignore
-import translate from '@drafterbit/common/client-side/translate';
+import translate from '@drafterbit/common/dist/client-side/translate';
 // @ts-ignore
-import { setCookie } from '@drafterbit/common/client-side/cookie';
+import { setCookie } from '@drafterbit/common/dist/client-side/cookie';
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 // @ts-ignore
-import DTContext from '@drafterbit/common/client-side/DTContext';
+import DTContext from '@drafterbit/common/dist/client-side/DTContext';
 
 import './Login.css'
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
@@ -42,7 +42,7 @@ class Login extends React.Component<Props, State> {
         client.createUserSession(email, password)
 		    .then((r: any) => {
 			    // TODO redirect to referrer
-                setCookie("dt_auth_token", r.token);
+                setCookie("dt_auth_token", r.token, 4);
                 window.location.replace("/");
 		    })
 		    .catch((e: any) => {
@@ -59,7 +59,7 @@ class Login extends React.Component<Props, State> {
 
         return(
             <DTContext.Consumer>
-                {($dt: ClientSide) => {
+                {($dt: any) => {
                     let setting = $dt.store.getState().COMMON.settings.General;
                     let appName = setting.app_name;
                     const onFinish = (values: any) => {

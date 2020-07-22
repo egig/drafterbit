@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import AuthCard from './AuthCard';
 import './Register.css';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/client-side/withDrafterbit';
+import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
