@@ -58,6 +58,7 @@ router.get('/types', async (ctx: App.Context, next: App.Next) => {
     let offset = 0;
     const pageSize = 10;
     ctx.set('Content-Range',`resources ${offset}-${offset+pageSize - (pageSize-dataCount)}/${dataCount}`);
+    console.log("fq.toODMFilters()", fq.toODMFilters());
     ctx.body = await m.getTypes(fq.toODMFilters());
 });
 

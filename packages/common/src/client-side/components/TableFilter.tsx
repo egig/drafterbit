@@ -93,8 +93,8 @@ class TableFilter extends React.Component<Props, State> {
                 <FilterFilled/>
                 <span style={{marginLeft:"6px"}}/>
 
-                {filters.map((f: FilterQuery.Filter, index) => {
-
+                {filters.map((f: FilterQuery.Filter, index: number) => {
+                    console.log("FILTER", f);
                     const isLongTag = f.val.length > 20;
                     let v=  isLongTag ? `${f.val.slice(0, 20)}...` : f.val;
 
@@ -132,7 +132,7 @@ class TableFilter extends React.Component<Props, State> {
                           initialValues={{
                               key: this.props.columns[0].dataIndex,
                               op:"=~",
-                              v:""
+                              val:""
                           }}
                           onFinish={values => {
                               this.handleInputConfirm(values)
@@ -152,7 +152,7 @@ class TableFilter extends React.Component<Props, State> {
                                     })}
                                 </Select>
                             </Form.Item>
-                            <Form.Item noStyle name="v">
+                            <Form.Item noStyle name="val">
                                 <Input
                                     style={{ width: '100px' }}
                                     onPressEnter={() => {

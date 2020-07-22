@@ -211,7 +211,7 @@ router.get('/:type_name',
         let offset = (page*PER_PAGE) - PER_PAGE;
         let max = PER_PAGE;
 
-        let filterObj = FilterQuery.fromString(ctx.query.fq).toMap();
+        let filterObj = FilterQuery.fromString(ctx.query.fq).toODMFilters();
         let typeName = ctx.params['type_name'];
         let m = ctx.app.model(ctx.params['type_name']);
 
@@ -224,15 +224,6 @@ router.get('/:type_name',
 
         let sortD = sortDir === 'asc' ? 1 : -1;
 
-        let matchRule: any = {};
-        if(filterObj) {
-            Object.keys(filterObj).forEach((k) => {
-                matchRule[k] = {
-                    $regex: `.*${filterObj[k]}.*`
-                };
-            });
-        }
-
 
         let sortObj;
         if(!!sortBy && sortBy !== '_id') {
@@ -243,7 +234,7 @@ router.get('/:type_name',
             sortObj = {'_id': sortD};
         }
 
-        let query = m.find(matchRule, null, {
+        let query = m.find(filterObj, null, {
             sort: sortObj
         }).select(selectFields).skip(offset).limit(max);
 
@@ -258,7 +249,7 @@ router.get('/:type_name',
         let results = await query.exec();
 
         // TODO add filter here, e.g to decode password field
-        let dataCount = await m.find(matchRule).estimatedDocumentCount();
+        let dataCount = await m.find(filterObj).estimatedDocumentCount();
         ctx.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
         ctx.body = results;
     }

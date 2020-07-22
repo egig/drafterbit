@@ -2,7 +2,7 @@ declare namespace FilterQuery {
     type Filter= {
         key: string,
         op: string,
-        val:any
+        val:string
     }
 }
 
@@ -122,7 +122,9 @@ class FilterQuery {
             let v = m[k];
             if (Array.isArray(v)) {
                 odmFilter["$or"] = v.map(val => {
-                    return FilterQuery._odmFilter(val.op, val.val);
+                    return {
+                        [k]: FilterQuery._odmFilter(val.op, val.val)
+                    }
                 });
             } else {
                 odmFilter[k] = FilterQuery._odmFilter(v.op, v.val);
@@ -141,7 +143,7 @@ class FilterQuery {
 
         let op: any = d[opSym];
         if (op == "$regex") {
-            val = `/${val}/`
+            val = `.*${val}.*`
         }
 
         return {
