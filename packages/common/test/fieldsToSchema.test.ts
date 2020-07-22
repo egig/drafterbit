@@ -1,11 +1,12 @@
+// @ts-ignore
 const chai = require('chai');
 const mongoose = require('mongoose');
 const should = chai.should();
 const expect = chai.expect;
 const Schema = mongoose.Schema;
 
-const { convert } = require('../fieldsToSchema');
-const FieldType = require('../FieldType');
+import { convert } from '../src/fieldsToSchema';
+import FieldType from '../src/FieldType';
 
 describe('fieldsToSchema', () => {
 

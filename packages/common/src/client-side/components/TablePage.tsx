@@ -11,17 +11,44 @@ const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const FilterQuery = require('../../FilterQuery');
 
-class TablePage extends React.Component {
+type Props = {
+    history: any,
+    location: any,
+    match : any,
+    loadContents: any
+    handleDelete: any
+    data: any
+    columns: any
+    onClickAdd: any
+    deleteText: string
+    contentCount: number
+    addText: string
+    renderContent: any
+    headerText: string
+}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selected: [],
-            loading: false,
-        };
-    }
+type State = {
+    selected: any[],
+    loading: boolean,
+}
 
-    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+class TablePage extends React.Component<Props, State> {
+
+    state: State = {
+        selected: [],
+        loading: false,
+    };
+
+    static defaultProps = {
+        addButton: true,
+        select: false,
+        headerText: "Untitled Page",
+        addText: "Add New",
+        deleteText: "Delete",
+        contentCount: 1000,
+    };
+
+    UNSAFE_componentWillReceiveProps(nextProps: any, nextContext: any) {
         let { location } = this.props;
         let nextLocation = nextProps.location;
 
@@ -38,14 +65,14 @@ class TablePage extends React.Component {
             loading: true
         });
         this.loadContents(nextProps)
-            .then(r => {
+            .then(() => {
                 this.setState({
                     loading: false
                 })
             })
     }
 
-    loadContents = (props) => {
+    loadContents = (props: any) => {
         let qs = querystring.parse(props.location.search.substr(1));
         let sortBy = qs['sort_by'];
         let sortDir = qs['sort_dir'];
@@ -55,30 +82,30 @@ class TablePage extends React.Component {
     };
 
     componentDidMount() {
-        return this.loadContents(this.props).then(r => {
+        return this.loadContents(this.props).then(() => {
             this.setState({
                 loading: false
             })
         })
     }
 
-    handleSort = (dataField, sortDir) => {
-        this.modifyQS((qs) => {
+    handleSort = (dataField: string, sortDir: string) => {
+        this.modifyQS((qs: any) => {
             qs['sort_by'] = dataField;
             qs['sort_dir'] = sortDir;
             return qs;
         });
     };
 
-    handlePage = (current, pageSize) => {
-        this.modifyQS((qs) => {
+    handlePage = (current: number, pageSize: number) => {
+        this.modifyQS((qs: any) => {
             qs['page'] = current;
             qs['page_size'] = pageSize;
             return qs;
         });
     };
 
-    modifyQS = (fn) => {
+    modifyQS = (fn: any) => {
         let {
             location,
             match,
@@ -91,21 +118,23 @@ class TablePage extends React.Component {
         history.push(newLink);
     };
 
-    onApplyFilters = (filters) => {
+    onApplyFilters = (filters: any) => {
         //..
     };
 
-    applyFilter = (k, v) => {
-        this.modifyFQ((fqObj) => {
+    applyFilter = (k: any, v: any) => {
+        this.modifyFQ((fqObj: any) => {
             fqObj.addFilter(k, v);
         });
     };
 
-    onFilterChange = (dataField, value) => {
-        let d = {};
+    onFilterChange = (dataField: string, value: any) => {
+        let d: any = {};
         d[dataField] = value;
 
-        this.setState((prevState) => {
+
+        // @ts-ignore
+        this.setState((prevState: any) => {
             return {
                 filterObject: Object.assign({}, prevState.filterObject, d)
             }
@@ -123,20 +152,20 @@ class TablePage extends React.Component {
         this.props.handleDelete(this.state.selected);
     };
 
-    onDeleteFilter = (k, v) => {
-        this.modifyFQ((fqObj) => {
+    onDeleteFilter = (k: any, v: any) => {
+        this.modifyFQ((fqObj: any) => {
             fqObj.removeFilter(k, v);
         });
     };
 
     popFilter = () => {
-        this.modifyFQ((fqObj) => {
+        this.modifyFQ((fqObj: any) => {
             fqObj.pop();
         });
     };
 
-    modifyFQ(fn) {
-        this.modifyQS((qs) => {
+    modifyFQ(fn: any) {
+        this.modifyQS((qs: any) => {
             let fqObj = FilterQuery.fromString(qs['fq']);
             fn(fqObj);
             let fqStr = fqObj.toString();
@@ -157,8 +186,6 @@ class TablePage extends React.Component {
             data,
             columns,
             onClickAdd,
-            addButton,
-            select
         } = this.props;
 
         let {
@@ -172,23 +199,23 @@ class TablePage extends React.Component {
         let filterObjects = FilterQuery.fromString(qs['fq']).getFilters();
 
         const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
+            onChange: (selectedRowKeys: any, selectedRows: any) => {
                 this.setState({
-                    selected: selectedRows.map(s => s._id)
+                    selected: selectedRows.map((s: any) => s._id)
                 });
             },
-            getCheckboxProps: record => ({
+            getCheckboxProps: (record: any) => ({
                 name: "_ids",
                 value: record._id,
             }),
         };
 
-        data = data.map(d => {
+        data = data.map((d:any) => {
             d.key = d._id;
             return d;
         });
 
-        function itemRender(current, type, originalElement) {
+        function itemRender(current: any, type: any, originalElement: any) {
             if (type === 'prev') {
                 return <a>Previous</a>;
             }
@@ -199,8 +226,7 @@ class TablePage extends React.Component {
         }
 
 
-        const onChange = (pagination, filters, sorter, extra) => {
-            console.log('params', pagination, filters, sorter, extra);
+        const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
             if (extra.action === 'sort') {
                 this.handleSort(sorter.field, sorter.order);
             }
@@ -214,7 +240,7 @@ class TablePage extends React.Component {
 
         if(!!selected.length) {
             extra.push(
-                <Button key="delete" type="line" danger  onClick={this.handleDelete} >
+                <Button key="delete" type="default" danger  onClick={this.handleDelete} >
                     {this.props.deleteText} {selected.length} items
                 </Button>
             )
@@ -283,14 +309,5 @@ class TablePage extends React.Component {
         );
     }
 }
-
-TablePage.defaultProps = {
-    addButton: true,
-    select: false,
-    headerText: "Untitled Page",
-    addText: "Add New",
-    deleteText: "Delete",
-    contentCount: 1000,
-};
 
 export default withRouter(withDrafterbit(TablePage));

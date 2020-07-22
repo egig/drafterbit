@@ -2,20 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export default function translate(namespaces) {
+export = function translate(namespaces: string[]): any {
 
-    function getDisplayName(WrappedComponent) {
+    function getDisplayName(WrappedComponent: any) {
         return WrappedComponent.displayName || WrappedComponent.name || 'Component';
     }
 
-    return function wrap(WrappedComponent) {
+    return function wrap(WrappedComponent: any) {
         if (typeof WrappedComponent !== 'function') {
             throw new Error('Expected WrappedComponent to be a React component.');
         }
 
         class Translate extends React.Component {
 
-            constructor(props, context) {
+            static contextTypes = {
+                languageContext: PropTypes.object.isRequired
+            };
+
+            constructor(props: any, context: any) {
                 super(props, context);
                 this.state = {
                     loadedAt: new Date()
@@ -54,16 +58,12 @@ export default function translate(namespaces) {
 
             render() {
                 let newProps = {
-                    t: (s) => this.context.languageContext.i18n.t(s)
+                    t: (s: any) => this.context.languageContext.i18n.t(s)
                 };
 
                 return <WrappedComponent {...this.props} {...newProps}/>;
             }
         }
-
-        Translate.contextTypes = {
-            languageContext: PropTypes.object.isRequired
-        };
 
         return Translate;
     }

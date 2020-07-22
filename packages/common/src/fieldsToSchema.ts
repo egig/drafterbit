@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const FieldType = require('./FieldType');
+import FieldType from './FieldType';
 
 /**
  * Converts type names into actual types supported by mongoose.
@@ -10,7 +10,7 @@ const FieldType = require('./FieldType');
  * @throws Error
  * @return {Object}
  */
-function matchType(type) {
+function matchType(type: string) {
 
     switch (type) {
     case FieldType.SHORT_TEXT:
@@ -34,7 +34,7 @@ function matchType(type) {
  * @param {Object} descriptor
  * @return {Object}
  */
-let convert = function (descriptor) {
+export function convert(descriptor: any) {
     let encoded = JSON.stringify(descriptor);
     return JSON.parse(encoded, function (key, value) {
 
@@ -51,8 +51,8 @@ let convert = function (descriptor) {
  * @param fields
  * @returns {any}
  */
-function getSchema(fields) {
-    let fieldsObj = {};
+export function getSchema(fields: any[]) {
+    let fieldsObj: any = {};
     let primitiveTypes = FieldType.fieldTypes.map(t => {
         return t.id;
     });
@@ -82,8 +82,3 @@ function getSchema(fields) {
 
     return convert(fieldsObj);
 }
-
-module.exports = {
-    convert,
-    getSchema
-};

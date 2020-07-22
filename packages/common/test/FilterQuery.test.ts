@@ -1,8 +1,9 @@
+//@ts-ignore
 let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const FilterQuery = require('../FilterQuery');
+import FilterQuery from '../src/FilterQuery';
 
 describe('FilterQuery', () => {
 

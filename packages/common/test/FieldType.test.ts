@@ -1,8 +1,9 @@
+// @ts-ignore
 let chai = require('chai');
 let should = chai.should();
 let expect = chai.expect;
 
-const FieldType = require('../FieldType');
+import FieldType from '../src/FieldType';
 
 describe('FieldType', () => {
 

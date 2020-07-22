@@ -65,24 +65,24 @@ class FieldType {
     ];
 
     static asMap() {
-        return FieldType.fieldTypes.reduce((o, f) => {
+        return FieldType.fieldTypes.reduce((o: any, f: any) => {
             o[f.id] = f.name;
             return o
         }, {});
     }
 
     static asObject() {
-        return FieldType.fieldTypes.reduce((o, f) => {
+        return FieldType.fieldTypes.reduce((o: any, f: any) => {
             o[f.id] = f;
             return o
         }, {});
     }
 
-    static getTypeName(id) {
+    static getTypeName(id: string) {
         return FieldType.asMap()[id];
     }
 
-    static get(id) {
+    static get(id: string) {
         return FieldType.asObject()[id];
     }
 
@@ -93,4 +93,4 @@ class FieldType {
     }
 }
 
-module.exports = FieldType;
+export default FieldType;

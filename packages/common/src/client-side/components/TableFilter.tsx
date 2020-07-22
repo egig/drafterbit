@@ -6,16 +6,37 @@ import {
     CloseCircleOutlined
 } from '@ant-design/icons';
 
-class TableFilter extends React.Component {
-    state = {
+type Props = {
+    onApplyFilters: any
+    columns: any
+}
+
+type State = {
+    filters: any[],
+    inputVisible: boolean
+    inputValue: any
+    editInputValue: any
+    tags: any
+    editInputIndex: number
+}
+
+class TableFilter extends React.Component<Props, State> {
+    state: State = {
         filters: [],
         inputVisible: false,
+        inputValue: null,
+        editInputValue: null,
+        tags: null,
+        editInputIndex: 0
     };
 
-    formRef = React.createRef();
+    input: any = null;
+    editInput: any = null;
 
-    handleClose = removedFilter => {
-        const filters = this.state.filters.filter(f => f.key !== removedFilter.key);
+    formRef: React.RefObject<any> = React.createRef();
+
+    handleClose = (removedFilter: any) => {
+        const filters = this.state.filters.filter((f: any) => f.key !== removedFilter.key);
         this.setState({ filters });
     };
 
@@ -23,11 +44,11 @@ class TableFilter extends React.Component {
         this.setState({ inputVisible: true });
     };
 
-    handleInputChange = e => {
+    handleInputChange = (e: any) => {
         this.setState({ inputValue: e.target.value });
     };
 
-    handleInputConfirm = (f) => {
+    handleInputConfirm = (f: any) => {
         let { filters } = this.state;
         filters.push(f);
         this.setState({
@@ -38,7 +59,7 @@ class TableFilter extends React.Component {
         });
     };
 
-    handleEditInputChange = e => {
+    handleEditInputChange = (e: any) => {
         this.setState({ editInputValue: e.target.value });
     };
 
@@ -55,16 +76,17 @@ class TableFilter extends React.Component {
         });
     };
 
-    saveInputRef = input => {
+    saveInputRef = (input: any) => {
         this.input = input;
     };
 
-    saveEditInputRef = input => {
+    saveEditInputRef = (input: any) => {
         this.editInput = input;
     };
 
     render() {
         const { tags, filters, inputVisible, inputValue, editInputIndex, editInputValue } = this.state;
+        // @ts-ignore
         return (
             <>
                 <FilterFilled/>
@@ -84,7 +106,7 @@ class TableFilter extends React.Component {
                             <span
                                 onDoubleClick={e => {
                                     if (index !== 0) {
-                                        this.setState({ editInputIndex: index, editInputValue: tag }, () => {
+                                        this.setState({ editInputIndex: index, editInputValue: tags }, () => {
                                             this.editInput.focus();
                                         });
                                         e.preventDefault();
@@ -118,7 +140,7 @@ class TableFilter extends React.Component {
                         <Input.Group compact >
                             <Form.Item noStyle name="key">
                                 <Select showSearch style={{minWidth: "120px"}}>
-                                    {this.props.columns.map((c,i) => {
+                                    {this.props.columns.map((c: any,i: number) => {
                                         return <Select.Option key={i} value={c.dataIndex}>{c.title}</Select.Option>
                                     })}
                                 </Select>

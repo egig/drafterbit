@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const withDrafterbit = function withDrafterbit(WrappedComponent) {
+const withDrafterbit = function withDrafterbit(WrappedComponent: any): any {
 
     class DrafterbitHOC extends React.Component {
-        render() {
 
+        static displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
+        static contextTypes = {
+            $dt: PropTypes.object.isRequired,
+        };
+
+        render() {
             const newProps = {
                 $dt: this.context.$dt,
             };
@@ -14,12 +19,7 @@ const withDrafterbit = function withDrafterbit(WrappedComponent) {
         }
     }
 
-    DrafterbitHOC.displayName = `withDrafterbit(${WrappedComponent.displayName || WrappedComponent.name})`;
-    DrafterbitHOC.contextTypes = {
-        $dt: PropTypes.object.isRequired,
-    };
-
     return DrafterbitHOC;
 };
 
-export default withDrafterbit;
+export = withDrafterbit;

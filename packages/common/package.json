@@ -2,13 +2,15 @@
   "name": "@drafterbit/common",
   "version": "3.0.0-dev.28",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": ["dist"],
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "nyc --reporter=none mocha './test/**/*.test.js' --timeout=3000 --reporter=spec  --exit --recursive --bail",
-    "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov"
+    "test": "nyc --reporter=none mocha --require ts-node/register \"test/**/*.test.{ts,tsx}\" --timeout=3000 --reporter=spec  --exit --recursive --bail",
+    "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
+    "build": "rm -rf dist && cp -r src dist && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
+    "@types/lodash": "^4.14.157",
     "antd": "^4.4.0",
     "axios": "0.19.2",
     "lodash": "^4.17.11",

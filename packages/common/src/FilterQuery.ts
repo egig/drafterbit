@@ -1,14 +1,16 @@
 class FilterQuery {
-    constructor(filters = []) {
+    private filters: any;
+
+    constructor(filters: Object[] = []) {
         this.filters = filters;
     }
 
-    addFilter(k, v) {
+    addFilter(k: string, v: any) {
         this.filters.push({k,v});
     }
 
-    removeFilter(k, v) {
-        this.filters = this.filters.filter(f => {
+    removeFilter(k: string, v: any) {
+        this.filters = this.filters.filter((f: any) => {
             return !(f.k === k && f.v === v);
         });
     }
@@ -18,7 +20,7 @@ class FilterQuery {
     }
 
     toMap() {
-        return this.filters.reduce((acc, curr) => {
+        return this.filters.reduce((acc: any, curr: any) => {
             if (typeof acc[curr.k] !== 'undefined' ) {
                 acc[curr.k] = [acc[curr.k]];
                 acc[curr.k].push(curr.v);
@@ -47,7 +49,7 @@ class FilterQuery {
             return new FilterQuery();
         }
 
-        let fqObjs = [];
+        let fqObjs: Object[] = [];
         fqStr.split(';').map((s) => {
             let t = s.split(':');
             let k = t[0];
@@ -64,4 +66,4 @@ class FilterQuery {
     }
 }
 
-module.exports = FilterQuery;
+export default FilterQuery;
