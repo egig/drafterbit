@@ -8,10 +8,12 @@ import Plugin from './Plugin';
 const commander = require('commander');
 const winston = require('winston');
 const mongoose = require('mongoose');
+import { getListPlugin } from "./odm";
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
 mongoose.set('useUnifiedTopology', true);
+mongoose.plugin(getListPlugin);
 
 declare namespace Application {
     interface Request extends Koa.Request {

@@ -1,7 +1,8 @@
 import App from "../../../index";
 
 const validateRequest = require('@drafterbit/common/dist/middlewares/validateRequest');
-import FilterQuery from '@drafterbit/common/dist/FilterQuery';
+import list from '@drafterbit/common/dist/middlewares/list';
+// import FilterQuery from '@drafterbit/common/dist/FilterQuery';
 const Router = require('@koa/router');
 
 let router = new Router();
@@ -51,16 +52,7 @@ router.get('/types/:type_name',
  *     tags:
  *        - /types
  */
-router.get('/types', async (ctx: App.Context, next: App.Next) => {
-    let m = ctx.app.model('Type');
-    let fq: FilterQuery = FilterQuery.fromString(ctx.query.fq);
-    let dataCount = await m.find(fq.toMap()).estimatedDocumentCount();
-    let offset = 0;
-    const pageSize = 10;
-    ctx.set('Content-Range',`resources ${offset}-${offset+pageSize - (pageSize-dataCount)}/${dataCount}`);
-    console.log("fq.toODMFilters()", fq.toODMFilters());
-    ctx.body = await m.getTypes(fq.toODMFilters());
-});
+router.get('/types', list("Type"));
 
 /**
  * @swagger

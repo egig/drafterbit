@@ -1,5 +1,5 @@
 import App from "../../../index";
-import FilterQuery from  '@drafterbit/common/dist/FilterQuery';
+import list from '@drafterbit/common/dist/middlewares/list';
 
 const validateRequest = require('@drafterbit/common/dist/middlewares/validateRequest');
 const contentMiddleware = require('../middlewares/content');
@@ -204,54 +204,20 @@ router.get('/:type_name',
     }),
     async function(ctx: App.Context, next: App.Next) {
 
-        let page = ctx.query.page || 1;
-        let sortBy = ctx.query.sort_by;
-        let sortDir = ctx.query.sort_dir || 'asc';
-        const PER_PAGE = 10;
-        let offset = (page*PER_PAGE) - PER_PAGE;
-        let max = PER_PAGE;
-
-        let filterObj = FilterQuery.fromString(ctx.query.fq).toODMFilters();
         let typeName = ctx.params['type_name'];
-        let m = ctx.app.model(ctx.params['type_name']);
 
-        let selectFields = ['-__v'];
-        ctx.app.plugins().map((m: any) => {
-            if (m.selectFields) {
-                selectFields = m.selectFields[typeName];
-            }
-        });
-
-        let sortD = sortDir === 'asc' ? 1 : -1;
-
-
-        let sortObj;
-        if(!!sortBy && sortBy !== '_id') {
-            sortObj = {
-                [sortBy]: sortD
-            };
-        } else {
-            sortObj = {'_id': sortD};
-        }
-
-        let query = m.find(filterObj, null, {
-            sort: sortObj
-        }).select(selectFields).skip(offset).limit(max);
-
-        ctx.state.lookupFields.forEach((f: any) => {
-            query.populate({
-                path: f.name,
-                select: '-__v',
-                options: { limit: 5 }
+        let listHandler = list(typeName, (query: any) => {
+            ctx.state.lookupFields.forEach((f: any) => {
+                query.populate({
+                    path: f.name,
+                    select: '-__v',
+                    options: { limit: 5 }
+                });
             });
+            return query;
         });
 
-        let results = await query.exec();
-
-        // TODO add filter here, e.g to decode password field
-        let dataCount = await m.find(filterObj).estimatedDocumentCount();
-        ctx.set('Content-Range',`resources ${offset}-${offset+PER_PAGE - (PER_PAGE-dataCount)}/${dataCount}`);
-        ctx.body = results;
+        await listHandler(ctx, next);
     }
 );
 

@@ -9,26 +9,19 @@ import FilterQuery from "../../FilterQuery";
 
 type Props = {
     onApplyFilters: (filters: FilterQuery.Filter[]) => Promise<any> | undefined
+    onDeleteFilter: (filters: FilterQuery.Filter) => Promise<any> | undefined
     columns: any
 }
 
 type State = {
     filters: FilterQuery.Filter[],
     inputVisible: boolean
-    inputValue: any
-    editInputValue: any
-    tags: any
-    editInputIndex: number
 }
 
 class TableFilter extends React.Component<Props, State> {
     state: State = {
         filters: [],
         inputVisible: false,
-        inputValue: null,
-        editInputValue: null,
-        tags: null,
-        editInputIndex: 0
     };
 
     input: any = null;
@@ -36,17 +29,19 @@ class TableFilter extends React.Component<Props, State> {
 
     formRef: React.RefObject<any> = React.createRef();
 
-    handleClose = (removedFilter: any) => {
-        const filters = this.state.filters.filter((f: any) => f.key !== removedFilter.key);
-        this.setState({ filters });
+    handleClose = (removedFilter: FilterQuery.Filter) => {
+        const filters = this.state.filters.filter((f: FilterQuery.Filter) => {
+            return (f.key !== removedFilter.key) && (f.op !== removedFilter.op) &&
+                (f.val !== removedFilter.val)
+        });
+        this.setState({ filters }, () => {
+            console.log(filters);
+            this.props.onDeleteFilter(removedFilter);
+        });
     };
 
     showInput = () => {
         this.setState({ inputVisible: true });
-    };
-
-    handleInputChange = (e: any) => {
-        this.setState({ inputValue: e.target.value });
     };
 
     handleInputConfirm = (f: any) => {
@@ -60,33 +55,8 @@ class TableFilter extends React.Component<Props, State> {
         });
     };
 
-    handleEditInputChange = (e: any) => {
-        this.setState({ editInputValue: e.target.value });
-    };
-
-    handleEditInputConfirm = () => {
-        this.setState(({ tags, editInputIndex, editInputValue }) => {
-            const newTags = [...tags];
-            newTags[editInputIndex] = editInputValue;
-
-            return {
-                tags: newTags,
-                editInputIndex: -1,
-                editInputValue: '',
-            };
-        });
-    };
-
-    saveInputRef = (input: any) => {
-        this.input = input;
-    };
-
-    saveEditInputRef = (input: any) => {
-        this.editInput = input;
-    };
-
     render() {
-        const { tags, filters, inputVisible, inputValue, editInputIndex, editInputValue } = this.state;
+        const {filters, inputVisible} = this.state;
         // @ts-ignore
         return (
             <>
@@ -94,7 +64,6 @@ class TableFilter extends React.Component<Props, State> {
                 <span style={{marginLeft:"6px"}}/>
 
                 {filters.map((f: FilterQuery.Filter, index: number) => {
-                    console.log("FILTER", f);
                     const isLongTag = f.val.length > 20;
                     let v=  isLongTag ? `${f.val.slice(0, 20)}...` : f.val;
 
@@ -102,19 +71,7 @@ class TableFilter extends React.Component<Props, State> {
                         <Tag key={f.key}
                              closable={true}
                              onClose={() => this.handleClose(f)}>
-                            <span onDoubleClick={e => {
-                                    if (index !== 0) {
-                                        this.setState({
-                                            editInputIndex: index,
-                                            editInputValue: tags },
-                                            () => {
-                                            this.editInput.focus();
-                                        });
-                                        e.preventDefault();
-                                    }
-                                }}>
-                                {`${f.key}${f.op}${v}`}
-                            </span>
+                            <span> {`${f.key}${f.op}${v}`} </span>
                         </Tag>
                     );
                     return isLongTag ? (

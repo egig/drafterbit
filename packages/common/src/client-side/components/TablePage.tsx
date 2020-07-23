@@ -182,17 +182,12 @@ class TablePage extends React.Component<Props, State> {
     };
 
 
-    /**
-     *
-     * @param key
-     * @param op
-     * @param val
-     */
-    onDeleteFilter = (key: string, op: string, val: any) => {
+    onDeleteFilter = (f: FilterQuery.Filter): (Promise<any> | undefined) => {
         this.modifyFQ((fqObj: FilterQuery) => {
-            fqObj.removeFilter(key, op, val);
+            fqObj.removeFilter(f.key, f.op, f.val);
             return fqObj;
         });
+        return;
     };
 
     /**
@@ -216,7 +211,7 @@ class TablePage extends React.Component<Props, State> {
                 faStr = "";
             }
             let fqObj: FilterQuery = FilterQuery.fromString(faStr as string);
-            fn(fqObj);
+            fqObj = fn(fqObj);
             let fqStr = fqObj.toString();
             if (fqStr === "") {
                 delete qs['fq'];
@@ -301,6 +296,7 @@ class TablePage extends React.Component<Props, State> {
 
         const tableFilter = (
             <TableFilter onApplyFilters={this.onApplyFilters}
+                         onDeleteFilter={this.onDeleteFilter}
                          columns={columns} />);
 
         const tableData = (
