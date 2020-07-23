@@ -31,9 +31,15 @@ class Types extends React.Component<Props,State> {
         super(props);
     }
 
-    loadContents = () => {
+    loadContents = (page: number, pageSize: number, sortBy: string, sortDir: string, fqStr: string) => {
         let client = this.props.$dt.getApiClient();
-        return client.getTypes()
+        return client.getTypes({
+            page,
+            page_size: pageSize,
+            sort_by: sortBy,
+            sort_dir: sortDir,
+            fq: fqStr
+        })
             .then((response: any) => {
                 this.setState({
                     contentCount: response.count,

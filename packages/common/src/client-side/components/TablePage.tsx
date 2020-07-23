@@ -13,7 +13,7 @@ type Props = {
     history: any,
     location: any,
     match : any,
-    loadContents: any
+    loadContents: (page: number, pageSize: number, sortBy: string, sortDir: string, fqStr: string) => Promise<any>
     handleDelete?: any
     data: any
     columns: any
@@ -65,6 +65,7 @@ class TablePage extends React.Component<Props, State> {
         this.setState({
             loading: true
         });
+
         this.loadContents(nextProps)
             .then(() => {
                 this.setState({
@@ -75,11 +76,20 @@ class TablePage extends React.Component<Props, State> {
 
     loadContents = (props: any) => {
         let qs = querystring.parse(props.location.search.substr(1));
-        let sortBy = qs['sort_by'];
-        let sortDir = qs['sort_dir'];
-        let fqStr = qs['fq'];
-        let page = qs['page'];
-        return this.props.loadContents(props.match, page, sortBy, sortDir, fqStr, qs);
+        let sortBy = qs['sort_by'] as string;
+        let sortDir = qs['sort_dir'] as string;
+        let fqStr = qs['fq'] as string;
+        let page = 1;
+        let pageSize = 10;
+        if (!!qs['page']) {
+            page = Number(qs['page']) || 1;
+        }
+
+        if (!!qs['page_size']) {
+            pageSize = Number(qs['page_size']) || 10;
+        }
+
+        return this.props.loadContents(page, pageSize, sortBy, sortDir, fqStr);
     };
 
     componentDidMount() {

@@ -4,10 +4,10 @@ import FilterQuery from "../FilterQuery";
 export default function list(typeName: string, queryExt: QueryExt = (q) => q ) {
     return async (ctx: any, next: any) => {
 
-        let page = ctx.query.page || 1;
+        let page = Number(ctx.query.page) || 1;
         let sortBy = ctx.query.sort_by;
-        let sortDir = ctx.query.sort_dir || 'asc';
-        const pageSize = ctx.query.page_size || 10;
+        let sortDir = ctx.query.sort_dir || 'ascend';
+        const pageSize = Number(ctx.query.page_size) || 10;
 
         let filterObj = FilterQuery.fromString(ctx.query.fq).toODMFilters();
         let m = ctx.app.model(typeName);
@@ -24,6 +24,5 @@ export default function list(typeName: string, queryExt: QueryExt = (q) => q ) {
 
         ctx.set('Content-Range',`resources ${offset}-${offset+max - (max-count)}/${count}`);
         ctx.body = list;
-        next();
     };
 };

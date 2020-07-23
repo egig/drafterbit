@@ -46,9 +46,9 @@ class Contents extends React.Component<Props, State> {
         super(props);
     }
 
-    loadContents = (match: any, page: number, sortBy: string, sortDir: string, fqStr: string) => {
+    loadContents = (page: number, pageSize: number, sortBy: string, sortDir: string, fqStr: string) => {
 
-        let typeName = match.params.type_name;
+        let typeName = this.props.match.params.type_name;
         // @ts-ignore
         let client = this.props.$dt.getApiClient();
         return client.getType(typeName)

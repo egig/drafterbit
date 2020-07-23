@@ -2,7 +2,6 @@ import App from "../../../index";
 
 const validateRequest = require('@drafterbit/common/dist/middlewares/validateRequest');
 import list from '@drafterbit/common/dist/middlewares/list';
-// import FilterQuery from '@drafterbit/common/dist/FilterQuery';
 const Router = require('@koa/router');
 
 let router = new Router();
