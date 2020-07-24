@@ -2,8 +2,7 @@ import React from 'react';
 import RichText from './RichText';
 import Relation  from './Relation';
 import { Form, Input, InputNumber } from 'antd'
-import FieldType from '@drafterbit/common/dist/FieldType';
-
+import { FieldType } from '@drafterbit/common';
 
 type Props = {
     field: any,

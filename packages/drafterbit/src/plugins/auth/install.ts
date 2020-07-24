@@ -1,9 +1,8 @@
 import Application from "../../index";
-import FieldType from '@drafterbit/common/dist/FieldType';
+import { FieldType, fieldsToSchema } from '@drafterbit/common';
 import password from './lib/password';
 
 const inquirer = require('inquirer');
-const fieldsToSchema = require('@drafterbit/common/dist/fieldsToSchema');
 
 module.exports = function install(app: Application) {
     return promptAndInstall(app)

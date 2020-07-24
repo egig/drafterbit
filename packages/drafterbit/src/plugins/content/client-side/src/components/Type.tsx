@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import FieldForm from './FieldForm';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
+import { withDrafterbit } from '@drafterbit/common';
 import TypeForm from './TypeForm'
 
 import {Row, Col, Tabs, Button, Card, message, PageHeader} from 'antd';

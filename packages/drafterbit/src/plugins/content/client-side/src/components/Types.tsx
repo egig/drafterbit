@@ -1,10 +1,9 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
+import { withDrafterbit, TablePage } from '@drafterbit/common';
 import TypeForm from './TypeForm';
 // @ts-ignore
-import TablePage from '@drafterbit/common/dist/client-side/components/TablePage';
 import { message } from 'antd';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
 

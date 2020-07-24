@@ -1,11 +1,11 @@
 import querystring from 'querystring';
 import React  from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
 import { Row, Col, Table, Button, PageHeader, Card } from 'antd'
 import TableFilter from './TableFilter';
 import { LoadingOutlined } from '@ant-design/icons';
-import FilterQuery from '../../FilterQuery';
+import FilterQuery from '../FilterQuery';
 
 const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -33,7 +33,7 @@ type State = {
 type modifyQSParam = (a: querystring.ParsedUrlQuery) => querystring.ParsedUrlQuery;
 type modifyFQParam = (a: FilterQuery) => FilterQuery;
 
-class TablePage extends React.Component<Props, State> {
+export class TablePage extends React.Component<Props, State> {
 
     state: State = {
         selected: [],

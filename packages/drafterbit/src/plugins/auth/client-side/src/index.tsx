@@ -1,7 +1,8 @@
 import React, { lazy } from 'react';
 import stateReducer from './stateReducer';
 // @ts-ignore
-import { getCookie } from '@drafterbit/common/dist/client-side/cookie';
+import { cookie } from '@drafterbit/common';
+const { getCookie } = cookie;
 import NavBarMenu from './components/NavBarMenu';
 import ApiClient from './ApiClient';
 import { Redirect } from 'react-router-dom';

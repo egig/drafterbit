@@ -1,7 +1,9 @@
 // @ts-ignore
-import {setCookie} from '@drafterbit/common/dist/client-side/cookie';
+import {cookie} from '@drafterbit/common';
 import React from 'react';
 import {Menu, Dropdown} from 'antd';
+
+const {setCookie} = cookie;
 
 import {
     LogoutOutlined

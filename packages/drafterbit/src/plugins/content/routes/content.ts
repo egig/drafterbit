@@ -1,10 +1,9 @@
 import App from "../../../index";
-import list from '@drafterbit/common/dist/middlewares/list';
-
-const validateRequest = require('@drafterbit/common/dist/middlewares/validateRequest');
+import { middlewares } from '@drafterbit/common';
 const contentMiddleware = require('../middlewares/content');
 const Router = require('@koa/router');
 
+const { list, validateRequest } = middlewares;
 let router = new Router();
 
 router.param('type_name',  contentMiddleware());

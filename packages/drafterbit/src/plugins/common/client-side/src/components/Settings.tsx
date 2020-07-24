@@ -1,9 +1,9 @@
 import React from 'react';
 // @ts-ignore
-import translate from '@drafterbit/common/dist/client-side/translate';
+import { translate } from '@drafterbit/common';
 import {Row, Col, Card, PageHeader} from 'antd'
 // @ts-ignore
-import withDrafterbit from '@drafterbit/common/dist/client-side/withDrafterbit';
+import { withDrafterbit } from '@drafterbit/common';
 import {Form, Tabs, Input, Switch, message, Button} from 'antd';
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
 

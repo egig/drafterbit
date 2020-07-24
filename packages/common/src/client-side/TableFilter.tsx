@@ -5,8 +5,8 @@ import {
     FilterFilled,
     CloseCircleOutlined
 } from '@ant-design/icons';
-import FilterQuery from "../../FilterQuery";
-import FieldType from "../../FieldType";
+import FilterQuery from "../FilterQuery";
+import FieldType from "../FieldType";
 
 
 type Props = {

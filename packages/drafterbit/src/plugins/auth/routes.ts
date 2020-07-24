@@ -3,9 +3,9 @@ import App from "../../index";
 const jwt = require('jsonwebtoken');
 const password = require('./lib/password');
 const UserAuthError  = require('./UserAuthError');
-const validateRequest  = require('@drafterbit/common/dist/middlewares/validateRequest');
+import { middlewares, fieldsToSchema } from '@drafterbit/common';
+const { validateRequest } = middlewares;
 const { sendResetPasswordEmail } = require('./lib/mail');
-const fieldsToSchema = require( '@drafterbit/common/dist/fieldsToSchema');
 const Router = require('@koa/router');
 
 let router = new Router();

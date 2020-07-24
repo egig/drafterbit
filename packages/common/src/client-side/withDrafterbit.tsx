@@ -22,4 +22,4 @@ const withDrafterbit = function withDrafterbit(WrappedComponent: any): any {
     return DrafterbitHOC;
 };
 
-export = withDrafterbit;
+export default withDrafterbit;

@@ -133,11 +133,16 @@ class FilterQuery {
         return odmFilter;
     }
 
-    private static _odmFilter(opSym: string, val: string) {
+    private static _odmFilter(opSym: string, val: string|number) {
+        // @ts-ignore;
+        if (!isNaN(val)) {
+            val = Number(val);
+        }
+
         let d: any = {
             "=": "$eq",
-            "=>": "$ge",
-            "=<": "$le",
+            "=>": "$gt",
+            "=<": "$lt",
             "=~": "$regex",
         };
 

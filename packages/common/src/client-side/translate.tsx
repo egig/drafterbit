@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export = function translate(namespaces: string[]): any {
+export default function translate(namespaces: string[]): any {
 
     function getDisplayName(WrappedComponent: any) {
         return WrappedComponent.displayName || WrappedComponent.name || 'Component';

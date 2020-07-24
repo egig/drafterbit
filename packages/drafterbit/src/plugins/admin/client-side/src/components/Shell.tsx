@@ -3,12 +3,22 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, HashRouter, Redirect  } from 'react-router-dom';
 import Layout from './Layout';
-import DTContext  from '@drafterbit/common/dist/client-side/DTContext';
+import DTContext from '@drafterbit/common/dist/client-side/DTContext';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import ClientSide from "../ClientSide";
 const LoadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-class Shell extends React.Component {
+type Props = {
+    $dt: ClientSide
+}
+
+class Shell extends React.Component<Props, {}> {
+
+    static childContextTypes: any = {
+        $dt: PropTypes.object.isRequired,
+        languageContext: PropTypes.object.isRequired
+    };
 
     render() {
         let store = this.props.$dt.store;
@@ -20,7 +30,7 @@ class Shell extends React.Component {
                         <Route path="/" render={({ location }) => {
 
                             let pagePattern = this.props.$dt.modules.map(m => {
-                                return m.routes.map(r => {
+                                return m.routes.map((r: any) => {
                                     return r.path.substr(1)
                                 }).join("|")
                             }).filter(i => !!i).join("|");
@@ -53,7 +63,7 @@ class Shell extends React.Component {
                                                         }
 
                                                         return <Route exact {...route} />
-                                 w                   })
+                                                    })
                                                 })}
                                             </Switch>
                                         </Suspense>
@@ -62,7 +72,7 @@ class Shell extends React.Component {
                             }
 
                             return this.props.$dt.modules.map(m => {
-                                return m.routes.map(r => {
+                                return m.routes.map((r: any) => {
                                     return <Route key={r.path} exact {...r} />
                                 })
                             });
@@ -83,10 +93,5 @@ class Shell extends React.Component {
         };
     }
 }
-
-Shell.childContextTypes = {
-    $dt: PropTypes.object.isRequired,
-    languageContext: PropTypes.object.isRequired
-};
 
 export default Shell;

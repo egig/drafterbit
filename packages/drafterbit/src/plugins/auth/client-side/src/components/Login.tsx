@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import AuthCard from './AuthCard';
 import { Helmet } from 'react-helmet';
 // @ts-ignore
-import translate from '@drafterbit/common/dist/client-side/translate';
+import { translate } from '@drafterbit/common';
 // @ts-ignore
-import { setCookie } from '@drafterbit/common/dist/client-side/cookie';
+import { cookie } from '@drafterbit/common';
+const { setCookie } = cookie;
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 // @ts-ignore

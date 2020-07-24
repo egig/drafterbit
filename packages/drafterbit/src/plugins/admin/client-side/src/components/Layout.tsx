@@ -5,7 +5,6 @@ import {
 	MenuFoldOutlined,
 } from '@ant-design/icons';
 import SideNav from './SideNav';
-import { Helmet } from 'react-helmet';
 import './Layout.css';
 import ClientSide from "../ClientSide";
 import Module from "../Module";
@@ -13,7 +12,6 @@ import Module from "../Module";
 const { Header, Content, Footer } = BaseLayout;
 
 type Props = {
-	title: string,
 	$dt: ClientSide
 }
 
@@ -43,9 +41,6 @@ class Layout extends React.Component<Props, State> {
 		let layoutMargin = this.state.collapsed ? 80 : 220;
 		return (
 			<BaseLayout>
-				<Helmet>
-					<title>{this.props.title}</title>
-				</Helmet>
 				<SideNav {...navProps} />
 				<BaseLayout className="site-layout"  style={{ marginLeft: layoutMargin, minHeight: "100vh" }}>
 					<Header className="site-layout-background" style={{
