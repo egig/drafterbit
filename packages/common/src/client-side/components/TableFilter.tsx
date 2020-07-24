@@ -6,6 +6,8 @@ import {
     CloseCircleOutlined
 } from '@ant-design/icons';
 import FilterQuery from "../../FilterQuery";
+import FieldType from "../../FieldType";
+
 
 type Props = {
     onApplyFilters: (filters: FilterQuery.Filter[]) => Promise<any> | undefined
@@ -15,17 +17,18 @@ type Props = {
 
 type State = {
     filters: FilterQuery.Filter[],
-    inputVisible: boolean
+    inputVisible: boolean,
+    operators: any[];
 }
 
 class TableFilter extends React.Component<Props, State> {
     state: State = {
         filters: [],
         inputVisible: false,
+        operators: [{sym: "="}]
     };
 
     input: any = null;
-    editInput: any = null;
 
     formRef: React.RefObject<any> = React.createRef();
 
@@ -57,6 +60,11 @@ class TableFilter extends React.Component<Props, State> {
 
     render() {
         const {filters, inputVisible} = this.state;
+        let opMap = this.props.columns.reduce((acc: any, curr: any) => {
+            acc[curr.dataIndex] = curr.dataType;
+            return acc;
+        }, {});
+
         // @ts-ignore
         return (
             <>
@@ -88,8 +96,15 @@ class TableFilter extends React.Component<Props, State> {
                           layout="inline"
                           initialValues={{
                               key: this.props.columns[0].dataIndex,
-                              op:"=~",
+                              op:"=",
                               val:""
+                          }}
+                          onValuesChange={(changedValues, values) => {
+                              if (typeof changedValues.key !== 'undefined') {
+                                  this.setState({
+                                      operators: TableFilter.getOp(opMap[changedValues.key])
+                                  })
+                              }
                           }}
                           onFinish={values => {
                               this.handleInputConfirm(values)
@@ -104,8 +119,8 @@ class TableFilter extends React.Component<Props, State> {
                             </Form.Item>
                             <Form.Item noStyle name="op">
                                 <Select>
-                                    {["=", "=~", ">", "<"].map((op,i) => {
-                                        return <Select.Option key={i} value={op}>{op}</Select.Option>
+                                    {this.state.operators.map((op,i) => {
+                                        return <Select.Option key={i} value={op.sym}>{op.sym}</Select.Option>
                                     })}
                                 </Select>
                             </Form.Item>
@@ -136,6 +151,11 @@ class TableFilter extends React.Component<Props, State> {
                 )}
             </>
         );
+    }
+
+    static getOp(typeName: string): any[] {
+        let m: any = FieldType.asObject();
+        return m[typeName].op;
     }
 }
 

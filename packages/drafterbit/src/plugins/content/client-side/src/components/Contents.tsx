@@ -105,13 +105,14 @@ class Contents extends React.Component<Props, State> {
 
         let slug = this.props.match.params.type_name;
 
-        const columns = [{
+        const columns: any[] = [{
             dataIndex: '_id',
             title: '#ID',
             render: (text: string, row: any) => {
                 return <span><Link to={`/c/${slug}/${row._id}`}>{text.substr(0,3)}&hellip;</Link></span>;
             },
-	        width: "80px"
+	        width: "80px",
+            dataType: FieldType.SHORT_TEXT
         }];
 
         this.state.ctFields.map((f: any) => {
@@ -120,7 +121,8 @@ class Contents extends React.Component<Props, State> {
 		        columns.push({
 			        dataIndex: f.name,
 			        title: f.label,
-                    sorter: true
+                    sorter: true,
+                    dataType: f.type_name
 		        } as any)
 	        }
         });

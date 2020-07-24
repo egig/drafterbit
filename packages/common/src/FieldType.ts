@@ -22,6 +22,10 @@ class FieldType {
                 'unique',
                 'min_length',
                 'max_length',
+            ],
+            op: [
+                {sym:"="},
+                {sym:"=~"},
             ]
         },
         {
@@ -33,6 +37,10 @@ class FieldType {
                 'unique',
                 'min_length',
                 'max_length',
+            ],
+            op: [
+                {sym:"="},
+                {sym:"=~"},
             ]
         },
         {
@@ -43,6 +51,10 @@ class FieldType {
                 'is_required',
                 'min_length',
                 'max_length',
+            ],
+            op: [
+                {sym:"="},
+                {sym:"=~"},
             ]
         },
         {
@@ -54,6 +66,11 @@ class FieldType {
                 'unique',
                 'min',
                 'max',
+            ],
+            op: [
+                {sym:"="},
+                {sym:"=>"},
+                {sym:"=<"}
             ]
         },
         {
