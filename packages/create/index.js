@@ -1,38 +1,38 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const REPO_NAME = 'app';
-const VERSION = '3.0.0-dev.29';
-const EXTRACT_DIR = `${REPO_NAME}-${VERSION}`;
-let archiveUrl = `https://github.com/drafterbit/app/archive/${VERSION}.zip`;
-let dirDest = process.cwd();
-let fileDest = `./drafterbit-app-${VERSION}.zip`;
-
-
 const { https } = require('follow-redirects');
 const fs = require('fs');
 const unzip = require('unzip-stream');
 const mkdirp = require('mkdirp');
 const shell = require('shelljs');
 
+const repoName = 'app';
+const { version } = require('./package.json');
+const srcDir = `${repoName}-${version}s`;
+let archiveUrl = `https://github.com/drafterbit/app/archive/${version}.zip`;
+let destDir = process.cwd();
+
 // Download
 console.log("Downloading from", archiveUrl);
-const download = function(url, dest, cb) {
-    let request = https.get(url, res => {
+const download = function(url, cb) {
+    https.get(url, res => {
         res.pipe(unzip.Parse())
             .on("finish", function () {
                 cb();
             })
             .on('entry', function (entry) {
-                let filePath = entry.path.replace(EXTRACT_DIR, "");
+                let filePath = entry.path.replace(srcDir, "");
                 if (filePath !== "") {
-                    let isDir     = 'Directory' === entry.type;
-                    let fullPath = path.join(dirDest, filePath);
+
+                    let fullPath = path.join(destDir, filePath);
+                    console.log("creating file", fullPath);
+
+                    let isDir = 'Directory' === entry.type;
                     let directory = isDir ? fullPath : path.dirname(fullPath);
 
                     mkdirp.sync(directory);
-                    if (! isDir) { // should really make this an `if (isFile)` check...
-                        console.log("creating file", fullPath);
+                    if (!isDir) {
                         entry.pipe(fs.createWriteStream(fullPath));
                     } else {
                         entry.autodrain();
@@ -42,16 +42,14 @@ const download = function(url, dest, cb) {
     })
 };
 
-download(archiveUrl, fileDest, function (e) {
+
+download(archiveUrl, function (e) {
     install()
 });
 
 function install() {
-    // shell.cd(process.cwd());
+    shell.cd(process.cwd());
     setTimeout(() => {
         shell.exec('npm install');
     }, 1000);
 }
-
-// Extract
-// Npm install
