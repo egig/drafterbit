@@ -9,7 +9,7 @@ const shell = require('shelljs');
 
 const repoName = 'app';
 const { version } = require('./package.json');
-const srcDir = `${repoName}-${version}s`;
+const srcDir = `${repoName}-${version}`;
 let archiveUrl = `https://github.com/drafterbit/app/archive/${version}.zip`;
 let destDir = process.cwd();
 
