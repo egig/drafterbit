@@ -14,19 +14,19 @@ let archiveUrl = `https://github.com/drafterbit/app/archive/${version}.zip`;
 let destDir = process.cwd();
 
 // Download
-console.log("Downloading from", archiveUrl);
+console.log('Downloading from', archiveUrl);
 const download = function(url, cb) {
     https.get(url, res => {
         res.pipe(unzip.Parse())
-            .on("finish", function () {
+            .on('finish', function () {
                 cb();
             })
             .on('entry', function (entry) {
-                let filePath = entry.path.replace(srcDir, "");
-                if (filePath !== "") {
+                let filePath = entry.path.replace(srcDir, '');
+                if (filePath !== '') {
 
                     let fullPath = path.join(destDir, filePath);
-                    console.log("creating file", fullPath);
+                    console.log('creating file', fullPath);
 
                     let isDir = 'Directory' === entry.type;
                     let directory = isDir ? fullPath : path.dirname(fullPath);
@@ -38,13 +38,13 @@ const download = function(url, cb) {
                         entry.autodrain();
                     }
                 }
-            })
-    })
+            });
+    });
 };
 
 
 download(archiveUrl, function (e) {
-    install()
+    install();
 });
 
 function install() {

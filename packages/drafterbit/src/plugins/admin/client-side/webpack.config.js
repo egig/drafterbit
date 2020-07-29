@@ -100,9 +100,9 @@ module.exports = env => {
         resolve: {
             extensions: ['*', '.js', '.jsx', '.css'],
             alias: {
-                "react": path.resolve(path.join(env.projectRoot, 'node_modules/react')),
-                "react-dom": path.resolve(path.join(env.projectRoot, 'node_modules/react-dom')),
-                "react-router-dom": path.resolve(path.join(env.projectRoot, 'node_modules/react-router-dom'))
+                'react': path.resolve(path.join(env.projectRoot, 'node_modules/react')),
+                'react-dom': path.resolve(path.join(env.projectRoot, 'node_modules/react-dom')),
+                'react-router-dom': path.resolve(path.join(env.projectRoot, 'node_modules/react-router-dom'))
             },
         },
     };

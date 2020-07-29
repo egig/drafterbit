@@ -16,8 +16,5 @@
   },
   "pre-commit": {
     "run": "test"
-  },
-  "dependencies": {
-    "@types/koa-bodyparser": "^4.3.0"
   }
 }
