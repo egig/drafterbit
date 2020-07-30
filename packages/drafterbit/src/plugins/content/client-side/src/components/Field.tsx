@@ -36,6 +36,18 @@ class Field extends React.Component<Props, {}> {
                 <Form.Item
                     label={field.display_text}
                     name={field.name}
+                    rules={[
+                        (form) => ({
+                            validator(rule, value) {
+                                // TODO check validation_rules here
+                                return Promise.resolve();
+                                // if (!value || getFieldValue('password') === value) {
+                                //     return Promise.resolve();
+                                // }
+                                // return Promise.reject('The two passwords that you entered do not match!');
+                            },
+                        })
+                    ]}
                 >
                     {/*<label htmlFor={field.name}>{field.display_text}</label>*/}
                     {types[field.type_name]()}

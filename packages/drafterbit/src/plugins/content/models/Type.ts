@@ -1,3 +1,5 @@
+import {Schema} from "mongoose";
+
 const mongoose = require('mongoose');
 
 
@@ -6,14 +8,14 @@ let TypeSchema = new mongoose.Schema({
     display_text: { type: String, unique: true },
     slug: { type: String, unique: true },
     description: String,
-    is_structured: { type: Boolean, default: false },
     has_fields: { type: Boolean, default: false },
     fields: [{
         name: String,
         label: String,
-        validation_rules: String,
+        validation_rules: Schema.Types.Mixed,
         show_in_list: { type: Boolean, default: true },
         show_in_form: { type: Boolean, default: true },
+        required: { type: Boolean, default: false },
         unique: { type: Boolean, default: false },
         type_name: String,
         display_text: String,
@@ -121,7 +123,7 @@ TypeSchema.statics.updateType = function(typeId: string, payload: any) {
  * @param payload
  * @returns {*}
  */
-TypeSchema.statics.updateTypeField = function(typeName: string, fieldId: string, payload: any) {
+TypeSchema.statics.updateTypeField = function (typeName: string, fieldId: string, payload: any) {
 
     let setter: any = {};
     for (let k of Object.keys(payload)) {

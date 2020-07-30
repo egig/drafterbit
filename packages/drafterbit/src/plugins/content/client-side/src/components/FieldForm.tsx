@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Modal, Form, Input, Select, Switch } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, Select, Switch } from 'antd';
 // @ts-ignore
 import DTContext from '@drafterbit/common/dist/client-side/DTContext';
+import { FieldType } from "@drafterbit/common";
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
+import type = Mocha.utils.type;
 
 declare namespace FieldForm {
     type Props = {
         onSuccess?: any,
-        belongsToTypeName?: string,
+        belongsToTypeName: string,
         field?: any,
         types?: any
     }
@@ -20,8 +22,9 @@ const FieldForm = (props: FieldForm.Props) => {
 
     const onSave = (values: any) => {
 
+        // TODO save validation_rules
         let {type_name, name, label, multiple,
-            show_in_form, show_in_list} = values;
+            show_in_form, show_in_list, validation_rules} = values;
 
         (() => {
             if(!!field) {
@@ -35,12 +38,13 @@ const FieldForm = (props: FieldForm.Props) => {
                         multiple,
                         show_in_form,
                         show_in_list,
+                        validation_rules
                     }
                 )
             } else {
                 // create
                 return $dt.getApiClient().addTypeField(belongsToTypeName,
-                    type_name, name, label, multiple, show_in_list, show_in_form
+                    type_name, name, label, multiple, show_in_list, show_in_form, validation_rules
                 )
                     .then(()=> {
                         form.resetFields();
@@ -63,12 +67,23 @@ const FieldForm = (props: FieldForm.Props) => {
         initialValues =  field;
     }
 
+    let dvo = !!field ? FieldType.get(field.type_name).validationOptions : [];
+    let [validationOptions, setValidationOptions] = React.useState(dvo);
+
+    const onValuesChange = function (changedValues: any, allValues: any) {
+        let typeName = form.getFieldValue("type_name");
+        if (!!typeName) {
+            setValidationOptions(FieldType.get(typeName).validationOptions);
+        }
+    };
+
     return (
         <Form
             form={form}
             layout="vertical"
             name="field_form"
             onFinish={onSave}
+            onValuesChange={onValuesChange}
             initialValues={initialValues}>
             <Form.Item
                 name="type_name"
@@ -129,9 +144,49 @@ const FieldForm = (props: FieldForm.Props) => {
             <Form.Item valuePropName="checked" name="show_in_form" label="Show in Form">
                 <Switch size="small" />
             </Form.Item>
+            <Form.Item valuePropName="checked" name="required" label="Required">
+                <Switch size="small" />
+            </Form.Item>
+            <Form.Item valuePropName="checked" name="unique" label="Unique">
+                <Switch size="small" />
+            </Form.Item>
+            {validationOptions.map((v: any,i: number) => {
+                if (v == "max_length") {
+                    return (
+                        <Form.Item name={["validation_rules","max_length"]} label="Max Length">
+                            <InputNumber />
+                        </Form.Item>
+                    )
+                }
+
+                if (v == "min_length") {
+                    return (
+                        <Form.Item name={["validation_rules","min_length"]} label="Min Length">
+                            <InputNumber />
+                        </Form.Item>
+                    )
+                }
+
+                if (v == "max") {
+                    return (
+                        <Form.Item name={["validation_rules","max"]} label="Max">
+                            <InputNumber />
+                        </Form.Item>
+                    )
+                }
+
+                if (v == "min") {
+                    return (
+                        <Form.Item name={["validation_rules",",min"]} label="Min">
+                            <InputNumber />
+                        </Form.Item>
+                    )
+                }
+            })}
             <Form.Item>
                 <Button type="primary" htmlType="submit">Save</Button>
             </Form.Item>
+
         </Form>
     );
 };

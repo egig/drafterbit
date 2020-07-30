@@ -55,7 +55,7 @@ const ApiClient = {
     },
 
     addTypeField: async function addTypeField(belongsToTypeName: string, typeName: string,
-        name: string, label: string,multiple: boolean, showInList: boolean, showInForm: boolean)  {
+                                              name: string, label: string, multiple: boolean, showInList: boolean, showInForm: boolean, validationRules: any)  {
         let url = `/types/${belongsToTypeName}/fields`;
         // @ts-ignore
         let response = await this.axiosInstance.post(url, {
@@ -65,7 +65,8 @@ const ApiClient = {
             type_name: typeName,
             multiple,
             show_in_form: showInForm,
-            show_in_list: showInList
+            show_in_list: showInList,
+            validation_rules: validationRules
         });
         return response.data;
     },

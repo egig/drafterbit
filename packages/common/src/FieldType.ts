@@ -3,19 +3,10 @@ class FieldType {
     static LONG_TEXT = "LongText";
     static RICH_TEXT = "RichText";
     static NUMBER = "Number";
-    static UNSTRUCTURED = "Unstructured";
-    static IMAGE = "Image";
-    static VIDEO = "Video";
-    static DATE = "Date";
-    static TIME = "Time";
-    static DATE_TIME = "DateTime";
-    static LOCATION = "Location";
-    static TOGGLE = "Toggle";
 
     static fieldTypes = [
         {
             id: FieldType.SHORT_TEXT,
-            code: 'FIELD_SHORT_TEXT',
             name: 'Short Text',
             validationOptions: [
                 'is_required',
@@ -30,7 +21,6 @@ class FieldType {
         },
         {
             id: FieldType.LONG_TEXT,
-            code: 'FIELD_LONG_TEXT',
             name: 'Long Text',
             validationOptions: [
                 'is_required',
@@ -45,7 +35,6 @@ class FieldType {
         },
         {
             id: FieldType.RICH_TEXT,
-            code: 'FIELD_RICH_TEXT',
             name: 'Rich Text',
             validationOptions: [
                 'is_required',
@@ -59,7 +48,6 @@ class FieldType {
         },
         {
             id: FieldType.NUMBER,
-            code: 'FIELD_NUMBER',
             name: 'Number',
             validationOptions: [
                 'is_required',
@@ -72,12 +60,6 @@ class FieldType {
                 {sym:"=>"},
                 {sym:"=<"}
             ]
-        },
-        {
-            id: FieldType.UNSTRUCTURED,
-            code: 'FIELD_UNSTRUCTURED',
-            name: 'Unstructured',
-            validationOptions: []
         }
     ];
 

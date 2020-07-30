@@ -145,7 +145,7 @@ class TableFilter extends React.Component<Props, State> {
                     </Form>
                 )}
                 {!inputVisible && (
-                    <Tag style={{border: "1px dashed #e1e1e1"}} className="site-tag-plus" onClick={this.showInput}>
+                    <Tag style={{border: "1px dashed #e1e1e1", cursor: "pointer"}} className="site-tag-plus" onClick={this.showInput}>
                         <PlusOutlined /> New Filter
                     </Tag>
                 )}

@@ -19,15 +19,6 @@ describe('fieldsToSchema', () => {
         expect(schema.title.type).to.equal(String);
     });
 
-    it('should convert unstructured to mongoose mixed', () => {
-        let schema = convert({
-            title: {
-                type: FieldType.UNSTRUCTURED
-            }
-        });
-        expect(schema.title.type).to.equal(Schema.Types.Mixed);
-    });
-
     it('should convert relation to mongoose objectId', () => {
         let schema = convert({
             title: {

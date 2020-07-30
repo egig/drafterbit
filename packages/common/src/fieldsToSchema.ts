@@ -18,9 +18,6 @@ function matchType(type: string) {
     case FieldType.RICH_TEXT:
         return String;
 
-    case FieldType.UNSTRUCTURED:
-        return Schema.Types.Mixed;
-
     case FieldType.NUMBER:
         return Number;
     default:

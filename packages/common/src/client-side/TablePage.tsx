@@ -216,7 +216,7 @@ export class TablePage extends React.Component<Props, State> {
      */
     modifyFQ(fn: modifyFQParam) {
         this.modifyQS((qs: querystring.ParsedUrlQuery) => {
-            let faStr: string | string[] = qs['fq'];
+            let faStr: any = qs['fq'];
             if (!faStr) {
                 faStr = "";
             }
