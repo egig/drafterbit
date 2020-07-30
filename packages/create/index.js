@@ -9,9 +9,19 @@ function copy(srcDir, dstDir) {
     let results = [];
     let list = fs.readdirSync(srcDir);
     let src, dst;
+
+    function skip(file) {
+        return /.*node_modules.*/.test(file) || /.env$/.test(file)
+            || /package-lock.json$/.test(file)
+    }
+
     list.forEach(function(file) {
         src = srcDir + '/' + file;
         dst = dstDir + '/' + file;
+
+        if (skip(file)) {
+            return;
+        }
 
         let stat = fs.statSync(src);
         if (stat && stat.isDirectory()) {
