@@ -34,17 +34,52 @@ class Field extends React.Component<Props, {}> {
         if (FieldType.primitives().indexOf(field.type_name) !== -1) {
             return (
                 <Form.Item
-                    label={field.display_text}
+                    label={field.label}
                     name={field.name}
                     rules={[
                         (form) => ({
-                            validator(rule, value) {
-                                // TODO check validation_rules here
+                            async validator(rule, value) {
+
+                                let rules = field.validation_rules;
+                                Object.keys(rules).map(k => {
+                                    if (k === "required") {
+                                        if (!!rules[k]) {
+                                            if (!!value && value !== "") {
+                                                throw new Error(`${field.label} is required`);
+                                            }
+                                        }
+                                    }
+
+                                    if (k === "max_length") {
+                                        let maxL = rules[k];
+                                        if (value.length > maxL) {
+                                            throw new Error(`${field.label} is too long`);
+                                        }
+                                    }
+
+                                    if (k === "min_length") {
+                                        let minL = rules[k];
+                                        if (value.length < minL) {
+                                            throw new Error(`${field.label} is too short`);
+                                        }
+                                    }
+
+                                    if (k === "max") {
+                                        let max = rules[k];
+                                        if (value > max) {
+                                            throw new Error(`${field.label} can not be more than ${max}`);
+                                        }
+                                    }
+
+                                    if (k === "min") {
+                                        let min = rules[k];
+                                        if (value < min) {
+                                            throw new Error(`${field.label} can not be less than ${min}`);
+                                        }
+                                    }
+
+                                });
                                 return Promise.resolve();
-                                // if (!value || getFieldValue('password') === value) {
-                                //     return Promise.resolve();
-                                // }
-                                // return Promise.reject('The two passwords that you entered do not match!');
                             },
                         })
                     ]}

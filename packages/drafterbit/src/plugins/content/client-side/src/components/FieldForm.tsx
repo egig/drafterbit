@@ -141,16 +141,24 @@ const FieldForm = (props: FieldForm.Props) => {
             <Form.Item valuePropName="checked" name="show_in_list" label="Show in List">
                 <Switch size="small" />
             </Form.Item>
-            <Form.Item valuePropName="checked" name="show_in_form" label="Show in Form">
-                <Switch size="small" />
-            </Form.Item>
-            <Form.Item valuePropName="checked" name="required" label="Required">
-                <Switch size="small" />
-            </Form.Item>
-            <Form.Item valuePropName="checked" name="unique" label="Unique">
-                <Switch size="small" />
-            </Form.Item>
             {validationOptions.map((v: any,i: number) => {
+
+                if (v == "required") {
+                    return (
+                        <Form.Item valuePropName="checked" name={["validation_rules","required"]} label="Required">
+                            <Switch size="small" />
+                        </Form.Item>
+                    )
+                }
+
+                if (v == "unique") {
+                    return (
+                        <Form.Item valuePropName="checked" name={["validation_rules","unique"]} label="Unique">
+                            <Switch size="small" />
+                        </Form.Item>
+                    )
+                }
+
                 if (v == "max_length") {
                     return (
                         <Form.Item name={["validation_rules","max_length"]} label="Max Length">
@@ -177,7 +185,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                 if (v == "min") {
                     return (
-                        <Form.Item name={["validation_rules",",min"]} label="Min">
+                        <Form.Item name={["validation_rules","min"]} label="Min">
                             <InputNumber />
                         </Form.Item>
                     )
