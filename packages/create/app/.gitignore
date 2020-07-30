@@ -1,0 +1,7 @@
+node_modules
+build
+.env
+.idea
+.nyc_output
+files/**
+!files/.gitkeep

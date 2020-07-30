@@ -1,0 +1,19 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "drafterbit": "latest"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "node bin/cli.js build"
+  },
+  "author": "",
+  "license": "ISC",
+  "gitHead": "830d5db4546f1205a4640ff8e14444fec75bcc46",
+  "publishConfig": {
+    "access": "public"
+  }
+}

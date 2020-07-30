@@ -1,55 +1,46 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const { https } = require('follow-redirects');
 const fs = require('fs');
-const unzip = require('unzip-stream');
-const mkdirp = require('mkdirp');
 const shell = require('shelljs');
-
-const repoName = 'app';
-const { version } = require('./package.json');
-const srcDir = `${repoName}-${version}`;
-let archiveUrl = `https://github.com/drafterbit/app/archive/${version}.zip`;
 let destDir = process.cwd();
 
-// Download
-console.log('Downloading from', archiveUrl);
-const download = function(url, cb) {
-    https.get(url, res => {
-        res.pipe(unzip.Parse())
-            .on('finish', function () {
-                cb();
-            })
-            .on('entry', function (entry) {
-                let filePath = entry.path.replace(srcDir, '');
-                if (filePath !== '') {
+function copy(srcDir, dstDir) {
+    let results = [];
+    let list = fs.readdirSync(srcDir);
+    let src, dst;
+    list.forEach(function(file) {
+        src = srcDir + '/' + file;
+        dst = dstDir + '/' + file;
 
-                    let fullPath = path.join(destDir, filePath);
-                    console.log('creating file', fullPath);
-
-                    let isDir = 'Directory' === entry.type;
-                    let directory = isDir ? fullPath : path.dirname(fullPath);
-
-                    mkdirp.sync(directory);
-                    if (!isDir) {
-                        entry.pipe(fs.createWriteStream(fullPath));
-                    } else {
-                        entry.autodrain();
-                    }
-                }
-            });
+        let stat = fs.statSync(src);
+        if (stat && stat.isDirectory()) {
+            try {
+                console.log('creating dir: ' + dst);
+                fs.mkdirSync(dst);
+            } catch(e) {
+                console.log('directory already exists: ' + dst);
+            }
+            results = results.concat(copy(src, dst));
+        } else {
+            try {
+                console.log('copying file: ' + dst);
+                fs.writeFileSync(dst, fs.readFileSync(src));
+            } catch(e) {
+                console.log('could\'t copy file: ' + dst);
+            }
+            results.push(src);
+        }
     });
-};
-
-
-download(archiveUrl, function (e) {
-    install();
-});
-
-function install() {
-    shell.cd(process.cwd());
-    setTimeout(() => {
-        shell.exec('npm install');
-    }, 1000);
+    return results;
 }
+
+function getStubDir(cb) {
+    return shell.exec(`npm explore -g @drafterbit/create -- "pwd"`, {silent: true}).stdout.trim();
+}
+
+let stubDir = getStubDir();
+let stub = path.join(stubDir, "app/.");
+
+copy(stub, destDir);
+shell.exec('npm install');
