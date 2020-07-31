@@ -1,5 +1,5 @@
 import React from 'react';
-import ClientSide from "drafterbit/dist/plugins/admin/client-side/src/ClientSide";
+import ClientSide from "./ClientSide";
 
 const DTContext: React.Context<ClientSide> = React.createContext(window.$dt);
 

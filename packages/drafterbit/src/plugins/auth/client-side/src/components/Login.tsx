@@ -9,11 +9,10 @@ import { cookie } from '@drafterbit/common';
 const { setCookie } = cookie;
 import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-// @ts-ignore
-import DTContext from '@drafterbit/common/dist/client-side/DTContext';
 
 import './Login.css'
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
+import DTContext from "../../../../admin/client-side/src/DTContext";
 
 
 type Props = {

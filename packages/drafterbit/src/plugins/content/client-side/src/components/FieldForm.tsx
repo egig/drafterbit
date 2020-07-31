@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Button, Modal, Form, Input, InputNumber, Select, Switch } from 'antd';
 // @ts-ignore
-import DTContext from '@drafterbit/common/dist/client-side/DTContext';
+import DTContext from "../../../../admin/client-side/src/DTContext";
 import { FieldType } from "@drafterbit/common";
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
-import type = Mocha.utils.type;
 
 declare namespace FieldForm {
     type Props = {
