@@ -1,4 +1,4 @@
-import Application from "../../index";
+import Application from "../../Application";
 
 module.exports = function install(app: Application) {
     return Promise.all([

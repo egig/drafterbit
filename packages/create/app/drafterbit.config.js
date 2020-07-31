@@ -1,5 +1,4 @@
-const drafterbit = require('drafterbit');
-const app = new drafterbit({
+module.exports = {
     plugins: [
         "./my-plugin",
         'drafterbit/plugins/admin',
@@ -7,7 +6,4 @@ const app = new drafterbit({
         'drafterbit/plugins/common',
         'drafterbit/plugins/content',
     ]
-});
-
-module.exports = app;
-
+}

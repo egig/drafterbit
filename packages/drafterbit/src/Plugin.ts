@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import Application  from "./index"
+import Application  from "./Application"
 import Config from "./Config";
 import mongoose from 'mongoose';
 

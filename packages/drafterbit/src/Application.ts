@@ -27,11 +27,11 @@ declare namespace Application {
     }
 
     type Next = Koa.Next
-}
 
 
-type Options = {
-    plugins: string[]
+    type Options = {
+        plugins: string[]
+    }
 }
 
 class Application extends Koa {
@@ -44,15 +44,6 @@ class Application extends Koa {
     projectDir = "";
     private _services: any = {};
     private _pluginPaths: string[] = [];
-
-    /**
-     *
-     * @param options
-     */
-    constructor(options: Options = { plugins: [] }) {
-        super();
-        this._pluginPaths= options.plugins || [];
-    }
 
     /**
      *
@@ -118,6 +109,16 @@ class Application extends Koa {
         });
     }
 
+    start() {
+        this.routing();
+        this.emit('pre-start');
+
+        const PORT = process.env.PORT || this.get('config').get("PORT") || 3000;
+        this.listen(PORT, () => {
+            console.log(`Our app is running on port ${ PORT }`);
+        });
+    }
+
     /**
      *
      * @param rootDir
@@ -130,13 +131,15 @@ class Application extends Koa {
 
         // build skeletons
         let options;
-        let configFileName = 'config.js';
+        let configFileName = 'drafterbit.config.js';
         let configFile = `${rootDir}/${configFileName}`;
         if (fs.existsSync(configFile)) {
             options = require(configFile);
         } else {
             options = {};
         }
+
+        this._pluginPaths= options.plugins || [];
 
         let config = new Config(rootDir, options);
         this.set('config', config);

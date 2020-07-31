@@ -1,4 +1,4 @@
-import Application from "../../index";
+import Application from "../../Application";
 import { FieldType, fieldsToSchema } from '@drafterbit/common';
 import password from './lib/password';
 

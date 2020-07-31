@@ -1,4 +1,4 @@
-import Application from "../../index";
+import Application from "../../Application";
 import Plugin from '../../Plugin';
 import Config from '../../Config';
 const install = require('./install');

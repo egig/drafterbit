@@ -1,3 +1,5 @@
 import Application from "./Application";
 
-export = Application
+export = function createApplication() {
+    return new Application()
+}

@@ -1,14 +1,15 @@
 {
-  "name": "my-app",
+  "name": "drafterbit-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "dependencies": {
-    "drafterbit": "latest"
+    "drafterbit": "latest",
+    "@drafterbit/cli": "latest",
   },
   "scripts": {
-    "start": "node server.js",
-    "build": "node bin/cli.js build"
+    "dev": "drafterbit dev",
+    "start": "drafterbit start",
+    "build": "drafterbit build"
   },
   "author": "",
   "license": "ISC",

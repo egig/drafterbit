@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 import Router from '@koa/router';
 let router = new Router();
-import App from "../../../index";
+import App from "../../../Application";
 import Koa from 'koa';
 
 /**

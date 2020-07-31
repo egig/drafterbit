@@ -1,4 +1,4 @@
-import App from "../../../index";
+import App from "../../../Application";
 import { middlewares } from '@drafterbit/common';
 const Router = require('@koa/router');
 let router = new Router();

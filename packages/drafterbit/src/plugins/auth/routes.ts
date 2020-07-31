@@ -1,4 +1,4 @@
-import App from "../../index";
+import App from "../../Application";
 
 const jwt = require('jsonwebtoken');
 const password = require('./lib/password');

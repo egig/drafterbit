@@ -1,5 +1,5 @@
 import Plugin from '../../Plugin';
-import Application from '../../index';
+import Application from '../../Application';
 const install = require('./install');
 
 class CommonPlugin extends Plugin {

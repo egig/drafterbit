@@ -1,4 +1,4 @@
-import Application from "../../index";
+import Application from "../../Application";
 
 module.exports = [
     {
@@ -10,5 +10,14 @@ module.exports = [
                 return app.install()
             }
         }
-    }
+    },
+    {
+        command: 'dev',
+        description: 'Install app data',
+        createAction: (app: Application) => {
+            return () => {
+                return app.start()
+            }
+        }
+    },
 ];

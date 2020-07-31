@@ -1,5 +1,5 @@
 import UserAuthError from './UserAuthError';
-import App from "../../index";
+import App from "../../Application";
 const password = require('./lib/password');
 const crypto = require('crypto');
 
