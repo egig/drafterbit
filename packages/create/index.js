@@ -13,7 +13,7 @@ function copy(srcDir, dstDir) {
     function skip(file) {
         return /.*node_modules.*/.test(file) || /.env$/.test(file)
             || /package-lock.json$/.test(file)
-    }
+    }``
 
     list.forEach(function(file) {
         src = srcDir + '/' + file;
@@ -45,11 +45,7 @@ function copy(srcDir, dstDir) {
     return results;
 }
 
-function getStubDir(cb) {
-    return shell.exec(`npm explore -g @drafterbit/create -- "pwd"`, {silent: true}).stdout.trim();
-}
-
-let stubDir = getStubDir();
+let stubDir = __dirname;
 let stub = path.join(stubDir, "app/.");
 
 copy(stub, destDir);
