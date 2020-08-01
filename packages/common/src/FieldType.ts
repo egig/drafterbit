@@ -9,7 +9,7 @@ class FieldType {
             id: FieldType.SHORT_TEXT,
             name: 'Short Text',
             validationOptions: [
-                'is_required',
+                'required',
                 'unique',
                 'min_length',
                 'max_length',
@@ -23,7 +23,7 @@ class FieldType {
             id: FieldType.LONG_TEXT,
             name: 'Long Text',
             validationOptions: [
-                'is_required',
+                'required',
                 'unique',
                 'min_length',
                 'max_length',
@@ -37,7 +37,7 @@ class FieldType {
             id: FieldType.RICH_TEXT,
             name: 'Rich Text',
             validationOptions: [
-                'is_required',
+                'requireds',
                 'min_length',
                 'max_length',
             ],
@@ -50,7 +50,7 @@ class FieldType {
             id: FieldType.NUMBER,
             name: 'Number',
             validationOptions: [
-                'is_required',
+                'required',
                 'unique',
                 'min',
                 'max',

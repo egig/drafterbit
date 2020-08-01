@@ -21,12 +21,12 @@ cd .env.example .env
 
 Now You can install the application by running following command.
 ```
-node bin/cli.js install
+npm run install
 ```
 
 ## 4. Start Development Server
 
 Then we can start the development server
 ```
-npm start
+npm run dev
 ```

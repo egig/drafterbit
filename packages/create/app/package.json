@@ -4,12 +4,13 @@
   "description": "",
   "dependencies": {
     "drafterbit": "latest",
-    "@drafterbit/cli": "latest",
+    "@drafterbit/cli": "latest"
   },
   "scripts": {
     "dev": "drafterbit dev",
     "start": "drafterbit start",
-    "build": "drafterbit build"
+    "build": "drafterbit build",
+    "app:install": "drafterbit install"
   },
   "author": "",
   "license": "ISC",

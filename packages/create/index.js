@@ -3,21 +3,21 @@
 const path = require('path');
 const fs = require('fs');
 const shell = require('shelljs');
-let destDir = process.cwd();
+const destDir = process.cwd();
 
 function copy(srcDir, dstDir) {
-    let results = [];
+
     let list = fs.readdirSync(srcDir);
     let src, dst;
 
     function skip(file) {
         return /.*node_modules.*/.test(file) || /.env$/.test(file)
             || /package-lock.json$/.test(file)
-    }``
+    }
 
     list.forEach(function(file) {
-        src = srcDir + '/' + file;
-        dst = dstDir + '/' + file;
+        src = path.join(srcDir,file);
+        dst = path.join(dstDir,file);
 
         if (skip(file)) {
             return;
@@ -29,20 +29,21 @@ function copy(srcDir, dstDir) {
                 console.log('creating dir: ' + dst);
                 fs.mkdirSync(dst);
             } catch(e) {
-                console.log('directory already exists: ' + dst);
+                console.log('cannot create dir: ' + dst);
+                console.error(e)
             }
-            results = results.concat(copy(src, dst));
-        } else {
-            try {
-                console.log('copying file: ' + dst);
-                fs.writeFileSync(dst, fs.readFileSync(src));
-            } catch(e) {
-                console.log('could\'t copy file: ' + dst);
-            }
-            results.push(src);
+
+            return copy(src, dst);
+        }
+
+        try {
+            console.log('copying file: ' + dst);
+            fs.writeFileSync(dst, fs.readFileSync(src));
+        } catch(e) {
+            console.log('could\'t copy file: ' + dst);
+            console.error(e)
         }
     });
-    return results;
 }
 
 let stubDir = __dirname;
