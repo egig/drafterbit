@@ -66,13 +66,23 @@ const FieldForm = (props: FieldForm.Props) => {
         initialValues =  field;
     }
 
-    let dvo = !!field ? FieldType.get(field.type_name).validationOptions : [];
+    // TODO validation for non primitive types
+
+    let dvo: any[] = [];
+    let typeDef = FieldType.get(field.type_name);
+    if (!!typeDef && !!field) {
+        dvo = !!field ? typeDef.validationOptions : [];
+    }
+
     let [validationOptions, setValidationOptions] = React.useState(dvo);
 
     const onValuesChange = function (changedValues: any, allValues: any) {
         let typeName = form.getFieldValue("type_name");
         if (!!typeName) {
-            setValidationOptions(FieldType.get(typeName).validationOptions);
+            let typeDef = FieldType.get(field.type_name);
+            if (!!typeDef) {
+                setValidationOptions(typeDef.validationOptions);
+            }
         }
     };
 
@@ -128,7 +138,7 @@ const FieldForm = (props: FieldForm.Props) => {
                 rules={[
                     {
                         required: true,
-                        message: 'Display Text Required !',
+                        message: 'Label Required !',
                     },
                 ]}
             >
@@ -140,6 +150,10 @@ const FieldForm = (props: FieldForm.Props) => {
             <Form.Item valuePropName="checked" name="show_in_list" label="Show in List">
                 <Switch size="small" />
             </Form.Item>
+            <Form.Item valuePropName="checked" name="show_in_form" label="Show in Form">
+                <Switch size="small" />
+            </Form.Item>
+
             {validationOptions.map((v: any,i: number) => {
 
                 if (v == "required") {
