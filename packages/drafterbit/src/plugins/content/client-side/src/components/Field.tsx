@@ -41,10 +41,14 @@ class Field extends React.Component<Props, {}> {
                             async validator(rule, value) {
 
                                 let rules = field.validation_rules;
+                                if (!rules) {
+                                    return Promise.resolve();
+                                }
+
                                 Object.keys(rules).map(k => {
                                     if (k === "required") {
                                         if (!!rules[k]) {
-                                            if (!!value && value !== "") {
+                                            if (!value || (value.trim() === "")) {
                                                 throw new Error(`${field.label} is required`);
                                             }
                                         }
@@ -52,28 +56,28 @@ class Field extends React.Component<Props, {}> {
 
                                     if (k === "max_length") {
                                         let maxL = rules[k];
-                                        if (value.length > maxL) {
+                                        if (!!value && (value.length > maxL)) {
                                             throw new Error(`${field.label} is too long`);
                                         }
                                     }
 
                                     if (k === "min_length") {
                                         let minL = rules[k];
-                                        if (value.length < minL) {
+                                        if (!!value && (value.length < minL)) {
                                             throw new Error(`${field.label} is too short`);
                                         }
                                     }
 
                                     if (k === "max") {
                                         let max = rules[k];
-                                        if (value > max) {
+                                        if (!!value && value > max) {
                                             throw new Error(`${field.label} can not be more than ${max}`);
                                         }
                                     }
 
                                     if (k === "min") {
                                         let min = rules[k];
-                                        if (value < min) {
+                                        if (!!value && value < min) {
                                             throw new Error(`${field.label} can not be less than ${min}`);
                                         }
                                     }

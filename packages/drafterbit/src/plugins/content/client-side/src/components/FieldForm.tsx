@@ -69,9 +69,11 @@ const FieldForm = (props: FieldForm.Props) => {
     // TODO validation for non primitive types
 
     let dvo: any[] = [];
-    let typeDef = FieldType.get(field.type_name);
-    if (!!typeDef && !!field) {
-        dvo = !!field ? typeDef.validationOptions : [];
+    if (!!field) {
+        let typeDef = FieldType.get(field.type_name);
+        if (!!typeDef) {
+            dvo = !!field ? typeDef.validationOptions : [];
+        }
     }
 
     let [validationOptions, setValidationOptions] = React.useState(dvo);
