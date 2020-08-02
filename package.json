@@ -6,8 +6,6 @@
     "pre-commit": "^1.2.2"
   },
   "scripts": {
-    "start": "node packages/cli/skeleton/server.js",
-    "auth:init": "node packages/cli/index.js auth:init",
     "bootstrap": "lerna bootstrap --hoist",
     "link": "lerna link --force-local",
     "linter": "./node_modules/.bin/eslint --fix ./packages",
