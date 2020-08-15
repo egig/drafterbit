@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
                 <Col span={24}>
                     <PageHeader title="Dashboard">
                         <Card>
-                            Welcome ! this component is from my-module
+                            Welcome ! this component is from my-plugin
                         </Card>
                     </PageHeader>
                 </Col>

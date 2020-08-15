@@ -13,7 +13,7 @@ module.exports = [
     },
     {
         command: 'dev',
-        description: 'Install app data',
+        description: 'run development mode',
         createAction: (app: Application) => {
             return () => {
                 return app.start()
