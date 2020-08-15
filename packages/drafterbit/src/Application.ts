@@ -95,7 +95,7 @@ class Application extends Koa {
                 process.exit(0)
             })
             .catch(e => {
-                this.get('log').error("Installation Failed.");
+                this.get('log').error("Installation Failed.", e);
                 process.exit(1)
             })
     }

@@ -10,7 +10,7 @@
     "dev": "drafterbit dev",
     "start": "drafterbit start",
     "build": "drafterbit build",
-    "app:install": "drafterbit install"
+    "install": "drafterbit install"
   },
   "author": "",
   "license": "ISC",
