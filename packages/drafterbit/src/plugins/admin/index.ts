@@ -1,10 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
-const serve = require('koa-static');
-const createWebpackConfig = require('./client-side/webpack.config');
+import path from 'path';
+import webpack from 'webpack';
+import serve from 'koa-static';
 import Plugin from '../../Plugin';
-const SettingSchema = require('./models/Setting');
-const koaWebpack = require('koa-webpack');
+import SettingSchema from './models/Setting';
+import koaWebpack from 'koa-webpack';
+
+const createWebpackConfig = require('./client-side/webpack.config');
 
 class AdminPlugin extends Plugin {
 

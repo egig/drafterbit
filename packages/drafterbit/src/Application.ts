@@ -2,12 +2,12 @@ import fs from 'fs';
 import Koa from 'koa';
 
 import bodyParser from 'koa-bodyparser';
-const cors = require('@koa/cors');
+import cors from '@koa/cors';
 import Config from './Config';
 import Plugin from './Plugin';
-const commander = require('commander');
-const mongoose = require('mongoose');
-const winston = require('winston');
+import commander from 'commander';
+import mongoose = require('mongoose');
+import winston from 'winston';
 import { getListPlugin } from "./odm";
 
 mongoose.set('useNewUrlParser', true);
@@ -190,9 +190,9 @@ class Application extends Koa {
         });
 
         this.use(cors({
-            'origin': '*',
-            'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-            'exposedHeaders': 'Content-Range,X-Content-Range'
+            origin: '*',
+            allowMethods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            exposeHeaders: 'Content-Range,X-Content-Range'
         }));
 
         this.use(bodyParser());

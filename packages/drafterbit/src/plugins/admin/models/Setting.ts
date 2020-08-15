@@ -46,4 +46,4 @@ SettingSchema.statics.setSetting = function(fieldsetName: string, payload: Objec
     return this.updateOne({ fieldset_name: fieldsetName }, payload,  {upsert: true});
 };
 
-module.exports = SettingSchema;
+export default SettingSchema;
