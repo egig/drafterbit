@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators } from 'redux';
 import actions from '../actions';
-// @ts-ignore
 import { TablePage, withDrafterbit, FieldType } from '@drafterbit/common';
 // @ts-ignore
 import ClientSide from "../../../../admin/client-side/src/ClientSide";
