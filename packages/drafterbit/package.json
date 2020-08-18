@@ -122,6 +122,7 @@
     "pre-push": "^0.1.1",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0",
+    "ts-loader": "^8.0.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
     "webpack-dev-middleware": "^3.7.0"
@@ -133,6 +134,7 @@
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "linter": "./node_modules/.bin/eslint --fix ./src",
     "build": "rm -rf dist && cp -r src dist && tsc",
+    "watch": "rm -rf dist && cp -r src dist && tsc -w",
     "prepare": "rm -rf dist && cp -r src dist && tsc",
     "flow": "flow check src"
   },

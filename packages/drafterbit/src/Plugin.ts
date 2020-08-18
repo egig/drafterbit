@@ -84,7 +84,7 @@ class Plugin {
      * @returns {string|boolean}
      */
     getAdminClientSideEntry(): any {
-        let entryPath = this._path+'/client-side/src/index.js';
+        let entryPath = this._path+'/client-side/src/index.tsx';
         if (fs.existsSync(entryPath)) {
             return entryPath;
         }

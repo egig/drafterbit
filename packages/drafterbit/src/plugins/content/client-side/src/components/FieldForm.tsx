@@ -167,7 +167,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "required") {
                             return (
-                                <Form.Item valuePropName="checked" name={["validation_rules","required"]} label="Required">
+                                <Form.Item key={i} valuePropName="checked" name={["validation_rules","required"]} label="Required">
                                     <Switch size="small" />
                                 </Form.Item>
                             )
@@ -175,7 +175,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "unique") {
                             return (
-                                <Form.Item valuePropName="checked" name={["validation_rules","unique"]} label="Unique">
+                                <Form.Item key={i} valuePropName="checked" name={["validation_rules","unique"]} label="Unique">
                                     <Switch size="small" />
                                 </Form.Item>
                             )
@@ -183,7 +183,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "max_length") {
                             return (
-                                <Form.Item name={["validation_rules","max_length"]} label="Max Length">
+                                <Form.Item key={i} name={["validation_rules","max_length"]} label="Max Length">
                                     <InputNumber />
                                 </Form.Item>
                             )
@@ -191,7 +191,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "min_length") {
                             return (
-                                <Form.Item name={["validation_rules","min_length"]} label="Min Length">
+                                <Form.Item key={i} name={["validation_rules","min_length"]} label="Min Length">
                                     <InputNumber />
                                 </Form.Item>
                             )
@@ -199,7 +199,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "max") {
                             return (
-                                <Form.Item name={["validation_rules","max"]} label="Max">
+                                <Form.Item key={i} name={["validation_rules","max"]} label="Max">
                                     <InputNumber />
                                 </Form.Item>
                             )
@@ -207,7 +207,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
                         if (v == "min") {
                             return (
-                                <Form.Item name={["validation_rules","min"]} label="Min">
+                                <Form.Item key={i} name={["validation_rules","min"]} label="Min">
                                     <InputNumber />
                                 </Form.Item>
                             )

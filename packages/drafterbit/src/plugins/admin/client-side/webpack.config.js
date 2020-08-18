@@ -15,7 +15,7 @@ module.exports = env => {
     ].concat(includePaths);
 
     let commonConfig = {
-        entry: [ '@babel/polyfill', path.join(__dirname,'src/init.js'), path.join(__dirname,'src/index.js')],
+        entry: [ '@babel/polyfill', path.join(__dirname,'src/init.ts'), path.join(__dirname,'src/index.tsx')],
         output: {
             path: env.outputPath,
             filename: 'js/[name].[hash].js',
@@ -24,6 +24,18 @@ module.exports = env => {
         },
         module: {
             rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: [
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                transpileOnly: true,
+                                configFile: path.resolve(path.join(env.projectRoot, 'tsconfig.json'))
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /\.(js|jsx)$/,
                     include: jsIncludes,
