@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Button, Modal, Form, Input, InputNumber, Select, Switch, Tabs } from 'antd';
+import React, { useContext } from 'react';
+import { Button, Form, Input, InputNumber, Select, Switch, Tabs } from 'antd';
 // @ts-ignore
 import DTContext from "../../../../admin/client-side/src/DTContext";
 import { FieldType } from "@drafterbit/common";

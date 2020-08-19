@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import Koa from 'koa';
 
 import bodyParser from 'koa-bodyparser';
@@ -9,6 +10,9 @@ import commander from 'commander';
 import mongoose = require('mongoose');
 import winston from 'winston';
 import { getListPlugin } from "./odm";
+import chokidar from 'chokidar';
+import cluster from 'cluster';
+import http from 'http'
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
@@ -44,6 +48,8 @@ class Application extends Koa {
     projectDir = "";
     private _services: any = {};
     private _pluginPaths: string[] = [];
+
+    private _server = http.createServer(this.callback());
 
     /**
      *
@@ -110,13 +116,96 @@ class Application extends Koa {
     }
 
     start() {
+
+        // Close current connections to fully destroy the server
+        const connections: any = {};
+
+        this._server.on('connection', conn => {
+            const key = conn.remoteAddress + ':' + conn.remotePort;
+            connections[key] = conn;
+
+            conn.on('close', function() {
+                delete connections[key];
+            });
+        });
+
+        // @ts-ignore
+        this._server.destroy = cb => {
+            this._server.close(cb);
+
+            for (let key in connections) {
+                connections[key].destroy();
+            }
+        };
+
         this.routing();
         this.emit('pre-start');
 
-        const PORT = process.env.PORT || this.get('config').get("PORT") || 3000;
-        this.listen(PORT, () => {
-            console.log(`Our app is running on port ${ PORT }`);
-        });
+        if (cluster.isMaster) {
+
+            cluster.on('message', (worker, message) => {
+                switch (message) {
+                    case 'reload':
+                        console.log("Restarting...");
+                        worker.send('isKilled');
+                        break;
+                    case 'kill':
+                        worker.kill();
+                        cluster.fork();
+                        break;
+                    case 'stop':
+                        worker.kill();
+                        process.exit(1);
+                    default:
+                        return;
+                }
+            });
+
+            cluster.fork();
+        } else {
+
+            // cluster.isWorker x
+
+            // Watch file change and restart
+            // @ts-ignore
+            if (process.env.NODE_ENV !== "production") {
+                // TODO include users plugins
+                let pathsToWatch = [path.resolve(path.join(__dirname, "../src"))];
+                console.log("pathsToWatch", pathsToWatch);
+                chokidar.watch(pathsToWatch, {
+                    ignoreInitial: true,
+                    ignored: [
+                        '**/node_modules',
+                        '**/node_modules/**',
+                    ],
+                    followSymlinks: true
+                }).on('all', (event, path) => {
+                    console.log(event, path);
+                    this._server.close();
+                    // @ts-ignore
+                    process.send('reload');
+                });
+            }
+
+            process.on('message', message => {
+                switch (message) {
+                    case 'isKilled':
+                        // @ts-ignore
+                        this._server.destroy(() => {
+                            // @ts-ignore
+                            process.send('kill');
+                        });
+                        break;
+                    default:
+                    // Do nothing.
+                }
+            });
+
+            const PORT = process.env.PORT || this.get('config').get("PORT") || 3000;
+            this._server.listen(PORT, () => {
+                console.log(`Our app is running on port ${ PORT }`);
+            });
+        }
     }
 
     /**
