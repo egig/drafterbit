@@ -82,7 +82,7 @@ const FieldForm = (props: FieldForm.Props) => {
 
         let typeName = form.getFieldValue("type_name");
         if (!!typeName) {
-            let typeDef = FieldType.get(field.type_name);
+            let typeDef = FieldType.get(typeName);
             if (!!typeDef) {
                 setValidationOptions(typeDef.validationOptions);
             }
