@@ -17,22 +17,23 @@ class AdminPlugin extends Plugin {
         this.webpackOutputPath = path.join(app.projectDir, 'build');
         app.use(serve(this.webpackOutputPath));
 
-        app.on('pre-start', async () => {
-            if(app.get('config').get('NODE_ENV') !== 'production') {
-                //
-                let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
-                const compiler = webpack(webpackConfig);
-                const middleware = await koaWebpack({
-                    compiler,
-                    devMiddleware: {
-                        publicPath: webpackConfig.output.publicPath,
-                        writeToDisk: true
-                    }
-                });
-                app.use(middleware);
-            }
-
-        });
+        // TODO supports hmr
+        // app.on('pre-start', async () => {
+        //     if(app.get('config').get('NODE_ENV') !== 'production') {
+        //         //
+        //         let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
+        //         const compiler = webpack(webpackConfig);
+        //         const middleware = await koaWebpack({
+        //             compiler,
+        //             devMiddleware: {
+        //                 publicPath: webpackConfig.output.publicPath,
+        //                 writeToDisk: true
+        //             }
+        //         });
+        //         app.use(middleware);
+        //     }
+        //
+        // });
 
         app.on('build', () => {
 

@@ -13,6 +13,7 @@ import { getListPlugin } from "./odm";
 import chokidar from 'chokidar';
 import cluster from 'cluster';
 import http from 'http'
+import execa from 'execa'
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
@@ -117,7 +118,7 @@ class Application extends Koa {
 
     start() {
 
-        // Close current connections to fully destroy the server
+        // Close current all connections to fully destroy the server
         const connections: any = {};
 
         this._server.on('connection', conn => {
@@ -172,6 +173,8 @@ class Application extends Koa {
                 // TODO include users plugins
                 let pathsToWatch = [path.resolve(path.join(__dirname, "../src"))];
                 console.log("pathsToWatch", pathsToWatch);
+
+                // TODO make watch and reload concurrent/not blocking
                 chokidar.watch(pathsToWatch, {
                     ignoreInitial: true,
                     ignored: [
@@ -182,6 +185,13 @@ class Application extends Koa {
                 }).on('all', (event, path) => {
                     console.log(event, path);
                     this._server.close();
+
+                    console.log("rebuilding...");
+                    execa.commandSync("npm run build",{
+                        stdio: "inherit",
+                        cwd: this.projectDir
+                    });
+
                     // @ts-ignore
                     process.send('reload');
                 });
