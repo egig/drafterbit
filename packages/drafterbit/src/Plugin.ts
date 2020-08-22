@@ -46,11 +46,7 @@ class Plugin {
     loadCommands() {
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
-            commands.map((c: any) => {
-                this._app.get('cmd').command(c.command)
-                    .description(c.description)
-                    .action(c.createAction(this._app));
-            });
+            commands(this._app.get('cmd'), this._app)
         }
     }
 
