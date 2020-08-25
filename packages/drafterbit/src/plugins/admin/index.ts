@@ -35,9 +35,12 @@ class AdminPlugin extends Plugin {
         //
         // });
 
-        app.on('build', () => {
+        app.on('build', (options: {
+            production?: boolean
+        } = {}) => {
 
-            let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath);
+            let isProduction = !!options.production;
+            let webpackConfig = this.prepareWebpackConfig(app, this.webpackOutputPath, isProduction);
             const compiler = webpack(webpackConfig);
 
             compiler.run((err: any, stats: Object) => {
@@ -47,9 +50,7 @@ class AdminPlugin extends Plugin {
         });
     }
 
-    prepareWebpackConfig(app: any, webpackOutputPath: string) {
-
-        let isProduction = (app.get('config').get('NODE_ENV') === 'production');
+    prepareWebpackConfig(app: any, webpackOutputPath: string, isProduction: boolean) {
 
         let modulePaths = app.plugins().map((mo:Plugin) => mo.getPath());
         let webpackConfig = createWebpackConfig({

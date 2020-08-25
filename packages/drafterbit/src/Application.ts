@@ -18,6 +18,7 @@ import execa from 'execa'
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', true);
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useCreateIndex', true);
 mongoose.plugin(getListPlugin);
 
 
@@ -73,8 +74,10 @@ class Application extends Koa {
     /**
      *
      */
-    build(): void {
-        this.emit('build');
+    build(options: {
+        production?: boolean
+    } = {}): void {
+        this.emit('build', options);
     }
 
     /**
@@ -116,7 +119,9 @@ class Application extends Koa {
         });
     }
 
-    start() {
+    start(options: {
+        production?: boolean
+    } = {}) {
 
         // Close current all connections to fully destroy the server
         const connections: any = {};
@@ -169,7 +174,7 @@ class Application extends Koa {
 
             // Watch file change and restart
             // @ts-ignore
-            if (process.env.NODE_ENV !== "production") {
+            if (!options.production) {
                 // TODO include users plugins
                 let pathsToWatch = [path.resolve(path.join(__dirname, "../src"))];
                 console.log("pathsToWatch", pathsToWatch);

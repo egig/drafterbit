@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "drafterbit dev",
-    "start": "drafterbit start",
-    "build": "drafterbit build",
+    "start": "drafterbit start --production",
+    "build": "drafterbit build --production",
     "install": "drafterbit install"
   },
   "author": "",

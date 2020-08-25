@@ -10,6 +10,13 @@ module.exports = function commands(cmd: commander.Command, app: Application) {
             return app.install()
         });
 
+    cmd.command('start')
+        .description("run app")
+        .option("-p, --production", "run app in production mode")
+        .action((options) => {
+            return app.start(options)
+        });
+
     cmd.command('dev')
         .description("run dev mode")
         .action(() => {
@@ -18,7 +25,8 @@ module.exports = function commands(cmd: commander.Command, app: Application) {
 
     cmd.command('build')
         .description("build the application")
-        .action(() => {
-            return app.build()
+        .option("-p, --production", "build in production mode")
+        .action((options) => {
+            return app.build(options)
         });
 };
