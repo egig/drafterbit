@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "@drafterbit/cli": "latest",
     "drafterbit": "latest",
-    "@drafterbit/cli": "latest"
+    "gray-matter": "^4.0.2",
+    "marked": "^1.1.1",
+    "nunjucks": "^3.2.2"
   },
   "scripts": {
     "dev": "drafterbit dev",
