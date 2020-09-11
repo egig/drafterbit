@@ -4,13 +4,10 @@ let router = new Router();
 const matter = require('gray-matter');
 const marked = require('marked');
 const fs = require('fs');
-const nunjucks = require('nunjucks');
 
 // Route Example
 //
 router.get("/(.*)", async (ctx, next) => {
-
-    nunjucks.configure(path.join(ctx.app.projectDir, 'views'), {autoescape: false});
 
     marked.setOptions({
         renderer: new marked.Renderer(),
@@ -42,15 +39,10 @@ router.get("/(.*)", async (ctx, next) => {
         }
     }
 
-    console.log(ctxPath);
-    console.log(contentRoot);
     const file = matter.read(contentRoot);
     let htmlContent = marked(file.content);
 
-    ctx.body =  nunjucks.render('layout.html', { content: htmlContent });
+    ctx.body =  ctx.app.render('layout.html', { content: htmlContent });
 });
-
-// router.redirect("/", "/admin");
-// router.redirect("/admin", "/");
 
 module.exports = router.routes();

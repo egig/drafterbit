@@ -1,5 +1,5 @@
 ---
-title: About Mes
+title: About Me
 ---
 
 # About Me

@@ -7,19 +7,12 @@ import cors from '@koa/cors';
 import Config from './Config';
 import Plugin from './Plugin';
 import commander from 'commander';
-import mongoose = require('mongoose');
 import winston from 'winston';
-import { getListPlugin } from "./odm";
 import chokidar from 'chokidar';
 import cluster from 'cluster';
 import http from 'http'
 import execa from 'execa'
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useCreateIndex', true);
-mongoose.plugin(getListPlugin);
+import nunjucks from 'nunjucks';
 
 
 declare namespace Application {
@@ -44,13 +37,10 @@ class Application extends Koa {
 
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
-    private _odmConnections: any = {};
-    private _odmDefaultConn: string = '_default';
-    private _odmConfig: any = {};
     projectDir = "";
     private _services: any = {};
     private _pluginPaths: string[] = [];
-
+    private _view: nunjucks.Environment | undefined;
     private _server = http.createServer(this.callback());
 
     /**
@@ -69,6 +59,18 @@ class Application extends Koa {
      */
     get(key: string): any{
         return this._services[key];
+    }
+
+    /**
+     *
+     * @param view
+     * @param options
+     */
+    render(view: string, options: any) {
+        if (typeof this._view === "undefined") {
+            throw new Error("_view undefined possibly call render before boots")
+        }
+        return this._view.render(view, options);
     }
 
     /**
@@ -233,6 +235,9 @@ class Application extends Koa {
         this._booted = false;
         this.projectDir = rootDir;
 
+        let viewsPath = path.join(this.projectDir, 'views');
+        this._view = new nunjucks.Environment(new nunjucks.FileSystemLoader(viewsPath),  {autoescape: true});
+
         // build skeletons
         let options;
         let configFileName = 'drafterbit.config.js';
@@ -251,10 +256,6 @@ class Application extends Koa {
         let logger = this.createLogger();
         this.set('log', logger);
 
-        this._odmConfig[this._odmDefaultConn] = {
-            uri: config.get('MONGODB_URI'),
-        };
-
         let cmd = commander;
         cmd
             .version('0.0.1')
@@ -269,8 +270,6 @@ class Application extends Koa {
             let moduleInstance = new ModulesClass(this);
             moduleInstance.setPath(modulePath);
 
-            let db = this.odm();
-            moduleInstance.registerSchema(db);
 
             // register config
             if (moduleInstance.canLoad('config')) {
@@ -305,53 +304,6 @@ class Application extends Koa {
 
         this._booted = true;
         return this;
-    }
-
-    /**
-     *
-     * @param name
-     */
-    model(name: string) {
-        return this.odm().model(name);
-    }
-
-    /**
-     *
-     * @param name
-     * @returns {*}
-     */
-    odm(name?: string) {
-
-        name = name || this._odmDefaultConn;
-
-        let config = this._odmConfig[name];
-        if (typeof config === 'undefined') {
-            throw new Error('Unknown connection name '+name )
-        }
-
-        if(!this._odmConnections[name]) {
-            this._odmConnections[name] = this.createODMConn(config.uri);
-        }
-
-        return this._odmConnections[name];
-    }
-
-    /**
-     *
-     * @param uri
-     * @returns {*}
-     */
-    createODMConn(uri: string) {
-
-        let conn = mongoose.createConnection(uri);
-
-        conn.on('error', (err: any) => {
-            if(err) {
-                this.get('log').error(err);
-            }
-        });
-
-        return conn;
     }
 
     /**

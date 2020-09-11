@@ -4,10 +4,7 @@
   "description": "",
   "dependencies": {
     "@drafterbit/cli": "latest",
-    "drafterbit": "latest",
-    "gray-matter": "^4.0.2",
-    "marked": "^1.1.1",
-    "nunjucks": "^3.2.2"
+    "drafterbit": "latest"
   },
   "scripts": {
     "dev": "drafterbit dev",
