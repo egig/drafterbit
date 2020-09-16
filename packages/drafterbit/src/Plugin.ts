@@ -1,8 +1,5 @@
 import path from 'path';
-import fs from 'fs';
 import Application  from "./Application"
-import Config from "./Config";
-import mongoose from 'mongoose';
 
 class Plugin {
 
@@ -58,34 +55,6 @@ class Plugin {
     require(file: string): any {
         let p: string = path.join(this._path, file);
         return require(p);
-    }
-
-    /**
-     *
-     * @param db
-     */
-    registerSchema(db: mongoose.Connection): any {}
-
-    /**
-     *
-     * @param serverConfig
-     * @returns {{}}
-     */
-    registerClientConfig(serverConfig: Config) {
-        return {};
-    }
-
-    /**
-     *
-     * @returns {string|boolean}
-     */
-    getAdminClientSideEntry(): any {
-        let entryPath = this._path+'/client-side/src/index.tsx';
-        if (fs.existsSync(entryPath)) {
-            return entryPath;
-        }
-
-        return false;
     }
 
     /**

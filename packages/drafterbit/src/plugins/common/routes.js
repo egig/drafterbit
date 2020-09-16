@@ -2,23 +2,13 @@ const Router = require('@koa/router');
 const path = require('path');
 let router = new Router();
 const matter = require('gray-matter');
-const marked = require('marked');
 const fs = require('fs');
 
 // Route Example
 //
 router.get("/(.*)", async (ctx, next) => {
 
-    marked.setOptions({
-        renderer: new marked.Renderer(),
-        pedantic: false,
-        gfm: true,
-        breaks: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-        xhtml: false
-    });
+
 
     let ctxPath = ctx.path;
     let contentRoot;

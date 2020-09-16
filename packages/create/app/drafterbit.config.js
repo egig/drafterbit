@@ -1,6 +1,6 @@
 module.exports = {
     plugins: [
-        "./plugnis/my-plugin",
+        "./plugins/my-plugin",
         'drafterbit/plugins/common'
     ]
 };

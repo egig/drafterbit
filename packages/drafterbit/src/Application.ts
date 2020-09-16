@@ -29,7 +29,7 @@ declare namespace Application {
 
 
     type Options = {
-        plugins: string[]
+        plugins?: string[]
     }
 }
 
@@ -68,7 +68,7 @@ class Application extends Koa {
      */
     render(view: string, options: any) {
         if (typeof this._view === "undefined") {
-            throw new Error("_view undefined possibly call render before boots")
+            throw new Error("_view undefined possibly call render before boot function")
         }
         return this._view.render(view, options);
     }
@@ -96,7 +96,6 @@ class Application extends Koa {
      */
     install() {
 
-        // TODO use mongoose transaction
         let installs = this._plugins.map(m => {
             return m.install(this)
         });
@@ -239,13 +238,11 @@ class Application extends Koa {
         this._view = new nunjucks.Environment(new nunjucks.FileSystemLoader(viewsPath),  {autoescape: true});
 
         // build skeletons
-        let options;
+        let options: Application.Options = {};
         let configFileName = 'drafterbit.config.js';
         let configFile = `${rootDir}/${configFileName}`;
         if (fs.existsSync(configFile)) {
             options = require(configFile);
-        } else {
-            options = {};
         }
 
         this._pluginPaths= options.plugins || [];
@@ -265,11 +262,10 @@ class Application extends Koa {
 
         // init plugins
         this._plugins = this._pluginPaths.map(m => {
-            let modulePath = Plugin.resolve(m, this.projectDir);
-            let ModulesClass = require(modulePath);
+            let _pluginPath = Plugin.resolve(m, this.projectDir);
+            let ModulesClass = require(_pluginPath);
             let moduleInstance = new ModulesClass(this);
-            moduleInstance.setPath(modulePath);
-
+            moduleInstance.setPath(_pluginPath);
 
             // register config
             if (moduleInstance.canLoad('config')) {
@@ -308,8 +304,6 @@ class Application extends Koa {
 
     /**
      *
-     * @param debug
-     * @returns {winston.Logger}
      */
     createLogger() {
 
@@ -331,4 +325,4 @@ class Application extends Koa {
 
 }
 
-export = Application;
+export default Application;
