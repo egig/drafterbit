@@ -14,6 +14,8 @@ import http from 'http'
 import execa from 'execa'
 import nunjucks from 'nunjucks';
 
+const packageJson = require('../package.json');
+
 
 declare namespace Application {
     interface Request extends Koa.Request {
@@ -30,6 +32,7 @@ declare namespace Application {
 
     type Options = {
         plugins?: string[]
+        theme?: string
     }
 }
 
@@ -41,6 +44,7 @@ class Application extends Koa {
     private _services: any = {};
     private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
+    private _theme: string  = "penabulu";
     private _server = http.createServer(this.callback());
 
     /**
@@ -71,6 +75,13 @@ class Application extends Koa {
             throw new Error("_view undefined possibly call render before boot function")
         }
         return this._view.render(view, options);
+    }
+
+    /**
+     *
+     */
+    getTheme() {
+        return this._theme;
     }
 
     /**
@@ -234,10 +245,6 @@ class Application extends Koa {
         this._booted = false;
         this.projectDir = rootDir;
 
-        let viewsPath = path.join(this.projectDir, 'views');
-        this._view = new nunjucks.Environment(new nunjucks.FileSystemLoader(viewsPath),  {autoescape: true});
-
-        // build skeletons
         let options: Application.Options = {};
         let configFileName = 'drafterbit.config.js';
         let configFile = `${rootDir}/${configFileName}`;
@@ -245,7 +252,21 @@ class Application extends Koa {
             options = require(configFile);
         }
 
+        if (options.theme) {
+            this._theme =  options.theme
+        }
+        const themeRoot = path.join(this.projectDir, 'themes', this._theme);
+        const templateRoot = path.join(themeRoot, 'templates');
+        const staticDir = path.join(themeRoot, 'public');
+        const fileSystemLoader = new nunjucks.FileSystemLoader(templateRoot);
+        this._view = new nunjucks.Environment(fileSystemLoader, {autoescape: true});
+
+        this.use(require('koa-static')(staticDir, {
+            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
+        }));
+
         this._pluginPaths= options.plugins || [];
+        this._pluginPaths = this._pluginPaths.concat(['drafterbit/plugins/core']);
 
         let config = new Config(rootDir, options);
         this.set('config', config);
@@ -255,7 +276,7 @@ class Application extends Koa {
 
         let cmd = commander;
         cmd
-            .version('0.0.1')
+            .version(packageJson.version)
             .option('-d, --debug', 'output extra debugging');
 
         this.set('cmd', cmd);

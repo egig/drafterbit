@@ -47,7 +47,7 @@
        "react",
        "react-dom",
        "koa",
-       "koa__router",
+       "koa__router",w
        "tinymce",
        "mocha"
      ],                           /* Type declaration files to be included in compilation. */

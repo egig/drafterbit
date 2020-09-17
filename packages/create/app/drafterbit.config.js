@@ -1,6 +1,6 @@
 module.exports = {
+    theme: "penabulu",
     plugins: [
-        "./plugins/my-plugin",
-        'drafterbit/plugins/common'
+        "./plugins/my-plugin"
     ]
 };
