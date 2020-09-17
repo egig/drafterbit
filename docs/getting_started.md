@@ -5,7 +5,6 @@
 Please make sure your server has following installed.
 
 + nodejs >= 12.18.3
-+ mongodb >= 4.2.0
 
 ## Install Locally
 
