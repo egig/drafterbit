@@ -1,5 +1,4 @@
 import path from 'path';
-import Application  from "./Application"
 
 class Plugin {
 
@@ -123,15 +122,6 @@ class Plugin {
                 throw e;
             }
         }
-    }
-
-    /**
-     *
-     * @param app
-     * @returns {Promise<[unknown]>}
-     */
-    install(app: Application) {
-        return Promise.all([]);
     }
 }
 

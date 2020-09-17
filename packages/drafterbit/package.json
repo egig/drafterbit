@@ -7,9 +7,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "files": [
-    "dist"
+    "lib"
   ],
   "dependencies": {
     "@drafterbit/common": "latest",
@@ -59,9 +59,9 @@
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "linter": "./node_modules/.bin/eslint --fix ./src",
-    "build": "rm -rf dist && cp -r src dist && tsc",
-    "watch": "rm -rf dist && cp -r src dist && tsc -w",
-    "prepare": "rm -rf dist && cp -r src dist && tsc",
+    "build": "rm -rf lib && cp -r src lib && tsc",
+    "watch": "rm -rf lib && cp -r src lib && tsc -w",
+    "prepare": "rm -rf lib && cp -r src lib && tsc",
     "flow": "flow check src"
   },
   "pre-push": {

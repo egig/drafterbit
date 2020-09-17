@@ -2,7 +2,7 @@ import Plugin from '../../Plugin';
 import Application from '../../Application';
 const marked = require('marked');
 
-class CommonPlugin extends Plugin {
+class CorePlugin extends Plugin {
 
     constructor(app: Application) {
         super(app);
@@ -24,4 +24,4 @@ class CommonPlugin extends Plugin {
     }
 }
 
-export  = CommonPlugin;
+export = CorePlugin;

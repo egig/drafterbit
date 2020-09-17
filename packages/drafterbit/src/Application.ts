@@ -103,27 +103,6 @@ class Application extends Koa {
 
     /**
      *
-     * @returns {Promise<[unknown]>}
-     */
-    install() {
-
-        let installs = this._plugins.map(m => {
-            return m.install(this)
-        });
-
-        return Promise.all(installs)
-            .then(() => {
-                this.get('log').info("Installation Complete.");
-                process.exit(0)
-            })
-            .catch(e => {
-                this.get('log').error("Installation Failed.", e);
-                process.exit(1)
-            })
-    }
-
-    /**
-     *
      */
     routing() {
         this._plugins.map(m => {
@@ -284,18 +263,18 @@ class Application extends Koa {
         // init plugins
         this._plugins = this._pluginPaths.map(m => {
             let _pluginPath = Plugin.resolve(m, this.projectDir);
-            let ModulesClass = require(_pluginPath);
-            let moduleInstance = new ModulesClass(this);
-            moduleInstance.setPath(_pluginPath);
+            let PluginClass = require(_pluginPath);
+            let pluginInstance = new PluginClass(this);
+            pluginInstance.setPath(_pluginPath);
 
             // register config
-            if (moduleInstance.canLoad('config')) {
-                config.registerConfig(moduleInstance.require('config'));
+            if (pluginInstance.canLoad('config')) {
+                config.registerConfig(pluginInstance.require('config'));
             }
 
-            moduleInstance.loadCommands();
+            pluginInstance.loadCommands();
 
-            return moduleInstance;
+            return pluginInstance;
         });
 
         // Error handling

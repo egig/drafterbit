@@ -2,9 +2,9 @@
   "name": "@drafterbit/common",
   "version": "3.0.0-dev.36",
   "description": "",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "files": [
-    "dist"
+    "lib"
   ],
   "directories": {
     "test": "test"
@@ -12,8 +12,8 @@
   "scripts": {
     "test": "nyc --reporter=none mocha --require ts-node/register \"test/**/*.test.{ts,tsx}\" --timeout=3000 --reporter=spec  --exit --recursive --bail",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
-    "build": "rm -rf dist && cp -r src dist && tsc",
-    "prepare": "rm -rf dist && cp -r src dist && tsc"
+    "build": "rm -rf lib && cp -r src lib && tsc",
+    "prepare": "rm -rf lib && cp -r src lib && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -21,8 +21,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0"
   }

@@ -6,6 +6,28 @@ let router = new Router();
 const matter = require('gray-matter');
 const fs = require('fs');
 
+function resolveContentFile(ctx: any): string {
+    let ctxPath = ctx.path;
+    let contentRoot = path.join(ctx.app.projectDir, 'content');
+
+    if (ctxPath === "/") {
+        return path.join(contentRoot, 'index.md');
+    }
+
+    ctxPath = ctxPath.replace(/\/$/, "");
+    let contentIndexDir = path.join(contentRoot, ctxPath, 'index.md');
+    if (fs.existsSync(contentIndexDir)) {
+        return contentIndexDir
+    }
+
+    let contentFilePath = path.join(contentRoot, `${ctxPath}.md`);
+    if (fs.existsSync(contentFilePath)) {
+        return contentFilePath;
+    }
+
+    return ""
+}
+
 router.get("/(.*)", async (ctx: Application.Context, next: Application.Next) => {
 
     let contentFile: string = resolveContentFile(ctx);
@@ -28,27 +50,5 @@ router.get("/(.*)", async (ctx: Application.Context, next: Application.Next) => 
     ctx.status = 404;
     return next();
 });
-
-function resolveContentFile(ctx: any): string {
-    let ctxPath = ctx.path;
-    let contentRoot = path.join(ctx.app.projectDir, 'content');
-
-    if (ctxPath === "/") {
-        return path.join(contentRoot, 'index.md');
-    }
-
-    ctxPath = ctxPath.replace(/\/$/, "");
-    let contentIndexDir = path.join(contentRoot, ctxPath, 'index.md');
-    if (fs.existsSync(contentIndexDir)) {
-        return contentIndexDir
-    }
-
-    let contentFilePath = path.join(contentRoot, `${ctxPath}.md`);
-    if (fs.existsSync(contentFilePath)) {
-        return contentFilePath;
-    }
-
-    return ""
-}
 
 module.exports = router.routes();

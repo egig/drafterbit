@@ -2,7 +2,7 @@ import path from 'path';
 
 class Config {
 
-    defaults: Object = {};
+    private _defaults: Object = {};
     /**
      *
      * @param root
@@ -10,7 +10,7 @@ class Config {
      */
     constructor(root: string, defaults: Object = {}) {
         require('dotenv').config({ path: path.join(root,'.env') });
-        this.defaults = defaults;
+        this._defaults = defaults;
     }
 
     /**
@@ -22,7 +22,7 @@ class Config {
         if (key in process.env) {
             return process.env[key];
         }
-        return (this.defaults as any)[key];
+        return (this._defaults as any)[key];
     }
 
     /**
@@ -30,8 +30,8 @@ class Config {
      * @param defaults
      */
     registerConfig(defaults: Object) {
-        this.defaults = Object.assign({}, this.defaults, defaults);
+        this._defaults = Object.assign({}, this._defaults, defaults);
     }
 }
 
-export = Config
+export default Config
