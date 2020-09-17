@@ -42,12 +42,8 @@
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
      "types": [
-       "antd",
-       "react",
-       "react-dom",
        "koa",
        "koa__router",
-       "tinymce",
        "mocha",
        "chai"
      ],                           /* Type declaration files to be included in compilation. */
