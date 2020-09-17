@@ -1,4 +1,4 @@
-const Router = require('@koa/router');
+const { Router } = require('drafterbit');
 let router = new Router();
 
 // Route Example
@@ -7,4 +7,4 @@ let router = new Router();
 //     //..
 // });
 
-module.exports = router.routes();
+module.exports = router;

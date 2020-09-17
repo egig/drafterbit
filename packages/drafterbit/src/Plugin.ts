@@ -31,8 +31,8 @@ class Plugin {
      */
     loadRoutes(): void {
         if (this.canLoad('routes')) {
-            let routes = this.require('routes');
-            this._app.use(routes);
+            let router = this.require('routes');
+            this._app.use(router.routes());
         }
     }
 

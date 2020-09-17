@@ -4,7 +4,7 @@ let expect = chai.expect;
 
 import Plugin from '../src/Plugin';
 
-describe('Module', () => {
+describe('Plugin', () => {
 
     it('should return relative to root', () => {
         let r = Plugin.resolve('./testpath.js', __dirname);

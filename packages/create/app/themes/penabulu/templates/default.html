@@ -1,10 +1,28 @@
-<html>
+<html lang="en">
     <head>
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
         <link href="/css/index.css" rel="stylesheet" />
+        <title>{{ page.title }}</title>
     </head>
     <body>
-        <h1>Site Name</h1>
-        {{ content | safe }}
+        <div class="main">
+            <nav class="demo">
+                <a href="/" class="brand">
+                    <span>{{ app_name }}</span>
+                </a>
+
+                <!-- responsive-->
+                <input id="bmenub" type="checkbox" class="show">
+                <label for="bmenub" class="burger pseudo button">menu</label>
+
+                <div class="menu">
+                    <a href="/another-page" class="pseudo button icon-picture">Another Page</a>
+                </div>
+            </nav>
+            <div class="content-wrapper">
+            {{ page.content | safe }}
+            </div>
+        </div>
     </body>
 </html>

@@ -1,4 +1,4 @@
-const Plugin = require('drafterbit/dist/Plugin');
+const { Plugin } = require('drafterbit');
 
 class MyPlugin extends Plugin {
 }

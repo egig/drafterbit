@@ -1,6 +1,6 @@
 import Application from "../../Application";
 
-const Router = require('@koa/router');
+const { Router } = require('../../index');
 const path = require('path');
 let router = new Router();
 const matter = require('gray-matter');
@@ -28,7 +28,7 @@ function resolveContentFile(ctx: any): string {
     return ""
 }
 
-router.get("/(.*)", async (ctx: Application.Context, next: Application.Next) => {
+router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.Next) => {
 
     let contentFile: string = resolveContentFile(ctx);
 
@@ -43,7 +43,15 @@ router.get("/(.*)", async (ctx: Application.Context, next: Application.Next) => 
 
         let htmlContent = marked(file.content);
 
-        ctx.body =  ctx.app.render(template, { content: htmlContent });
+        let data = {
+            app_name: ctx.app.get('config').get('APP_NAME'),
+            page: {
+                title: file.data.title,
+                content: htmlContent
+            }
+        };
+
+        ctx.body =  ctx.app.render(template, data);
         return next()
     }
 
@@ -51,4 +59,4 @@ router.get("/(.*)", async (ctx: Application.Context, next: Application.Next) => 
     return next();
 });
 
-module.exports = router.routes();
+module.exports = router;
