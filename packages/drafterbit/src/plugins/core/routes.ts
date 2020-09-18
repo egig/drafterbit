@@ -43,8 +43,14 @@ router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.N
 
         let htmlContent = marked(file.content);
 
+        let baseURL = ctx.app.options.base_url ?  ctx.app.options.base_url
+            : `${ctx.protocol}://${ctx.host}`;
+
         let data = {
-            app_name: ctx.app.get('config').get('APP_NAME'),
+            base_url: baseURL,
+            app: {
+                name: ctx.app.options.app_name,
+            },
             page: {
                 title: file.data.title,
                 content: htmlContent

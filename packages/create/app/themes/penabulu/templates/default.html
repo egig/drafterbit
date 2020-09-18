@@ -2,14 +2,14 @@
     <head>
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
-        <link href="/css/index.css" rel="stylesheet" />
+        <link href="{{ base_url }}/css/index.css" rel="stylesheet" />
         <title>{{ page.title }}</title>
     </head>
     <body>
         <div class="main">
             <nav class="demo">
                 <a href="/" class="brand">
-                    <span>{{ app_name }}</span>
+                    <span>{{ app.name }}</span>
                 </a>
 
                 <!-- responsive-->
@@ -17,8 +17,8 @@
                 <label for="bmenub" class="burger pseudo button">menu</label>
 
                 <div class="menu">
-                    <a href="/typography" class="pseudo button icon-picture">Typography</a>
-                    <a href="/another-page" class="pseudo button icon-picture">Another Page</a>
+                    <a href="{{ base_url }}/typography" class="pseudo button icon-picture">Typography</a>
+                    <a href="{{ base_url }}/another-page" class="pseudo button icon-picture">Another Page</a>
                 </div>
             </nav>
             <div class="content-wrapper">

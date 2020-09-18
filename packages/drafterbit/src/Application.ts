@@ -33,6 +33,8 @@ declare namespace Application {
     type Options = {
         plugins?: string[]
         theme?: string
+        app_name?: string
+        base_url?: string
     }
 }
 
@@ -41,6 +43,7 @@ class Application extends Koa {
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
     projectDir = "";
+    options: Application.Options = {};
     private _services: any = {};
     private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
@@ -230,6 +233,8 @@ class Application extends Koa {
         if (fs.existsSync(configFile)) {
             options = require(configFile);
         }
+
+        this.options = options;
 
         if (options.theme) {
             this._theme =  options.theme

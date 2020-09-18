@@ -1,12 +1,13 @@
 .main {
-    max-width: 800px;
+    max-width: 860px;
     margin: auto;
 }
 
 nav {
     position: relative;
+    box-shadow: none !important;
 }
 
 .content-wrapper {
-    margin: 0 0.6em;
+    margin: 0 1.2em;
 }
