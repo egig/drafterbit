@@ -9,8 +9,7 @@
   "scripts": {
     "dev": "drafterbit dev",
     "start": "drafterbit start --production",
-    "build": "drafterbit build --production",
-    "install": "drafterbit install"
+    "build": "drafterbit build --production"
   },
   "author": "",
   "license": "ISC",

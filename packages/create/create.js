@@ -3,7 +3,16 @@
 const path = require('path');
 const fs = require('fs');
 const shell = require('shelljs');
-const destDir = process.cwd();
+
+const mkdirp = require('mkdirp');
+
+let destDir = process.cwd();
+let argv2 = process.argv[2];
+if (argv2 !== undefined) {
+    destDir = path.join(process.cwd(), argv2);
+    console.log("creating app dir", destDir);
+    mkdirp.sync(destDir);
+}
 
 function copy(srcDir, dstDir) {
 
@@ -50,4 +59,4 @@ let stubDir = __dirname;
 let stub = path.join(stubDir, "app/.");
 
 copy(stub, destDir);
-shell.exec('npm install');
+shell.exec(`cd ${destDir} && npm install`);

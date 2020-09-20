@@ -2,9 +2,9 @@
   "name": "@drafterbit/create",
   "version": "3.0.0-dev.36",
   "description": "",
-  "main": "index.js",
+  "main": "create.js",
   "bin": {
-    "create-dt": "./index.js"
+    "create-drafterbit-app": "./create.js"
   },
   "directories": {
     "test": "test"
