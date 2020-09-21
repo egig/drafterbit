@@ -1,6 +1,6 @@
 {
   "name": "@drafterbit/create",
-  "version": "3.0.0-dev.36",
+  "version": "4.0.0-alpha.1",
   "description": "",
   "main": "create.js",
   "bin": {
@@ -15,6 +15,5 @@
   "gitHead": "673f6efce44a44a5c1df10444daa1ec9877cd8e8",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {}
+  }
 }
