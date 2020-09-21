@@ -1,4 +1,3 @@
-# Table of contents
+## Table of Contents
 
-* [Introduction](README.md)
-* [Getting Started](getting_started.md)
+* [Getting Started](getting_started)

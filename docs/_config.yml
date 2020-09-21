@@ -1,0 +1,15 @@
+theme: jekyll-theme-primer
+
+title: drafterbit docs
+description: The Documentation for Drafterbit
+
+exclude:
+  - node_modules
+  - script
+
+#sass:
+#  style: :compressed
+
+repository: drafterbit/drafterbit
+
+markdown: kramdown
