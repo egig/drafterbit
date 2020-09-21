@@ -67,5 +67,5 @@
   "pre-push": {
     "run": "test"
   },
-  "gitHead": "673f6efce44a44a5c1df10444daa1ec9877cd8e8"
+  "gitHead": "af71e08e1ed494401aaa69cf841cab4d0c1bbbf4"
 }
