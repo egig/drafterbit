@@ -6,9 +6,10 @@ description: The Documentation for Drafterbit
 exclude:
   - node_modules
   - script
+  - jekyll.sh
 
-#sass:
-#  style: :compressed
+sass:
+  style: :compressed
 
 repository: drafterbit/drafterbit
 
