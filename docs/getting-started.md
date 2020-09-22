@@ -1,10 +1,5 @@
 ## Getting Started
 
-### Table of Contents
-
-* TOC
-{:toc}
-
 ### Server Requirements
 
 Please make sure your server has following installed.
