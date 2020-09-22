@@ -1,4 +1,4 @@
 
 # README.md
 
-[![Build Status](https://travis-ci.org/drafterbit/drafterbit.svg?branch=develop)](https://travis-ci.org/drafterbit/drafterbit)
+[![Actions Status](https://github.com/drafterbit/drafterbit/workflows/test/badge.svg)](https://github.com/drafterbit/drafterbit/actions)
