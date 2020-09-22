@@ -1,7 +1,5 @@
-## Introduction
-
 Welcome to Drafterbit Documentation!
 
-This app still in experimental phase and not production ready, use at your own risk !
+Note ! This app still in development and not production ready.
 
 {% include_relative SUMMARY.md %}

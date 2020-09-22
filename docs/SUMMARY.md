@@ -1,3 +1,7 @@
 ## Table of Contents
 
-* [Getting Started](getting_started)
+* [Introduction](introduction)
+* [Getting Started](getting-started)
+* [Content](content)
+* [Theme](theme)
+* [Plugin](plugin)
