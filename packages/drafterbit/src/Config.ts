@@ -1,28 +1,26 @@
 import path from 'path';
 
+const DRAFTERBIT_ENV_PREFIX = "DRAFTERBIT_";
+
 class Config {
 
-    private _defaults: Object = {};
+    private _defaults: any = {};
+
     /**
      *
-     * @param root
      * @param defaults
      */
-    constructor(root: string, defaults: Object = {}) {
-        require('dotenv').config({ path: path.join(root,'.env') });
+    constructor(defaults: Object = {}) {
         this._defaults = defaults;
     }
 
     /**
      *
      * @param key
-     * @returns {string|*}
+     * @param fallback
      */
-    get(key: string) {
-        if (key in process.env) {
-            return process.env[key];
-        }
-        return (this._defaults as any)[key];
+    get(key: string, fallback?: any) {
+        return (this._defaults as any)[key] || fallback;
     }
 
     /**
@@ -31,6 +29,22 @@ class Config {
      */
     registerConfig(defaults: Object) {
         this._defaults = Object.assign({}, this._defaults, defaults);
+    }
+
+    /**
+     *
+     * @param dir
+     */
+    load(dir: string) {
+        require('dotenv').config({ path: path.join(dir,'.env') });
+
+        for (let k of Object.keys(process.env)){;
+            if (k.toUpperCase().startsWith(DRAFTERBIT_ENV_PREFIX)) {
+                let reg = new RegExp(`^${DRAFTERBIT_ENV_PREFIX}`);
+                let configKey  = k.replace(reg, "").toLowerCase();
+                this._defaults[configKey] = process.env[k];
+            }
+        }
     }
 }
 

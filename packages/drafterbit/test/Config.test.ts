@@ -5,13 +5,31 @@ let expect = chai.expect;
 
 import Config from '../src/Config';
 
-describe('createConfig', () => {
+describe('Config', () => {
 
-    it('should load config from file', () => {
-        let config = new Config(__dirname, {
-            MONGODB_NAME: 'test_db_name'
+    it('should load default', () => {
+
+        let config = new Config({
+            test_default: "bar"
         });
-        expect(config.get('MONGODB_NAME')).to.equal('test_db_name');
+        expect(config.get('test_default')).to.equal('bar');
     });
+
+    it('should load from env', () => {
+        let config = new Config({});
+
+        process.env.DRAFTERBIT_TEST_KEY = 'foo';
+        config.load(__dirname);
+        expect(config.get('test_key')).to.equal('foo');
+    });
+
+    it('should register config', () => {
+        let config = new Config({});
+        config.registerConfig({
+            "plugin_config": "baz"
+        });
+
+        expect(config.get('plugin_config')).to.equal('baz');
+    })
 
 });

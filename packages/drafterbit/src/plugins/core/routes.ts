@@ -8,7 +8,7 @@ const fs = require('fs');
 
 function resolveContentFile(ctx: any): string {
     let ctxPath = ctx.path;
-    let contentRoot = path.join(ctx.app.projectDir, 'content');
+    let contentRoot = path.join(ctx.app.dir, 'content');
 
     if (ctxPath === "/") {
         return path.join(contentRoot, 'index.md');
@@ -43,13 +43,13 @@ router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.N
 
         let htmlContent = marked(file.content);
 
-        let baseURL = ctx.app.options.base_url ?  ctx.app.options.base_url
+        let baseURL = ctx.app.options.base_url ?  ctx.app.config.get('base_url')
             : `${ctx.protocol}://${ctx.host}`;
 
         let data = {
             base_url: baseURL,
             app: {
-                name: ctx.app.options.app_name,
+                name: ctx.app.config.get('app_name'),
             },
             page: {
                 title: file.data.title,

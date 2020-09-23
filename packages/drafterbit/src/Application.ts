@@ -38,17 +38,32 @@ declare namespace Application {
     }
 }
 
+const DEFAULT_PORT = 3000;
+const DEFAULT_THEME = 'penabulu';
+const CONFIG_FILE_NAME = 'drafterbit.config.js';
+
 class Application extends Koa {
+
+
+    dir: string = "";
+    options: Application.Options = {};
+    config: Config;
 
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
-    projectDir = "";
-    options: Application.Options = {};
+
     private _services: any = {};
     private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
-    private _theme: string  = "penabulu";
+    private _theme: string  = DEFAULT_THEME;
     private _server = http.createServer(this.callback());
+
+    constructor(options?: any) {
+        // @ts-ignore
+        super(options);
+
+        this.config = new Config(options);
+    }
 
     /**
      *
@@ -171,7 +186,6 @@ class Application extends Koa {
             if (!options.production) {
                 // TODO include users plugins
                 let pathsToWatch = [path.resolve(path.join(__dirname, "../src"))];
-                console.log("pathsToWatch", pathsToWatch);
 
                 // TODO make watch and reload concurrent/not blocking
                 chokidar.watch(pathsToWatch, {
@@ -188,7 +202,7 @@ class Application extends Koa {
                     console.log("rebuilding...");
                     execa.commandSync("npm run build",{
                         stdio: "inherit",
-                        cwd: this.projectDir
+                        cwd: this.dir
                     });
 
                     // @ts-ignore
@@ -210,7 +224,7 @@ class Application extends Koa {
                 }
             });
 
-            const PORT = process.env.PORT || this.get('config').get("PORT") || 3000;
+            const PORT = this.config.get("port", DEFAULT_PORT);
             this._server.listen(PORT, () => {
                 console.log(`Our app is running on port ${ PORT }`);
             });
@@ -225,36 +239,30 @@ class Application extends Koa {
     boot(rootDir: string) {
 
         this._booted = false;
-        this.projectDir = rootDir;
+        this.dir = rootDir;
+        this._setupConfig();
+        this._setupBaseService();
 
+        let publicDir = this._setupTheme();
+        this._setupPlugins();
+        this._setupBaseMiddlewares(publicDir);
+
+        this.emit('boot');
+        this._booted = true;
+        return this;
+    }
+
+    private _setupConfig() {
+        this.config.load(this.dir);
         let options: Application.Options = {};
-        let configFileName = 'drafterbit.config.js';
-        let configFile = `${rootDir}/${configFileName}`;
+        let configFile = `${this.dir}/${CONFIG_FILE_NAME}`;
         if (fs.existsSync(configFile)) {
             options = require(configFile);
         }
+        this.config.registerConfig(options);
+    }
 
-        this.options = options;
-
-        if (options.theme) {
-            this._theme =  options.theme
-        }
-        const themeRoot = path.join(this.projectDir, 'themes', this._theme);
-        const templateRoot = path.join(themeRoot, 'templates');
-        const staticDir = path.join(themeRoot, 'public');
-        const fileSystemLoader = new nunjucks.FileSystemLoader(templateRoot);
-        this._view = new nunjucks.Environment(fileSystemLoader, {autoescape: true});
-
-        this.use(require('koa-static')(staticDir, {
-            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
-        }));
-
-        this._pluginPaths= options.plugins || [];
-        this._pluginPaths = this._pluginPaths.concat(['drafterbit/plugins/core']);
-
-        let config = new Config(rootDir, options);
-        this.set('config', config);
-
+    private _setupBaseService() {
         let logger = this.createLogger();
         this.set('log', logger);
 
@@ -264,23 +272,47 @@ class Application extends Koa {
             .option('-d, --debug', 'output extra debugging');
 
         this.set('cmd', cmd);
+    }
 
-        // init plugins
+    private _setupTheme(): string {
+        this._theme =  this.config.get('theme', DEFAULT_THEME);
+        const themeRoot = path.join(this.dir, 'themes', this._theme);
+        const templateRoot = path.join(themeRoot, 'templates');
+        const fileSystemLoader = new nunjucks.FileSystemLoader(templateRoot);
+        this._view = new nunjucks.Environment(fileSystemLoader, {autoescape: true});
+        return path.join(themeRoot, 'public');
+    }
+
+    private _setupPlugins() {
+        this._pluginPaths= this.config.get('plugins', []);
+        this._pluginPaths = this._pluginPaths.concat(['drafterbit/plugins/core']);
         this._plugins = this._pluginPaths.map(m => {
-            let _pluginPath = Plugin.resolve(m, this.projectDir);
+            let _pluginPath = Plugin.resolve(m, this.dir);
             let PluginClass = require(_pluginPath);
             let pluginInstance = new PluginClass(this);
             pluginInstance.setPath(_pluginPath);
 
             // register config
             if (pluginInstance.canLoad('config')) {
-                config.registerConfig(pluginInstance.require('config'));
+                this.config.registerConfig(pluginInstance.require('config'));
             }
 
             pluginInstance.loadCommands();
 
             return pluginInstance;
         });
+    }
+
+    private _setupBaseMiddlewares(staticDir: string) {
+        this.use(require('koa-static')(staticDir, {
+            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
+        }));
+
+        this.use(cors({
+            origin: '*',
+            allowMethods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            exposeHeaders: 'Content-Range,X-Content-Range'
+        }));
 
         // Error handling
         this.use(async (ctx: any, next: any) => {
@@ -292,19 +324,7 @@ class Application extends Koa {
                 ctx.app.emit('error', err, ctx);
             }
         });
-
-        this.use(cors({
-            origin: '*',
-            allowMethods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-            exposeHeaders: 'Content-Range,X-Content-Range'
-        }));
-
         this.use(bodyParser());
-
-        this.emit('boot');
-
-        this._booted = true;
-        return this;
     }
 
     /**
@@ -314,7 +334,7 @@ class Application extends Koa {
 
         // TODO add rotate file logger
         const logger = winston.createLogger({
-            level: this.get('config').get('DEBUG') ? 'debug' : 'warn',
+            level: this.config.get('debug') ? 'debug' : 'warn',
             format: winston.format.json(),
             transports: []
         });
