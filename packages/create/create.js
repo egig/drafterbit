@@ -10,7 +10,7 @@ let destDir = process.cwd();
 let argv2 = process.argv[2];
 if (argv2 !== undefined) {
     destDir = path.join(process.cwd(), argv2);
-    console.log("creating app dir", destDir);
+    console.log('creating app dir', destDir);
     mkdirp.sync(destDir);
 }
 
@@ -21,7 +21,7 @@ function copy(srcDir, dstDir) {
 
     function skip(file) {
         return /.*node_modules.*/.test(file) || /.env$/.test(file)
-            || /package-lock.json$/.test(file)
+            || /package-lock.json$/.test(file);
     }
 
     list.forEach(function(file) {
@@ -39,7 +39,7 @@ function copy(srcDir, dstDir) {
                 fs.mkdirSync(dst);
             } catch(e) {
                 console.log('cannot create dir: ' + dst);
-                console.error(e)
+                console.error(e);
             }
 
             return copy(src, dst);
@@ -50,13 +50,13 @@ function copy(srcDir, dstDir) {
             fs.writeFileSync(dst, fs.readFileSync(src));
         } catch(e) {
             console.log('could\'t copy file: ' + dst);
-            console.error(e)
+            console.error(e);
         }
     });
 }
 
 let stubDir = __dirname;
-let stub = path.join(stubDir, "app/.");
+let stub = path.join(stubDir, 'app/.');
 
 copy(stub, destDir);
 shell.exec(`cd ${destDir} && npm install`);

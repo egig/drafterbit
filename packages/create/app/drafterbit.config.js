@@ -1,7 +1,7 @@
 module.exports = {
-    app_name: "Drafterbit",
-    theme: "penabulu",
+    app_name: 'Drafterbit',
+    theme: 'penabulu',
     plugins: [
-        "./plugins/my-plugin"
+        './plugins/my-plugin'
     ]
 };
