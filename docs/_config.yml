@@ -14,3 +14,5 @@ sass:
 repository: drafterbit/drafterbit
 
 markdown: kramdown
+
+baseurl: /drafterbit
