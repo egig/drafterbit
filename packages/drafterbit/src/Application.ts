@@ -13,6 +13,8 @@ import cluster from 'cluster';
 import http from 'http'
 import execa from 'execa'
 import nunjucks from 'nunjucks';
+import serveStatic from 'koa-static';
+import mount from 'koa-mount';
 
 const packageJson = require('../package.json');
 
@@ -242,10 +244,10 @@ class Application extends Koa {
         this.dir = rootDir;
         this._setupConfig();
         this._setupBaseService();
-
-        let publicDir = this._setupTheme();
         this._setupPlugins();
-        this._setupBaseMiddlewares(publicDir);
+
+        let themePublicPath = this._setupTheme();
+        this._setupBaseMiddlewares(themePublicPath);
 
         this.emit('boot');
         this._booted = true;
@@ -303,10 +305,14 @@ class Application extends Koa {
         });
     }
 
-    private _setupBaseMiddlewares(staticDir: string) {
-        this.use(require('koa-static')(staticDir, {
+    private _setupBaseMiddlewares(themePublicPath: string) {
+        this.use(serveStatic(path.join(this.dir, "public"), {
             maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
         }));
+
+        this.use(mount(`/themes/${this.getTheme()}`, serveStatic(themePublicPath, {
+            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
+        })));
 
         this.use(cors({
             origin: '*',

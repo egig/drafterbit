@@ -47,6 +47,7 @@ router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.N
             : `${ctx.protocol}://${ctx.host}`;
 
         let data = {
+            theme_url: `${baseURL}/themes/${ctx.app.getTheme()}`,
             base_url: baseURL,
             app: {
                 name: ctx.app.config.get('app_name'),
