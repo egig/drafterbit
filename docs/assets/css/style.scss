@@ -15,4 +15,9 @@
 .nav > ul > li {
   list-style: none;
   padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.nav > ul > li.active {
+  font-weight: bolder;
 }

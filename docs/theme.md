@@ -1,6 +1,6 @@
 ## Theme
 
-Current only one default theme available which named
+Currently only one default theme available which named
 "penabulu". However, you can create your own theme.
 
 The easiest way to create your own theme is

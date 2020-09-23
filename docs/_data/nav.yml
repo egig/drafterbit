@@ -1,0 +1,15 @@
+items:
+  - title: Introduction
+    url: /introduction.html
+
+  - title: Getting Started
+    url: /getting-started.html
+
+  - title: Content
+    url: /content.html
+
+  - title: Theme
+    url: /theme.html
+
+  - title: Plugin
+    url: /plugin.html
