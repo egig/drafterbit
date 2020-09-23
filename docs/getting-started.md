@@ -39,6 +39,8 @@ In Drafterbit, there is two type of configuration.
 
 You can start by copy `.env.example` to `.env` and edit according to your needs.
 
+---
+
 ### Directory Structure
 
 Drafterbit is file based application therefor it rely to its directory structure.
