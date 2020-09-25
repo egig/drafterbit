@@ -1,19 +1,19 @@
 import fs from 'fs';
 import path from 'path';
+import http from 'http'
 import Koa from 'koa';
-
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
-import Config from './Config';
-import Plugin from './Plugin';
 import commander from 'commander';
 import chokidar from 'chokidar';
 import cluster from 'cluster';
-import http from 'http'
 import nunjucks from 'nunjucks';
 import serveStatic from 'koa-static';
 import mount from 'koa-mount';
 import KoaRouter from '@koa/router';
+
+import Config from './Config';
+import Plugin from './Plugin';
 
 const packageJson = require('../package.json');
 
@@ -54,7 +54,6 @@ class Application extends Koa {
 
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
-
     private _services: any = {};
     private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
@@ -122,11 +121,7 @@ class Application extends Koa {
         });
     }
 
-    start(options: {
-        production?: boolean
-    } = {}) {
-        this.loadRoutes();
-
+    private _setupServer() {
         // Close current all connections to fully destroy the server
         const connections: any = {};
 
@@ -147,73 +142,92 @@ class Application extends Koa {
                 connections[key].destroy();
             }
         };
+    }
+
+    private _setupMaster() {
+        cluster.on('message', (worker, message) => {
+            switch (message) {
+                case 'restart':
+                    this._logger.log("Restarting...");
+                    worker.send('restartWorker');
+                    break;
+                case 'killAndFork':
+                    worker.kill();
+                    cluster.fork();
+                    break;
+                case 'stop':
+                    worker.kill();
+                    process.exit(1);
+                    break;
+                default:
+                    return;
+            }
+        });
+
+        cluster.fork();
+    }
+
+    private _watchFiles(callback: () => any) {
+        let pathsToWatch = this._plugins.map((p,i) => {
+            return p.getPath()
+        }).concat([path.resolve(path.join(__dirname, "../src"))]);
+
+        // TODO make watch and reload concurrent/not blocking
+        chokidar.watch(pathsToWatch, {
+            ignoreInitial: true,
+            ignored: [
+                '**/node_modules',
+                '**/node_modules/**',
+            ],
+            followSymlinks: true
+        }).on('all', (event, path) => {
+            this._logger.log(event, path);
+            callback();
+        });
+    }
+
+    private _setupWorker() {
+        process.on('message', message => {
+            switch (message) {
+                case 'restartWorker':
+                    // @ts-ignore
+                    this._server.destroy(() => {
+                        // @ts-ignore
+                        process.send('killAndFork');
+                    });
+                    break;
+                default:
+                // Do nothing.
+            }
+        })
+    }
+
+    start(options: {
+        production?: boolean
+    } = {}) {
+        this.loadRoutes();
+        this._setupServer();
 
         if (cluster.isMaster) {
+            this._setupMaster();
+        }
 
-            cluster.on('message', (worker, message) => {
-                switch (message) {
-                    case 'reload':
-                        this._logger.log("Restarting...");
-                        worker.send('isKilled');
-                        break;
-                    case 'kill':
-                        worker.kill();
-                        cluster.fork();
-                        break;
-                    case 'stop':
-                        worker.kill();
-                        process.exit(1);
-                    default:
-                        return;
-                }
-            });
+        if (cluster.isWorker) {
 
-            cluster.fork();
-        } else {
-
-            // cluster.isWorker x
-
-            // Watch file change and restart
-            // @ts-ignore
             if (!options.production) {
-
-                let pathsToWatch = this._plugins.map((p,i) => {
-                    return p.getPath()
-                }).concat([path.resolve(path.join(__dirname, "../src"))]);
-
-                // TODO make watch and reload concurrent/not blocking
-                chokidar.watch(pathsToWatch, {
-                    ignoreInitial: true,
-                    ignored: [
-                        '**/node_modules',
-                        '**/node_modules/**',
-                    ],
-                    followSymlinks: true
-                }).on('all', (event, path) => {
-                    this._logger.log(event, path);
+                // test
+                this._watchFiles(() => {
                     this._server.close();
                     // @ts-ignore
-                    process.send('reload');
+                    process.send('restart');
                 });
             }
 
-            process.on('message', message => {
-                switch (message) {
-                    case 'isKilled':
-                        // @ts-ignore
-                        this._server.destroy(() => {
-                            // @ts-ignore
-                            process.send('kill');
-                        });
-                        break;
-                    default:
-                    // Do nothing.
-                }
-            });
+            this._setupWorker();
 
-            const PORT = this.config.get("port", DEFAULT_PORT);
-            this._server.listen(PORT, () => {
-                this._logger.log(`Our app is running on port ${ PORT }`);
+            const port = this.config.get("port", DEFAULT_PORT);
+            this._server.listen(port, () => {
+                this._logger.log(`Our app is running on port ${ port }`);
             });
         }
     }

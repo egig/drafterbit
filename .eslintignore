@@ -1,2 +1,2 @@
-packages/**/modules/**/client-side/*
 packages/**/node_modules
+packages/**/lib
