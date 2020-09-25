@@ -1,5 +1,6 @@
 import Application from "./Application";
 import Router from '@koa/router';
+import commander from 'commander';
 import Plugin from './Plugin';
 
 exports = module.exports = function createApplication() {
@@ -8,3 +9,4 @@ exports = module.exports = function createApplication() {
 
 exports.Router = Router;
 exports.Plugin = Plugin;
+exports.Command = commander.Command;

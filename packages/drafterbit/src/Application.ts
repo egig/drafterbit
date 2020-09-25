@@ -13,6 +13,7 @@ import http from 'http'
 import nunjucks from 'nunjucks';
 import serveStatic from 'koa-static';
 import mount from 'koa-mount';
+import KoaRouter from '@koa/router';
 
 const packageJson = require('../package.json');
 
@@ -28,7 +29,7 @@ declare namespace Application {
     }
 
     type Next = Koa.Next
-
+    type Router = KoaRouter
 
     type Options = {
         plugins?: string[]
@@ -36,6 +37,8 @@ declare namespace Application {
         app_name?: string
         base_url?: string
     }
+
+    type Command = commander.Command
 }
 
 const DEFAULT_PORT = 3000;

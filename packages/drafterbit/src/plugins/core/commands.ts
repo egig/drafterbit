@@ -1,8 +1,6 @@
 import Application from "../../Application";
-import commander from 'commander';
 
-
-module.exports = function commands(cmd: commander.Command, app: Application) {
+module.exports = function commands(cmd: Application.Command, app: Application) {
 
     cmd.command('start')
         .description("run app")
