@@ -26,7 +26,6 @@
     "koa-webpack": "^5.3.0",
     "marked": "^1.1.1",
     "nunjucks": "^3.2.2",
-    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^14.1.0",
@@ -44,7 +43,6 @@
     "chokidar": "^3.4.2",
     "eslint": "^4.10.0",
     "eslint-config-dev": "^2.0.0",
-    "execa": "^4.0.3",
     "mocha": "^6.1.4",
     "nodemon": "^1.18.9",
     "nyc": "^14.1.1",

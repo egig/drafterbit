@@ -7,11 +7,9 @@ import cors from '@koa/cors';
 import Config from './Config';
 import Plugin from './Plugin';
 import commander from 'commander';
-import winston from 'winston';
 import chokidar from 'chokidar';
 import cluster from 'cluster';
 import http from 'http'
-import execa from 'execa'
 import nunjucks from 'nunjucks';
 import serveStatic from 'koa-static';
 import mount from 'koa-mount';
@@ -57,13 +55,13 @@ class Application extends Koa {
     private _services: any = {};
     private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
+    private _logger: Console = console;
     private _theme: string  = DEFAULT_THEME;
     private _server = http.createServer(this.callback());
 
     constructor(options?: any) {
         // @ts-ignore
         super(options);
-
         this.config = new Config(options);
     }
 
@@ -100,31 +98,22 @@ class Application extends Koa {
     /**
      *
      */
-    getTheme() {
+    get theme() {
         return this._theme;
-    }
-
-    /**
-     *
-     */
-    build(options: {
-        production?: boolean
-    } = {}): void {
-        this.emit('build', options);
     }
 
     /**
      *
      * @returns {Array}
      */
-    plugins() {
+    get plugins() {
         return this._plugins
     }
 
     /**
      *
      */
-    routing() {
+    loadRoutes() {
         this._plugins.map(m => {
             m.loadRoutes();
         });
@@ -133,6 +122,7 @@ class Application extends Koa {
     start(options: {
         production?: boolean
     } = {}) {
+        this.loadRoutes();
 
         // Close current all connections to fully destroy the server
         const connections: any = {};
@@ -155,15 +145,12 @@ class Application extends Koa {
             }
         };
 
-        this.routing();
-        this.emit('pre-start');
-
         if (cluster.isMaster) {
 
             cluster.on('message', (worker, message) => {
                 switch (message) {
                     case 'reload':
-                        console.log("Restarting...");
+                        this._logger.log("Restarting...");
                         worker.send('isKilled');
                         break;
                     case 'kill':
@@ -186,8 +173,10 @@ class Application extends Koa {
             // Watch file change and restart
             // @ts-ignore
             if (!options.production) {
-                // TODO include users plugins
-                let pathsToWatch = [path.resolve(path.join(__dirname, "../src"))];
+
+                let pathsToWatch = this._plugins.map((p,i) => {
+                    return p.getPath()
+                }).concat([path.resolve(path.join(__dirname, "../src"))]);
 
                 // TODO make watch and reload concurrent/not blocking
                 chokidar.watch(pathsToWatch, {
@@ -198,15 +187,8 @@ class Application extends Koa {
                     ],
                     followSymlinks: true
                 }).on('all', (event, path) => {
-                    console.log(event, path);
+                    this._logger.log(event, path);
                     this._server.close();
-
-                    console.log("rebuilding...");
-                    execa.commandSync("npm run build",{
-                        stdio: "inherit",
-                        cwd: this.dir
-                    });
-
                     // @ts-ignore
                     process.send('reload');
                 });
@@ -228,7 +210,7 @@ class Application extends Koa {
 
             const PORT = this.config.get("port", DEFAULT_PORT);
             this._server.listen(PORT, () => {
-                console.log(`Our app is running on port ${ PORT }`);
+                this._logger.log(`Our app is running on port ${ PORT }`);
             });
         }
     }
@@ -265,10 +247,8 @@ class Application extends Koa {
     }
 
     private _setupBaseService() {
-        let logger = this.createLogger();
-        this.set('log', logger);
 
-        let cmd = commander;
+        let cmd = new commander.Command();
         cmd
             .version(packageJson.version)
             .option('-d, --debug', 'output extra debugging');
@@ -310,7 +290,7 @@ class Application extends Koa {
             maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
         }));
 
-        this.use(mount(`/themes/${this.getTheme()}`, serveStatic(themePublicPath, {
+        this.use(mount(`/themes/${this._theme}`, serveStatic(themePublicPath, {
             maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
         })));
 
@@ -335,23 +315,17 @@ class Application extends Koa {
 
     /**
      *
+     * @param logger
      */
-    createLogger() {
+    set logger(logger: Console) {
+        this._logger = logger
+    }
 
-        // TODO add rotate file logger
-        const logger = winston.createLogger({
-            level: this.config.get('debug') ? 'debug' : 'warn',
-            format: winston.format.json(),
-            transports: []
-        });
-
-        if (process.env.NODE_ENV !== 'production') {
-            logger.add(new winston.transports.Console({
-                format: winston.format.simple()
-            }));
-        }
-
-        return logger;
+    /**
+     *
+     */
+    get log() {
+        return this._logger
     }
 
 }
