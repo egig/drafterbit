@@ -3,7 +3,6 @@ import path from 'path';
 import http from 'http'
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
-import cors from '@koa/cors';
 import commander from 'commander';
 import chokidar from 'chokidar';
 import cluster from 'cluster';
@@ -11,7 +10,6 @@ import nunjucks from 'nunjucks';
 import serveStatic from 'koa-static';
 import mount from 'koa-mount';
 import KoaRouter from '@koa/router';
-
 import Config from './Config';
 import Plugin from './Plugin';
 
@@ -44,6 +42,7 @@ declare namespace Application {
 const DEFAULT_PORT = 3000;
 const DEFAULT_THEME = 'penabulu';
 const CONFIG_FILE_NAME = 'drafterbit.config.js';
+const STATIC_CACHE_MAX_AGE = 2 * 60 * 60 * 24 * 1000;
 
 class Application extends Koa {
 
@@ -61,6 +60,10 @@ class Application extends Koa {
     private _theme: string  = DEFAULT_THEME;
     private _server = http.createServer(this.callback());
 
+    /**
+     *
+     * @param options
+     */
     constructor(options?: any) {
         // @ts-ignore
         super(options);
@@ -115,7 +118,7 @@ class Application extends Koa {
     /**
      *
      */
-    loadRoutes() {
+    private _loadRoutes() {
         this._plugins.map(m => {
             m.loadRoutes();
         });
@@ -205,7 +208,7 @@ class Application extends Koa {
     start(options: {
         production?: boolean
     } = {}) {
-        this.loadRoutes();
+        this._loadRoutes();
         this._setupServer();
 
         if (cluster.isMaster) {
@@ -264,10 +267,8 @@ class Application extends Koa {
     }
 
     private _setupBaseService() {
-
         let cmd = new commander.Command();
-        cmd
-            .version(packageJson.version)
+        cmd.version(packageJson.version)
             .option('-d, --debug', 'output extra debugging');
 
         this.set('cmd', cmd);
@@ -304,18 +305,12 @@ class Application extends Koa {
 
     private _setupBaseMiddlewares(themePublicPath: string) {
         this.use(serveStatic(path.join(this.dir, "public"), {
-            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
+            maxAge: STATIC_CACHE_MAX_AGE
         }));
 
         this.use(mount(`/themes/${this._theme}`, serveStatic(themePublicPath, {
-            maxAge: 2 * 60 * 60 * 24 * 1000 // 2 days
+            maxAge: STATIC_CACHE_MAX_AGE
         })));
-
-        this.use(cors({
-            origin: '*',
-            allowMethods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-            exposeHeaders: 'Content-Range,X-Content-Range'
-        }));
 
         // Error handling
         this.use(async (ctx: any, next: any) => {

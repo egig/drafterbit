@@ -15,5 +15,9 @@
   "gitHead": "af71e08e1ed494401aaa69cf841cab4d0c1bbbf4",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "execa": "^4.0.3",
+    "mkdirp": "^1.0.4"
   }
 }

@@ -2,12 +2,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const shell = require('shelljs');
-
 const mkdirp = require('mkdirp');
-
-let destDir = process.cwd();
-let argv2 = process.argv[2];
+const execa = require('execa');
 
 function log(...msg) {
     // eslint-disable-next-line no-console
@@ -18,14 +14,6 @@ function logError(...msg) {
     // eslint-disable-next-line no-console
     console.error(...msg);
 }
-
-
-if (argv2 !== undefined) {
-    destDir = path.join(process.cwd(), argv2);
-    log('creating app dir', destDir);
-    mkdirp.sync(destDir);
-}
-
 
 function copy(srcDir, dstDir) {
 
@@ -68,8 +56,36 @@ function copy(srcDir, dstDir) {
     });
 }
 
-let stubDir = __dirname;
-let stub = path.join(stubDir, 'app/.');
+function runInstall(wd) {
+    execa.sync('npm', ['install'], {
+        cwd: wd
+    });
+}
 
-copy(stub, destDir);
-shell.exec(`cd ${destDir} && npm install`);
+try {
+
+    let destDir = process.cwd();
+    let argv2 = process.argv[2];
+    if (argv2 !== undefined) {
+        destDir = path.join(process.cwd(), argv2);
+        if (fs.existsSync(destDir)) {
+            let fileList = fs.readdirSync(destDir);
+            if (fileList.length >= 1) {
+                logError(`directory ${destDir} is not empty`);
+                process.exit(1)
+            }
+        } else {
+            log('creating app dir', destDir);
+            mkdirp.sync(destDir);
+        }
+    }
+
+    let stubDir = __dirname;
+    let stub = path.join(stubDir, 'app/.');
+
+    copy(stub, destDir);
+    runInstall(destDir)
+
+} catch (e) {
+    logError(e)
+}
