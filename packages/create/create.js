@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const execa = require('execa');
+const chalk = require('chalk');
 
 function log(...msg) {
     // eslint-disable-next-line no-console
@@ -36,10 +37,10 @@ function copy(srcDir, dstDir) {
         let stat = fs.statSync(src);
         if (stat && stat.isDirectory()) {
             try {
-                log('creating dir: ' + dst);
+                log(chalk.green('CREATE FILE: ') + dst);
                 fs.mkdirSync(dst);
             } catch(e) {
-                log('cannot create dir: ' + dst);
+                log(chalk.red('cannot create dir: ') + dst);
                 logError(e);
             }
 
@@ -47,45 +48,68 @@ function copy(srcDir, dstDir) {
         }
 
         try {
-            log('copying file: ' + dst);
+            log(chalk.green('CREATE FILE: ') + dst);
             fs.writeFileSync(dst, fs.readFileSync(src));
         } catch(e) {
-            log('could\'t copy file: ' + dst);
+            log(chalk.red('could\'t copy file: ') + dst);
             logError(e);
         }
     });
 }
 
 function runInstall(wd) {
-    execa.sync('npm', ['install'], {
+    return execa('npm', ['install', '--only=prod', '--no-fund'], {
         cwd: wd
-    });
+    })
 }
 
-try {
+(async() => {
 
-    let destDir = process.cwd();
-    let argv2 = process.argv[2];
-    if (argv2 !== undefined) {
-        destDir = path.join(process.cwd(), argv2);
-        if (fs.existsSync(destDir)) {
-            let fileList = fs.readdirSync(destDir);
-            if (fileList.length >= 1) {
-                logError(`directory ${destDir} is not empty`);
-                process.exit(1)
+    try {
+
+        let destDir = process.cwd();
+        let argv2 = process.argv[2];
+        if (argv2 !== undefined) {
+            destDir = path.join(process.cwd(), argv2);
+            if (fs.existsSync(destDir)) {
+                let fileList = fs.readdirSync(destDir);
+                if (fileList.length >= 1) {
+                    logError(chalk.red(`Directory ${destDir} is not empty !`));
+                    process.exit(1)
+                }
+            } else {
+                log('creating app dir', destDir);
+                mkdirp.sync(destDir);
             }
-        } else {
-            log('creating app dir', destDir);
-            mkdirp.sync(destDir);
         }
+
+        let stubDir = __dirname;
+        let stub = path.join(stubDir, 'app/.');
+
+        copy(stub, destDir);
+        log(chalk.green('INSTALLING DEPENDENCIES...'));
+        let{stdout} = await runInstall(destDir);
+        stdout.split("\n").map(line => {
+            if (line.trim() !== "") log(chalk.green("NPM INSTALL: ")+(line));
+        });
+
+        log("");
+        log(chalk.green('          Congratulation ! seems you\'ve successfully install drafterbit.'));
+
+        let cmd = `npm run dev`;
+        if (argv2 !== undefined) {
+            cmd = `cd ${path.basename(destDir)} && npm run dev`;
+            log(chalk.green(`                   Now you can run ${chalk.bold(cmd)}`));
+        } else {
+            log(chalk.green(`                       Now you can run ${chalk.bold(cmd)}`));
+        }
+        log("");
+        log(chalk.green("                               Happy Hacking !"));
+        log("");
+
+
+    } catch (e) {
+        logError(e)
     }
 
-    let stubDir = __dirname;
-    let stub = path.join(stubDir, 'app/.');
-
-    copy(stub, destDir);
-    runInstall(destDir)
-
-} catch (e) {
-    logError(e)
-}
+})();

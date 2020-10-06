@@ -17,6 +17,7 @@
     "access": "public"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "execa": "^4.0.3",
     "mkdirp": "^1.0.4"
   }
