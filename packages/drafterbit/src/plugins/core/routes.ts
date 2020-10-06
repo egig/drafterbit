@@ -6,6 +6,8 @@ let router = new Router();
 const matter = require('gray-matter');
 const fs = require('fs');
 
+const DEFAULT_TEMPLATE = 'default.html';
+
 function resolveContentFile(ctx: any): string {
     let ctxPath = ctx.path;
     let contentRoot = path.join(ctx.app.dir, 'content');
@@ -33,37 +35,34 @@ router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.N
     let contentFile: string = resolveContentFile(ctx);
 
     const marked = ctx.app.get('marked');
-
     if (contentFile !== "") {
-        const file = matter.read(contentFile);
-        let template = 'default.html';
-        if (file.data.layout) {
-            template = file.data.layout
-        }
-
-        let htmlContent = marked(file.content);
-
-        let baseURL = ctx.app.options.base_url ?  ctx.app.config.get('base_url')
-            : `${ctx.protocol}://${ctx.host}`;
-
-        let data = {
-            theme_url: `${baseURL}/themes/${ctx.app.theme}`,
-            base_url: baseURL,
-            app: {
-                name: ctx.app.config.get('app_name'),
-            },
-            page: {
-                title: file.data.title,
-                content: htmlContent
-            }
-        };
-
-        ctx.body =  ctx.app.render(template, data);
-        return next()
+        ctx.status = 404;
+        return next();
     }
 
-    ctx.status = 404;
+    const file = matter.read(contentFile);
+    let template = file.data.template || DEFAULT_TEMPLATE;
+
+    let htmlContent = marked(file.content);
+
+    let baseURL = ctx.app.options.base_url ?  ctx.app.config.get('base_url')
+        : `${ctx.protocol}://${ctx.host}`;
+
+    let data = {
+        theme_url: `${baseURL}/themes/${ctx.app.theme}`,
+        base_url: baseURL,
+        app: {
+            name: ctx.app.config.get('app_name'),
+        },
+        page: {
+            title: file.data.title,
+            content: htmlContent
+        }
+    };
+
+    ctx.body =  ctx.app.render(template, data);
     return next();
+
 });
 
 module.exports = router;

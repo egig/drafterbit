@@ -1,5 +1,6 @@
 ---
 title: Another Page
+template: page.html
 ---
 
 # Another Page

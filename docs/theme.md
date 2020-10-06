@@ -12,7 +12,7 @@ A theme is consist of
 2. A template file
 3. A public directory to server your theme-related static file
 
-#### Theme Directory Structure
+####  Directory Structure
 This is simplest directory structure required to create a theme.
 ```sh
 /<theme-name>/
