@@ -4,7 +4,7 @@
        <img src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
-     <bold>Simple yet extensible flat-first CMS built with javascript.</bold>
+     <strong>Simple yet extensible flat-first CMS built with javascript.</strong>
 </p>
 
 [![Actions Status](https://github.com/drafterbit/drafterbit/workflows/test/badge.svg)](https://github.com/drafterbit/drafterbit/actions)
