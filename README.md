@@ -1,7 +1,7 @@
 
 <p align="center">
      <a href="https://drafterbit.github.io/drafterbit">
-       <img src="http://0.0.0.0:4000/drafterbit/assets/img/logo.png" width="200"/>
+       <img src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
      <bold>Simple yet extensible flat-first CMS built with javascript.</bold>
