@@ -8,7 +8,8 @@
 </p>
 
 [![Actions Status](https://github.com/drafterbit/drafterbit/workflows/test/badge.svg)](https://github.com/drafterbit/drafterbit/actions)
-
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![GitHub license](https://img.shields.io/github/license/drafterbit/drafterbit.svg)](https://github.com/drafterbit/drafterbit/blob/develop/LICENSE)
 
 ## Getting Started
 
