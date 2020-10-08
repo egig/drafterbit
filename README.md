@@ -1,10 +1,10 @@
 
 <p align="center">
      <a href="https://drafterbit.github.io/drafterbit">
-       <img src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
+       <img style="border-radius:6px" src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
-     <strong>Simple yet extensible flat-first CMS built with javascript.</strong>
+     <strong>Simple yet extensible flat-file CMS built with javascript.</strong>
 </p>
 
 [![Actions Status](https://github.com/drafterbit/drafterbit/workflows/test/badge.svg)](https://github.com/drafterbit/drafterbit/actions)

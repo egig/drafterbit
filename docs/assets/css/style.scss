@@ -2,6 +2,11 @@
 ---
 
 @import "{{ site.theme }}";
+
+.site-title a {
+  color: inherit;
+}
+
 .nav > ul {
   margin: 0;
   padding: 0;
