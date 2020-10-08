@@ -7,9 +7,10 @@
      <strong>Simple yet extensible flat-file CMS built with javascript.</strong>
 </p>
 
+[![npm version](https://badge.fury.io/js/drafterbit.svg)](https://badge.fury.io/js/drafterbit)
 [![Actions Status](https://github.com/drafterbit/drafterbit/workflows/test/badge.svg)](https://github.com/drafterbit/drafterbit/actions)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![GitHub license](https://img.shields.io/github/license/drafterbit/drafterbit.svg)](https://github.com/drafterbit/drafterbit/blob/develop/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ## Getting Started
 
