@@ -8,6 +8,9 @@ items:
   - title: Content
     url: /content.html
 
+  - title: Config
+    url: /config.html
+
   - title: Theme
     url: /theme.html
 
