@@ -1,4 +1,6 @@
-## Theme
+---
+title: Theme
+---
 
 ### Introduction
 

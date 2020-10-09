@@ -1,4 +1,6 @@
-## Plugin
+---
+title: Plugin
+---
 
 ### Introduction
 

@@ -1,4 +1,6 @@
-## Config
+---
+title: Config
+---
 
 There is two type of configuration.
 

@@ -1,4 +1,6 @@
-## Content
+---
+title: Content
+---
 
 ### Introduction
 
