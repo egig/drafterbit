@@ -5,6 +5,8 @@
      </a>
      <br/>
      <strong>Simple yet extensible flat-file CMS built with javascript.</strong>
+     <br/>
+     <br/>
      <a href="https://badge.fury.io/js/drafterbit">
         <img alt="Npm Package" src="https://badge.fury.io/js/drafterbit.svg"/>
      </a>
