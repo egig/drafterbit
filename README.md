@@ -1,7 +1,7 @@
 
 <p align="center">
-     <a href="https://drafterbit.github.io/drafterbit">
-       <img alt="Drafterbit" style="border-radius:6px" src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
+     <a href="https://egig.github.io/drafterbit">
+       <img alt="Drafterbit" style="border-radius:6px" src="https://egig.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
      <strong>Simple yet extensible flat-file CMS.</strong>
@@ -10,13 +10,13 @@
      <a href="https://badge.fury.io/js/drafterbit">
         <img alt="Npm Package" src="https://badge.fury.io/js/drafterbit.svg"/>
      </a>
-     <a href="https://github.com/drafterbit/drafterbit/actions">
-         <img alt="Github Actions" src="https://github.com/drafterbit/drafterbit/workflows/test/badge.svg"/>
+     <a href="https://github.com/egig/drafterbit/actions">
+         <img alt="Github Actions" src="https://github.com/egig/drafterbit/workflows/test/badge.svg"/>
      </a>
-     <a href="https://github.com/drafterbit/drafterbit/blob/develop/LICENSE">
+     <a href="https://github.com/egig/drafterbit/blob/develop/LICENSE">
          <img alt="Github License" src="https://img.shields.io/github/license/drafterbit/drafterbit.svg"/>
      </a>
-     <a href="https://github.com/drafterbit/drafterbit/compare">
+     <a href="https://github.com/egig/drafterbit/compare">
           <img alt="Github License" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
      </a>
 </p>
