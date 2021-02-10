@@ -1,6 +1,6 @@
-import Application from "../../Application";
+import Application from "../Application";
 
-const { Router } = require('../../index');
+const { Router } = require('../index');
 const path = require('path');
 let router = new Router();
 const matter = require('gray-matter');
@@ -12,17 +12,21 @@ function resolveContentFile(ctx: any): string {
     let ctxPath = ctx.path;
     let contentRoot = path.join(ctx.app.dir, 'content');
 
+
     if (ctxPath === "/") {
         return path.join(contentRoot, 'index.md');
     }
 
+
     ctxPath = ctxPath.replace(/\/$/, "");
     let contentIndexDir = path.join(contentRoot, ctxPath, 'index.md');
+
     if (fs.existsSync(contentIndexDir)) {
         return contentIndexDir
     }
 
     let contentFilePath = path.join(contentRoot, `${ctxPath}.md`);
+
     if (fs.existsSync(contentFilePath)) {
         return contentFilePath;
     }
@@ -35,7 +39,7 @@ router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.N
     let contentFile: string = resolveContentFile(ctx);
 
     const marked = ctx.app.get('marked');
-    if (contentFile !== "") {
+    if (contentFile === "") {
         ctx.status = 404;
         return next();
     }

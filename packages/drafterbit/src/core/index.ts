@@ -1,5 +1,5 @@
-import Plugin from '../../Plugin';
-import Application from '../../Application';
+import Plugin from '../Plugin';
+import Application from '../Application';
 const marked = require('marked');
 
 class CorePlugin extends Plugin {

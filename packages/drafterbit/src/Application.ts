@@ -285,7 +285,7 @@ class Application extends Koa {
 
     private _setupPlugins() {
         this._pluginPaths= this.config.get('plugins', []);
-        this._pluginPaths = this._pluginPaths.concat(['drafterbit/plugins/core']);
+        this._pluginPaths = this._pluginPaths.concat(['drafterbit/core']);
         this._plugins = this._pluginPaths.map(m => {
             let _pluginPath = Plugin.resolve(m, this.dir);
             let PluginClass = require(_pluginPath);

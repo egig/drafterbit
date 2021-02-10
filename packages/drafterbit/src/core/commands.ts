@@ -1,4 +1,4 @@
-import Application from "../../Application";
+import Application from "../Application";
 
 module.exports = function commands(cmd: Application.Command, app: Application) {
 
