@@ -28,5 +28,5 @@ you might want to include it in vcs as this config defines the features of the a
 |Name|Description|Default|
 |----|------|------|
 | appName | The name of your application, the environment variable DRAFTERBIT_APP_NAME take higher priority |  |
-| theme | The theme name used | penabulu |
+| theme | The theme name used | quill |
 | plugins | The list of plugins | [] |

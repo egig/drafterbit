@@ -7,7 +7,7 @@ title: Theme
 We use **theme**  to represent your content as web page so you can
 add styles to the web page according to you needs.
 Currently only one default theme available which named
-"penabulu". However, you can create your own theme.
+"quill". However, you can create your own theme.
 
 A theme is consist of
 1. A directory named of your choice

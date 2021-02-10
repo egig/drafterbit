@@ -1,7 +1,7 @@
 
 <p align="center">
-     <a href="https://egig.github.io/drafterbit">
-       <img alt="Drafterbit" style="border-radius:6px" src="https://egig.github.io/drafterbit/assets/img/logo.png" width="200"/>
+     <a href="https://drafterbit.github.io/drafterbit">
+       <img alt="Drafterbit" style="border-radius:6px" src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
      <strong>Simple yet extensible flat-file CMS.</strong>

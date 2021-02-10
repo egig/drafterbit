@@ -1,6 +1,6 @@
 module.exports = {
     appName: 'Drafterbit',
-    theme: 'penabulu',
+    theme: 'quill',
     plugins: [
         './plugins/my-plugin'
     ]
