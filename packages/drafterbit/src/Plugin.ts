@@ -1,26 +1,27 @@
 import path from 'path';
+import Application from "./Application";
 
 class Plugin {
 
-    private _path: string = '';
+    private readonly _path: string;
     private readonly _app: any;
 
     /**
      *
      * @param app drafterbit app instance
+     * @param path string
+     * @Final
      */
-    constructor(app: any) {
+    constructor(app: any, path: string) {
         this._app = app;
+        this._path = path;
+
+        app.on('boot', this.onBoot)
     }
 
-    /**
-     *
-     * @param p
-     */
-    setPath(p: string): void {
-        this._path = p;
+    get app() {
+        return this._app;
     }
-
 
     getPath(): string {
         return this._path;
@@ -43,6 +44,12 @@ class Plugin {
         if (this.canLoad('commands')) {
             let commands = this.require('commands');
             commands(this._app.get('cmd'), this._app)
+        }
+    }
+
+    loadConfig() {
+        if (this.canLoad('config')) {
+            this._app.config.registerConfig(this.require('config'));
         }
     }
 
@@ -122,6 +129,10 @@ class Plugin {
                 throw e;
             }
         }
+    }
+
+    onBoot(app: Application) {
+
     }
 }
 

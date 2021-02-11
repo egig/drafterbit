@@ -1,26 +1,22 @@
 import Plugin from '../Plugin';
-import Application from '../Application';
+import Application from "../Application";
 const marked = require('marked');
 
 class CorePlugin extends Plugin {
 
-    constructor(app: Application) {
-        super(app);
-        
-        app.on('boot', function () {
-            marked.setOptions({
-                renderer: new marked.Renderer(),
-                pedantic: false,
-                gfm: true,
-                breaks: false,
-                sanitize: false,
-                smartLists: true,
-                smartypants: false,
-                xhtml: false
-            });
+    onBoot(app: Application) {
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            pedantic: false,
+            gfm: true,
+            breaks: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false,
+            xhtml: false
+        });
 
-            app.set('marked', marked)
-        })
+        app.set('marked', marked)
     }
 }
 

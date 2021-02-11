@@ -46,7 +46,6 @@ const STATIC_CACHE_MAX_AGE = 2 * 60 * 60 * 24 * 1000;
 
 class Application extends Koa {
 
-
     dir: string = "";
     options: Application.Options = {};
     config: Config;
@@ -54,7 +53,6 @@ class Application extends Koa {
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
     private _services: any = {};
-    private _pluginPaths: string[] = [];
     private _view: nunjucks.Environment | undefined;
     private _logger: Console = console;
     private _theme: string  = DEFAULT_THEME;
@@ -242,7 +240,10 @@ class Application extends Koa {
      */
     boot(rootDir: string) {
 
-        this._booted = false;
+        if (this._booted) {
+            throw new Error("app already booted")
+        }
+
         this.dir = rootDir;
         this._setupConfig();
         this._setupBaseService();
@@ -251,7 +252,7 @@ class Application extends Koa {
         let themePublicPath = this._setupTheme();
         this._setupBaseMiddlewares(themePublicPath);
 
-        this.emit('boot');
+        this.emit('boot', this);
         this._booted = true;
         return this;
     }
@@ -284,19 +285,13 @@ class Application extends Koa {
     }
 
     private _setupPlugins() {
-        this._pluginPaths= this.config.get('plugins', []);
-        this._pluginPaths = this._pluginPaths.concat(['drafterbit/core']);
-        this._plugins = this._pluginPaths.map(m => {
-            let _pluginPath = Plugin.resolve(m, this.dir);
-            let PluginClass = require(_pluginPath);
-            let pluginInstance = new PluginClass(this);
-            pluginInstance.setPath(_pluginPath);
-
-            // register config
-            if (pluginInstance.canLoad('config')) {
-                this.config.registerConfig(pluginInstance.require('config'));
-            }
-
+        let pluginPaths: string[] = this.config.get('plugins', []);
+        pluginPaths = pluginPaths.concat(['drafterbit/core']);
+        this._plugins = pluginPaths.map(m => {
+            let pluginPath = Plugin.resolve(m, this.dir);
+            let PluginClass = require(pluginPath);
+            let pluginInstance = new PluginClass(this, pluginPath);
+            pluginInstance.loadConfig();
             pluginInstance.loadCommands();
 
             return pluginInstance;
@@ -304,13 +299,11 @@ class Application extends Koa {
     }
 
     private _setupBaseMiddlewares(themePublicPath: string) {
-        this.use(serveStatic(path.join(this.dir, "public"), {
+        let statOpt = {
             maxAge: STATIC_CACHE_MAX_AGE
-        }));
-
-        this.use(mount(`/themes/${this._theme}`, serveStatic(themePublicPath, {
-            maxAge: STATIC_CACHE_MAX_AGE
-        })));
+        }
+        this.use(serveStatic(path.join(this.dir, "public"), statOpt));
+        this.use(mount(`/themes/${this._theme}`, serveStatic(themePublicPath, statOpt)));
 
         // Error handling
         this.use(async (ctx: any, next: any) => {

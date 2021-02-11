@@ -34,30 +34,42 @@ function resolveContentFile(ctx: any): string {
     return ""
 }
 
-router.get("main", "/(.*)", async (ctx: Application.Context, next: Application.Next) => {
+function viewDataMiddleware() {
+    return async (ctx: Application.Context, next: Application.Next) => {
+
+        let baseURL = ctx.app.options.base_url ?  ctx.app.config.get('base_url')
+            : `${ctx.protocol}://${ctx.host}`;
+        ctx.state.data = {
+            base_url: baseURL,
+            theme_url: `${baseURL}/themes/${ctx.app.theme}`,
+            app: {
+                name: ctx.app.config.get('app_name'),
+            },
+        }
+
+        return next()
+    }
+}
+
+router.get("main", "/(.*)",
+    viewDataMiddleware(),
+    async (ctx: Application.Context, next: Application.Next) => {
 
     let contentFile: string = resolveContentFile(ctx);
-
-    const marked = ctx.app.get('marked');
     if (contentFile === "") {
         ctx.status = 404;
         return next();
     }
+
+    const marked = ctx.app.get('marked');
 
     const file = matter.read(contentFile);
     let template = file.data.template || DEFAULT_TEMPLATE;
 
     let htmlContent = marked(file.content);
 
-    let baseURL = ctx.app.options.base_url ?  ctx.app.config.get('base_url')
-        : `${ctx.protocol}://${ctx.host}`;
-
     let data = {
-        theme_url: `${baseURL}/themes/${ctx.app.theme}`,
-        base_url: baseURL,
-        app: {
-            name: ctx.app.config.get('app_name'),
-        },
+        ...ctx.state.data,
         page: {
             title: file.data.title,
             content: htmlContent
