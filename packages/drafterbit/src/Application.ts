@@ -290,6 +290,10 @@ class Application extends Koa {
         this._plugins = pluginPaths.map(m => {
             let pluginPath = Plugin.resolve(m, this.dir);
             let PluginClass = require(pluginPath);
+            if (typeof PluginClass.default !== "undefined") {
+                PluginClass = PluginClass.default
+            }
+
             let pluginInstance = new PluginClass(this, pluginPath);
             pluginInstance.loadConfig();
             pluginInstance.loadCommands();

@@ -20,4 +20,4 @@ class CorePlugin extends Plugin {
     }
 }
 
-export = CorePlugin;
+export default CorePlugin;
