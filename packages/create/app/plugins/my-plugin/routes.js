@@ -7,4 +7,4 @@ let router = new Router();
 //     ctx.body = "Hello World !";
 // });
 
-module.exports = router
+module.exports = router;

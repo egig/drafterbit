@@ -2,6 +2,7 @@
   "name": "drafterbit-monorepo",
   "private": true,
   "devDependencies": {
+    "eslint": "^7.19.0",
     "lerna": "^3.20.2",
     "pre-commit": "^1.2.2"
   },

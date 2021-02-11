@@ -23,9 +23,9 @@ function doCopy(srcDir, dstDir, spinner) {
             copy(srcDir, dstDir, spinner);
             resolve();
         } catch (e) {
-            reject(e)
+            reject(e);
         }
-    })
+    });
 }
 
 function copy(srcDir, dstDir, spinner) {
@@ -48,32 +48,23 @@ function copy(srcDir, dstDir, spinner) {
 
         let stat = fs.statSync(src);
         if (stat && stat.isDirectory()) {
-            try {
-                spinner.text = 'Creating Files: '+ dst;
-                fs.mkdirSync(dst);
-            } catch(e) {
-                throw e;
-            }
-
+            spinner.text = 'Creating Files: '+ dst;
+            fs.mkdirSync(dst);
             return copy(src, dst, spinner);
         }
 
-        try {
-            spinner.text = 'Creating Files: '+ dst;
-            fs.writeFileSync(dst, fs.readFileSync(src));
-        } catch(e) {
-            throw e
-        }
+        spinner.text = 'Creating Files: '+ dst;
+        fs.writeFileSync(dst, fs.readFileSync(src));
     });
 }
 
 function runInstall(wd, spinner) {
-    let proc = execa('npm', ['install', '--only=prod', '--no-fund', "-d"], {
+    let proc = execa('npm', ['install', '--only=prod', '--no-fund', '-d'], {
         cwd: wd
     });
 
-    proc.stdout.on("data", (chunk) => {
-        spinner.text = chunk
+    proc.stdout.on('data', (chunk) => {
+        spinner.text = chunk;
     });
 
     return proc;
@@ -91,7 +82,7 @@ function prepareProjectDir(spinner) {
 
         destDir = path.join(process.cwd(), argv2);
 
-        fs.stat(destDir, function(err, stat) {
+        fs.stat(destDir, function(err) {
             if(err == null) {
                 fs.readdir(destDir, (err, files) => {
                     if (files.length >= 1) {
@@ -101,12 +92,12 @@ function prepareProjectDir(spinner) {
                 });
 
             } else if(err.code === 'ENOENT') {
-                spinner.text = "Create app dir: "+destDir;
+                spinner.text = 'Create app dir: '+destDir;
                 return mkdirp(destDir).then(() => {
-                    return resolve(destDir)
-                })
+                    return resolve(destDir);
+                });
             } else {
-                return reject(err)
+                return reject(err);
             }
         });
 
@@ -123,42 +114,41 @@ function prepareProjectDir(spinner) {
         let stub = path.join(stubDir, 'app/.');
 
         let projectDir = await prepareProjectDir(spinner);
-        spinner.succeed("Prepare project dir: "+projectDir);
+        spinner.succeed('Prepare project dir: '+projectDir);
 
         const spinner2 = ora('Creating Files...').start();
         try {
 
-            let a = await doCopy(stub, projectDir, spinner2);
-            spinner2.succeed("Creating Files.")
+            await doCopy(stub, projectDir, spinner2);
+            spinner2.succeed('Creating Files.');
 
         } catch (e) {
-            spinner2.fail("Creating Files.");
-            logError(e)
+            spinner2.fail('Creating Files.');
+            logError(e);
         }
 
         const spinner3 = ora('Install Dependencies...').start();
         try {
-
-            let { stdout } = await runInstall(projectDir, spinner3);
-            spinner3.succeed("Install Dependencies.")
+            await runInstall(projectDir, spinner3);
+            spinner3.succeed('Install Dependencies.');
 
         } catch (e) {
-            spinner3.fail("Install Dependencies.");
-            logError(e)
+            spinner3.fail('Install Dependencies.');
+            logError(e);
         }
 
-        log("");
+        log('');
         log(chalk.green('    Congratulation ! seems you\'ve successfully install drafterbit.'));
         let cmd = `cd ${projectDir} && npm run dev`;
         log(chalk.green(`    Now you can run ${chalk.bold(cmd)}`));
-        log("");
-        log(chalk.green("    Happy Hacking !"));
-        log("");
+        log('');
+        log(chalk.green('    Happy Hacking !'));
+        log('');
 
 
     } catch (e) {
-        spinner.fail("Install Failed");
-        logError(e)
+        spinner.fail('Install Failed');
+        logError(e);
     }
 
 })();
