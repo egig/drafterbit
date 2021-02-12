@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "drafterbit dev",
-    "start": "drafterbit start --production",
-    "build": "drafterbit build --production"
+    "start": "drafterbit start",
+    "build": "drafterbit build"
   },
   "author": "",
   "license": "ISC",

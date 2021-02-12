@@ -42,7 +42,7 @@ describe('Application', () => {
     it("has default logger", () => {
         let app = new Application();
         app.boot(path.join(__dirname, "test-app"));
-        expect(app.log.log).is.a("function");
+        expect(app.logger.log).is.a("function");
     })
 
 });

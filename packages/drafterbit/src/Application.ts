@@ -204,7 +204,7 @@ class Application extends Koa {
     }
 
     start(options: {
-        production?: boolean
+        watch?: boolean
     } = {}) {
         this._loadRoutes();
         this._setupServer();
@@ -215,7 +215,7 @@ class Application extends Koa {
 
         if (cluster.isWorker) {
 
-            if (!options.production) {
+            if (!options.watch) {
                 // test
                 this._watchFiles(() => {
                     this._server.close();
@@ -333,7 +333,7 @@ class Application extends Koa {
     /**
      *
      */
-    get log() {
+    get logger() {
         return this._logger
     }
 
