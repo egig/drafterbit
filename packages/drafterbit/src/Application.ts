@@ -339,8 +339,6 @@ class Application extends Koa {
     }
 
     baseViewData() {
-
-        // TODO validate baseURL
         let baseURL = this.options.base_url ?  this.config.get('base_url') : "";
         return {
             base_url: baseURL,

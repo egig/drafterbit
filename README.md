@@ -4,7 +4,7 @@
        <img alt="Drafterbit" style="border-radius:6px" src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
      </a>
      <br/>
-     <strong>Simple yet extensible flat-file CMS.</strong>
+     <strong>Build a better website, once again.</strong>
      <br/>
      <br/>
      <a href="https://badge.fury.io/js/drafterbit">
