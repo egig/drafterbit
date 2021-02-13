@@ -4,7 +4,9 @@
   "description": "",
   "dependencies": {
     "@drafterbit/cli": "latest",
-    "drafterbit": "latest"
+    "drafterbit": "latest",
+    "fs-extra": "^9.1.0",
+    "glob": "^7.1.6"
   },
   "scripts": {
     "dev": "drafterbit dev",

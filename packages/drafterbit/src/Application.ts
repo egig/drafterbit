@@ -49,6 +49,7 @@ class Application extends Koa {
     dir: string = "";
     options: Application.Options = {};
     config: Config;
+    DEFAULT_TEMPLATE = 'default.html';
 
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
@@ -335,6 +336,19 @@ class Application extends Koa {
      */
     get logger() {
         return this._logger
+    }
+
+    baseViewData() {
+
+        // TODO validate baseURL
+        let baseURL = this.options.base_url ?  this.config.get('base_url') : "";
+        return {
+            base_url: baseURL,
+            theme_url: `${baseURL}/themes/${this.theme}`,
+            app: {
+                name: this.config.get('app_name'),
+            },
+        }
     }
 
 }
