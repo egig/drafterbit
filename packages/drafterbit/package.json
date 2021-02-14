@@ -53,8 +53,8 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "test": "nyc --reporter=none mocha --require ts-node/register \"test/**/*.test.{ts,tsx}\" --timeout=3000 --reporter=spec  --exit --recursive --bail",
-    "coverage": "nyc report --reporter=text-summary",
+    "test": "mocha --require ts-node/register \"test/**/*.test.{ts,tsx}\" --timeout=3000 --reporter=spec  --exit --recursive --bail",
+    "coverage": "nyc --reporter=text-summary npm run test",
     "coverage:html": "nyc report --reporter=html && open coverage/index.html",
     "coverage:lcov": "nyc report --reporter=text-lcov > coverage.lcov",
     "linter": "./node_modules/.bin/eslint --fix ./src",

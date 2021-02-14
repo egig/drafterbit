@@ -2,14 +2,19 @@
   "name": "@drafterbit/create",
   "version": "4.0.0-alpha.4",
   "description": "",
-  "main": "create.js",
+  "main": "lib/create.js",
   "bin": {
-    "create-drafterbit-app": "./create.js"
+    "create-drafterbit-app": "create.js"
   },
   "directories": {
     "test": "test"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "rm -rf lib && cp -r src lib && tsc",
+    "prepare": "npm run build",
+    "test": "mocha --require ts-node/register \"test/**/*.test.{ts,tsx}\" --timeout=3000 --reporter=spec  --exit --recursive --bail",
+    "coverage": "nyc --reporter=text-summary npm run test"
+  },
   "author": "",
   "license": "ISC",
   "gitHead": "af71e08e1ed494401aaa69cf841cab4d0c1bbbf4",
@@ -17,8 +22,11 @@
     "access": "public"
   },
   "dependencies": {
+    "@types/fs-extra": "^9.0.7",
+    "@types/mkdirp": "^1.0.1",
     "chalk": "^4.1.0",
     "execa": "^4.0.3",
+    "fs-extra": "^9.1.0",
     "mkdirp": "^1.0.4",
     "ora": "^5.1.0"
   }
