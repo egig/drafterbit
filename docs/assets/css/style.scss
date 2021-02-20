@@ -28,4 +28,20 @@
 
 .toc {
   font-size: 0.9em;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+.side-nav {
+  background: rgb(247,248,250);
+  background: linear-gradient(180deg, rgba(247,248,250,1) 70%, rgba(255,255,255,1) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px 20px 100px;
+}
+
+.content {
+  margin-left: 200px;
 }
