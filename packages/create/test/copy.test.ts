@@ -7,7 +7,7 @@ describe("copy()", function () {
     it("copy source to dest", () => {
         let stub = path.join(__dirname, "../app")
         let dest = path.join(__dirname, "new_app")
-        fs.rmSync(dest, {force: true, recursive: true})
+        fs.removeSync(dest)
         fs.mkdirpSync(dest)
         copy(stub, dest, null)
 
@@ -32,6 +32,6 @@ describe("copy()", function () {
             chai.assert(fs.existsSync(path.join(dest, f)), `should copied ${f}`)
         })
 
-        fs.rmSync(dest, {force: true, recursive: true})
+        fs.removeSync(dest)
     })
 })
