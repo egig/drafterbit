@@ -37,9 +37,9 @@ for more advance and detailed usage.
 
 ## Requirements
 
-Mainly drafterbit is developed in Mac OS Mojave with following software required to be installed in advance.
+Mainly drafterbit is developed in Mac OS Big Sur with following software required to be installed in advance.
 
-+ nodejs >= v12.18.2
++ nodejs >= v14.*
 
 ## LICENSE
 

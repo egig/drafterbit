@@ -38,7 +38,7 @@ class Config {
     load(dir: string) {
         require('dotenv').config({ path: path.join(dir,'.env') });
 
-        for (let k of Object.keys(process.env)){;
+        for (let k of Object.keys(process.env)){
             if (k.toUpperCase().startsWith(DRAFTERBIT_ENV_PREFIX)) {
                 let reg = new RegExp(`^${DRAFTERBIT_ENV_PREFIX}`);
                 let configKey  = k.replace(reg, "").toLowerCase();

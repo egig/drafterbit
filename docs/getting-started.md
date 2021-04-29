@@ -6,7 +6,7 @@ title: Getting Started
 
 Please make sure your server has following installed.
 
-+ nodejs >= 12.18.3
++ nodejs >= 14.*
 
 ### Installation
 

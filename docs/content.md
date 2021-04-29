@@ -52,5 +52,5 @@ But these are front matter options recognized by the applicaiton.
 
 |Name|Description|
 |----|---|
-|title| The title fo your page, used to create title in html head |
+|title| The title for your page, used to create title in html head |
 |layout| The layout file name used for the page. Must be supported by the theme |
