@@ -40,7 +40,7 @@ declare namespace Application {
 }
 
 const DEFAULT_PORT = 3000;
-const DEFAULT_THEME = 'penabulu';
+const DEFAULT_THEME = 'quill';
 const CONFIG_FILE_NAME = 'drafterbit.config.js';
 const STATIC_CACHE_MAX_AGE = 2 * 60 * 60 * 24 * 1000;
 
@@ -140,7 +140,7 @@ class Application extends Koa {
         this._server.destroy = cb => {
             this._server.close(cb);
 
-            for (let key in connections) {
+            for (let key of connections) {
                 connections[key].destroy();
             }
         };
@@ -170,7 +170,7 @@ class Application extends Koa {
     }
 
     private _watchFiles(callback: () => any) {
-        let pathsToWatch = this._plugins.map((p,i) => {
+        let pathsToWatch = this._plugins.map((p) => {
             return p.getPath()
         }).concat([path.resolve(path.join(__dirname, "../src"))]);
 
