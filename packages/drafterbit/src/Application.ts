@@ -110,7 +110,7 @@ class Application extends Koa {
      *
      * @returns {Array}
      */
-    get plugins() {
+    get plugins(): Array<any> {
         return this._plugins
     }
 
@@ -118,7 +118,7 @@ class Application extends Koa {
      *
      */
     private _loadRoutes() {
-        this._plugins.map(m => {
+        this._plugins.forEach(m => {
             m.loadRoutes();
         });
     }
@@ -239,7 +239,7 @@ class Application extends Koa {
      * @param rootDir
      * @returns {Application}
      */
-    boot(rootDir: string) {
+    boot(rootDir: string): Application {
 
         if (this._booted) {
             throw new Error("app already booted")

@@ -22,13 +22,15 @@ your plugin in it and list your plugin in
     /index.js
     /routes.js
     /config.js
+    /commands.js
 ```
 
 |Name|Description|
 |----|-----------|
-|index.js| Main file of your plugin, you define plugin in this file
-|routes.js| Where you define the routes for the application
-|config.js| Where you define configuration options for your plugin 
+|index.js| Main file of your plugin, you define plugin in this file.
+|routes.js| Where you define the routes for the application.
+|config.js| Where you define configuration options for your plugin.
+|command.js| Where you define command extention for the cli application.
 
 ### Create Plugin
 

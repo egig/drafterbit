@@ -9,12 +9,12 @@ class Plugin {
     /**
      *
      * @param app drafterbit app instance
-     * @param path string
+     * @param p string
      * @Final
      */
-    constructor(app: any, path: string) {
+    constructor(app: any, p: string) {
         this._app = app;
-        this._path = path;
+        this._path = p;
 
         app.on('boot', this.onBoot)
     }

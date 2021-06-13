@@ -13,9 +13,9 @@ If you see this, then congratulation ! you have successfully install Drafterbit.
 Yes, this is not quite good content to show in your site. So here is quick tutor
 step about how to edit this page.
 
-Step 1. Edit this file according to your needs: `./content/index.md`
+Step 1. Edit this file according to your needs: `./content/index.md` then save.
 
-Step 2. That's it.
+Step 2. That's it. You can reload the site to see the changes.
 
 
 ## Create New Page

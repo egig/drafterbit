@@ -9,5 +9,5 @@ Welcome to Drafterbit Documentation!
 </div>
 
 Drafterbit is open source software that you can use to build a website.
-It powered by widely used programming language javascript, markdown
+Its powered by widely used programming language javascript, markdown
 and require minimal resources to run.

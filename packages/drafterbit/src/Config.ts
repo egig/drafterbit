@@ -20,7 +20,7 @@ class Config {
      * @param fallback
      */
     get(key: string, fallback?: any) {
-        return (this._defaults as any)[key] || fallback;
+        return this._defaults[key] || fallback;
     }
 
     /**

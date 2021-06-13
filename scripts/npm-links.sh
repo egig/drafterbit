@@ -1,3 +1,4 @@
+#!/bin/bash
 pkgDir="$PWD/packages"
 
 cd "$pkgDir/drafterbit" && npm link

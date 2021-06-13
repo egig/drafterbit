@@ -2,9 +2,9 @@
 title: Getting Started
 ---
 
-### Server Requirements
+### Requirements
 
-Please make sure your server has following installed.
+Please make sure your machine has following installed.
 
 + nodejs >= 14.*
 
