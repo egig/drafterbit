@@ -68,7 +68,7 @@ class Plugin {
      * @param files
      * @returns {boolean}
      */
-    canLoad(files: string) {
+    canLoad(files: string): boolean {
         let resolvingPath = path.join(this._path,files);
         try {
             require.resolve(resolvingPath);
@@ -88,7 +88,7 @@ class Plugin {
      * @returns {boolean}
      * @private
      */
-    static _isRelative(filename: string) {
+    static _isRelative(filename: string): boolean {
         return (filename.indexOf('./') === 0 || filename.indexOf('../') === 0);
     }
 
@@ -97,7 +97,7 @@ class Plugin {
      * @param filePath
      * @returns {boolean}
      */
-    static isDTPlugin(filePath: string) {
+    static isDTPlugin(filePath: string): boolean {
         return (filePath.indexOf('drafterbit') === 0);
     }
 
@@ -107,7 +107,7 @@ class Plugin {
      * @param root
      * @returns {void | string|string|*}
      */
-    static resolve(filePath: string, root: string) {
+    static resolve(filePath: string, root: string): void | string | string | any {
         if(Plugin.isDTPlugin(filePath)){
             return filePath.replace(/^drafterbit/gi, __dirname);
         }

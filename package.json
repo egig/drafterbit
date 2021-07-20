@@ -2,8 +2,9 @@
   "name": "drafterbit-monorepo",
   "private": true,
   "devDependencies": {
-    "eslint": "^7.19.0",
+    "eslint": "^6.3.0",
     "lerna": "^3.20.2",
+    "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2"
   },
   "scripts": {
@@ -11,7 +12,10 @@
     "link": "lerna link --force-local",
     "linter": "./node_modules/.bin/eslint --fix ./packages",
     "test": "lerna run test",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "watch": "lerna run watch",
+    "start-app": "cd ./packages/create/app && npm run dev",
+    "dev": "npm-run-all --parallel watch start-app"
   },
   "pre-commit": {
     "run": "test"

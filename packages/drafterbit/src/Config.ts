@@ -11,7 +11,9 @@ class Config {
      * @param defaults
      */
     constructor(defaults: Object = {}) {
-        this._defaults = defaults;
+        this._defaults = Object.assign({}, {
+            templateDefault: "default.html",
+        }, defaults);
     }
 
     /**

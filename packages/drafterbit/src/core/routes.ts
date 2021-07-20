@@ -44,7 +44,7 @@ router.get("main", "/(.*)",
     const marked = ctx.app.get('marked');
 
     const file = matter.read(contentFile);
-    let template = file.data.template || ctx.app.DEFAULT_TEMPLATE;
+    let template = file.data.template || ctx.app.config.get("defaultTemplate");
 
     let htmlContent = marked(file.content);
 

@@ -18,8 +18,7 @@ module.exports = function commands(cmd, app) {
                     const marked = app.get('marked');
 
                     const file = matter.read(fPathAbs);
-                    let template = file.data.template || app.DEFAULT_TEMPLATE;
-
+                    let template = file.data.template || app.config.get('templateDefault');
                     let htmlContent = marked(file.content);
 
                     let data = {

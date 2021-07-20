@@ -1,10 +1,8 @@
 
-<p align="center">
-     <a href="https://drafterbit.github.io/drafterbit">
-       <img alt="Drafterbit" style="border-radius:6px" src="https://drafterbit.github.io/drafterbit/assets/img/logo.png" width="200"/>
-     </a>
+<div align="center">
+      <h1>drafterbit</h1>
      <br/>
-     <strong>Build a better website, once again.</strong>
+     <strong>A Flat-File CMS.</strong>
      <br/>
      <br/>
      <a href="https://badge.fury.io/js/drafterbit">
@@ -19,7 +17,7 @@
      <a href="https://github.com/egig/drafterbit/compare">
           <img alt="Github License" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
      </a>
-</p>
+</div>
 
 ## Getting Started
 

@@ -49,7 +49,6 @@ class Application extends Koa {
     dir: string = "";
     options: Application.Options = {};
     config: Config;
-    DEFAULT_TEMPLATE = 'default.html';
 
     private _booted: boolean = false;
     private _plugins: Plugin[] = [];
